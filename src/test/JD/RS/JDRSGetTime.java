@@ -438,13 +438,13 @@ public class JDRSGetTime extends JDTestcase {
             .getInstance(TimeZone.getTimeZone("GMT-6:00"));// tc cal
 
         Calendar thisClientCal = new GregorianCalendar();
-        // System.out.println( gmt.getTimeZone().getRawOffset());
+        // output_.println( gmt.getTimeZone().getRawOffset());
 
-        // System.out.println( centralCal.getTimeZone().getRawOffset());
-        // System.out.println( thisClientCal.getTimeZone().getRawOffset());
+        // output_.println( centralCal.getTimeZone().getRawOffset());
+        // output_.println( thisClientCal.getTimeZone().getRawOffset());
         int offset = (centralCal.getTimeZone().getRawOffset()
             - thisClientCal.getTimeZone().getRawOffset()) / 3600000;
-        // System.out.println(offset);
+        // output_.println(offset);
 
         if (((getDriver() == JDTestDriver.DRIVER_NATIVE && "UTC".equals(tz)))) {
           assertCondition(v.toString().equals("08:14:03"),

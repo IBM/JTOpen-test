@@ -1207,7 +1207,7 @@ public class JDSDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMaximumScale",64);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("new native property");
+        output_.println("new native property");
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
@@ -1224,7 +1224,7 @@ public class JDSDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMaximumScale",-1);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("NEW native property");
+        output_.println("NEW native property");
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
@@ -1300,7 +1300,7 @@ public class JDSDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMinimumDivideScale",10);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("NEW NATIVE PROPERTY");
+        output_.println("NEW NATIVE PROPERTY");
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
@@ -1882,7 +1882,7 @@ public class JDSDSProperties extends JDTestcase {
                 // if here, then there is a problem unless method text is "", then there is not
                 // a method in datasource for the corresponding property
                 if (propsNVM[ind + 2] != "") {
-                  System.out.println(
+                  output_.println(
                       "Error getting back Property: " + propsNVM[ind] + " by calling method DS." + propsNVM[ind + 2]);
                   passed = false;
                 } else

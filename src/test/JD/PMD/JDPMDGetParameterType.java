@@ -1508,8 +1508,8 @@ a procedure call for data type of bigint.
 	  
       }
       } catch (Exception e) {
-        System.out.println("Warning:  TESTCASE error "); 
-        e.printStackTrace(System.out); 
+        output_.println("Warning:  TESTCASE error "); 
+        e.printStackTrace(output_); 
 
       }
       return Types.CLOB; 
@@ -1528,8 +1528,8 @@ a procedure call for data type of bigint.
 
       }
       } catch (Exception e) {
-        System.out.println("Warning:  TESTCASE error "); 
-        e.printStackTrace(System.out); 
+        output_.println("Warning:  TESTCASE error "); 
+        e.printStackTrace(output_); 
 
       }
       return Types.CHAR; 
@@ -1548,8 +1548,8 @@ a procedure call for data type of bigint.
 
       }
       } catch (Exception e) {
-        System.out.println("Warning:  TESTCASE error "); 
-        e.printStackTrace(System.out); 
+        output_.println("Warning:  TESTCASE error "); 
+        e.printStackTrace(output_); 
 
       }
       return Types.VARCHAR; 
@@ -1569,8 +1569,8 @@ a procedure call for data type of bigint.
         } 
       }
     } catch (Exception e) {
-      System.out.println("Warning:  TESTCASE error ");
-      e.printStackTrace(System.out);
+      output_.println("Warning:  TESTCASE error ");
+      e.printStackTrace(output_);
 
     }
     return Types.CLOB;

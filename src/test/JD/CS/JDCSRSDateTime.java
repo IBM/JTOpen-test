@@ -124,7 +124,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s1.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s1.close();
@@ -137,7 +137,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s2.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s2.close();
@@ -149,7 +149,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s3.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s3.close();
@@ -161,7 +161,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s4.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s4.close();
@@ -173,7 +173,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s5.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s5.close();
@@ -185,7 +185,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s6.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s6.close();
@@ -197,7 +197,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s7.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s7.close();
@@ -209,7 +209,7 @@ public class JDCSRSDateTime extends JDTestcase {
     try {
       s8.execute(sql);
     } catch (Exception e) {
-      System.out.println("Error creating: " + sql);
+      output_.println("Error creating: " + sql);
       e.printStackTrace();
     }
     s8.close();

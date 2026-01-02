@@ -106,7 +106,7 @@ Performs setup needed before running variations.
 		int errorCode = e.getErrorCode();
 		if (errorCode == -204) {
 		} else {
-		    System.out.println("Unexpected Exception errorCode="+errorCode);
+		    output_.println("Unexpected Exception errorCode="+errorCode);
 		    e.printStackTrace();
 		}
 	    }
@@ -138,7 +138,7 @@ Performs setup needed before running variations.
                 s.executeUpdate(sql);
             }
             catch(Exception e){
-                System.out.println("Warning.. create table failed " + sql);
+                output_.println("Warning.. create table failed " + sql);
                 e.printStackTrace();
             }
         }
@@ -183,7 +183,7 @@ Performs cleanup needed after running variations.
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
             }
             catch(Exception e){
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
         }

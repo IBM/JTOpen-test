@@ -227,7 +227,7 @@ Performs setup needed before running variations.
 	    try {
 		s.executeUpdate (createStatements[i]);
 	    } catch (Exception e) {
-		System.out.println("Warning.. create table failed "+createStatements[i]);
+		output_.println("Warning.. create table failed "+createStatements[i]);
 		e.printStackTrace();
 	    }
 	}
@@ -261,7 +261,7 @@ Performs setup needed before running variations.
 
       }
     } catch (Exception e) {
-      System.out.println("Warning.. create table failed " + sql);
+      output_.println("Warning.. create table failed " + sql);
       e.printStackTrace();
     }
 
@@ -275,7 +275,7 @@ Performs setup needed before running variations.
 	    try {
 		s.executeUpdate (sql);  //@L1A
 	    } catch (Exception e) {
-		System.out.println("Warning.. create table failed "+sql);
+		output_.println("Warning.. create table failed "+sql);
 		e.printStackTrace();
 	    }
 	}
@@ -297,7 +297,7 @@ Performs setup needed before running variations.
                 s.executeUpdate(sql);   // @M1A
             }
             catch(Exception e){
-                System.out.println("Warning.. create table failed " + sql); // @M1A
+                output_.println("Warning.. create table failed " + sql); // @M1A
                 e.printStackTrace();                                        // @M1A
             }
         }
@@ -313,7 +313,7 @@ Performs setup needed before running variations.
                 s.executeUpdate(sql);
             }
             catch(Exception e){
-                System.out.println("Warning.. create table failed " + sql);
+                output_.println("Warning.. create table failed " + sql);
                 e.printStackTrace();
             }
         }
@@ -356,7 +356,7 @@ Performs cleanup needed after running variations.
 	    try {
 		s.executeUpdate(dropStatements[i]);
 	    } catch (Exception e) {
-		System.out.println("Warning.. drop table failed "+dropStatements[i]);
+		output_.println("Warning.. drop table failed "+dropStatements[i]);
 		e.printStackTrace();
 	    }
 	}
@@ -366,25 +366,25 @@ Performs cleanup needed after running variations.
 		s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
 				 + ".CHARCOLUMNS");
 	    } catch (Exception e) {
-		System.out.println("Warning.. drop table failed");
+		output_.println("Warning.. drop table failed");
 		e.printStackTrace();
 	    }
             try {
               s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".CHARUTF8COLUMNS");
             } catch (Exception e) {
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
           try {
               s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".GRAPHICUTF16COLUMNS");
             } catch (Exception e) {
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
           try {
               s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".ROWIDCOLUMNS");
             } catch (Exception e) {
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
 
@@ -398,7 +398,7 @@ Performs cleanup needed after running variations.
             s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION   //@L1A
                          + ".LCNCOLUMNS");
 	} catch (Exception e) {
-	    System.out.println("Warning.. drop table failed");
+	    output_.println("Warning.. drop table failed");
 	    e.printStackTrace();
 	}
         }
@@ -410,7 +410,7 @@ Performs cleanup needed after running variations.
                 s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".DEFCOLUMNS");
             }
             catch(Exception e){
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
         }
@@ -421,7 +421,7 @@ Performs cleanup needed after running variations.
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
             }
             catch(Exception e){
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
         }
@@ -587,7 +587,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
 		    int stopHere = 0;
 		    stopHere++; 
 		    if (stopHere > 10000) {
-		      System.out.println("stop for timestamp before heree"); 
+		      output_.println("stop for timestamp before heree"); 
 		    }
 		}
                 int columnSize          = rs.getInt ("COLUMN_SIZE");
@@ -1169,7 +1169,7 @@ columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1246,7 +1246,7 @@ exactly.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1298,7 +1298,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1350,7 +1350,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1430,7 +1430,7 @@ columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1507,7 +1507,7 @@ exactly.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1559,7 +1559,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1611,7 +1611,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1689,7 +1689,7 @@ columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1767,7 +1767,7 @@ exactly.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1819,7 +1819,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1871,7 +1871,7 @@ there is a match.  All matching columns should be returned.
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -1943,14 +1943,14 @@ is closed.
 	    if ( row[2].equals(expected[i][2]) &&
 		 row[4].equals(expected[i][4])) {
 		// We've found the right row.. it now must match
-/*		System.out.println("\nRECEIVED \n"+
+/*		output_.println("\nRECEIVED \n"+
 				     "*********");
 		for(int j = 2; j< row.length; j++)
-		    System.out.print(row[j]+": ");
-		System.out.println("\nEXPECTED \n"+
+		    output_.print(row[j]+": ");
+		output_.println("\nEXPECTED \n"+
 				     "*********");
 		for(int j = 2; j< row.length; j++)
-		    System.out.print(expected[i][j]+": ");
+		    output_.print(expected[i][j]+": ");
 */
         boolean ok = true;
         for (int j = 2; j < row.length; j++) {
@@ -2124,7 +2124,7 @@ is closed.
 
 		for(int i=1; i <= count; i++)
 		{
-		    // System.out.println("Getting "+i);
+		    // output_.println("Getting "+i);
 		    oneRow[i]=rs.getString(i);
 		}
 
@@ -2267,7 +2267,7 @@ is closed.
                 //
 		for(int i=1; i <= count; i++)
 		{
-		    // System.out.println("Getting "+i);
+		    // output_.println("Getting "+i);
 		    oneRow[i]=rs.getString(i);
 		}
 		//
@@ -2406,7 +2406,7 @@ is closed.
                 //
 		for(int i=1; i <= count; i++)
 		{
-		   //System.out.println("Getting "+i);
+		   //output_.println("Getting "+i);
 		    oneRow[i]=rs.getString(i);
 		}
 		//
@@ -2806,7 +2806,7 @@ is closed.
             }
             message.append("\n");
             success = false;
-            // System.out.println(sb.toString());
+            // output_.println(sb.toString());
           }
         }
 
@@ -2911,7 +2911,7 @@ is closed.
                 //
 		for(int i=1; i <= count; i++)
 		{
-		   // System.out.println("Getting "+i);
+		   // output_.println("Getting "+i);
 		    oneRow[i]=rs.getString(i);
 		}
 		//
@@ -2926,7 +2926,7 @@ is closed.
 		    }
 		    message.append("\n");
 		    success=false;
-		//    System.out.println(sb.toString());
+		//    output_.println(sb.toString());
 		}
 	    }
 
@@ -3011,7 +3011,7 @@ SQL400 - the CLI seems to return some pretty weird stuff for a timestamp
                     String outCatalog = rs.getString("TABLE_CAT");
                     if (outCatalog == null) {
                     } else {
-                        System.out.println("Expected null, got "+outCatalog);
+                        output_.println("Expected null, got "+outCatalog);
                         success=false;
                     }
                 } else {
@@ -3248,7 +3248,7 @@ SQL400 - The native driver will return null for a remarks field that
 		    String outCatalog = rs.getString("TABLE_CAT");
 		    if (outCatalog == null) {
 		    } else {
-			System.out.println("Expected null, got "+outCatalog);
+			output_.println("Expected null, got "+outCatalog);
 			success=false;
 		    }
 		} else {
@@ -3479,7 +3479,7 @@ SQL400 - The native driver will return null for a remarks field that
 		    }
 		    message.append("\n");
 		    success=false;
-		    //System.out.println(sb.toString());
+		    //output_.println(sb.toString());
 		}
 	    }
 
@@ -3605,7 +3605,7 @@ SQL400 - The native driver will return null for a remarks field that
                     }
                     message.append("\n");
                     success=false;
-                    //System.out.println(sb.toString());
+                    //output_.println(sb.toString());
                 }
             }
 
@@ -3738,7 +3738,7 @@ SQL400 - The native driver will return null for a remarks field that
                    //
                 for(int i=1; i <= count; i++)
                 {
-                   // System.out.println("Getting "+i);
+                   // output_.println("Getting "+i);
                     oneRow[i]=rs.getString(i);
                 }
                 //
@@ -3753,7 +3753,7 @@ SQL400 - The native driver will return null for a remarks field that
                     }
                     message.append("\n");
                     success=false;
-                //    System.out.println(sb.toString());
+                //    output_.println(sb.toString());
                 }
             }
 
@@ -3909,7 +3909,7 @@ SQL400 - The native driver will return null for a remarks field that
           // Get the row contents
           //
           for (int i = 1; i <= count; i++) {
-            // System.out.println("Getting "+i);
+            // output_.println("Getting "+i);
             oneRow[i] = rs.getString(i);
           }
           //
@@ -3925,7 +3925,7 @@ SQL400 - The native driver will return null for a remarks field that
             }
             message.append("\n");
             success = false;
-            // System.out.println(sb.toString());
+            // output_.println(sb.toString());
           }
         }
 
@@ -7139,7 +7139,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getColumns");
+		    // output_.println("Calling getColumns");
 		    ResultSet rs = dmd_.getColumns (null, JDDMDTest.COLLECTION,
 						    "COLUMNS", "%");
 		    rs.close();
@@ -7291,7 +7291,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 			}
 			message.append("\n");
 			success=false;
-		    //System.out.println(sb.toString());
+		    //output_.println(sb.toString());
 		    }
 		}
 
@@ -7406,7 +7406,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 			}
 			message.append("\n");
 			success=false;
-		    //System.out.println(sb.toString());
+		    //output_.println(sb.toString());
 		    }
 		}
 

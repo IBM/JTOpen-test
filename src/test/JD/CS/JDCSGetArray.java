@@ -113,7 +113,7 @@ public class JDCSGetArray extends JDTestcase {
             JDSetupProcedure.STP_CSARRINT, supportedFeatures_);
       }
     } catch (Exception e) {
-      System.out.println("WARNING:  Uncaught exception in setup()");
+      output_.println("WARNING:  Uncaught exception in setup()");
       e.printStackTrace();
     }
   }
@@ -949,7 +949,7 @@ public class JDCSGetArray extends JDTestcase {
 
       Array b = (Array) cs.getObject(2);
       boolean check2 = false;
-      System.out.println(((Array) b).getBaseTypeName());
+      output_.println(((Array) b).getBaseTypeName());
       if (((Array) b).getBaseTypeName().equals("INTEGER"))
         check2 = true;
 
@@ -957,7 +957,7 @@ public class JDCSGetArray extends JDTestcase {
 
       /*
        * iaCheck = (Integer[])b.getArray(); for(int x=0;x<iaCheck.length;x++) {
-       * // iaCheck[x].toString(); //System.out.println(i[x].toString()); }
+       * // iaCheck[x].toString(); //output_.println(i[x].toString()); }
        */
 
       boolean check3 = true;
@@ -1041,7 +1041,7 @@ public class JDCSGetArray extends JDTestcase {
 
       Array b = (Array) cs.getObject(2);
       boolean check2 = false;
-      System.out.println(((Array) b).getBaseTypeName());
+      output_.println(((Array) b).getBaseTypeName());
       if (((Array) b).getBaseTypeName().equals("INTEGER"))
         check2 = true;
 
@@ -1049,7 +1049,7 @@ public class JDCSGetArray extends JDTestcase {
 
       /*
        * iaCheck = (Integer[])b.getArray(); for(int x=0;x<iaCheck.length;x++) {
-       * // iaCheck[x].toString(); //System.out.println(i[x].toString()); }
+       * // iaCheck[x].toString(); //output_.println(i[x].toString()); }
        */
 
       boolean check3 = true;

@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetFunctionColumns.java
  //
  // Classes:      JDDMDGetFunctionColumns
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -104,7 +93,7 @@ Constructor.
 
 
     protected String getCatalogFromURL(String url) {
-      // System.out.println("BaseURL is "+baseURL_);
+      // output_.println("BaseURL is "+baseURL_);
       // must be running JCC, set to a valid value.
       // jdbc:db2://y0551p2:446/*LOCAL
 
@@ -135,7 +124,7 @@ Performs setup needed before running variations.
         connectionCatalog_ = connection_.getCatalog();
         if (connectionCatalog_ == null) {
            connectionCatalog_ = getCatalogFromURL(baseURL_);
-           System.out.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
+           output_.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
         }
         dmd_ = connection_.getMetaData ();
 
@@ -183,7 +172,7 @@ Performs cleanup needed after running variations.
      * @exception java.lang.Exception
      *                Exception is thrown if functionis not created.
      */
-    public static void createFunction(Connection connection, String function, String functionSpec) throws Exception
+    public void createFunction(Connection connection, String function, String functionSpec) throws Exception
     {
         Statement s = null;
         try
@@ -216,7 +205,7 @@ Performs cleanup needed after running variations.
     /**
      * Uses a connection to drop a function
      */
-    public static void dropFunction(Connection connection, String function, String functionSpec) throws Exception
+    public void dropFunction(Connection connection, String function, String functionSpec) throws Exception
     {
         Statement s = null;
         try
@@ -234,7 +223,7 @@ Performs cleanup needed after running variations.
                 int argindex = noArgs.indexOf("JDMDSIP1 ");
                 while (argindex > 0)
                 {
-                    // if (debug) System.out.println("RTest: noArgs = " + noArgs
+                    // if (debug) output_.println("RTest: noArgs = " + noArgs
                     // + "argindex = "+argindex );
                     noArgs = noArgs.substring(0, argindex) + noArgs.substring(argindex + 9);
                     argindex = noArgs.indexOf("JDMDSIP1 ");
@@ -268,7 +257,7 @@ Performs cleanup needed after running variations.
                     }
                     if (e != null)
                     {
-                        System.out.println("JDDMDGetFunctionColumns.debug:  warning:  unable to drop function using 'drop function "+noArgs+"'");
+                        output_.println("JDDMDGetFunctionColumns.debug:  warning:  unable to drop function using 'drop function "+noArgs+"'");
                         e.printStackTrace();
                     }
                 }
@@ -538,7 +527,7 @@ verify all columns with system remarks (the default).
         }
 
       } catch (Exception e) {
-        System.out.println("******* Exception Caught ******\n");
+        output_.println("******* Exception Caught ******\n");
         failed(e, message.toString());
       }
     }

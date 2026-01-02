@@ -146,11 +146,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -193,11 +193,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -240,11 +240,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -287,11 +287,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -334,11 +334,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -387,11 +387,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -434,11 +434,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -481,11 +481,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -528,11 +528,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -575,11 +575,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -629,11 +629,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -676,11 +676,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -723,11 +723,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -770,11 +770,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -817,11 +817,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -871,11 +871,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -918,11 +918,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -965,11 +965,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1012,11 +1012,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1059,11 +1059,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1126,11 +1126,11 @@ Performs cleanup needed after running variations.
            }
            catch (SQLException e)
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1252,11 +1252,11 @@ Performs cleanup needed after running variations.
            }
            catch (SQLException e)
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1362,11 +1362,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1408,11 +1408,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1454,11 +1454,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1500,11 +1500,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1545,11 +1545,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1596,11 +1596,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1642,11 +1642,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1688,11 +1688,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1734,11 +1734,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1779,11 +1779,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1830,11 +1830,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1876,11 +1876,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1922,11 +1922,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -1968,11 +1968,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -2013,11 +2013,11 @@ Performs cleanup needed after running variations.
            } 
            catch (SQLException e) 
            {
-               System.out.println("SQLException exception: ");
-               System.out.println("Message:....." + e.getMessage());
-               System.out.println("SQLState:...." + e.getSQLState());
-               System.out.println("Vendor Code:." + e.getErrorCode());
-               System.out.println("-----------------------------------------------------");
+               output_.println("SQLException exception: ");
+               output_.println("Message:....." + e.getMessage());
+               output_.println("SQLState:...." + e.getSQLState());
+               output_.println("Vendor Code:." + e.getErrorCode());
+               output_.println("-----------------------------------------------------");
                e.printStackTrace();
                exception = true;
            }
@@ -2261,7 +2261,7 @@ Performs cleanup needed after running variations.
         if (!condition)
         {  
            failedCount ++;
-           System.out.println("   Sub-variation " + currentCount + " failed");
+           output_.println("   Sub-variation " + currentCount + " failed");
         }
     }
 

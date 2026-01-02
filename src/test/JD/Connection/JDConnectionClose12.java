@@ -153,7 +153,7 @@ Constructor.
           String message = "JDConnectionClose.Var012 loop=" + i + "/"
               + CONNECTIONS_TO_TEST + " or timeLeft = " + timeleft + "s";
           JDJobName.sendProgramMessage(message);
-          System.out.println(message);
+          output_.println(message);
           nextMessage = System.currentTimeMillis() + 15000;
         }
 
@@ -172,7 +172,7 @@ Constructor.
 		String message = e.toString();
 		if ((message.indexOf("Error occurred in SQL Call Level Interface") >=  0) &&
 		    (message.indexOf("The error code is 14") >= 0 )) {
-		    System.out.println("Warning.. out of handles, forcing gc");
+		    output_.println("Warning.. out of handles, forcing gc");
 		    System.gc();
 		    j = STATEMENTS_PER_CONNECTION; 
 		} 

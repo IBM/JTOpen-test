@@ -112,7 +112,7 @@ Performs setup needed before running variations.
         // SQL400 - changed to use a generic URL so that it would
         //          work with both the toolbox and the native driver.
 	if (getDriver() == JDTestDriver.DRIVER_JCC) {
-	    System.out.println("baseURL="+baseURL_);
+	    output_.println("baseURL="+baseURL_);
 	    String url = baseURL_;
 	    connection_ = testDriver_.getConnection(url, systemObject_.getUserId(),
 						    encryptedPassword_);
@@ -318,7 +318,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getTableTypes");
+		    // output_.println("Calling getTableTypes");
 		    ResultSet rs = dmd_.getTableTypes ();
 		    rs.close();
 		}

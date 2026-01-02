@@ -962,7 +962,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
             supportedFeatures_, getDriver());
         cs1.execute();
 
-        // System.out.println("Setting all parameters but for parameter
+        // output_.println("Setting all parameters but for parameter
         // #(1-based): "+(i+1));
 
         // Sets all parameters but for i+1
@@ -982,7 +982,7 @@ public class JDCSSetObject extends JDCSSetTestcase {
             && JDSetupProcedure.checkAllForOne(cs1,
                 JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_,
                 i + 1))) {
-          System.out.println("*** Failed on : " + (i + 1));
+          output_.println("*** Failed on : " + (i + 1));
           success = false;
         }
         cs1.close();

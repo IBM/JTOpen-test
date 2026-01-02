@@ -2821,8 +2821,8 @@ public class JDPSSetBinaryStream extends JDTestcase {
         long freeMemoryBefore = runtime.freeMemory();
         ps.setBinaryStream(1, is, 1000000);
         long freeMemoryAfter = runtime.freeMemory();
-        System.out.println("Before freeMemory=" + freeMemoryBefore);
-        System.out.println("After  freeMemory=" + freeMemoryAfter);
+        output_.println("Before freeMemory=" + freeMemoryBefore);
+        output_.println("After  freeMemory=" + freeMemoryAfter);
 
         ps.close();
         statement_.executeUpdate("Drop table " + table);
@@ -2903,7 +2903,7 @@ public class JDPSSetBinaryStream extends JDTestcase {
           long elapsedTime = System.currentTimeMillis() - startTime;
           result[0] = "" + size;
           result[1] = "" + elapsedTime;
-          System.out.println(size + " took " + elapsedTime + " ms for "
+          output_.println(size + " took " + elapsedTime + " ms for "
               + testcase + " blockSize=" + blockSize);
           sb.append(size + " took " + elapsedTime + " ms\n");
           resultVector.addElement(result);
@@ -2920,8 +2920,8 @@ public class JDPSSetBinaryStream extends JDTestcase {
         sb.append("Executing sql: " + sql + "\n");
         s2.executeUpdate(sql);
       } catch (Exception e) {
-        System.out.println("WARNING:  TABLE did not drop");
-        e.printStackTrace(System.out);
+        output_.println("WARNING:  TABLE did not drop");
+        e.printStackTrace(output_);
       }
       s2.close();
       blockingConnection.commit();

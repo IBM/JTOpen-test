@@ -1302,10 +1302,10 @@ had them.
                     s.executeUpdate("CREATE TABLE " + table2_ + " (ONE CHAR (10 ) NOT NULL WITH DEFAULT)");
                 }
                 catch (SQLException three) {
-                    //System.out.println ("*** SQL Exception Caught ***\n");
-                    //System.out.println (" SQLState: " + two.getSQLState ());
-                    //System.out.println (" Message: " + two.getMessage ());
-                    //System.out.println (" Vendor: " + two.getErrorCode ());
+                    //output_.println ("*** SQL Exception Caught ***\n");
+                    //output_.println (" SQLState: " + two.getSQLState ());
+                    //output_.println (" Message: " + two.getMessage ());
+                    //output_.println (" Vendor: " + two.getErrorCode ());
                     vendorCode = three.getErrorCode();
                 }
 
@@ -2654,10 +2654,10 @@ had them.
 			JDReflectionUtil.callMethod_L(s,"executeLargeUpdate","CREATE TABLE " + table2_ + " (ONE CHAR (10 ) NOT NULL WITH DEFAULT)");
 		    }
 		    catch (SQLException three) {
-		    //System.out.println ("*** SQL Exception Caught ***\n");
-		    //System.out.println (" SQLState: " + two.getSQLState ());
-		    //System.out.println (" Message: " + two.getMessage ());
-		    //System.out.println (" Vendor: " + two.getErrorCode ());
+		    //output_.println ("*** SQL Exception Caught ***\n");
+		    //output_.println (" SQLState: " + two.getSQLState ());
+		    //output_.println (" Message: " + two.getMessage ());
+		    //output_.println (" Vendor: " + two.getErrorCode ());
 			vendorCode = three.getErrorCode();
 		    }
 

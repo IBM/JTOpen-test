@@ -1109,15 +1109,15 @@ execute() - Verify that lobs cannot be inserted even when the width of the inser
             byte[] b4 = b1;
             String sql = "insert into " + table4_ + " values(?,?,?,?)";
             pstmt = connection_.prepareStatement(sql);
-            System.out.println("Done preparing...");
+            output_.println("Done preparing...");
             pstmt.setBytes(1, b1);
-            System.out.println("1 done...");
+            output_.println("1 done...");
             pstmt.setBytes(2, b2);
-            System.out.println("2 done...");
+            output_.println("2 done...");
             pstmt.setBytes(3, b3);
-            System.out.println("3 done...");
+            output_.println("3 done...");
             pstmt.setBytes(4, b4);
-            System.out.println("4 done...");
+            output_.println("4 done...");
 
             boolean failed = false;
             try {

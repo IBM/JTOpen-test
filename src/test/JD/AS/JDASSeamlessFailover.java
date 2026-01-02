@@ -91,7 +91,7 @@ public void setup() {
 String runSeconds = System.getProperty("RUN_SECONDS"); 
 if (runSeconds != null) { 
 RUN_SECONDS=Integer.parseInt(runSeconds); 
-System.out.println("RUN_SECONDS set from property to "+RUN_SECONDS); 
+output_.println("RUN_SECONDS set from property to "+RUN_SECONDS); 
 }
 
 
@@ -183,10 +183,10 @@ transactionalConnection.commit();
 }
 
 } catch (Exception e) {
-System.out.println("Setup error.");
-System.out.println("Last sql statement was the following");
-System.out.println(sql);
-e.printStackTrace(System.out);
+output_.println("Setup error.");
+output_.println("Last sql statement was the following");
+output_.println(sql);
+e.printStackTrace(output_);
 }
 }
 
@@ -208,7 +208,7 @@ for (int i = 0; i < cleanupSql.length; i++) {
 try {
 s.execute(cleanupSql[i]);
 } catch (Exception e) {
-e.printStackTrace(System.out);
+e.printStackTrace(output_);
 }
 }
 connection.close();
@@ -377,9 +377,9 @@ try {
 killerConnection = testDriver_.getConnection(killerUrl,
 systemObject_.getUserId(), encryptedPassword_);
 } catch (Exception e) { 
-System.out.println("******************************");
-System.out.println("Exception connecting to "+killerUrl);
-System.out.println("******************************");
+output_.println("******************************");
+output_.println("Exception connecting to "+killerUrl);
+output_.println("******************************");
 throw e; 
 }
 
@@ -476,9 +476,9 @@ try {
 killerConnection = testDriver_.getConnection(killerUrl,
 systemObject_.getUserId(), encryptedPassword_);
 } catch (Exception e) { 
-System.out.println("******************************");
-System.out.println("Exception connecting to "+killerUrl);
-System.out.println("******************************");
+output_.println("******************************");
+output_.println("Exception connecting to "+killerUrl);
+output_.println("******************************");
 throw e; 
 }
 

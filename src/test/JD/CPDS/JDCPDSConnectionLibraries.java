@@ -254,7 +254,7 @@ SQL400 - for the native driver, the value *libl is going to come back from
                 Connection c = dataSource.getConnection ();
                 String defaultSchema = getDefaultSchema (c);
                 c.close ();
-                System.out.println("Default schema is " + defaultSchema);
+                output_.println("Default schema is " + defaultSchema);
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE)
                     assertCondition (defaultSchema.equalsIgnoreCase ("*LIBL"));
                 else

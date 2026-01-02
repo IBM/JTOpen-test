@@ -838,7 +838,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
 		while (success && statementCount < maxStatements && System.currentTimeMillis() < endTime ) { 
 
  	            /* Force garbage collection, so numbers are not thrown off */
-		    System.out.println("statementCount="+statementCount); 
+		    output_.println("statementCount="+statementCount); 
 		    System.gc(); 
 
 		    conn =    testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
@@ -1139,7 +1139,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
 		return; 
 	    }
 	    
-	    System.out.println("driverFixLevel="+getDriverFixLevel());
+	    output_.println("driverFixLevel="+getDriverFixLevel());
 
             String added = " -- Added by toolbox 1/09/2011 to test CPS 8Q9LML";
             Var26Cleaner cleanerThread = null; 
@@ -1154,7 +1154,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
                 cleanerThread.start(); 
 
                 int seconds = 60; 
-                System.out.println("Starting "+seconds+" second test closer thread "); 
+                output_.println("Starting "+seconds+" second test closer thread "); 
                 long endTime = System.currentTimeMillis() + seconds * 1000;
                 int statementCount = 1000; 
                 var26statements = new Statement[statementCount];
@@ -1165,9 +1165,9 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
                       rs.next();
                   }
                   cleanerThread.setCleanup(true);
-                  System.out.println("Calling rollback"); 
+                  output_.println("Calling rollback"); 
                   c2.rollback();
-                  System.out.println("Rollback completed"); 
+                  output_.println("Rollback completed"); 
                   cleanerThread.setCleanup(false); 
 
                 }
@@ -1209,7 +1209,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         setName("Var26Cleaner"+jobName);
         while (!complete) {
           while (cleanup) {
-            System.out.println("Cleanup thread running"); 
+            output_.println("Cleanup thread running"); 
             for (int i = 0; cleanup && i < var26statements.length; i++) {
               try {
                 var26statements[i].close();
@@ -1218,7 +1218,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
               }
             } /*int i */
             cleanup = false; 
-            System.out.println("Cleanup thread complete"); 
+            output_.println("Cleanup thread complete"); 
           } /* while cleanup */
           try {
             wait();

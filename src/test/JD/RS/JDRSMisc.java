@@ -109,7 +109,7 @@ Performs setup needed before running variations.
 		   ResultSet.TYPE_SCROLL_INSENSITIVE,
 		   ResultSet.CONCUR_READ_ONLY);
 	    } catch (Exception e) {
-		System.out.println("Warning:  creating nonScrollable cursor");
+		output_.println("Warning:  creating nonScrollable cursor");
 		statement_ = connection_.createStatement(); 
 	    }
 	    
@@ -1265,7 +1265,7 @@ even though it is declared to be. @D2A
           ResultSet rs = statement.executeQuery (command); 
           int type = rs.getType ();
 
-                      // System.out.println("Type is "+type +" Scroll insenstive = "+ResultSet.TYPE_SCROLL_INSENSITIVE );
+                      // output_.println("Type is "+type +" Scroll insenstive = "+ResultSet.TYPE_SCROLL_INSENSITIVE );
 
           // verify that the cursor is scrollable
           // this should throw exception for an array result set 
@@ -1657,8 +1657,8 @@ failed (e, "Unexpected Exception"+added);
                 statement2.close(); 
                 updateWorked = true; 
               } catch (Exception e) {
-                 // System.out.println("FAILED : "+sql);
-                 // System.out.println(" This was created using rs.getCursorName"); 
+                 // output_.println("FAILED : "+sql);
+                 // output_.println(" This was created using rs.getCursorName"); 
                  // e.printStackTrace(); 
                  updateWorked = false; 
               }
@@ -1736,7 +1736,7 @@ failed (e, "Unexpected Exception"+added);
             rs.next(); 
             holdable = true; 
           } catch (Exception e) {
-            System.out.println("Using cursor after commit failed\n"); 
+            output_.println("Using cursor after commit failed\n"); 
             e.printStackTrace(); 
             holdable = false; 
           }
@@ -2668,17 +2668,17 @@ failed (e, "Unexpected Exception"+added);
 				    int hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");
 				    int concurrency = rs.getConcurrency ();
 				    int type = rs.getType();
-				    System.out.println(hold);
-				    System.out.println(concurrency);
-				    System.out.println(type);
+				    output_.println(hold);
+				    output_.println(concurrency);
+				    output_.println(type);
 				    while(statement.getMoreResults()){
 					rs = statement.getResultSet();
 					hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");
 					concurrency = rs.getConcurrency ();
 					type = rs.getType();
-					System.out.println(hold);
-					System.out.println(concurrency);
-					System.out.println(type);
+					output_.println(hold);
+					output_.println(concurrency);
+					output_.println(type);
 				    }
 				    rs.close ();
 				    statement.close ();

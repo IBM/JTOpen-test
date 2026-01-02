@@ -98,8 +98,8 @@ extends JDTestcase {
 		normalConnection.close();
 		replaceConnection.close(); 
 	    } catch (Exception e) {
-		System.out.println("Exception during cleanup");
-		e.printStackTrace(System.out); 
+		output_.println("Exception during cleanup");
+		e.printStackTrace(output_); 
 	    } 
 	} 
 	

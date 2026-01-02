@@ -312,7 +312,7 @@ getTypeMap() - Throws an exception, not supported.
 	    if ((getDriver () == JDTestDriver.DRIVER_NATIVE) ) {
 		try {
 		    java.util.Map<?,?> map = connection_.getTypeMap ();
-		    System.out.println("passed "+map);
+		    output_.println("passed "+map);
 		    assertCondition(true);
 		}
 		catch (Exception e) {
@@ -597,8 +597,8 @@ getConnection -- test the query optimize goal property
           // Extract optimization level from the Database Monitor results
           String value =""+rs.getString(1);
           String valueOpt =""+rsOpt.getString(1);
-          System.out.println("value   ="+value);
-          System.out.println("valueOpt="+valueOpt);
+          output_.println("value   ="+value);
+          output_.println("valueOpt="+valueOpt);
           String expected = "A"; //allio
           String expectedOpt = "F"; //firstio
           String failMsg = "(goal=2) Expected '"+expected+"' and received '"+value+"'"+"\n";
@@ -610,7 +610,7 @@ getConnection -- test the query optimize goal property
               valueOpt.equalsIgnoreCase(expectedOpt)), failMsg);
           // End of new code @H2A
           //message+="Totals\n allio="+totalQueryTime+"       firstio"+totalQueryOptTime+"\n";
-          /* System.out.println("Totals allio="+totalQueryTime+"       firstio"+totalQueryOptTime);  */
+          /* output_.println("Totals allio="+totalQueryTime+"       firstio"+totalQueryOptTime);  */
 
           //assertCondition(totalQueryTime > totalQueryOptTime, "Error time for connection with *firstio is not less than *allio Messages=\n"+message);
 
@@ -764,8 +764,8 @@ isValid -- Verify that a negative value throws an exception.
           "ENDJOB JOB(*) OPTION(*IMMED)                                                                '"+
           ", 0000000080.00000) ";
 
-          // System.out.println(sql);
-          // System.out.flush();
+          // output_.println(sql);
+          // output_.flush();
 	  statusStringBuffer.append("Executing "+sql+"\n"); 
           stmt.executeQuery(sql);
 	  statusStringBuffer.append("Return from "+sql+"\n"); 
@@ -851,7 +851,7 @@ getConnection -- test the servermode subsystem property
             }
 	  }
         } catch (Exception e) {
-          System.out.println("ERROR setting up subsystems");
+          output_.println("ERROR setting up subsystems");
           e.printStackTrace();
         }
 
@@ -1002,7 +1002,7 @@ getConnection -- test a bogus subsystem property
      * setup the libraries used by the system naming tests
      */
 
-    public static void setupSystemNamingLibraries(Connection connection, String newBaseCollection ) throws Exception {
+    public  void setupSystemNamingLibraries(Connection connection, String newBaseCollection ) throws Exception {
 	if (!systemNamingLibrariesCreated) {
 	  systemNamingLibraries = new Vector<String>();
 	    String sql = "";
@@ -1079,7 +1079,7 @@ getConnection -- test a bogus subsystem property
 		systemNamingLibrariesCreated = true;
 		s.close();
 	    } catch (Exception sqlex) {
-		System.out.println("setupSystemNamingLibraries: Exception caught sql="+sql);
+		output_.println("setupSystemNamingLibraries: Exception caught sql="+sql);
 		throw sqlex;
 	    }
 	}
@@ -1352,18 +1352,18 @@ getConnection -- test a bogus subsystem property
 
   void startThreads(SignonThread[] threads) {
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("Starting thread " + i);
+      output_.println("Starting thread " + i);
       threads[i].start();
     }
   }
 
   void stopThreads(SignonThread[] threads) throws InterruptedException {
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("Stopping thread " + i);
+      output_.println("Stopping thread " + i);
       threads[i].markStop();
     }
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("joining " + i);
+      output_.println("joining " + i);
       threads[i].join();
     }
 

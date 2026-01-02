@@ -4316,9 +4316,9 @@ public class JDDMDGetTypeInfo extends JDTestcase {
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()) {
         boolean condition = success && (rows == expectedRows);
         if (!condition) {
-          System.out.println("success = " + success);
-          System.out.println("rows = " + rows + " should be " + expectedRows);
-          System.out.println("Comment is " + comment);
+          output_.println("success = " + success);
+          output_.println("rows = " + rows + " should be " + expectedRows);
+          output_.println("Comment is " + comment);
         }
 
         assertCondition(success && (rows == expectedRows)); // @A1C @B0C
@@ -4326,9 +4326,9 @@ public class JDDMDGetTypeInfo extends JDTestcase {
       {
         boolean condition = success && (rows >= 27);
         if (!condition) {
-          System.out.println("success = " + success);
-          System.out.println("rows = " + rows + " sb >= 27");
-          System.out.println("Comment is " + comment);
+          output_.println("success = " + success);
+          output_.println("rows = " + rows + " sb >= 27");
+          output_.println("Comment is " + comment);
         }
         assertCondition(condition); // This is what the native driver will
                                     // get...
@@ -4417,7 +4417,7 @@ sb.append("NUM_PREC_RADIX = "+    rs.getString("NUM_PREC_RADIX")+"\n");
         Statement stmt = connection_.createStatement();
 
         for (int i = 0; i < 1000; i++) {
-          // System.out.println("Calling getTypeInfo");
+          // output_.println("Calling getTypeInfo");
           ResultSet rs = dmd_.getTypeInfo();
           rs.close();
         }

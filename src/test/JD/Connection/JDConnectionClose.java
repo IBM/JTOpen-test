@@ -433,7 +433,7 @@ close() - Check for handle leak..
 		Statement st= con.createStatement();
 		ResultSet rs = st.executeQuery("SELECT * FROM SYSIBM.SYSDUMMY1");
 		String cursorName = rs.getCursorName();
-		// System.out.println("cursor name is "+cursorName);
+		// output_.println("cursor name is "+cursorName);
 		int beginHandle = Integer.parseInt(cursorName.substring(10));
 		rs.close();
 		st.close();
@@ -454,7 +454,7 @@ close() - Check for handle leak..
 		st= con.createStatement();
 		rs = st.executeQuery("SELECT * FROM SYSIBM.SYSDUMMY1");
 		String afterCursorName = rs.getCursorName();
-		// System.out.println("after cursor name is "+afterCursorName);
+		// output_.println("after cursor name is "+afterCursorName);
 		int afterHandle = Integer.parseInt(afterCursorName.substring(10));
 		rs.close();
 		st.close();
@@ -525,7 +525,7 @@ Closing of connection when job ends.  Check that the connection does not hang wh
 		Connection dieConn = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);
 
 		String jobname = getJobName(dieConn);
-		System.out.println("Jobname="+jobname+" for "+dieConn);
+		output_.println("Jobname="+jobname+" for "+dieConn);
 		JDConnectionCloseRunnable thread = new JDConnectionCloseRunnable(dieConn, "select * from qsys2.syscolumns", sb);
 		thread.setDaemon(true);
 		thread.start();
@@ -545,7 +545,7 @@ Closing of connection when job ends.  Check that the connection does not hang wh
 		    sb.append(mainMarker()+" Calling ENDJOB \n");
 		}
 		stmt.executeUpdate("CALL  QSYS.QCMDEXC('ENDJOB JOB("+jobname+") OPTION(*IMMED)                                              ',  0000000080.00000)");
-		System.out.println("Calling ENDJOB on "+jobname); 
+		output_.println("Calling ENDJOB on "+jobname); 
 		synchronized(sb) {
 		    sb.append(mainMarker()+" Back from ENDJOB \n");
 		}
@@ -657,7 +657,7 @@ Closing of connection when job ends.  Check that the connection does not hang wh
 			"Processing of the SQL statement ended",
 		    };
 		    String exceptionInfo = e.toString();
-		// System.out.println("Exception in thread:" + exceptionInfo);
+		// output_.println("Exception in thread:" + exceptionInfo);
 		    for (int i = 0; i < expectedException.length; i++) {
 			if (exceptionInfo.indexOf(expectedException[i]) >= 0) {
 			    done_ = true;
@@ -724,11 +724,11 @@ This testcase should detect this problem.
                 String message = "JDConnectionClose.Var009 loop="+i+"/"+CONNECTIONS_TO_TEST+
                 " or timeLeft = "+timeleft+"s";
                 JDJobName.sendProgramMessage(message );
-                System.out.println(message);
+                output_.println(message);
                 nextMessage = System.currentTimeMillis() + 15000;
               }
 		sb.append("Create connection loop "+i+"\n");
-		// System.out.println("Create connection loop "+i+"\n");
+		// output_.println("Create connection loop "+i+"\n");
 		Connection conn = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);
 		for (int j = 0; j < STATEMENTS_PER_CONNECTION  && System.currentTimeMillis() < lastTime; j++) {
 		    PreparedStatement ps = conn.prepareStatement("Select * from sysibm.sysdummy1");
@@ -751,7 +751,7 @@ This testcase should detect this problem.
 
    public void leakConnection(StringBuffer sb, int i, int STATEMENTS_PER_CONNECTION ) throws Exception {
 	sb.append("Create connection loop "+i+"\n");
-		// System.out.println("Create connection loop "+i+"\n");
+		// output_.println("Create connection loop "+i+"\n");
 
 	Connection conn = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);
 	PreparedStatement[] ps = new PreparedStatement[STATEMENTS_PER_CONNECTION];
@@ -762,7 +762,7 @@ This testcase should detect this problem.
 		String message = e.toString();
 		if ((message.indexOf("Error occurred in SQL Call Level Interface") >=  0) &&
 		    (message.indexOf("The error code is 14") >= 0 )) {
-		    System.out.println("Warning.. out of handles, forcing gc");
+		    output_.println("Warning.. out of handles, forcing gc");
 		    System.gc();
 		    j = STATEMENTS_PER_CONNECTION; 
 		    } 
@@ -785,7 +785,7 @@ This testcase should detect this problem.
 
    public void leakConnectionAndResultSets(StringBuffer sb, int i, int STATEMENTS_PER_CONNECTION ) throws Exception {
 	sb.append("Create connection loop "+i+"\n");
-		// System.out.println("Create connection loop "+i+"\n");
+		// output_.println("Create connection loop "+i+"\n");
 
 	Connection conn = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);
 	PreparedStatement[] ps = new PreparedStatement[STATEMENTS_PER_CONNECTION];
@@ -800,7 +800,7 @@ This testcase should detect this problem.
 		String message = e.toString();
 		if ((message.indexOf("Error occurred in SQL Call Level Interface") >=  0) &&
 		    (message.indexOf("The error code is 14") >= 0 )) {
-		    System.out.println("Warning.. out of handles, forcing gc");
+		    output_.println("Warning.. out of handles, forcing gc");
 		    System.gc();
 		    j = STATEMENTS_PER_CONNECTION; 
 		    } 
@@ -827,7 +827,7 @@ This testcase should detect this problem.
 	String override = System.getProperty(property);
 	if (override != null) {
 	    STATEMENTS_PER_CONNECTION = Integer.parseInt(override); 
-	    System.out.println("Value "+property+" overridden with "+override); 
+	    output_.println("Value "+property+" overridden with "+override); 
 	} 
 	return STATEMENTS_PER_CONNECTION; 
     } 

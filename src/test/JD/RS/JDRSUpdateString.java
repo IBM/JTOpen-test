@@ -1945,7 +1945,7 @@ extends JDTestcase
 		// Change the CCSID 
 		    String command = "QSYS/chgjob "+jobname+" CCSID(5035)";
 		    String sql = "CALL QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
-		    // System.out.println("executing "+sql);
+		    // output_.println("executing "+sql);
 		    Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 								 ResultSet.CONCUR_UPDATABLE);
 		    stmt.execute(sql); 
@@ -2011,7 +2011,7 @@ extends JDTestcase
 		    // Change the CCSID 
 		    String command = "QSYS/chgjob "+jobname+" CCSID(5035)";
 		    String sql = "CALL QSYS.QCMDEXC('"+command+"', 00000000"+command.length()+".00000)";
-		    // System.out.println("executing "+sql);
+		    // output_.println("executing "+sql);
 		    Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 								 ResultSet.CONCUR_UPDATABLE);
 		    stmt.execute(sql); 

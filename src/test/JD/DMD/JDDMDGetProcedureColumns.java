@@ -134,7 +134,7 @@ Constructor.
 
 
   protected String getCatalogFromURL(String url) {
-    // System.out.println("BaseURL is "+baseURL_);
+    // output_.println("BaseURL is "+baseURL_);
     // must be running JCC, set to a valid value.
     // jdbc:db2://y0551p2:446/*LOCAL
 
@@ -165,7 +165,7 @@ Performs setup needed before running variations.
 	String connectUrl = baseURL_   + ";errors=full;libraries=" + JDDMDTest.COLLECTION + ","
 						    + JDDMDTest.COLLECTION2 + "," + JDDMDTest.COLLECTIONXX;
 
-      System.out.println("connecting to URL"); 
+      output_.println("connecting to URL"); 
       connection_ = testDriver_.getConnection(connectUrl, userId_, encryptedPassword_);
     }
 
@@ -240,7 +240,7 @@ Performs setup needed before running variations.
         expectedRowsAll++;
       }
     } catch (Exception e) {
-      System.out.println("Exception during setup:  SQL probably = " + sql);
+      output_.println("Exception during setup:  SQL probably = " + sql);
       e.printStackTrace();
     }
         s.close ();
@@ -364,9 +364,9 @@ verify all columns.
                 short nullable          = rs.getShort ("NULLABLE");
                 String remarks          = rs.getString ("REMARKS");
 
-                // System.out.println (procedureName + ":" + columnName + ":" + columnType + ":");
-                // System.out.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
-                // System.out.println (nullable + ":" + remarks + ":");
+                // output_.println (procedureName + ":" + columnName + ":" + columnType + ":");
+                // output_.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
+                // output_.println (nullable + ":" + remarks + ":");
 
                 if (procedureName.equals ("PROCCOLS") && columnName.equals ("PARM")) {
                     success = (checkInt("PROCCOLS.PARM:columnType",columnType,DatabaseMetaData.procedureColumnIn)) && success;
@@ -511,10 +511,10 @@ verify all columns.
 
                 }
 
-              //   System.out.println ("Success = " + success);
+              //   output_.println ("Success = " + success);
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
                 assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
@@ -1533,9 +1533,9 @@ Detects native driver bug.
                 String nullable         = rs.getString ("NULLABLE");
                 String remarks          = rs.getString ("REMARKS");
 
-                // System.out.println (procedureName + ":" + columnName + ":" + columnType + ":");
-                // System.out.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
-                // System.out.println (nullable + ":" + remarks + ":");
+                // output_.println (procedureName + ":" + columnName + ":" + columnType + ":");
+                // output_.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
+                // output_.println (nullable + ":" + remarks + ":");
 
                 if (procedureName.equals ("PROCCOLS") && columnName.equals ("PARM")) {
                     parameterName="PROCCOLS.PARM";
@@ -1677,10 +1677,10 @@ Detects native driver bug.
 
                 }
 
-              //   System.out.println ("Success = " + success);
+              //   output_.println ("Success = " + success);
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
                 assertCondition((rows == 5) && success, "rows = "+rows+" "+errorMessage);    //@C1A
@@ -2820,9 +2820,9 @@ Detects native driver bug with getLong @D1A
                 short nullable          = (short) rs.getLong ("NULLABLE");
                 String remarks          = rs.getString ("REMARKS");
 
-                // System.out.println (procedureName + ":" + columnName + ":" + columnType + ":");
-                // System.out.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
-                // System.out.println (nullable + ":" + remarks + ":");
+                // output_.println (procedureName + ":" + columnName + ":" + columnType + ":");
+                // output_.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
+                // output_.println (nullable + ":" + remarks + ":");
 
                 if (procedureName.equals ("PROCCOLS") && columnName.equals ("PARM")) {
                     success = (checkInt("PROCCOLS.PARM:columnType",columnType,DatabaseMetaData.procedureColumnIn)) && success;
@@ -2967,10 +2967,10 @@ Detects native driver bug with getLong @D1A
 
                 }
 
-              //   System.out.println ("Success = " + success);
+              //   output_.println ("Success = " + success);
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
@@ -3025,9 +3025,9 @@ Detects native driver bug with getObject @D1A
                 short nullable          =  ((Integer) rs.getObject ("NULLABLE")).shortValue();
                 String remarks          = (String) rs.getObject ("REMARKS");
 
-                // System.out.println (procedureName + ":" + columnName + ":" + columnType + ":");
-                // System.out.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
-                // System.out.println (nullable + ":" + remarks + ":");
+                // output_.println (procedureName + ":" + columnName + ":" + columnType + ":");
+                // output_.println (dataType + ":" + typeName + ":" + precision + ":" + length + ":" + scale + ":" + radix + ":");
+                // output_.println (nullable + ":" + remarks + ":");
 
                 if (procedureName.equals ("PROCCOLS") && columnName.equals ("PARM")) {
                     success = (checkInt("PROCCOLS.PARM:columnType",columnType,DatabaseMetaData.procedureColumnIn)) && success;
@@ -3172,10 +3172,10 @@ Detects native driver bug with getObject @D1A
 
                 }
 
-              //   System.out.println ("Success = " + success);
+              //   output_.println ("Success = " + success);
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition((rows == 5) && success, "rows = "+rows+" sb 5 "+ errorMessage);    //@C1A
@@ -3261,7 +3261,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getProcedureColumns");
+		    // output_.println("Calling getProcedureColumns");
 		    ResultSet rs =
 		      dmd_.getProcedureColumns (null, JDDMDTest.COLLECTION,
 						"PROCCOLS%", "%");

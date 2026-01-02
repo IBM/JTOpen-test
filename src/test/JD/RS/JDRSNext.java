@@ -99,7 +99,7 @@ Performs setup needed before running variations.
 	try { 
 	    statement4_.setMaxRows (50);
 	} catch (Exception e) {
-	    System.out.println("Warning:  Exception calling setMaxRows(50) "+e.toString()); 
+	    output_.println("Warning:  Exception calling setMaxRows(50) "+e.toString()); 
 	} 
 
         if (isJdbc20 ()) {
@@ -128,7 +128,7 @@ Performs setup needed before running variations.
 							   ResultSet.CONCUR_UPDATABLE);
 	    } catch (Exception e) {
 		statement3_ = connection_.createStatement (); 
-		System.out.println("Warning:  Exception creating scrollSensistive/Updatatable cursor: "+e.toString()); 
+		output_.println("Warning:  Exception creating scrollSensistive/Updatatable cursor: "+e.toString()); 
 	    } 
 
         }

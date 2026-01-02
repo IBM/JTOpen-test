@@ -653,7 +653,7 @@ Test Jesse Gorzinski's error case
   String info = "Testing " + outputPosition + "." + parameterCount + "."
       + parameterTypes+"."+parameterDirections + " " + label; 
   if (verbose) {
-    System.out.println(info);
+    output_.println(info);
   }
   sb.append(info+"\n"); 
   Statement statement = connection_.createStatement(); 
@@ -736,7 +736,7 @@ Test Jesse Gorzinski's error case
              }
            }
            if (verbose ) { 
-               System.out.println("Trying to call "+thisCallSql);
+               output_.println("Trying to call "+thisCallSql);
            }
            
            try { 
@@ -851,7 +851,7 @@ Test Jesse Gorzinski's error case
                
                 sb.append(" outputString is "+outputString+"\n"); 
                 if (verbose) { 
-                  System.out.println(" outputString is "+outputString); 
+                  output_.println(" outputString is "+outputString); 
                 }
                 
                 // Generated the predicted output value.  Only the input parameters are traced
@@ -994,7 +994,7 @@ Test Jesse Gorzinski's error case
       possibleParameters[i]++;
       if (possibleParameters[i] <= parametersLeft) {
         if (noDuplicates(possibleParameters))  {
-           // System.out.println("incrementPossibleParameters returning "+dumpArray(possibleParameters));
+           // output_.println("incrementPossibleParameters returning "+dumpArray(possibleParameters));
            return true; 
         } else {
           // Keep looking because there was a duplicate, but start incrementing at the bottom
@@ -1168,7 +1168,7 @@ Test Jesse Gorzinski's error case
       String info = "Testing " + parameterCount + "." + parameterTypes + "."
           + parameterDirections + " " + label;
       if (verbose) {
-        System.out.println(info);
+        output_.println(info);
       }
       sb.append(info + "\n");
       Statement statement = connection_.createStatement();
@@ -1243,7 +1243,7 @@ Test Jesse Gorzinski's error case
             sb.append("----------------------------------------------\n");
             sb.append("Trying to call " + thisCallSql + "\n");
             if (verbose) {
-              System.out.println("Trying to call " + thisCallSql);
+              output_.println("Trying to call " + thisCallSql);
             }
 
             try {
@@ -1351,7 +1351,7 @@ Test Jesse Gorzinski's error case
 
               sb.append(" outputString is " + outputString + "\n");
               if (verbose) {
-                System.out.println(" outputString is " + outputString);
+                output_.println(" outputString is " + outputString);
               }
 
               // Generated the predicted output value. Only the input parameters

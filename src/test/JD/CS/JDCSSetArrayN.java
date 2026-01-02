@@ -113,21 +113,21 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    rs.close();
 	    stmt.close();
 	} catch (Exception e ) {
-	    System.out.println("Warning:  Connnection not available");
-	    System.out.flush();
+	    output_.println("Warning:  Connnection not available");
+	    output_.flush();
 	    System.err.flush();
 	    e.printStackTrace();
-	    System.out.flush();
+	    output_.flush();
 	    System.err.flush();
 
 	    try {
 		reconnect();
 	    } catch (Exception e2) {
-		System.out.println("Warning:  reconnect failed ");
-		System.out.flush();
+		output_.println("Warning:  reconnect failed ");
+		output_.flush();
 		System.err.flush();
 		e2.printStackTrace();
-		System.out.flush();
+		output_.flush();
 		System.err.flush();
 
 	    }
@@ -1186,7 +1186,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = cs.getArray(2);
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)b).getBaseTypeName().equals("INTEGER") )
                 check2 = true;
 
@@ -1246,7 +1246,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("SMALLINT") )  {
 		check1 = true;
 	    } else {
@@ -1266,7 +1266,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (outObjectArray[0] instanceof Integer) {
 		// No change neede
 	    } else if (outObjectArray[0] instanceof Short) {
-		System.out.println("Output is Short.. Converting input");
+		output_.println("Output is Short.. Converting input");
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
@@ -1317,7 +1317,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("INTEGER") ) {
                   check1 = true;
 	    } else {
@@ -1373,7 +1373,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
 
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BIGINT") ) {
                 check1 = true;
 	    } else {
@@ -1433,7 +1433,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("REAL") ) {
                 check1 = true;
 	    } else {
@@ -1486,7 +1486,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") || ((Array)out).getBaseTypeName().equals("FLOAT")) {
                 check1 = true;
@@ -1544,7 +1544,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals("DOUBLE")) {
           check1 = true;
         } else {
@@ -1603,7 +1603,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals("DECIMAL")) {
           check1 = true;
         } else {
@@ -1669,7 +1669,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals(baseTypeName)) {
           check1 = true;
         } else {
@@ -1724,7 +1724,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") ) {
                 check1 = true;
             } else {
@@ -1777,7 +1777,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") ) {
                 check1 = true;
         } else {
@@ -1833,7 +1833,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") ) {
                 check1 = true;
             } else {
@@ -1899,7 +1899,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals(outputTypeName)) {
           check1 = true;
         } else {
@@ -1953,7 +1953,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")
                 || ((Array)out).getBaseTypeName().equals("NVARCHAR")
 		|| ((Array)out).getBaseTypeName().equals("VARCHAR")) {
@@ -2010,7 +2010,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") ) {
                 check1 = true;
         } else {
@@ -2064,7 +2064,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") ) {
                 check1 = true;
         } else {
@@ -2123,7 +2123,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DATE") ) {
                 check1 = true;
         } else {
@@ -2197,7 +2197,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIME") )
                 check1 = true;
 
@@ -2255,7 +2255,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -2303,7 +2303,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BINARY") )
                 check1 = true;
 
@@ -2351,7 +2351,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARBINARY") )
                 check1 = true;
 
@@ -2423,7 +2423,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -2508,7 +2508,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             boolean check1 = false;
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)outa1).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
             if( ((Array)outa2).getBaseTypeName().equals("INTEGER") )
@@ -2583,7 +2583,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             boolean check1 = false;
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)outa1).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
             if( ((Array)outa2).getBaseTypeName().equals("VARCHAR") )
@@ -2645,7 +2645,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -2700,7 +2700,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -2952,7 +2952,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DATE") )
                 check1 = true;
 
@@ -3023,7 +3023,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIME") )
                 check1 = true;
 
@@ -3082,7 +3082,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -3132,7 +3132,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -3182,7 +3182,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") )
                 check1 = true;
 
@@ -3232,7 +3232,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") )
                 check1 = true;
 
@@ -3274,7 +3274,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLIST");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -3345,7 +3345,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLISTOUT");
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)b).getBaseTypeName().equals("INTEGER") )
                 check2 = true;
 
@@ -3409,7 +3409,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
                 check1 = true;
             /* smallints are Integers from jdbc 4.0 spec:
@@ -3461,7 +3461,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -3508,7 +3508,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BIGINT") )
                 check1 = true;
 
@@ -3559,7 +3559,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("REAL") )
                 check1 = true;
 
@@ -3613,7 +3613,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
                 check1 = true;
@@ -3668,7 +3668,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
                 check1 = true;
 
@@ -3722,7 +3722,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -3781,7 +3781,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals(baseTypeName) )
                 check1 = true;
 
@@ -3831,7 +3831,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -3879,7 +3879,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -3936,7 +3936,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
         boolean check3 = false;
         if (out != null) {
-          // System.out.println( ((Array)b).getBaseTypeName());
+          // output_.println( ((Array)b).getBaseTypeName());
           if (((Array) out).getBaseTypeName().equals("VARCHAR"))
             check1 = true;
 
@@ -3999,7 +3999,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals(outputTypeName) ) {
 		check1 = true;
 	    }
@@ -4052,7 +4052,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR")  || ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -4105,7 +4105,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") )
                 check1 = true;
 
@@ -4157,7 +4157,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") )
                 check1 = true;
 
@@ -4274,7 +4274,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     boolean check2 = false;
     boolean check3 = false;
     if (out != null) {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIME") )
 		    check1 = true;
 
@@ -4334,7 +4334,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -4385,7 +4385,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BINARY") )
                 check1 = true;
 
@@ -4436,7 +4436,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARBINARY") )
                 check1 = true;
 
@@ -4510,7 +4510,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -4589,7 +4589,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLISTOUT");
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)b).getBaseTypeName().equals("INTEGER") ) {
                 check2 = true;
             } else {
@@ -4663,7 +4663,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
                 check1 = true;
             /* smallints are Integers from jdbc 4.0 spec:
@@ -4718,7 +4718,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -4768,7 +4768,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BIGINT") )
                 check1 = true;
 
@@ -4823,7 +4823,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("REAL") )
                 check1 = true;
 
@@ -4875,7 +4875,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
 	    if( ((Array)out).getBaseTypeName().equals("DOUBLE") ) {
 		check1 = true;
@@ -4934,7 +4934,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("DOUBLE") ) {
 		check1 = true;
 	    } else {
@@ -4990,7 +4990,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -5048,7 +5048,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NUMERIC") )
                 check1 = true;
 
@@ -5101,7 +5101,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check3 = false;
 
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -5153,7 +5153,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check3 = false;
 
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -5208,7 +5208,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check3 = false;
 
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -5262,7 +5262,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check3 = false;
 
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NCHAR")  || ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -5311,7 +5311,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR") || ((Array)out).getBaseTypeName().equals("VARCHAR") )) {
                  check1 = true;
 	    } else {
@@ -5374,7 +5374,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("CLOB") ) {
 		check1 = true;
 	    } else {
@@ -5434,7 +5434,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null &&  ((Array)out).getBaseTypeName().equals("BLOB") ) {
                 check1 = true;
 	    } else {
@@ -5501,7 +5501,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null &&  ((Array)out).getBaseTypeName().equals("DATE") ) {
 		check1 = true;
 	    } else {
@@ -5563,7 +5563,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("TIME") ) {
 		check1 = true;
 	    } else {
@@ -5624,7 +5624,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if(out != null &&  ((Array)out).getBaseTypeName().equals("TIMESTAMP") ) {
                 check1 = true;
 	    } else {
@@ -5682,7 +5682,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BINARY")) {
                 check1 = true;
 	    } else {
@@ -5741,7 +5741,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("VARBINARY") )  {
                 check1 = true;
 	    } else {
@@ -5812,7 +5812,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -5977,7 +5977,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRSIN));
 
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
 		    check1 = true;
 	    /* smallints are Integers from jdbc 4.0 spec:
@@ -5992,7 +5992,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (arrayClassName.equals("java.lang.Integer")) {
 		// No fix needed
 	    } else if (arrayClassName.equals("java.lang.Short")) {
-		System.out.println("Output is Short.. Converting input");
+		output_.println("Output is Short.. Converting input");
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
@@ -6048,7 +6048,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRIN));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("INTEGER") )
 		    check1 = true;
 
@@ -6098,7 +6098,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRBIN));
 
 	    } else {
-	  // System.out.println( ((Array)b).getBaseTypeName());
+	  // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("BIGINT") )
 		    check1 = true;
 
@@ -6151,7 +6151,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRREA));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("REAL") )
 		    check1 = true;
 
@@ -6203,7 +6203,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRFLO));
 
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 
 		if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
 		    check1 = true;
@@ -6256,7 +6256,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDOU));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
 		    check1 = true;
 
@@ -6310,7 +6310,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDEC));
 	    } else {
 
-       // System.out.println( ((Array)b).getBaseTypeName());
+       // output_.println( ((Array)b).getBaseTypeName());
 
 		if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
 		    check1 = true;
@@ -6366,7 +6366,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRNUM));
 	    } else {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NUMERIC") )
                 check1 = true;
 
@@ -6418,7 +6418,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRCH1));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("CHAR") )
 		    check1 = true;
 
@@ -6463,7 +6463,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    boolean check2 = false;
 	    boolean check3 = false;
 	    if (out == null) {
@@ -6517,7 +6517,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    boolean check2 = false;
 	    boolean check3 = false;
 	    if (out == null) {
@@ -6574,7 +6574,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRGR));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("NCHAR") ||
 		    ((Array)out).getBaseTypeName().equals("CHAR")  )
 		    check1 = true;
@@ -6627,7 +6627,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRVGR));
 	    } else {
 
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR") || ((Array)out).getBaseTypeName().equals("VARCHAR") )
 		    check1 = true;
 
@@ -6727,7 +6727,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check1 = false;
             boolean check2 = false;
             boolean check3 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if (out == null) {
 		sb.append("output array is null"+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRBLO));
 	    } else {
@@ -6784,7 +6784,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    boolean check2 = false;
 	    boolean check3 = false;
 
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if (out == null) {
 		sb.append("output array is null"+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDAT));
 	    } else {
@@ -6839,7 +6839,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output array is null "+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRTIM));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIME") )
 		    check1 = true;
 
@@ -6893,7 +6893,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		check1=false;
 		sb.append("output array is null " +" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRTS));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
 		    check1 = true;
 
@@ -6966,7 +6966,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BINARY")) {
                 check1 = true;
 	    } else {
@@ -7023,7 +7023,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check1 = false;
 	    boolean check2 = false;
 	    boolean check3 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
 	    if (out == null) {
 		check1 = false;
@@ -7087,7 +7087,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -7404,7 +7404,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLISTOUT");
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)b).getBaseTypeName().equals("INTEGER") ) {
 		sb.append("check2=false baseTypeName="+((Array)b).getBaseTypeName()+"\n");
                 check2 = true;
@@ -7472,7 +7472,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("SMALLINT") )  {
 		check1 = true;
 	    } else {
@@ -7492,7 +7492,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (outObjectArray[0] instanceof Integer) {
 		// No change neede
 	    } else if (outObjectArray[0] instanceof Short) {
-		System.out.println("Output is Short.. Converting input");
+		output_.println("Output is Short.. Converting input");
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
@@ -7548,7 +7548,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check1 = false;
             boolean check2 = false; 
             boolean check3 = false; 
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("INTEGER") ) {
                   check1 = true;
 	    } else {
@@ -7604,7 +7604,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
 
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BIGINT") ) {
                 check1 = true;
 	    } else {
@@ -7667,7 +7667,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("REAL") ) {
                 check1 = true;
 	    } else {
@@ -7723,7 +7723,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") || ((Array)out).getBaseTypeName().equals("FLOAT")) {
                 check1 = true;
@@ -7784,7 +7784,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals("DOUBLE")) {
           check1 = true;
         } else {
@@ -7846,7 +7846,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals("DECIMAL")) {
           check1 = true;
         } else {
@@ -7915,7 +7915,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals(baseTypeName)) {
           check1 = true;
         } else {
@@ -7973,7 +7973,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") ) {
                 check1 = true;
             } else {
@@ -8029,7 +8029,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") ) {
                 check1 = true;
         } else {
@@ -8088,7 +8088,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") ) {
                 check1 = true;
             } else {
@@ -8158,7 +8158,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
         if (((Array) out).getBaseTypeName().equals(outputTypeName)) {
           check1 = true;
         } else {
@@ -8214,7 +8214,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")
                 || ((Array)out).getBaseTypeName().equals("NVARCHAR")
 		|| ((Array)out).getBaseTypeName().equals("VARCHAR")) {
@@ -8273,7 +8273,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") ) {
                 check1 = true;
         } else {
@@ -8329,7 +8329,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") ) {
                 check1 = true;
         } else {
@@ -8391,7 +8391,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DATE") ) {
                 check1 = true;
         } else {
@@ -8469,7 +8469,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIME") )
                 check1 = true;
 
@@ -8529,7 +8529,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -8579,7 +8579,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BINARY") )
                 check1 = true;
 
@@ -8629,7 +8629,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARBINARY") )
                 check1 = true;
 
@@ -8701,7 +8701,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -8792,7 +8792,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             boolean check1 = false;
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)outa1).getBaseTypeName().equals("INTEGER") ) {
                 check1 = true;
 	    } else {
@@ -8883,7 +8883,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             boolean check1 = false;
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)outa1).getBaseTypeName().equals("VARCHAR") ) {
                 check1 = true;
 	    } else {
@@ -8958,7 +8958,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -9016,7 +9016,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -9296,7 +9296,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DATE") )
                 check1 = true;
 
@@ -9368,7 +9368,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIME") )
                 check1 = true;
 
@@ -9430,7 +9430,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -9482,7 +9482,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -9534,7 +9534,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") )
                 check1 = true;
 
@@ -9586,7 +9586,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") )
                 check1 = true;
 
@@ -9632,7 +9632,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLIST");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -9706,7 +9706,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLISTOUT");
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)b).getBaseTypeName().equals("INTEGER") )
                 check2 = true;
 
@@ -9774,7 +9774,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
                 check1 = true;
             /* smallints are Integers from jdbc 4.0 spec:
@@ -9830,7 +9830,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -9880,7 +9880,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BIGINT") )
                 check1 = true;
 
@@ -9934,7 +9934,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("REAL") )
                 check1 = true;
 
@@ -9991,7 +9991,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
                 check1 = true;
@@ -10049,7 +10049,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
                 check1 = true;
 
@@ -10105,7 +10105,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -10166,7 +10166,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals(baseTypeName) )
                 check1 = true;
 
@@ -10219,7 +10219,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -10270,7 +10270,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -10329,7 +10329,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -10395,7 +10395,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals(outputTypeName) ) {
 		check1 = true;
 	    }
@@ -10450,7 +10450,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR")  || ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -10505,7 +10505,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CLOB") )
                 check1 = true;
 
@@ -10559,7 +10559,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BLOB") )
                 check1 = true;
 
@@ -10614,7 +10614,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     boolean check2 = false;
     boolean check3 = false;
     if (out != null) {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("DATE") )
 		    check1 = true;
 
@@ -10679,7 +10679,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     boolean check2 = false;
     boolean check3 = false;
     if (out != null) {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIME") )
 		    check1 = true;
 
@@ -10742,7 +10742,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
                 check1 = true;
 
@@ -10795,7 +10795,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BINARY") )
                 check1 = true;
 
@@ -10848,7 +10848,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARBINARY") )
                 check1 = true;
 
@@ -10921,7 +10921,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -11002,7 +11002,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array b = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","NUMLISTOUT");
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)b).getBaseTypeName().equals("INTEGER") ) {
                 check2 = true;
             } else {
@@ -11078,7 +11078,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
                 check1 = true;
             /* smallints are Integers from jdbc 4.0 spec:
@@ -11135,7 +11135,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("INTEGER") )
                 check1 = true;
 
@@ -11187,7 +11187,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("BIGINT") )
                 check1 = true;
 
@@ -11244,7 +11244,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check2 = false;
             boolean check3 = false;
             if (out != null) {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("REAL") )
                 check1 = true;
 
@@ -11295,7 +11295,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
 	    if( ((Array)out).getBaseTypeName().equals("DOUBLE") ) {
 		check1 = true;
@@ -11354,7 +11354,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)out).getBaseTypeName().equals("DOUBLE") ) {
 		check1 = true;
 	    } else {
@@ -11410,7 +11410,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
                 check1 = true;
 
@@ -11468,7 +11468,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NUMERIC") )
                 check1 = true;
 
@@ -11520,7 +11520,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -11572,7 +11572,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -11627,7 +11627,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("VARCHAR") )
                 check1 = true;
 
@@ -11681,7 +11681,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NCHAR")  || ((Array)out).getBaseTypeName().equals("CHAR") )
                 check1 = true;
 
@@ -11734,7 +11734,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR") || ((Array)out).getBaseTypeName().equals("VARCHAR") )) {
                  check1 = true;
 	    } else {
@@ -11799,7 +11799,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("CLOB") ) {
 		check1 = true;
 	    } else {
@@ -11861,7 +11861,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null &&  ((Array)out).getBaseTypeName().equals("BLOB") ) {
                 check1 = true;
 	    } else {
@@ -11930,7 +11930,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null &&  ((Array)out).getBaseTypeName().equals("DATE") ) {
 		check1 = true;
 	    } else {
@@ -11994,7 +11994,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("TIME") ) {
 		check1 = true;
 	    } else {
@@ -12057,7 +12057,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if(out != null &&  ((Array)out).getBaseTypeName().equals("TIMESTAMP") ) {
                 check1 = true;
 	    } else {
@@ -12117,7 +12117,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BINARY")) {
                 check1 = true;
 	    } else {
@@ -12178,7 +12178,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("VARBINARY") )  {
                 check1 = true;
 	    } else {
@@ -12248,7 +12248,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -12420,7 +12420,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRSIN));
 
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("SMALLINT") )
 		    check1 = true;
 	    /* smallints are Integers from jdbc 4.0 spec:
@@ -12435,7 +12435,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (arrayClassName.equals("java.lang.Integer")) {
 		// No fix needed
 	    } else if (arrayClassName.equals("java.lang.Short")) {
-		System.out.println("Output is Short.. Converting input");
+		output_.println("Output is Short.. Converting input");
 		Integer[] intArray =  (Integer[]) ia;
 		ia = new Short[intArray.length];
 		for (int i = 0; i < intArray.length; i++) {
@@ -12494,7 +12494,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRIN));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("INTEGER") )
 		    check1 = true;
 
@@ -12546,7 +12546,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRBIN));
 
 	    } else {
-	  // System.out.println( ((Array)b).getBaseTypeName());
+	  // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("BIGINT") )
 		    check1 = true;
 
@@ -12601,7 +12601,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRREA));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("REAL") )
 		    check1 = true;
 
@@ -12655,7 +12655,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRFLO));
 
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 
 		if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
 		    check1 = true;
@@ -12710,7 +12710,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDOU));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("DOUBLE") )
 		    check1 = true;
 
@@ -12766,7 +12766,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDEC));
 	    } else {
 
-       // System.out.println( ((Array)b).getBaseTypeName());
+       // output_.println( ((Array)b).getBaseTypeName());
 
 		if( ((Array)out).getBaseTypeName().equals("DECIMAL") )
 		    check1 = true;
@@ -12824,7 +12824,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRNUM));
 	    } else {
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("NUMERIC") )
                 check1 = true;
 
@@ -12878,7 +12878,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRCH1));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("CHAR") )
 		    check1 = true;
 
@@ -12925,7 +12925,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    boolean check2 = false;
 	    boolean check3 = false;
 	    if (out == null) {
@@ -12981,7 +12981,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    boolean check2 = false;
 	    boolean check3 = false;
 	    if (out == null) {
@@ -13040,7 +13040,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRGR));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("NCHAR") ||
 		    ((Array)out).getBaseTypeName().equals("CHAR")  )
 		    check1 = true;
@@ -13095,7 +13095,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		sb.append("output is null:  Procedure definition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRVGR));
 	    } else {
 
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("VARGRAPHIC")   || ((Array)out).getBaseTypeName().equals("NVARCHAR") || ((Array)out).getBaseTypeName().equals("VARCHAR") )
 		    check1 = true;
 
@@ -13199,7 +13199,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check1 = false;
             boolean check2 = false;
             boolean check3 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if (out == null) {
 		sb.append("output array is null"+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRBLO));
 	    } else {
@@ -13258,7 +13258,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    boolean check2 = false;
 	    boolean check3 = false;
 
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if (out == null) {
 		sb.append("output array is null"+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRDAT));
 	    } else {
@@ -13315,7 +13315,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	    if (out == null) {
 		sb.append("output array is null "+" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRTIM));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIME") )
 		    check1 = true;
 
@@ -13371,7 +13371,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 		check1=false;
 		sb.append("output array is null " +" procedureDefinition is "+JDSetupProcedure.getProcedureDefinition(JDSetupProcedure.STP_CSARRTS));
 	    } else {
-	   // System.out.println( ((Array)b).getBaseTypeName());
+	   // output_.println( ((Array)b).getBaseTypeName());
 		if( ((Array)out).getBaseTypeName().equals("TIMESTAMP") )
 		    check1 = true;
 
@@ -13446,7 +13446,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( out != null && ((Array)out).getBaseTypeName().equals("BINARY")) {
                 check1 = true;
 	    } else {
@@ -13505,7 +13505,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
             boolean check1 = false;
 	    boolean check2 = false;
 	    boolean check3 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 
 	    if (out == null) {
 		check1 = false;
@@ -13570,7 +13570,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             Array out = (Array) JDReflectionUtil.callMethod_O(cs,"getArray","arrOut");
             boolean check1 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
             if( ((Array)out).getBaseTypeName().equals("SQLXML") )  //correct? or XML
                 check1 = true;
 
@@ -13841,7 +13841,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
             boolean check1 = false;
             boolean check2 = false;
-           // System.out.println( ((Array)b).getBaseTypeName());
+           // output_.println( ((Array)b).getBaseTypeName());
 	    if( ((Array)outa1).getBaseTypeName().equals("INTEGER") ) {
                 check1 = true;
 	    } else {

@@ -1603,7 +1603,7 @@ SQL400 - The Native JDBC driver handle limit keeps changing.
          c.close ();
          statements_.removeAllElements();
 
-	 System.out.println("Able to create "+count+" statements "); 
+	 output_.println("Able to create "+count+" statements "); 
          if (isToolboxDriver())
             assertCondition (count > 500, "Count is only "+count+" should be > 500");   // @C2C
          else

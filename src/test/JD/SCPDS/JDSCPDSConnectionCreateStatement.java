@@ -240,7 +240,7 @@ reached, and returns the number of statements allocated.
             // limit.
             for (int i = 0; i < 600; ++i) {
 
-                // System.out.println("connection number " + i);
+                // output_.println("connection number " + i);
                 //if (i == 26)
                 //{
                 //   i = i;
@@ -555,9 +555,9 @@ and read-only.
                         && (scrollable == true));
 		    if (!condition)
 		    {
-			System.out.println("w = " + w);
-			System.out.println("updatable = " + updatable);
-			System.out.println("scrollable = " + scrollable);
+			output_.println("w = " + w);
+			output_.println("updatable = " + updatable);
+			output_.println("scrollable = " + scrollable);
 		    }
 		    assertCondition (condition);		    
 		}
@@ -1090,9 +1090,9 @@ and read-only.
                         && (scrollable == true));
 		    if (!condition)
 		    {
-			System.out.println("w = " + w);
-			System.out.println("updatable = " + updatable);
-			System.out.println("scrollable = " + scrollable);
+			output_.println("w = " + w);
+			output_.println("updatable = " + updatable);
+			output_.println("scrollable = " + scrollable);
 		    }
 		    assertCondition (condition);
 		}

@@ -117,7 +117,7 @@ Constructor.
       WIDTH_ = 30000; 
 
 
-      System.out.println(this+" setting up  LARGE with "+WIDTH_); 
+      output_.println(this+" setting up  LARGE with "+WIDTH_); 
       StringBuffer buffer = new StringBuffer (WIDTH_);
       int actualLength = WIDTH_ - 2;
       for (int i = 1; i <= actualLength; ++i)
@@ -148,7 +148,7 @@ Constructor.
 
 
 
-      System.out.println(this+" setting up HUGE with width"+HUGE_WIDTH_); 
+      output_.println(this+" setting up HUGE with width"+HUGE_WIDTH_); 
       buffer = new StringBuffer (HUGE_WIDTH_/3);
       actualLength = HUGE_WIDTH_/3 - 2;
       for (int i = 1; i <= actualLength; ++i)
@@ -198,7 +198,7 @@ Performs setup needed before running variations.
 	if (l > 5) {
 	    initials =  JDLobTest.COLLECTION.substring(l - 5); 
 	}
-	System.out.println("initials are "+initials); 
+	output_.println("initials are "+initials); 
 	if (initials.equals("614CU") ||
 	    initials.equals("615CU") ||
 	    initials.equals("616CU")    ) {
@@ -221,19 +221,19 @@ Performs setup needed before running variations.
 	    }
 
 	} catch (Throwable t) {
-	    System.out.println("Error caught during setup");
+	    output_.println("Error caught during setup");
 	    Runtime runtime = Runtime.getRuntime();
-	    System.out.println("runtime.freeMemory()="+runtime.freeMemory()); 
-	    System.out.println("runtime.totalMemory()="+runtime.totalMemory());
+	    output_.println("runtime.freeMemory()="+runtime.freeMemory()); 
+	    output_.println("runtime.totalMemory()="+runtime.totalMemory());
 	    try { 
-		System.out.println("runtime.maxMemory()="+runtime.maxMemory());
+		output_.println("runtime.maxMemory()="+runtime.maxMemory());
 	    } catch (java.lang.NoSuchMethodError e) {
-		System.out.println("runtime.maxMemory()=UNKNOWN:no maxMemory method");
+		output_.println("runtime.maxMemory()=UNKNOWN:no maxMemory method");
 	    } 
-	    System.out.println("---------BEGIN STACK--------------"); 
-	    t.printStackTrace(System.out);
-	    System.out.println("---------END STACK--------------"); 
-	    System.out.flush(); 
+	    output_.println("---------BEGIN STACK--------------"); 
+	    t.printStackTrace(output_);
+	    output_.println("---------END STACK--------------"); 
+	    output_.flush(); 
 
 
 	} 
@@ -303,11 +303,11 @@ Performs cleanup needed after running variations.
 
 		ResultSet rs = stmt.executeQuery("SELECT * from "+TABLE120_);
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 	    /* Clob clob = rs.getClob(1); */ 
 		String s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		stmt.close(); 
 
@@ -342,17 +342,17 @@ Performs cleanup needed after running variations.
 
 		ResultSet rs = pstmt.executeQuery(); 
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 		String s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		rs = pstmt.executeQuery();
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 		s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		pstmt.close(); 
 
@@ -593,7 +593,7 @@ getCharacterStream() - When the lob is full.
    /**
     Compares an InputStream with a byte[].
     **/
-    protected static boolean compare (InputStream i, byte[] b)
+    protected boolean compare (InputStream i, byte[] b)
     {
         try
         {
@@ -609,32 +609,32 @@ getCharacterStream() - When the lob is full.
             if(num == -1) --total;
 
 	    if ( total != b.length) {
-		System.out.println("  Actual Bytes("+total+")="+dumpBytes(buf));
-		System.out.println("Expected Bytes("+b.length+")="+dumpBytes(b));
+		output_.println("  Actual Bytes("+total+")="+dumpBytes(buf));
+		output_.println("Expected Bytes("+b.length+")="+dumpBytes(b));
 	    }
 	    boolean allDone = (i.available() == 0); 
 	    if ( !allDone ) {
-		System.out.println("Bytes still available");
-		System.out.println("  Actual Bytes("+total+")="+dumpBytes(buf));
-		System.out.println("Expected Bytes("+b.length+")="+dumpBytes(b));
+		output_.println("Bytes still available");
+		output_.println("  Actual Bytes("+total+")="+dumpBytes(buf));
+		output_.println("Expected Bytes("+b.length+")="+dumpBytes(b));
 		int restCount = i.available();
 		buf=new byte[restCount];
 		i.read(buf, 0, restCount);
-		System.out.println("  Extra bytes("+restCount+")="+dumpBytes(buf));
+		output_.println("  Extra bytes("+restCount+")="+dumpBytes(buf));
 	    } 
-            return total == b.length && allDone  && isEqual(b, buf);	
+            return total == b.length && allDone  && isEqualArray(b, buf);	
 
         }
         catch(IOException e)
         {
-	    System.out.println("Exception thrown");
+	    output_.println("Exception thrown");
 	    e.printStackTrace(); 
             return false;
         }
     }
 
 
-    public static boolean isEqual(byte[] expected, byte[] actual) {
+    public  boolean isEqualArray(byte[] expected, byte[] actual) {
 	int offset = 0; 
         boolean answer = expected.length == actual.length;
         if (answer)
@@ -650,9 +650,9 @@ getCharacterStream() - When the lob is full.
             }
         }
 	if (answer == false) {
-	    System.out.println("Different at offset "+offset); 
-	    System.out.println("  Actual Bytes("+actual.length+")="+dumpBytes(actual));
-	    System.out.println("Expected Bytes("+expected.length+")="+dumpBytes(expected));
+	    output_.println("Different at offset "+offset); 
+	    output_.println("  Actual Bytes("+actual.length+")="+dumpBytes(actual));
+	    output_.println("Expected Bytes("+expected.length+")="+dumpBytes(expected));
 	} 
         return answer;
     }
@@ -748,7 +748,7 @@ getCharacterStream() - When the lob is full.
     /**
     Compares a Reader with a String.
     **/
-    protected static boolean compare (Reader r, String s)	// @K2
+    protected  boolean compare (Reader r, String s)	// @K2
     {
         try
         {
@@ -758,7 +758,7 @@ getCharacterStream() - When the lob is full.
                 int lastRead = r.read ();
 		boolean answer = (lastRead == -1) || (lastRead == 0);
 		if (!answer) {
-		    System.out.println("String.length=0 but lastRead="+lastRead); 
+		    output_.println("String.length=0 but lastRead="+lastRead); 
 		}
                 return(answer);
             }
@@ -775,8 +775,8 @@ getCharacterStream() - When the lob is full.
             String s2 = buffer.toString ();
             boolean answer=s2.equals (s);
 	    if ( ! answer ) {
-		   System.out.println("hex(actual)   = "+dumpChars(s2));
-		   System.out.println("hex(expected) = "+dumpChars(s));
+		   output_.println("hex(actual)   = "+dumpChars(s2));
+		   output_.println("hex(expected) = "+dumpChars(s));
 	    } 
             return(answer );
         }
@@ -790,14 +790,14 @@ getCharacterStream() - When the lob is full.
     /**
     Compares a String with a String.
     **/
-    protected static boolean compare (String s2, String s)	
+    protected  boolean compare (String s2, String s)	
     {
     	boolean answer =s2.equals (s); 
 	    if ( ! answer  ) {
-	      System.out.println("actual.length="+s2.length());
-		  System.out.println("hex(actual)   = "+dumpChars(s2.substring(1,100)));
-	      System.out.println("expected.length="+s.length());
-		  System.out.println("hex(expected) = "+dumpChars( s.substring(1,100)));
+	      output_.println("actual.length="+s2.length());
+		  output_.println("hex(actual)   = "+dumpChars(s2.substring(1,100)));
+	      output_.println("expected.length="+s.length());
+		  output_.println("hex(expected) = "+dumpChars( s.substring(1,100)));
 	    }
         return(answer);
         

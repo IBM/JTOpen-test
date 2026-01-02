@@ -1920,7 +1920,7 @@ unicode correctly.
             cleanupTable(s, table_);
             s.close();
 
-            //System.out.println(userName);
+            //output_.println(userName);
             if (userName == null) userName="nullUserName"; 
             assertCondition(userName.equals(systemObject_.getUserId ()));
 
@@ -1968,7 +1968,7 @@ unicode correctly.
             cleanupTable(s, table_);
             s.close();
 
-            //System.out.println(literal);
+            //output_.println(literal);
             if (literal == null) literal = "null"; 
             assertCondition(literal.equals(expectedLiteral));
 
@@ -2092,8 +2092,8 @@ the result set.
 				  stmt.close(); 
 			      }
 			} catch (SQLException one) {
-			    System.out.println("Warning, unable to drop the table ");
-			    one.printStackTrace(System.out); 
+			    output_.println("Warning, unable to drop the table ");
+			    one.printStackTrace(output_); 
 			}
 			try {
 			    stmt =   connection_.createStatement();
@@ -2129,7 +2129,7 @@ the result set.
 	if (l > 5) {
 	    initials =  JDRSTest.COLLECTION.substring(l - 5); 
 	}
-	System.out.println("initials are "+initials); 
+	output_.println("initials are "+initials); 
 	if (initials.equals("614CU") ||
 	    initials.equals("615CU") ||
 	    initials.equals("616CU")    ) {
@@ -2206,8 +2206,8 @@ the result set.
 		      stmt.close();
 		  }
 	    } catch (SQLException one) {
-			    System.out.println("Warning, unable to drop the table ");
-			    one.printStackTrace(System.out); 
+			    output_.println("Warning, unable to drop the table ");
+			    one.printStackTrace(output_); 
 
 
 	    }

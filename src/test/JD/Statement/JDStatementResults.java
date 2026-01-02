@@ -451,7 +451,7 @@ sets.
             ResultSet rs3 = s.getResultSet ();
             boolean success3; 
             if (rs3 == null) {
-              System.out.println("rs3 not available ");
+              output_.println("rs3 not available ");
               success3 = false; 
             } else { 
               success3 = rs3.next ();
@@ -498,7 +498,7 @@ sets.
             ResultSet rs3 = s.getResultSet ();
             boolean success3; 
             if (rs3 == null) {
-              System.out.println("rs3 not available ");
+              output_.println("rs3 not available ");
               success3 = false; 
             } else { 
               success3 = rs3.next ();
@@ -1133,12 +1133,12 @@ access to three result sets at the same time.
 		rs3 = s.getResultSet();
                 /*
 		ResultSetMetaData rsmd = rs1.getMetaData();
-		System.out.println(rsmd.getColumnCount());
+		output_.println(rsmd.getColumnCount());
 		rsmd = rs2.getMetaData();
-		System.out.println(rsmd.getColumnCount());
+		output_.println(rsmd.getColumnCount());
                 
 		rsmd = rs3.getMetaData();
-		System.out.println(rsmd.getColumnCount());
+		output_.println(rsmd.getColumnCount());
                 */
                 boolean rs1next = rs1.next(); 
                 boolean rs2next = rs2.next(); 
@@ -3678,14 +3678,14 @@ have been obtained.
 		stmt_.close ();
 		boolean condition = success1 && success2 && success3 && success4 && closed1 && closed2 && closed3 ;
 		if (!condition) {
-		    System.out.println("The following conditions should be true");
-		    System.out.println("success1 = "+success1);
-		    System.out.println("success2 = "+success2);
-		    System.out.println("success3 = "+success3);
-		    System.out.println("success4 = "+success4); 
-		    System.out.println("closed1 = "+closed1);
-		    System.out.println("closed2 = "+closed2);
-		    System.out.println("closed3 = "+closed3);
+		    output_.println("The following conditions should be true");
+		    output_.println("success1 = "+success1);
+		    output_.println("success2 = "+success2);
+		    output_.println("success3 = "+success3);
+		    output_.println("success4 = "+success4); 
+		    output_.println("closed1 = "+closed1);
+		    output_.println("closed2 = "+closed2);
+		    output_.println("closed3 = "+closed3);
 		}
 		assertCondition (condition);
 	    }

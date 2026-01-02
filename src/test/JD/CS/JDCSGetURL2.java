@@ -582,9 +582,9 @@ getURL() - getURL on a type registered as DATALINK, INOUT DATALINK
 		CallableStatement cstmt = connection.prepareCall("{call "+JDCSTest.COLLECTION+".RETURNDL (?)}");
 		cstmt.registerOutParameter(1, java.sql.Types.DATALINK);
 		cstmt.setString(1,"http://www.ibm.com/us/");
-		System.out.println("After setString");
+		output_.println("After setString");
 		cstmt.execute();
-		System.out.println("After execute");
+		output_.println("After execute");
 
 		URL check = cstmt.getURL(1);
 		failed ("Didn't throw SQLException "+check);		

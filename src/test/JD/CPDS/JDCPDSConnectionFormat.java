@@ -105,7 +105,7 @@ Performs setup needed before running variations.
 	    } catch (Exception e) {
 	        clearPassword_ = PasswordVault.decryptPasswordLeak(encryptedPassword_);
 	        if (clearPassword_ == null) {
-	          System.out.println("Warning... clearPassword_ is null!!!!");
+	          output_.println("Warning... clearPassword_ is null!!!!");
 	        }
 		JDReflectionUtil.callMethod_V(dataSource,"setPassword",clearPassword_); 
 	    }

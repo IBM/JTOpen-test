@@ -125,7 +125,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 	try {
 
 	    if (getRelease() >= JDTestDriver.RELEASE_V7R5M0) {
-		System.out.println("Arm tests not working on 7.5 and later"); 
+		output_.println("Arm tests not working on 7.5 and later"); 
 		return; 
 	    } 
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
@@ -147,7 +147,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 			if (rs.next()) {
 			    // result found 
 			} else {
-			    System.out.println("Warning:  EWLM software not on system:  Please load 5733VE1 option "+options[i]); 
+			    output_.println("Warning:  EWLM software not on system:  Please load 5733VE1 option "+options[i]); 
 			}
 			rs.close(); 
 		    } 
@@ -155,14 +155,14 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 
 		} catch (Exception e) {
 		    e.printStackTrace();
-		    System.out.println("Warning:  Unable to detemine if product 5733VE1, options *BASE, 40, 41, 42 and 43 are on the system"); 
+		    output_.println("Warning:  Unable to detemine if product 5733VE1, options *BASE, 40, 41, 42 and 43 are on the system"); 
 		} 
                 // Add the right library to the library list..
                 // Yeah.. This is weird, but they make me do it...
                 // This did not work because it must be set before the JVM
                 // is created.
 		// I use liblist -a QWLM in qshell to add the library list entry. 
-		// System.out.println("Calling JDEnableEWLM"); 
+		// output_.println("Calling JDEnableEWLM"); 
 		// JDEnableEWLM.enable(); 
 		tranFactoryName = "com.ibm.wlm.arm40SDK.transaction.Arm40TransactionFactory";
 	    } else {
@@ -257,7 +257,7 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 
 
 	} catch (Exception e) {
-	    System.out.println("ERROR:  Exception in setupARM");
+	    output_.println("ERROR:  Exception in setupARM");
 	    e.printStackTrace(); 
 	    armTransactionFactory = null;
 	    throw(e); 
@@ -278,12 +278,12 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 						       armTransactionDefinition); 
 
 	int rc = JDReflectionUtil.callMethod_I(armTransaction, "start");
-	System.out.println("ArmTransaction.start() returned "+rc); 
+	output_.println("ArmTransaction.start() returned "+rc); 
     }
 
     protected void stopTransaction() throws Exception {
 	JDReflectionUtil.callMethod_I(armTransaction, "stop", 0);
-	// System.out.println("Stop returned "+rc); 
+	// output_.println("Stop returned "+rc); 
     }
 
 
@@ -295,10 +295,10 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 	// org.opengroup.arm40.transaction.ArmCorrelator getCorrelator();
 	armCorrelator = JDReflectionUtil.callMethod_O(armTransaction, "getCorrelator");
 
-	System.out.println("Correlator is "+armCorrelator); 
+	output_.println("Correlator is "+armCorrelator); 
  	correlator = (byte[]) JDReflectionUtil.callMethod_O(armCorrelator, "getBytes");
 	if (correlator == null) {
-	    System.out.println("Correlator bytes are null");
+	    output_.println("Correlator bytes are null");
 	    // Seeing this on V7R1.. create a correlator just so
 	    // that we can test the DB2 part
 	    correlator = new byte[64];
@@ -306,10 +306,10 @@ NOTE:  All the ARM API's are hidden by reflection to prevent compile time errors
 	    for (int i = 0; i < correlator.length; i++) {
 		correlator[i] = (byte) ( random.nextInt() % 0xFF); 
 	    }
-	    System.out.println("Testcase generated Correlator bytes are "+JDCSGetBlob.dumpBytes(correlator));
+	    output_.println("Testcase generated Correlator bytes are "+JDCSGetBlob.dumpBytes(correlator));
 
 	} else { 
-	    System.out.println("Correlator bytes are "+JDCSGetBlob.dumpBytes(correlator));
+	    output_.println("Correlator bytes are "+JDCSGetBlob.dumpBytes(correlator));
 	}
 	return correlator; 
     } 

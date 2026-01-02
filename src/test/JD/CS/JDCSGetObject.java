@@ -496,8 +496,8 @@ getObject() - Get a type that was registered as a BINARY.
                 (byte) ' ', (byte) ' ', (byte) ' ',     
                 (byte) ' ', (byte) ' ', (byte) ' ',     
                 (byte) ' ', (byte) ' '};     
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             assertCondition (areEqual (p,check));
         }
         catch (Exception e) {
@@ -517,8 +517,8 @@ getObject() - Get a type that was registered as a VARBINARY.
             byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                 (byte) 'e', (byte) ' ', (byte) 'W',
                 (byte) 'a', (byte) 'l', (byte) 'l'};     
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             assertCondition (areEqual (p, check));
         }
         catch (Exception e) {
@@ -605,7 +605,7 @@ getObject() - Get a type that was registered as a BLOB.
             try {
                Object p = csTypes_.getObject(19);
                if (isJdbc20()) 
-                  assertCondition (JDCSGetBlob.compare((Blob) p, JDCSGetBlob.expected));
+                  assertCondition (JDCSGetBlob.compare((Blob) p, JDCSGetBlob.expected,output_));
                else
                   assertCondition(areEqual ((byte[]) p, JDCSGetBlob.expected));
             }
@@ -716,7 +716,7 @@ SQL400 - We added this testcase because of a customer bug.
 	  Object xRetVal = cstmt.getObject(1);
 	  boolean condition =  (xRetVal == null); 
 	  if (!condition) {
-	      System.out.println("xRetVal ("+xRetVal+") should have been null");
+	      output_.println("xRetVal ("+xRetVal+") should have been null");
 	  }
 
 	  assertCondition(condition); 
@@ -902,8 +902,8 @@ getObject() - Get a type that was registered as a BINARY.
 		(byte) ' ', (byte) ' ', (byte) ' ',     
 		(byte) ' ', (byte) ' ', (byte) ' ',     
 		(byte) ' ', (byte) ' '};     
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             assertCondition (areEqual (p,check));
 	    }
 	    catch (Exception e) {
@@ -924,8 +924,8 @@ getObject() - Get a type that was registered as a VARBINARY.
 		byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
 		(byte) 'e', (byte) ' ', (byte) 'W',
 		(byte) 'a', (byte) 'l', (byte) 'l'};     
-	    // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-	    // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+	    // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+	    // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
 		assertCondition (areEqual (p, check));
 	    }
 	    catch (Exception e) {
@@ -1017,7 +1017,7 @@ getObject() - Get a type that was registered as a BLOB.
 		try {
 		    Object p = csTypes_.getObject("P_BLOB");
 		    if (isJdbc20()) 
-			assertCondition (JDCSGetBlob.compare((Blob) p, JDCSGetBlob.expected));
+			assertCondition (JDCSGetBlob.compare((Blob) p, JDCSGetBlob.expected,output_));
 		    else
 			assertCondition(areEqual ((byte[]) p, JDCSGetBlob.expected));
 		}
@@ -1180,10 +1180,10 @@ getObject() - Get a type that was registered as a BIGINT.
 	    cs.execute();
             step="cs.getObject(2)";
 	    String o2 = ""+cs.getObject(2);
-	    // System.out.println("o2="+o2); 
+	    // output_.println("o2="+o2); 
             step="cs.getObject(1)";
 	    String o1 = ""+cs.getObject(1);
-	    // System.out.println("o1="+o1);
+	    // output_.println("o1="+o1);
 	    
             step="DROP PROCEDURE "+procedureName;
 	    stmt.executeUpdate(step);

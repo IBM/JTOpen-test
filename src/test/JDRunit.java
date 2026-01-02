@@ -1951,7 +1951,8 @@ public class JDRunit {
     SYSTEM = SYSTEM.toUpperCase();
 
     if (driver.equals("native")) {
-        SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM); 
+        PrintWriter printWriter = new PrintWriter(System.out) ;
+        SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM, printWriter); 
     } 
 
 

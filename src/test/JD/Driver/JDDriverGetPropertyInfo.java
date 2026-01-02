@@ -225,9 +225,9 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
 
         for (int i = 0; i < propertyInfo.length; ++i) {
-          System.out.println(propertyInfo[i].name);
+          output_.println(propertyInfo[i].name);
           if (propertyInfo[i].choices != null) {
-            System.out.println(propertyInfo[i].choices.length);
+            output_.println(propertyInfo[i].choices.length);
           }
 
         }
@@ -352,7 +352,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
         boolean found = false;
         for (int i = 0; i < propertyInfo.length; ++i) {
           sb.append("Property " + i + " = " + propertyInfo[i] + "\n");
-          // System.out.println("property name = "+ propertyInfo[i].name);
+          // output_.println("property name = "+ propertyInfo[i].name);
           if (propertyInfo[i].name.equals("decfloat rounding mode")) {
             found = true;
             if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) // @H4A
@@ -443,7 +443,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
       for (int i = 0; i < propertyInfo.length; i++) {
         DriverPropertyInfo thisProperty = propertyInfo[i];
         String property = thisProperty.name;
-        // System.out.println("looking at "+property);
+        // output_.println("looking at "+property);
         String getMethodName = generateGetMethodName(property);
         String setMethodName = "s" + getMethodName.substring(1);
         String[] choices = thisProperty.choices;
@@ -453,8 +453,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
             getMethodName = "is" + getMethodName.substring(3);
           }
         }
-        // System.out.println("  get="+getMethodName);
-        // System.out.println("  set="+setMethodName);
+        // output_.println("  get="+getMethodName);
+        // output_.println("  set="+setMethodName);
 
         if (!methodExists(getMethodName, as400JdbcDataSourceMethods)) {
           sb.append("\nMethod " + getMethodName
@@ -520,22 +520,22 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
 
     for (int i = 0; i < descriptors.length; i++) {
       PropertyDescriptor descriptor = descriptors[i];
-      // System.out.println(descriptor.getName());
+      // output_.println(descriptor.getName());
       Method readMethod = descriptor.getReadMethod();
       if (readMethod != null) {
         String name = readMethod.getName();
         returnMethods.put(name, name);
-        // System.out.println(name);
+        // output_.println(name);
       } else {
-        // System.out.println("READ METHOD IS NULL");
+        // output_.println("READ METHOD IS NULL");
       }
       Method writeMethod = descriptor.getWriteMethod();
       if (writeMethod != null) {
         String name = writeMethod.getName();
-        // System.out.println(writeMethod.getName());
+        // output_.println(writeMethod.getName());
         returnMethods.put(name, name);
       } else {
-        // System.out.println("READ METHOD IS NULL");
+        // output_.println("READ METHOD IS NULL");
       }
     }
 

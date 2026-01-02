@@ -312,7 +312,7 @@ deleteRow() - Should delete a middle row when positioned there.
 
 //                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i)))
 			if(! s1.equals(s2)){
-			    System.out.println(" "+i+". "+s2+" sb "+s1);
+			    output_.println(" "+i+". "+s2+" sb "+s1);
                             success = false;
 			}
                     }               
@@ -321,7 +321,7 @@ deleteRow() - Should delete a middle row when positioned there.
 			s2 = keysAfter.elementAt(i-1).toString();
 
 			if(! s1.equals(s2)){
-			    System.out.println(" "+i+". "+s2+" sb "+s1);
+			    output_.println(" "+i+". "+s2+" sb "+s1);
                             success = false;
 			}
                     }

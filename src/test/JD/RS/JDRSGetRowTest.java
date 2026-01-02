@@ -172,7 +172,7 @@ result set.
 
 @exception SQLException If an exception occurs.
 **/
-   public static void position (ResultSet rs, String key)
+   public  void position (ResultSet rs, String key)
    throws SQLException
    {
       rs.beforeFirst ();
@@ -191,7 +191,7 @@ result set.
 
 @exception SQLException If an exception occurs.
 **/
-   public static void position0 (ResultSet rs, String key)
+   public  void position0 (ResultSet rs, String key)
    throws SQLException
    {
       if (key != null) {
@@ -203,7 +203,7 @@ result set.
          }
 
          if (key != null)
-            System.out.println ("Warning: Key " + key + " not found.");
+            out_.println ("Warning: Key " + key + " not found.");
       }
       return ;
    }
@@ -255,18 +255,18 @@ Creates the testcases.
 	     	try
 	     	{
 	     	    Job[] jobs = systemObject_.getJobs(AS400.DATABASE);
-	     	    System.out.println("Host Server job(s): ");
+	     	    out_.println("Host Server job(s): ");
 
 	     	    	for(int i = 0 ; i< jobs.length; i++)
 	     	    	{   	    	
-	     	    		System.out.println(jobs[i]);
+	     	    		out_.println(jobs[i]);
 	     	    	}    	    
 	     	 }
 	     	 catch(Exception exc){}
 	     	    
 	     	 try 
 	     	 {
-	     	    	System.out.println ("Toolbox is paused. Press ENTER to continue.");
+	     	    	out_.println ("Toolbox is paused. Press ENTER to continue.");
 	     	    	System.in.read ();
 	     	 } 
 	     	 catch (Exception exc) {};   	   

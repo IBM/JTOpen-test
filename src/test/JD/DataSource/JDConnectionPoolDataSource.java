@@ -117,7 +117,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         c3.close();
         c4.close();
         c5.close();
-        System.out.println();
+        output_.println();
       }
     }
   }
@@ -156,7 +156,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
 
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -166,7 +166,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -186,8 +186,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -220,14 +220,14 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         long totalTime;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -235,8 +235,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         }
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -264,7 +264,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
 
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -274,7 +274,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -288,8 +288,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         }
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -325,7 +325,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         ResultSet rs;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -335,7 +335,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -357,8 +357,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime + " count=" + count);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime + " count=" + count);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -394,7 +394,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         ResultSet rs;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -402,7 +402,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -420,8 +420,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime + " count=" + count);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime + " count=" + count);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -455,7 +455,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         ResultSet rs1;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -465,7 +465,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -495,8 +495,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s1.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime + " count=" + count);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime + " count=" + count);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -531,7 +531,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         ResultSet rs;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -541,7 +541,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -563,8 +563,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -599,7 +599,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         ResultSet rs;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -609,7 +609,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -629,8 +629,8 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         s.close();
         endTime = System.currentTimeMillis();
         totalTime = endTime - beginTime;
-        System.out.println("End Time " + endTime);
-        System.out.println("Total Time " + totalTime);
+        output_.println("End Time " + endTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -665,7 +665,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
         Connection c6;
         if (isToolboxDriver()) {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_);
           c1 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
           c2 = cpd.getPooledConnection(systemObject_.getUserId(), passwordChars).getConnection();
@@ -676,7 +676,7 @@ public class JDConnectionPoolDataSource extends JDTestcase {
           PasswordVault.clearPassword(passwordChars);
         } else {
           beginTime = System.currentTimeMillis();
-          System.out.println("Start Time " + beginTime);
+          output_.println("Start Time " + beginTime);
           c1 = ds.getPooledConnection(systemObject_.getUserId(),
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
           c2 = ds.getPooledConnection(systemObject_.getUserId(),
@@ -691,9 +691,9 @@ public class JDConnectionPoolDataSource extends JDTestcase {
               new String(PasswordVault.decryptPassword(encryptedPassword_))).getConnection();
         }
         endTime = System.currentTimeMillis();
-        System.out.println("End Time " + endTime);
+        output_.println("End Time " + endTime);
         totalTime = endTime - beginTime;
-        System.out.println("Total Time " + totalTime);
+        output_.println("Total Time " + totalTime);
         succeeded();
         c6.close();
       } catch (Exception e) {

@@ -1438,11 +1438,11 @@ testGetBinaryStream(rs1200_, 8, ROW8_1208_, null);
                  
               }
               if (!passed) {
-                System.out.println("Column data is '"+columnData+"'");
+                output_.println("Column data is '"+columnData+"'");
                 e.printStackTrace(); 
               }
             } else { 
-                System.out.println("Column data is '"+columnData+"'");
+                output_.println("Column data is '"+columnData+"'");
              
                 failed (e, "Unexpected Exception");
             }

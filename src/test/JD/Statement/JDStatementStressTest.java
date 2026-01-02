@@ -1336,7 +1336,7 @@ public class JDStatementStressTest extends JDTestcase {
       JDStatementStressUpdate ust[] = new JDStatementStressUpdate[2];
       for (int i = 1; i <= ust.length; i++) {
         ust[i - 1] = new JDStatementStressUpdate(testDriver_, connection_, i,
-            JDStatementTest.COLLECTION);
+            JDStatementTest.COLLECTION, output_);
         ust[i - 1].setName("JDStatementStressUpdate" + i);
         ust[i - 1].start();
       }
@@ -1344,7 +1344,7 @@ public class JDStatementStressTest extends JDTestcase {
       JDStatementStressCallable cst[] = new JDStatementStressCallable[2];
       for (int i = 1; i <= cst.length; i++) {
         cst[i - 1] = new JDStatementStressCallable(connection_, i,
-            JDStatementTest.COLLECTION);
+            JDStatementTest.COLLECTION, output_);
         cst[i - 1].setName("JDStatementStressCallable" + i);
         cst[i - 1].start();
       }
@@ -1352,7 +1352,7 @@ public class JDStatementStressTest extends JDTestcase {
       JDStatementStressSelect sst[] = new JDStatementStressSelect[2];
       for (int i = 1; i <= sst.length; i++) {
         sst[i - 1] = new JDStatementStressSelect(connection_, i,
-            JDStatementTest.COLLECTION);
+            JDStatementTest.COLLECTION, output_);
         sst[i - 1].setName("JDStatementStressSelect" + i);
         sst[i - 1].start();
       }
@@ -1839,7 +1839,7 @@ public class JDStatementStressTest extends JDTestcase {
         }
 
       } else {
-        System.out.println("Warning: skipping ccsid " + ccsid);
+        output_.println("Warning: skipping ccsid " + ccsid);
       }
       assertCondition(passed, sb);
     } catch (Exception e) {
@@ -1850,8 +1850,8 @@ public class JDStatementStressTest extends JDTestcase {
       try {
         resetConnection();
       } catch (Exception e2) {
-        System.out.println("Error resetting connection");
-        e2.printStackTrace(System.out);
+        output_.println("Error resetting connection");
+        e2.printStackTrace(output_);
       }
     }
 
@@ -2694,7 +2694,7 @@ public class JDStatementStressTest extends JDTestcase {
 
       size = pool.length;
     } catch (Exception e2) {
-      e2.printStackTrace(System.out);
+      e2.printStackTrace(output_);
     }
     return size;
   }
@@ -2710,7 +2710,7 @@ public class JDStatementStressTest extends JDTestcase {
 
       size = storagePool.length;
     } catch (Exception e2) {
-      e2.printStackTrace(System.out);
+      e2.printStackTrace(output_);
     }
     return size;
 
@@ -2804,7 +2804,7 @@ public class JDStatementStressTest extends JDTestcase {
               replyRequestedPoolSize = getDBReplyRequestedDSPoolSize();
             } catch (Exception e) {
             }
-            System.out.println(i + " of " + stmt.length
+            output_.println(i + " of " + stmt.length
                 + " storage pool size = " + storagePoolSize
                 + " replyrequeested pool size = " + +replyRequestedPoolSize
                 + " time=" + (printTime - lastPrintTime));
@@ -2837,7 +2837,7 @@ public class JDStatementStressTest extends JDTestcase {
               replyRequestedPoolSize = getDBReplyRequestedDSPoolSize();
             } catch (Exception e) {
             }
-            System.out.println(i + " of " + stmt.length
+            output_.println(i + " of " + stmt.length
                 + " storage pool size = " + storagePoolSize
                 + " replyrequeested pool size = " + +replyRequestedPoolSize
                 + " time=" + (printTime - lastPrintTime));
@@ -3030,7 +3030,7 @@ public class JDStatementStressTest extends JDTestcase {
                         * double byte -- 1377
                         */
       case 57777: /* SAP CCSID */
-        System.out.println("Skipping unsupported CCSID " + ccsid);
+        output_.println("Skipping unsupported CCSID " + ccsid);
         return true;
 
       }
@@ -3061,7 +3061,7 @@ public class JDStatementStressTest extends JDTestcase {
       } catch (Exception e) {
         String message = e.toString();
         if (message.indexOf("not valid") < 0) {
-          e.printStackTrace(System.out);
+          e.printStackTrace(output_);
         }
         String sql2 = null;
         try {
@@ -3077,9 +3077,9 @@ public class JDStatementStressTest extends JDTestcase {
         } catch (Exception e1) {
           String message1 = e1.toString();
           if (message1.indexOf("not valid") < 0) {
-            System.out.println("Unable to create table using [" + sql
+            output_.println("Unable to create table using [" + sql
                 + "] .... [" + sql2 + "]");
-            e1.printStackTrace(System.out);
+            e1.printStackTrace(output_);
             return false;
           } else {
             return true;
@@ -3088,8 +3088,8 @@ public class JDStatementStressTest extends JDTestcase {
 
       }
 
-      System.out.print("Checking valid CCSID " + ccsid + "...\n");
-      System.out.flush();
+      output_.print("Checking valid CCSID " + ccsid + "...\n");
+      output_.flush();
 
       String simpleExpected = "ABCDEFG";
       String insertValue = "'ABCDEFG'";
@@ -3208,7 +3208,7 @@ public class JDStatementStressTest extends JDTestcase {
         }
 
         if (ConvTable.isMixedCCSID(ccsid) && (ccsid != 1208)) {
-          System.out.println("..Testing all mixed CCSID combinations"); 
+          output_.println("..Testing all mixed CCSID combinations"); 
           // Test all the mixed combinations.
           StringBuffer sqlBuffer = new StringBuffer();
           char[] hexDigits = new char[4];
@@ -3322,11 +3322,11 @@ public class JDStatementStressTest extends JDTestcase {
         statement_.executeUpdate(sql);
       }
 
-      System.out.println("..Done\n");
+      output_.println("..Done\n");
 
       if (!passed) {
-        System.out.println("CCSID " + ccsid + " Failed\n");
-        System.out.println(sb.toString() + "\n");
+        output_.println("CCSID " + ccsid + " Failed\n");
+        output_.println(sb.toString() + "\n");
         returnSb.append(sb);
       }
       return passed;
@@ -3334,8 +3334,8 @@ public class JDStatementStressTest extends JDTestcase {
       sb.append("Unexpected error on ccsid " + ccsid + "\n");
       printStackTraceToStringBuffer(e, sb);
 
-      System.out.println("CCSID " + ccsid + " Failed\n");
-      System.out.println(sb.toString() + "\n");
+      output_.println("CCSID " + ccsid + " Failed\n");
+      output_.println(sb.toString() + "\n");
 
       returnSb.append(sb);
       return false;

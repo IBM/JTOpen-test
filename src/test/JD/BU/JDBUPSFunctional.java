@@ -113,7 +113,7 @@ Performs setup needed before running variations.
             s.close();
 
         } catch (Exception e) {
-            System.out.println("Caught exception: " + e.getMessage());
+            output_.println("Caught exception: " + e.getMessage());
 
         }
     }
@@ -133,7 +133,7 @@ Performs setup needed before running variations.
                     connection_.close();
 		}
             } catch (SQLException e) {
-                System.out.println("Critical Error - couldn't close connection");
+                output_.println("Critical Error - couldn't close connection");
             }
 
              connection_ = testDriver_.getConnection(baseURL_+";" + connectionParms, userId_, encryptedPassword_); 
@@ -162,14 +162,14 @@ Performs setup needed before running variations.
             connection_.commit();
 
         } catch (Exception e) {
-            System.out.println("Caught exception: ");
+            output_.println("Caught exception: ");
             e.printStackTrace();
         } finally {
             try {
                 if (s != null)
                     s.close();
             } catch (SQLException e) {
-                System.out.println("Critical Error closing statement()");
+                output_.println("Critical Error closing statement()");
             }
         }
     }
@@ -195,7 +195,7 @@ be full of LOB columns so that we can see that we handle locators right.
             ps.setInt(1, i);
             ps.setBytes(2, blobBytes);
             ps.setBytes(3, blobBytes);
-            System.out.println("Building batch input value is " + byteValue);
+            output_.println("Building batch input value is " + byteValue);
             ps.addBatch();
         }
 
@@ -216,7 +216,7 @@ This is the place to put all cleanup work for the testcase.
             connection_=null; 
 
         } catch (Exception e) {
-            System.out.println("Caught exception: ");
+            output_.println("Caught exception: ");
 
         }
     }
@@ -234,7 +234,7 @@ This is the place to put all cleanup work for the testcase.
                     connection_.close();
 		}
             } catch (SQLException e) {
-                System.out.println("Critical Error - couldn't close connection");
+                output_.println("Critical Error - couldn't close connection");
             }
 
             connection_ = testDriver_.getConnection(baseURL_+";" + connectionParms, userId_, encryptedPassword_); 
@@ -256,13 +256,13 @@ This is the place to put all cleanup work for the testcase.
             connection_.commit();
 
         } catch (Exception e) {
-            System.out.println("Caught exception: " + e.getMessage());
+            output_.println("Caught exception: " + e.getMessage());
         } finally {
             try {
                 if (s != null)
                     s.close();
             } catch (SQLException e) {
-                System.out.println("Critical Error closing statement()");
+                output_.println("Critical Error closing statement()");
             }
         }
     }
@@ -484,8 +484,7 @@ executebatch() <-- works - clear had no effect
     public void Var004() {
 	if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
 	    getDriverFixLevel() <= 704) {
-	    System.out.println("WARNING:  New Testcase not working in JTOpen 7.4");
-	    assertCondition(true);
+	    assertCondition(true,"WARNING:  New Testcase not working in JTOpen 7.4");
 
 	    return; 
 	}
@@ -525,8 +524,7 @@ executebatch() <-- works - the set parameter is cleared
     public void Var005() {
 	if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
 	    getDriverFixLevel() <= 704) {
-	    System.out.println("New Testcase not working in JTOpen 7.4");
-	    assertCondition(true); 
+	    assertCondition(true,"New Testcase not working in JTOpen 7.4"); 
 	    return; 
 	}
 
@@ -815,8 +813,7 @@ addbatch() <-- works - all the parameters have been set.
     public void Var013() {
 	if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
 	    getDriverFixLevel() <= 704) {
-	    System.out.println("New Testcase not working in JTOpen 7.4");
-	    assertCondition(true); 
+	    assertCondition(true,"New Testcase not working in JTOpen 7.4"); 
 	    return; 
 	}
 

@@ -110,7 +110,7 @@ Performs setup needed before running variations.
            try {
               s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings2");
           } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
           }
 
           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings2 (col1 varchar(10))");
@@ -128,7 +128,7 @@ Performs setup needed before running variations.
            rs = s.executeQuery("select * from "+JDParmTest.COLLECTION+".strings2");
 
         } catch (Exception e) {
-           System.out.println("Caught exception: " + e.getMessage());
+           output_.println("Caught exception: " + e.getMessage());
            e.printStackTrace();
         }
     }
@@ -145,7 +145,7 @@ This is the place to put all cleanup work for the testcase.
          connection.close();
 
       } catch (Exception e) {
-         System.out.println("Caught exception: ");
+         output_.println("Caught exception: ");
          e.printStackTrace();
       }
    }

@@ -81,13 +81,13 @@ public class JDConnectionTrustStore extends JDTestcase {
        sb.append("\nChecking for cacerts");
        File f = new File ("cacerts"); 
        if (!f.exists()) { 
-         System.out.println("WARNING: cacerts does not exist in the current directory"); 
-         System.out.println(" * The file cacerts should exist in the current directory (normally\n"
+         output_.println("WARNING: cacerts does not exist in the current directory"); 
+         output_.println(" * The file cacerts should exist in the current directory (normally\n"
              + " * /home/jdbctest) and should contain the certificates need for SSL to the\n"
              + " * target system. The password for the cacerts file should be the default\n"
              + " * password changeit.\n"
              + " **");
-         System.out.println("The current directory is "+System.getProperty("user.dir"));
+         output_.println("The current directory is "+System.getProperty("user.dir"));
        }
        
        /* Create an empty cacerts file */ 
@@ -144,13 +144,13 @@ public class JDConnectionTrustStore extends JDTestcase {
           keystore.setCertificateEntry("BASE",cert); 
            keystore.store(fileOutputStream, storePassword.toCharArray());
          } catch (Exception e) {
-           System.out.println("Warning: Creating emptyCacerts failed"); 
+           output_.println("Warning: Creating emptyCacerts failed"); 
            e.printStackTrace();
        }
        
      } catch (Exception e) { 
-       System.out.println("WARNING: Exception during setup"+sb.toString()); 
-       e.printStackTrace(System.out); 
+       output_.println("WARNING: Exception during setup"+sb.toString()); 
+       e.printStackTrace(output_); 
      }
   }
 

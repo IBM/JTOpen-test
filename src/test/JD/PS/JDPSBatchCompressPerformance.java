@@ -95,13 +95,13 @@ Performs setup needed before running variations.
           Connection c = testDriver_.getConnection("jdbc:db2:*LOCAL",   pwrSysUserID_, pwrSysEncryptedPassword_);
           sql = "CALL QSYS.QCMDEXC ('CHGJOB JOB(" + jobName
               + ")  RUNPTY(1)            ', 0000000051.00000)";
-          System.out.println("Setup:  "+sql); 
+          output_.println("Setup:  "+sql); 
           Statement s = c.createStatement();
 
           s.execute(sql);
           c.close();
         } catch (Exception e) {
-          System.out.println("Warning:  error in setup sql=" + sql);
+          output_.println("Warning:  error in setup sql=" + sql);
           e.printStackTrace();
         }
       }
@@ -330,9 +330,9 @@ Performs setup needed before running variations.
 			unformatttedJobdName.substring(0, 10).trim();
 		  }
 	      } catch (Exception e) {
-		  System.out.println("Warning:  Exception on getConnection("+
+		  output_.println("Warning:  Exception on getConnection("+
 				     baseURL_+","+pwrSysUserID_+")");
-		  e.printStackTrace(System.out); 
+		  e.printStackTrace(output_); 
 				     
 	      } 
           }
@@ -343,7 +343,7 @@ Performs setup needed before running variations.
           for (int i = 0; i < 50; i++) { 
             if (jobNames[i] != null) { 
               String sql = "call QSYS.QCMDEXC('ENDJOB JOB("+jobNames[i]+") OPTION(*IMMED)        ' , 0000000056.00000)";
-              // System.out.println("Running "+sql); 
+              // output_.println("Running "+sql); 
               stmt.executeUpdate(sql);
               
             }
@@ -353,13 +353,13 @@ Performs setup needed before running variations.
               Statement s = connections[i].createStatement(); 
               s.executeQuery("Select * from sysibm.sysdummy1"); 
               connections[i].close(); 
-              // System.out.println("Connection "+i+" closed"); 
+              // output_.println("Connection "+i+" closed"); 
             } catch (Exception e) {
-              //System.out.println("Connection "+i+" exception while closing"); 
+              //output_.println("Connection "+i+" exception while closing"); 
               String message = e.toString(); 
               if (message.indexOf("Communication link failure") < 0 ) {
-                System.out.println("Connection "+i+" : UNEXPECTED exception while closing"); 
-                e.printStackTrace(System.out);
+                output_.println("Connection "+i+" : UNEXPECTED exception while closing"); 
+                e.printStackTrace(output_);
               }
             }
           }
