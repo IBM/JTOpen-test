@@ -116,7 +116,7 @@ Performs setup needed before running testcases.
       }
 
       JDSetupCollection.create (systemObject_, 
-                                connection_, COLLECTION);
+                                connection_, COLLECTION, out_);
 
       statement_ = connection_.createStatement ();
 

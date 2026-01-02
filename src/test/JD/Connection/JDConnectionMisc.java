@@ -1017,7 +1017,7 @@ getConnection -- test a bogus subsystem property
 		    String collection = baseCollection+i;
 		    systemNamingLibraries.addElement(collection);
 		
-		    JDSetupCollection.create(connection,collection,false);
+		    JDSetupCollection.create(connection,collection,false, output_);
 
 		    try {
 			sql = "DROP TABLE "+collection+".VERSION";
@@ -1096,14 +1096,14 @@ getConnection -- test a bogus subsystem property
   /*
    * cleanup the libaries used by the system naming tests
    */
-  public static void cleanupSystemNamingLibraries(Connection connection) throws SQLException {
+  public  void cleanupSystemNamingLibraries(Connection connection) throws SQLException {
       if (cleanupLibraries ) {
 	  if (systemNamingLibrariesCreated) {
 	      Statement s = connection.createStatement();
 
 	      for (int i = 0; i < 10; i++) {
 		  String collection = baseCollection + i;
-		  JDSetupCollection.dropCollection(s, collection);
+		  JDSetupCollection.dropCollection(s, collection, output_);
 	      }
 	      s.close();
 	      systemNamingLibrariesCreated = false;

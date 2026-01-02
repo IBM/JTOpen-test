@@ -107,10 +107,10 @@ public class JDCSGetArray extends JDTestcase {
         st.close();
 
         JDSetupProcedure.create(systemObject_,  connection_,
-            JDSetupProcedure.STP_CSARRSUM, supportedFeatures_);
+            JDSetupProcedure.STP_CSARRSUM, supportedFeatures_, output_);
 
         JDSetupProcedure.create(systemObject_, connection_,
-            JDSetupProcedure.STP_CSARRINT, supportedFeatures_);
+            JDSetupProcedure.STP_CSARRINT, supportedFeatures_, output_);
       }
     } catch (Exception e) {
       output_.println("WARNING:  Uncaught exception in setup()");
@@ -136,9 +136,9 @@ public class JDCSGetArray extends JDTestcase {
       st.close();
 
       JDSetupProcedure.dropProcedure(connection_,
-          JDSetupProcedure.STP_CSARRSUM);
+          JDSetupProcedure.STP_CSARRSUM, output_);
       JDSetupProcedure.dropProcedure(connection_,
-          JDSetupProcedure.STP_CSARRINT);
+          JDSetupProcedure.STP_CSARRINT, output_);
     
 
     connection_.close();

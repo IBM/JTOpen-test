@@ -88,7 +88,7 @@ Constructor.
     protected void setupSchema(String collection) throws SQLException {
  
 	Statement s = conn_.createStatement();
-	JDSetupCollection.create(conn_, collection, false);
+	JDSetupCollection.create(conn_, collection, false, output_);
 
 
 	try {

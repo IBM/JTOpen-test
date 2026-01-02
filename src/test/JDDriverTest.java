@@ -103,7 +103,7 @@ extends JDTestDriver
         {
             COLLECTION = testLib_;
         }
-        JDSetupCollection.create(systemObject_,  c, COLLECTION);
+        JDSetupCollection.create(systemObject_,  c, COLLECTION, out_);
         try { 
         c.commit(); // for xa
         } catch (Exception e) {} 

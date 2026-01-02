@@ -130,7 +130,7 @@ Setup.
         s.close ();
 
             JDSetupProcedure.create (systemObject_, c, JDSetupProcedure.STP_CSPARMS,
-                                     supportedFeatures_, collection_);
+                                     supportedFeatures_, collection_, output_);
        
 
         c.commit(); // for xa

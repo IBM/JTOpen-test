@@ -148,7 +148,7 @@ Performs setup needed before running testcases.
       System.out.println("JTATest collection is "+COLLECTION); 
       JDSetupCollection.create (systemObject_, 
                                 c, COLLECTION,
-				false);  /* Do not drop collection */ 
+				false, out_);  /* Do not drop collection */ 
 
       c.close ();
    }

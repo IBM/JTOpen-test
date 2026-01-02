@@ -119,7 +119,7 @@ Performs setup needed before running variations.
          JDSetupProcedure.create (systemObject_, connection_,
                                   JDSetupProcedure.STP_CSPARMS,
                                   supportedFeatures_,
-				  collection_);
+				  collection_, output_);
       
       connection_.commit(); // for xa testing
 

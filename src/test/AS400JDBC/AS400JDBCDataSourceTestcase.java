@@ -5461,7 +5461,7 @@ notApplicable("SSLight Testcase");
         boolean passed = true; 
         String tablename = AS400JDBCDataSourceTest.COLLECTION+".JDSTMTSQT" ; 
          Connection lockingConnection =  ds1.getConnection();
-	 JDSetupCollection.create(lockingConnection, AS400JDBCDataSourceTest.COLLECTION);
+	 JDSetupCollection.create(lockingConnection, AS400JDBCDataSourceTest.COLLECTION, output_);
 	 lockingConnection.commit(); 
 
          Statement lockingStatement = lockingConnection.createStatement(); 

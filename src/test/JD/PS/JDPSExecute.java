@@ -130,13 +130,13 @@ Performs setup needed before running variations.
 
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_RS0,
-                                     supportedFeatures_, collection_);
+                                     supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_RS1,
-                                     supportedFeatures_, collection_);
+                                     supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_RS3,
-                                     supportedFeatures_, collection_);
+                                     supportedFeatures_, collection_, output_);
             table_  = JDPSTest.COLLECTION + ".JDPSE";
             table2_  = JDPSTest.COLLECTION + ".JDPSE2";
             table3_  = JDPSTest.COLLECTION + ".JDPSE3";

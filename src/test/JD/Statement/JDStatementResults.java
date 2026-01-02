@@ -119,11 +119,11 @@ Performs setup needed before running variations.
         s1.close ();
 
             JDSetupProcedure.create (systemObject_,
-                connection_, JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+                connection_, JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,
-                connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,
-                connection_, JDSetupProcedure.STP_RS3, supportedFeatures_, collection_);
+                connection_, JDSetupProcedure.STP_RS3, supportedFeatures_, collection_, output_);
     }
 
 

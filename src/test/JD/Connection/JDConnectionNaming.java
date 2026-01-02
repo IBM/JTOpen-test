@@ -83,7 +83,7 @@ Set up.
     {
         Connection c = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
             JDSetupProcedure.create (systemObject_, c, JDSetupProcedure.STP_RS1,
-                                     supportedFeatures_, collection_);
+                                     supportedFeatures_, collection_, output_);
         
 
         c.close();

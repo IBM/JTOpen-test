@@ -206,7 +206,7 @@ public class JDCSSetArray extends JDCSSetTestcase
 	      };
 	      for (int i = 0; i < procedures.length; i++) {
 	        if (createdProceduresHashtable.get(procedures[i]) != null ) {
-	          JDSetupProcedure.dropProcedure(connection_, procedures[i]);
+	          JDSetupProcedure.dropProcedure(connection_, procedures[i], output_);
 	        }
 	      }
 

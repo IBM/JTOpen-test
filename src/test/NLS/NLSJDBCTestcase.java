@@ -114,11 +114,11 @@ Performs setup needed before running variations.
             jdbc_dbcs_words[i-1] = getResource("JDBC_DBCS_WORDS"+i);
 
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTION);
+            localConnection_, COLLECTION, output_);
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTION2);
+            localConnection_, COLLECTION2, output_);
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTIONXX);
+            localConnection_, COLLECTIONXX, output_);
     }
 
 
@@ -1484,7 +1484,7 @@ INOUT parameter.
         try {
             // Variation cleanup.
             JDSetupProcedure.create (systemObject_, localConnection_, 
-                JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C
+                JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, output_); // @D0C
 
             CallableStatement csTypes = JDSetupProcedure.prepare (localConnection_,
                 JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C

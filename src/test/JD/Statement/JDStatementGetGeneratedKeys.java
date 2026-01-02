@@ -220,13 +220,13 @@ Performs setup needed before running variations.
 
 		sql="setup STP_RS0"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
 		sql="setup STP_RS2"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
 		sql="setup STP_RS3"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS3, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS3, supportedFeatures_, collection_, output_);
 
 	    if (getDriver() != JDTestDriver.DRIVER_JCC) {
 		connection_.commit(); // for xa

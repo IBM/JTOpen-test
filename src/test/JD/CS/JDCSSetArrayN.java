@@ -93,7 +93,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     public void assureProcedureExists(String procedure) throws Exception  {
 	if (createdProceduresHashtable1.get(procedure) == null) {
 	    JDSetupProcedure.create (systemObject_, 
-				 connection_, procedure, supportedFeatures_);
+				 connection_, procedure, supportedFeatures_, output_);
 	    createdProceduresHashtable1.put(procedure, procedure);
 	}
     }
@@ -206,7 +206,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	      };
 	      for (int i = 0; i < procedures.length; i++) {
 	        if (createdProceduresHashtable1.get(procedures[i]) != null ) {
-	          JDSetupProcedure.dropProcedure(connection_, procedures[i]);
+	          JDSetupProcedure.dropProcedure(connection_, procedures[i], output_);
 	        }
 	      }
 

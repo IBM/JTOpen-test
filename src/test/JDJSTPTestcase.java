@@ -944,7 +944,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
       * @exception java.lang.Exception If an error occurs, an exception is thrown describing the error.
       * @see #setSourcepath
       **/
-		public static void install(String filename) throws Exception {
+		public  void install(String filename) throws Exception {
 
 			//
 			// Check to see if the file needs to be reinstalled
@@ -2552,7 +2552,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
      /**
       * Assure that a binary file on the server is up to date.
       */
-     public static boolean updateBinaryServerFile(String localFile, String serverFile) throws Exception {
+     public  boolean updateBinaryServerFile(String localFile, String serverFile) throws Exception {
 	 checkSetup();
 
          //
@@ -2589,7 +2589,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 	     // Copy into a blob 
 	     //
 
-	     JDJSTPBlobUtil.copyToBlob(cmdConn, localFile, localFile);
+	     JDJSTPBlobUtil.copyToBlob(cmdConn, localFile, localFile, output_);
 
 	     //
              // Copy from a blob

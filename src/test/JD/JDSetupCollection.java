@@ -13,6 +13,7 @@
 
 package test.JD;
 
+import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Job;
@@ -51,7 +52,8 @@ other test userids can use it.
 **/
     static public void create (AS400 system,	   
 	                             Connection connection,
-                               String collection  ) throws Exception
+                               String collection,
+                               PrintWriter output) throws Exception
     {
 	// The default behavior is not to drop the collection if it
         // exists.  If the collection is dropped, this
@@ -62,11 +64,11 @@ other test userids can use it.
 	// should be deleted in the very beginning of the
 	// testcase using the form of the create that does the delete. 
 	//
-	create(system,connection,collection, false); 
+	create(system,connection,collection, false, output); 
     } /* create */ 
 
     
-    public static void dropCollection(Statement s, String collection) {
+    public static void dropCollection(Statement s, String collection, PrintWriter output) {
 	try {
 	    s
 	      .executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)')");
@@ -74,14 +76,12 @@ other test userids can use it.
 	    e.printStackTrace();
 	}
 	try {
-	    System.out.println("JDSetupCollection:  Dropping COLLECTION "+collection);
-	    // Exception e  = new Exception("Location");
-	    // e.printStackTrace(System.out);
+	    output.println("JDSetupCollection:  Dropping COLLECTION "+collection);
 
 	    s.executeUpdate("DROP COLLECTION " + collection);
 	} catch (SQLException e) {
-	    System.out.println("Exception caught dropping collection");
-	    e.printStackTrace(System.out); 
+	    output.println("Exception caught dropping collection");
+	    e.printStackTrace(output); 
 	}
 
     }
@@ -90,7 +90,7 @@ other test userids can use it.
      * Should the collection be dropped because of problems
      */
     
-    public static boolean shouldCollectionBeDropped(Connection conn, String collection ) {
+    public static boolean shouldCollectionBeDropped(Connection conn, String collection, PrintWriter output ) {
       boolean dropCollection = false; 
       
       try {
@@ -119,7 +119,7 @@ other test userids can use it.
             shortCollection = rs.getString(1); 
           } else {
             /* Couldn't look up long name.  Drop it */
-	    System.out.println("WARNING:  JDSetupCollection.shouldCollectionBeDropped:  not found by ("+collection+") "+sqlQuery); 
+	    output.println("WARNING:  JDSetupCollection.shouldCollectionBeDropped:  not found by ("+collection+") "+sqlQuery); 
             dropCollection = true; 
             return true; 
           }
@@ -131,7 +131,7 @@ other test userids can use it.
           try {
               rs = s.executeQuery(" SELECT * FROM qtemp.contents WHERE ODOBNM = 'QSQJRN' ");
               if (!rs.next()) {
-                  System.out.println("WARNING:  JDSetupCollection.shouldCollectionBeDropped: QSQJRN not found in collection:  forcing recreate");
+                  output.println("WARNING:  JDSetupCollection.shouldCollectionBeDropped: QSQJRN not found in collection:  forcing recreate");
                   dropCollection = true; 
               }
               rs.close(); 
@@ -147,7 +147,7 @@ other test userids can use it.
 	  // Ignore not found exceptin 
 	  if (e.toString().toUpperCase().indexOf("NOT FOUND") < 0) {
 
-	      System.out.println("Warning:  JDSetupCollection: Exception trying to validate collection "+collection+"\n");
+	      output.println("Warning:  JDSetupCollection: Exception trying to validate collection "+collection+"\n");
 	      e.printStackTrace();
 	  }
       } 
@@ -165,20 +165,20 @@ other test userids can use it.
  @exception  Exception  If an exception occurs.
 **/
     static public void create(AS400 system, 
-        Connection connection, String collection, boolean dropCollection)
+        Connection connection, String collection, boolean dropCollection, PrintWriter output)
     throws Exception {
 
-      create(connection, collection, dropCollection);
+      create(connection, collection, dropCollection, output);
     }
 
 
-      static public void create(Connection conn, String collection, boolean dropCollection) throws SQLException {
+      static public void create(Connection conn, String collection, boolean dropCollection, PrintWriter output) throws SQLException {
 
 
 
        if  ( (collection.indexOf("\"") > 0) || (collection.indexOf("'") > 0) ) {
 	   SQLException sqlex =  new SQLException("WARNING:  Cannot quotes in collection '"+collection+"'");
-	   sqlex.printStackTrace(System.out);
+	   sqlex.printStackTrace(output);
 	   return; 
        }
  
@@ -188,7 +188,7 @@ other test userids can use it.
       
       Statement s = conn.createStatement(); 
 
-      if (!dropCollection) dropCollection = shouldCollectionBeDropped( conn, collection); 
+      if (!dropCollection) dropCollection = shouldCollectionBeDropped( conn, collection, output); 
 
       //
       // drop the collection if the dropCollection flag is specified.
@@ -197,7 +197,7 @@ other test userids can use it.
       //
 
       if (dropCollection) {
-        dropCollection(s, collection); 
+        dropCollection(s, collection, output); 
       } 
 
 
@@ -216,7 +216,7 @@ other test userids can use it.
 	  catch (SQLException e) {
 	      int code = e.getErrorCode();
 	      if (code == -901) {
-		  System.out
+		  output
 		    .println("SQL0901 found -- trying to recover using RCLDBXREF");
 		  s.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
 		  retry = true; 
@@ -229,8 +229,8 @@ other test userids can use it.
 
 		      } catch (Exception e2) {
 			  if (e.toString().indexOf("-601") < 0) {
-			      System.out.println("Error.  Unexpected exception creating collection "+collection);
-			      e.printStackTrace(System.out); 
+			      output.println("Error.  Unexpected exception creating collection "+collection);
+			      e.printStackTrace(output); 
 			  } 
 		     // The collection already exists.
 			  created = false;
@@ -239,8 +239,8 @@ other test userids can use it.
 		  } else { 
 		      if ((e.toString().indexOf("already exists") < 0) &&
 			  (e.toString().indexOf("-601") < 0)){
-			  System.out.println("Error.  Unexpected exception creating collection "+collection);
-			  e.printStackTrace(System.out); 
+			  output.println("Error.  Unexpected exception creating collection "+collection);
+			  e.printStackTrace(output); 
 		      } 
 	    // The collection already exists.
 		      created = false;
@@ -259,8 +259,8 @@ other test userids can use it.
 	    try {
 		s.executeUpdate(sql); 
 	    } catch (Exception e) {
-		System.out.println("Warning: exception on "+sql);
-		e.printStackTrace(System.out); 
+		output.println("Warning: exception on "+sql);
+		e.printStackTrace(output); 
 	    } 
 
 
@@ -304,7 +304,7 @@ other test userids can use it.
         } else {
           if (jexMessage.indexOf("in use") >= 0) {
             try {
-              System.out
+              output
                   .println("Warning:  object in use -- trying to end jobs");
               ObjectDescription objectDescription = new ObjectDescription(
                   pwrSys, collection, "ATOM", "FILE");
@@ -315,7 +315,7 @@ other test userids can use it.
                 String jobname = lock.getJobName();
                 String jobnumber = lock.getJobNumber();
                 String jobusername = lock.getJobUserName();
-                System.out.println("Warning: ending job " + jobnumber + "/"
+                output.println("Warning: ending job " + jobnumber + "/"
                     + jobusername + "/" + jobname + " holding lock");
                 // Now end the job immediately to release the lock
                 Job job = new Job(pwrSys, jobname, jobusername, jobnumber);
@@ -325,27 +325,27 @@ other test userids can use it.
               // Sleeping 10 seconds for the job to catch up.
               Thread.sleep(10);
             } catch (Exception endException) {
-              System.out.println("Exception trying to end jobs holding locks");
-              endException.printStackTrace(System.out);
+              output.println("Exception trying to end jobs holding locks");
+              endException.printStackTrace(output);
 
             }
           } else if (jexMessage.indexOf("Not authorized") >= 0) {
             CommandCall cmd = new CommandCall(pwrSys);
-            System.out.println(
+            output.println(
                 "Warning... Attempted to authorize *PUBLIC to table atom");
             try {
               cmd.run("QSYS/GRTOBJAUT OBJ(" + collection
                   + "/ATOM) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*ALL)");
             } catch (Exception e) {
-              System.out
+              output
                   .println("Warning... could not grant permissions table atom");
-              e.printStackTrace(System.out);
+              e.printStackTrace(output);
 
             }
             retryCount--;
           } else {
-            System.out.println("Warning... could not drop table atom");
-            jex.printStackTrace(System.out);
+            output.println("Warning... could not drop table atom");
+            jex.printStackTrace(output);
           }
           retryCount--;
         }
@@ -357,8 +357,8 @@ other test userids can use it.
        //insert into atom values(null);
 	s.executeUpdate("insert into "+collection+".atom values(null)");
     } catch (Exception e) {
-	System.out.println("Warning.  unable to create atom");
-	e.printStackTrace(System.out);
+	output.println("Warning.  unable to create atom");
+	e.printStackTrace(output);
 
     } 
 
@@ -377,18 +377,18 @@ other test userids can use it.
    * @exception Exception
    *              If an exception occurs.
    **/
-  static public void create(Connection connection, String collection)
+  static public void create(Connection connection, String collection, PrintWriter output)
       throws Exception {
-      create(connection,collection,JDSupportedFeatures.getDefault()); 
+      create(connection,collection,JDSupportedFeatures.getDefault(), output ); 
   }
 
       
       public static void create(Connection connection, String collection,
-      JDSupportedFeatures supportedFeatures) throws Exception {
+      JDSupportedFeatures supportedFeatures, PrintWriter output) throws Exception {
     // Create the collection.
     Statement s = connection.createStatement();
 
-    boolean forceDrop = shouldCollectionBeDropped(connection, collection);
+    boolean forceDrop = shouldCollectionBeDropped(connection, collection, output);
 
     //
     // drop the collection if the dropCollection flag is specified.
@@ -397,7 +397,7 @@ other test userids can use it.
     //
 
     if (forceDrop) {
-      dropCollection(s, collection);
+      dropCollection(s, collection, output);
     }
 
     boolean created = false;
@@ -443,9 +443,9 @@ other test userids can use it.
             + "DLTRCV(*YES)                                              ',0000000070.00000)";
         s.executeUpdate(sql);
       } catch (Exception e) {
-        System.out.println("Exception on " + sql
+        output.println("Exception on " + sql
             + " while granting permissions");
-        e.printStackTrace(System.out);
+        e.printStackTrace(output);
       }
 
     }
@@ -463,7 +463,7 @@ other test userids can use it.
           s.executeUpdate(sql);
         } catch (SQLException sqlex) { 
           if (sqlex.getErrorCode() != -601) { 
-            System.out.println("ERROR on SQL "+sql); 
+            output.println("ERROR on SQL "+sql); 
             throw sqlex; 
           }
           

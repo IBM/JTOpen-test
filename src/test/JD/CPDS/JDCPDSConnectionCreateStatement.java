@@ -132,7 +132,7 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
 
       s.close();
       JDSetupProcedure.create(systemObject_, connection_, JDSetupProcedure.STP_CSPARMS, supportedFeatures_,
-          collection_);
+          collection_, output_);
 
       closedConnection_ = db2ConnectionPoolDataSource.getConnection();
       closedConnection_.close();

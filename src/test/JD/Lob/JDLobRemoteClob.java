@@ -301,7 +301,7 @@ get a remote clob with 5035 data
 			Statement stmt = connection.createStatement();
 			try {
 
-			    JDSetupCollection.create(connection, collection, false);
+			    JDSetupCollection.create(connection, collection, false, output_);
 			    connection.commit(); 
 			} catch (Exception e) {
 			    // assume it exists 

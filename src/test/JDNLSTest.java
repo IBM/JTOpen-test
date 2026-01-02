@@ -61,7 +61,7 @@ public class JDNLSTest extends JDTestDriver {
         //dropCollection(connPwr, COLLECTION);
         
         JDSetupCollection.create (systemObject_, 
-                connPwr, COLLECTION);
+                connPwr, COLLECTION, out_);
         
         connection.close();
     }

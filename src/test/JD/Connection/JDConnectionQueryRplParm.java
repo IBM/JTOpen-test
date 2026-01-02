@@ -90,7 +90,7 @@ extends JDTestcase {
 	    normalConnection = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 	    replaceConnection = testDriver_.getConnection (baseURL_+";query replace truncated parameter=@@@@@@@@", userId_, encryptedPassword_);
 
-	    JDSetupCollection.create (systemObject_,  normalConnection,  collection); 
+	    JDSetupCollection.create (systemObject_,  normalConnection,  collection, output_); 
 	}
 
 	protected void cleanup () {

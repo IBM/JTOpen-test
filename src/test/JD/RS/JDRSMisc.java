@@ -115,11 +115,11 @@ Performs setup needed before running variations.
 	    
             if(collection_ != null) {
                 JDSetupProcedure.create (systemObject_,
-                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             }
             else {
                 JDSetupProcedure.create (systemObject_,
-                                         connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, JDSetupProcedure.STP_RS1);
+                                         connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, JDSetupProcedure.STP_RS1, output_);
             }
         }
     }
@@ -287,7 +287,7 @@ regardless of what they are set to.
         if (checkJdbc20 ()) {
         try {
                 JDSetupProcedure.create (systemObject_,
-                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1);
@@ -313,7 +313,7 @@ are read only.
         if (checkJdbc20 ()) {
         try {
                 JDSetupProcedure.create (systemObject_,
-                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             ResultSet rs = connection_.getMetaData ().getTables (null, null, null, null);
             int concurrency = rs.getConcurrency ();
             rs.close ();
@@ -336,7 +336,7 @@ FOR UPDATE are read only regardless of what they are set to.
         if (checkJdbc20 ()) {
         try {
                 JDSetupProcedure.create (systemObject_,
-                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                    connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery ("SELECT * FROM QIWS.QCUSTCDT");
@@ -921,7 +921,7 @@ regardless of what they are set to.
 	if (checkJdbc20 ()) {
 	    try {
 		    JDSetupProcedure.create (systemObject_,
-					     connection_, JDSetupProcedure.STP_RS1S, supportedFeatures_, collection_);
+					     connection_, JDSetupProcedure.STP_RS1S, supportedFeatures_, collection_, output_);
 		Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
 								   ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1S);
@@ -2523,7 +2523,7 @@ failed (e, "Unexpected Exception"+added);
 		    //Trace.setTraceDatastreamOn(true);
 		try {
 			JDSetupProcedure.create (systemObject_,
-						 connection_, JDSetupProcedure.STP_RS1S, supportedFeatures_,collection_);
+						 connection_, JDSetupProcedure.STP_RS1S, supportedFeatures_,collection_, output_);
 		    Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
 								       ResultSet.CONCUR_READ_ONLY);
 
@@ -2552,9 +2552,9 @@ failed (e, "Unexpected Exception"+added);
 
 	    if (checkJdbc20 ()) {
 		try {
-			JDSetupProcedure.dropProcedure(connection_, JDSetupProcedure.STP_RS1);
+			JDSetupProcedure.dropProcedure(connection_, JDSetupProcedure.STP_RS1, output_);
 			JDSetupProcedure.create (systemObject_,
-						 connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+						 connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
 		    Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
 								       ResultSet.CONCUR_UPDATABLE);
 		    ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1);
@@ -2578,7 +2578,7 @@ failed (e, "Unexpected Exception"+added);
 	    if (checkJdbc20 ()) {
 		try {
 			JDSetupProcedure.create (systemObject_,
-						 connection_, JDSetupProcedure.STP_RS1UPD, supportedFeatures_, collection_);
+						 connection_, JDSetupProcedure.STP_RS1UPD, supportedFeatures_, collection_, output_);
 		    Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
 								       ResultSet.CONCUR_UPDATABLE);
 		    ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1UPD);
@@ -2607,7 +2607,7 @@ failed (e, "Unexpected Exception"+added);
 	    if (checkJdbc40 ()) {
 		try {
 			JDSetupProcedure.create (systemObject_,
-						 connection3_, JDSetupProcedure.STP_RS1WH, supportedFeatures_, collection_); //conn3
+						 connection3_, JDSetupProcedure.STP_RS1WH, supportedFeatures_, collection_, output_); //conn3
 		    Statement statement = connection3_.createStatement (); //conn3
 		    ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1WH);
 		    int hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");
@@ -2633,7 +2633,7 @@ failed (e, "Unexpected Exception"+added);
 	    if (checkJdbc40 ()) {
 		try {
 			JDSetupProcedure.create (systemObject_,
-						 connection2_, JDSetupProcedure.STP_RS1WOH, supportedFeatures_, collection_); //conn2
+						 connection2_, JDSetupProcedure.STP_RS1WOH, supportedFeatures_, collection_, output_); //conn2
 		    Statement statement = connection2_.createStatement (); //conn2
 		    ResultSet rs = statement.executeQuery ("CALL " + JDSetupProcedure.STP_RS1WOH);
 		    int hold = JDReflectionUtil.callMethod_I(rs, "getHoldability");

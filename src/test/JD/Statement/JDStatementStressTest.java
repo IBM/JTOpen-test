@@ -1244,7 +1244,7 @@ public class JDStatementStressTest extends JDTestcase {
     ps.close();
 
     String QIWS = JDSetupProcedure.setupQIWS(systemObject_,
-        connection_);
+        connection_, output_);
 
     String drop = "DROP PROCEDURE " + PROC_;
     try {

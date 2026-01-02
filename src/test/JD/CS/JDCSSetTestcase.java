@@ -348,7 +348,7 @@ public class JDCSSetTestcase extends JDTestcase {
  if (createdProceduresHashtable.get(procedure) == null) {
    
      JDSetupProcedure.create (systemObject_, connection_, 
-        procedure, supportedFeatures_);
+        procedure, supportedFeatures_, output_);
      createdProceduresHashtable.put(procedure, procedure);
  }
    }

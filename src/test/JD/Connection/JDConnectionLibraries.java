@@ -107,7 +107,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 			COLLECTION2 = collection_+"2";
 		}
 		JDSetupCollection.create (systemObject_,  c,
-								  COLLECTION2);
+								  COLLECTION2, output_);
 		c.close ();
 
 		String piece = COLLECTION2;
@@ -1816,7 +1816,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
             setupConnection = testDriver_.getConnection (setupURL, userId_, encryptedPassword_);
             setupStatement  = setupConnection.createStatement();
             try{
-                JDSetupCollection.create(setupConnection, collectionWithSP);
+                JDSetupCollection.create(setupConnection, collectionWithSP, output_);
             }catch(Exception e){}//ignore warning
             try { setupStatement.executeUpdate("CREATE TABLE " + table + " (p1_int integer)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate("INSERT INTO " + table + " VALUES (98765)" ); } catch (Exception e) { }
@@ -1912,7 +1912,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
 		   {
             setupConnection = testDriver_.getConnection (setupURL, userId_, encryptedPassword_);
             setupStatement  = setupConnection.createStatement();
-            JDSetupCollection.create(setupConnection,  collectionWithSP);
+            JDSetupCollection.create(setupConnection,  collectionWithSP, output_);
             try { setupStatement.executeUpdate("CREATE TABLE " + table + " (p1_int integer)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate("INSERT INTO " + table + " VALUES (98765)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate( SP ); } catch (Exception e) { }

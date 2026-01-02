@@ -203,7 +203,7 @@ extends JDTestDriver {
             COLLECTION = testLib_;
         }
         JDSetupCollection.create (systemObject_, 
-                                  c, COLLECTION);
+                                  c, COLLECTION, out_);
 
  
 	String collection = COLLECTION;
@@ -213,52 +213,52 @@ extends JDTestDriver {
 	} 
         JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS0, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_RS0, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS1, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_RS1, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS3, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_RS3, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CS0, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CS0, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CS1, supportedFeatures_, collection);       //@F2A
+                                     c, JDSetupProcedure.STP_CS1, supportedFeatures_, collection,out_);        //@F2A
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSPARMSRS, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSPARMSRS, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUT, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESOUT, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUTX, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESOUTX, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUTB, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESOUTB, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESIN, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESIN, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESINOUTX, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESINOUTX, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESNULL, supportedFeatures_, collection);
+                                     c, JDSetupProcedure.STP_CSTYPESNULL, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,                                                 //@F1A
-                                     c, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, collection);  //@F1A
+                                     c, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, collection,out_);   //@F1A
             JDSetupProcedure.create (systemObject_,                                                 //@F1A
-                                     c, JDSetupProcedure.STP_CSNULLTEST, supportedFeatures_, collection);  //@F1A
+                                     c, JDSetupProcedure.STP_CSNULLTEST, supportedFeatures_, collection,out_);   //@F1A
             JDSetupProcedure.create (systemObject_,                                                  //@KBA
-                                     c, JDSetupProcedure.STP_CSSRS, supportedFeatures_, collection);     //@KBA
+                                     c, JDSetupProcedure.STP_CSSRS, supportedFeatures_, collection,out_);      //@KBA
             JDSetupProcedure.create (systemObject_,                                                  //@KBA
-                                     c, JDSetupProcedure.STP_CSMSRS, supportedFeatures_, collection);    //@KBA
+                                     c, JDSetupProcedure.STP_CSMSRS, supportedFeatures_, collection,out_);     //@KBA
 
             if (areReturnValuesSupported()) {                                                       // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSRV, supportedFeatures_, collection);           // @E2A
+                                         c, JDSetupProcedure.STP_CSRV, supportedFeatures_, collection,out_);            // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSPARMSRV, supportedFeatures_, collection);      // @E2A
+                                         c, JDSetupProcedure.STP_CSPARMSRV, supportedFeatures_, collection,out_);       // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSPARMSRSRV, supportedFeatures_, collection);    // @E2A
+                                         c, JDSetupProcedure.STP_CSPARMSRSRV, supportedFeatures_, collection,out_);     // @E2A
             }                                                                                       // @E2A
 
         c.close ();

@@ -115,12 +115,12 @@ Setup.
 
             connection_ = db2ConnectionPooolDataSource.getConnection ();
             Statement s = connection_.createStatement ();
-            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION); 
+            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION, output_); 
             s.executeUpdate ("CREATE TABLE " + table_ + " (COL1 INT)");
             s.close ();
 
                 JDSetupProcedure.create (systemObject_,  connection_, 
-                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_);        
+                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_, output_);        
 
             connection_.close ();
         }

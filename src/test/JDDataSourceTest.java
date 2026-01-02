@@ -131,7 +131,7 @@ Performs setup needed before running testcases.
       }
       
       JDSetupCollection.create (systemObject_, 
-                                connection_, COLLECTION);
+                                connection_, COLLECTION, out_);
 
       connection_.commit(); // needed for XA testing
    }

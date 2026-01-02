@@ -116,13 +116,13 @@ Setup.
             JDReflectionUtil.callMethod_V(dataSource,"setPassword",PasswordVault.decryptPasswordLeak(encryptedPassword_));
             connection_ = dataSource.getConnection ();
             Statement s = connection_.createStatement ();
-            JDSetupCollection.create(connection_, JDSCPDSTest.COLLECTION);
+            JDSetupCollection.create(connection_, JDSCPDSTest.COLLECTION, output_);
             s.executeUpdate ("CREATE TABLE " + table_ + " (COL1 INT)");
             s.close ();
 
             JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this); 
                 JDSetupProcedure.create (systemObject_, connection_, 
-                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_);        
+                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_, output_);        
 
             connection_.close ();
             connection_ = null; 

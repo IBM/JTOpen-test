@@ -134,7 +134,7 @@ Performs setup needed before running testcases.
         if(testLib_ != null) {   // @E1A
             COLLECTION = testLib_;
         }
-        JDSetupCollection.create (systemObject_,  c,COLLECTION);
+        JDSetupCollection.create (systemObject_,  c,COLLECTION, out_);
 	if (getDriver() != JDTestDriver.DRIVER_JCC) {
 	    c.commit(); // for xa
 	}

@@ -139,7 +139,7 @@ public class JDASTest extends JDTestDriver
            COLLECTION = testLib_;
        }
        JDSetupCollection.create (systemObject_, 
-                                 c, COLLECTION);
+                                 c, COLLECTION, out_);
 
        c.close ();
    }

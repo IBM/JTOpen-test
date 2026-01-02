@@ -105,7 +105,7 @@ Performs setup needed before running variations.
                 COLLECTION2 = collection_;
             }
             JDSetupCollection.create (systemObject_,  c,
-                                      COLLECTION2);
+                                      COLLECTION2, output_);
             c.close ();
         }
     }

@@ -112,7 +112,7 @@ Performs setup needed before running variations.
        //build a table to query
        conn_ = DriverManager.getConnection(baseURL_);
        stmt_ = conn_.createStatement ();
-       JDSetupCollection.create (systemObject_,  conn_, COLLECTION_);
+       JDSetupCollection.create (systemObject_,  conn_, COLLECTION_, output_);
        boolean tableCreated;
        try {
             stmt_.executeUpdate("CREATE TABLE " + TABLE_ + "(C_ONE VARCHAR(50))");

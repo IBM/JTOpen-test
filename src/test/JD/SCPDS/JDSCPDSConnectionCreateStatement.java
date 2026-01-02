@@ -156,7 +156,7 @@ Performs setup needed before running variations.
 
             s.close ();
                 JDSetupProcedure.create (systemObject_, connection_, 
-                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_,  collection_);        
+                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_,  collection_, output_);        
            
 
             closedConnection_ = dataSource.getConnection ();

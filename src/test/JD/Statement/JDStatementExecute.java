@@ -124,11 +124,11 @@ Performs setup needed before running variations.
                          + " (NAME, ID) VALUES ('robb', -1)");
 
             JDSetupProcedure.create (systemObject_,connection_,
-                                     JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+                                     JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,connection_,
-                                     JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+                                     JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
             JDSetupProcedure.create (systemObject_,connection_,
-                                     JDSetupProcedure.STP_RS3, supportedFeatures_, collection_);
+                                     JDSetupProcedure.STP_RS3, supportedFeatures_, collection_, output_);
         connection_.commit(); // for xa
 
         s.close ();

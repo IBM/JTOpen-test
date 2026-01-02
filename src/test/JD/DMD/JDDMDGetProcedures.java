@@ -148,7 +148,7 @@ Performs setup needed before running variations.
 	    }
         }
         dmd_ = connection_.getMetaData ();
-        String QIWS = JDSetupProcedure.setupQIWS(systemObject_, connection_);
+        String QIWS = JDSetupProcedure.setupQIWS(systemObject_, connection_, output_);
         Statement s = connection_.createStatement ();
         s.executeUpdate ("CREATE PROCEDURE " + JDDMDTest.COLLECTION
             + ".PROCS LANGUAGE SQL READS SQL DATA P1: BEGIN DECLARE DUMMY INTEGER;"

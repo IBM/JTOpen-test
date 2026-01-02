@@ -117,7 +117,7 @@ Performs setup needed before running variations.
 		JDSetupProcedure.resetCollection(JDConnectionTest.COLLECTION); 
                 JDSetupProcedure.create (systemObject_, c,
                                          JDSetupProcedure.STP_RS1,
-                                         supportedFeatures_, collection_);
+                                         supportedFeatures_, collection_, output_);
 
             dmd_ = c.getMetaData ();
 
