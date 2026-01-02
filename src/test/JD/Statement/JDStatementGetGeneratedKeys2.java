@@ -180,7 +180,7 @@ Performs setup needed before running variations.
 
 
              JDSetupProcedure.create (systemObject_,connection_,
-                                     JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+                                     JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
  
 
 	if (getDriver() != JDTestDriver.DRIVER_JCC) {

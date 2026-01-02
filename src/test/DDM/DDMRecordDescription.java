@@ -102,15 +102,15 @@ public class DDMRecordDescription extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
-        System.out.println("Either library DDMTESTSAV does not exist or you");
-        System.out.println("do not have authority to it.");
-        System.out.println("ftp DDMTESTSAV.SAVF in binary from");
-        System.out.println("the test/ directory in git");
-        System.out.println("to the AS/400 system to which you are running.");
-        System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
-        System.out.println("ran="+ran); 
+        output_.println("Either library DDMTESTSAV does not exist or you");
+        output_.println("do not have authority to it.");
+        output_.println("ftp DDMTESTSAV.SAVF in binary from");
+        output_.println("the test/ directory in git");
+        output_.println("to the AS/400 system to which you are running.");
+        output_.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
+        output_.println("ran="+ran); 
         throw new Exception("");
       }
 
@@ -394,18 +394,18 @@ public class DDMRecordDescription extends Testcase
     {
       rd = new AS400FileRecordDescription(systemObject_, simple);
       rd.createRecordFormatSource(null, null);
-      System.out.println("Verify the following:");
-      System.out.println("  1) File SIMPLEFormat.java exists in the current (client) directory.");
-      System.out.println("  2) Verify the contents of the file:");
-      System.out.println("     a) No package statement");
-      System.out.println("     b) Class name = SIMPLEFormat and extends RecordFormat");
-      System.out.println("     c) Three fields: FIELD1 (CHAR10), TENCHARFLD (BIN7), ZONED (27,4)");
-      System.out.println("     d) CCSID for character fields = the ccsid displayed for the field");
-      System.out.println("        in the output from the DSPFFD DDMTESTSAV/SIMPLESEQ command on");
-      System.out.println("        the AS/400.");
-      System.out.println("     e) No key fields");
-      System.out.println("  3) The file compiles.\n");
-      System.out.println("Is everything ok (Y/N)?");
+      output_.println("Verify the following:");
+      output_.println("  1) File SIMPLEFormat.java exists in the current (client) directory.");
+      output_.println("  2) Verify the contents of the file:");
+      output_.println("     a) No package statement");
+      output_.println("     b) Class name = SIMPLEFormat and extends RecordFormat");
+      output_.println("     c) Three fields: FIELD1 (CHAR10), TENCHARFLD (BIN7), ZONED (27,4)");
+      output_.println("     d) CCSID for character fields = the ccsid displayed for the field");
+      output_.println("        in the output from the DSPFFD DDMTESTSAV/SIMPLESEQ command on");
+      output_.println("        the AS/400.");
+      output_.println("     e) No key fields");
+      output_.println("  3) The file compiles.\n");
+      output_.println("Is everything ok (Y/N)?");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -415,7 +415,7 @@ public class DDMRecordDescription extends Testcase
         return;
       }
       rd = new AS400FileRecordDescription(systemObject_, simple);
-      System.out.println("Enter a directory path in which to create the file");
+      output_.println("Enter a directory path in which to create the file");
       String path = null;
       String pkg = null;
       try
@@ -427,7 +427,7 @@ public class DDMRecordDescription extends Testcase
         failed(e, "Unable to read path specified");
         return;
       }
-      System.out.println("Enter a package name in which to create the file");
+      output_.println("Enter a package name in which to create the file");
       try
       {
         pkg = inBuf.readLine();
@@ -438,18 +438,18 @@ public class DDMRecordDescription extends Testcase
         return;
       }
       rd.createRecordFormatSource(path, pkg);
-      System.out.println("Verify the following:");
-      System.out.println("  1) File SIMPLEFormat.java exists in client directory " + path);
-      System.out.println("  2) Verify the contents of the file:");
-      System.out.println("     a) package " + pkg);
-      System.out.println("     b) Class name = SIMPLEFormat and extends RecordFormat");
-      System.out.println("     c) Three fields: FIELD1 (CHAR10), TENCHARFLD (BIN7), ZONED (27,4)");
-      System.out.println("     d) CCSID for character fields = the ccsid displayed for the field");
-      System.out.println("        in the output from the DSPFFD DDMTESTSAV/SIMPLESEQ command on");
-      System.out.println("        the AS/400.");
-      System.out.println("     e) No key fields");
-      System.out.println("  3) The file compiles.\n");
-      System.out.println("Is everything ok (Y/N)?");
+      output_.println("Verify the following:");
+      output_.println("  1) File SIMPLEFormat.java exists in client directory " + path);
+      output_.println("  2) Verify the contents of the file:");
+      output_.println("     a) package " + pkg);
+      output_.println("     b) Class name = SIMPLEFormat and extends RecordFormat");
+      output_.println("     c) Three fields: FIELD1 (CHAR10), TENCHARFLD (BIN7), ZONED (27,4)");
+      output_.println("     d) CCSID for character fields = the ccsid displayed for the field");
+      output_.println("        in the output from the DSPFFD DDMTESTSAV/SIMPLESEQ command on");
+      output_.println("        the AS/400.");
+      output_.println("     e) No key fields");
+      output_.println("  3) The file compiles.\n");
+      output_.println("Is everything ok (Y/N)?");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -512,13 +512,13 @@ public class DDMRecordDescription extends Testcase
       rd4.createRecordFormatSource(null, null);
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
-      System.out.println("Please ensure that the following files exist in the current working directory and compile them:");
-      System.out.println("  SIMPLEFormat.java");
-      System.out.println("  SIMPLEKEYFormat.java");
-      System.out.println("  ALLFLDSFormat.java");
-      System.out.println("  ALLFLDSKEYFormat.java\n");
-      System.out.println("Do the files exist and compile (Y/N)?");
-      System.out.println(" rfs="+rfs); 
+      output_.println("Please ensure that the following files exist in the current working directory and compile them:");
+      output_.println("  SIMPLEFormat.java");
+      output_.println("  SIMPLEKEYFormat.java");
+      output_.println("  ALLFLDSFormat.java");
+      output_.println("  ALLFLDSKEYFormat.java\n");
+      output_.println("Do the files exist and compile (Y/N)?");
+      output_.println(" rfs="+rfs); 
       String resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -597,28 +597,28 @@ public class DDMRecordDescription extends Testcase
         k2.close();
 
         Record[] recs = s1.readAll();
-        System.out.println("Records in " + s1.getFileName());
+        output_.println("Records in " + s1.getFileName());
         for (int i = 0; i < recs.length; ++i)
         {
-          System.out.println(recs[i]);
+          output_.println(recs[i]);
         }
         recs = s2.readAll();
-        System.out.println("Records in " + s2.getFileName());
+        output_.println("Records in " + s2.getFileName());
         for (int i = 0; i < recs.length; ++i)
         {
-          System.out.println(recs[i]);
+          output_.println(recs[i]);
         }
         recs = k1.readAll();
-        System.out.println("Records in " + k1.getFileName());
+        output_.println("Records in " + k1.getFileName());
         for (int i = 0; i < recs.length; ++i)
         {
-          System.out.println(recs[i]);
+          output_.println(recs[i]);
         }
         recs = k2.readAll();
-        System.out.println("Records in " + k2.getFileName());
+        output_.println("Records in " + k2.getFileName());
         for (int i = 0; i < recs.length; ++i)
         {
-          System.out.println(recs[i]);
+          output_.println(recs[i]);
         }
       }
       catch(Exception e)

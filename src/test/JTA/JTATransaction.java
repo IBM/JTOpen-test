@@ -741,17 +741,17 @@ public class JTATransaction extends JTATestcase {
     {
         byte[] g = xid.getGlobalTransactionId();
         byte[] b = xid.getBranchQualifier();
-        System.out.print("----->globalXid=");
+        output_.print("----->globalXid=");
         for(int x = 0; x< g.length; x++)
         {
-            System.out.print(g[x] + ",");   
+            output_.print(g[x] + ",");   
         }
-        System.out.print("\n----->branchXid=");
+        output_.print("\n----->branchXid=");
         for(int x = 0; x< b.length; x++)
         {
-            System.out.print(b[x] + ",");   
+            output_.print(b[x] + ",");   
         }
-        System.out.println("");
+        output_.println("");
     
     }
 }

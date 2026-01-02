@@ -168,16 +168,13 @@ Performs setup needed before running testcases.
       }
 
       JDSetupCollection.create (systemObject_, 
-                                connection_, COLLECTION);
+                                connection_, COLLECTION, out_);
       JDSetupCollection.create (systemObject_, 
-                                connection_, COLLECTION2);
+                                connection_, COLLECTION2, out_);
       JDSetupCollection.create (systemObject_, 
-                                connection_, COLLECTIONXX);
-      if(true)  //@128sch 
-      {
+                                connection_, COLLECTIONXX, out_);
           JDSetupCollection.create (systemObject_,
-                  connection_, SCHEMAS_LEN128);
-      }
+                  connection_, SCHEMAS_LEN128, out_);
       
       try { 
         // Ignore any exceptions from commit.  JCC for DB2 V9 now throws exception

@@ -13,6 +13,7 @@
 
 package test.JD;
 
+import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
@@ -78,7 +79,8 @@ public class JDTestUtilities
     **/
     public static void cleanup(AS400 systemObject,
                         String password,
-                        String collection)
+                        String collection,
+                        PrintWriter output)
     {
       // get jdbc necessaries
       registerDriver();
@@ -96,16 +98,16 @@ public class JDTestUtilities
       }
       catch(Exception e)
       {
-        System.out.println("Exception occurred while getting connection/statement objects.");
+        output.println("Exception occurred while getting connection/statement objects.");
         e.printStackTrace();
       }
 
       // kill the table
-      dropCollection(systemObject, collection);
+      dropCollection(systemObject, collection, output);
 
  
 
-      System.out.println("Cleanup completed for "+collection+".");
+      output.println("Cleanup completed for "+collection+".");
     }
 
 
@@ -308,11 +310,12 @@ public class JDTestUtilities
     **/
     public static void dropAndClose (Connection connection,
                               String tableName,
-                              String tableLib)
+                              String tableLib,
+                              PrintWriter output)
         throws SQLException
     {
         if (connection == null) {
-          System.out.println("JDTestUtilities.dropAndClose: " +
+          output.println("JDTestUtilities.dropAndClose: " +
                              "Specified connection is null.");
           return;
         }
@@ -338,53 +341,54 @@ public class JDTestUtilities
     to the standard message that appears in the message queue.
     **/
     public static void dropCollection(AS400 systemObject,
-                               String collection)
+                               String collection,
+                               PrintWriter output)
     {
       CommandCall cmd = new CommandCall(systemObject);
       try
       {
         // End journaling for all files in the collection to close the journal.
-        System.out.println("  Ending journaling for collection "+collection+"...");
+        output.println("  Ending journaling for collection "+collection+"...");
         cmd.setCommand("QSYS/ENDJRNPF FILE(*ALL) JRN("+collection+"/QSQJRN)");
         cmd.run();
         cmd.setCommand("QSYS/ENDJRNAP FILE(*ALL) JRN("+collection+"/QSQJRN)");
         cmd.run();
 
         // Delete the SQL Journal that gets created when a "CREATE COLLECTION" is done.
-        System.out.println("  Deleting journal...");
+        output.println("  Deleting journal...");
         cmd.setCommand("QSYS/DLTJRN "+collection+"/Q*");
         cmd.run();
 
         // Delete the temporary save file.
         // This prevents the notorious "...already contains data..." message from
         // appearing in the message queue.
-        System.out.println("  Deleting pre-existing temporary save file...");
+        output.println("  Deleting pre-existing temporary save file...");
         cmd.setCommand("QSYS/DLTF "+collection+"/TEMP");
         cmd.run();
 
         // Create a temporary save file into which the objects in the collection
         // will be saved.
-        System.out.println("  Re-creating temporary save file...");
+        output.println("  Re-creating temporary save file...");
         cmd.setCommand("QSYS/CRTSAVF "+collection+"/TEMP");
         cmd.run();
 
         // Save the objects to the save file.
         // This prevents the notorious "...not fully saved..." message from
         // appearing in the message queue.
-        System.out.println("  Saving all objects in collection "+collection+"...");
+        output.println("  Saving all objects in collection "+collection+"...");
         String str = "QSYS/SAVOBJ OBJ(*ALL) LIB("+collection+") DEV(*SAVF) ";
         str += "SAVF("+collection+"/TEMP)";
         cmd.setCommand(str);
         cmd.run();
 
         // Delete the collection.
-        System.out.println("  Deleting collection "+collection+"...");
+        output.println("  Deleting collection "+collection+"...");
 	TestDriver.deleteLibrary(cmd,collection);
 
       }
       catch(Exception e)
       {
-        System.out.println("Exception occurred while dropping collection object "+collection+".");
+        output.println("Exception occurred while dropping collection object "+collection+".");
         e.printStackTrace();
       }
     }
@@ -399,7 +403,8 @@ public class JDTestUtilities
     **/
     public static void grantAuthority(AS400 systemObject,
                                String library,
-                               String user)
+                               String user,
+                               PrintWriter output)
     {
       if (user == null)
         user = systemObject.getUserId();
@@ -411,23 +416,23 @@ public class JDTestUtilities
       str2 += ") OBJTYPE(*ALL) USER("+user+") AUT(*ALL)";
       try
       {
-        System.out.println("  Granting authority to "+user+" for library "+library+"...");
+        output.println("  Granting authority to "+user+" for library "+library+"...");
         cmd.setCommand(str1);
         cmd.run();
       }
       catch(Exception e)
       {
-        System.out.println("Failed to grant library authority.");
+        output.println("Failed to grant library authority.");
       }
       try
       {
-        System.out.println("  Granting authority to "+user+" for all objects in "+library+"...");
+        output.println("  Granting authority to "+user+" for all objects in "+library+"...");
         cmd.setCommand(str2);
         cmd.run();
       }
       catch(Exception e)
       {
-        System.out.println("Failed to grant object authorities.");
+        output.println("Failed to grant object authorities.");
       }
     }
 
@@ -567,22 +572,23 @@ public class JDTestUtilities
                           String AS400password,
                           String rs6000,
                           String AFSuserid,
-                          String AFSpassword)
+                          String AFSpassword,
+                           PrintWriter output)
     {
       CommandCall cmd = new CommandCall(systemObject);
 
-      System.out.println("Cleaning up JDBCLIB...");
-      cleanup(systemObject, AS400password, "JDBCLIB");
-      System.out.println("Cleaning up JDBCTEST...");
-      cleanup(systemObject, AS400password, "JDBCTEST");
-      System.out.println("Cleaning up JDDMDLIB...");
-      cleanup(systemObject, AS400password, "JDDMDLIB");
-      System.out.println("Cleaning up JDDMDTST...");
-      cleanup(systemObject, AS400password, "JDDMDTST");
-      System.out.println("Cleaning up JDBCSTP...");
-      cleanup(systemObject, AS400password, "JDBCSTP");
+      output.println("Cleaning up JDBCLIB...");
+      cleanup(systemObject, AS400password, "JDBCLIB",output);
+      output.println("Cleaning up JDBCTEST...");
+      cleanup(systemObject, AS400password, "JDBCTEST",output);
+      output.println("Cleaning up JDDMDLIB...");
+      cleanup(systemObject, AS400password, "JDDMDLIB",output);
+      output.println("Cleaning up JDDMDTST...");
+      cleanup(systemObject, AS400password, "JDDMDTST",output);
+      output.println("Cleaning up JDBCSTP...");
+      cleanup(systemObject, AS400password, "JDBCSTP",output);
 
-      System.out.println("Creating save files...");
+      output.println("Creating save files...");
       try
       {
         cmd.setCommand("QSYS/CRTSAVF QGPL/JDBCSTP");
@@ -594,12 +600,12 @@ public class JDTestUtilities
       }
       catch(Exception e)
       {
-        System.out.println("Exception occurred while creating save files.");
+        output.println("Exception occurred while creating save files.");
         e.printStackTrace();
         return;
       }
 
-      System.out.println("Starting ftp...");
+      output.println("Starting ftp...");
       try
       {
 
@@ -651,13 +657,13 @@ public class JDTestUtilities
       }
       catch(Exception e)
       {
-        System.out.println("Exception occurred while ftp-ing save files.");
+        output.println("Exception occurred while ftp-ing save files.");
         e.printStackTrace();
         return;
       }
 
       cmd = new CommandCall(systemObject);
-      System.out.println("Restoring objects and libraries...");
+      output.println("Restoring objects and libraries...");
 
       try
       {
@@ -672,29 +678,29 @@ public class JDTestUtilities
       }
       catch(Exception e)
       {
-        System.out.println("Exception occurred while restoring save files.");
+        output.println("Exception occurred while restoring save files.");
         e.printStackTrace();
         return;
       }
 
-      System.out.println("\n");
-      System.out.println("Setup of JDBC on "+systemObject.getSystemName()+" is complete.");
+      output.println("\n");
+      output.println("Setup of JDBC on "+systemObject.getSystemName()+" is complete.");
     }
 
 
-    public static void getCmdMessages(CommandCall cmd)
+    public static void getCmdMessages(CommandCall cmd, PrintWriter output)
     {
       try
       {
           AS400Message[] messagelist = cmd.getMessageList();
           for (int i=0; i < messagelist.length; i++)
           {
-            System.out.println( messagelist[i].getText() );
+            output.println( messagelist[i].getText() );
           }
       }
       catch(Exception e)
       {
-        System.out.println("Exception while getting messages.");
+        output.println("Exception while getting messages.");
         e.printStackTrace();
       }
     }

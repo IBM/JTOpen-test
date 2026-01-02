@@ -95,7 +95,7 @@ Constructor.
      } else if (jdk == JVMInfo.JDK_V21) {
        gtridPrefix = 0x1DBCCC1D00000000L;    
      } else {
-       System.out.println("Warning.. did not recognize jdk version "+jdk); 
+       output_.println("Warning.. did not recognize jdk version "+jdk); 
      }
      JTATestXid.setGtridPrefix(gtridPrefix);
      
@@ -418,7 +418,7 @@ Performs cleanup needed after running variations.
                 JTATest.verboseOut("Skipped Forget");
               }
             } else {
-              System.out.println("Warning:  Found extra transaction for XID = "+xids[i]);
+              output_.println("Warning:  Found extra transaction for XID = "+xids[i]);
             }
           }
 

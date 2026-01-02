@@ -1743,7 +1743,7 @@ unicode correctly.
             cleanupTable(s,  table_);
             s.close();
 
-            //System.out.println(userName);
+            //output_.println(userName);
             assertCondition(userName.equals(systemObject_.getUserId ()));
 
             } catch (SQLException two) {
@@ -1787,7 +1787,7 @@ unicode correctly.
             cleanupTable(s,  table_);
             s.close();
 
-            //System.out.println(literal);
+            //output_.println(literal);
             assertCondition(literal.equals(expectedLiteral));
 
 	    } catch (SQLException two) {
@@ -1913,8 +1913,8 @@ the result set.
 				  stmt.close();
 			      }
 			} catch (SQLException one) {
-			    System.out.println("Warning.  exception during cleanup");
-			    one.printStackTrace(System.out); 
+			    output_.println("Warning.  exception during cleanup");
+			    one.printStackTrace(output_); 
 			}
 			try {
 			    stmt =   connection_.createStatement();
@@ -2997,8 +2997,8 @@ the result set.
          if (stmt != null) stmt.close();
          if (connection != null) connection.close();
        } catch (Exception e) { 
-         System.out.println("Unexpected error "); 
-         e.printStackTrace(System.out); 
+         output_.println("Unexpected error "); 
+         e.printStackTrace(output_); 
        }
    } 
 

@@ -113,7 +113,7 @@ Constructors.
     }
 
     protected String getCatalogFromURL(String url) { 
-      // System.out.println("BaseURL is "+baseURL_); 
+      // output_.println("BaseURL is "+baseURL_); 
       // must be running JCC, set to a valid value.
       // jdbc:db2://y0551p2:446/*LOCAL
 
@@ -144,7 +144,7 @@ Performs setup needed before running variations.
         connectionCatalog_ = connection_.getCatalog(); 
         if (connectionCatalog_ == null) {
            connectionCatalog_ = getCatalogFromURL(baseURL_); 
-           System.out.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_); 
+           output_.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_); 
         }
         dmd_ = connection_.getMetaData ();
 
@@ -2238,7 +2238,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getUDTs");
+		    // output_.println("Calling getUDTs");
                     ResultSet rs = dmd_.getUDTs (null, JDDMDTest.COLLECTION,
                             "UDTS%", null);
 

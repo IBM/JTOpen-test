@@ -69,7 +69,7 @@ public class SysvalSerialization extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS400.");
+      output_.println("Unable to connect to the AS400.");
       e.printStackTrace(output_);
     }
 */
@@ -79,7 +79,7 @@ public class SysvalSerialization extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to run setup.");
+      output_.println("Unable to run setup.");
       ///systemObject_.disconnectService(AS400.RECORDACCESS);
       return;
     }
@@ -147,7 +147,7 @@ public class SysvalSerialization extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup failed.");
+      output_.println("Cleanup failed.");
       return;
     }
     ///systemObject_.disconnectService(AS400.RECORDACCESS);
@@ -291,7 +291,7 @@ String runCommand(String command)
     }
     catch(Exception e)
     {
-      System.out.println("Cleanup unsuccessful.");
+      output_.println("Cleanup unsuccessful.");
       e.printStackTrace(output_);
       throw e;
     }

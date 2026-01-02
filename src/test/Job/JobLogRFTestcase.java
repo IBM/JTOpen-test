@@ -3654,7 +3654,7 @@ public class JobLogRFTestcase extends Testcase {
             f.setSelectionValue(RJobLog.STARTING_MESSAGE_KEY,
                 qmsg1.getAttributeValue(RQueuedMessage.MESSAGE_KEY));
             f.refreshContents();
-            System.out.println("length after setSelectionValue = "
+            output_.println("length after setSelectionValue = "
                 + f.getListLength());
             qmsg2 = (RQueuedMessage) f.resourceAt(0);
             if (f.getListLength() < 2 || !qmsg1.equals(qmsg2)) {
@@ -3667,7 +3667,7 @@ public class JobLogRFTestcase extends Testcase {
                                                                      // NEXT
             f.refreshContents();
             qmsg2 = (RQueuedMessage) f.resourceAt(0);
-            System.out.println("length = " + f.getListLength());
+            output_.println("length = " + f.getListLength());
             if (!qmsg0.equals(qmsg2)) {
               failed("Message objects unequal after reset.");
               return;

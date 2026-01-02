@@ -1082,7 +1082,7 @@ public class JDPSSetBlob extends JDTestcase {
             "check = " + JDTestUtilities.getMixedString(check) + " And SB "
                 + JDTestUtilities.getMixedString(expected) + added);
       } catch (Exception e) {
-        System.out.println("Encoding is " + byteEncoding + " jvm is " + jvm
+        output_.println("Encoding is " + byteEncoding + " jvm is " + jvm
             + " jvmVendor is " + jvmVendor);
         failed(e, "Unexpected Exception" + added);
       }

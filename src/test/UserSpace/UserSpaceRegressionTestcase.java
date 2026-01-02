@@ -127,7 +127,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     }
     catch(Exception e)
     {
-        System.out.println("Cleanup failed - Delete UserSpace: " + e);
+        output_.println("Cleanup failed - Delete UserSpace: " + e);
     }
   }
 
@@ -147,7 +147,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
        if (cmd.run("QSYS/CRTLIB LIB(USTEST)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
        // Create a user space to use test on an pre-existing user space.
@@ -158,8 +158,8 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed, could not create "+UserSpaceTest.COLLECTION+".LIB/preexist.usrspc");
-       System.out.println(e);
+       output_.println("Setup failed, could not create "+UserSpaceTest.COLLECTION+".LIB/preexist.usrspc");
+       output_.println(e);
        throw e;
     }
   }
@@ -171,7 +171,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
   private void setupUSUnauthorized()
   {
     if (pwrSys_ == null) {
-      System.out.println("Setup failed, pwrSys_ not specified.");
+      output_.println("Setup failed, pwrSys_ not specified.");
       return;
     }
     CommandCall cmd = new CommandCall(pwrSys_);
@@ -185,13 +185,13 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
        if (cmd.run("QSYS/CRTAUTL AUTL(USAUTHLIST) AUT(*EXCLUDE)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
        if (cmd.run("QSYS/CRTLIB LIB("+testAuth+") AUT(USAUTHLIST)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
     }
     catch (Exception e) {}
@@ -207,7 +207,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed, could not create "+testAuth+".LIB/uswrite3.usrspc " + e);
+       output_.println("Setup failed, could not create "+testAuth+".LIB/uswrite3.usrspc " + e);
     }
   }
 
@@ -226,7 +226,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
        if (cmd.run("QSYS/CRTLIB LIB("+authLib+")") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println("Setup warning - " + messageList[0].toString());
+           output_.println("Setup warning - " + messageList[0].toString());
        }
 
        UserSpace aUSpace = new UserSpace(pwrSys_, authorityUserSpace_);
@@ -238,7 +238,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed." + e);
+       output_.println("Setup failed." + e);
     }
   }
 
@@ -288,7 +288,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
 
       }catch(Exception ex)
       {
-         System.out.println("PgmRun Failed: " + ex);
+         output_.println("PgmRun Failed: " + ex);
       }
       return collectorWrite;
    }
@@ -335,13 +335,13 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
          {
             AS400Message[] messageList = collector.getMessageList();
             for (int msg = 0; msg < messageList.length; msg++)
-               System.out.println("PgmError: " + messageList[msg].toString());
+               output_.println("PgmError: " + messageList[msg].toString());
          }
       }
       catch(Exception ex)
       {
          String message = (start) ? "started! ":"ended! ";
-         System.out.println("PgmRun: Collector failed to " + message + ex);
+         output_.println("PgmRun: Collector failed to " + message + ex);
       }
    }
 
@@ -397,7 +397,7 @@ unauthorizedUserSpace_ = "/QSYS.LIB/"+testAuth+".LIB/USWRITE3.USRSPC";
      }
      catch(Exception e)
      {
-        System.out.println("Cleanup failed." + e);
+        output_.println("Cleanup failed." + e);
         throw e;
      }
   }
@@ -2073,7 +2073,7 @@ Ensure AS400SecurityException is thrown if the user does not have authority to t
 
         {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println("Testcase cleanup failed. - " + messageList[0].toString());
+           output_.println("Testcase cleanup failed. - " + messageList[0].toString());
         }
         pwrSys_.disconnectAllServices();
         usSystem_.disconnectAllServices();
@@ -2467,7 +2467,7 @@ Ensure that a second UserSpace object can write to a open user space.(same AS400
     {
         try {
            secondUS.close();
-        }catch(Exception e) { System.out.println("Testcase cleanup failed. " + e); }
+        }catch(Exception e) { output_.println("Testcase cleanup failed. " + e); }
         deleteUserSpace(aUserSpace);
     }
   }
@@ -2507,7 +2507,7 @@ Ensure that a second UserSpace object can write to a user space after it is clos
     {
        try {
           secondUS.close();
-       }catch(Exception e) { System.out.println("Cleanup failed - UserSpace.close: " + e);
+       }catch(Exception e) { output_.println("Cleanup failed - UserSpace.close: " + e);
        }
        deleteUserSpace(aUserSpace);
     }
@@ -3661,7 +3661,7 @@ Ensure that a second UserSpace object can read from a open user space.(same AS40
     {
         try {
            secondUS.close();
-        }catch(Exception e) { System.out.println("Testcase cleanup failed. " + e); }
+        }catch(Exception e) { output_.println("Testcase cleanup failed. " + e); }
         deleteUserSpace(aUserSpace);
     }
   }
@@ -3702,7 +3702,7 @@ Ensure that a second UserSpace object can read from a user space after it is clo
        try {
           secondUS.close();
        }
-       catch(Exception e) { System.out.println("Testcase cleanup failed. " + e);
+       catch(Exception e) { output_.println("Testcase cleanup failed. " + e);
        }
        deleteUserSpace(aUserSpace);
     }

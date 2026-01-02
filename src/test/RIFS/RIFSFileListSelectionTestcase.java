@@ -179,7 +179,7 @@ Checks a particular selection meta data.
 /**
 Checks a particular selection meta data.
 **/
-    static boolean verifySelectionMetaData(ResourceMetaData[] smd, 
+     boolean verifySelectionMetaData(ResourceMetaData[] smd, 
                                             Object attributeID, 
                                             Class<?> attributeType,
                                             boolean readOnly, 
@@ -195,7 +195,7 @@ Checks a particular selection meta data.
         }
 
         if (found < 0) {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -320,7 +320,7 @@ getSelectionMetaData() with 1 parameter - Try each of them.
                                                              smd[i].isValueLimited(),
                                                              smd[i].areMultipleAllowed());
                 if (!thisOne) {
-                    System.out.println("Comparison failed for: " + smd[i] + ".");
+                    output_.println("Comparison failed for: " + smd[i] + ".");
                     success = false;
                 }
             }
@@ -457,7 +457,7 @@ getSelectionValue() - Pass every selection ID.
             ResourceMetaData[] smd = u.getSelectionMetaData();
             boolean success = true;
             for(int i = 0; i < smd.length; ++i) {
-                // System.out.println("Getting selection " + smd[i] + ".");
+                // output_.println("Getting selection " + smd[i] + ".");
                 Object value = u.getSelectionValue(smd[i].getID());
                 Class<?> valueClass = value.getClass();
                 Class<?> type = smd[i].getType();
@@ -465,7 +465,7 @@ getSelectionValue() - Pass every selection ID.
                 // Validate the type.
                 if (smd[i].areMultipleAllowed()) {
                     if (!valueClass.isArray()) {
-                        System.out.println("Error getting selection " + smd[i] + ".");
+                        output_.println("Error getting selection " + smd[i] + ".");
                         System.out.println("Type array mismatch: " + valueClass + " is not an array, "
                                            + "but multiple values are allowed.");
                         success = false;
@@ -473,14 +473,14 @@ getSelectionValue() - Pass every selection ID.
                     else {
                         Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
-                            System.out.println("Error getting selection " + smd[i] + ".");
+                            output_.println("Error getting selection " + smd[i] + ".");
                             System.out.println("Type mismatch: " + componentType + " != " + type + ".");
                             success = false;
                         }
                     }
                 }
                 else if (!type.isAssignableFrom(valueClass)) {
-                    System.out.println("Error getting selection " + smd[i] + ".");
+                    output_.println("Error getting selection " + smd[i] + ".");
                     System.out.println("Type mismatch: " + valueClass + " != " + type + ".");
                     success = false;
                 }
@@ -497,7 +497,7 @@ getSelectionValue() - Pass every selection ID.
                                 found = true;                           
 
                             if (! found) {
-                                System.out.println("Error getting selection " + smd[i] + ".");
+                                output_.println("Error getting selection " + smd[i] + ".");
                                 System.out.println("Value: " + asArray[k] + " is not a valid possible value.");
                                 success = false;
                             }
@@ -509,7 +509,7 @@ getSelectionValue() - Pass every selection ID.
                                 found = true;
 
                         if (! found) {
-                            System.out.println("Error getting selection " + smd[i] + ".");
+                            output_.println("Error getting selection " + smd[i] + ".");
                             System.out.println("Value: " + value + " is not a valid possible value.");
                             success = false;
                         }

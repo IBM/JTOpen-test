@@ -101,7 +101,7 @@ Performs setup needed before running variations.
 	             + ";time format=jis"
                      + ";date format=iso"; 
               
-          System.out.println("Connecting to url "+baseURL_); 
+          output_.println("Connecting to url "+baseURL_); 
         connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
 	setAutoCommit(connection_, false); // @E1A
 
@@ -148,12 +148,12 @@ Performs setup needed before running variations.
           ps.execute(); 
           ps.close(); 
         } catch (SQLException sqlex) {
-          System.out.println("Warning: Boolean setup failure on " + sql);
-          sqlex.printStackTrace(System.out);
+          output_.println("Warning: Boolean setup failure on " + sql);
+          sqlex.printStackTrace(output_);
           sql = "VALUES CURRENT SERVER"; 
           ResultSet rs = statement_.executeQuery(sql); 
           rs.next(); 
-          System.out.println("Current server is "+rs.getString(1));
+          output_.println("Current server is "+rs.getString(1));
         }
 
       }

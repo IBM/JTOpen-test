@@ -1881,7 +1881,7 @@ public class AS400JDBCDataSourcePropertiesTestcase extends Testcase
          ds.setTrace(false);
       File cleanupFile = new File(logFileName); //@A1A
       if (!cleanupFile.delete()) //@A1A
-            System.out.println("WARNING... testcase cleanup could not delete: "+logFileName); //@A1A
+            output_.println("WARNING... testcase cleanup could not delete: "+logFileName); //@A1A
       }
    }
 
@@ -2081,7 +2081,7 @@ public class AS400JDBCDataSourcePropertiesTestcase extends Testcase
          ds.setToolboxTraceCategory("none");
       File cleanupFile = new File(logFileName); //@K1A
       if (!cleanupFile.delete()) //@K1A
-            System.out.println("WARNING... testcase cleanup could not delete: "+logFileName); //@K1A
+            output_.println("WARNING... testcase cleanup could not delete: "+logFileName); //@K1A
       }
    }
 

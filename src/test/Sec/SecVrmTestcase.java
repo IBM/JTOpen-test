@@ -143,7 +143,7 @@ public class SecVrmTestcase extends Testcase {
    **/
   public void Var009() {
     try {
-      System.out.println("  Var009: connecting to " + VNEXT_SYSTEM_NAME);
+      output_.println("  Var009: connecting to " + VNEXT_SYSTEM_NAME);
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       AS400 system = new AS400(VNEXT_SYSTEM_NAME, userId_, charPassword);
       PasswordVault.clearPassword(charPassword);

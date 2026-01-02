@@ -146,7 +146,7 @@ ABSOLUTE_PATH - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.ABSOLUTE_PATH, String.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.ABSOLUTE_PATH, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -231,7 +231,7 @@ CANONICAL_PATH - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CANONICAL_PATH, String.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CANONICAL_PATH, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -316,7 +316,7 @@ CAN_READ - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CAN_READ, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CAN_READ, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -428,7 +428,7 @@ CAN_WRITE - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CAN_WRITE, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CAN_WRITE, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -540,7 +540,7 @@ CCSID - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CCSID, Integer.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CCSID, Integer.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -627,7 +627,7 @@ CREATED - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CREATED, Date.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.CREATED, Date.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -720,7 +720,7 @@ EXISTS - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.EXISTS, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.EXISTS, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -807,7 +807,7 @@ IS_ABSOLUTE - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_ABSOLUTE, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_ABSOLUTE, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -943,7 +943,7 @@ IS_DIRECTORY - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_DIRECTORY, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_DIRECTORY, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1030,7 +1030,7 @@ IS_FILE - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_FILE, Boolean.class, true, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_FILE, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1117,7 +1117,7 @@ IS_HIDDEN - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_HIDDEN, Boolean.class, false, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_HIDDEN, Boolean.class, false, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1344,7 +1344,7 @@ IS_READ_ONLY - Check the attribute meta data in the entire list.
         try {
             RIFSFile u = new RIFSFile();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_READ_ONLY, Boolean.class, false, 0, null, false, false));
+            assertCondition(RIFSFileGenericAttributeTestcase.verifyAttributeMetaData(amd, RIFSFile.IS_READ_ONLY, Boolean.class, false, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

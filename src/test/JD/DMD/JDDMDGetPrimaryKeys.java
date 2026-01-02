@@ -946,7 +946,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getPrimaryKeys");
+		    // output_.println("Calling getPrimaryKeys");
 		    ResultSet rs =
 		      dmd_.getPrimaryKeys (connection_.getCatalog (),
 					   JDDMDTest.COLLECTION2, "PK1");

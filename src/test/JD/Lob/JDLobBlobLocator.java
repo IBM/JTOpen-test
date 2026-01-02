@@ -130,7 +130,7 @@ public class JDLobBlobLocator extends JDTestcase {
         try {
           statement2_ = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); // @C2C
         } catch (Exception e) {
-          System.out.println("Warning:  Exception creating statement2");
+          output_.println("Warning:  Exception creating statement2");
           e.printStackTrace();
           statement2_ = connection_.createStatement();
         }
@@ -138,7 +138,7 @@ public class JDLobBlobLocator extends JDTestcase {
         try {
           statement6_ = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE); // @C2C
         } catch (Exception e) {
-          System.out.println("Warning:  Exception creating statement6");
+          output_.println("Warning:  Exception creating statement6");
           e.printStackTrace();
           statement6_ = connection_.createStatement();
         }
@@ -255,7 +255,7 @@ public class JDLobBlobLocator extends JDTestcase {
           try {
             cmd.execute();
           } catch (Exception e) {
-            System.out.println("Error calling " + command);
+            output_.println("Error calling " + command);
             e.printStackTrace();
           }
 
@@ -266,7 +266,7 @@ public class JDLobBlobLocator extends JDTestcase {
           try {
             cmd.execute();
           } catch (Exception e) {
-            System.out.println("Error calling " + command);
+            output_.println("Error calling " + command);
             e.printStackTrace();
           }
 
@@ -282,7 +282,7 @@ public class JDLobBlobLocator extends JDTestcase {
           try {
             stmt.executeUpdate(sql);
           } catch (Exception e) {
-            System.out.println("Error running " + sql);
+            output_.println("Error running " + sql);
             e.printStackTrace();
           }
           stmt.close();
@@ -347,7 +347,7 @@ public class JDLobBlobLocator extends JDTestcase {
         try {
           positionToRow(1);
           Blob blob = rs_.getBlob("C_BLOB");
-          System.out.println("****** blobLocator = " + blob);
+          output_.println("****** blobLocator = " + blob);
           sb.setLength(0);
           InputStream v = blob.getBinaryStream();
           if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @D3
@@ -1391,9 +1391,9 @@ public class JDLobBlobLocator extends JDTestcase {
           rs.next();
           Blob blob3 = rs.getBlob("C_BLOB");
 
-          if ((JDLobGraphicData.checkResultsBytes(biggerBlob, blob1.getBytes(1, (int) blob1.length())))
-              && (JDLobGraphicData.checkResultsBytes(biggerBlob2, blob2.getBytes(1, (int) blob2.length())))
-              && (JDLobGraphicData.checkResultsBytes(biggerBlob3, blob3.getBytes(1, (int) blob3.length()))))
+          if ((JDLobGraphicData.checkResultsBytes(biggerBlob, blob1.getBytes(1, (int) blob1.length()),output_))
+              && (JDLobGraphicData.checkResultsBytes(biggerBlob2, blob2.getBytes(1, (int) blob2.length()),output_))
+              && (JDLobGraphicData.checkResultsBytes(biggerBlob3, blob3.getBytes(1, (int) blob3.length()),output_)))
             assertCondition(true);
           else
             failed("data mismatch sql was " + sql);
@@ -1469,9 +1469,9 @@ public class JDLobBlobLocator extends JDTestcase {
             i++;
           }
 
-          if ((JDLobGraphicData.checkResultsBytes(biggerBlob, b1))
-              && (JDLobGraphicData.checkResultsBytes(biggerBlob2, b2))
-              && (JDLobGraphicData.checkResultsBytes(biggerBlob3, b3)))
+          if ((JDLobGraphicData.checkResultsBytes(biggerBlob, b1,output_))
+              && (JDLobGraphicData.checkResultsBytes(biggerBlob2, b2,output_))
+              && (JDLobGraphicData.checkResultsBytes(biggerBlob3, b3,output_)))
             assertCondition(true);
           else
             failed("data mismatch sql was " + sql);
@@ -3029,7 +3029,7 @@ public class JDLobBlobLocator extends JDTestcase {
               "Check said " + answer[0]);
 
         } catch (Exception e) {
-          System.out.println(e);
+          output_.println(e);
           failed(e, "Unexpected Exception");
         }
       }
@@ -3218,7 +3218,7 @@ public class JDLobBlobLocator extends JDTestcase {
         rs_.next();
         ;
         Blob blob = rs_.getBlob("C_BLOB");
-        System.out.println("Classname is " + blob.getClass().getName());
+        output_.println("Classname is " + blob.getClass().getName());
         JDReflectionUtil.callMethod_V(blob, "free");
         try {
           blob.length();
@@ -3501,7 +3501,7 @@ public class JDLobBlobLocator extends JDTestcase {
               + "' should have said error because the result set is closed -- new variation for V7R1");
 
         } catch (Exception e) {
-          System.out.println(e);
+          output_.println(e);
           failed(e, "Unexpected Exception");
         }
       }
@@ -3543,7 +3543,7 @@ public class JDLobBlobLocator extends JDTestcase {
       assertCondition(answer.indexOf("ERROR") >= 0, "Check said " + answer);
 
     } catch (Exception e) {
-      System.out.println(e);
+      output_.println(e);
       failed(e, "Unexpected Exception");
     }
 

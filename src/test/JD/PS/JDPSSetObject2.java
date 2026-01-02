@@ -2690,7 +2690,7 @@ setDateTimeParameterTest () - Set the specified paramber using an object using a
       try {
         Object o = JDReflectionUtil.callStaticMethod_O("java.time.LocalDateTime",
             "of", 2021,02,04, 21, 02, 04,123456789);
-         System.out.println("localDatetime is "+o); 
+         output_.println("localDatetime is "+o); 
         setDateTimeParameterTest("C_TIMESTAMP", o, "2021-02-04 21:02:04.123456");
       } catch (Exception e) {
         failed(e, "Unexpected Exception");

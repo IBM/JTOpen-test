@@ -177,7 +177,7 @@ public class JDDSProperties extends JDTestcase {
       ctx_ = new InitialContext(env);
 
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-        System.out.println("Calling bind (" + bindName_ + "," + dataSourceTB_ + ")");
+        output_.println("Calling bind (" + bindName_ + "," + dataSourceTB_ + ")");
         ctx_.bind(bindName_, dataSourceTB_);
       }
 
@@ -188,24 +188,24 @@ public class JDDSProperties extends JDTestcase {
       ctx_.rebind(bindName_, dataSource_);
       Object ds = ctx_.lookup(bindName_);
       if (!ds.equals(dataSource_)) {
-        System.out.println("Warning retrieved(" + ds + ") <> original(" + dataSource_ + ")");
+        output_.println("Warning retrieved(" + ds + ") <> original(" + dataSource_ + ")");
       }
     } catch (Exception e) {
-      System.out.println("Test call failed ");
-      e.printStackTrace(System.out);
+      output_.println("Test call failed ");
+      e.printStackTrace(output_);
       String msg = e.toString();
       if (msg.indexOf("Malformed") > 0) {
-        System.out.println("Resetting context");
+        output_.println("Resetting context");
         String[] files = { "/tmp/.bindings", "/.bindings", ".bindings" };
         for (int i = 0; i < files.length; i++) {
           File file = new File(files[i]);
           if (file.exists()) {
-            System.out.println("Deleting " + file);
+            output_.println("Deleting " + file);
             try {
               file.delete();
             } catch (Exception e2) {
-              System.out.println("Delete failed ");
-              e2.printStackTrace(System.out);
+              output_.println("Delete failed ");
+              e2.printStackTrace(output_);
             }
           }
         }
@@ -1036,8 +1036,8 @@ public class JDDSProperties extends JDTestcase {
         try {
           JDReflectionUtil.callMethod_V(dataSource_, "setTrace", false);
         } catch (Exception e) {
-          System.out.println("Error during testcase cleanup");
-          e.printStackTrace(System.out);
+          output_.println("Error during testcase cleanup");
+          e.printStackTrace(output_);
         }
 
       }
@@ -1441,7 +1441,7 @@ public class JDDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMaximumScale",64);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("new native property");
+        output_.println("new native property");
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
         } else {
@@ -1465,7 +1465,7 @@ public class JDDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMaximumScale",-1);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("NEW native property");
+        output_.println("NEW native property");
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
         } else {
@@ -1548,7 +1548,7 @@ public class JDDSProperties extends JDTestcase {
         // JDReflectionUtil.callMethod_V(dataSource_,"setMinimumDivideScale",10);
         failed("Did not throw exception New native property (toolbox will need)");
       } catch (Exception e) {
-        System.out.println("NEW NATIVE PROPERTY");
+        output_.println("NEW NATIVE PROPERTY");
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           assertExceptionIsInstanceOf(e, "com.ibm.as400.access.ExtendedIllegalArgumentException");
         } else {
@@ -2113,7 +2113,7 @@ public class JDDSProperties extends JDTestcase {
                 // if here, then there is a problem unless method text is "", then there is not
                 // a method in datasource for the corresponding property
                 if (propsNVM[ind + 2] != "") {
-                  System.out.println(
+                  output_.println(
                       "Error getting back Property: " + propsNVM[ind] + " by calling method DS." + propsNVM[ind + 2]);
                   passed = false;
                 } else

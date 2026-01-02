@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDCCSID65535.java
 //
 // Classes:      JDDMDCCSID65535
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -94,7 +83,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
     dmd_ = connection_.getMetaData();
     stmt_ = connection_.createStatement();
 
-    JDDMDGetColumnPrivileges.setupPrivileges(stmt_, getDriver(), getRelease());
+    JDDMDGetColumnPrivileges.setupPrivileges(stmt_, getDriver(), getRelease(),output_);
     
     stmt_.execute("CALL QSYS2.QCMDEXC('CHGJOB CCSID(65535)')");
 
@@ -113,7 +102,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
     String sql="select 'DUMPED JOBLOG FOR ' || job_name || ',' || current user from sysibm.sysdummy1"; 
     ResultSet rs = stmt_.executeQuery(sql);
     rs.next();
-    System.out.println(rs.getString(1));
+    output_.println(rs.getString(1));
     rs.close(); 
     JDDMDGetColumnPrivileges.cleanupPrivileges(stmt_, getDriver(), getRelease());
     connection_.close();
@@ -204,7 +193,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
       rs = stmt_.executeQuery("select distinct(QQC181) from qgpl.jddmdCc1 WHERE QQC181 LIKE 'TABLES_%'");
       while(rs.next()) {
 	  String value = rs.getString(1);
-	  /* System.out.println("DBMON CURSOR: "+ value); */ 
+	  /* output_.println("DBMON CURSOR: "+ value); */ 
 	  if ( "TABLES_EMPTYHJ".equals(value)) {
 	      emptyhj_found  = true; 
 	  }
@@ -327,7 +316,7 @@ public class JDDMDCCSID65535 extends JDTestcase {
       rs = stmt_.executeQuery("select distinct(QQC181) from qgpl.jddmdvar04 WHERE QQC181 IS NOT NULL");
       while(rs.next()) {
 	  String value = rs.getString(1);
-	  System.out.println("DBMON CURSOR: "+ value);
+	  output_.println("DBMON CURSOR: "+ value);
 
 	  if ( "COL_EMPTYHJ".equals(value)) {
 	      emptyhj_found  = true; 

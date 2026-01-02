@@ -69,7 +69,7 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
             {
                 try
                 {
-                    System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+                    output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
 
                     for (int j = 0; j < 7; ++j)
                     {
@@ -81,7 +81,7 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
 
                     ServiceProgramCall s = new ServiceProgramCall();
 
-                    System.out.println("     Running ServiceProgramCall..." + "(t" + curntThread_ + ")");
+                    output_.println("     Running ServiceProgramCall..." + "(t" + curntThread_ + ")");
 
                     if (s.run(sys_, serviceProgramName_, "i_iiiiiii", ServiceProgramCall.RETURN_INTEGER, paramList_))
                     {
@@ -89,8 +89,8 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
                         int k = I.intValue();
                         if (k != 28)     // If run successful, but incorrect return data.
                         {
-                            System.out.println("     Incorrect data returned.");
-                            System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                            output_.println("     Incorrect data returned.");
+                            output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                             AS400Message[] messageList = s.getMessageList();
                             for (int msg = 0; msg < messageList.length; ++msg)
@@ -100,12 +100,12 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
                         }
                         else
                         {
-                            System.out.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
+                            output_.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
                         }
                     }
                     else    // Run failed.
                     {
-                        System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                        output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                         AS400Message[] messageList = s.getMessageList();
                         for (int msg = 0; msg < messageList.length; ++msg)
@@ -116,8 +116,8 @@ public class ServicePgmCallStressTestcase extends ProxyStressTest implements Run
                 }
                 catch (Exception e)
                 {
-                    System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
-                    System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                    output_.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+                    output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                     if (Trace.isTraceOn()) Trace.log(Trace.ERROR, e);
                 }
                 if (i == maxIterations_)

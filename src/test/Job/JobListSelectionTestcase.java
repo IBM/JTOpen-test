@@ -162,7 +162,7 @@ Checks a particular selection meta data.
 /**
 Checks a particular selection meta data.
 **/
-    static boolean verifySelectionMetaData(ResourceMetaData[] smd, 
+    boolean verifySelectionMetaData(ResourceMetaData[] smd, 
                                             Object attributeID, 
                                             Class attributeType,
                                             boolean readOnly, 
@@ -178,7 +178,7 @@ Checks a particular selection meta data.
         }
 
         if (found < 0) {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -656,7 +656,7 @@ getSelectionMetaData() with 1 parameter - Try each of them.
                                                              smd[i].isValueLimited(),
                                                              smd[i].areMultipleAllowed());
                 if (!thisOne) {
-                    System.out.println("Comparison failed for: " + smd[i] + ".");
+                    output_.println("Comparison failed for: " + smd[i] + ".");
                     success = false;
                 }
             }

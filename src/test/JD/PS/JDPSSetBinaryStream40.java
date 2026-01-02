@@ -1536,7 +1536,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
             "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
         ParameterMetaData pmd = ps.getParameterMetaData();
         int precision = pmd.getPrecision(1);
-        System.out.println("Precision is " + precision);
+        output_.println("Precision is " + precision);
         byte[] b = new byte[9000];
         InputStream is = new ByteArrayInputStream(b);
         length = b.length;
@@ -2393,8 +2393,8 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           long freeMemoryBefore = runtime.freeMemory();
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
           long freeMemoryAfter = runtime.freeMemory();
-          System.out.println("Before freeMemory=" + freeMemoryBefore);
-          System.out.println("After  freeMemory=" + freeMemoryAfter);
+          output_.println("Before freeMemory=" + freeMemoryBefore);
+          output_.println("After  freeMemory=" + freeMemoryAfter);
 
           ps.close();
           statement_.executeUpdate("Drop table " + table);

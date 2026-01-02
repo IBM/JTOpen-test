@@ -93,7 +93,7 @@ public class JDConnectionBlockSize extends JDTestcase {
         }
         long endTime = System.currentTimeMillis(); 
         double seconds = (endTime - startTime) / 1000.0; 
-        System.out.println("URL="+testURL+" retrieved "+count+" rows in "+seconds+" seconds"); 
+        output_.println("URL="+testURL+" retrieved "+count+" rows in "+seconds+" seconds"); 
         rs.close();
         s.close();
         c.close();

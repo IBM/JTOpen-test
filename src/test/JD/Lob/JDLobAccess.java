@@ -90,7 +90,7 @@ extends JDTestcase
                          + ";user=" + systemObject_.getUserId()
                          + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_) ;
             connection_ = testDriver_.getConnection(url,systemObject_.getUserId(),encryptedPassword_);
-	    String QIWS = JDSetupProcedure.setupQIWS(systemObject_,  connection_); 
+	    String QIWS = JDSetupProcedure.setupQIWS(systemObject_,  connection_, output_); 
             statement_ = connection_.createStatement();
 	    JDTestDriver.dropTable(statement_, TABLE_);
 

@@ -167,7 +167,7 @@ Checks that a ResultSet object is still usable.
 		/* DUMP THE EXCEPTION SO WE CAN FIX IT  */
 		/* ALL EXCEPTIONS THAT WE EXPECT AS WELL AS THE */
 		/* EXPECTED RESULT SHOULD BE EXPLICILY SPECIFIED */
-		    System.out.println("cursorOpen encountered unexpected exception "+e);
+		    output_.println("cursorOpen encountered unexpected exception "+e);
 		    e.printStackTrace();
 		}		
 	      }

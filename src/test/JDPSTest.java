@@ -282,7 +282,7 @@ Performs setup needed before running testcases.
       PSTEST_SETDB2DEF = COLLECTION + ".PS_SETDB2";
 
     }
-    JDSetupCollection.create(systemObject_,  connection_, COLLECTION);
+    JDSetupCollection.create(systemObject_,  connection_, COLLECTION, out_);
 
     statement_ = connection_.createStatement();
 
@@ -377,7 +377,7 @@ Performs setup needed before running testcases.
     // Setup stored procedure.
       JDSetupProcedure.resetCollection(COLLECTION); 
       JDSetupProcedure.create(systemObject_,  connection_,
-          JDSetupProcedure.STP_CSPARMS, supportedFeatures_, COLLECTION);
+          JDSetupProcedure.STP_CSPARMS, supportedFeatures_, COLLECTION, out_);
     
 
  

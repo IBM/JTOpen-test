@@ -129,10 +129,10 @@ public class PCTransformTestcase extends Testcase
 
        jdk_ = JVMInfo.getJDK();
 
-       System.out.println("jdk_ is "+jdk_+ " from "+JVMInfo.getJavaVersionString()); 
+       output_.println("jdk_ is "+jdk_+ " from "+JVMInfo.getJavaVersionString()); 
        // Extract the XPCML XSD specification file (from the Toolbox jar) to the local directory, so that the XML parser can find it.
        xpcmlSchemaFile = new File("xpcml.xsd");
-       PCMiscTestcase.extractFile ("com/ibm/as400/data/xpcml.xsd", xpcmlSchemaFile);
+       PCMiscTestcase.extractFile ("com/ibm/as400/data/xpcml.xsd", xpcmlSchemaFile, output_);
 
     }
     
@@ -161,7 +161,7 @@ public class PCTransformTestcase extends Testcase
                                                         ProgramCallDocument.SOURCE_PCML); 
       sb.append("\nCreated pcd is "+pcd+"\n"); 
       }  else {
-          System.out.println("Warning: did not check pcml"); 
+          output_.println("Warning: did not check pcml"); 
       }
       if (checkXpcml) { 
       sb.append("\nMaking ProgramCallDocument from xpcml\n");
@@ -174,7 +174,7 @@ public class PCTransformTestcase extends Testcase
                                                                 ProgramCallDocument.SOURCE_XPCML); 
       sb.append("\nCreated pcd2 is "+pcd2+"\n");
       }  else {
-        System.out.println("Warning: did not check xpcml"); 
+        output_.println("Warning: did not check xpcml"); 
     }
 
     }
@@ -193,14 +193,14 @@ public class PCTransformTestcase extends Testcase
       {
 
           InputStream pcmlStream = new StringBufferInputStream(pcmlString);
-          if (debug) System.out.println("-----\ninput\n-----\n"+pcmlString);
+          if (debug) output_.println("-----\ninput\n-----\n"+pcmlString);
           
           OutputStream xpcmlStream = new ByteArrayOutputStream();
 
           ProgramCallDocument.transformPCMLToXPCML(pcmlStream, xpcmlStream);
 
           xpcmlString = strip0d(xpcmlStream.toString());
-          if (debug) System.out.println("-----\noutput\n-----\n"+xpcmlString);
+          if (debug) output_.println("-----\noutput\n-----\n"+xpcmlString);
           
           boolean stringCompare = compareStrings(expectedXpcmlString, xpcmlString, sb); 
           // Make sure they are usable, i.e. no exception is thrown

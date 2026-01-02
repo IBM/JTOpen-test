@@ -527,7 +527,7 @@ public void Var014() {
 
       assertCondition(true);
     } catch (Exception e) {
-      System.out.println("SQL string is :" + sqlString);
+      output_.println("SQL string is :" + sqlString);
       failed(e, "Unexpected Exception - native Added");
     }
   }
@@ -940,7 +940,7 @@ public void Var014() {
 	    int[]  testLength = { 1000,10000,100000,1000000,1048576  };
 	    String char100 = "                                                                                                    "; 
 	    for (int i = 0; i < testLength.length; i++) {
-		System.out.println("Testing "+testLength[i]); 
+		output_.println("Testing "+testLength[i]); 
 		StringBuffer sb = new StringBuffer(0);
 		sb.append(before);
 		length = before.length() + after.length();

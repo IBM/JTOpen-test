@@ -110,7 +110,7 @@ public class DDMMultipleFormat extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -123,7 +123,7 @@ public class DDMMultipleFormat extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -174,7 +174,7 @@ public class DDMMultipleFormat extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -200,27 +200,27 @@ public class DDMMultipleFormat extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
-        System.out.println("Either library DDMTESTSAV does not exist or you");
-        System.out.println("do not have authority to it.");
-        System.out.println("ftp DDMTESTSAV.SAVF in binary from");
-        System.out.println("test/ in GIT");
-        System.out.println("to the AS/400 system to which you are running.");
-        System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
+        output_.println("Either library DDMTESTSAV does not exist or you");
+        output_.println("do not have authority to it.");
+        output_.println("ftp DDMTESTSAV.SAVF in binary from");
+        output_.println("test/ in GIT");
+        output_.println("to the AS/400 system to which you are running.");
+        output_.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
         throw new Exception("");
       }
       // Make sure the user has access 
       String command = " GRTOBJAUT OBJ(DDMTESTSAV) OBJTYPE(*LIB) USER("+userId_+") ";
       boolean result = c.run(command); 
       if (!result) {
-        System.out.println("Warning:  Command failed : "+command); 
+        output_.println("Warning:  Command failed : "+command); 
       }
       
       command = "QSYS/GRTOBJAUT OBJ(DDMTESTSAV/*ALL) OBJTYPE(*ALL) USER("+userId_+")    ";
       result = c.run(command); 
       if (!result) {
-        System.out.println("Warning:  Command failed : "+command); 
+        output_.println("Warning:  Command failed : "+command); 
       }
       
       // Delete and re-create the file
@@ -448,7 +448,7 @@ public class DDMMultipleFormat extends Testcase
      }
      catch(Exception e)
      {
-       System.out.println("Failed to release explicit locks for " + file.getPath());
+       output_.println("Failed to release explicit locks for " + file.getPath());
      }
      // Disconnect from the system for violator.  This is to prevent the subsystem
      // from filling up with jobs.
@@ -1371,7 +1371,7 @@ public class DDMMultipleFormat extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1384,7 +1384,7 @@ public class DDMMultipleFormat extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -1449,7 +1449,7 @@ public class DDMMultipleFormat extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_ALL);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_ALL);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1462,7 +1462,7 @@ public class DDMMultipleFormat extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -1527,7 +1527,7 @@ public class DDMMultipleFormat extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1540,7 +1540,7 @@ public class DDMMultipleFormat extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -1605,7 +1605,7 @@ public class DDMMultipleFormat extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_ALL);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_ALL);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1618,7 +1618,7 @@ public class DDMMultipleFormat extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + "DDMTest" + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {

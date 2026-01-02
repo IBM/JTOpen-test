@@ -103,8 +103,8 @@ public class JTAStdConn extends JTATestcase {
         } catch (Throwable t) {
           String tInfo = t.toString();
           if (tInfo.indexOf("not found") < 0) {
-            t.printStackTrace(System.out);
-            System.out.println("pwrConn_" + pwrConn_ + " using "
+            t.printStackTrace(output_);
+            output_.println("pwrConn_" + pwrConn_ + " using "
                 + pwrSysUserID_);
           }
         }
@@ -1580,7 +1580,7 @@ public class JTAStdConn extends JTATestcase {
         JTATest.verboseOut("TestXid : fmt=?? gtrid=0x"
             + Long.toHexString(newXid.myGtrid) + " bqual=0x"
             + Long.toHexString(newXid.myBqual));
-        System.out.println("Setting of locker to 10");
+        output_.println("Setting of locker to 10");
         xaRes.setTransactionTimeout(10);
 
         xaRes.start(newXid, XAResource.TMNOFLAGS);
@@ -1616,7 +1616,7 @@ public class JTAStdConn extends JTATestcase {
           xaRes = xaConn.getXAResource();
           conn = xaConn.getConnection();
           if (isNTS) {
-            System.out.println("Setting transaction timeout to 5");
+            output_.println("Setting transaction timeout to 5");
             xaRes.setTransactionTimeout(5);
           }
 
@@ -1637,18 +1637,18 @@ public class JTAStdConn extends JTATestcase {
 
           try {
             // Expect this operation to timeout
-            System.out.println("Thread sleeping for 6 seconds");
+            output_.println("Thread sleeping for 6 seconds");
             Thread.sleep(6000);
-            System.out.println("Back from sleep");
+            output_.println("Back from sleep");
             stmt = conn.prepareStatement(sqlString);
-            System.out.println("Back from prepare");
+            output_.println("Back from prepare");
 
             stmt.execute();
-            System.out.println("Back from execute");
+            output_.println("Back from execute");
           } catch (SQLException e) {
             JTATest.verboseOut("Expected timeout exception: " + e);
             String msg = e.toString();
-            System.out.println("Got exception " + msg);
+            output_.println("Got exception " + msg);
             /* Toolbox error message */ 
             if (msg.indexOf("Row or object " + table + " in "
                 + JTATest.COLLECTION + " type *FILE in use") != -1) {

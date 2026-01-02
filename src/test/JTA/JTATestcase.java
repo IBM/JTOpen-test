@@ -59,12 +59,12 @@ extends JDTestcase
 	   enableCLITrace = enableCLITrace.toUpperCase().trim();
 	   if (enableCLITrace.equals("TRUE")) {
 	       String jobname = JDJobName.getJobName();
-               System.out.println("Enabling CLI trace for "+jobname);
+               output_.println("Enabling CLI trace for "+jobname);
                int slashIndex = jobname.indexOf("/"); 
                
                String jobnum = jobname.substring(0,slashIndex);
                String command = "system CALL QSYS/QP0WUSRT parm('-l 2'  '"+jobnum+"') ";
-               System.out.println("Running "+command);
+               output_.println("Running "+command);
                Runtime rt = Runtime.getRuntime(); 
                try { 
                Process process = rt.exec(command); 
@@ -100,12 +100,12 @@ extends JDTestcase
 	   enableCLITrace = enableCLITrace.toUpperCase().trim();
 	   if (enableCLITrace.equals("TRUE")) {
 	       String jobname = JDJobName.getJobName();
-               System.out.println("Enabling CLI trace for "+jobname);
+               output_.println("Enabling CLI trace for "+jobname);
                int slashIndex = jobname.indexOf("/"); 
                
                String jobnum = jobname.substring(0,slashIndex);
                String command = "system CALL QSYS/QP0WUSRT parm('-l 2'  '"+jobnum+"') ";
-               System.out.println("Running "+command);
+               output_.println("Running "+command);
                Runtime rt = Runtime.getRuntime(); 
                try { 
                Process process = rt.exec(command); 

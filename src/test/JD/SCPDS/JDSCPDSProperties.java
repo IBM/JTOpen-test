@@ -919,7 +919,7 @@ to check that the correct (default) value is returned.
                 ctx_.rebind(bindName_, dataSource_);
                 DataSource ds = (DataSource)ctx_.lookup(bindName_);
                 assertCondition(JDReflectionUtil.callMethod_S(ds,"getLibraries").equals(""));
-                System.out.println(JDReflectionUtil.callMethod_S(ds,"getLibraries"));
+                output_.println(JDReflectionUtil.callMethod_S(ds,"getLibraries"));
                 ctx_.unbind(bindName_);
             }
             catch (Exception e) {

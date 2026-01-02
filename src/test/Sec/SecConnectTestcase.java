@@ -1206,45 +1206,45 @@ public class SecConnectTestcase extends Testcase {
     boolean succeeded = true;
     try {
       boolean result;
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive();
-      // System.out.println("isConnectionAlive() returned " + result);
+      // output_.println("isConnectionAlive() returned " + result);
       if (result == true) {
-        System.out.println("UNEXPECTED RESULT (1)");
+        output_.println("UNEXPECTED RESULT (1)");
         succeeded = false;
       }
 
-      // System.out.println("connecting to "+nameForService(service)+" service ...");
+      // output_.println("connecting to "+nameForService(service)+" service ...");
       sys.connectService(service);
 
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive();
-      // System.out.println("isConnectionAlive() returned " + result);
+      // output_.println("isConnectionAlive() returned " + result);
       if (result == false) {
-        System.out.println("UNEXPECTED RESULT (2)");
+        output_.println("UNEXPECTED RESULT (2)");
         succeeded = false;
       }
 
-      // System.out.println("calling isConnectionAlive again ...");
+      // output_.println("calling isConnectionAlive again ...");
       result = sys.isConnectionAlive();
-      // System.out.println("isConnectionAlive() returned " + result);
+      // output_.println("isConnectionAlive() returned " + result);
       if (result == false) {
-        System.out.println("UNEXPECTED RESULT (3)");
+        output_.println("UNEXPECTED RESULT (3)");
         succeeded = false;
       }
 
-      // System.out.println("disconnecting "+nameForService(service)+" service ...");
+      // output_.println("disconnecting "+nameForService(service)+" service ...");
       sys.disconnectService(service);
 
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive();
-      // System.out.println("isConnectionAlive() returned " + result);
+      // output_.println("isConnectionAlive() returned " + result);
       if (result == true) {
-        System.out.println("UNEXPECTED RESULT (4)");
+        output_.println("UNEXPECTED RESULT (4)");
         succeeded = false;
       }
     } catch (Throwable t) {
-      System.out.println("UNEXPECTED EXCEPTION");
+      output_.println("UNEXPECTED EXCEPTION");
       t.printStackTrace();
       succeeded = false;
     } finally {
@@ -1262,61 +1262,61 @@ public class SecConnectTestcase extends Testcase {
     boolean succeeded = true;
     try {
       boolean result;
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive(service);
-      // System.out.println("isConnectionAlive("+nameForService(service)+") returned "
+      // output_.println("isConnectionAlive("+nameForService(service)+") returned "
       // + result);
       if (result == true) {
-        System.out.println("UNEXPECTED RESULT (5)");
+        output_.println("UNEXPECTED RESULT (5)");
         succeeded = false;
       }
 
-      // System.out.println("connecting to "+nameForService(service)+" service ...");
+      // output_.println("connecting to "+nameForService(service)+" service ...");
       sys.connectService(service);
 
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive(service);
-      // System.out.println("isConnectionAlive("+nameForService(service)+") returned "
+      // output_.println("isConnectionAlive("+nameForService(service)+") returned "
       // + result);
       if (result == false) {
-        System.out.println("UNEXPECTED RESULT (6)");
+        output_.println("UNEXPECTED RESULT (6)");
         succeeded = false;
       }
 
-      // System.out.println("calling isConnectionAlive again ...");
+      // output_.println("calling isConnectionAlive again ...");
       result = sys.isConnectionAlive(service);
-      // System.out.println("isConnectionAlive("+nameForService(service)+") returned "
+      // output_.println("isConnectionAlive("+nameForService(service)+") returned "
       // + result);
       if (result == false) {
-        System.out.println("UNEXPECTED RESULT (7)");
+        output_.println("UNEXPECTED RESULT (7)");
         succeeded = false;
       }
 
       /*
-       * If attended: if (service == AS400.DATABASE) { System.out.println
+       * If attended: if (service == AS400.DATABASE) { output_.println
        * ("Signon to the system and end the job QUSRWRK/QZDASOINIT under user \"" +
        * userId_ + "\".  Press ENTER to continue."); try { System.in.read (); } catch
        * (Exception exc) {};
        * 
-       * System.out.println("calling isConnectionAlive ..."); result =
-       * sys.isConnectionAlive(); System.out.println("isConnectionAlive() returned " +
-       * result); if (result == true) { System.out.println("UNEXPECTED RESULT (X)");
+       * output_.println("calling isConnectionAlive ..."); result =
+       * sys.isConnectionAlive(); output_.println("isConnectionAlive() returned " +
+       * result); if (result == true) { output_.println("UNEXPECTED RESULT (X)");
        * succeeded = false; } }
        */
 
-      // System.out.println("disconnecting "+nameForService(service)+" service ...");
+      // output_.println("disconnecting "+nameForService(service)+" service ...");
       sys.disconnectService(service);
 
-      // System.out.println("calling isConnectionAlive ...");
+      // output_.println("calling isConnectionAlive ...");
       result = sys.isConnectionAlive(service);
-      // System.out.println("isConnectionAlive("+nameForService(service)+") returned "
+      // output_.println("isConnectionAlive("+nameForService(service)+") returned "
       // + result);
       if (result == true) {
-        System.out.println("UNEXPECTED RESULT (8)");
+        output_.println("UNEXPECTED RESULT (8)");
         succeeded = false;
       }
     } catch (Throwable t) {
-      System.out.println("UNEXPECTED EXCEPTION");
+      output_.println("UNEXPECTED EXCEPTION");
       t.printStackTrace();
       succeeded = false;
     } finally {

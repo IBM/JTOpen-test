@@ -212,9 +212,9 @@ Performs setup needed before running variations.
             statement_.executeUpdate(buffer.toString());
 
         } catch (Exception e) {
-            System.out.println("Error in setup for "+buffer.toString()); 
+            output_.println("Error in setup for "+buffer.toString()); 
             // ignore error
-            System.out.println(e);
+            output_.println(e);
         }
     }
 
@@ -233,7 +233,7 @@ Performs cleanup needed after running variations.
             statement_.executeUpdate("DROP TABLE " + JDPSTest.PSTEST_SETDB2DEF);
         } catch (Exception e)
         {
-            System.out.println("Error on DROP TABLE " + JDPSTest.PSTEST_SETDB2DEF);
+            output_.println("Error on DROP TABLE " + JDPSTest.PSTEST_SETDB2DEF);
             e.printStackTrace();
 
         } 

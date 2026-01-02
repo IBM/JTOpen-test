@@ -714,11 +714,11 @@ data size is 14 significant digits and the transfer size is 5 digits.
 		    DataTruncation dt = (DataTruncation)e;
 
 	    // See what we have here...
-	    //System.out.println("dt.getIndex() is " + dt.getIndex());
-	    //System.out.println("dt.getParameter() is " + dt.getParameter());
-	    //System.out.println("dt.getRead() is " + dt.getRead());
-	    //System.out.println("dt.getTransferSize() is " + dt.getTransferSize());
-	    //System.out.println("dt.getDataSize() is " + dt.getDataSize());
+	    //output_.println("dt.getIndex() is " + dt.getIndex());
+	    //output_.println("dt.getParameter() is " + dt.getParameter());
+	    //output_.println("dt.getRead() is " + dt.getRead());
+	    //output_.println("dt.getTransferSize() is " + dt.getTransferSize());
+	    //output_.println("dt.getDataSize() is " + dt.getDataSize());
 		    if ((isToolboxDriver()) || (getDriver () == JDTestDriver.DRIVER_JTOPENLITE))
 			assertCondition ((dt.getIndex() == 1)
 					 && (dt.getParameter() == true)

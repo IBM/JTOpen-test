@@ -125,7 +125,7 @@ public class DDMP9960329 extends Testcase implements Runnable
       ResultSet rs = s.executeQuery("SELECT CASE  WHEN LAND(DBXRSEC,X'E0') = X'00' THEN '*USRID'  WHEN LAND(DBXRSEC,X'E0') = X'20' THEN '*VLDONLY'  WHEN LAND(DBXRSEC,X'E0') = X'40' THEN '*USRIDPWD'  WHEN LAND(DBXRSEC,X'E0') = X'C0' THEN '*USRENCPWD' WHEN LAND(DBXRSEC,X'E0') = X'80' THEN '*ENCUSRPWD' WHEN LAND(DBXRSEC,X'E0') = X'A0' THEN '*KERBEROS'  ELSE '*UNKNOWN' END FROM qsys.qadbxrdbd WHERE DBXRMTN = '*LOCAL' ");
       if (rs.next()) {
 	  oldDdmSetting = rs.getString(1);
-	  System.out.println("INFO:  OLD DDMTCPA setting is "+oldDdmSetting); 
+	  output_.println("INFO:  OLD DDMTCPA setting is "+oldDdmSetting); 
       }
       c.close();
 

@@ -101,7 +101,7 @@ Performs setup needed before running variations.
          if(getDriver () == JDTestDriver.DRIVER_NATIVE){
              dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2DataSource");
            
-             //System.out.println("running with NATIVE");
+             //output_.println("running with NATIVE");
 	     if (true &&
 		 getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		 dataSource2_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2DataSource");
@@ -112,7 +112,7 @@ Performs setup needed before running variations.
          else
          {
              dataSource_ = new AS400JDBCDataSource();
-             //System.out.println("running with TB");
+             //output_.println("running with TB");
              dataSource2_ = new AS400JDBCDataSource();
              ((AS400JDBCDataSource)dataSource2_).setPrompt(false);
          }

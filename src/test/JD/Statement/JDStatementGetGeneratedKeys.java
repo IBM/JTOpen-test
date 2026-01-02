@@ -220,13 +220,13 @@ Performs setup needed before running variations.
 
 		sql="setup STP_RS0"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
 		sql="setup STP_RS2"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
 		sql="setup STP_RS3"; 
 		JDSetupProcedure.create (systemObject_,connection_,
-					 JDSetupProcedure.STP_RS3, supportedFeatures_, collection_);
+					 JDSetupProcedure.STP_RS3, supportedFeatures_, collection_, output_);
 
 	    if (getDriver() != JDTestDriver.DRIVER_JCC) {
 		connection_.commit(); // for xa
@@ -234,7 +234,7 @@ Performs setup needed before running variations.
 
 	    s.close ();
 	} catch (Exception e) {
-	    System.out.println("ERROR in SETUP SQL="+sql);
+	    output_.println("ERROR in SETUP SQL="+sql);
 	    e.printStackTrace(); 
 	} 
     }
@@ -1623,11 +1623,11 @@ the second time.
             String key2 = rs2.getString(1);
 	    boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13");
 	    if (!condition) {
-		System.out.println("  check1 should be true but is "+check1);
-		System.out.println("  key1 should be 10 but is "+key1);
-		System.out.println("  check2 should be true but is "+check2);
-		System.out.println("  key2 should be 10 but is "+key2);
-		System.out.println("  check table using select * from "+table); 
+		output_.println("  check1 should be true but is "+check1);
+		output_.println("  key1 should be 10 but is "+key1);
+		output_.println("  check2 should be true but is "+check2);
+		output_.println("  key2 should be 10 but is "+key2);
+		output_.println("  check table using select * from "+table); 
 	    } else { 
 		cleanupTable(s, table);
 	    } 
@@ -1703,12 +1703,12 @@ the second time.
             check2 && key2.equals("13") &&  
             check3 && key3.equals("16") ;   
             if (!condition) {
-              System.out.println("  check1 should be true but is "+check1);
-              System.out.println("  key1 should be 10 but is "+key1);
-              System.out.println("  check2 should be true but is "+check2);
-              System.out.println("  key2 should be 13 but is "+key2);
-              System.out.println("  check3 should be true but is "+check3);
-              System.out.println("  key3 should be 16 but is "+key3);
+              output_.println("  check1 should be true but is "+check1);
+              output_.println("  key1 should be 10 but is "+key1);
+              output_.println("  check2 should be true but is "+check2);
+              output_.println("  key2 should be 13 but is "+key2);
+              output_.println("  check3 should be true but is "+check3);
+              output_.println("  key3 should be 16 but is "+key3);
             }
 	    if (condition) {
 		cleanupTable(s, table1);
@@ -3261,11 +3261,11 @@ the second time.
             String key2 = rs2.getString(1);
 	    boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13");
 	    if (!condition) {
-		System.out.println("  check1 should be true but is "+check1);
-		System.out.println("  key1 should be 10 but is "+key1);
-		System.out.println("  check2 should be true but is "+check2);
-		System.out.println("  key2 should be 10 but is "+key2);
-		System.out.println("  check table using select * from "+table); 
+		output_.println("  check1 should be true but is "+check1);
+		output_.println("  key1 should be 10 but is "+key1);
+		output_.println("  check2 should be true but is "+check2);
+		output_.println("  key2 should be 10 but is "+key2);
+		output_.println("  check table using select * from "+table); 
 	    } else { 
 		cleanupTable(s, table);
 	    } 
@@ -3342,12 +3342,12 @@ the second time.
             check2 && key2.equals("13") &&  
             check3 && key3.equals("16") ;   
             if (!condition) {
-              System.out.println("  check1 should be true but is "+check1);
-              System.out.println("  key1 should be 10 but is "+key1);
-              System.out.println("  check2 should be true but is "+check2);
-              System.out.println("  key2 should be 13 but is "+key2);
-              System.out.println("  check3 should be true but is "+check3);
-              System.out.println("  key3 should be 16 but is "+key3);
+              output_.println("  check1 should be true but is "+check1);
+              output_.println("  key1 should be 10 but is "+key1);
+              output_.println("  check2 should be true but is "+check2);
+              output_.println("  key2 should be 13 but is "+key2);
+              output_.println("  check3 should be true but is "+check3);
+              output_.println("  key3 should be 16 but is "+key3);
             }
 
             
@@ -3659,8 +3659,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -3728,8 +3728,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -3797,8 +3797,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = rowCount==3 && check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println("rowCount sb 3 but is "+rowCount+" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println("rowCount sb 3 but is "+rowCount+" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -3866,8 +3866,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = rowCount==3 && check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println(" rowCount="+rowCount+" sb 3  check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println(" rowCount="+rowCount+" sb 3  check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -3935,8 +3935,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -4007,8 +4007,8 @@ the second time.
             String key3 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
             }
             else
             {
@@ -4059,8 +4059,8 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
             }
             else
             {
@@ -4109,9 +4109,9 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = rowCount==2 && check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-		System.out.println(" rowCount = "+rowCount+" sb 2"); 
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
+		output_.println(" rowCount = "+rowCount+" sb 2"); 
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
             }
             else
             {
@@ -4166,8 +4166,8 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
             }
             else
             {
@@ -4222,8 +4222,8 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -4278,9 +4278,9 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = rowCount==2 && check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-		System.out.println(" rowCount = "+rowCount+" sb 2"); 
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
+		output_.println(" rowCount = "+rowCount+" sb 2"); 
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -4335,9 +4335,9 @@ the second time.
             String key2 = rs1.getString(1);
             boolean condition = rowCount == 2 && check1 && key1.equals("10") && check2 && key2.equals("13");
             if(!condition){
-		System.out.println(" rowCount sb 2 but is "+rowCount); 
-                System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-                System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
+		output_.println(" rowCount sb 2 but is "+rowCount); 
+                output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+                output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -4386,8 +4386,8 @@ the second time.
             String key2 = rs1.getString(2);
             boolean condition = check1 && key1.length() > 1 && key2.equals("10");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1);
-                System.out.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
+                output_.println(" check1 sb true but is " + check1);
+                output_.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -4443,8 +4443,8 @@ the second time.
             String key2 = rs1.getString(2);
             boolean condition = check1 && key1.length() > 1 && key2.equals("10");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1);
-                System.out.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
+                output_.println(" check1 sb true but is " + check1);
+                output_.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -4500,8 +4500,8 @@ the second time.
             String key2 = rs1.getString(2);
             boolean condition = check1 && key1.length() > 1 && key2.equals("10");
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1);
-                System.out.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
+                output_.println(" check1 sb true but is " + check1);
+                output_.println(" key1.length()>1 sb true but is " + (key1.length()>1) + ", key2 sb 10 but is " + key2);
             }
             else
             {
@@ -5598,8 +5598,8 @@ auto-generated key will be returned.
 		String key3 = rs1.getString(1);
 		boolean condition = rowCount==3 && check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
 		if(!condition){
-		    System.out.println("rowCount sb 3 but is "+rowCount+" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-		    System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+		    output_.println("rowCount sb 3 but is "+rowCount+" check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+		    output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
 		}
 		else
 		{
@@ -5668,8 +5668,8 @@ auto-generated key will be returned.
 		String key3 = rs1.getString(1);
 		boolean condition = rowCount==3 && check1 && key1.equals("10") && check2 && key2.equals("13") && check3 && key3.equals("16");
 		if(!condition){
-		    System.out.println(" rowCount="+rowCount+" sb 3  check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
-		    System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
+		    output_.println(" rowCount="+rowCount+" sb 3  check1 sb true but is " + check1 + ", check2 sb true but is " + check2 + ", check3 sb true but is " + check3);
+		    output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2 + ", key3 sb 16 but is " + key3);
 		}
 		else
 		{
@@ -5720,9 +5720,9 @@ auto-generated key will be returned.
 		String key2 = rs1.getString(1);
 		boolean condition = rowCount==2 && check1 && key1.equals("10") && check2 && key2.equals("13");
 		if(!condition){
-		    System.out.println(" rowCount = "+rowCount+" sb 2"); 
-		    System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-		    System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
+		    output_.println(" rowCount = "+rowCount+" sb 2"); 
+		    output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+		    output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 13 but is " + key2);
 		}
 		else
 		{
@@ -5780,9 +5780,9 @@ auto-generated key will be returned.
 		String key2 = rs1.getString(1);
 		boolean condition = rowCount==2 && check1 && key1.equals("10") && check2 && key2.equals("13");
 		if(!condition){
-		    System.out.println(" rowCount = "+rowCount+" sb 2"); 
-		    System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-		    System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
+		    output_.println(" rowCount = "+rowCount+" sb 2"); 
+		    output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+		    output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
 		}
 		else
 		{
@@ -5838,9 +5838,9 @@ auto-generated key will be returned.
 		String key2 = rs1.getString(1);
 		boolean condition = rowCount == 2 && check1 && key1.equals("10") && check2 && key2.equals("13");
 		if(!condition){
-		    System.out.println(" rowCount sb 2 but is "+rowCount); 
-		    System.out.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
-		    System.out.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
+		    output_.println(" rowCount sb 2 but is "+rowCount); 
+		    output_.println(" check1 sb true but is " + check1 + ", check2 sb true but is " + check2);
+		    output_.println(" key1 sb 10 but is " + key1 + ", key2 sb 10 but is " + key2);
 		}
 		else
 		{
@@ -5894,8 +5894,8 @@ auto-generated key will be returned.
             boolean condition = check1 && key1.length() > 1 
                 && key2.equals("10") && key3 != null ;
             if(!condition){
-                System.out.println(" check1 sb true but is " + check1);
-                System.out.println(" key1.length()>1 sb true but is " + 
+                output_.println(" check1 sb true but is " + check1);
+                output_.println(" key1.length()>1 sb true but is " + 
                 (key1.length()>1) + ", key2 sb 10 but is " + key2 +" key3 should not be null");
             }
             else

@@ -172,11 +172,11 @@ public class SFTestcase extends Testcase {
     }
   }
 
-  private static void delete(SaveFile sf) {
+  private void delete(SaveFile sf) {
     if (sf == null)
       return;
     if (DEBUG)
-      System.out.println("DEBUG: Deleting savefile: " + sf.getPath());
+      output_.println("DEBUG: Deleting savefile: " + sf.getPath());
     try {
       sf.delete();
     } catch (Exception e) {
@@ -205,7 +205,7 @@ public class SFTestcase extends Testcase {
     try {
 	command="QSYS/CRTLIB LIB(" + libName + ") AUT(*ALL)";
 	if (!pwrCmd_.run(command)) {
-	    System.out.println("Error FAILE: "+command); 
+	    output_.println("Error FAILE: "+command); 
 	    return false;
 	}
     } catch (Exception e) {
@@ -222,7 +222,7 @@ public class SFTestcase extends Testcase {
   }
 
   // Validate all of the attribute values of a SaveFile object.
-  private static boolean validateAttributeValues(SaveFile sf) {
+  private  boolean validateAttributeValues(SaveFile sf) {
     boolean ok = true;
 
     try {
@@ -244,22 +244,22 @@ public class SFTestcase extends Testcase {
 
       if (system.getSystemName().length() == 0) {
         ok = false;
-        System.out.println("System has zero-length name");
+        output_.println("System has zero-length name");
       }
 
       if (system.getUserId().length() == 0) {
         ok = false;
-        System.out.println("System userid is zero-length");
+        output_.println("System userid is zero-length");
       }
 
       if (!lib.equals(savefileLib_)) {
         ok = false;
-        System.out.println("Library name is incorrect");
+        output_.println("Library name is incorrect");
       }
 
       if (!name.equals(savefileName1_)) {
         ok = false;
-        System.out.println("SaveFile name is incorrect");
+        output_.println("SaveFile name is incorrect");
       }
 
       String path0 = new QSYSObjectPathName(savefileLib_, savefileName1_,
@@ -267,17 +267,17 @@ public class SFTestcase extends Testcase {
 
       if (!path.equals(path0)) {
         ok = false;
-        System.out.println("SaveFile path is incorrect");
+        output_.println("SaveFile path is incorrect");
       }
 
       if (!exists) {
         ok = false;
-        System.out.println("Existence is incorrect");
+        output_.println("Existence is incorrect");
       }
 
       if (entries.length == 0) {
         ok = false;
-        System.out.println("listEntries() reported no entries");
+        output_.println("listEntries() reported no entries");
       }
 
       if (DEBUG)
@@ -287,55 +287,55 @@ public class SFTestcase extends Testcase {
 
       if (numRecs <= 0L) {
         ok = false;
-        System.out.println("Number of entries is invalid");
+        output_.println("Number of entries is invalid");
       }
 
       if (maxRecs < 0L) { // Note that 0 indicates "no maximum".
         ok = false;
-        System.out.println("Max entries is invalid");
+        output_.println("Max entries is invalid");
       }
 
       if (waitTime < -1 || waitTime > 32767) { // Note that -1 indicates
                                                // "immediate".
         ok = false;
-        System.out.println("Wait time is invalid");
+        output_.println("Wait time is invalid");
       }
 
       if (desc.length() > 50) {
         ok = false;
-        System.out.println("Description is longer than 50 chars");
+        output_.println("Description is longer than 50 chars");
       }
 
       String descFromObjDesc = (String) objDesc
           .getValue(ObjectDescription.TEXT_DESCRIPTION);
       if (!desc.equals(descFromObjDesc)) {
         ok = false;
-        System.out
+        output_
             .println("Description is inconsistent with ObjectDescription");
       }
 
       if (length <= 0L || length > 1099511627776L) {
         ok = false;
-        System.out.println("Length is incorrect");
+        output_.println("Length is incorrect");
       }
 
       String nameFromObjDesc = (String) objDesc
           .getValue(ObjectDescription.NAME);
       if (!name.equals(nameFromObjDesc)) {
         ok = false;
-        System.out.println("Name is inconsistent with ObjectDescription");
+        output_.println("Name is inconsistent with ObjectDescription");
       }
 
       String libFromObjDesc = (String) objDesc
           .getValue(ObjectDescription.LIBRARY);
       if (!lib.equals(libFromObjDesc)) {
         ok = false;
-        System.out.println("Library is inconsistent with ObjectDescription");
+        output_.println("Library is inconsistent with ObjectDescription");
       }
 
       if (sfAsString.trim().length() == 0) {
         ok = false;
-        System.out.println("toString() returned a zero-length string");
+        output_.println("toString() returned a zero-length string");
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -348,7 +348,7 @@ public class SFTestcase extends Testcase {
   // Verify that the attribute values of two SaveFile objects match.
   // Note: If matchAll==false, then certain attributes are not compared, because
   // they are expected to mismatch.
-  private static boolean attributeValuesMatch(SaveFile sf1, SaveFile sf2,
+  private  boolean attributeValuesMatch(SaveFile sf1, SaveFile sf2,
       boolean matchAll) {
     boolean ok = true;
 
@@ -386,79 +386,79 @@ public class SFTestcase extends Testcase {
 
       if (!system1.getSystemName().equals(system2.getSystemName())) {
         ok = false;
-        System.out.println("Attribute mismatch: systemName ("
+        output_.println("Attribute mismatch: systemName ("
             + system1.getSystemName() + " vs " + system2.getSystemName() + ")");
       }
 
       if (!system1.getUserId().equals(system2.getUserId())) {
         ok = false;
-        System.out.println("Attribute mismatch: userID (" + system1.getUserId()
+        output_.println("Attribute mismatch: userID (" + system1.getUserId()
             + " vs " + system2.getUserId() + ")");
       }
 
       if (!lib1.equals(lib2)) {
         ok = false;
-        System.out
+        output_
             .println("Attribute mismatch: lib (" + lib1 + " vs " + lib2 + ")");
       }
 
       if (matchAll && !name1.equals(name2)) {
         ok = false;
-        System.out.println(
+        output_.println(
             "Attribute mismatch: name (" + name1 + " vs " + name2 + ")");
       }
 
       if (matchAll && !path1.equals(path2)) {
         ok = false;
-        System.out.println(
+        output_.println(
             "Attribute mismatch: path (" + path1 + " vs " + path2 + ")");
       }
 
       if (exists1 != exists2) {
         ok = false;
-        System.out.println(
+        output_.println(
             "Attribute mismatch: exists (" + exists1 + " vs " + exists2 + ")");
       }
 
       if (entries1.length != entries2.length) {
         ok = false;
-        System.out.println("Attribute mismatch: entries (" + entries1.length
+        output_.println("Attribute mismatch: entries (" + entries1.length
             + " vs " + entries2.length + ")");
       }
 
       if (prods1.length != prods2.length) {
         ok = false;
-        System.out.println("Attribute mismatch: prods (" + prods1.length
+        output_.println("Attribute mismatch: prods (" + prods1.length
             + " vs " + prods2.length + ")");
       }
 
       if (numRecs1 != numRecs2) {
         ok = false;
-        System.out.println("Attribute mismatch: numRecs (" + numRecs1 + " vs "
+        output_.println("Attribute mismatch: numRecs (" + numRecs1 + " vs "
             + numRecs2 + ")");
       }
 
       if (maxRecs1 != maxRecs2) {
         ok = false;
-        System.out.println("Attribute mismatch: maxRecs (" + maxRecs1 + " vs "
+        output_.println("Attribute mismatch: maxRecs (" + maxRecs1 + " vs "
             + maxRecs2 + ")");
       }
 
       if (waitTime1 != waitTime2) {
         ok = false;
-        System.out.println("Attribute mismatch: waitTime (" + waitTime1 + " vs "
+        output_.println("Attribute mismatch: waitTime (" + waitTime1 + " vs "
             + waitTime2 + ")");
       }
 
       if (shared1 != shared2) {
         ok = false;
-        System.out.println(
+        output_.println(
             "Attribute mismatch: shared (" + shared1 + " vs " + shared2 + ")");
       }
 
       if (!desc1.equals(desc2)) {
         ok = false;
-        System.out.println(
+        output_.println(
             "Attribute mismatch: desc (" + desc1 + " vs " + desc2 + ")");
       }
 
@@ -468,14 +468,14 @@ public class SFTestcase extends Testcase {
       {
         if (length1 != length2) {
           ok = false;
-          System.out.println("Attribute mismatch: length (" + length1 + " vs "
+          output_.println("Attribute mismatch: length (" + length1 + " vs "
               + length2 + ")");
         }
       }
 
       if (matchAll && !objDesc1.equals(objDesc2)) {
         ok = false;
-        System.out.println("Attribute mismatch: objDesc (" + objDesc1 + " vs "
+        output_.println("Attribute mismatch: objDesc (" + objDesc1 + " vs "
             + objDesc2 + ")");
       }
 
@@ -586,13 +586,13 @@ public class SFTestcase extends Testcase {
   }
 
   // Lists entries in a SaveFile object.
-  private static void listEntries(SaveFile sf) {
+  private  void listEntries(SaveFile sf) {
     try {
-      System.out.println("Entries in savefile:");
+      output_.println("Entries in savefile:");
       SaveFileEntry[] entries = sf.listEntries();
       for (int i = 0; i < entries.length; i++) {
         SaveFileEntry entry = entries[i];
-        System.out.println("library: " + entry.getLibrary() + " ; name: "
+        output_.println("library: " + entry.getLibrary() + " ; name: "
             + entry.getName() + " ; type: " + entry.getType());
       }
     } catch (Exception e) {
@@ -601,7 +601,7 @@ public class SFTestcase extends Testcase {
   }
 
   // Exercises the SaveFileEntry.compareTo() and .equals() methods.
-  static boolean checkEqualsAndCompareTo(SaveFileEntry[] entries) {
+  boolean checkEqualsAndCompareTo(SaveFileEntry[] entries) {
     boolean ok = true;
     try {
       // Verify correct behavior of SaveFileEntry.compareTo() and .equals()
@@ -609,12 +609,12 @@ public class SFTestcase extends Testcase {
       for (int i = 1; i < entries.length; i++) {
         SaveFileEntry thisEntry = entries[i];
         if (thisEntry.compareTo(priorEntry) == 0) {
-          System.out.println("compareTo() returned 0 for different entries: "
+          output_.println("compareTo() returned 0 for different entries: "
               + thisEntry.toString() + " <--> " + priorEntry.toString());
           ok = false;
         }
         if (!thisEntry.equals(thisEntry)) {
-          System.out.println(
+          output_.println(
               "equals() returned false for an entry compared with itself: "
                   + thisEntry.toString());
           ok = false;
@@ -923,7 +923,7 @@ public class SFTestcase extends Testcase {
       sf.copyTo(savefileLib_, newName);
       sf2 = new SaveFile(systemObject_, savefileLib_, newName);
 
-      assertCondition(sf.equals(sf) && !sf.equals(sf2) && !sf.equals(newName)
+      assertCondition(sf.equals(sf) && !sf.equals(sf2) && !sf.toString().equals(newName)
           && !sf.equals(null));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
@@ -963,7 +963,7 @@ public class SFTestcase extends Testcase {
       long fileLength = file.length();
 
       if (fileLength >= sf2.getLength()) {
-        System.out.println("Warning: Variation setup failed: fileLength >= SaveFile.getLength(): "
+        output_.println("Warning: Variation setup failed: fileLength >= SaveFile.getLength(): "
             + fileLength + ", " + sf2.getLength()+" sf.getLength="+sf.getLength());
       }
       IFSFileInputStream inStream = new IFSFileInputStream(systemObject_,
@@ -1121,10 +1121,10 @@ public class SFTestcase extends Testcase {
     String sfName = libName;
     try {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
       if (DEBUG)
-        System.out.println("DEBUG: Copying library W95LIB to " + libName);
+        output_.println("DEBUG: Copying library W95LIB to " + libName);
       if (!pwrCmd_.run(
           "QSYS/CPYLIB FROMLIB(W95LIB) TOLIB(" + libName + ") CRTLIB(*YES)")) {
         failed("Variation setup failed: CPYLIB to " + libName + " failed");
@@ -1143,24 +1143,24 @@ public class SFTestcase extends Testcase {
       sf2.create(); // setDescription() needs the save file to exist
       sf2.setDescription("Test save file for Toolbox SAVEFILE class");
       if (DEBUG)
-        System.out.println("DEBUG: Saving library " + libName);
+        output_.println("DEBUG: Saving library " + libName);
       sf2.save(libName);
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       if (deleteLibrary(libName) != null) {
         failed(
             "Variation setup failed: deleteLibrary of " + libName + " failed");
         return;
       }
       if (DEBUG) {
-        System.out.println("DEBUG: Entries in savefile " + sf2.getPath() + ":");
+        output_.println("DEBUG: Entries in savefile " + sf2.getPath() + ":");
         SaveFileEntry[] entries2 = sf2.listEntries();
         for (int i = 0; i < entries2.length; i++) {
-          System.out.println(entries2[i].getName());
+          output_.println(entries2[i].getName());
         }
       }
       if (DEBUG)
-        System.out.println("DEBUG: Restoring library " + libName);
+        output_.println("DEBUG: Restoring library " + libName);
       sf2.restore(libName);
       cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
       cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
@@ -1173,7 +1173,7 @@ public class SFTestcase extends Testcase {
       failed(e, "Unexpected Exception");
     } finally {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
       if (!DEBUG && exists(sf2)) {
         delete(sf2);
@@ -1199,7 +1199,7 @@ public class SFTestcase extends Testcase {
       sf2.setDescription("Test save file for Toolbox SAVEFILE class");
       String[] objects = { "IRCTST02", "PROG10", "CLEANUP" };
       if (DEBUG)
-        System.out.println("DEBUG: Saving 3 objects from W95LIB");
+        output_.println("DEBUG: Saving 3 objects from W95LIB");
       sf2.save("W95LIB", objects);
       SaveFileEntry[] entries2 = sf2.listEntries();
       boolean okSoFar = checkEqualsAndCompareTo(entries2);
@@ -1235,9 +1235,9 @@ public class SFTestcase extends Testcase {
       IFSFile dir = new IFSFile(pwrSys_, "/etc");
       String[] names = dir.list();
       if (DEBUG) {
-        System.out.println("Files in /etc :");
+        output_.println("Files in /etc :");
         for (int i = 0; i < names.length; i++) {
-          System.out.println(names[i]);
+          output_.println(names[i]);
         }
       }
 
@@ -1252,10 +1252,10 @@ public class SFTestcase extends Testcase {
       }
       sf2.create();
       sf2.setDescription("Test save file for Toolbox SAVEFILE class");
-      /// if (DEBUG) System.out.println("DEBUG: Saving object W95LIB/IRCTST02");
+      /// if (DEBUG) output_.println("DEBUG: Saving object W95LIB/IRCTST02");
       sf2.save(names);
 
-      // System.out.println ("View the contents of save file " + sf2.getPath() +
+      // output_.println ("View the contents of save file " + sf2.getPath() +
       // ". Press ENTER to continue."); try { System.in.read (); } catch
       // (Exception exc) {};
       //
@@ -1270,7 +1270,7 @@ public class SFTestcase extends Testcase {
       // boolean ok = true;
       // for (int i=0; i<entries2.length; i++) {
       // if (!entries2[i].getName().equals(names[i])) {
-      // System.out.println("Mismatch: " + entries2[i].getName() + " != " +
+      // output_.println("Mismatch: " + entries2[i].getName() + " != " +
       // names[i]);
       // ok = false;
       // }
@@ -1288,8 +1288,8 @@ public class SFTestcase extends Testcase {
         } catch (Exception exc) {
           exc.printStackTrace();
         }
-        System.out.println(msg.toString());
-        System.out.println(msg.getHelp());
+        output_.println(msg.toString());
+        output_.println(msg.getHelp());
         failed(e, "Unexpected Exception");
       }
     } catch (Exception e) {
@@ -1379,10 +1379,10 @@ public class SFTestcase extends Testcase {
     } catch (AS400Exception e) {
       AS400Message[] msgs = e.getAS400MessageList();
       for (int i = 0; i < msgs.length; i++) {
-        System.out.println(msgs[i].toString());
+        output_.println(msgs[i].toString());
       }
       deleteSf2 = false;
-      System.out.println("Not deleting " + savefileLib_ + "/" + sfName);
+      output_.println("Not deleting " + savefileLib_ + "/" + sfName);
       failed(e, "Unexpected AS400Exception " + sb.toString());
     } catch (Exception e) {
       failed(e, "Unexpected Exception " + sb.toString());
@@ -1405,10 +1405,10 @@ public class SFTestcase extends Testcase {
     String sfName = libName;
     try {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
       if (DEBUG)
-        System.out.println("DEBUG: Copying library W95LIB to " + libName);
+        output_.println("DEBUG: Copying library W95LIB to " + libName);
       if (!pwrCmd_.run(
           "QSYS/CPYLIB FROMLIB(W95LIB) TOLIB(" + libName + ") CRTLIB(*YES)")) {
         failed("Variation setup failed: CPYLIB to " + libName + " failed");
@@ -1428,28 +1428,28 @@ public class SFTestcase extends Testcase {
       sf2.create();
       sf2.setDescription("Test save file for Toolbox SAVEFILE class");
       if (DEBUG)
-        System.out.println("DEBUG: Saving library " + libName);
+        output_.println("DEBUG: Saving library " + libName);
       if (!pwrCmd_.run("QSYS/SAVLIB LIB(" + libName + ") DEV(*SAVF) SAVF("
           + savefileLib_ + "/" + sfName + ")")) {
         failed("Variation setup failed: SAVLIB to " + sfName + " failed");
         return;
       }
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       if (deleteLibrary(libName) != null) {
         failed(
             "Variation setup failed: deleteLibrary of " + libName + " failed");
         return;
       }
       if (DEBUG) {
-        System.out.println("DEBUG: Entries in savefile " + sf2.getPath() + ":");
+        output_.println("DEBUG: Entries in savefile " + sf2.getPath() + ":");
         SaveFileEntry[] entries2 = sf2.listEntries();
         for (int i = 0; i < entries2.length; i++) {
-          System.out.println(entries2[i].getName());
+          output_.println(entries2[i].getName());
         }
       }
       if (DEBUG)
-        System.out.println("DEBUG: Restoring library " + libName);
+        output_.println("DEBUG: Restoring library " + libName);
       sf2.restore(libName);
       cmdRun("QSYS/GRTOBJAUT OBJ("+libName+")       AUT(*CHANGE)    OBJTYPE(*LIB) USER("+userId_+") ");
       cmdRun("QSYS/GRTOBJAUT OBJ("+libName+"/*ALL)  AUT(*CHANGE)    OBJTYPE(*ALL) USER("+userId_+")"); 
@@ -1458,7 +1458,7 @@ public class SFTestcase extends Testcase {
       failed(e, "Unexpected Exception");
     } finally {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
       if (!DEBUG && exists(sf2)) {
         delete(sf2);
@@ -1564,11 +1564,11 @@ public class SFTestcase extends Testcase {
     String libName = "LIB023";
     try {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
 
       if (DEBUG)
-        System.out.println("DEBUG: Restoring library " + libName);
+        output_.println("DEBUG: Restoring library " + libName);
       sf = new SaveFile(pwrSys_, savefileLib_, savefileName2_);
       String[] objectList = { "IRCTST02", "PROGS" };
       sf.restore("W95LIB", objectList, libName);
@@ -1579,17 +1579,17 @@ public class SFTestcase extends Testcase {
       IFSFile dir1 = new IFSFile(systemObject_, libPath1);
       if (DEBUG) {
         if (dir1.exists())
-          System.out.println(dir1.getPath() + " exists.");
+          output_.println(dir1.getPath() + " exists.");
         else
-          System.out.println(dir1.getPath() + " not found.");
+          output_.println(dir1.getPath() + " not found.");
       }
 
       // Get list of files in the library.
       String[] list1 = dir1.list();
       if (DEBUG) {
-        System.out.println("DEBUG: list1:");
+        output_.println("DEBUG: list1:");
         for (int i = 0; i < list1.length; i++)
-          System.out.println(list1[i]);
+          output_.println(list1[i]);
       }
       Arrays.sort(list1);
       assertCondition(list1.length == 2 && list1[0].equals("IRCTST02.PGM")
@@ -1599,7 +1599,7 @@ public class SFTestcase extends Testcase {
       listEntries(sf);
     } finally {
       if (DEBUG)
-        System.out.println("DEBUG: Deleting library " + libName);
+        output_.println("DEBUG: Deleting library " + libName);
       deleteLibrary(libName);
     }
   }

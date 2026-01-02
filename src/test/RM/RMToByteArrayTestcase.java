@@ -76,7 +76,7 @@ public class RMToByteArrayTestcase extends Testcase
         {
           String expectedMsg = "<recordformat> element named 'doesNotExist' not found in document";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -96,9 +96,9 @@ public class RMToByteArrayTestcase extends Testcase
             byte[] received = rfmlDoc.toByteArray("format1");
             byte[] expected = createByteArray(new int[] {0xC1});  // ebcdic 'A'
 
-///            System.out.println("Expected:");
+///            output_.println("Expected:");
 ///            printByteArray(expected);
-///            System.out.println("Received:");
+///            output_.println("Received:");
 ///            printByteArray(received);
 
             assertCondition (areEqual(expected, received));
@@ -143,9 +143,9 @@ public class RMToByteArrayTestcase extends Testcase
             byte[] received = rfmlDoc.toByteArray("format1");
             byte[] expected = createByteArray(new int[] {0xF8});  // ebcdic '8'
 
-///            System.out.println("Expected:");
+///            output_.println("Expected:");
 ///            printByteArray(expected);
-///            System.out.println("Received:");
+///            output_.println("Received:");
 ///            printByteArray(received);
 
             assertCondition (areEqual(expected, received));
@@ -262,9 +262,9 @@ public class RMToByteArrayTestcase extends Testcase
             };
             byte[] expected = createByteArray(expectedVals);
 /*
-            System.out.println("Expected:");
+            output_.println("Expected:");
             printByteArray(expected);
-            System.out.println("Received:");
+            output_.println("Received:");
             printByteArray(received);
 */
             assertCondition (areEqual(expected, received));
@@ -303,9 +303,9 @@ public class RMToByteArrayTestcase extends Testcase
             };
             byte[] expected = createByteArray(expectedVals);
 /*
-            System.out.println("Expected:");
+            output_.println("Expected:");
             printByteArray(expected);
-            System.out.println("Received:");
+            output_.println("Received:");
             printByteArray(received);
 */
             assertCondition (areEqual(expected, received));
@@ -335,9 +335,9 @@ public class RMToByteArrayTestcase extends Testcase
             byte[] received = rfmlDoc.toByteArray("format1");
             byte[] expected = createByteArray(new int[] {0xC2});  // ebcdic 'B'
 
-///            System.out.println("Expected:");
+///            output_.println("Expected:");
 ///            printByteArray(expected);
-///            System.out.println("Received:");
+///            output_.println("Received:");
 ///            printByteArray(received);
 
             assertCondition (areEqual(expected, received));

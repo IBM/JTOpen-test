@@ -100,7 +100,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SET_PASSWORD_TO_EXPIRE, Boolean.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SET_PASSWORD_TO_EXPIRE, Boolean.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -220,7 +220,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SIGN_ON_ATTEMPTS_NOT_VALID, Integer.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SIGN_ON_ATTEMPTS_NOT_VALID, Integer.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -300,7 +300,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
             try
             {
                 system.connectService(AS400.COMMAND);
-                System.out.println("The sign-on did not fail like we need it to.");
+                output_.println("The sign-on did not fail like we need it to.");
             }
             catch (Exception e)
             {
@@ -335,7 +335,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
                 try
                 {
                     system.connectService(AS400.COMMAND);
-                    System.out.println("The sign-on did not fail like we need it to.");
+                    output_.println("The sign-on did not fail like we need it to.");
                 }
                 catch (Exception e)
                 {
@@ -369,7 +369,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
             try
             {
                 system.connectService(AS400.COMMAND);
-                System.out.println("The sign-on did not fail like we need it to.");
+                output_.println("The sign-on did not fail like we need it to.");
             }
             catch (Exception e)
             {
@@ -406,7 +406,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
             try
             {
                 system.connectService(AS400.COMMAND);
-                System.out.println("The sign-on did not fail like we need it to.");
+                output_.println("The sign-on did not fail like we need it to.");
             }
             catch (Exception e)
             {
@@ -433,7 +433,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_DOMAIN, String.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_DOMAIN, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -484,7 +484,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_ROUTE, String.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_ROUTE, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -535,7 +535,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_USER_ID, String.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SMTP_USER_ID, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -586,7 +586,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SORT_SEQUENCE_TABLE, String.class, false, 4, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SORT_SEQUENCE_TABLE, String.class, false, 4, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -830,7 +830,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SPECIAL_AUTHORITIES, String.class, false, 8, null, true, true));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SPECIAL_AUTHORITIES, String.class, false, 8, null, true, true,output_));
         }
         catch (Exception e)
         {
@@ -1071,7 +1071,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SPECIAL_ENVIRONMENT , String.class, false, 3, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SPECIAL_ENVIRONMENT , String.class, false, 3, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1224,7 +1224,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.STATUS , String.class, false, 2, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.STATUS , String.class, false, 2, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1362,7 +1362,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.STORAGE_USED, Integer.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.STORAGE_USED, Integer.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1430,7 +1430,7 @@ public class UserSpecificAttributeRtoSTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SUPPLEMENTAL_GROUPS, String[].class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.SUPPLEMENTAL_GROUPS, String[].class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {

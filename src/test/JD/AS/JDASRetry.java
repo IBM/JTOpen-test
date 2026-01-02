@@ -147,11 +147,11 @@ public class JDASRetry extends JDASTestcase
                    sb.append("Proxy1 failedConnectCount: "+ proxy1FailedConnectCount+" sb "+(maxRetries+1)+"\n");
                    sb.append("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount()+" sb "+maxRetries+"\n");
                 } else {
-                   System.out.println(testString); 
-                   System.out.println("Test took "+testTime+" ms between "+
+                   output_.println(testString); 
+                   output_.println("Test took "+testTime+" ms between "+
                        expectedMinimumTestMillis +" and "+expectedMaximumTestMillis);
-                   System.out.println("Proxy1 failedConnectCount: "+socketProxy1.getFailedConnectCount());
-                   System.out.println("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount());
+                   output_.println("Proxy1 failedConnectCount: "+socketProxy1.getFailedConnectCount());
+                   output_.println("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount());
                   
                 }
 

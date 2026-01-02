@@ -87,20 +87,20 @@ public class FTPTestcase extends    Testcase
 
         if (initialToken_ == null)
         {
-           System.out.println("-directory is invalid, no test will be run");
+           output_.println("-directory is invalid, no test will be run");
            // notWorthTrying = true;
-           System.out.println();
+           output_.println();
         }
         else
         {
           if (FTPTest.DEBUG) {
-            System.out.println("using initial token " + initialToken_);
-            System.out.println();
+            output_.println("using initial token " + initialToken_);
+            output_.println();
           }
         }
 
         if ((password == null) || (password.length() < 1)) {
-          System.out.println("===> warning, variations will fail because no -password specified");
+          output_.println("===> warning, variations will fail because no -password specified");
         } else { 
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
             clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
@@ -113,16 +113,16 @@ public class FTPTestcase extends    Testcase
            system_   = systemObject_.getSystemName();
         }
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
         if ((user_ == null) || (user_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -uid specified");
+           output_.println("===> warning, variations will fail because no -uid specified");
 
 
         if ((system_ == null) || (system_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -system specified");
+           output_.println("===> warning, variations will fail because no -system specified");
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -154,63 +154,63 @@ public class FTPTestcase extends    Testcase
     void cleanUpDirs()
     {
        System.gc();
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
 
        String targetDir = "targetDirTest19";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest19a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest20";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest21";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest21a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest22";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest25";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest26";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest27";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest28";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
     }
 
 
@@ -220,14 +220,14 @@ public class FTPTestcase extends    Testcase
     {
        try
        {
-          if (! FTPUtilities.deleteDirectory(targetDir))
+          if (! FTPUtilities.deleteDirectory(targetDir,output_))
           {
-             System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+             output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           }
        }
        catch (Throwable e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           e.printStackTrace();
        }
     }
@@ -254,7 +254,7 @@ public class FTPTestcase extends    Testcase
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
           e.printStackTrace();
        }
     }
@@ -273,9 +273,9 @@ public class FTPTestcase extends    Testcase
           // Get a list of all files in the target directory.
           // Delete each of those files.
           String[] remoteFileNames = c.ls();
-          ///System.out.println("\nRemote files:");
+          ///output_.println("\nRemote files:");
           for (int i=0; i<remoteFileNames.length; i++) {
-            ///System.out.println(remoteFileNames[i]);
+            ///output_.println(remoteFileNames[i]);
             c.issueCommand("DELE " + remoteFileNames[i]);
           }
 
@@ -286,7 +286,7 @@ public class FTPTestcase extends    Testcase
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
           e.printStackTrace();
        }
     }
@@ -990,7 +990,7 @@ public class FTPTestcase extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.dir();
-             if (FTPUtilities.checkTestDir(result, DETAILED, TOTAL)) {}
+             if (FTPUtilities.checkTestDir(result, DETAILED, TOTAL,output_)) {}
              else
              {
                 failed("contents of directory incorrect (1) ");
@@ -1022,7 +1022,7 @@ public class FTPTestcase extends    Testcase
                 else
                 {
                    for (int i = 0; i < result.length; i++)
-                      System.out.println("    " + result[i]);
+                      output_.println("    " + result[i]);
 
                    failed("contents of directory incorrect (2) ");
                    Continue = false;
@@ -1064,7 +1064,7 @@ public class FTPTestcase extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.ls();
-             if (FTPUtilities.checkTestDir(result, NAME_ONLY, TOTAL)) {}
+             if (FTPUtilities.checkTestDir(result, NAME_ONLY, TOTAL,output_)) {}
              else
              {
                 failed("contents of directory incorrect (3) ");
@@ -1096,7 +1096,7 @@ public class FTPTestcase extends    Testcase
                 else
                 {
                    for (int i = 0; i < result.length; i++)
-                      System.out.println("    " + result[i]);
+                      output_.println("    " + result[i]);
 
                    failed("contents of directory incorrect (4) ");
                    Continue = false;
@@ -1118,7 +1118,7 @@ public class FTPTestcase extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectoryDeep);
              String[] result = c.ls();
-             if (FTPUtilities.checkForFile(result, "FSTOOL.EXE")) {}
+             if (FTPUtilities.checkForFile(result, "FSTOOL.EXE",output_)) {}
              else
              {
                 failed("contents of directory incorrect (5) ");
@@ -2303,7 +2303,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2325,7 +2325,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2347,7 +2347,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2369,7 +2369,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2391,7 +2391,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5 ");
+          output_.print("5 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2415,7 +2415,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6 ");
+          output_.print("6 ");
           try
           {
              String source   = targetDirFull + "PureJava.html";
@@ -2428,7 +2428,7 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("PureJava.html", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -2452,7 +2452,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7 ");
+          output_.print("7 ");
           try
           {
              String source   = targetDirFull + "jt400.jar";
@@ -2467,7 +2467,7 @@ public class FTPTestcase extends    Testcase
              if (c.get("jt400.jar", source))
              {
                 c.removeFTPListener(this);
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {
                    if ((ftpEvent != null) && (ftpEvent.getID() == FTPEvent.FTP_RETRIEVED))
                    {}
@@ -2501,7 +2501,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-          System.out.print("8 ");
+          output_.print("8 ");
              String source   = targetDirFull + "javasp.savf";
              String original = testDirectory + File.separator + "javasp.savf";
 
@@ -2512,7 +2512,7 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("javasp.savf", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -2538,7 +2538,7 @@ public class FTPTestcase extends    Testcase
        {
           try
           {
-          System.out.print("9 ");
+          output_.print("9 ");
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
@@ -2549,12 +2549,12 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("a.a", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
-                   System.out.println();
-                   System.out.println(" warning, ascii compare failed (9) ");
+                   output_.println();
+                   output_.println(" warning, ascii compare failed (9) ");
                    cleanup = false;
                    // failed("compare failed (9)");
                    // Continue = false;
@@ -2575,7 +2575,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10 ");
+          output_.print("10 ");
           try
           {
              String source   = targetDirFull + "FSTOOL.EXE";
@@ -2590,7 +2590,7 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("rootDir/subdir2/FSTOOL.EXE", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -2614,7 +2614,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("11 ");
+          output_.print("11 ");
           try
           {
              String source   = targetDir;
@@ -2687,7 +2687,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("12 ");
+          output_.print("12 ");
           try
           {
              java.io.File fred = new java.io.File("fred");
@@ -2710,7 +2710,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("13 ");
+          output_.print("13 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2732,7 +2732,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("14 ");
+          output_.print("14 ");
           try
           {
              java.io.File fred = new java.io.File("fred");
@@ -2755,7 +2755,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("15 ");
+          output_.print("15 ");
           try
           {
              java.io.File fred = new java.io.File(targetDirFull + "fred");
@@ -2780,7 +2780,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("16 ");
+          output_.print("16 ");
           try
           {
              String source   = targetDirFull + "PureJava.html";
@@ -2793,7 +2793,7 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("PureJava.html", new java.io.File(source)))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -2817,7 +2817,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("17 ");
+          output_.print("17 ");
           try
           {
              String source   = targetDirFull + "jt400.jar";
@@ -2832,7 +2832,7 @@ public class FTPTestcase extends    Testcase
              if (c.get("jt400.jar", new java.io.File(source)))
              {
                 c.removeFTPListener(this);
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {
                    if ((ftpEvent != null) && (ftpEvent.getID() == FTPEvent.FTP_RETRIEVED))
                    {}
@@ -2864,7 +2864,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("18 ");
+          output_.print("18 ");
           try
           {
              String source   = targetDirFull + "javasp.savf";
@@ -2877,7 +2877,7 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("javasp.savf", new java.io.File(source)))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -2901,7 +2901,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.println("19 ");
+          output_.println("19 ");
           try
           {
              String source   = targetDirFull + "a.a";
@@ -2914,12 +2914,12 @@ public class FTPTestcase extends    Testcase
 
              if (c.get("a.a", new java.io.File(source)))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
-                   System.out.println();
-                   System.out.println("   warning, ascii compare failed (9a) ");
+                   output_.println();
+                   output_.println("   warning, ascii compare failed (9a) ");
                    cleanup = false;
                    // failed("compare failed (9a)");
                    // Continue = false;
@@ -2973,7 +2973,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -2996,7 +2996,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3019,7 +3019,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3046,7 +3046,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4");
+          output_.print("4");
           try
           {
              String target   = targetDirFull + "PureJava.html";
@@ -3061,10 +3061,10 @@ public class FTPTestcase extends    Testcase
 
              if (i != null)
              {
-                System.out.print("v ");
+                output_.print("v ");
                 FTPUtilities.copy(i, target);
 
-                if (FTPUtilities.compareFile(target, original))
+                if (FTPUtilities.compareFile(target, original,output_))
                 {}
                 else
                 {
@@ -3088,7 +3088,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5");
+          output_.print("5");
           try
           {
              String target   = targetDirFull + "jt400.jar";
@@ -3102,9 +3102,9 @@ public class FTPTestcase extends    Testcase
              InputStream i = c.get("jt400.jar");
              if (i != null)
              {
-                System.out.print("v ");
+                output_.print("v ");
                 FTPUtilities.copy(i, target);
-                if (FTPUtilities.compareFile(target, original))
+                if (FTPUtilities.compareFile(target, original,output_))
                 {}
                 else
                 {
@@ -3128,7 +3128,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6");
+          output_.print("6");
           try
           {
              String target   = targetDirFull + "javasp.savf";
@@ -3142,9 +3142,9 @@ public class FTPTestcase extends    Testcase
              InputStream i = c.get("javasp.savf");
              if (i != null)
              {
-                System.out.print("v ");
+                output_.print("v ");
                 FTPUtilities.copy(i, target);
-                if (FTPUtilities.compareFile(target, original))
+                if (FTPUtilities.compareFile(target, original,output_))
                 {}
                 else
                 {
@@ -3168,7 +3168,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7");
+          output_.print("7");
           try
           {
              String target   = targetDirFull + "a.a";
@@ -3183,10 +3183,10 @@ public class FTPTestcase extends    Testcase
              InputStream i = c.get("a.a");
              if (i != null)
              {
-                System.out.println("v ");
+                output_.println("v ");
                 FTPUtilities.copy(i, target);
                 c.removeFTPListener(this);
-                if (FTPUtilities.compareFile(target, original))
+                if (FTPUtilities.compareFile(target, original,output_))
                 {
                    if ((ftpEvent != null) && (ftpEvent.getID() == FTPEvent.FTP_RETRIEVED))
                    {}
@@ -3198,8 +3198,8 @@ public class FTPTestcase extends    Testcase
                 }
                 else
                 {
-                   System.out.println();
-                   System.out.println("   warning, ascii compare failed (9) ");
+                   output_.println();
+                   output_.println("   warning, ascii compare failed (9) ");
                    cleanup = false;
                    // failed("compare failed (9)");
                    // Continue = false;
@@ -3243,7 +3243,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              File f = new File(compareDir);
@@ -3262,7 +3262,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3286,7 +3286,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3308,7 +3308,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3330,7 +3330,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5 ");
+          output_.print("5 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3352,7 +3352,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6 ");
+          output_.print("6 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3374,7 +3374,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7 ");
+          output_.print("7 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3398,7 +3398,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("8");
+          output_.print("8");
           try
           {
              String target   = "jt400.jar";
@@ -3414,12 +3414,12 @@ public class FTPTestcase extends    Testcase
              c.addFTPListener(this);
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 FTPEvent localFTPEvent = ftpEvent;
                 if (c.get(target, compare))
                 {
                    c.removeFTPListener(this);
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                       if ((localFTPEvent != null) && (localFTPEvent.getID() == FTPEvent.FTP_PUT))
                       {}
@@ -3456,7 +3456,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("9");
+          output_.print("9");
           try
           {
              String target   = "javasp.savf";
@@ -3470,10 +3470,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -3503,7 +3503,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10");
+          output_.print("10");
           try
           {
              String target   = "PureJava.html";
@@ -3517,10 +3517,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -3550,7 +3550,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("11");
+          output_.print("11");
           try
           {
              String target   = "a.a";
@@ -3563,15 +3563,15 @@ public class FTPTestcase extends    Testcase
              c.setDataTransferType(FTP.ASCII);
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9) ");
                       cleanup = false;
                       // failed("compare failed (9)");
                       // Continue = false;
@@ -3598,7 +3598,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("12 ");
+          output_.print("12 ");
           try
           {
              String target   = "PureJava.html";
@@ -3656,7 +3656,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("13 ");
+          output_.print("13 ");
           try
           {
              File f = new File(compareDir);
@@ -3675,7 +3675,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("14 ");
+          output_.print("14 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3699,7 +3699,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("15 ");
+          output_.print("15 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3721,7 +3721,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("16 ");
+          output_.print("16 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3743,7 +3743,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("17 ");
+          output_.print("17 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3765,7 +3765,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("18 ");
+          output_.print("18 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -3789,7 +3789,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("19");
+          output_.print("19");
           try
           {
              String target   = "jt400.jar";
@@ -3806,11 +3806,11 @@ public class FTPTestcase extends    Testcase
              if (c.put(new java.io.File(original), target))
              {
                 FTPEvent localFTPEvent = ftpEvent;
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
                    c.removeFTPListener(this);
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                       if ((localFTPEvent != null) && (localFTPEvent.getID() == FTPEvent.FTP_PUT))
                       {}
@@ -3847,7 +3847,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("20");
+          output_.print("20");
           try
           {
              String target   = "javasp.savf";
@@ -3861,10 +3861,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.put(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -3894,7 +3894,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("21");
+          output_.print("21");
           try
           {
              String target   = "PureJava.html";
@@ -3908,10 +3908,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.put(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -3941,7 +3941,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("22");
+          output_.print("22");
           try
           {
              String target   = "a.a";
@@ -3954,15 +3954,15 @@ public class FTPTestcase extends    Testcase
              c.setDataTransferType(FTP.ASCII);
              if (c.put(new java.io.File(original), target))
              {
-                System.out.println("v ");
+                output_.println("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9a) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9a) ");
                       cleanup = false;
                       // failed("compare failed (9a)");
                       // Continue = false;
@@ -4009,7 +4009,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              File f = new File(compareDir);
@@ -4028,7 +4028,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4052,7 +4052,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4075,7 +4075,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4099,7 +4099,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5");
+          output_.print("5");
           try
           {
              String target   = "jt400.jar";
@@ -4116,10 +4116,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4148,7 +4148,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6");
+          output_.print("6");
           try
           {
              String target   = "javasp.savf";
@@ -4165,10 +4165,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4198,7 +4198,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7");
+          output_.print("7");
           try
           {
              String target   = "PureJava.html";
@@ -4215,10 +4215,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4248,7 +4248,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("8");
+          output_.print("8");
           try
           {
              String target   = "a.a";
@@ -4267,11 +4267,11 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.println("v ");
+                output_.println("v ");
                 if (c.get(target, compare))
                 {
                    c.removeFTPListener(this);
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                       if ((localFTPEvent != null) && (localFTPEvent.getID() == FTPEvent.FTP_PUT))
                       {}
@@ -4283,8 +4283,8 @@ public class FTPTestcase extends    Testcase
                    }
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9) ");
                       cleanup = false;
                       // failed("compare failed (9)");
                       // Continue = false;
@@ -4499,7 +4499,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              File f = new File(compareDir);
@@ -4518,7 +4518,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4542,7 +4542,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4564,7 +4564,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4586,7 +4586,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5 ");
+          output_.print("5 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4608,7 +4608,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6 ");
+          output_.print("6 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4630,7 +4630,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7 ");
+          output_.print("7 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -4654,7 +4654,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("8");
+          output_.print("8");
           try
           {
              String target   = "jt400.jar";
@@ -4668,10 +4668,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                    }
                    else
@@ -4701,7 +4701,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("9");
+          output_.print("9");
           try
           {
              String target   = "javasp.savf";
@@ -4715,10 +4715,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4748,7 +4748,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10");
+          output_.print("10");
           try
           {
              String target   = "PureJava.html";
@@ -4762,10 +4762,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4795,7 +4795,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("11");
+          output_.print("11");
           try
           {
              String target   = "a.a";
@@ -4808,15 +4808,15 @@ public class FTPTestcase extends    Testcase
              c.setDataTransferType(FTP.ASCII);
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9) ");
                       cleanup = false;
                       // failed("compare failed (9)");
                       // Continue = false;
@@ -4843,7 +4843,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("12 ");
+          output_.print("12 ");
           try
           {
              String target   = "PureJava.html";
@@ -4873,7 +4873,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("13");
+          output_.print("13");
           try
           {
              String target   = "PureJavaAppend.html";
@@ -4887,10 +4887,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -4919,7 +4919,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("14");
+          output_.print("14");
           try
           {
              String target   = "jt400Append.jar";
@@ -4933,10 +4933,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                    }
                    else
@@ -4964,7 +4964,7 @@ public class FTPTestcase extends    Testcase
           }
        }
 
-       System.out.println();
+       output_.println();
        
        if (Continue)
           succeeded();
@@ -4994,7 +4994,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("13 ");
+          output_.print("13 ");
           try
           {
              File f = new File(compareDir);
@@ -5013,7 +5013,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("14 ");
+          output_.print("14 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5037,7 +5037,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("15 ");
+          output_.print("15 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5059,7 +5059,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("16 ");
+          output_.print("16 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5081,7 +5081,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("17 ");
+          output_.print("17 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5103,7 +5103,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("18 ");
+          output_.print("18 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5127,7 +5127,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("19");
+          output_.print("19");
           try
           {
              String target   = "jt400.jar";
@@ -5141,10 +5141,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                    }
                    else
@@ -5174,7 +5174,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("20");
+          output_.print("20");
           try
           {
              String target   = "javasp.savf";
@@ -5188,10 +5188,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5221,7 +5221,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("21");
+          output_.print("21");
           try
           {
              String target   = "PureJava.html";
@@ -5235,10 +5235,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5268,7 +5268,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("22");
+          output_.print("22");
           try
           {
              String target   = "a.a";
@@ -5281,15 +5281,15 @@ public class FTPTestcase extends    Testcase
              c.setDataTransferType(FTP.ASCII);
              if (c.append(new java.io.File(original), target))
              {
-                System.out.println("v ");
+                output_.println("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9a) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9a) ");
                       cleanup = false;
                       // failed("compare failed (9a)");
                       // Continue = false;
@@ -5317,7 +5317,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("23");
+          output_.print("23");
           try
           {
              String target   = "PureJavaAppend.html";
@@ -5331,10 +5331,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5363,7 +5363,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("24");
+          output_.print("24");
           try
           {
              String target   = "jt400Append.jar";
@@ -5377,10 +5377,10 @@ public class FTPTestcase extends    Testcase
 
              if (c.append(new java.io.File(original), target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                    }
                    else
@@ -5408,7 +5408,7 @@ public class FTPTestcase extends    Testcase
           }
        }
 
-       System.out.println();
+       output_.println();
 
        if (Continue)
           succeeded();
@@ -5437,7 +5437,7 @@ public class FTPTestcase extends    Testcase
        
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              File f = new File(compareDir);
@@ -5456,7 +5456,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5480,7 +5480,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5503,7 +5503,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -5527,7 +5527,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5");
+          output_.print("5");
           try
           {
              String target   = "jt400.jar";
@@ -5544,10 +5544,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5576,7 +5576,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6");
+          output_.print("6");
           try
           {
              String target   = "javasp.savf";
@@ -5593,10 +5593,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5626,7 +5626,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7");
+          output_.print("7");
           try
           {
              String target   = "PureJava.html";
@@ -5643,10 +5643,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5676,7 +5676,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("8");
+          output_.print("8");
           try
           {
              String target   = "a.a";
@@ -5692,16 +5692,16 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.println("v ");
+                output_.println("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {
                    }
                    else
                    {
-                      System.out.println();
-                      System.out.println("   warning, ascii compare failed (9) ");
+                      output_.println();
+                      output_.println("   warning, ascii compare failed (9) ");
                       cleanup = false;
                       // failed("compare failed (9)");
                       // Continue = false;
@@ -5728,7 +5728,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("9");
+          output_.print("9");
           try
           {
              String target   = "PureJavaAppend.html";
@@ -5745,10 +5745,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5778,7 +5778,7 @@ public class FTPTestcase extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10");
+          output_.print("10");
           try
           {
              String target   = "jt400Append.jar";
@@ -5795,10 +5795,10 @@ public class FTPTestcase extends    Testcase
              {
                 FTPUtilities.copy(original, o);
 
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -5825,7 +5825,7 @@ public class FTPTestcase extends    Testcase
           }
        }
 
-       System.out.println();
+       output_.println();
 
        if (Continue)
           succeeded();
@@ -5888,25 +5888,25 @@ public class FTPTestcase extends    Testcase
 
         sb.append("3 ");
         for (int i=0; i<3; i++) {
-          FTPUtilities.createFile(compareDirFull+"file"+i+".txt", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"file"+i+".lst", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"file"+i+"lst", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"file."+i+".lst", "data"+i);
+          FTPUtilities.createFile(compareDirFull+"file"+i+".txt", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"file"+i+".lst", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"file"+i+"lst", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"file."+i+".lst", "data"+i,output_);
 
-          FTPUtilities.createFile(compareDirFull+"test"+i+".txt", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"test"+i+".lst", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"test"+i+"lst", "data"+i);
-          FTPUtilities.createFile(compareDirFull+"test."+i+".lst", "data"+i);
+          FTPUtilities.createFile(compareDirFull+"test"+i+".txt", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"test"+i+".lst", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"test"+i+"lst", "data"+i,output_);
+          FTPUtilities.createFile(compareDirFull+"test."+i+".lst", "data"+i,output_);
         }
 
         sb.append("4 ");
         File compareDirectory = new File(compareDir);
         File[] localFiles = compareDirectory.listFiles();
-        ///System.out.println("\nLocal files:");
+        ///output_.println("\nLocal files:");
         for (int i=0; i<localFiles.length; i++) {
           ///sb.append(localFiles[i].getPath());
           RandomAccessFile raf = new RandomAccessFile(localFiles[i], "r");
-          ///System.out.println(" ; contents==|"+raf.readUTF()+"|");
+          ///output_.println(" ; contents==|"+raf.readUTF()+"|");
           conn.put(localFiles[i], localFiles[i].getName());
           raf.close(); // Need to close or won't be able to delete later @A1A
         }
@@ -6135,7 +6135,7 @@ public class FTPTestcase extends    Testcase
         ///         if (c.get(target, compare))
         ///         {
         ///           c.removeFTPListener(this);
-        ///           if (FTPUtilities.compareFile(compare, original))
+        ///           if (FTPUtilities.compareFile(compare, original,output_))
         ///           {
         ///             if ((localFTPEvent != null) && (localFTPEvent.getID() == FTPEvent.FTP_PUT))
         ///             {}
@@ -6187,7 +6187,7 @@ public class FTPTestcase extends    Testcase
         ///         sb.append("v ");
         ///         if (c.get(target, compare))
         ///         {
-        ///           if (FTPUtilities.compareFile(compare, original))
+        ///           if (FTPUtilities.compareFile(compare, original,output_))
         ///           {}
         ///           else
         ///           {
@@ -6232,7 +6232,7 @@ public class FTPTestcase extends    Testcase
         ///         sb.append("v ");
         ///         if (c.get(target, compare))
         ///         {
-        ///           if (FTPUtilities.compareFile(compare, original))
+        ///           if (FTPUtilities.compareFile(compare, original,output_))
         ///           {}
         ///           else
         ///           {
@@ -6276,12 +6276,12 @@ public class FTPTestcase extends    Testcase
         ///         sb.append("v ");
         ///         if (c.get(target, compare))
         ///         {
-        ///           if (FTPUtilities.compareFile(compare, original))
+        ///           if (FTPUtilities.compareFile(compare, original,output_))
         ///           {}
         ///           else
         ///           {
-        ///             System.out.println();
-        ///             System.out.println("   warning, ascii compare failed (9) ");
+        ///             output_.println();
+        ///             output_.println("   warning, ascii compare failed (9) ");
         ///             cleanup = false;
         ///             // failed("compare failed (9)");
         ///             // return;
@@ -6332,7 +6332,7 @@ public class FTPTestcase extends    Testcase
         ///         return;
         ///       }
         ///     }
-        System.out.println();
+        output_.println();
 
         succeeded();
       }
@@ -6352,19 +6352,19 @@ public class FTPTestcase extends    Testcase
     boolean listsMatch(String[] got, String[] expected)
     {
       if (got == null || expected == null) {
-        System.out.println("List is null.");
+        output_.println("List is null.");
         return false;
       }
       Arrays.sort(got);
       Arrays.sort(expected);
       for (int i=0; i<Math.min(got.length, expected.length); i++) {
         if (! got[i].equals(expected[i])) {
-          System.out.println("Mismatch: Got |"+got[i]+"|, expected |"+expected[i]+"|");
+          output_.println("Mismatch: Got |"+got[i]+"|, expected |"+expected[i]+"|");
           return false;
         }
       }
       if (got.length != expected.length) {
-        System.out.println("List lengths mismatch: " + got.length + " versus " + expected.length);
+        output_.println("List lengths mismatch: " + got.length + " versus " + expected.length);
         return false;
       }
       return true;

@@ -377,8 +377,8 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog_ ));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -412,7 +412,7 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                 String   stringDeferrability  = rs.getString ("DEFERRABILITY");
 
 
-                // System.out.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
+                // output_.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
 
                 success = success && (keySeq == 1);
 
@@ -421,32 +421,32 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                 success = success && (deferrability == DatabaseMetaData.importedKeyNotDeferrable);
 
 		if (intKeySeq != 1) {
-		    System.out.println("intKeySeq is "+intKeySeq+" sb 1");
+		    output_.println("intKeySeq is "+intKeySeq+" sb 1");
 		    success = false;
 		}
 
 		if (intDeferrability != DatabaseMetaData.importedKeyNotDeferrable ) {
-		    System.out.println("intDeferrability = "+intDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
+		    output_.println("intDeferrability = "+intDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
 		    success = false;
 		}
 
 		if (longKeySeq != 1) {
-		    System.out.println("longKeySeq is "+longKeySeq+" sb 1");
+		    output_.println("longKeySeq is "+longKeySeq+" sb 1");
 		    success = false;
 		}
 
 		if (longDeferrability != DatabaseMetaData.importedKeyNotDeferrable ) {
-		    System.out.println("longDeferrability = "+longDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
+		    output_.println("longDeferrability = "+longDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
 		    success = false;
 		}
 
 		if (!stringKeySeq.equals("1")) {
-		    System.out.println("stringKeySeq is "+stringKeySeq+" sb 1");
+		    output_.println("stringKeySeq is "+stringKeySeq+" sb 1");
 		    success = false;
 		}
 
 		if (!stringDeferrability.equals(""+DatabaseMetaData.importedKeyNotDeferrable) ) {
-		    System.out.println("stringDeferrability = "+stringDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
+		    output_.println("stringDeferrability = "+stringDeferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
 		    success = false;
 		}
 
@@ -463,30 +463,30 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                         success = success && (updateRule == DatabaseMetaData.importedKeyNoAction);
                         success = success && (deleteRule == DatabaseMetaData.importedKeyNoAction);
 			if (intUpdateRule != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 			if (intDeleteRule != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 
 
 			if (longUpdateRule != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 			if (longDeleteRule != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 
 			if (! stringUpdateRule.equals(""+ DatabaseMetaData.importedKeyNoAction)) {
-			    System.out.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 			if (! stringDeleteRule.equals(""+ DatabaseMetaData.importedKeyNoAction)) {
-			    System.out.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 
@@ -498,29 +498,29 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                     success = success && (deleteRule == DatabaseMetaData.importedKeyRestrict);
                     success = success && (fkName.equals("EKKEY5"));
 			if (intUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (intDeleteRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 
 			if (longUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (longDeleteRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 
 			if (!stringUpdateRule.equals(""+DatabaseMetaData.importedKeyRestrict)) {
-			    System.out.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (!stringDeleteRule.equals(""+DatabaseMetaData.importedKeyRestrict)) {
-			    System.out.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 
@@ -532,28 +532,28 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
                     success = success && (deleteRule == DatabaseMetaData.importedKeyCascade);
                     success = success && (fkName.equals("EKKEY6"));
 			if (intUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (intDeleteRule != DatabaseMetaData.importedKeyCascade) {
-			    System.out.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
+			    output_.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
 			    success=false;
 			}
 
 			if (longUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (longDeleteRule != DatabaseMetaData.importedKeyCascade) {
-			    System.out.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
+			    output_.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
 			    success=false;
 			}
 			if (!stringUpdateRule.equals(""+ DatabaseMetaData.importedKeyRestrict)) {
-			    System.out.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (!stringDeleteRule.equals(""+ DatabaseMetaData.importedKeyCascade)) {
-			    System.out.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
+			    output_.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
 			    success=false;
 			}
 
@@ -573,39 +573,39 @@ SQL400 - Another difference in the rules:  The native driver reports EK7s update
 
 
 			if (intDeleteRule != DatabaseMetaData.importedKeySetDefault) {
-			    System.out.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
+			    output_.println("intDeleteRule is "+intDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
 			    success=false;
 			}
 
 			if (longDeleteRule != DatabaseMetaData.importedKeySetDefault) {
-			    System.out.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
+			    output_.println("longDeleteRule is "+longDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
 			    success=false;
 			}
 
 			if (!stringDeleteRule.equals(""+ DatabaseMetaData.importedKeySetDefault)) {
-			    System.out.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
+			    output_.println("stringDeleteRule is "+stringDeleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
 			    success=false;
 			}
 
                     }
 
 		    if (intUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			System.out.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			output_.println("intUpdateRule is "+intUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			success=false;
 		    }
 		    if (longUpdateRule != DatabaseMetaData.importedKeyRestrict) {
-			System.out.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			output_.println("longUpdateRule is "+longUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			success=false;
 		    }
 		    if (!stringUpdateRule.equals(""+DatabaseMetaData.importedKeyRestrict)) {
-			System.out.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			output_.println("stringUpdateRule is "+stringUpdateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			success=false;
 		    }
 
                 }
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition ((rows == 4) && success);
@@ -1226,8 +1226,8 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
                 String fktableName      = (String) rs.getObject ("FKTABLE_NAME");
                 String fkcolumnName     = (String) rs.getObject ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog_ ));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -1246,7 +1246,7 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
 
 
-                // System.out.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
+                // output_.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
 
 
                 success = success && (pkName.equals("EKKEY1"));
@@ -1254,12 +1254,12 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
 
 		if (keySeq.intValue() != 1) {
-		    System.out.println("keySeq is "+keySeq+" sb 1");
+		    output_.println("keySeq is "+keySeq+" sb 1");
 		    success = false;
 		}
 
 		if (deferrability.intValue() != DatabaseMetaData.importedKeyNotDeferrable ) {
-		    System.out.println("deferrability = "+deferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
+		    output_.println("deferrability = "+deferrability+" sb " +DatabaseMetaData.importedKeyNotDeferrable);
 		    success = false;
 		}
 
@@ -1277,11 +1277,11 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
 
 			if (updateRule.intValue() != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 			if (deleteRule.intValue() != DatabaseMetaData.importedKeyNoAction) {
-			    System.out.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
+			    output_.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyNoAction);
 			    success=false;
 			}
 
@@ -1293,11 +1293,11 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
                     success = success && (fkName.equals("EKKEY5"));
 			if (updateRule.intValue() != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (deleteRule.intValue() != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 
@@ -1310,11 +1310,11 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
                     success = success && (fkName.equals("EKKEY6"));
 			if (updateRule.intValue() != DatabaseMetaData.importedKeyRestrict) {
-			    System.out.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			    output_.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			    success=false;
 			}
 			if (deleteRule.intValue() != DatabaseMetaData.importedKeyCascade) {
-			    System.out.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
+			    output_.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeyCascade);
 			    success=false;
 			}
                 }
@@ -1332,7 +1332,7 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
 
 
 			if (deleteRule.intValue() != DatabaseMetaData.importedKeySetDefault) {
-			    System.out.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
+			    output_.println("deleteRule is "+deleteRule+" sb "+DatabaseMetaData.importedKeySetDefault);
 			    success=false;
 			}
 
@@ -1340,13 +1340,13 @@ exactly.  All matching columns should be returned.   Test for 128 byte column na
                     }
 
 		    if (updateRule.intValue() != DatabaseMetaData.importedKeyRestrict) {
-			System.out.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
+			output_.println("updateRule is "+updateRule+" sb "+DatabaseMetaData.importedKeyRestrict);
 			success=false;
 		    }
                 }
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition ((rows == 4) && success);
@@ -1382,7 +1382,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 
 		DatabaseMetaData dmd = connection.getMetaData ();
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getExportedKeys");
+		    // output_.println("Calling getExportedKeys");
 		    ResultSet rs = dmd.getExportedKeys (null, JDDMDTest.COLLECTION,
 							 "EK1");
 		    rs.close();

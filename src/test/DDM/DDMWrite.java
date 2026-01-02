@@ -108,7 +108,7 @@ public class DDMWrite extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -120,11 +120,11 @@ public class DDMWrite extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
-    System.out.println("Running " + name_ + " with a blocking factor of " + String.valueOf(bf_));
+    output_.println("Running " + name_ + " with a blocking factor of " + String.valueOf(bf_));
 
     if ((allVariations || variationsToRun_.contains("1")) &&
         runMode_ != ATTENDED)
@@ -394,7 +394,7 @@ public class DDMWrite extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -2809,8 +2809,8 @@ public class DDMWrite extends Testcase
 
       String rec1String = rec1.toString();
       String rec2String = rec2.toString();
-      //System.out.println("rec1.toString(): |" + rec1String + "|");
-      //System.out.println("rec2.toString(): |" + rec2String + "|");
+      //output_.println("rec1.toString(): |" + rec1String + "|");
+      //output_.println("rec2.toString(): |" + rec2String + "|");
       if (!rec2String.equals(rec1String))
       {
         failMsg.append("records don't match.\n");
@@ -2825,8 +2825,8 @@ public class DDMWrite extends Testcase
     }
     finally
     {
-      ///System.out.println("File: " + file.getPath());
-      ///System.out.println ("Press ENTER to continue."); try { System.in.read(); } catch (Exception exc) {};
+      ///output_.println("File: " + file.getPath());
+      ///output_.println ("Press ENTER to continue."); try { System.in.read(); } catch (Exception exc) {};
       if (file != null) {
         try {
           file.close();

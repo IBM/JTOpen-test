@@ -231,7 +231,7 @@ public class JDStatementPackageCache extends JDTestcase {
           /* CPC2192 = Object &1 in &2 type *&3 deleted. */
           if ((!ml[0].getID().equals("CPF2105"))
               && (!ml[0].getID().equals("CPC2191"))) {
-            System.out.println("   Message: " + ml[0]);
+            output_.println("   Message: " + ml[0]);
             System.out
                 .println("   Warning, delete of old package failed.  Tried to delete package DAWPKG9899.");
             System.out
@@ -239,7 +239,7 @@ public class JDStatementPackageCache extends JDTestcase {
           }
         }
       } catch (Exception e) {
-        System.out.println("Warning, error deleting old package");
+        output_.println("Warning, error deleting old package");
         e.printStackTrace();
       }
 
@@ -395,7 +395,7 @@ public class JDStatementPackageCache extends JDTestcase {
       // force these selects into the sql package (v6r1 has a threshold for sql
       // use count before it is added)
       // //////1 2 3 on same connection
-      System.out.println("Connecting with "+connect_string); 
+      output_.println("Connecting with "+connect_string); 
       connection = testDriver_.getConnection(connect_string,systemObject_.getUserId(), encryptedPassword_);
 
       for (int x = 0; x < 3; x++) {
@@ -457,8 +457,8 @@ public class JDStatementPackageCache extends JDTestcase {
         } catch (Exception e) { 
           String message = e.toString(); 
           if (message.indexOf("not found") < 0 ) { 
-             System.out.println("WARNING:  Unexpected exception dropping procedure"); 
-             e.printStackTrace(System.out);
+             output_.println("WARNING:  Unexpected exception dropping procedure"); 
+             e.printStackTrace(output_);
           }
         }
         String proc = "CREATE PROCEDURE " + collection
@@ -654,68 +654,68 @@ public class JDStatementPackageCache extends JDTestcase {
       rs = statement.executeQuery(DBMonQuery);
 
       while (rs.next()) {
-        // System.out.println(rs.getString(1) + " " + rs.getString(3));
+        // output_.println(rs.getString(1) + " " + rs.getString(3));
         String data = rs.getString(1) + " " + rs.getString(3);
         data = data.toUpperCase();
 
         if (data.indexOf("DAWPKG") >= 0) {
           if (data.indexOf("PKGTEST01") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             ordinarySelect = true;
           }
 
           if (data.indexOf("PKGTEST02") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             ordinarySelectWithConstant = true;
           }
 
           if (data.indexOf("PKGTEST03") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             parameterMarkers = true;
           }
 
           if (data.indexOf("PKGTEST04") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             ordinarySelectWithConstant = true;
           }
 
           if (data.indexOf("PKGTEST05") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             ordinaryInsert = true;
           }
 
           if (data.indexOf("PKGTEST06") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             insertWithPM = true;
           }
 
           if (data.indexOf("PKGTEST07") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             insertWithSubSelect = true;
           }
 
           if (data.indexOf("PKGTEST08") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             selectWithForUpdate = true;
           }
 
           if (data.indexOf("PKGTEST09") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             createProc = true;
           }
 
           if (data.indexOf("PKGTEST10") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             insertWithSubSelect = true;
           }
 
           if (data.indexOf("PKGTEST11") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             insertWithSubSelect = true;
           }
 
           if (data.indexOf("PKGTEST12") >= 0) {
-            System.out.println("Found " + data);
+            output_.println("Found " + data);
             insertWithSubSelect = true;
           }
         }
@@ -759,8 +759,8 @@ public class JDStatementPackageCache extends JDTestcase {
     try { 
       s.executeUpdate(string); 
     } catch (Exception e) {
-      System.out.println("Exception on "+string); 
-      e.printStackTrace(System.out); 
+      output_.println("Exception on "+string); 
+      e.printStackTrace(output_); 
     }
   }
 
@@ -785,7 +785,7 @@ public class JDStatementPackageCache extends JDTestcase {
 
     String SQLCommand = commandPreface + command + "', " + commandLength + ")";
 
-    // System.out.println("Running command: " + SQLCommand);
+    // output_.println("Running command: " + SQLCommand);
 
     statement.executeUpdate(SQLCommand);
     statement.close();
@@ -1334,7 +1334,7 @@ public class JDStatementPackageCache extends JDTestcase {
                                                                                            // size
 
           } catch (Exception e) {
-            System.out.println(e);
+            output_.println(e);
           }
 
           String s = "insert into " + tableName + " values (?, ?,?, ?)";
@@ -1377,7 +1377,7 @@ public class JDStatementPackageCache extends JDTestcase {
           byte[] b = bl.getBytes(1, 10);
 
           String outputStr = new String(b);
-          // System.out.println(outputStr);
+          // output_.println(outputStr);
 
           // do an insert via the cache
           s = "insert into " + tableName + " values (?, ?,?, ?)";
@@ -1481,7 +1481,7 @@ public class JDStatementPackageCache extends JDTestcase {
 		  }
 
 		  if (is != null) {
-		      System.out.println("Interactive:  press enter to continue");
+		      output_.println("Interactive:  press enter to continue");
 		      is.readLine(); 
 		  } 
 		  Statement x = c.createStatement(); 
@@ -1681,7 +1681,7 @@ public class JDStatementPackageCache extends JDTestcase {
       }
 
       if (is != null) {
-	  System.out.println("Interactive:  press enter to continue");
+	  output_.println("Interactive:  press enter to continue");
 	  is.readLine(); 
       } 
 

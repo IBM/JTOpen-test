@@ -1629,7 +1629,7 @@ getDate() - Get from a BIGINT.
            while (rs.next())
            {
               rs.getDate(2); 
-           // System.out.println(rs.getString(1) + " " + d);
+           // output_.println(rs.getString(1) + " " + d);
               rowCount++;
            }
            
@@ -1689,7 +1689,7 @@ getDate() - Get from a TIMESTAMP.
                 // String timezone = System.getProperty("user.timezone");
                 //@pdd long is platform dependent, change to generic getTime method
                 //if (timezone == null || (! timezone.equals("UTC"))) { 
-                 //   System.out.println("aaa1" + l);
+                 //   output_.println("aaa1" + l);
                  //   assertCondition (l.equals(Long.valueOf("961909200000")), "Added by Toolbox 8/26/2004 -- date should be normalized l = "+l+"("+v+")  sb 961909200000  =" + new Date(961909200000L));
                 //} else {
                    

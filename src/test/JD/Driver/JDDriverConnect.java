@@ -2001,7 +2001,7 @@ public class JDDriverConnect extends JDTestcase {
           System.err.println("Exception");
           e.printStackTrace();
           System.err.flush();
-          System.out.flush();
+          output_.flush();
           stats += "part5a failed to connect;  ";
         }
 
@@ -2472,7 +2472,7 @@ public class JDDriverConnect extends JDTestcase {
 
         System.out
             .println("Error did not get exception after connecting with bad proflie .  Sleeping for 120 seconds.");
-        System.out.println("Please check the following jobs " + sb.toString());
+        output_.println("Please check the following jobs " + sb.toString());
         try {
           Thread.sleep(120000);
         } catch (Exception e) {
@@ -2518,8 +2518,8 @@ public class JDDriverConnect extends JDTestcase {
         }
       }
       if (thrownException != null) {
-        System.out.println("Attempt count is " + attemptCount);
-        System.out.println("Exception count is " + exceptionCount);
+        output_.println("Attempt count is " + attemptCount);
+        output_.println("Exception count is " + exceptionCount);
         throw thrownException;
       }
 
@@ -2577,7 +2577,7 @@ public class JDDriverConnect extends JDTestcase {
           }
         }
         if (!found) {
-          System.out.println("Unexpected exception executing " + command);
+          output_.println("Unexpected exception executing " + command);
           e.printStackTrace();
         }
       }
@@ -2627,7 +2627,7 @@ public class JDDriverConnect extends JDTestcase {
           Random random = new Random();
           boolean passed = true;
           sb.append("Getting base connection\n");
-          System.out.println("..Running leak test with user id " + userId_);
+          output_.println("..Running leak test with user id " + userId_);
           Connection connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
 
           /* Run for 6 seconds in 10 sec batches */
@@ -2699,7 +2699,7 @@ public class JDDriverConnect extends JDTestcase {
           ResultSet rs = s.executeQuery("VALUES CURRENT USER");
           rs.next();
           String currentUser = rs.getString(1);
-          System.out.println("current MFA user is " + currentUser);
+          output_.println("current MFA user is " + currentUser);
           assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser),
               "currentUser=" + currentUser + " MFAUserID=" + mfaUserid_);
         } catch (Exception e) {
@@ -2737,7 +2737,7 @@ public class JDDriverConnect extends JDTestcase {
             ResultSet rs = s.executeQuery("VALUES CURRENT USER");
             rs.next();
             String currentUser = rs.getString(1);
-            System.out.println("current MFA user is " + currentUser);
+            output_.println("current MFA user is " + currentUser);
             assertCondition(false, "Able to connect as MFS user without mfaFactor currentUser=" + currentUser
                 + " MFAUserID=" + mfaUserid_);
           } catch (SQLException e) {
@@ -3020,13 +3020,13 @@ public class JDDriverConnect extends JDTestcase {
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
         String currentUser = rs.getString(1);
-        System.out.println("current MFA user is " + currentUser);
+        output_.println("current MFA user is " + currentUser);
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           jobName = rs.getString(2).replace('/', '.');
         } else {
           jobName = JDJobName.getJobName().replace('/', '.');
         }
-        System.out.println("Job with exit information is " + jobName);
+        output_.println("Job with exit information is " + jobName);
         rs.close();
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
           successful = false;
@@ -3156,7 +3156,7 @@ public class JDDriverConnect extends JDTestcase {
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
         String currentUser = rs.getString(1);
-        System.out.println("current MFA user is " + currentUser);
+        output_.println("current MFA user is " + currentUser);
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
           successful = false;
           sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");
@@ -3261,9 +3261,9 @@ public class JDDriverConnect extends JDTestcase {
         ResultSet rs = s.executeQuery("SELECT CURRENT USER, JOB_NAME FROM SYSIBM.SYSDUMMY1");
         rs.next();
         String currentUser = rs.getString(1);
-        System.out.println("current MFA user is " + currentUser);
+        output_.println("current MFA user is " + currentUser);
         jobName = JDJobName.getJobName().replace('/', '.');
-        System.out.println("Job with exit information is " + jobName);
+        output_.println("Job with exit information is " + jobName);
         rs.close();
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
           successful = false;
@@ -3644,7 +3644,7 @@ public class JDDriverConnect extends JDTestcase {
         assertCondition(successful, sb);
       }
     } catch (Exception e) {
-      /* e.printStackTrace(System.out);  */ 
+      /* e.printStackTrace(output_);  */ 
       assertExceptionContains(e, "additionalAuthFactor: Length is not valid", sb); 
     }
   }
@@ -3725,7 +3725,7 @@ public class JDDriverConnect extends JDTestcase {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
           } else {
-            System.out.println("Unexpected exception deleting old profile");
+            output_.println("Unexpected exception deleting old profile");
             e.printStackTrace();
           }
         }
@@ -3743,7 +3743,7 @@ public class JDDriverConnect extends JDTestcase {
           if (e.toString().indexOf("not found") >= 0) {
             // Just ignore */
           } else {
-            System.out.println("Unexpected exception deleting old profile");
+            output_.println("Unexpected exception deleting old profile");
             e.printStackTrace();
           }
         }

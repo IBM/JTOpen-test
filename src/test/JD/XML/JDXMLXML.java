@@ -790,7 +790,7 @@ public class JDXMLXML extends JDTestcase {
 
 	  ps.close();
       } catch (Exception e) {
-	  System.out.println("Exception loading table on value "+updateValue);
+	  output_.println("Exception loading table on value "+updateValue);
 	  e.printStackTrace(); 
       } 
 
@@ -844,7 +844,7 @@ public class JDXMLXML extends JDTestcase {
       updateValue = ROW1_S_;
       ps.setString (1, updateValue); ps.executeUpdate ();
       } catch (Exception e) {
-          System.out.println("Exception loading table on value "+updateValue);
+          output_.println("Exception loading table on value "+updateValue);
           e.printStackTrace(); 
     } 
 
@@ -901,7 +901,7 @@ public class JDXMLXML extends JDTestcase {
       updateValue = ROW1_S_;
       ps.setString (1, updateValue); ps.executeUpdate ();
       } catch (Exception e) {
-          System.out.println("Exception loading table on value "+updateValue);
+          output_.println("Exception loading table on value "+updateValue);
           e.printStackTrace(); 
     } 
 
@@ -957,7 +957,7 @@ try {
       updateValue = ROW1_S_;
       ps.setString (1, updateValue); ps.executeUpdate ();
 } catch (Exception e) {
-  System.out.println("Exception loading table on value "+updateValue);
+  output_.println("Exception loading table on value "+updateValue);
   e.printStackTrace(); 
 } 
 
@@ -1163,7 +1163,7 @@ try {
 	StringBuffer sb = new StringBuffer(); 
         boolean passed = compare(v, expected, sb);
         if ((!passed) || (expectedException != null)) {
-	    System.out.println("Failed:  sb = "+sb.toString()); 
+	    output_.println("Failed:  sb = "+sb.toString()); 
 	    message.append(sb.toString());
         }
         if (expectedException != null) {
@@ -2152,7 +2152,7 @@ try {
         columnData = rs.getString(column);
         Object xml = JDReflectionUtil.callMethod_OS(rs, "getSQLXML", column);
 
-	System.out.println("sourceClass is "+sourceClass); 
+	output_.println("sourceClass is "+sourceClass); 
         Object source = JDReflectionUtil.callMethod_O(xml, "getSource", Class
             .forName("java.lang.Class"), sourceClass);
 
@@ -2290,11 +2290,11 @@ try {
 
           }
           if (!passed) {
-            System.out.println("Column data is '" + columnData + "'");
+            output_.println("Column data is '" + columnData + "'");
             e.printStackTrace();
           }
         } else {
-          System.out.println("Column data is '" + columnData + "'");
+          output_.println("Column data is '" + columnData + "'");
 
           failed(e, "Unexpected Exception");
         }

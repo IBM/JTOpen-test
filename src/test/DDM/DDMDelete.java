@@ -94,7 +94,7 @@ public class DDMDelete extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -232,7 +232,7 @@ public class DDMDelete extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for the record level access service
@@ -257,7 +257,7 @@ public class DDMDelete extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -293,7 +293,7 @@ public class DDMDelete extends Testcase
     catch(Exception e)
     {
       e.printStackTrace(output_);
-      System.out.println("Unable to delete " + testLib_ + "/file");
+      output_.println("Unable to delete " + testLib_ + "/file");
       throw e;
     }
   }

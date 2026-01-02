@@ -139,14 +139,14 @@ Performs setup needed before running variations.
 
 	     
 	   } else {
-	     System.out.println("Unexpected osVersion="+JTOpenTestEnvironment.osVersion); 
+	     output_.println("Unexpected osVersion="+JTOpenTestEnvironment.osVersion); 
 	   }
 
            Context context = new InitialContext();
            try
            {
-	       System.out.println("binding "+jndiName_+" with "+ds);
-	       // System.out.println("Reference for ds is "+((AS400JDBCDataSource)ds).getReference());
+	       output_.println("binding "+jndiName_+" with "+ds);
+	       // output_.println("Reference for ds is "+((AS400JDBCDataSource)ds).getReference());
                // Note:  If this blows up with a Null Pointer Exception, this refers to the
                // following bug as documented (valid 5/2/2007) at 
                // http://archives.java.sun.com/cgi-bin/wa?A2=ind0003&L=jndi-interest&D=0&P=3248 
@@ -157,11 +157,11 @@ Performs setup needed before running variations.
 		   context.bind(jndiName_, ds);
 	       } catch (NullPointerException e) {
 		   e.printStackTrace();
-		   System.out.println(" Note:  If this blows up with a Null Pointer Exception, this refers to the");
-		   System.out.println("following bug as documented (valid 5/2/2007) at ");
-		   System.out.println("http://archives.java.sun.com/cgi-bin/wa?A2=ind0003&L=jndi-interest&D=0&P=3248 ");
+		   output_.println(" Note:  If this blows up with a Null Pointer Exception, this refers to the");
+		   output_.println("following bug as documented (valid 5/2/2007) at ");
+		   output_.println("http://archives.java.sun.com/cgi-bin/wa?A2=ind0003&L=jndi-interest&D=0&P=3248 ");
 
-		   System.out.println("To fix this you need the fscontext.jar from fscontext-1_2-beta3"); 
+		   output_.println("To fix this you need the fscontext.jar from fscontext-1_2-beta3"); 
 	       } 
               
            }
@@ -369,7 +369,7 @@ row set.
                    return;
              }
           }
-          System.out.println ("Warning: Key " + key + " not found.");
+          output_.println ("Warning: Key " + key + " not found.");
        }
     }
 
@@ -706,7 +706,7 @@ clearWarnings() - Clears warnings after 1 has been posted.
 	   String systemName = systemObject_.getSystemName().trim();
 	   String databaseName = "UNSET"; 
             try {
-               databaseName = JDDatabaseOverride.getDatabaseNameFromSystemName(systemName); 
+               databaseName = JDDatabaseOverride.getDatabaseNameFromSystemName(systemName, output_); 
                DataSource ds;
                if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
                {
@@ -799,7 +799,7 @@ reported.
                {
 		   
 		   String systemName = systemObject_.getSystemName();
-		   String databaseName =  JDDatabaseOverride.getDatabaseNameFromSystemName(systemName);  
+		   String databaseName =  JDDatabaseOverride.getDatabaseNameFromSystemName(systemName, output_);  
                    dataSource = new AS400JDBCDataSource(systemName, systemObject_.getUserId(), encryptedPassword_);
                    ((AS400JDBCDataSource)dataSource).setDatabaseName(databaseName);
                    ((AS400JDBCDataSource)dataSource).setDataTruncation(true);

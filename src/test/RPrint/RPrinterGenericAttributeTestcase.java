@@ -111,14 +111,15 @@ Checks a particular attribute meta data.
 /**
 Checks a particular attribute meta data.
 **/
-    static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
+     static boolean verifyAttributeMetaData(ResourceMetaData[] amd, 
                                             Object attributeID, 
                                             Class<?> attributeType,
                                             boolean readOnly, 
                                             int possibleValueCount, 
                                             Object defaultValue, 
                                             boolean valueLimited,
-                                            boolean multipleAllowed)
+                                            boolean multipleAllowed,
+                                            java.io.PrintWriter output_)
     {
         int found = -1;
         for (int i = 0; (i < amd.length) && (found < 0); ++i) {
@@ -127,7 +128,7 @@ Checks a particular attribute meta data.
         }
 
         if (found < 0) {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -382,9 +383,9 @@ each attribute.
             // I did not hardcode an exact length...otherwise, we
             // have to change this every time we add a property.
             assertCondition((amd.length > 20) 
-                   && (verifyAttributeMetaData(amd, RPrinter.FORM_TYPE, String.class, false, 3, null, false, false))
-                   && (verifyAttributeMetaData(amd, RPrinter.HELD_STATUS, Boolean.class, true, 0, null, false, false))
-                   && (verifyAttributeMetaData(amd, RPrinter.WRITING_STATUS, String.class, true, 4, null, true, false)));
+                   && (verifyAttributeMetaData(amd, RPrinter.FORM_TYPE, String.class, false, 3, null, false, false,output_))
+                   && (verifyAttributeMetaData(amd, RPrinter.HELD_STATUS, Boolean.class, true, 0, null, false, false,output_))
+                   && (verifyAttributeMetaData(amd, RPrinter.WRITING_STATUS, String.class, true, 4, null, true, false,output_)));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -499,7 +500,7 @@ getAttributeMetaData() with 1 parameter - Try each of them.
                                                              amd[i].isValueLimited(),
                                                              amd[i].areMultipleAllowed());
                 if (!thisOne) {
-                    System.out.println("Comparison failed for: " + amd[i] + ".");
+                    output_.println("Comparison failed for: " + amd[i] + ".");
                     success = false;
                 }
             }
@@ -891,7 +892,7 @@ getAttributeValue() - Pass every attribute ID.
             ResourceMetaData[] amd = u.getAttributeMetaData();
             boolean success = true;
             for(int i = 0; i < amd.length; ++i) {
-                // System.out.println("Getting attribute " + amd[i] + ".");
+                // output_.println("Getting attribute " + amd[i] + ".");
                 Object value = u.getAttributeValue(amd[i].getID());
                 Class<?> valueClass = value.getClass();
                 Class<?> type = amd[i].getType();
@@ -899,23 +900,23 @@ getAttributeValue() - Pass every attribute ID.
                 // Validate the type.
                 if (amd[i].areMultipleAllowed()) {
                     if (!valueClass.isArray()) {
-                        System.out.println("Error getting attribute " + amd[i] + ".");
-                        System.out.println("Type array mismatch: " + valueClass + " is not an array, "
+                        output_.println("Error getting attribute " + amd[i] + ".");
+                        output_.println("Type array mismatch: " + valueClass + " is not an array, "
                                            + "but multiple values are allowed.");
                         success = false;
                     }
                     else {
                         Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type)) {
-                            System.out.println("Error getting attribute " + amd[i] + ".");
-                            System.out.println("Type mismatch: " + componentType + " != " + type + ".");
+                            output_.println("Error getting attribute " + amd[i] + ".");
+                            output_.println("Type mismatch: " + componentType + " != " + type + ".");
                             success = false;
                         }
                     }
                 }
                 else if (!valueClass.equals(type)) {
-                    System.out.println("Error getting attribute " + amd[i] + ".");
-                    System.out.println("Type mismatch: " + valueClass + " != " + type + ".");
+                    output_.println("Error getting attribute " + amd[i] + ".");
+                    output_.println("Type mismatch: " + valueClass + " != " + type + ".");
                     success = false;
                 }
 
@@ -931,8 +932,8 @@ getAttributeValue() - Pass every attribute ID.
                                 found = true;                           
 
                             if (! found) {
-                                System.out.println("Error getting attribute " + amd[i] + ".");
-                                System.out.println("Value: " + asArray[k] + " is not a valid possible value.");
+                                output_.println("Error getting attribute " + amd[i] + ".");
+                                output_.println("Value: " + asArray[k] + " is not a valid possible value.");
                                 success = false;
                             }
                         }
@@ -957,8 +958,8 @@ getAttributeValue() - Pass every attribute ID.
                         }
 
                         if (! found) {
-                            System.out.println("Error getting attribute " + amd[i] + ".");
-                            System.out.println("Value: " + value + " is not a valid possible value.");
+                            output_.println("Error getting attribute " + amd[i] + ".");
+                            output_.println("Value: " + value + " is not a valid possible value.");
                             success = false;
                         }
                     }
@@ -1518,7 +1519,7 @@ setAttributeValue() - Pass every attribute ID.
             boolean success = true;
             for(int i = 0; i < amd.length; ++i) {
                 if (! amd[i].isReadOnly()) {
-                    //System.out.println("Setting attribute " + amd[i] + ".");
+                    //output_.println("Setting attribute " + amd[i] + ".");
                     Object originalValue = u.getAttributeValue(amd[i].getID());
 
                     // First, just try setting the value to what it is already equal.

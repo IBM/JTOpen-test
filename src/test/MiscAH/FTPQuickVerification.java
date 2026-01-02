@@ -91,13 +91,13 @@ public class FTPQuickVerification extends    Testcase
 
         if (initialToken_ == null)
         {
-           System.out.println("-directory is invalid, no test will be run");
+           output_.println("-directory is invalid, no test will be run");
            notWorthTrying = true;
-           System.out.println();
+           output_.println();
         }
 
         if ((password == null) || (password.length() < 1)) {
-          System.out.println("===> warning, variations will fail because no -password specified");
+          output_.println("===> warning, variations will fail because no -password specified");
         } else { 
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
             clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
@@ -110,18 +110,18 @@ public class FTPQuickVerification extends    Testcase
            system_   = systemObject_.getSystemName();
         }
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
         if ((user_ == null) || (user_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -uid specified");
+           output_.println("===> warning, variations will fail because no -uid specified");
 
         if ((clearPasswordString_ == null) || (clearPasswordString_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
+           output_.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -system specified");
+           output_.println("===> warning, variations will fail because no -system specified");
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -152,39 +152,39 @@ public class FTPQuickVerification extends    Testcase
     void cleanUpDirs()
     {
        System.gc();
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
 
        String targetDir = "targetDirTest19";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest19a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest20";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest21";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest21a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest22";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
     }
 
 
@@ -194,14 +194,14 @@ public class FTPQuickVerification extends    Testcase
     {
        try
        {
-          if (! FTPUtilities.deleteDirectory(targetDir))
+          if (! FTPUtilities.deleteDirectory(targetDir,output_))
           {
-             System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+             output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           }
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           e.printStackTrace();
        }
     }
@@ -225,7 +225,7 @@ public class FTPQuickVerification extends    Testcase
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
           e.printStackTrace();
        }
     }
@@ -543,7 +543,7 @@ public class FTPQuickVerification extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.dir();
-             if (FTPUtilities.checkTestDir(result, DETAILED, TOTAL)) {}
+             if (FTPUtilities.checkTestDir(result, DETAILED, TOTAL,output_)) {}
              else
              {
                 failed("contents of directory incorrect (1) ");
@@ -575,7 +575,7 @@ public class FTPQuickVerification extends    Testcase
                 else
                 {
                    for (int i = 0; i < result.length; i++)
-                      System.out.println("    " + result[i]);
+                      output_.println("    " + result[i]);
 
                    failed("contents of directory incorrect (2) ");
                    Continue = false;
@@ -617,7 +617,7 @@ public class FTPQuickVerification extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectory);
              String[] result = c.ls();
-             if (FTPUtilities.checkTestDir(result, NAME_ONLY, TOTAL)) {}
+             if (FTPUtilities.checkTestDir(result, NAME_ONLY, TOTAL,output_)) {}
              else
              {
                 failed("contents of directory incorrect (3) ");
@@ -649,7 +649,7 @@ public class FTPQuickVerification extends    Testcase
                 else
                 {
                    for (int i = 0; i < result.length; i++)
-                      System.out.println("    " + result[i]);
+                      output_.println("    " + result[i]);
 
                    failed("contents of directory incorrect (4) ");
                    Continue = false;
@@ -671,7 +671,7 @@ public class FTPQuickVerification extends    Testcase
              c.cd(initialToken_);
              c.cd(testDirectoryDeep);
              String[] result = c.ls();
-             if (FTPUtilities.checkForFile(result, "FSTOOL.EXE")) {}
+             if (FTPUtilities.checkForFile(result, "FSTOOL.EXE",output_)) {}
              else
              {
                 failed("contents of directory incorrect (5) ");
@@ -1381,7 +1381,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1403,7 +1403,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1425,7 +1425,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1447,7 +1447,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1469,7 +1469,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5 ");
+          output_.print("5 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1493,7 +1493,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6 ");
+          output_.print("6 ");
           try
           {
              String source   = targetDirFull + "PureJava.html";
@@ -1506,7 +1506,7 @@ public class FTPQuickVerification extends    Testcase
 
              if (c.get("PureJava.html", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -1532,7 +1532,7 @@ public class FTPQuickVerification extends    Testcase
        {
           try
           {
-          System.out.print("9 ");
+          output_.print("9 ");
              String source   = targetDirFull + "a.a";
              String original = testDirectory + File.separator + "a.a";
 
@@ -1543,11 +1543,11 @@ public class FTPQuickVerification extends    Testcase
 
              if (c.get("a.a", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
-                   System.out.println();
+                   output_.println();
                    System.out.println(" warning, ascii compare failed (9) ");
                    cleanup = false;
                    // failed("compare failed (9)");
@@ -1569,7 +1569,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10 ");
+          output_.print("10 ");
           try
           {
              String source   = targetDirFull + "FSTOOL.EXE";
@@ -1584,7 +1584,7 @@ public class FTPQuickVerification extends    Testcase
 
              if (c.get("rootDir/subdir2/FSTOOL.EXE", source))
              {
-                if (FTPUtilities.compareFile(source, original))
+                if (FTPUtilities.compareFile(source, original,output_))
                 {}
                 else
                 {
@@ -1608,7 +1608,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.println("11 ");
+          output_.println("11 ");
           try
           {
              String source   = targetDir;
@@ -1657,7 +1657,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("1 ");
+          output_.print("1 ");
           try
           {
              File f = new File(compareDir);
@@ -1676,7 +1676,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("2 ");
+          output_.print("2 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1700,7 +1700,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("3 ");
+          output_.print("3 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1722,7 +1722,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("4 ");
+          output_.print("4 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1744,7 +1744,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("5 ");
+          output_.print("5 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1766,7 +1766,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("6 ");
+          output_.print("6 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1788,7 +1788,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("7 ");
+          output_.print("7 ");
           try
           {
              FTP c = new FTP(system_, user_, clearPasswordString_);
@@ -1813,7 +1813,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("10");
+          output_.print("10");
           try
           {
              String target   = "PureJava.html";
@@ -1827,10 +1827,10 @@ public class FTPQuickVerification extends    Testcase
 
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
@@ -1860,7 +1860,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.print("11");
+          output_.print("11");
           try
           {
              String target   = "a.a";
@@ -1873,14 +1873,14 @@ public class FTPQuickVerification extends    Testcase
              c.setDataTransferType(FTP.ASCII);
              if (c.put(original, target))
              {
-                System.out.print("v ");
+                output_.print("v ");
                 if (c.get(target, compare))
                 {
-                   if (FTPUtilities.compareFile(compare, original))
+                   if (FTPUtilities.compareFile(compare, original,output_))
                    {}
                    else
                    {
-                      System.out.println();
+                      output_.println();
                       System.out.println("   warning, ascii compare failed (9) ");
                       cleanup = false;
                       // failed("compare failed (9)");
@@ -1908,7 +1908,7 @@ public class FTPQuickVerification extends    Testcase
 
        if (Continue)
        {
-          System.out.println("12 ");
+          output_.println("12 ");
           try
           {
              String target   = "PureJava.html";

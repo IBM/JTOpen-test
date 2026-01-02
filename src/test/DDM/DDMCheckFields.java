@@ -72,7 +72,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
       setup();
     } catch (Exception e) {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -80,7 +80,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
     try {
       systemObject_.connectService(AS400.RECORDACCESS);
     } catch (Exception e) {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -99,7 +99,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
     try {
       cleanup();
     } catch (Exception e) {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     systemObject_.disconnectAllServices();
@@ -140,7 +140,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
 
             cmd.run("SETIGC CHANGE(*BOTH) VALUE(*YES)");
           } catch (Exception e) {
-            System.out.println("Could not change SETIGC to *YES ");
+            output_.println("Could not change SETIGC to *YES ");
             e.printStackTrace();
           }
 
@@ -148,7 +148,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
 
       }
     } catch (Exception e) {
-      System.out.println("Unexpected Exception");
+      output_.println("Unexpected Exception");
 
     }
 
@@ -157,7 +157,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
       cmd.run("QSYS/CRTLIB LIB(" + testLib_ + ")");
 
     } catch (Exception e) {
-      System.out.println("Could not create library or table " + testLib_);
+      output_.println("Could not create library or table " + testLib_);
     }
 
     try {
@@ -165,7 +165,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
       f = new SequentialFile(systemObject_, "/QSYS.LIB/" + testLib_
           + ".LIB/DDMCHKFLD1.FILE/%FILE%.MBR");
     } catch (Exception e) {
-      System.out.println("Could not create sequential file DDMCHKFLD1.");
+      output_.println("Could not create sequential file DDMCHKFLD1.");
     }
 
     try {
@@ -173,7 +173,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
           + ".LIB/DDMCHKFLD2.FILE/%FILE%.MBR");
 
     } catch (Exception e) {
-      System.out.println("Could not create sequential file DDMCHKFLD2.");
+      output_.println("Could not create sequential file DDMCHKFLD2.");
     }
 
   }
@@ -190,7 +190,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
       deleteLibrary(cmd, testLib_);
 
     } catch (Exception e) {
-      System.out.println("Could not delete library " + testLib_);
+      output_.println("Could not delete library " + testLib_);
       e.printStackTrace();
     }
 
@@ -200,7 +200,7 @@ public class DDMCheckFields extends Testcase implements Runnable {
 
         cmd.run("SETIGC CHANGE(*BOTH) VALUE(*NO)");
       } catch (Exception e) {
-        System.out.println("Could not change SETIGC back to *NO ");
+        output_.println("Could not change SETIGC back to *NO ");
         e.printStackTrace();
       }
 

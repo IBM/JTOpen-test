@@ -12,6 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.Cmd;
 
+import java.io.PrintWriter;
+
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
 import com.ibm.as400.access.Trace;
@@ -21,7 +23,9 @@ import test.TestDriver;
 
 public class CmdStressTestcase extends ProxyStressTest implements Runnable
 {
+
   public static void main(String args[]) throws Exception {
+    output_ = new PrintWriter(System.out); 
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
      newArgs[1] = "CmdStressTestcase";
@@ -58,18 +62,18 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
     {
         try
         {
-            System.out.println("     Deleting CmdCall libraries..." + "(t" + curntThread_ + ")");
+            output_.println("     Deleting CmdCall libraries..." + "(t" + curntThread_ + ")");
 	    String deleteResult = TestDriver.deleteLibrary(dlt_,"fred"+curntThread_); 
 	    if (deleteResult != null )
             {
                 msglist_ = dlt_.getMessageList();
-                System.out.println("       Cleanup Failed."  + "(t" + curntThread_ + ")");
+                output_.println("       Cleanup Failed."  + "(t" + curntThread_ + ")");
                 Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
             }
         }
         catch(Exception e)
         {
-            System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+            output_.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
             Trace.log(Trace.ERROR, e);
         }
     }
@@ -89,8 +93,8 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
             {
                 try
                 {
-                    System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
-                    System.out.println("     Creating CmdCall libraries..." + "(t" + curntThread_ + ")");
+                    output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+                    output_.println("     Creating CmdCall libraries..." + "(t" + curntThread_ + ")");
                     if (crt_.run() != true)
                     {
                         msglist_ = crt_.getMessageList();
@@ -99,8 +103,8 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
                         }
                         else
                         {
-                            System.out.println("       Create Failed." + "(t" + curntThread_ + ")");
-                            System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                            output_.println("       Create Failed." + "(t" + curntThread_ + ")");
+                            output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                             Trace.log(Trace.ERROR, "     CurrentThread: " + curntThread_ + " Iteration: " + i);
                             Trace.log(Trace.ERROR, "     Message: " + msglist_[0].getID() + " " + msglist_[0].getText() );
                         }
@@ -113,28 +117,28 @@ public class CmdStressTestcase extends ProxyStressTest implements Runnable
                         {
                             if (!msglist_[0].getText().equalsIgnoreCase("Library FRED" + curntThread_ + " created."))
                             {
-                                System.out.println("         Unexpected Message." + "(t" + curntThread_ + ")");
-                                System.out.println("   Loop #" + i + ": FAILED" + " (t" + curntThread_ + ")");
+                                output_.println("         Unexpected Message." + "(t" + curntThread_ + ")");
+                                output_.println("   Loop #" + i + ": FAILED" + " (t" + curntThread_ + ")");
 
                                 Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText() );
                             }
                             else
                             {
-                                System.out.println("   Loop #" + i + ":  Successful"+ " (t" + curntThread_ + ")");
+                                output_.println("   Loop #" + i + ":  Successful"+ " (t" + curntThread_ + ")");
                             }
                         }
                         else
                         {
-                            System.out.println("       Unexpected Message." + "(t" + curntThread_ + ")");
-                            System.out.println("   Loop #" + i + ": FAILED");
+                            output_.println("       Unexpected Message." + "(t" + curntThread_ + ")");
+                            output_.println("   Loop #" + i + ": FAILED");
                             Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText() );
                         }
                     }
                 }
                 catch(Exception e)
                 {
-                    System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
-                    System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                    output_.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+                    output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                     if (Trace.isTraceOn())
                         Trace.log(Trace.ERROR, e);
                 }

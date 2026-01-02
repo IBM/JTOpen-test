@@ -114,7 +114,7 @@ Performs setup needed before running variations.
 	       if (message.indexOf("not found") > 0 &&
 		   message.indexOf("type *FILE") > 0) {
 	       } else {
-		   System.out.println("Warning .. could not delete strings");
+		   output_.println("Warning .. could not delete strings");
 		   e.printStackTrace();
 
 	       }
@@ -131,7 +131,7 @@ Performs setup needed before running variations.
            rs = s.executeQuery("select * from "+JDParmTest.COLLECTION+".strings");
 
         } catch (Exception e) {
-           System.out.println("Caught exception: " + e.getMessage());
+           output_.println("Caught exception: " + e.getMessage());
            e.printStackTrace();
         }
     }
@@ -148,7 +148,7 @@ This is the place to put all cleanup work for the testcase.
          connection.close();
 
       } catch (Exception e) {
-         System.out.println("Caught exception: ");
+         output_.println("Caught exception: ");
          e.printStackTrace();
       }
    }

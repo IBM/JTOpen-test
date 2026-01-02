@@ -124,7 +124,7 @@ Setup.
         try { 
           stmt.executeUpdate(sql); 
         } catch (Exception e) {
-          System.out.println("Warning:  Exception on "+sql); 
+          output_.println("Warning:  Exception on "+sql); 
           e.printStackTrace(); 
         }
         

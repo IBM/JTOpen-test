@@ -132,7 +132,7 @@ Performs setup needed before running variations.
 	try {
 	    cleanup(true);
 	} catch (Exception e) {
-	    System.out.println("---------------- Warning.. cleanup failed --------------");
+	    output_.println("---------------- Warning.. cleanup failed --------------");
 	}
 
         if (getDriver()== JDTestDriver.DRIVER_JCC) {
@@ -566,8 +566,8 @@ SQL400 - The native driver reports the update and delete rules in the following
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -584,7 +584,7 @@ SQL400 - The native driver reports the update and delete rules in the following
                 String pkName           = rs.getString ("PK_NAME");
                 short deferrability     = rs.getShort ("DEFERRABILITY");
 
-                // System.out.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
+                // output_.println (keySeq + ":" + updateRule + ":" + deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability + ":");
 
                 success = success && (keySeq == 1);
 
@@ -612,7 +612,7 @@ SQL400 - The native driver reports the update and delete rules in the following
                 }
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition ((rows == 1) && success);
@@ -673,8 +673,8 @@ getCrossReference() - Specify null for the primary catalog.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -755,8 +755,8 @@ exactly.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -811,8 +811,8 @@ getCrossReference() - Specify "localhost" for the primary catalog.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -919,8 +919,8 @@ getCrossReference() - Specify null for the foreign catalog.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -1001,8 +1001,8 @@ exactly.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -1057,8 +1057,8 @@ getCrossReference() - Specify "localhost" for the foreign  catalog.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -1165,8 +1165,8 @@ getCrossReference() - Specify null for the primary schema.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -1243,8 +1243,8 @@ exactly.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -1372,8 +1372,8 @@ getCrossReference() - Specify null for the foreign schema.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));
@@ -1450,8 +1450,8 @@ exactly.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -1635,8 +1635,8 @@ exactly.  All matching rows should be returned.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -1819,8 +1819,8 @@ exactly.  All matching rows should be returned.
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION2));
@@ -2899,7 +2899,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getCrossReference");
+		    // output_.println("Calling getCrossReference");
 		    ResultSet rs = dmd_.getCrossReference (catalog,
 							   JDDMDTest.COLLECTION2,
 							   "LCNCR3",
@@ -2961,8 +2961,8 @@ getCrossReference() - Readonly connection
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
+                // output_.println (pktableCat + ":" + pktableSchem + ":" + pktableName + ":" + pkcolumnName + ":");
+                // output_.println (fktableCat + ":" + fktableSchem + ":" + fktableName + ":" + fkcolumnName + ":");
 
                 success = success && (pktableCat.equals (catalog));
                 success = success && (pktableSchem.equals (JDDMDTest.COLLECTION));

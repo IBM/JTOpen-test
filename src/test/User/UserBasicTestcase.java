@@ -1128,11 +1128,11 @@ public class UserBasicTestcase extends Testcase
         {
             output_.println("Setting up profiles...");
             CommandCall cc = new CommandCall(pwrSys_);
-            System.out.println("system = " + pwrSys_.getSystemName() + ", user = " + pwrSys_.getUserId());
+            output_.println("system = " + pwrSys_.getSystemName() + ", user = " + pwrSys_.getUserId());
             boolean dltResult = cc.run("QSYS/DLTUSRPRF "+testruser1+"");
-            System.out.println("Delete sucessful?" + dltResult);
+            output_.println("Delete sucessful?" + dltResult);
             boolean crtResult = cc.run("QSYS/CRTUSRPRF "+testruser1+" *NONE");
-            System.out.println("Create sucessful?" + crtResult);
+            output_.println("Create sucessful?" + crtResult);
 
             RUser ruser = new RUser(pwrSys_, ""+testruser1+"");
             for (int i = 0; i < authorities_.length; ++i)

@@ -99,15 +99,15 @@ public class PgmRunTestcase extends Testcase
 
 	String command = ""; 
 	String cmdCrtUsr = "QSYS/CRTUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+") USRCLS(*SECADM) SPCAUT(*ALLOBJ)  TEXT('Toolbox testing profile')";
-	System.out.println("command = " + cmdCrtUsr);
+	output_.println("command = " + cmdCrtUsr);
 	CommandCall cc = new CommandCall(pwrSys_);
 	try {
 	    command = cmdCrtUsr; 
 	    boolean result = cc.run(command);
 	    if (result)
-		System.out.println("user profile PGMHang is successfully created. ");
+		output_.println("user profile PGMHang is successfully created. ");
 	    else{
-		System.out.println("Create failed, adjusting existing profile"); 
+		output_.println("Create failed, adjusting existing profile"); 
                // Profile not created.. Assume it is already there and adjust it 
 		 command = "QSYS/CHGUSRPRF USRPRF("+userHang+") PASSWORD(GARBAGE)";
 		 result = cc.run(command);
@@ -115,14 +115,14 @@ public class PgmRunTestcase extends Testcase
 		     command = "QSYS/CHGUSRPRF USRPRF("+userHang+") PASSWORD("+pwdHang+")  STATUS(*ENABLED)   ";
 		     result = cc.run(command);
 		     if (!result) {
-			 System.out.println("Command failed: "+command); 
+			 output_.println("Command failed: "+command); 
 		     }
 		 } else {
-			 System.out.println("Command failed: "+command); 
+			 output_.println("Command failed: "+command); 
 		 } 
 	    }
 	} catch (Exception e) {
-	    System.out.println("Warning: Command Failed :"+command); 
+	    output_.println("Warning: Command Failed :"+command); 
 	    e.printStackTrace();
 	}
 
@@ -145,9 +145,9 @@ public class PgmRunTestcase extends Testcase
 
 	    boolean result = cc.run(cmdDltUsr);
 	    if (result)
-		System.out.println("user profile PGMHang is successfully deleted. ");
+		output_.println("user profile PGMHang is successfully deleted. ");
 	    else
-		System.out.println("can't delete user profile using "+cmdDltUsr);
+		output_.println("can't delete user profile using "+cmdDltUsr);
 	} catch (Exception e) {
 	    e.printStackTrace(); 
 	    failed("can't delete user profile using "+cmdDltUsr);
@@ -760,10 +760,10 @@ public class PgmRunTestcase extends Testcase
             ProgramCall pgm = new ProgramCall(systemObject_);
             if (pgm.run(Prog35_, parmlist_))
             {
-            	System.out.println(pgm.getParameterList()[34].getOutputDataLength());
-            	System.out.println(pgm.getParameterList()[34].getParameterType());
+            	output_.println(pgm.getParameterList()[34].getOutputDataLength());
+            	output_.println(pgm.getParameterList()[34].getParameterType());
             for(int i = 0; i < pgm.getParameterList()[34].getOutputData().length; i++ ) {
-            	System.out.print( (pgm.getParameterList()[34].getOutputData()[i]-65) + ", ");
+            	output_.print( (pgm.getParameterList()[34].getOutputData()[i]-65) + ", ");
             }
                 if (compare(
                             strret,
@@ -1248,7 +1248,7 @@ public class PgmRunTestcase extends Testcase
                 {
                     msgId = msgs[m].getID();
                     msgText = msgs[m].getText();
-                    System.out.println("    " + msgId + " - " + msgText);
+                    output_.println("    " + msgId + " - " + msgText);
                 }
             }
             else
@@ -1257,19 +1257,19 @@ public class PgmRunTestcase extends Testcase
                 //  byte[] data = parms[0].getOutputData();
                 //
                 //  int value   = ((Integer) bin4.toObject(data)).intValue();
-                //  System.out.println("        Bytes returned:      " + value);
+                //  output_.println("        Bytes returned:      " + value);
                 //
                 //  value   = ((Integer) bin4.toObject(data, 4)).intValue();
-                //  System.out.println("        Bytes available:     " + value);
+                //  output_.println("        Bytes available:     " + value);
                 //
                 //  String strValue = (String) char10.toObject(data, 8);
-                //  System.out.println("        Profile name:        " + strValue);
+                //  output_.println("        Profile name:        " + strValue);
                 //
                 //  strValue = (String) char7.toObject(data, 18);
-                //  System.out.println("        Previous signon date:" + strValue);
+                //  output_.println("        Previous signon date:" + strValue);
                 //
                 //  strValue = (String) char6.toObject(data, 25);
-                //  System.out.println("        Previous signon time:" + strValue);
+                //  output_.println("        Previous signon time:" + strValue);
             }
         }
         catch (Exception e)
@@ -1452,7 +1452,7 @@ public class PgmRunTestcase extends Testcase
 
         final MessageFile msgFile = new MessageFile(systemObject_, "/QSYS.LIB/QCPFMSG.MSGF");
 
-        if (DEBUG) System.out.println("\nUsing default ErrorCodeParameter constructor:\n");
+        if (DEBUG) output_.println("\nUsing default ErrorCodeParameter constructor:\n");
         boolean result = pc.run();
         boolean foundExpectedMessage = false;
         if (result == false)
@@ -1478,22 +1478,22 @@ public class PgmRunTestcase extends Testcase
           String substData = errorParm.getSubstitutionData();
           //int ccsid = errorParm.getDataCCSID();
           if (DEBUG) {
-            System.out.println("result == " + result);
-            System.out.println("messageID == |" + messageID + "|");
-            System.out.println("substData == |" + substData + "|");
-            //System.out.println("ccsid == |" + ccsid + "|");
+            output_.println("result == " + result);
+            output_.println("messageID == |" + messageID + "|");
+            output_.println("substData == |" + substData + "|");
+            //output_.println("ccsid == |" + ccsid + "|");
           }
           if (messageID != null) {
             AS400Message msg = msgFile.getMessage(messageID, substData);
-            if (DEBUG) System.out.println("Substituted message: |" + msg.getText() + "|");
+            if (DEBUG) output_.println("Substituted message: |" + msg.getText() + "|");
             msg.load();
-            if (DEBUG) System.out.println("Help text: |" + msg.getHelp() + "|");
+            if (DEBUG) output_.println("Help text: |" + msg.getHelp() + "|");
           }
         }
 
         // Now try the form of ErrorCodeParameter that returns the error info in the output parameter rather than as an exception.  Specify 'false,false'.
 
-        if (DEBUG) System.out.println("\nUsing ErrorCodeParameter(false,false):\n");
+        if (DEBUG) output_.println("\nUsing ErrorCodeParameter(false,false):\n");
         errorParm = new ErrorCodeParameter(false, false); // error code, no replacement data, no CCHAR
         parms[5] = errorParm;
         result = pc.run();
@@ -1502,23 +1502,23 @@ public class PgmRunTestcase extends Testcase
           String substData = errorParm.getSubstitutionData();
           //int ccsid = errorParm.getDataCCSID();
           if (DEBUG) {
-            System.out.println("result == " + result);
-            System.out.println("messageID == |" + messageID + "|");
-            System.out.println("substData == |" + substData + "|");
-            //System.out.println("ccsid == |" + ccsid + "|");
+            output_.println("result == " + result);
+            output_.println("messageID == |" + messageID + "|");
+            output_.println("substData == |" + substData + "|");
+            //output_.println("ccsid == |" + ccsid + "|");
           }
           if (messageID != null) {
             AS400Message msg = msgFile.getMessage(messageID, substData);
-            if (DEBUG) System.out.println("Substituted message: |" + msg.getText() + "|");
+            if (DEBUG) output_.println("Substituted message: |" + msg.getText() + "|");
             msg.load();
-            if (DEBUG) System.out.println("Help text: |" + msg.getHelp() + "|");
+            if (DEBUG) output_.println("Help text: |" + msg.getHelp() + "|");
           }
         }
 
 
         // Now try the form of ErrorCodeParameter that returns the error info in the output parameter rather than as an exception.  Specify 'false,true'.
 
-        if (DEBUG) System.out.println("\nUsing ErrorCodeParameter(false,true):\n");
+        if (DEBUG) output_.println("\nUsing ErrorCodeParameter(false,true):\n");
         errorParm = new ErrorCodeParameter(false, true); // error code, no replacement data, use CCHAR
         parms[5] = errorParm;
         result = pc.run();
@@ -1527,23 +1527,23 @@ public class PgmRunTestcase extends Testcase
           String substData = errorParm.getSubstitutionData();
           //int ccsid = errorParm.getDataCCSID();
           if (DEBUG) {
-            System.out.println("result == " + result);
-            System.out.println("messageID == |" + messageID + "|");
-            System.out.println("substData == |" + substData + "|");
-            //System.out.println("ccsid == |" + ccsid + "|");
+            output_.println("result == " + result);
+            output_.println("messageID == |" + messageID + "|");
+            output_.println("substData == |" + substData + "|");
+            //output_.println("ccsid == |" + ccsid + "|");
           }
           if (messageID != null) {
             AS400Message msg = msgFile.getMessage(messageID, substData);
-            if (DEBUG) System.out.println("Substituted message: |" + msg.getText() + "|");
+            if (DEBUG) output_.println("Substituted message: |" + msg.getText() + "|");
             msg.load();
-            if (DEBUG) System.out.println("Help text: |" + msg.getHelp() + "|");
+            if (DEBUG) output_.println("Help text: |" + msg.getHelp() + "|");
           }
         }
 
 
         // Now try the form of ErrorCodeParameter that returns the error info in the output parameter rather than as an exception.  Specify 'true,false'.
 
-        if (DEBUG) System.out.println("\nUsing ErrorCodeParameter(true,false):\n");
+        if (DEBUG) output_.println("\nUsing ErrorCodeParameter(true,false):\n");
         errorParm = new ErrorCodeParameter(true, false); // error code, return replacement data, no CCHAR
         parms[5] = errorParm;
         result = pc.run();
@@ -1552,23 +1552,23 @@ public class PgmRunTestcase extends Testcase
           String substData = errorParm.getSubstitutionData();
           //int ccsid = errorParm.getDataCCSID();
           if (DEBUG) {
-            System.out.println("result == " + result);
-            System.out.println("messageID == |" + messageID + "|");
-            System.out.println("substData == |" + substData + "|");
-            //System.out.println("ccsid == |" + ccsid + "|");
+            output_.println("result == " + result);
+            output_.println("messageID == |" + messageID + "|");
+            output_.println("substData == |" + substData + "|");
+            //output_.println("ccsid == |" + ccsid + "|");
           }
           if (messageID != null) {
             AS400Message msg = msgFile.getMessage(messageID, substData);
-            if (DEBUG) System.out.println("Substituted message: |" + msg.getText() + "|");
+            if (DEBUG) output_.println("Substituted message: |" + msg.getText() + "|");
             msg.load();
-            if (DEBUG) System.out.println("Help text: |" + msg.getHelp() + "|");
+            if (DEBUG) output_.println("Help text: |" + msg.getHelp() + "|");
           }
         }
 
 
         // Now try the form of ErrorCodeParameter that returns the error info in the output parameter rather than as an exception.  Specify 'true,true'.
 
-        if (DEBUG) System.out.println("\nUsing ErrorCodeParameter(true,true):\n");
+        if (DEBUG) output_.println("\nUsing ErrorCodeParameter(true,true):\n");
         errorParm = new ErrorCodeParameter(true, true); // error code, return replacement data, use CCHAR
         parms[5] = errorParm;
         result = pc.run();
@@ -1577,16 +1577,16 @@ public class PgmRunTestcase extends Testcase
           String substData = errorParm.getSubstitutionData();
           //int ccsid = errorParm.getDataCCSID();
           if (DEBUG) {
-            System.out.println("result == " + result);
-            System.out.println("messageID == |" + messageID + "|");
-            System.out.println("substData == |" + substData + "|");
-            //System.out.println("ccsid == |" + ccsid + "|");
+            output_.println("result == " + result);
+            output_.println("messageID == |" + messageID + "|");
+            output_.println("substData == |" + substData + "|");
+            //output_.println("ccsid == |" + ccsid + "|");
           }
           if (messageID != null) {
             AS400Message msg = msgFile.getMessage(messageID, substData);
-            if (DEBUG) System.out.println("Substituted message: |" + msg.getText() + "|");
+            if (DEBUG) output_.println("Substituted message: |" + msg.getText() + "|");
             msg.load();
-            if (DEBUG) System.out.println("Help text: |" + msg.getHelp() + "|");
+            if (DEBUG) output_.println("Help text: |" + msg.getHelp() + "|");
           }
         }
 

@@ -118,7 +118,7 @@ public class SecPHActionTestcase extends Testcase implements AS400CredentialList
   public void setup() {
     if (isNative_) {
       nativeSystemObject = new AS400();
-      System.out.println("nativeSystemObject created");
+      output_.println("nativeSystemObject created");
     }
 
     try {

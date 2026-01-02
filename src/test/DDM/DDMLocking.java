@@ -106,7 +106,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -188,7 +188,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete final cleanup.");
+      output_.println("Unable to complete final cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -250,7 +250,7 @@ public class DDMLocking extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -364,7 +364,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup unsuccessful. Delete file " + testLib_ + "/DDMLOCK if it exists.");
+      output_.println("Cleanup unsuccessful. Delete file " + testLib_ + "/DDMLOCK if it exists.");
       e.printStackTrace(output_);
       throw e;
     }
@@ -522,8 +522,8 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-	System.out.println("Unexpected error after test"); 
-      e.printStackTrace(System.out); 
+	output_.println("Unexpected error after test"); 
+      e.printStackTrace(output_); 
     }
     // Release the lock obtained
     try
@@ -532,7 +532,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Failed to release explicit locks for " + file.getPath());
+      output_.println("Failed to release explicit locks for " + file.getPath());
     }
   }
 
@@ -973,7 +973,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-      e.printStackTrace(System.out);
+      e.printStackTrace(output_);
       failMsg.append("Unexpected exception."+e);
       return; 
     }
@@ -1100,7 +1100,7 @@ public class DDMLocking extends Testcase
     }
     catch (Exception e)
     {
-	e.printStackTrace(System.out);
+	e.printStackTrace(output_);
 	failMsg.append("Unexpected exception."+e);
     }
     // Close the file
@@ -1616,7 +1616,7 @@ public class DDMLocking extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1629,7 +1629,7 @@ public class DDMLocking extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {
@@ -1738,7 +1738,7 @@ public class DDMLocking extends Testcase
   }
 
   private boolean ask(String string) {
-	  System.out.println("ERROR:  Interactive tests that needs updating:"+string); 
+	  output_.println("ERROR:  Interactive tests that needs updating:"+string); 
 	return false;
   }
 
@@ -1783,7 +1783,7 @@ public class DDMLocking extends Testcase
       file.startCommitmentControl(AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.open(AS400File.READ_ONLY, 0, AS400File.COMMIT_LOCK_LEVEL_CURSOR_STABILITY);
       file.readFirst();
-      System.out.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 1 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
       InputStreamReader r = new InputStreamReader(System.in);
       BufferedReader inBuf = new BufferedReader(r);
       String resp = inBuf.readLine();
@@ -1796,7 +1796,7 @@ public class DDMLocking extends Testcase
         return;
       }
       file.readNext();
-      System.out.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
+      output_.println("Does a *READ record lock exist on record number 2 of file DDMLOCK in " + testLib_ + "(Y/N)? (DSPRCDLCK)");
       resp = inBuf.readLine();
       if (!resp.equals("y") && !resp.equals("Y"))
       {

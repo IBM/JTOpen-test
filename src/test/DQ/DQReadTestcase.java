@@ -570,7 +570,7 @@ public class DQReadTestcase extends Testcase
 	{
 	    // boolean failed = false;  // Keeps track of failure in multi-part tests.
 	    DataQueue dq = new DataQueue(systemObject_, "/QSYS.LIB/QTEMP.LIB/READTEST.DTAQ");
-	    DQWriter writer = new DQWriter(dq);
+	    DQWriter writer = new DQWriter(dq,output_);
 	    dq.create(80);
 	    try
 	    {
@@ -627,8 +627,7 @@ public class DQReadTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning Dropper failed");
-		assertCondition(true); 
+		assertCondition(true,"Warning Dropper failed"); 
 
 	    }
 	    catch (Exception e)
@@ -684,8 +683,7 @@ public class DQReadTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning Dropper failed");
-		assertCondition(true); 
+		assertCondition(true,"Warning Dropper failed"); 
 
 	    }
 	    catch (Exception e)
@@ -862,8 +860,8 @@ public class DQReadTestcase extends Testcase
 
           try
           {
-             DQRunnable writeRunnable = new DQRunnable(dqWrite, "WRITE", 15);
-             DQRunnable readRunnable = new DQRunnable(dq, "READ", 15);
+             DQRunnable writeRunnable = new DQRunnable(dqWrite, "WRITE", 15, output_);
+             DQRunnable readRunnable = new DQRunnable(dq, "READ", 15, output_);
              
              Thread readThread = new Thread(readRunnable);
              Thread writeThread = new Thread(writeRunnable);
@@ -882,8 +880,8 @@ public class DQReadTestcase extends Testcase
                msg += "readRunnable failed with exception "+readException+"\n"; 
                failed = true; 
              }
-             System.out.println("Write completed. opCount="+writeRunnable.getOpCount());
-             System.out.println("Read completed. opCount="+readRunnable.getOpCount());
+             output_.println("Write completed. opCount="+writeRunnable.getOpCount());
+             output_.println("Read completed. opCount="+readRunnable.getOpCount());
           }
           finally
           {

@@ -17,6 +17,13 @@ echo ----------------------------------------
 echo -- removing com/ibm/as400
 echo ----------------------------------------
 rm -fr com/ibm/as400
+
+echo -------------------------------------
+echo -- removing known stale files
+echo -------------------------------------
+rm -f test/Message/MessageTest.java
+rm -f test/JD/RS/JDRSStressTest.java
+
 #
 #
 echo 'CLASSPATH set to '$CLASSPATH

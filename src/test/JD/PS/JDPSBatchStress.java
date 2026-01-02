@@ -218,7 +218,7 @@ job log.
 		    ResultSet rs = s.executeQuery("select QMHMID from "+JDPSTest.COLLECTION+".QPJOBLOG");
 		    while (rs.next()) {
 			String mid = rs.getString(1);
-			/* System.out.println(mid); */ 
+			/* output_.println(mid); */ 
 			if (mid.indexOf("MCH") >= 0) {
 			    passed = false;
 			    message+=" FOUND "+mid+" in job log\n";

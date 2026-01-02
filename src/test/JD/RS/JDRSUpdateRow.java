@@ -567,7 +567,7 @@ public class JDRSUpdateRow extends JDTestcase {
           if (i == updatedColumn) {
             if ((!after[i].equals(Integer.valueOf(3343))) || (afterNulls[i] != false)) {
               success = false;
-              System.out.println("failed 1");
+              output_.println("failed 1");
             }
           } else {
             success = compareColumns(i, before, after, beforeNulls, afterNulls, message) && success;

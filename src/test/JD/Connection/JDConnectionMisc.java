@@ -34,6 +34,7 @@ import test.PasswordVault;
 import test.JD.JDSetupCollection;
 
 import java.io.FileOutputStream;
+import java.io.PrintWriter; 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -134,7 +135,7 @@ Performs cleanup needed after running variations.
     protected void cleanup ()
     throws Exception
     {
-        cleanupSystemNamingLibraries(connection_ );
+        cleanupSystemNamingLibraries(connection_ , output_);
         connection_.close ();
         connection_ = null; 
 
@@ -312,7 +313,7 @@ getTypeMap() - Throws an exception, not supported.
 	    if ((getDriver () == JDTestDriver.DRIVER_NATIVE) ) {
 		try {
 		    java.util.Map<?,?> map = connection_.getTypeMap ();
-		    System.out.println("passed "+map);
+		    output_.println("passed "+map);
 		    assertCondition(true);
 		}
 		catch (Exception e) {
@@ -597,8 +598,8 @@ getConnection -- test the query optimize goal property
           // Extract optimization level from the Database Monitor results
           String value =""+rs.getString(1);
           String valueOpt =""+rsOpt.getString(1);
-          System.out.println("value   ="+value);
-          System.out.println("valueOpt="+valueOpt);
+          output_.println("value   ="+value);
+          output_.println("valueOpt="+valueOpt);
           String expected = "A"; //allio
           String expectedOpt = "F"; //firstio
           String failMsg = "(goal=2) Expected '"+expected+"' and received '"+value+"'"+"\n";
@@ -610,7 +611,7 @@ getConnection -- test the query optimize goal property
               valueOpt.equalsIgnoreCase(expectedOpt)), failMsg);
           // End of new code @H2A
           //message+="Totals\n allio="+totalQueryTime+"       firstio"+totalQueryOptTime+"\n";
-          /* System.out.println("Totals allio="+totalQueryTime+"       firstio"+totalQueryOptTime);  */
+          /* output_.println("Totals allio="+totalQueryTime+"       firstio"+totalQueryOptTime);  */
 
           //assertCondition(totalQueryTime > totalQueryOptTime, "Error time for connection with *firstio is not less than *allio Messages=\n"+message);
 
@@ -764,8 +765,8 @@ isValid -- Verify that a negative value throws an exception.
           "ENDJOB JOB(*) OPTION(*IMMED)                                                                '"+
           ", 0000000080.00000) ";
 
-          // System.out.println(sql);
-          // System.out.flush();
+          // output_.println(sql);
+          // output_.flush();
 	  statusStringBuffer.append("Executing "+sql+"\n"); 
           stmt.executeQuery(sql);
 	  statusStringBuffer.append("Return from "+sql+"\n"); 
@@ -851,7 +852,7 @@ getConnection -- test the servermode subsystem property
             }
 	  }
         } catch (Exception e) {
-          System.out.println("ERROR setting up subsystems");
+          output_.println("ERROR setting up subsystems");
           e.printStackTrace();
         }
 
@@ -1002,7 +1003,7 @@ getConnection -- test a bogus subsystem property
      * setup the libraries used by the system naming tests
      */
 
-    public static void setupSystemNamingLibraries(Connection connection, String newBaseCollection ) throws Exception {
+    public static void setupSystemNamingLibraries(Connection connection, String newBaseCollection, PrintWriter output ) throws Exception {
 	if (!systemNamingLibrariesCreated) {
 	  systemNamingLibraries = new Vector<String>();
 	    String sql = "";
@@ -1017,7 +1018,7 @@ getConnection -- test a bogus subsystem property
 		    String collection = baseCollection+i;
 		    systemNamingLibraries.addElement(collection);
 		
-		    JDSetupCollection.create(connection,collection,false);
+		    JDSetupCollection.create(connection,collection,false, output);
 
 		    try {
 			sql = "DROP TABLE "+collection+".VERSION";
@@ -1079,7 +1080,7 @@ getConnection -- test a bogus subsystem property
 		systemNamingLibrariesCreated = true;
 		s.close();
 	    } catch (Exception sqlex) {
-		System.out.println("setupSystemNamingLibraries: Exception caught sql="+sql);
+		output.println("setupSystemNamingLibraries: Exception caught sql="+sql);
 		throw sqlex;
 	    }
 	}
@@ -1096,14 +1097,14 @@ getConnection -- test a bogus subsystem property
   /*
    * cleanup the libaries used by the system naming tests
    */
-  public static void cleanupSystemNamingLibraries(Connection connection) throws SQLException {
+  public static void cleanupSystemNamingLibraries(Connection connection, PrintWriter output) throws SQLException {
       if (cleanupLibraries ) {
 	  if (systemNamingLibrariesCreated) {
 	      Statement s = connection.createStatement();
 
 	      for (int i = 0; i < 10; i++) {
 		  String collection = baseCollection + i;
-		  JDSetupCollection.dropCollection(s, collection);
+		  JDSetupCollection.dropCollection(s, collection, output);
 	      }
 	      s.close();
 	      systemNamingLibrariesCreated = false;
@@ -1121,7 +1122,7 @@ getConnection -- test a bogus subsystem property
 
 	  try {
 	      boolean passed = true;
-	      setupSystemNamingLibraries(connection_, JDConnectionTest.COLLECTION);
+	      setupSystemNamingLibraries(connection_, JDConnectionTest.COLLECTION, output_);
         connection_.commit();
         
 	      Connection connNamingTest = testDriver_.getConnection(baseURL_, userId_,
@@ -1352,18 +1353,18 @@ getConnection -- test a bogus subsystem property
 
   void startThreads(SignonThread[] threads) {
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("Starting thread " + i);
+      output_.println("Starting thread " + i);
       threads[i].start();
     }
   }
 
   void stopThreads(SignonThread[] threads) throws InterruptedException {
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("Stopping thread " + i);
+      output_.println("Stopping thread " + i);
       threads[i].markStop();
     }
     for (int i = 0; i < threads.length; i++) {
-      System.out.println("joining " + i);
+      output_.println("joining " + i);
       threads[i].join();
     }
 

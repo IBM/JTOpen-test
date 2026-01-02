@@ -111,7 +111,7 @@ public class DQKeyedPeekTestcase extends Testcase
         }
         else
         {
-	    System.out.println("checkServerInfo returning false:  senderInfo='"+senderInfo+"' user="+user+ "user1="+user1+" server="+server+" server1="+server1); 
+	    output_.println("checkServerInfo returning false:  senderInfo='"+senderInfo+"' user="+user+ "user1="+user1+" server="+server+" server1="+server1); 
             return false;
         }
     }
@@ -1963,7 +1963,7 @@ public class DQKeyedPeekTestcase extends Testcase
 	    dq.create(10, 80);
 	    try
 	    {
-		(new DQWriter(dq)).start();
+		(new DQWriter(dq,output_)).start();
 
 		String key = "wait ";
 		byte[] testKey = key.getBytes("UnicodeBigUnmarked");
@@ -2042,7 +2042,7 @@ public class DQKeyedPeekTestcase extends Testcase
 		KeyedDataQueue dq = new KeyedDataQueue(systemObject_, "/QSYS.LIB/"+DQTest.DQLIB+".LIB/CD1EKTST.DTAQ");
 
 		    for (int i = 0; i < RETRIES; i++) {
-			System.out.println("Running drop iteration "+i); 
+			output_.println("Running drop iteration "+i); 
 			dq.create(10, 80);
 			byte[] key = (new String("key  ")).getBytes("UnicodeBigUnmarked");
 
@@ -2065,8 +2065,7 @@ public class DQKeyedPeekTestcase extends Testcase
 			    return; 
 			}
 		    }
-		System.out.println("Warning:  Unable to force race condition"); 
-		assertCondition(true); 
+		assertCondition(true,"Warning:  Unable to force race condition"); 
 	    }
 	    catch (Exception e)
 	    {

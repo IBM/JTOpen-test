@@ -118,7 +118,7 @@ protected void setup () //throws Exception
         }    
         catch(Exception ex) 
         {
-            System.out.println(ex);
+            output_.println(ex);
         }
      }
      catch(Exception e)
@@ -139,7 +139,7 @@ protected void cleanup()
       }    
       catch(Exception ex) 
       {
-           System.out.println(ex);
+           output_.println(ex);
       }
 
       {
@@ -150,7 +150,7 @@ protected void cleanup()
         } 
         catch(NullPointerException exe)
         {
-          System.out.println("The file does not exist!");
+          output_.println("The file does not exist!");
         }
       }
      

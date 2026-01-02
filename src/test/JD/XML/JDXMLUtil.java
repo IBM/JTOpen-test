@@ -106,7 +106,7 @@ public class JDXMLUtil {
 
     // testDoc.normalize();
    //     String content = testDoc.getXmlEncoding();
-  //  System.out.println("testDoc is "+testDoc+" content="+content); 
+  //  output_.println("testDoc is "+testDoc+" content="+content); 
     
     } catch (Exception e) { 
       e.printStackTrace(); 

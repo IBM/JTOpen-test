@@ -105,7 +105,7 @@ Performs setup needed before running variations.
                 COLLECTION2 = collection_;
             }
             JDSetupCollection.create (systemObject_,  c,
-                                      COLLECTION2);
+                                      COLLECTION2, output_);
             c.close ();
         }
     }
@@ -254,7 +254,7 @@ SQL400 - for the native driver, the value *libl is going to come back from
                 Connection c = dataSource.getConnection ();
                 String defaultSchema = getDefaultSchema (c);
                 c.close ();
-                System.out.println("Default schema is " + defaultSchema);
+                output_.println("Default schema is " + defaultSchema);
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE)
                     assertCondition (defaultSchema.equalsIgnoreCase ("*LIBL"));
                 else

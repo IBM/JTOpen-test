@@ -115,7 +115,7 @@ public class RMToXmlTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "Document has not been set";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -142,7 +142,7 @@ public class RMToXmlTestcase extends Testcase
           if (DEBUG) e.printStackTrace();
           String expectedMsg = "outputStream";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "java.lang.NullPointerException"));
@@ -168,7 +168,7 @@ public class RMToXmlTestcase extends Testcase
           ///e.printStackTrace();
           // String expectedMsg = "outputStream";
           // String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(///receivedMsg != null &&
                  ///receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "java.io.FileNotFoundException"));
@@ -196,7 +196,7 @@ public class RMToXmlTestcase extends Testcase
 ///          ///e.printStackTrace();
 ///          String expectedMsg = "outputStream";
 ///          String receivedMsg = e.getMessage();
-///          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          ///output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(///receivedMsg != null &&
 ///                 ///receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "java.io.FileNotFoundException"));
@@ -239,7 +239,7 @@ public class RMToXmlTestcase extends Testcase
           file1.createNewFile();  // Note: This method is new in Java2.
           raFile1 = new RandomAccessFile(file1, "r");
           rfmlDoc.toXml(file1);
-          ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+          ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 
           // Verify that the file is as expected.
           StringBuffer buffer = new StringBuffer();
@@ -248,7 +248,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"timeField1\" type=\"char\" length=\"8\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -289,7 +289,7 @@ public class RMToXmlTestcase extends Testcase
           file1.createNewFile();  // Note: This method is new in Java2.
           raFile1 = new RandomAccessFile(file1, "r");
           rfmlDoc.toXml(file1);
-          ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+          ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 
           // Verify that the file is as expected.
           StringBuffer buffer = new StringBuffer();
@@ -298,7 +298,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          if (DEBUG) System.out.println("File contents:\n" + buffer.toString());
+          if (DEBUG) output_.println("File contents:\n" + buffer.toString());
           Integer intC = Integer.valueOf(systemObject_.getCcsid());
           String ccsidVal = new String(intC.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" count=\"5\" type=\"char\" length=\"8\" ccsid=\"" + ccsidVal.trim() + "\"/>  </recordformat></rfml>");
@@ -341,7 +341,7 @@ public class RMToXmlTestcase extends Testcase
       {
         String expectedMsg = "Data type AS400Structure is not supported by RFML";
         String receivedMsg = e.getMessage();
-        if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+        if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -379,11 +379,11 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"char\" length=\"20\" ccsid=\"37\"/>  </recordformat></rfml>");
 
           // Try constructing a new RecordFormatDocument from the generated file.
-          ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+          ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
           ///RecordFormatDocument doc2 = new RecordFormatDocument("test.emptyFile");
           RecordFormatDocument doc2 = new RecordFormatDocument("emptyFile");
 
@@ -438,7 +438,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"char\" length=\"20\" init=\"This is the default\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -493,11 +493,11 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"char\" length=\"20\" ccsid=\"37\" init=\"This is the default\"/>  </recordformat></rfml>");
           ///RMTest.displayTree(rfmlDoc);
           String fieldContents2 = (String)rfmlDoc.getValue("RECFORMAT1.field1");
-          ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+          ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
           assertCondition(areEqualXml(buffer, expected) &&
                  fieldContents2.equals(fieldContents1));
         }
@@ -545,7 +545,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"int\" length=\"2\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -595,7 +595,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"int\" length=\"4\" init=\"123\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -648,11 +648,11 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"int\" length=\"4\" init=\"123\"/>  </recordformat></rfml>");
           ///RMTest.displayTree(rfmlDoc);
           Integer fieldContents2 = (Integer)rfmlDoc.getValue("RECFORMAT1.field1");
-          ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+          ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
           assertCondition(areEqualXml(buffer, expected) &&
                  fieldContents2.equals(fieldContents1));
         }
@@ -701,7 +701,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"float\" length=\"4\"/>  </recordformat></rfml>");
           // Note: The <data type="float"> element has no 'precision' attribute.
           assertCondition(areEqualXml(buffer, expected));
@@ -754,7 +754,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"float\" length=\"4\" init=\"1.23E24\"/>  </recordformat></rfml>");
           // Note: The <data type="float"> element has no 'precision' attribute.
           assertCondition(areEqualXml(buffer, expected));
@@ -813,11 +813,11 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"float\" length=\"8\" init=\"1.23E24\"/>  </recordformat></rfml>");
           ///RMTest.displayTree(rfmlDoc);
           Double fieldContents2 = (Double)rfmlDoc.getValue("RECFORMAT1.field1");
-          ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+          ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
           assertCondition(areEqualXml(buffer, expected) &&
                  fieldContents2.equals(fieldContents1));
         }
@@ -866,7 +866,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          //System.out.println("File contents:\n" + buffer.toString());
+          //output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"packed\" length=\"8\" precision=\"2\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -918,7 +918,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"packed\" length=\"8\" precision=\"2\" init=\"1122334455\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -973,12 +973,12 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"packed\" length=\"8\" precision=\"2\" init=\"112233\"/>  </recordformat></rfml>");
           ///RMTest.displayTree(rfmlDoc);
           BigDecimal fieldContents2 = (BigDecimal)rfmlDoc.getValue("RECFORMAT1.field1");
-          ///System.out.println("fieldContents1 == |" + fieldContents1.toString() + "|");
-          ///System.out.println("fieldContents2 == |" + fieldContents2.toString() + "|");
+          ///output_.println("fieldContents1 == |" + fieldContents1.toString() + "|");
+          ///output_.println("fieldContents2 == |" + fieldContents2.toString() + "|");
           assertCondition(areEqualXml(buffer, expected) &&
                  fieldContents2.doubleValue() == fieldContents1.doubleValue());
         }
@@ -1027,11 +1027,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"zoned\" length=\"6\" precision=\"2\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         BigDecimal fieldContents2 = (BigDecimal)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2==null);  // TBD - Working as designed?
       }
@@ -1080,11 +1080,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"12.34\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         BigDecimal fieldContents2 = (BigDecimal)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.toString().equals("12.34"));
       }
@@ -1135,11 +1135,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"12.34\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         BigDecimal fieldContents2 = (BigDecimal)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.toString().equals("56.78"));
       }
@@ -1188,7 +1188,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"byte\" length=\"32\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -1239,7 +1239,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"byte\" length=\"4\" init=\"3\"/>  </recordformat></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }
@@ -1290,7 +1290,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"byte\" length=\"4\" init=\"1 2 3 4\"/>  </recordformat></rfml>");
           byte[] fieldContents2 = (byte [])rfmlDoc.getValue("RECFORMAT1.field1");
           ///printByteArray("fieldContents2: ", fieldContents2);
@@ -1349,7 +1349,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"RECFORMAT1\">    <data name=\"field1\" type=\"byte\" length=\"4\" init=\"3\"/>  </recordformat></rfml>");
           byte[] fieldContents2 = (byte[])rfmlDoc.getValue("RECFORMAT1.field1");
           ///printByteArray("fieldContents2:", fieldContents2);
@@ -1403,11 +1403,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"packed\" length=\"6\" precision=\"2\" init=\"12.34\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         BigDecimal fieldContents2 = (BigDecimal)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.toString().equals("56.78"));
       }
@@ -1455,11 +1455,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2==null);  // TBD - Working as designed?
       }
@@ -1508,11 +1508,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" init=\"1999-11-05\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("1999-11-05"));
       }
@@ -1544,7 +1544,7 @@ public class RMToXmlTestcase extends Testcase
         RecordFormat recFmt = new RecordFormat("format1");
         TimestampFieldDescription field1 = new TimestampFieldDescription(new AS400Text(26,systemObject_), "field1");
         field1.setDFTCurrent();
-        ///System.out.println("Default after setDFTCurrent(): " + (String)field1.getDFT() + ", " + (String)field1.getDFTCurrentValue());
+        ///output_.println("Default after setDFTCurrent(): " + (String)field1.getDFT() + ", " + (String)field1.getDFTCurrentValue());
         field1.setDFT("1999-01-30-12.47.55.00000");
         recFmt.addFieldDescription(field1);
 
@@ -1562,11 +1562,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"26\" init=\"1999-01-30-12.47.55.00000\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("1999-01-30-12.47.55.00000"));
       }
@@ -1616,11 +1616,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" ccsid=\"37\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2==null);  // TBD - Working as designed?
       }
@@ -1675,11 +1675,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" init=\"Field1Dflt\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("Field1Dflt"));
       }
@@ -1736,11 +1736,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" ccsid=\"37\" init=\"Field1Dflt\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("Field1Val"));
       }
@@ -1789,11 +1789,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" ccsid=\"37\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2==null);  // TBD - Working as designed?
       }
@@ -1848,11 +1848,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" init=\"Field1Dflt\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("Field1Dflt"));
       }
@@ -1946,11 +1946,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" ccsid=\"37\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2==null);
       }
@@ -2004,11 +2004,11 @@ public class RMToXmlTestcase extends Testcase
           buffer.append(nextLine);
           nextLine = raFile1.readLine();
         }
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"10\" init=\"Field1Dflt\"/>  </recordformat></rfml>");
         ///RMTest.displayTree(rfmlDoc);
         String fieldContents2 = (String)rfmlDoc.getValue("FORMAT1.field1");
-        ///System.out.println("fieldContents2 == |" + fieldContents2 + "|");
+        ///output_.println("fieldContents2 == |" + fieldContents2 + "|");
         assertCondition(areEqualXml(buffer, expected) &&
                fieldContents2.equals("Field1Dflt"));
       }
@@ -2088,7 +2088,7 @@ public class RMToXmlTestcase extends Testcase
           file1.createNewFile();  // Note: This method is new in Java2.
           raFile1 = new RandomAccessFile(file1, "r");
           rfmlDoc.toXml(file1);
-          ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+          ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 
           // Verify that the file is as expected.
           StringBuffer buffer = new StringBuffer();
@@ -2097,7 +2097,7 @@ public class RMToXmlTestcase extends Testcase
             buffer.append(nextLine);
             nextLine = raFile1.readLine();
           }
-          ///System.out.println("File contents:\n" + buffer.toString());
+          ///output_.println("File contents:\n" + buffer.toString());
           StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\" ccsid=\"819\">  <recordformat name=\"cusrec\">    <data name=\"cusnum\" type=\"zoned\" length=\"6\" precision=\"0\" init=\"0\"/>    <data name=\"lstnam\" type=\"char\" length=\"8\" ccsid=\"37\" init=\"A\"/>    <data name=\"init\" type=\"char\" length=\"3\" ccsid=\"37\" init=\"B\"/>    <data name=\"street\" type=\"char\" length=\"13\" ccsid=\"37\" init=\"C\"/>    <data name=\"city\" type=\"char\" length=\"6\" ccsid=\"37\" init=\"D\"/>    <data name=\"state\" type=\"char\" length=\"2\" ccsid=\"37\" init=\"E\"/>    <data name=\"zipcod\" type=\"zoned\" length=\"5\" init=\"1\"/>    <data name=\"cdtlmt\" type=\"zoned\" length=\"4\" init=\"2\"/>    <data name=\"chgcod\" type=\"zoned\" length=\"1\" init=\"3\"/>    <data name=\"baldue\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"4\"/>    <data name=\"cdtdue\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"5\"/>  </recordformat>  <recordformat name=\"cusrec1\">    <data name=\"cusnum\" type=\"zoned\" length=\"6\" precision=\"0\" init=\"0\"/>    <data name=\"lstnam\" type=\"char\" length=\"8\" ccsid=\"37\" init=\"A\"/>    <data name=\"init\" type=\"char\" length=\"3\" ccsid=\"37\" init=\"B\"/>    <data name=\"street\" type=\"char\" length=\"13\" ccsid=\"37\" init=\"C\"/>    <data name=\"city\" type=\"char\" length=\"6\" ccsid=\"37\" init=\"D\"/>    <data name=\"state\" type=\"char\" length=\"2\" ccsid=\"37\" init=\"E\"/>    <data name=\"zipcod\" type=\"zoned\" length=\"5\" init=\"1\"/>    <data name=\"cdtlmt\" type=\"zoned\" length=\"4\" init=\"2\"/>    <data name=\"chgcod\" type=\"zoned\" length=\"1\" init=\"3\"/>    <data name=\"baldue\" type=\"struct\" struct=\"balance\"/>    <data name=\"cdtdue\" type=\"struct\" struct=\"balance\"/>  </recordformat>  <recordformat name=\"cusrecAscii\">    <data name=\"cusnum\" type=\"zoned\" length=\"6\" precision=\"0\" init=\"0\"/>    <data name=\"lstnam\" type=\"char\" length=\"8\" init=\"A\"/>    <data name=\"init\" type=\"char\" length=\"3\" init=\"B\"/>    <data name=\"street\" type=\"char\" length=\"13\" init=\"C\"/>    <data name=\"city\" type=\"char\" length=\"6\" init=\"D\"/>    <data name=\"state\" type=\"char\" length=\"2\" init=\"E\"/>    <data name=\"zipcod\" type=\"zoned\" length=\"5\" init=\"1\"/>    <data name=\"cdtlmt\" type=\"zoned\" length=\"4\" init=\"2\"/>    <data name=\"chgcod\" type=\"zoned\" length=\"1\" init=\"3\"/>    <data name=\"baldue\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"4\"/>    <data name=\"cdtdue\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"5\"/>  </recordformat>  <struct name=\"balance\">    <data name=\"amount\" type=\"zoned\" length=\"6\" precision=\"2\" init=\"7\"/>  </struct></rfml>");
           assertCondition(areEqualXml(buffer, expected));
         }

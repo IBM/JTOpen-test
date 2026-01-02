@@ -114,7 +114,7 @@ extends JDTestDriver {
         }
 
         JDSetupCollection.create (systemObject_, 
-                                  connection, COLLECTION);
+                                  connection, COLLECTION, out_);
     }
 
 

@@ -76,7 +76,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
       }
       if (!fd.getShortDescription().equals(shortDesc))
       {
-         sb.append("Wrong short description "+dspName+": " + fd.getShortDescription()+" expected "+shortDesc+"\n");
+         sb.append("Wrong short description for '"+ dspName +"' : " + fd.getShortDescription()+" sb "+shortDesc+"\n");
          passed = false; 
       }
       if (fd.isExpert() != exp)
@@ -462,7 +462,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
       {
          AS400JDBCConnectionPoolDataSourceBeanInfo bi = new AS400JDBCConnectionPoolDataSourceBeanInfo();
          BeanInfo[] bis = bi.getAdditionalBeanInfo();
-         int expectedLength = 117; 
+         int expectedLength = 118; 
          PropertyDescriptor[] pd = bis[0].getPropertyDescriptors();
          if (pd.length != expectedLength)  
          {
@@ -487,7 +487,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("blockCriteria", "int");
          propertyTypes.put("blockSize", "int");
          propertyTypes.put("cursorHold", "boolean");
-         propertyTypes.put("cursorSensitivity", "java.lang.String");  //@A6A
+         propertyTypes.put("cursorSensitivity", "java.lang.String");  
          propertyTypes.put("databaseName", "java.lang.String");
          propertyTypes.put("dataCompression", "boolean");
          propertyTypes.put("dataSourceName", "java.lang.String");
@@ -499,7 +499,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
          propertyTypes.put("driver", "java.lang.String");
          propertyTypes.put("errors", "java.lang.String");
          propertyTypes.put("extendedDynamic", "boolean");
-         propertyTypes.put("extendedMetadata", "boolean");  //@A3A
+         propertyTypes.put("extendedMetadata", "boolean");  
          propertyTypes.put("fullOpen", "boolean");  // @W1a
          propertyTypes.put("lazyClose", "boolean");
          propertyTypes.put("libraries", "java.lang.String");
@@ -601,17 +601,18 @@ propertyTypes.put("additionalAuthenticationFactor", "[C");
 propertyTypes.put("stayAlive",  "int"); 
 propertyTypes.put("tlsTruststore",  "java.lang.String"); 
 propertyTypes.put("tlsTruststorePassword",  "java.lang.String"); 
-
-
+propertyTypes.put("useSock5",  "boolean"); 
 
 
 for (int i = 0; i < pd.length; i++) {
+  String propertyName=pd[i].getName();
   String value = (String) propertyTypes.get(pd[i].getName());
-  if (!pd[i].getPropertyType().getName().equals(value)) {
-    if ("password".equals(pd[i].getName()) && "[C".equals(pd[i].getPropertyType().toString())) {
+  String propertyTypeName=pd[i].getPropertyType().getName();
+  if (!propertyTypeName.equals(value)) {
+    if ("password".equals(propertyName) && "[C".equals(propertyTypeName)) {
       /* valid */
     } else {
-      failMessage.append("Wrong property types returned: [" + i + "]:(" + pd[i].getName() + ") "
+      failMessage.append("Wrong property types returned: [" + i + "]:(" + propertyName + ") "
           + pd[i].getPropertyType().toString() + " sb " + value + "\n");
       passed = false;
     }
@@ -711,9 +712,10 @@ for (int i = 0; i < pd.length; i++) {
          getPropertyMethods.put("maximumBlockedInputRows", "getMaximumBlockedInputRows"); 
 	 getPropertyMethods.put("queryTimeoutMechanism", "getQueryTimeoutMechanism");
 	 getPropertyMethods.put("queryReplaceTruncatedParameter", "getQueryReplaceTruncatedParameter"); 
+	 getPropertyMethods.put("portNumber", "getPortNumber"); 
 
 getPropertyMethods.put("extendedMetadata","isExtendedMetadata"); 
-getPropertyMethods.put("toolboxTraceCategory","getToolboxTraceCategory");
+getPropertyMethods.put("keepAlive","isKeepAlive"); 
 getPropertyMethods.put("numericRangeError","getNumericRangeError");
 getPropertyMethods.put("characterTruncation","getCharacterTruncation");
 getPropertyMethods.put("secondaryURL","getSecondaryURL");
@@ -726,7 +728,7 @@ getPropertyMethods.put("describeOption","getDescribeOption");
 getPropertyMethods.put("decimalDataErrors","getDecimalDataErrors");
 getPropertyMethods.put("timestampFormat","getTimestampFormat");
 getPropertyMethods.put("useDrdaMetadataVersion","isUseDrdaMetadataVersion");
-
+getPropertyMethods.put("toolboxTraceCategory","getToolboxTraceCategory");
 
 getPropertyMethods.put("enableClientAffinitiesList", "getEnableClientAffinitiesList"); 
 getPropertyMethods.put("affinityFailbackInterval","getAffinityFailbackInterval"); 
@@ -739,6 +741,7 @@ getPropertyMethods.put("additionalAuthenticationFactor","getAdditionalAuthentica
 getPropertyMethods.put("stayAlive","getStayAlive"); 
 getPropertyMethods.put("tlsTruststore","getTlsTruststore"); 
 getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword"); 
+getPropertyMethods.put("useSock5","isUseSock5"); 
 
 
          for (int i=0; i< pd.length; i++)
@@ -904,6 +907,7 @@ setPropertyMethods.put("additionalAuthenticationFactor","setAdditionalAuthentica
 setPropertyMethods.put("stayAlive","setStayAlive"); 
 setPropertyMethods.put("tlsTruststore","setTlsTruststore"); 
 setPropertyMethods.put("tlsTruststorePassword","setTlsTruststorePassword"); 
+setPropertyMethods.put("useSock5","setUseSock5"); 
 
 
 Properties setPropertyMethods2 = new Properties()	 ;
@@ -1070,8 +1074,6 @@ propertyShortDescs.put("decimalDataErrors","Specifies how decimal data errors ar
 propertyShortDescs.put("timestampFormat","Specifies the format for timestamps retrieved via getString.");
 propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata version information should be returned.");
 
-         propertyShortDescs.put("extendedMetadata", "extendedMetadata");
-
          propertyShortDescs.put("enableClientAffinitiesList", "Specifies if alternate servers should be used."); 
          propertyShortDescs.put("affinityFailbackInterval","Specifies the length, in seconds, of the interval after which the primary connection will be re-established."); 
          propertyShortDescs.put("clientRerouteAlternateServerName","Specifies the list of alternate servers."); 
@@ -1079,10 +1081,14 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
          propertyShortDescs.put("maxRetriesForClientReroute","The maximum number of connection retries for automatic client reroute."); 
          propertyShortDescs.put("retryIntervalForClientReroute","The number of seconds between consecutive connection retries."); 
          propertyShortDescs.put("enableSeamlessFailover","Specifies whether the JTOpen JDBC driver uses seamless failover for client reroute."); 
+
+         propertyShortDescs.put("extendedMetadata", "extendedMetadata");
+         propertyShortDescs.put("portNumber", "Specifies the port number used to connect to the ZDA server.");
          propertyShortDescs.put("additionalAuthenticationFactor","Specifies the additional authentication factor to be used in conjunction with the password.");
          propertyShortDescs.put("stayAlive","Specifies the number of seconds between pings to the Host Server.  This is used to prevent a connection from being viewed as inactive.  A value of 0 means to not send pings to keep the connection alive.");
          propertyShortDescs.put("tlsTruststore","Specifies a file to be used as the truststore for TLS connections."); 
          propertyShortDescs.put("tlsTruststorePassword","Specifies the password associated with the configured TLS truststore."); 
+         propertyShortDescs.put("useSock5","Specifies that Socks5 should be used for the proxy support."); 
          
          for (int i=0; i< pd.length; i++)
          {

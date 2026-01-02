@@ -60,7 +60,7 @@ public class PgmParmTestcase extends Testcase implements PropertyChangeListener,
     {
         if (propChange_ != null)
         {
-            System.out.println("propertyChange refired!");
+            output_.println("propertyChange refired!");
         }
         propChange_ = e;
         propertyName_ = e.getPropertyName();
@@ -75,7 +75,7 @@ public class PgmParmTestcase extends Testcase implements PropertyChangeListener,
         {
             if (vetoRefire_ != null)
             {
-                System.out.println("vetoableChange refired!");
+                output_.println("vetoableChange refired!");
             }
             else
             {
@@ -101,7 +101,7 @@ public class PgmParmTestcase extends Testcase implements PropertyChangeListener,
     {
         if (asource_ != null)
         {
-            System.out.println("actionCompleted refired!");
+            output_.println("actionCompleted refired!");
         }
         asource_ = e.getSource();
     }

@@ -115,12 +115,12 @@ Setup.
 
             connection_ = db2ConnectionPooolDataSource.getConnection ();
             Statement s = connection_.createStatement ();
-            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION); 
+            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION, output_); 
             s.executeUpdate ("CREATE TABLE " + table_ + " (COL1 INT)");
             s.close ();
 
                 JDSetupProcedure.create (systemObject_,  connection_, 
-                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_);        
+                                         JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection_, output_);        
 
             connection_.close ();
         }
@@ -287,7 +287,7 @@ close() - Should close all its statements, but not those of a different connecti
     
              c2.close ();
     
-             System.out.println(s1Before + " " + s2Before + " " + s3Before + " " + sXBefore
+             output_.println(s1Before + " " + s2Before + " " + s3Before + " " + sXBefore
                      + " " + s1After + " " + s2After + " " + s3After  + " " + sXAfter);
              assertCondition (!s1Before && !s2Before && !s3Before && !sXBefore
                      && s1After && s2After && s3After && !sXAfter);
@@ -337,7 +337,7 @@ back in the pool
     
              c2.close ();
     
-             System.out.println(rs1Before + " " + rs2Before + " " + rsXBefore
+             output_.println(rs1Before + " " + rs2Before + " " + rsXBefore
                      + " " + rs1After + " " + rs2After + " " + rsXAfter);
              assertCondition (!rs1Before && !rs2Before && !rsXBefore
                      && rs1After && rs2After && !rsXAfter);

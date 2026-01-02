@@ -111,7 +111,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
     else if (jndiType.equals("ldap"))
       jndiType_ = JNDI_LDAP;
     else
-      System.out.println("WARNING... Unknown jndi type '" + jndiType + "' using default of " + jndiType_);
+      output_.println("WARNING... Unknown jndi type '" + jndiType + "' using default of " + jndiType_);
     authorityUsr_ = authorityUsr; // @A2A
     authorityPwd_ = authorityPwd; // @A2A
   }
@@ -152,7 +152,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
         sb.append("Did not find " + prefix + " " + suffix + "\n");
       }
     } catch (Exception e) {
-      System.out.println("Log check failed.");
+      output_.println("Log check failed.");
       e.printStackTrace();
     }
     return equal;
@@ -180,12 +180,12 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       if (!false) // @A9A
       {
         if (!testFile_.delete())
-          System.out.println("WARNING... testcase cleanup could not delete: " + logFileName_);
+          output_.println("WARNING... testcase cleanup could not delete: " + logFileName_);
         if (!javatest_.delete()) // @A6A
-          System.out.println("WARNING... testcase cleanup could not delete: " + logDirectory_); // @A6A
+          output_.println("WARNING... testcase cleanup could not delete: " + logDirectory_); // @A6A
       }
     } catch (Exception e) {
-      System.out.println("AS400JDBCRowSetTestcase cleanup FAILED!");
+      output_.println("AS400JDBCRowSetTestcase cleanup FAILED!");
       e.printStackTrace();
     }
   }
@@ -199,7 +199,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
 
     // Determine the environment.
     String os = System.getProperty("os.name");
-    System.out.println("Environment: " + os);
+    output_.println("Environment: " + os);
 
     {
       // Get the JNDI Initial Context.
@@ -222,7 +222,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       try {
         context_ = new InitialContext(env_);
       } catch (Exception cxt) {
-        System.out.println("ERROR: testcase setup failed to initialize the JNDI context.");
+        output_.println("ERROR: testcase setup failed to initialize the JNDI context.");
         cxt.printStackTrace();
       }
     }
@@ -233,10 +233,10 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       javatest_ = new File(logDirectory_); // @A6C
       
       if (!javatest_.exists()) {
-        System.out.println("Setup is creating 'javatest' directory.");
+        output_.println("Setup is creating 'javatest' directory.");
 
         if (!javatest_.mkdir()) {
-          System.out.println("WARNING:  Setup could not create the 'javatest' directory.");
+          output_.println("WARNING:  Setup could not create the 'javatest' directory.");
         }
       }
 
@@ -248,7 +248,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
         previousWriter_ = DriverManager.getLogWriter(); // @A5A
         // @A3D DriverManager.setLogStream(writer_);
       } catch (IOException e) {
-        System.out.println("WARNING... testcase setup could not create log file: " + logFileName_);
+        output_.println("WARNING... testcase setup could not create log file: " + logFileName_);
         e.printStackTrace();
       }
     }
@@ -284,7 +284,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
         context_.unbind(traceDS_);
         context_.bind(traceDS_, dataSource);
       } catch (NamingException n2) {
-        System.out.println("Setup error occurred.");
+        output_.println("Setup error occurred.");
         n2.printStackTrace();
       }
     }
@@ -320,38 +320,38 @@ public class AS400JDBCRowSetTestcase extends Testcase {
         context_.unbind(jndiName_);
         context_.bind(jndiName_, dataSource);
       } catch (NamingException n2) {
-        System.out.println("Setup error occurred.");
+        output_.println("Setup error occurred.");
         n2.printStackTrace();
       }
     } catch (IllegalArgumentException n) {
       try {
         Hashtable<?, ?> environment = context_.getEnvironment();
-        System.out.println("Illegal argument exception encountered"); 
-        System.out.println("Environment is "); 
+        output_.println("Illegal argument exception encountered"); 
+        output_.println("Environment is "); 
         Enumeration<?> keys = environment.keys(); 
         while (keys.hasMoreElements()) {
           Object key = keys.nextElement(); 
           Object value = environment.get(key); 
-          System.out.println("  "+key+":"+value); 
+          output_.println("  "+key+":"+value); 
         }
         
-        System.out.println("Resetting environment"); 
+        output_.println("Resetting environment"); 
         if (javatest_.exists()) {
-          System.out.println("Setup is deleting 'javatest' ("+javatest_+") directory.");
+          output_.println("Setup is deleting 'javatest' ("+javatest_+") directory.");
           File[] files = javatest_.listFiles();
           for (int i = 0; i < files.length; i++) { 
             files[i].delete(); 
           }
           javatest_.delete(); 
           if (!javatest_.mkdir()) {
-            System.out.println("WARNING:  Setup could not create the 'javatest' directory.");
+            output_.println("WARNING:  Setup could not create the 'javatest' directory.");
           }
         }
 
         context_.unbind(jndiName_);
         context_.bind(jndiName_, dataSource);
       } catch (Exception n2) {
-        System.out.println("Setup error occurred.");
+        output_.println("Setup error occurred.");
         n2.printStackTrace();
       }
     }
@@ -677,7 +677,7 @@ public class AS400JDBCRowSetTestcase extends Testcase {
       ps.close();
       c.close();
     } catch (Exception e) {
-      System.out.println("AS400JDBCRowSetTestcase setup FAILED!");
+      output_.println("AS400JDBCRowSetTestcase setup FAILED!");
       e.printStackTrace();
     }
   }

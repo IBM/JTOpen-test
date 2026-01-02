@@ -108,7 +108,7 @@ public class NLSDATestcase extends Testcase
     }
     catch(Exception e)
     {
-        System.out.println("Setup failed.  Unexpected exception occurred." + e);
+        output_.println("Setup failed.  Unexpected exception occurred." + e);
         throw e;
     }
   }
@@ -127,7 +127,7 @@ public class NLSDATestcase extends Testcase
      }
      catch(Exception e)
      {
-        System.out.println("Cleanup failed. " + e);
+        output_.println("Cleanup failed. " + e);
         throw e;
      }
   }

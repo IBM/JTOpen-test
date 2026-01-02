@@ -121,9 +121,9 @@ Performs setup needed before running variations.
 		rs_ = statement_.executeQuery (select_ + " FOR UPDATE");
 
 	    } catch (Exception e) {
-		System.out.println("-----------------Error on setup -------------------------");
+		output_.println("-----------------Error on setup -------------------------");
 		e.printStackTrace();
-		System.out.println("---------------------------------------------------------");
+		output_.println("---------------------------------------------------------");
 	    } 
         }
     }

@@ -57,7 +57,7 @@ Constructor.
       // Only override collection if it is a standard one
       // otherwise this was set using the -lib parameter
       //
-      System.out.println("JTATest.COLLECTION = "+JTATest.COLLECTION); 
+      output_.println("JTATest.COLLECTION = "+JTATest.COLLECTION); 
       if (JTATest.COLLECTION.equals(JTATest.DEFAULT_COLLECTION)) {
 	  JTATest.COLLECTION=JTAUDBTest.COLLECTION;
       } 

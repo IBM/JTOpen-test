@@ -952,8 +952,8 @@ public class JDRSGetTimestamp extends JDTestcase {
     try {
       connection_.commit();
     } catch (Exception e) {
-      System.out.println("Warning:  Exception on commit");
-      e.printStackTrace(System.out);
+      output_.println("Warning:  Exception on commit");
+      e.printStackTrace(output_);
 
     }
   }

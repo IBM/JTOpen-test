@@ -55,7 +55,7 @@ public class CmdCallThreadTestcase extends ThreadedTestcase
         }
         catch (Exception e)
         {
-            System.out.println("Setup failed");
+            output_.println("Setup failed");
             return;
         }
 

@@ -94,7 +94,7 @@ Performs setup needed before running variations.
 	if (nativeDriver_) {
             // @H1A  native driver uses different notion of VRM 
 	    vrm_ = testDriver_.getRelease();
-	    System.out.println("vrm = "+vrm_);
+	    output_.println("vrm = "+vrm_);
 
             // Set the VRM constants to match driver
 	    VRM_710 = 710; 

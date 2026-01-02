@@ -412,7 +412,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
     {
         vetoEvents.addElement(event);
 	if (event.getNewValue().equals("REJECT")) {
-	    System.out.println("Throwing Property veto exception for REJECT"); 
+	    output_.println("Throwing Property veto exception for REJECT"); 
             throw new PropertyVetoException("badegg", event);
 	}
         if (((String)(event.getNewValue())).indexOf("REJECTPATH") > 1)
@@ -556,10 +556,10 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
               expected[1] = expected2;
             }
             
-	    System.out.println("-------------- INFO ----------------"); 
-	    System.out.println("Veto events"); 
+	    output_.println("-------------- INFO ----------------"); 
+	    output_.println("Veto events"); 
 	    printVetoEvents( expected);
-	    System.out.println("Change events"); 
+	    output_.println("Change events"); 
 	    printChangeEvents(1);
 
 	    // Primed 5/30/2014 on fowgai using  616CA 
@@ -572,9 +572,9 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
         expectedListener2[0] = expected2;
       }
 
-	    System.out.println("Listener2 Veto events"); 
+	    output_.println("Listener2 Veto events"); 
 	    listener2.printVetoEvents( expectedListener2);
-	    System.out.println("Listener2 Change events"); 
+	    output_.println("Listener2 Change events"); 
 	    listener2.printChangeEvents(1);
 
 
@@ -582,7 +582,7 @@ public class PNBeansTestcase extends Testcase implements PropertyChangeListener,
                 !gotVetoEvent(expected))
             {
                 failed("Events not correct.");
-                System.out.println("-------------FAILED---------------"); 
+                output_.println("-------------FAILED---------------"); 
                 printVetoEvents( expected);
             }
             else if (!exceptionIs(e, "PropertyVetoException", "badegg"))

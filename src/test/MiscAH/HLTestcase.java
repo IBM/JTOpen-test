@@ -3217,7 +3217,7 @@ public class HLTestcase extends Testcase {
 			hl.setMessageSeverity(3);
 			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
-			System.out.println(hl.getLength());
+			output_.println(hl.getLength());
 			while(messages.hasMoreElements())
 			{
 				QueuedMessage message = (QueuedMessage) messages.nextElement();
@@ -3256,7 +3256,7 @@ public class HLTestcase extends Testcase {
 			hl.setMessageSeverity(1);
 			Enumeration<QueuedMessage> messages = hl.getMessages();
 			boolean success = true;
-			System.out.println(hl.getLength());
+			output_.println(hl.getLength());
 			while(messages.hasMoreElements())
 			{
 				QueuedMessage message = (QueuedMessage) messages.nextElement();
@@ -3393,7 +3393,7 @@ public class HLTestcase extends Testcase {
 			hl.setStartingDate(new Date(System.currentTimeMillis() - 900000)); 
 			hl.setEndingDate(date, "*AVAIL");
 			QueuedMessage[] messages = hl.getMessages(0, 2);
-			//System.out.println(messages.length);
+			//output_.println(messages.length);
 			boolean success = true;
 			for(int i=0; i<messages.length; i++)
 			{

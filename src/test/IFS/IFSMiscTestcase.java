@@ -355,9 +355,9 @@ Ensure that IFSFile.canWrite returns false if called for a read-only file.
     try
     {
       cmd.setCommand(cmdStr1);
-      if (!cmd.run()) { System.out.println("WARNING:  Unable to run "+cmdStr1);} 
+      if (!cmd.run()) { output_.println("WARNING:  Unable to run "+cmdStr1);} 
       cmd.setCommand(cmdStr2);
-      if (!cmd.run()) { System.out.println("WARNING:  Unable to run "+cmdStr2);} 
+      if (!cmd.run()) { output_.println("WARNING:  Unable to run "+cmdStr2);} 
     }
     catch(Exception e)
     {
@@ -1008,7 +1008,7 @@ Specify a filename with old-unicode characters.
       }
       if (DEBUG) {
         for (int i=0; i<fileNames.length; i++)
-          System.out.println("--> " + fileNames[i]);
+          output_.println("--> " + fileNames[i]);
       }
       if (fileNames.length != 1)
         failed("Wrong number of files in directory: " + fileNames.length);
@@ -1084,7 +1084,7 @@ Specify a filename with new-unicode characters.
       }
       if (DEBUG) {
         for (int i=0; i<fileNames.length; i++)
-          System.out.println("--> " + fileNames[i]);
+          output_.println("--> " + fileNames[i]);
       }
       if (fileNames.length != 1)
         failed("Wrong number of files in directory: " + fileNames.length);
@@ -1167,8 +1167,8 @@ Verify that getCCSID() returns valid CCSID for a valid file.
     {
       IFSFile file = new IFSFile(systemObject_, fileName);
       if (DEBUG) {
-        System.out.println("Reported system CCSID == " + systemObject_.getCcsid());
-        System.out.println("Reported file CCSID == " + file.getCCSID());
+        output_.println("Reported system CCSID == " + systemObject_.getCcsid());
+        output_.println("Reported file CCSID == " + file.getCCSID());
       }
       assertCondition(file.getCCSID() > 0);
     }
@@ -1254,7 +1254,7 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
     {
 
     {
-      if (DEBUG) System.out.println("Directory: /QIBM/ProdData/HTTP/Public/jt400");
+      if (DEBUG) output_.println("Directory: /QIBM/ProdData/HTTP/Public/jt400");
       IFSFile dir = new IFSFile(systemObject_, "/QIBM/ProdData/HTTP/Public/jt400");
       Enumeration<IFSFile> enumeration = dir.enumerateFiles();
       while (enumeration.hasMoreElements())
@@ -1262,20 +1262,20 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
         IFSFile file = (IFSFile)enumeration.nextElement();
         String subtype = file.getSubtype();
         if (subtype == null) {
-          System.out.println("Null subtype for " + file.getPath());
+          output_.println("Null subtype for " + file.getPath());
           ok = false;
         }
         else if (DEBUG && subtype != null &&
                  (subtype.equals("PF") || subtype.equals("LF")))
         {
-          System.out.print(file.getPath()+": "+subtype+": ");
-          System.out.println(file.isSourcePhysicalFile());
+          output_.print(file.getPath()+": "+subtype+": ");
+          output_.println(file.isSourcePhysicalFile());
         }
       }
     }
 
       {
-        if (DEBUG) System.out.println("Directory: /QSYS.LIB");
+        if (DEBUG) output_.println("Directory: /QSYS.LIB");
         IFSFile dir = new IFSFile(systemObject_, "/QSYS.LIB");
         Enumeration<IFSFile> enumeration = dir.enumerateFiles();
         while (enumeration.hasMoreElements())
@@ -1283,20 +1283,20 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
           IFSFile file = (IFSFile)enumeration.nextElement();
           String subtype = file.getSubtype();
           if (subtype == null) {
-            System.out.print(" Null subtype");
+            output_.print(" Null subtype");
             ok = false;
           }
           else if (DEBUG && subtype != null &&
                    (subtype.equals("PF") || subtype.equals("LF")))
           {
-            System.out.print(file.getPath()+": "+subtype+": ");
-            System.out.println(file.isSourcePhysicalFile());
+            output_.print(file.getPath()+": "+subtype+": ");
+            output_.println(file.isSourcePhysicalFile());
           }
         }
       }
 
       {
-        if (DEBUG) System.out.println("Directory: /QSYS.LIB/QGPL.LIB");
+        if (DEBUG) output_.println("Directory: /QSYS.LIB/QGPL.LIB");
         IFSFile dir = new IFSFile(systemObject_, "/QSYS.LIB/QGPL.LIB");
         Enumeration<IFSFile> enumeration = dir.enumerateFiles();
         while (enumeration.hasMoreElements())
@@ -1306,22 +1306,22 @@ Run IFSFile.getSubtype() against everything in QSYS.LIB/QGPL.LIB.
             IFSFile file = (IFSFile)enumeration.nextElement();
             String subtype = file.getSubtype();
             if (subtype == null) {
-              System.out.println("Null subtype for " + file.getPath());
+              output_.println("Null subtype for " + file.getPath());
               ok = false;
             }
             else if (DEBUG && subtype != null &&
                      (subtype.equals("PF") || subtype.equals("LF")))
             {
-              System.out.print(file.getPath()+": "+subtype+": ");
-              System.out.println(file.isSourcePhysicalFile());
+              output_.print(file.getPath()+": "+subtype+": ");
+              output_.println(file.isSourcePhysicalFile());
               if (file.isSourcePhysicalFile() && subtype.equals("LF")) {
-                System.out.println("Found a Logical File that is a source physical file: " + file.getPath());
+                output_.println("Found a Logical File that is a source physical file: " + file.getPath());
                 ok = false;
               }
             }
           }
           catch (AS400Exception e) {
-            System.out.println(e.getAS400Message().toString());
+            output_.println(e.getAS400Message().toString());
           }
         }
       }
@@ -1594,21 +1594,21 @@ IFS files can be very large, so MAX_FILE_LENGTH+1 is still valid.
     }
   }
 
-  static final boolean verifyFileCount(IFSFile dir, int expectedCount) throws IOException
+  boolean verifyFileCount(IFSFile dir, int expectedCount) throws IOException
   {
     boolean result = true;
     Enumeration<?> enumeration = dir.enumerateFiles("*");
     int counter = 0;
-    if (DEBUG) System.out.println("Enumerating files");
+    if (DEBUG) output_.println("Enumerating files");
     while (enumeration.hasMoreElements())
     {
       IFSFile f = (IFSFile)enumeration.nextElement();
       ++counter;
-      if (DEBUG) System.out.println(counter+": "+f.getName());
+      if (DEBUG) output_.println(counter+": "+f.getName());
     }
-    if (DEBUG) System.out.println("enumerateFiles() returned " + counter + " files.");
+    if (DEBUG) output_.println("enumerateFiles() returned " + counter + " files.");
     if (counter != expectedCount) {
-      System.out.println("Incorrect number of files reported.  Expected " + expectedCount + ", got " + counter);
+      output_.println("Incorrect number of files reported.  Expected " + expectedCount + ", got " + counter);
       result = false;
     }
     return result;
@@ -1721,49 +1721,49 @@ Note to tester: This can be a long-running variation.
       // Start out with empty directory, and check reported count.
       if (!verifyFileCount(dir1, 0))   ok = false;
 
-      System.out.println(" Var053: Step 1"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 1"+"fileCount="+fileCount); 
       // Populate the library with MAXIMUM_GET_COUNT_-3 files,
       // and check the reported file count.
       fileCount += populateLibrary(libName, 1, MAXIMUM_GET_COUNT_-3);
       if (!verifyFileCount(dir1, MAXIMUM_GET_COUNT_-3))   ok = false;
 
-      System.out.println(" Var053: Step 2"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 2"+"fileCount="+fileCount); 
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, MAXIMUM_GET_COUNT_-2))   ok = false;
 
-      System.out.println(" Var053: Step 3"+"fileCount="+fileCount);
+      output_.println(" Var053: Step 3"+"fileCount="+fileCount);
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, MAXIMUM_GET_COUNT_-1))   ok = false;
 
-      System.out.println(" Var053: Step 4"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 4"+"fileCount="+fileCount); 
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, MAXIMUM_GET_COUNT_))   ok = false;
 
-      System.out.println(" Var053: Step 5"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 5"+"fileCount="+fileCount); 
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, MAXIMUM_GET_COUNT_+1))   ok = false;
 
-      System.out.println(" Var053: Step 6"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 6"+"fileCount="+fileCount); 
       // Add files to bring the file count up to (2*MAXIMUM_GET_COUNT - 1),
       // and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, MAXIMUM_GET_COUNT_-2);
       if (!verifyFileCount(dir1, (2*MAXIMUM_GET_COUNT_)-1))   ok = false;
 
-      System.out.println(" Var053: Step 7"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 7"+"fileCount="+fileCount); 
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, 2*MAXIMUM_GET_COUNT_))   ok = false;
 
-      System.out.println(" Var053: Step 8"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 8"+"fileCount="+fileCount); 
       // Add one more file to the library, and check the reported count.
       fileCount += populateLibrary(libName, fileCount+1, 1);
       if (!verifyFileCount(dir1, (2*MAXIMUM_GET_COUNT_)+1))   ok = false;
 
-      System.out.println(" Var053: Step 9"+"fileCount="+fileCount); 
+      output_.println(" Var053: Step 9"+"fileCount="+fileCount); 
 
       assertCondition(ok && fileCount==(2*MAXIMUM_GET_COUNT_)+1);
     }
@@ -1796,11 +1796,11 @@ Note to tester: This can be a long-running variation.
       // Set up a folder.
       String cmdString = "QSYS/CRTFLR FLR(" + folderName + ")";
       if (!commandCallPwrSys_.run(cmdString)) {
-        System.out.println("Setup failed: " + cmdString);
-        System.out.println("You may need to do a ADDDIRE for user profile " + commandCallPwrSys_.getSystem().getUserId());
+        output_.println("Setup failed: " + cmdString);
+        output_.println("You may need to do a ADDDIRE for user profile " + commandCallPwrSys_.getSystem().getUserId());
         AS400Message[] messagelist = commandCallPwrSys_.getMessageList();
         for (int i = 0; i < messagelist.length; ++i) {
-          System.out.println(messagelist[i].getText());
+          output_.println(messagelist[i].getText());
         }
         ok = false;
       }
@@ -2200,18 +2200,18 @@ Verify that setCCSID() successfully resets the data CCSID of a valid file.
         newCCSID = 37;
       }
       file1.setCCSID(newCCSID);
-      System.out.println(file1.getPath() + ": setCCSID("+newCCSID+")");
+      output_.println(file1.getPath() + ": setCCSID("+newCCSID+")");
       IFSFile file2 = new IFSFile(systemObject_, fileName);
       currentCCSID = file2.getCCSID();
       if (currentCCSID != newCCSID) {
-        System.out.println("ERROR: CCSID is " + currentCCSID + " after setCCSID("+newCCSID+"); original CCSID was " + oldCCSID);
+        output_.println("ERROR: CCSID is " + currentCCSID + " after setCCSID("+newCCSID+"); original CCSID was " + oldCCSID);
         success = false;
       }
       file1.setCCSID(oldCCSID);
       IFSFile file3 = new IFSFile(systemObject_, fileName);
       currentCCSID = file3.getCCSID();
       if (currentCCSID != oldCCSID) {
-        System.out.println("ERROR: CCSID is " + currentCCSID + " after resetting CCSID to "+oldCCSID);
+        output_.println("ERROR: CCSID is " + currentCCSID + " after resetting CCSID to "+oldCCSID);
         success = false;
       }
       assertCondition(success);
@@ -2274,20 +2274,20 @@ Verify that IFSFile.getPathPointedTo() returns the correct value.
       String cmdStr = "ADDLNK OBJ('" + fileName + "') NEWLNK('" + symlinkName + "') LNKTYPE(*SYMBOLIC)";
       CommandCall cmd = new CommandCall(systemObject_);
       if (!cmd.run(cmdStr)) {
-        System.out.println("Failed to create symbolic link.");
+        output_.println("Failed to create symbolic link.");
       }
 
       IFSFile symlink = new IFSFile(systemObject_, symlinkName);
       String pathPointedTo = symlink.getPathPointedTo();
       if (!pathPointedTo.equals(fileName)) {
         succeeded = false;
-        System.out.println("Unexpected result from getPathPointedTo().  Expected: |"+fileName+"|. Got: |"+pathPointedTo+"|");
+        output_.println("Unexpected result from getPathPointedTo().  Expected: |"+fileName+"|. Got: |"+pathPointedTo+"|");
       }
 
       pathPointedTo = file.getPathPointedTo();
       if (pathPointedTo != null) {
         succeeded = false;
-        System.out.println("Unexpected result from getPathPointedTo().  Expected: null. Got: |"+pathPointedTo+"|");
+        output_.println("Unexpected result from getPathPointedTo().  Expected: null. Got: |"+pathPointedTo+"|");
       }
       assertCondition(succeeded);
     }
@@ -2319,21 +2319,21 @@ Test getParentFile().
       if (!(file.getParentFile().getPath()).equals(expectedParentFile))
       {
         succeeded = false;
-        System.out.println("file.getParentFile(): |" + file.getParentFile() + "|; expectedParentFile: |" + expectedParentFile + "|");
+        output_.println("file.getParentFile(): |" + file.getParentFile() + "|; expectedParentFile: |" + expectedParentFile + "|");
       }
 
       file = new IFSFile(systemObject_, "/");
       if (file.getParentFile() != null)
       {
         succeeded = false;
-        System.out.println("file.getParentFile(/): Expected null, but got |" + file.getParentFile() + "|");
+        output_.println("file.getParentFile(/): Expected null, but got |" + file.getParentFile() + "|");
       }
 
       file = new IFSFile();
       if (file.getParentFile() != null)
       {
         succeeded = false;
-        System.out.println("file.getParentFile(): Expected null, but got |" + file.getParentFile() + "|");
+        output_.println("file.getParentFile(): Expected null, but got |" + file.getParentFile() + "|");
       }
 
       file = new IFSFile();
@@ -2341,7 +2341,7 @@ Test getParentFile().
       if (!(file.getParentFile().getPath()).equals(expectedParentFile))
       {
         succeeded = false;
-        System.out.println("file.getParentFile() [2]: |" + file.getParentFile() + "|; expectedParentFile: |" + expectedParentFile + "|");
+        output_.println("file.getParentFile() [2]: |" + file.getParentFile() + "|; expectedParentFile: |" + expectedParentFile + "|");
       }
 
       assertCondition(succeeded);
@@ -2372,12 +2372,12 @@ Test getParentFile().
 
   
 
-  static final void pause()
+  void pause()
   {
-    System.out.println ("Toolbox is paused. Press ENTER to continue.");
+    output_.println ("Toolbox is paused. Press ENTER to continue.");
     try { System.in.read (); } catch (Exception e) {};  }
 
-  static final int populateDirectory(IFSFile dir, int startIndex, int numFiles) throws IOException
+  int populateDirectory(IFSFile dir, int startIndex, int numFiles) throws IOException
   {
     int counter = 0;
     int endIndex = startIndex+numFiles;  // non-inclusive
@@ -2387,7 +2387,7 @@ Test getParentFile().
       f.createNewFile();
       counter++;
     }
-    if (DEBUG) System.out.println("Created " + counter + " files in directory " + dir.getPath());
+    if (DEBUG) output_.println("Created " + counter + " files in directory " + dir.getPath());
     return counter;
   }
 
@@ -2399,10 +2399,10 @@ Test getParentFile().
     {
       String command = "QSYS/CPYF FROMFILE(QIWS/QCUSTCDT) TOFILE("+libName+"/TEST"+i+") CRTFILE(*YES)"; 
       boolean b = commandCall_.run(command);
-      if (DEBUG) System.out.println(i+": "+b+" "+command);
+      if (DEBUG) output_.println(i+": "+b+" "+command);
       counter++;
     }
-    if (DEBUG) System.out.println("Created " + counter + " files in library " + libName);
+    if (DEBUG) output_.println("Created " + counter + " files in library " + libName);
     return counter;
   }
 

@@ -102,7 +102,7 @@ public class ConvTableBidiRoundTripTestcase extends Testcase
           }
           else
           {
-             System.out.println("FAILED: " + i + " S1: " + (int)s1.charAt(i) + " S2: " + (int)s2.charAt(i));
+             output_.println("FAILED: " + i + " S1: " + (int)s1.charAt(i) + " S2: " + (int)s2.charAt(i));
           }
        }
     }

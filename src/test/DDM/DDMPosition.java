@@ -111,10 +111,10 @@ public class DDMPosition extends Testcase {
       setup();
     } catch (Exception e) {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
-    System.out.println("Blocking factor of " + String.valueOf(bf_)
+    output_.println("Blocking factor of " + String.valueOf(bf_)
         + " was specified for " + name_ + ".");
     if (runMode_ != ATTENDED) {
       // Unattended variations.
@@ -357,7 +357,7 @@ public class DDMPosition extends Testcase {
       if (!(msgs[0].getID().equals("CPF2111") || msgs[0].getID().equals(
           "CPC2102"))) {
         for (int i = 0; i < msgs.length; ++i) {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -367,7 +367,7 @@ public class DDMPosition extends Testcase {
       // CPC3101 - Member &2 file &1 in &3 cleared. (Success msg)
       if (!(msgs[0].getID().equals("CPC3101"))) {
         for (int i = 0; i < msgs.length; ++i) {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -377,7 +377,7 @@ public class DDMPosition extends Testcase {
       // CPC3101 - Member &2 file &1 in &3 cleared. (Success msg)
       if (!(msgs[0].getID().equals("CPC3101"))) {
         for (int i = 0; i < msgs.length; ++i) {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -3439,9 +3439,9 @@ public class DDMPosition extends Testcase {
       file.positionCursorBefore(1);
       /*
        * Record r = file.read(); if (r != null) {
-       * System.out.println("Record at current cursor position is: " +
+       * output_.println("Record at current cursor position is: " +
        * r.toString()); } else {
-       * System.out.println("null record returned from read"); }
+       * output_.println("null record returned from read"); }
        */
       failed("Exception didn't occur.");
     } catch (AS400Exception e) {
@@ -4894,7 +4894,7 @@ public class DDMPosition extends Testcase {
         record.setField(2, "Fld3____" + Integer.toString(i));
         file.write(record);
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
       }
       file.close();
 
@@ -4904,7 +4904,7 @@ public class DDMPosition extends Testcase {
       file.positionCursorToFirst();
       record = file.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "1A ";
         varSuccess = false;
@@ -4919,7 +4919,7 @@ public class DDMPosition extends Testcase {
       }
       record = file.readNext();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__2 ")) {
         failureString += "2A ";
         varSuccess = false;
@@ -4939,7 +4939,7 @@ public class DDMPosition extends Testcase {
       file.positionCursorAfter(key2);
       record = file.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__4 ")) {
         failureString += "3A ";
         varSuccess = false;
@@ -4960,7 +4960,7 @@ public class DDMPosition extends Testcase {
       file.positionCursorBefore(key3);
       record = file.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__5 ")) {
         failureString += "4A ";
         varSuccess = false;
@@ -4984,7 +4984,7 @@ public class DDMPosition extends Testcase {
       file.positionCursor(key2); // position cursor to the updated record
       record = file.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__6 ")) {
         failureString += "5A ";
         varSuccess = false;
@@ -5001,7 +5001,7 @@ public class DDMPosition extends Testcase {
       if (varSuccess == true)
         succeeded();
       else {
-        System.out.println("failureString='" + failureString + "'");
+        output_.println("failureString='" + failureString + "'");
         failed("Incorrect record returned: " + record.toString());
       }
     } catch (AS400Exception e) {
@@ -5056,11 +5056,11 @@ public class DDMPosition extends Testcase {
         record.setField(1, "Fld2____" + Integer.toString(i));
         record.setField(2, "Fld3___" + Integer.toString(i) + "A");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         pf1.write(record);
         record.setField(2, "Fld3___" + Integer.toString(i) + "B");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         pf1.write(record); // Write rec 2nd time with fld3 different
       }
       pf1.close(); // Now have 18 records in the Physical file
@@ -5072,7 +5072,7 @@ public class DDMPosition extends Testcase {
       pf1.positionCursorToFirst();
       record = pf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "1A ";
         varSuccess = false;
@@ -5087,7 +5087,7 @@ public class DDMPosition extends Testcase {
       }
       record = pf1.readNext();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "2A ";
         varSuccess = false;
@@ -5107,7 +5107,7 @@ public class DDMPosition extends Testcase {
       pf1.positionCursorAfter(key2);
       record = pf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__3 ")) {
         failureString += "3A ";
         varSuccess = false;
@@ -5128,7 +5128,7 @@ public class DDMPosition extends Testcase {
       pf1.positionCursorBefore(key3);
       record = pf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__5 ")) {
         failureString += "4A ";
         varSuccess = false;
@@ -5151,7 +5151,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorToFirst();
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "5A ";
         varSuccess = false;
@@ -5170,7 +5170,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorAfter(key2);
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__3 ")) {
         failureString += "6A ";
         varSuccess = false;
@@ -5190,7 +5190,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorBefore(key3);
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__5 ")) {
         failureString += "7A ";
         varSuccess = false;
@@ -5212,7 +5212,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorToFirst();
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Fld2____1 ")) {
         failureString += "8A ";
         varSuccess = false;
@@ -5231,7 +5231,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorAfter(key2);
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Fld2____3 ")) {
         failureString += "9A ";
         varSuccess = false;
@@ -5259,7 +5259,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursor(key2); // position cursor to the updated record
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Fld2new_6 ")) {
         failureString += "10A ";
         varSuccess = false;
@@ -5278,7 +5278,7 @@ public class DDMPosition extends Testcase {
       if (varSuccess == true)
         succeeded();
       else {
-        System.out.println("failureString='" + failureString + "'");
+        output_.println("failureString='" + failureString + "'");
         failed("Incorrect record returned: " + record.toString());
       }
     } catch (AS400Exception e) {
@@ -5330,11 +5330,11 @@ public class DDMPosition extends Testcase {
         record.setField(0, "Record__" + Integer.toString(i));
         record.setField(1, "Fld2___" + Integer.toString(i) + "A");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         pf1.write(record);
         record.setField(1, "Fld2___" + Integer.toString(i) + "B");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         pf1.write(record); // Write rec 2nd time with fld2 different
       }
       pf1.close(); // Now have 18 records in the Physical file
@@ -5346,7 +5346,7 @@ public class DDMPosition extends Testcase {
       pf1.positionCursorToFirst();
       record = pf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "1A ";
         varSuccess = false;
@@ -5357,7 +5357,7 @@ public class DDMPosition extends Testcase {
       }
       record = pf1.readNext();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "2A ";
         varSuccess = false;
@@ -5373,7 +5373,7 @@ public class DDMPosition extends Testcase {
       pf1.positionCursorAfter(key2);
       record = pf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__3 ")) {
         failureString += "3A ";
         varSuccess = false;
@@ -5396,7 +5396,7 @@ public class DDMPosition extends Testcase {
         record.setField(0, "Record_" + Integer.toString(i));
         record.setField(1, "Fld2__" + Integer.toString(i) + "A");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         // The next write() is where the failure occured prior to the fix
         // made for [ jt400-Bugs-1796143 ] Writing to a multiple format file
         // fails
@@ -5404,7 +5404,7 @@ public class DDMPosition extends Testcase {
         lf1.write(record);
         record.setField(1, "Fld2__" + Integer.toString(i) + "B");
         if (DEBUG)
-          System.out.println("Record='" + record.toString() + "'");
+          output_.println("Record='" + record.toString() + "'");
         lf1.write(record); // Write rec 2nd time with fld2 different
       }
       // Now have extra 6 records in the Physical file
@@ -5413,7 +5413,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorToFirst();
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record__1 ")) {
         failureString += "5A ";
         varSuccess = false;
@@ -5428,7 +5428,7 @@ public class DDMPosition extends Testcase {
       lf1.positionCursorAfter(key2);
       record = lf1.read();
       if (DEBUG)
-        System.out.println("Record='" + record.toString() + "'");
+        output_.println("Record='" + record.toString() + "'");
       if (!((String) record.getField(0)).startsWith("Record_11 ")) {
         failureString += "6A ";
         varSuccess = false;
@@ -5442,7 +5442,7 @@ public class DDMPosition extends Testcase {
       if (varSuccess == true)
         succeeded();
       else {
-        System.out.println("failureString='" + failureString + "'");
+        output_.println("failureString='" + failureString + "'");
         failed("Incorrect record returned: " + record.toString());
       }
     } catch (AS400Exception e) {

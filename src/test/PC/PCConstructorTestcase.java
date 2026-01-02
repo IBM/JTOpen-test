@@ -85,7 +85,7 @@ public class PCConstructorTestcase extends Testcase
     protected void setup() throws Exception
     {
       exceptionProperty_original_ = System.getProperty(SystemProperties.THROW_SAX_EXCEPTION_IF_PARSE_ERROR);
-      System.out.println("DEBUG exceptionProperty_original_ == " + exceptionProperty_original_); ///
+      output_.println("DEBUG exceptionProperty_original_ == " + exceptionProperty_original_); ///
     }
 
     /**
@@ -177,10 +177,10 @@ public class PCConstructorTestcase extends Testcase
         {
           if (DEBUG) e.printStackTrace();
           Exception e1 = e.getException();
-          ///if (DEBUG) {System.out.println("Embedded exception:"); e1.printStackTrace(); }
+          ///if (DEBUG) {output_.println("Embedded exception:"); e1.printStackTrace(); }
           String expectedMsg = "Premature end of file.";
           String receivedMsg = e1.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e1, "com.ibm.as400.data.ParseException"));
@@ -207,10 +207,10 @@ public class PCConstructorTestcase extends Testcase
             ProgramCallDocument pcmlDoc = new ProgramCallDocument("test.pcml.versionBad");
             Descriptor descriptor = pcmlDoc.getDescriptor();
             String[] attrs = descriptor.getAttributeList();
-            System.out.println("Attributes:");
+            output_.println("Attributes:");
             for (int i=0; i<attrs.length; i++)
             {
-              System.out.println(attrs[i] + ": " + descriptor.getAttributeValue(attrs[i]));
+              output_.println(attrs[i] + ": " + descriptor.getAttributeValue(attrs[i]));
             }
             ///pcmlDoc.serialize();
             failed("Did not throw exception.");
@@ -219,11 +219,11 @@ public class PCConstructorTestcase extends Testcase
         {
           if (DEBUG) e.printStackTrace();
           Exception e1 = e.getException();
-          if (DEBUG) {System.out.println("Embedded exception:"); e1.printStackTrace(); }
+          if (DEBUG) {output_.println("Embedded exception:"); e1.printStackTrace(); }
           ///String expectedMsg = "Attribute \"version\" with value \"1.0\" must have a value of \"4.0\".";
           String expectedMsg = "Attribute \"version\" with value \"99.0\" must have a value from the list \"1.0 2.0 3.0 4.0 ";
           String receivedMsg = e1.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e1, "com.ibm.as400.data.ParseException"));
@@ -250,7 +250,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -299,21 +299,21 @@ public class PCConstructorTestcase extends Testcase
 ///            BigDecimal bigDec = new BigDecimal(123.456); // Note: The value ends up as 123.4560000000000030695446184836328029632568359375 in field1.
 ///            ///BigDecimal bigDec = new BigDecimal("123.456");
 ///
-///            System.out.println("bigDec == " + bigDec.toString());
+///            output_.println("bigDec == " + bigDec.toString());
 ///            ///bigDec = bigDec.setScale(3, BigDecimal.ROUND_HALF_EVEN);
-///            System.out.println("scale == " + bigDec.scale());
+///            output_.println("scale == " + bigDec.scale());
 ///
 ///            pcmlDoc.setValue("format1.field1", bigDec);
 ///            BigDecimal outVal1 = (BigDecimal)pcmlDoc.getValue("format1.field1");
-///            System.out.println("Returned value: " + outVal1.toString());
+///            output_.println("Returned value: " + outVal1.toString());
 ///
 ///            pcmlDoc.setValue("format1.field2", bigDec);
 ///            Float outVal2 = (Float)pcmlDoc.getValue("format1.field2");
-///            System.out.println("Returned value: " + outVal2.toString());
+///            output_.println("Returned value: " + outVal2.toString());
 ///
 ///            pcmlDoc.setValue("format1.field3", bigDec);
 ///            Double outVal3 = (Double)pcmlDoc.getValue("format1.field3");
-///            System.out.println("Returned value: " + outVal3.toString());
+///            output_.println("Returned value: " + outVal3.toString());
 ///        }
 ///        catch (Exception e)
 ///        {
@@ -360,7 +360,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -401,12 +401,12 @@ public class PCConstructorTestcase extends Testcase
               String attrVal = child1.getAttributeValue(child1AttList[i]);
               if (attrVal != null) {
                 child1NumAttrs++;
-                if (DEBUG) System.out.println(child1AttList[i] + ": " + attrVal);
+                if (DEBUG) output_.println(child1AttList[i] + ": " + attrVal);
               }
             }
 // Debug only:
-            System.out.println();
-            System.out.println(
+            output_.println();
+            output_.println(
                    children.size() + ", " +
                    child1.getTagName() + ", " +
                    child1.hasChildren() + ", " +
@@ -474,7 +474,7 @@ public class PCConstructorTestcase extends Testcase
           ///e.printStackTrace();
           ///String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  ///receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -497,7 +497,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -562,8 +562,8 @@ public class PCConstructorTestcase extends Testcase
 
             if (DEBUG)
             {
-              System.out.println();
-              System.out.println(
+              output_.println();
+              output_.println(
                                  children.size() + ", " +
                                  child1.getTagName() + ", " +
                                  child1.hasChildren() + ", " +
@@ -666,7 +666,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1Child1AttList.length; i++) {
               String attrVal = child1Child1.getAttributeValue(child1Child1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
                 child1Child1NumAttrs++;
               }
             }
@@ -675,9 +675,9 @@ public class PCConstructorTestcase extends Testcase
             pcmlDoc.setValue("prog1.field1", new int[] {1}, "second");
             pcmlDoc.setValue("prog1.field1", new int[] {2}, "third1");
 /*
-            System.out.println("prog1.field1[0]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {0}));
-            System.out.println("prog1.field1[1]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {1}));
-            System.out.println("prog1.field1[2]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {2}));
+            output_.println("prog1.field1[0]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {0}));
+            output_.println("prog1.field1[1]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {1}));
+            output_.println("prog1.field1[2]: " + (String)pcmlDoc.getValue("prog1.field1", new int[] {2}));
 */
 ///            byte[] received = pcmlDoc.toByteArray("prog1");
 ///
@@ -695,13 +695,13 @@ public class PCConstructorTestcase extends Testcase
 
             if (DEBUG)
             {
-              ///System.out.println("Expected:");
+              ///output_.println("Expected:");
               ///printByteArray(expected);
-              ///System.out.println("Received:");
+              ///output_.println("Received:");
               ///printByteArray(received);
 
-              System.out.println();
-              System.out.println(
+              output_.println();
+              output_.println(
                                  children.size() + ", " +
                                  child1.getTagName() + ", " +
                                  child1.hasChildren() + ", " +
@@ -774,7 +774,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -802,7 +802,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -828,7 +828,7 @@ public class PCConstructorTestcase extends Testcase
 ///          ///String expectedMsg = "Exception 'java.io.FileNotFoundException' received.";
 ///          String expectedMsg = "java.io.FileNotFoundException";
 ///          String receivedMsg = e.getMessage();
-///          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -853,7 +853,7 @@ public class PCConstructorTestcase extends Testcase
 ///          ///String expectedMsg = "Exception 'java.io.FileNotFoundException' received.";
 ///          String expectedMsg = "java.io.FileNotFoundException";
 ///          String receivedMsg = e.getMessage();
-///          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -878,7 +878,7 @@ public class PCConstructorTestcase extends Testcase
 ///          String expectedMsg1 = "java.net.MalformedURLException";   // This is expected with JDK 1.4 or earlier
 ///          String expectedMsg2 = "A parse error occurred";           // This is expected with JDK 1.5 or later
 ///          String receivedMsg = e.getMessage();
-///          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 ((receivedMsg.indexOf(expectedMsg1) != -1) || (receivedMsg.indexOf(expectedMsg2) != -1)) &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -899,7 +899,7 @@ public class PCConstructorTestcase extends Testcase
 ///        {
 ///          String expectedMsg = "A parse error occurred";
 ///          String receivedMsg = e.getMessage();
-///          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          ///output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -922,7 +922,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -944,7 +944,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -985,7 +985,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1AttList.length; i++) {
               String attrVal = child1.getAttributeValue(child1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                 child1NumAttrs++;
               }
             }
@@ -1004,15 +1004,15 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<grandChild1AttList.length; i++) {
               String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                 grandChild1NumAttrs++;
               }
             }
 
             if (DEBUG)
             {
-              System.out.println();
-              System.out.println(
+              output_.println();
+              output_.println(
                                  children.size() + ", " +
                                  grandChildren.size() + ", " +
                                  child1.getTagName() + ", " +
@@ -1071,7 +1071,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1094,7 +1094,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1136,7 +1136,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1AttList.length; i++) {
               String attrVal = child1.getAttributeValue(child1AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+                ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                 child1NumAttrs++;
               }
             }
@@ -1154,7 +1154,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<grandChild1AttList.length; i++) {
               String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+                ///output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                 grandChild1NumAttrs++;
               }
             }
@@ -1165,7 +1165,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                ///output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                 grandChild2NumAttrs++;
               }
             }
@@ -1176,14 +1176,14 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                ///output_.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                 grandChild3NumAttrs++;
               }
             }
 
 /* Debug only: */
-//            System.out.println();
-//            System.out.println(
+//            output_.println();
+//            output_.println(
 //                   children.size() + ", " +
 //                   child1.getTagName() + ", " +
 //                   child1.hasChildren() + ", " +
@@ -1251,7 +1251,7 @@ public class PCConstructorTestcase extends Testcase
 ///        {
 ///          String expectedMsg = "A parse error occurred";
 ///          String receivedMsg = e.getMessage();
-///          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          ///output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1291,7 +1291,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1AttList.length; i++) {
               String attrVal = child1.getAttributeValue(child1AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+                ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                 child1NumAttrs++;
               }
             }
@@ -1310,7 +1310,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1Child1AttList.length; i++) {
               String attrVal = child1Child1.getAttributeValue(child1Child1AttList[i]);
               if (attrVal != null) {
-                ///System.out.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
+                ///output_.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
                 child1Child1NumAttrs++;
               }
             }
@@ -1322,7 +1322,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child2AttList.length; i++) {
               String attrVal = child2.getAttributeValue(child2AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
                 child2NumAttrs++;
               }
             }
@@ -1341,15 +1341,15 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child2Child1AttList.length; i++) {
               String attrVal = child2Child1.getAttributeValue(child2Child1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
                 child2Child1NumAttrs++;
               }
             }
 
             if (DEBUG)
             {
-              System.out.println();
-              System.out.println(
+              output_.println();
+              output_.println(
                                  children.size() + ", " +
 
                                  child1children.size() + ", " +
@@ -1450,7 +1450,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child1AttList.length; i++) {
 ///              String attrVal = child1.getAttributeValue(child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
 ///                child1NumAttrs++;
 ///              }
 ///            }
@@ -1469,7 +1469,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child1Child1AttList.length; i++) {
 ///              String attrVal = child1Child1.getAttributeValue(child1Child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
 ///                child1Child1NumAttrs++;
 ///              }
 ///            }
@@ -1481,7 +1481,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child2AttList.length; i++) {
 ///              String attrVal = child2.getAttributeValue(child2AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
+///                ///output_.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
 ///                child2NumAttrs++;
 ///              }
 ///            }
@@ -1500,7 +1500,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child2Child1AttList.length; i++) {
 ///              String attrVal = child2Child1.getAttributeValue(child2Child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
 ///                child2Child1NumAttrs++;
 ///              }
 ///            }
@@ -1512,7 +1512,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child3AttList.length; i++) {
 ///              String attrVal = child3.getAttributeValue(child3AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child3Attr: " + child3AttList[i] + " = " + attrVal);
+///                ///output_.println("child3Attr: " + child3AttList[i] + " = " + attrVal);
 ///                child3NumAttrs++;
 ///              }
 ///            }
@@ -1531,7 +1531,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child3Child1AttList.length; i++) {
 ///              String attrVal = child3Child1.getAttributeValue(child3Child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child3Child1Attr: " + child3Child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child3Child1Attr: " + child3Child1AttList[i] + " = " + attrVal);
 ///                child3Child1NumAttrs++;
 ///              }
 ///            }
@@ -1550,14 +1550,14 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child3Child1Child1AttList.length; i++) {
 ///              String attrVal = child3Child1Child1.getAttributeValue(child3Child1Child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child3Child1Child1Attr: " + child3Child1Child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child3Child1Child1Attr: " + child3Child1Child1AttList[i] + " = " + attrVal);
 ///                child3Child1Child1NumAttrs++;
 ///              }
 ///            }
 ///
 ////* Debug only:
-///            System.out.println();
-///            System.out.println(
+///            output_.println();
+///            output_.println(
 ///                   children.size() + ", " +
 ///
 ///                   );
@@ -1645,7 +1645,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred.";  //TBD - fix the MRI.
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1668,7 +1668,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1693,7 +1693,7 @@ public class PCConstructorTestcase extends Testcase
 ///          ///String expectedMsg = "A parse error occurred";
 ///          String expectedMsg = "A PCML specification error occurred.";  //TBD - fix the MRI.
 ///          String receivedMsg = e.getMessage();
-///          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+///          ///output_.println("DEBUG Received msgs: " + receivedMsg);
 ///          assertCondition(receivedMsg != null &&
 ///                 receivedMsg.indexOf(expectedMsg) != -1 &&
 ///                 exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1717,7 +1717,7 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";  //TBD - fix the MRI.
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1814,7 +1814,7 @@ public class PCConstructorTestcase extends Testcase
           String expectedMsg = "A parse error occurred";
           ///String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1855,7 +1855,7 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1AttList.length; i++) {
               String attrVal = child1.getAttributeValue(child1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                 child1NumAttrs++;
               }
             }
@@ -1874,15 +1874,15 @@ public class PCConstructorTestcase extends Testcase
             for (int i=0; i<child1Child1AttList.length; i++) {
               String attrVal = child1Child1.getAttributeValue(child1Child1AttList[i]);
               if (attrVal != null) {
-                if (DEBUG) System.out.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
+                if (DEBUG) output_.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
                 child1Child1NumAttrs++;
               }
             }
 
             if (DEBUG)
             {
-              System.out.println();
-              System.out.println(
+              output_.println();
+              output_.println(
                                  children.size() + ", " +
                                  child1Children.size() + ", " +
                                  child1.getTagName() + ", " +
@@ -1952,23 +1952,23 @@ public class PCConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-          System.out.println("Received an exception of type " + e.getClass().getName()); ///
+          output_.println("Received an exception of type " + e.getClass().getName()); ///
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           Exception cause = null;
           if (e instanceof PcmlException)
           {
             cause = ((PcmlException)e).getException();
             if (cause != null) {
-              System.out.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
+              output_.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
               if (cause instanceof PcmlSpecificationException)
               {
                 PcmlSpecificationException pse = (PcmlSpecificationException)cause;
                 String[] msgs = pse.getMessages();
-                System.out.println("Messages in PcmlSpecificationException: ");
+                output_.println("Messages in PcmlSpecificationException: ");
                 for (int i=0; i<msgs.length; i++) {
-                  System.out.println(msgs[i]);
+                  output_.println(msgs[i]);
                 }
               }
             }
@@ -2018,7 +2018,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child1AttList.length; i++) {
 ///              String attrVal = child1.getAttributeValue(child1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+///                ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
 ///                child1NumAttrs++;
 ///              }
 ///            }
@@ -2036,7 +2036,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<grandChild1AttList.length; i++) {
 ///              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+///                ///output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
 ///                grandChild1NumAttrs++;
 ///              }
 ///            }
@@ -2047,7 +2047,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<grandChild2AttList.length; i++) {
 ///              String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+///                ///output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
 ///                grandChild2NumAttrs++;
 ///              }
 ///            }
@@ -2058,14 +2058,14 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<grandChild3AttList.length; i++) {
 ///              String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
 ///              if (attrVal != null) {
-///                ///System.out.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+///                ///output_.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
 ///                grandChild3NumAttrs++;
 ///              }
 ///            }
 ///
 ////* Debug only: 
-///            System.out.println();
-///            System.out.println(
+///            output_.println();
+///            output_.println(
 ///                   children.size() + ", " +
 ///                   grandChildren.size() + ", " +
 ///                   child1.getTagName() + ", " +
@@ -2201,7 +2201,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child1AttList.length; i++) {
 ///              String attrVal = child1.getAttributeValue(child1AttList[i]);
 ///              if (attrVal != null) {
-///                if (DEBUG) System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+///                if (DEBUG) output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
 ///                child1NumAttrs++;
 ///              }
 ///            }
@@ -2213,7 +2213,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child2AttList.length; i++) {
 ///              String attrVal = child2.getAttributeValue(child2AttList[i]);
 ///              if (attrVal != null) {
-///                if (DEBUG) System.out.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
+///                if (DEBUG) output_.println("child2Attr: " + child2AttList[i] + " = " + attrVal);
 ///                child2NumAttrs++;
 ///              }
 ///            }
@@ -2232,7 +2232,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child1Child1AttList.length; i++) {
 ///              String attrVal = child1Child1.getAttributeValue(child1Child1AttList[i]);
 ///              if (attrVal != null) {
-///                if (DEBUG) System.out.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
+///                if (DEBUG) output_.println("child1Child1Attr: " + child1Child1AttList[i] + " = " + attrVal);
 ///                child1Child1NumAttrs++;
 ///              }
 ///            }
@@ -2251,7 +2251,7 @@ public class PCConstructorTestcase extends Testcase
 ///            for (int i=0; i<child2Child1AttList.length; i++) {
 ///              String attrVal = child2Child1.getAttributeValue(child2Child1AttList[i]);
 ///              if (attrVal != null) {
-///                if (DEBUG) System.out.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
+///                if (DEBUG) output_.println("child2Child1Attr: " + child2Child1AttList[i] + " = " + attrVal);
 ///                child2Child1NumAttrs++;
 ///              }
 ///            }
@@ -2263,12 +2263,12 @@ public class PCConstructorTestcase extends Testcase
 ///              child2Child1Children.addElement(child);
 ///            }
 ///            Descriptor child2Child1Child1 = (Descriptor)(child2Child1Children.elementAt(0));
-/////            System.out.println("child2Child1Child1: " + child2Child1Child1.getAttributeValue("name"));
+/////            output_.println("child2Child1Child1: " + child2Child1Child1.getAttributeValue("name"));
 ///
 ///            if (DEBUG)
 ///            {
-///              System.out.println();
-///              System.out.println(
+///              output_.println();
+///              output_.println(
 ///                                 children.size() + ", " +
 ///
 ///                                 child1Children.size() + ", " +
@@ -2449,20 +2449,20 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           Exception cause = null;
           if (e instanceof PcmlException)
           {
             cause = ((PcmlException)e).getException();
             if (cause != null) {
-              System.out.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
+              output_.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
               if (cause instanceof PcmlSpecificationException)
               {
                 PcmlSpecificationException pse = (PcmlSpecificationException)cause;
                 String[] msgs = pse.getMessages();
-                System.out.println("Messages in PcmlSpecificationException: ");
+                output_.println("Messages in PcmlSpecificationException: ");
                 for (int i=0; i<msgs.length; i++) {
-                  System.out.println(msgs[i]);
+                  output_.println(msgs[i]);
                 }
               }
             }
@@ -2529,7 +2529,7 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -2555,14 +2555,14 @@ public class PCConstructorTestcase extends Testcase
           {
             cause = ((PcmlException)e).getException();
             if (cause != null) {
-              System.out.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
+              output_.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
               if (cause instanceof PcmlSpecificationException)
               {
                 PcmlSpecificationException pse = (PcmlSpecificationException)cause;
                 String[] msgs = pse.getMessages();
-                System.out.println("Messages in PcmlSpecificationException: ");
+                output_.println("Messages in PcmlSpecificationException: ");
                 for (int i=0; i<msgs.length; i++) {
-                  System.out.println(msgs[i]);
+                  output_.println(msgs[i]);
                 }
               }
             }
@@ -2570,7 +2570,7 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  cause instanceof PcmlSpecificationException &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
@@ -2615,7 +2615,7 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -2639,7 +2639,7 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -2681,7 +2681,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -2706,21 +2706,21 @@ public class PCConstructorTestcase extends Testcase
           ///String expectedMsg = "A parse error occurred";
           String expectedMsg = "A PCML specification error occurred.";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
 
           Exception cause = null;
           if (e instanceof PcmlException)
           {
             cause = ((PcmlException)e).getException();
             if (cause != null) {
-              System.out.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
+              output_.println("Original exception: " + cause.getClass().getName() + ": " + cause.getMessage());
               if (cause instanceof PcmlSpecificationException)
               {
                 PcmlSpecificationException pse = (PcmlSpecificationException)cause;
                 String[] msgs = pse.getMessages();
-                System.out.println("Messages in PcmlSpecificationException: ");
+                output_.println("Messages in PcmlSpecificationException: ");
                 for (int i=0; i<msgs.length; i++) {
-                  System.out.println(msgs[i]);
+                  output_.println(msgs[i]);
                 }
               }
             }
@@ -2750,7 +2750,7 @@ public class PCConstructorTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(///receivedMsg != null &&  // TBD - For some reason the msg is null.
                  ///receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"), "expectedMsg="+expectedMsg +" receivedMsg= "+receivedMsg);
@@ -2773,7 +2773,7 @@ public class PCConstructorTestcase extends Testcase
         {
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -2901,7 +2901,7 @@ public class PCConstructorTestcase extends Testcase
         }
         else {
           ok = false;
-          System.out.println("Deserialized document does not match original.");
+          output_.println("Deserialized document does not match original.");
         }
       }
 
@@ -2926,7 +2926,7 @@ public class PCConstructorTestcase extends Testcase
           {}
           else {
             ok = false;
-            System.out.println("Deserialized document does not match original (1,2)");
+            output_.println("Deserialized document does not match original (1,2)");
           }
         }
 
@@ -2956,7 +2956,7 @@ public class PCConstructorTestcase extends Testcase
           {}
           else {
             ok = false;
-            System.out.println("Deserialized document does not match original (3,4)");
+            output_.println("Deserialized document does not match original (3,4)");
           }
         }
 
@@ -2969,7 +2969,7 @@ public class PCConstructorTestcase extends Testcase
         failed(e);
       }
       finally {
-        ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 
         if (outFile1 != null) {
           try { outFile1.delete(); } catch (Exception e) {}
@@ -3037,12 +3037,12 @@ public class PCConstructorTestcase extends Testcase
         }
     }
   
-    static boolean extractFile(String resourceName, File destination) throws FileNotFoundException, IOException
+    boolean extractFile(String resourceName, File destination) throws FileNotFoundException, IOException
     {
       boolean succeeded = false;
       InputStream is = ClassLoader.getSystemResourceAsStream(resourceName);
       if (is == null) {
-        System.out.println("Resource not found: |" + resourceName + "|");
+        output_.println("Resource not found: |" + resourceName + "|");
       }
       else
       {

@@ -90,7 +90,7 @@ public class ToolboxTestcase extends Testcase
             list = (String[]) linkedList.toArray(new String[0]); 
             zipFile.close(); 
           } else {
-            System.out.println("Path of AS400 class:" + thisPath);
+            output_.println("Path of AS400 class:" + thisPath);
 
             int as400ClassIndex = thisPath.indexOf(thisFileName);
             if (as400ClassIndex > 0) {
@@ -98,7 +98,7 @@ public class ToolboxTestcase extends Testcase
               String basePath = thisPath.substring(0, as400ClassIndex - 1);
               String directoryPath = basePath + File.separator
                   + packageName.replace('.', File.separatorChar);
-              System.out.println("directoryPath is " + directoryPath);
+              output_.println("directoryPath is " + directoryPath);
               File directory = new File(directoryPath);
               FilenameFilter classFilter = new FilenameFilter() {
                 public boolean accept(File dir, String name) {
@@ -114,7 +114,7 @@ public class ToolboxTestcase extends Testcase
 
             } else {
               // TODO: Process jar file
-              System.out.println("jar file is " + thisFileName);
+              output_.println("jar file is " + thisFileName);
 
             }
 
@@ -124,7 +124,7 @@ public class ToolboxTestcase extends Testcase
 
       for (int i = 0; i < list.length; i++) { 
         String beanInfoClass = list[i]; 
-        System.out.println("Checking "+beanInfoClass); 
+        output_.println("Checking "+beanInfoClass); 
         int beanInfoIndex = beanInfoClass.indexOf("BeanInfo");
         String className = beanInfoClass.substring(0,beanInfoIndex); 
         try { 

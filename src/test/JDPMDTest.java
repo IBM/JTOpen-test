@@ -170,7 +170,7 @@ Performs setup needed before running testcases.
         }
 */
         JDSetupCollection.create (systemObject_, 
-                                  connection_, COLLECTION);
+                                  connection_, COLLECTION, out_);
 
 
         statement_ = connection_.createStatement ();
@@ -215,21 +215,21 @@ Performs setup needed before running testcases.
             // For testing the getDirection method.
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_CSPARMS,
-                                     supportedFeatures_, COLLECTION);
+                                     supportedFeatures_, COLLECTION, out_);
 
             // For testing all the other methods against a stored procedure call.
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_CSTYPESINOUT,
-                                     supportedFeatures_, COLLECTION);
+                                     supportedFeatures_, COLLECTION, out_);
 
             // For testing that ParameterMetaData objects handle return values right.
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_CSRV,
-                                     supportedFeatures_, COLLECTION);
+                                     supportedFeatures_, COLLECTION, out_);
 
             JDSetupProcedure.create (systemObject_,
                                      connection_, JDSetupProcedure.STP_CSPARMSRV,
-                                     supportedFeatures_, COLLECTION);
+                                     supportedFeatures_, COLLECTION, out_);
 
 
         connection_.commit(); // for xa

@@ -19,7 +19,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 package test.JD.Statement;
-
+import java.io.PrintWriter; 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -46,8 +46,9 @@ public class JDStatementTimeoutStress implements Runnable {
   private Object[] tableArray;
   private int tableCount;
   String threadName = ""; 
+  PrintWriter output_ = null; 
   public JDStatementTimeoutStress(String url, String userid, String password,
-      String schema, int runSeconds, int timeoutSeconds, String threadName) throws Exception {
+      String schema, int runSeconds, int timeoutSeconds, String threadName, PrintWriter output) throws Exception {
     this.url = url;
     this.userid = userid;
     this.password = password;
@@ -55,6 +56,7 @@ public class JDStatementTimeoutStress implements Runnable {
     this.runSeconds = runSeconds;
     this.timeoutSeconds = timeoutSeconds;
     this.threadName = threadName; 
+    this.output_ = output; 
     int unknownCount = 0;
     Class.forName("com.ibm.as400.access.AS400JDBCDriver");
     connection = DriverManager.getConnection(
@@ -62,7 +64,7 @@ public class JDStatementTimeoutStress implements Runnable {
     stmt = connection.createStatement();
     stmt.execute("SET SCHEMA " + schema);
     stmt.setQueryTimeout(timeoutSeconds);
-    System.out.println("Query timeout is " + timeoutSeconds);
+    output_.println("Query timeout is " + timeoutSeconds);
     // Figure out the metadata for the tables
     DatabaseMetaData dmd = connection.getMetaData();
     ResultSet rs = dmd.getColumns(null, schema, null, null);
@@ -126,7 +128,7 @@ public class JDStatementTimeoutStress implements Runnable {
         datatype = "SQLXML"; 
         break; 
       default:
-        System.out.println("Warning:  type " + sqltype + " unknown");
+        output_.println("Warning:  type " + sqltype + " unknown");
         datatype = "UNKNOWN";
         unknownCount++;
       }
@@ -154,18 +156,18 @@ public class JDStatementTimeoutStress implements Runnable {
     if (unknownCount > 0) {
       throw new Exception("unknownCount=" + unknownCount);
     }
-    System.out.println("---------------------------------------");
+    output_.println("---------------------------------------");
 
     Set<String> keySet = tableToColumns.keySet();
     tableArray = keySet.toArray();
     tableCount = tableArray.length;
-    System.out.println("There were " + tableCount + " tables found");
+    output_.println("There were " + tableCount + " tables found");
     for (int i = 0; i < tableCount; i++) {
        ArrayList<String> columns = tableToColumns.get(tableArray[i]);
-      System.out.println(
+      output_.println(
           "Table " + tableArray[i] + " has " + columns.size() + " columns");
     }
-    System.out.println("---------------------------------------");
+    output_.println("---------------------------------------");
 
   }
 
@@ -175,7 +177,7 @@ public class JDStatementTimeoutStress implements Runnable {
       String noComplex = System.getProperty("noComplex");
       String statementLeak = System.getProperty("statementLeak");
       if (statementLeak != null) {
-	  System.out.println(threadName+":Runnning with statement leak"); 
+	  output_.println(threadName+":Runnning with statement leak"); 
       } 
       while (System.currentTimeMillis() < endTime) {
 	  if (statementLeak != null) {
@@ -211,7 +213,7 @@ public class JDStatementTimeoutStress implements Runnable {
 	    sqlsb.append(table1 + " T1");
 
 	} 
-        System.out.println(threadName+":Query is : " + sqlsb.toString());
+        output_.println(threadName+":Query is : " + sqlsb.toString());
         long queryStartTime = System.currentTimeMillis();
         long queryEndTime = 0;
         try {
@@ -225,8 +227,8 @@ public class JDStatementTimeoutStress implements Runnable {
               .println(threadName+":Query took " + (queryEndTime - queryStartTime) + " ms");
         } catch (Exception e) {
 	    queryEndTime = System.currentTimeMillis();
-          System.out.println(threadName+":Exception caught");
-          e.printStackTrace(System.out);
+          output_.println(threadName+":Exception caught");
+          e.printStackTrace(output_);
 
           System.out
               .println(threadName+":Query took " + (queryEndTime - queryStartTime) + " ms");
@@ -237,7 +239,7 @@ public class JDStatementTimeoutStress implements Runnable {
       }
 
     } catch (Exception e) {
-      System.out.println(threadName+":Error found: Thread aborting");
+      output_.println(threadName+":Error found: Thread aborting");
       e.printStackTrace();
     }
 
@@ -292,9 +294,10 @@ public class JDStatementTimeoutStress implements Runnable {
       System.out.println("Creating threads"); 
       JDStatementTimeoutStress runnables[] = new JDStatementTimeoutStress[threadCount];
       Thread threads[] = new Thread[threadCount]; 
+      PrintWriter output = new PrintWriter(System.out);
       for (int i = 0; i < threadCount; i++) { 
         runnables[i] =  new JDStatementTimeoutStress(url, userid,
-          password, schema, runSeconds, timeoutSeconds, "Thread"+(i+1)+"-of-"+threadCount);
+          password, schema, runSeconds, timeoutSeconds, "Thread"+(i+1)+"-of-"+threadCount, output);
         threads[i] = new Thread(runnables[i]); 
       }
       System.out.println("Starting threads"); 

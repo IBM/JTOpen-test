@@ -1121,9 +1121,9 @@ extends JDTestcase
             boolean condition =  xRetVal.intValue() == 32000 && yRetVal.intValue() == 0 && zRetVal == null; 
             if(!condition)
             {
-                System.out.println("xRetVal ("+xRetVal+") != 32000"); 
-                System.out.println("yRetVal ("+yRetVal+") != 0");
-                System.out.println("zRetVal ("+zRetVal+") != null"); 
+                output_.println("xRetVal ("+xRetVal+") != 32000"); 
+                output_.println("yRetVal ("+yRetVal+") != 0");
+                output_.println("zRetVal ("+zRetVal+") != null"); 
             }
 
             assertCondition(condition); 
@@ -1373,12 +1373,12 @@ extends JDTestcase
                                  fRetVal == null);
             if(!condition)
             {
-                System.out.println("aRetVal("+aRetVal+") != null");
-                System.out.println("bRetVal("+aRetVal+") != null");
-                System.out.println("cRetVal("+aRetVal+") != null");
-                System.out.println("dRetVal("+aRetVal+") != null");
-                System.out.println("eRetVal("+aRetVal+") != null");
-                System.out.println("fRetVal("+aRetVal+") != null");
+                output_.println("aRetVal("+aRetVal+") != null");
+                output_.println("bRetVal("+aRetVal+") != null");
+                output_.println("cRetVal("+aRetVal+") != null");
+                output_.println("dRetVal("+aRetVal+") != null");
+                output_.println("eRetVal("+aRetVal+") != null");
+                output_.println("fRetVal("+aRetVal+") != null");
 
             }
             assertCondition(condition); 

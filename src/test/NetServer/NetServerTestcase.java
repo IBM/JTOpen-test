@@ -69,9 +69,9 @@ public class NetServerTestcase extends Testcase
             throw new IllegalStateException("ERROR: Please specify a power system via -pwrsys.");
 
 
-        //System.out.println("namesAndVars keys:");
+        //output_.println("namesAndVars keys:");
         //for (Enumeration enum = namesAndVars.keys(); enum.hasMoreElements(); ) {
-        //  System.out.println((String)enum.nextElement());
+        //  output_.println((String)enum.nextElement());
         //}
     }
 
@@ -88,9 +88,9 @@ public class NetServerTestcase extends Testcase
       CommandCall cmdCall = new CommandCall(pwrSys_); 
       boolean success = cmdCall.run("STRTCPSVR SERVER(*NETSVR)   ");
       if (success) { 
-        System.out.println("*NETSVR  started"); 
+        output_.println("*NETSVR  started"); 
       } else {
-        System.out.println("*NETSVR not started"); 
+        output_.println("*NETSVR not started"); 
       }
       
       
@@ -1329,7 +1329,7 @@ public class NetServerTestcase extends Testcase
             ns.commitAttributeChanges();
 
             if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
-               System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTETS) - failed.  Manually delete profile on AS/400");
+               output_.println("QSYS/DLTUSRPRF USRPRF(NETSRVTETS) - failed.  Manually delete profile on AS/400");
         }
         catch (Exception e) 
         {
@@ -1890,7 +1890,7 @@ public class NetServerTestcase extends Testcase
 	    Thread.sleep(1000);
 	    isStarted = netser.isStarted();
 	}
-	System.out.println("netserver took "+(System.currentTimeMillis() - startTime)+ "ms to end"); 
+	output_.println("netserver took "+(System.currentTimeMillis() - startTime)+ "ms to end"); 
 
     }
 
@@ -1912,8 +1912,8 @@ public class NetServerTestcase extends Testcase
 		netser.start();
 		waitForStart(netser); 
 	    } catch (Exception e) {
-		System.out.println("Warning:  Var069 restart failed");
-		e.printStackTrace(System.out); 
+		output_.println("Warning:  Var069 restart failed");
+		e.printStackTrace(output_); 
 	    }
         }
         catch (Exception e) 
@@ -1935,9 +1935,9 @@ public class NetServerTestcase extends Testcase
 		isStarted = netser.isStarted();
 	    }
 	    if (isStarted) {
-		System.out.println("netserver took "+(System.currentTimeMillis() - startTime)+ " ms to start");
+		output_.println("netserver took "+(System.currentTimeMillis() - startTime)+ " ms to start");
 	    } else {
-		System.out.println("netserver did not start in "+(System.currentTimeMillis() - startTime)+ " ms");
+		output_.println("netserver did not start in "+(System.currentTimeMillis() - startTime)+ " ms");
 	    }
 
     }
@@ -1966,8 +1966,8 @@ public class NetServerTestcase extends Testcase
 		netser.start();
 		waitForStart(netser); 
 	    } catch (Exception e) {
-		System.out.println("Warning:  Var070 restart failed");
-		e.printStackTrace(System.out); 
+		output_.println("Warning:  Var070 restart failed");
+		e.printStackTrace(output_); 
 	    }
 
         }
@@ -2001,8 +2001,8 @@ public class NetServerTestcase extends Testcase
 		netser.start();
 		waitForStart(netser); 
 	    } catch (Exception e) {
-		System.out.println("Warning:  Var071 restart failed");
-		e.printStackTrace(System.out); 
+		output_.println("Warning:  Var071 restart failed");
+		e.printStackTrace(output_); 
 	    }
 
         }
@@ -2031,8 +2031,8 @@ public class NetServerTestcase extends Testcase
 		netser.start();
 		waitForStart(netser); 
 	    } catch (Exception e) {
-		System.out.println("Warning:  Var072 restart failed");
-		e.printStackTrace(System.out); 
+		output_.println("Warning:  Var072 restart failed");
+		e.printStackTrace(output_); 
 	    }
 
         }

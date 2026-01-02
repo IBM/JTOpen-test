@@ -567,7 +567,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
         {
             Class<?> beanclass = Class.forName("com.ibm.as400.access.MessageFile");
             BeanInfo beaninfo = Introspector.getBeanInfo(beanclass);
-            //System.out.println("Class of beaninfo is: " + beaninfo.getClass().getName());
+            //output_.println("Class of beaninfo is: " + beaninfo.getClass().getName());
             // Note: Experimentation reveals that the returned BeanInfo object
             // is of type java.beans.GenericBeanInfo.
             // Why isn't it of type com.ibm.as400.access.MessageFileBeanInfo ?
@@ -578,11 +578,11 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
             // Icons / GUI components no longer available in JTOpen 20.0.X
 
             EventSetDescriptor[] event = beaninfo.getEventSetDescriptors();
-            //System.out.println("eventSetDescriptors.length == " + event.length);
+            //output_.println("eventSetDescriptors.length == " + event.length);
             //for (int i=0; i<event.length; i++)
             //{
             //  EventSetDescriptor esd = event[i];
-            //  System.out.println("esd["+i+"]: " + esd.getDisplayName() + " (" + esd.getName() + ")");
+            //  output_.println("esd["+i+"]: " + esd.getDisplayName() + " (" + esd.getName() + ")");
             //}
             PropertyDescriptor[] props = beaninfo.getPropertyDescriptors();
 
@@ -617,7 +617,7 @@ public class MessageFileBeansTestcase extends Testcase implements PropertyChange
                 failed("Vector is not empty.");
                 while (!v.isEmpty())
                 {
-                    System.out.println("   " + v.elementAt(0));
+                    output_.println("   " + v.elementAt(0));
                     v.removeElementAt(0);
                 }
             }

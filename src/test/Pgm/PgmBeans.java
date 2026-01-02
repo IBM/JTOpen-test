@@ -196,7 +196,7 @@ ActionCompletedListener
     public void propertyChange(PropertyChangeEvent e)
     {
         if (propChange!=null)
-            System.out.println( "propertyChange refired!" );
+            output_.println( "propertyChange refired!" );
         propChange = e;
         propertyName = e.getPropertyName();
         oldValue = e.getOldValue();
@@ -210,7 +210,7 @@ ActionCompletedListener
         if (vetoChange!=null)
         {
             if (vetoRefire!=null)
-                System.out.println( "vetoableChange refired!" );
+                output_.println( "vetoableChange refired!" );
             else
                 vetoRefire = e;
         }
@@ -230,7 +230,7 @@ ActionCompletedListener
     public void actionCompleted(ActionCompletedEvent e)
     {
         if (asource!=null)
-            System.out.println( "actionCompleted refired!" );
+            output_.println( "actionCompleted refired!" );
         asource = e.getSource();
     }
 

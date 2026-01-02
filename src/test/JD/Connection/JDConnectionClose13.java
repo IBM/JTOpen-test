@@ -135,7 +135,7 @@ In this case we don't explicitly close the connection, but allow the gc to close
 	            String message = "JDConnectionClose.Var013 loop="+i+"/"+CONNECTIONS_TO_TEST+
 	            " or timeLeft = "+timeleft+"s";
 	            JDJobName.sendProgramMessage(message );
-	            System.out.println(message);
+	            output_.println(message);
 	            nextMessage = System.currentTimeMillis() + 15000;
 	          }
 

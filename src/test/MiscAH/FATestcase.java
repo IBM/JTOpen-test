@@ -69,7 +69,7 @@ public class FATestcase extends Testcase
     protected void cleanup() throws Exception
     {
 	if (skipCleanup) {
-	    System.out.println("Skipping cleanup\n"); 
+	    output_.println("Skipping cleanup\n"); 
 	} else { 
       // Delete the test file.
 	    cmdRun("QSYS/DEL OBJLNK('"+FILE_PATH_PERSISTENT+"')");
@@ -104,7 +104,7 @@ public class FATestcase extends Testcase
     private void cleanupTestFile()
     {
 	if (skipCleanup) {
-	    System.out.println("Skipping cleanupTestFile\n"); 
+	    output_.println("Skipping cleanupTestFile\n"); 
 	} else { 
 
 	// Delete the test file.

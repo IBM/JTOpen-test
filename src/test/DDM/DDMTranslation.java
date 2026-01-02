@@ -92,7 +92,7 @@ public class DDMTranslation extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -110,11 +110,11 @@ public class DDMTranslation extends Testcase
     }
     catch(Exception e)
     {
-	System.out.println("Warning:   exception thrown during setup");
-	System.out.flush(); 
+	output_.println("Warning:   exception thrown during setup");
+	output_.flush(); 
       e.printStackTrace(output_);
       System.err.flush();
-      System.out.flush(); 
+      output_.flush(); 
       throw e;
     }
   }
@@ -205,7 +205,7 @@ public class DDMTranslation extends Testcase
 	      String expected = "not found"; 
 	      if (msg.indexOf(expected) > 0) {
 	      } else {
-		  System.out.println("Warning:  exception missing "+expected);
+		  output_.println("Warning:  exception missing "+expected);
 		  e.printStackTrace(); 
 	      } 
 	  } 

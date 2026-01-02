@@ -123,7 +123,7 @@ public class JDCSArrays extends JDTestcase {
     String sql = "";
     try {
       if (redundantTest(combination)) {
-        // System.out.println("Skipping redundant test "+describeTest(combination)); 
+        // output_.println("Skipping redundant test "+describeTest(combination)); 
       } else {
 
         sb.append("*************************************************************\n");
@@ -742,7 +742,7 @@ public class JDCSArrays extends JDTestcase {
             double totalEstimatedTime = (double) elapsedTime / (double) count
                 * (double) totalCount;
             int secondsLeft = (int) (totalEstimatedTime - elapsedTime) / 1000;
-            System.out.println("Currently processing " + count + "/"
+            output_.println("Currently processing " + count + "/"
                 + totalCount + " combo 0x" + Integer.toHexString(combo)
                 + " about " + secondsLeft + "/"
                 + ((int) (totalEstimatedTime / 1000)) + " seconds left");
@@ -795,7 +795,7 @@ public class JDCSArrays extends JDTestcase {
             double totalEstimatedTime = (double) elapsedTime / (double) count
                 * (double) totalCount;
             int secondsLeft = (int) (totalEstimatedTime - elapsedTime) / 1000;
-            System.out.println("Currently processing " + count + "/"
+            output_.println("Currently processing " + count + "/"
                 + totalCount + " combo 0x" + Integer.toHexString(combo)
                 + " about " + secondsLeft + "/"
                 + ((int) (totalEstimatedTime / 1000)) + " seconds left");
@@ -844,7 +844,7 @@ public class JDCSArrays extends JDTestcase {
             double totalEstimatedTime = (double) elapsedTime / (double) count
                 * (double) totalCount;
             int secondsLeft = (int) (totalEstimatedTime - elapsedTime) / 1000;
-            System.out.println("Currently processing " + count + "/"
+            output_.println("Currently processing " + count + "/"
                 + totalCount + " combo 0x" + Integer.toHexString(combo)
                 + " about " + secondsLeft + "/"
                 + ((int) (totalEstimatedTime / 1000)) + " seconds left");
@@ -893,7 +893,7 @@ public class JDCSArrays extends JDTestcase {
           if (currentTime > printTime) {
             long elapsedTime = currentTime - startTime;
             int secondsLeft = (int) (totalMillis - elapsedTime) / 1000;
-            System.out.println("Currently processing combo 0x" + Long.toHexString(combo)
+            output_.println("Currently processing combo 0x" + Long.toHexString(combo)
                 + " about " + secondsLeft + " seconds left");
 
             printTime = currentTime + 2000;
@@ -935,7 +935,7 @@ public class JDCSArrays extends JDTestcase {
           if (currentTime > printTime) {
             long elapsedTime = currentTime - startTime;
             int secondsLeft = (int) (totalMillis - elapsedTime) / 1000;
-            System.out.println("Currently processing combo 0x" + Long.toHexString(combo)
+            output_.println("Currently processing combo 0x" + Long.toHexString(combo)
                 + " about " + secondsLeft + " seconds left");
 
             printTime = currentTime + 2000;
@@ -979,7 +979,7 @@ public class JDCSArrays extends JDTestcase {
           if (currentTime > printTime) {
             long elapsedTime = currentTime - startTime;
             int secondsLeft = (int) (totalMillis - elapsedTime) / 1000;
-            System.out.println("Currently processing combo 0x" + Long.toHexString(combo)
+            output_.println("Currently processing combo 0x" + Long.toHexString(combo)
                 + " about " + secondsLeft + " seconds left");
 
             printTime = currentTime + 2000;

@@ -304,8 +304,8 @@ super.cleanup();
                 (byte) 'B', (byte) 'o', (byte) 'n',
                 (byte) 'j', (byte) 'o', (byte) 'u',
                 (byte) 'r'};
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             StringBuffer sb = new StringBuffer(); 
             boolean passed = areEqual(p, check, sb);
             assertCondition(passed,sb); 
@@ -495,8 +495,8 @@ super.cleanup();
                 (byte) ' ', (byte) ' ', (byte) ' ',     
                 (byte) ' ', (byte) ' ', (byte) ' ',     
                 (byte) ' ', (byte) ' '};     
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             StringBuffer sb = new StringBuffer(); 
             boolean passed = areEqual(p, check, sb);
             assertCondition(passed,sb); 
@@ -587,8 +587,8 @@ super.cleanup();
             byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                 (byte) 'e', (byte) ' ', (byte) 'W',
                 (byte) 'a', (byte) 'l', (byte) 'l'};     
-            // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             StringBuffer sb = new StringBuffer(); 
             boolean passed = areEqual(p, check, sb);
             assertCondition(passed,sb); 
@@ -833,8 +833,8 @@ super.cleanup();
                 (byte) 'B', (byte) 'o', (byte) 'n',
                 (byte) 'j', (byte) 'o', (byte) 'u',
                 (byte) 'r'};
-            //for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-            //for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+            //for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+            //for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
             StringBuffer sb = new StringBuffer(); 
             boolean passed = areEqual(p, check, sb);
             assertCondition(passed,sb); 
@@ -1091,8 +1091,8 @@ super.cleanup();
                     (byte) ' ', (byte) ' ', (byte) ' ',     
                     (byte) ' ', (byte) ' ', (byte) ' ',     
                     (byte) ' ', (byte) ' '};     
-                // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-                // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+                // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+                // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
                 StringBuffer sb = new StringBuffer(); 
                 boolean passed = areEqual(p, check, sb);
                 assertCondition(passed,sb); 
@@ -1181,8 +1181,8 @@ super.cleanup();
                 byte[] check = new byte[] { (byte) 'D', (byte) 'a', (byte) 'v',
                     (byte) 'e', (byte) ' ', (byte) 'W',
                     (byte) 'a', (byte) 'l', (byte) 'l'};     
-                // for (int i = 0; i < p.length; ++i) System.out.println ("p[" + i + "]=" + p[i]);
-                // for (int i = 0; i < check.length; ++i) System.out.println ("check[" + i + "]=" + check[i]);
+                // for (int i = 0; i < p.length; ++i) output_.println ("p[" + i + "]=" + p[i]);
+                // for (int i = 0; i < check.length; ++i) output_.println ("check[" + i + "]=" + check[i]);
                 StringBuffer sb = new StringBuffer(); 
                 boolean passed = areEqual(p, check, sb);
                 assertCondition(passed,sb); 

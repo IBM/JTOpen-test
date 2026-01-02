@@ -2024,7 +2024,7 @@ setNumberOfPages() - Should work when set before the list is opened.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2061,7 +2061,7 @@ and closed.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2090,7 +2090,7 @@ setNumberOfPages() - Should work when set to 1.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2119,7 +2119,7 @@ setNumberOfPages() - Should work when set to 2.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2200,7 +2200,7 @@ setPageSize() - Should work when set before the list is opened.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2237,7 +2237,7 @@ and closed.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2266,7 +2266,7 @@ setPageSize() - Should work when set to 1.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2295,7 +2295,7 @@ setPageSize() - Should work when set to 2.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2325,7 +2325,7 @@ setNumberOfPages()/setPageSize() - Should work when both set to 1.
             boolean success = true;
             for(int i = 0;i < length; ++i) {
                 if (ul.resourceAt(i) == null) {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }

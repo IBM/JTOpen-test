@@ -97,8 +97,8 @@ public class DDMGetSet extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
-      e.printStackTrace(System.out); 
+      output_.println("Unable to connect to the AS/400");
+      e.printStackTrace(output_); 
       return;
     }
 
@@ -110,7 +110,7 @@ public class DDMGetSet extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -1025,7 +1025,7 @@ public class DDMGetSet extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -1145,7 +1145,7 @@ String runCommand(String command, StringBuffer sb)
   }
   catch(Exception e)
   {
-    System.out.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
+    output_.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
     e.printStackTrace(output_);
     output_.print(sb.toString()); 
     throw e;

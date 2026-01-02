@@ -148,13 +148,13 @@ dumpBytes() - Utility function used to see the bytes
 /**
 Compares a Blob with a byte[].
 **/
-   static boolean compare (Blob i, byte[] b)
+    static boolean compare (Blob i, byte[] b, java.io.PrintWriter output_)
    throws SQLException
    {
       byte[] iBytes = i.getBytes (1, (int) i.length ());  // @B1C
       boolean result =  areEqual (iBytes, b);
       if (!result) {
-	  System.out.println("     BLOB("+dumpBytes(iBytes)+") != Bytes("+dumpBytes(b)+")");
+	  output_.println("     BLOB("+dumpBytes(iBytes)+") != Bytes("+dumpBytes(b)+")");
       }
       return result;
    }
@@ -623,7 +623,7 @@ the data was returned in the result set.
          if (checkLobSupport ()) {
             try {
                Blob p = csTypes_.getBlob (19);
-               assertCondition (compare(p, expected));
+               assertCondition (compare(p, expected,output_));
             } catch (Exception e)
             {
                failed (e, "Unexpected Exception");
@@ -644,7 +644,7 @@ the locator was returned in the result set.
          if (checkLobSupport ()) {
             try {
                Blob p = csTypes2_.getBlob (19);
-               assertCondition (compare(p, expected));
+               assertCondition (compare(p, expected,output_));
             } catch (Exception e)
             {
                failed (e, "Unexpected Exception");
@@ -1019,7 +1019,7 @@ the data was returned in the result set.
 	       if (checkLobSupport ()) {
 		   try {
 		       Blob p = csTypes_.getBlob ("P_BLOB");
-		       assertCondition (compare(p, expected));
+		       assertCondition (compare(p, expected, output_));
 		   } catch (Exception e)
 		   {
 		       failed (e, "Unexpected Exception");
@@ -1041,7 +1041,7 @@ the locator was returned in the result set.
 	       if (checkLobSupport ()) {
 		   try {
 		       Blob p = csTypes2_.getBlob ("P_BLOB");
-		       assertCondition (compare(p, expected));
+		       assertCondition (compare(p, expected,output_));
 		   } catch (Exception e)
 		   {
 		       failed (e, "Unexpected Exception");
@@ -1133,7 +1133,7 @@ getBlob() - Get blob on a large blob
 		       }
 
 		       Blob check = cstmt.getBlob(1);
-		       assertCondition (compare(check, expected1), "Testcase added 12/14/2005 by native driver");
+		       assertCondition (compare(check, expected1,output_), "Testcase added 12/14/2005 by native driver");
 		   } catch (Exception e) {
 		       failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "+
 			       " Currrently fails -- see issue 29243 ");
@@ -1193,7 +1193,7 @@ getBlob() - Get blob on a large blob
 
 
 		      Blob check = cstmt.getBlob(1);
-		      assertCondition (compare(check, expected1), "Testcase added 12/14/2005 by native driver");
+		      assertCondition (compare(check, expected1,output_), "Testcase added 12/14/2005 by native driver");
 		  } catch (Exception e) {
 		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "
 			      );
@@ -1336,7 +1336,7 @@ getBlob() - Get blob on a large blob
 
 		    stmt.close();
 
-		    if (callCount > 1) { System.out.println("Test made "+callCount+" calls in  "+runSeconds+" seconds."); }
+		    if (callCount > 1) { output_.println("Test made "+callCount+" calls in  "+runSeconds+" seconds."); }
 		    assertCondition(passed, info+"\n"+sb.toString());
 
 		} catch (Exception e) {

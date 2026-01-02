@@ -190,7 +190,7 @@ Performs setup needed before running variations.
         //@PDA table and SPs for testing date/time formats in SP with
         // formats in connection props
         Statement st = connection_.createStatement();
-        System.out.println("st.execute(DROP TABLE " + TABLE1 );
+        output_.println("st.execute(DROP TABLE " + TABLE1 );
 
         for(int x = 0; x < 5; x++)
         {
@@ -1982,13 +1982,13 @@ cache.
 	      assertCondition ( passed, sb);
 
 	  } catch(Exception e) {
-              System.out.println(sb.toString());
-	      System.out.println("Exception SQL = "+sql);
+              output_.println(sb.toString());
+	      output_.println("Exception SQL = "+sql);
 	      if (e instanceof SQLException) {
 		  SQLException sqlex = (SQLException) e;
-                  System.out.println("SQLCODE = "+sqlex.getErrorCode());
-                  System.out.println("SQLSTATE = "+sqlex.getSQLState());
-                  System.out.println("SQLMESSAGE = "+sqlex.getMessage());
+                  output_.println("SQLCODE = "+sqlex.getErrorCode());
+                  output_.println("SQLSTATE = "+sqlex.getSQLState());
+                  output_.println("SQLMESSAGE = "+sqlex.getMessage());
 	      }
 	      failed (e, "Unexpected Exception -- new testcase added by native driver 06/16/08 ");
 	  }
@@ -2890,13 +2890,13 @@ cache.
 	      assertCondition ( passed, sb);
 
 	  } catch(Exception e) {
-              System.out.println(sb.toString());
-	      System.out.println("Exception SQL = "+sql);
+              output_.println(sb.toString());
+	      output_.println("Exception SQL = "+sql);
 	      if (e instanceof SQLException) {
 		  SQLException sqlex = (SQLException) e;
-                  System.out.println("SQLCODE = "+sqlex.getErrorCode());
-                  System.out.println("SQLSTATE = "+sqlex.getSQLState());
-                  System.out.println("SQLMESSAGE = "+sqlex.getMessage());
+                  output_.println("SQLCODE = "+sqlex.getErrorCode());
+                  output_.println("SQLSTATE = "+sqlex.getSQLState());
+                  output_.println("SQLMESSAGE = "+sqlex.getMessage());
 	      }
 	      failed (e, "Unexpected Exception -- new testcase added by native driver 06/16/2014 ");
 	  }
@@ -3099,13 +3099,13 @@ cache.
 	      assertCondition ( passed, sb);
 
 	  } catch(Exception e) {
-              System.out.println(sb.toString());
-	      System.out.println("Exception SQL = "+sql);
+              output_.println(sb.toString());
+	      output_.println("Exception SQL = "+sql);
 	      if (e instanceof SQLException) {
 		  SQLException sqlex = (SQLException) e;
-                  System.out.println("SQLCODE = "+sqlex.getErrorCode());
-                  System.out.println("SQLSTATE = "+sqlex.getSQLState());
-                  System.out.println("SQLMESSAGE = "+sqlex.getMessage());
+                  output_.println("SQLCODE = "+sqlex.getErrorCode());
+                  output_.println("SQLSTATE = "+sqlex.getSQLState());
+                  output_.println("SQLMESSAGE = "+sqlex.getMessage());
 	      }
 	      failed (e, "Unexpected Exception -- new testcase added by native driver 06/16/08 ");
 	  }
@@ -3309,13 +3309,13 @@ cache.
 	      assertCondition ( passed, sb);
 
 	  } catch(Exception e) {
-              System.out.println(sb.toString());
-	      System.out.println("Exception SQL = "+sql);
+              output_.println(sb.toString());
+	      output_.println("Exception SQL = "+sql);
 	      if (e instanceof SQLException) {
 		  SQLException sqlex = (SQLException) e;
-                  System.out.println("SQLCODE = "+sqlex.getErrorCode());
-                  System.out.println("SQLSTATE = "+sqlex.getSQLState());
-                  System.out.println("SQLMESSAGE = "+sqlex.getMessage());
+                  output_.println("SQLCODE = "+sqlex.getErrorCode());
+                  output_.println("SQLSTATE = "+sqlex.getSQLState());
+                  output_.println("SQLMESSAGE = "+sqlex.getMessage());
 	      }
 	      failed (e, "Unexpected Exception -- new testcase added by native driver 06/16/08 ");
 	  }

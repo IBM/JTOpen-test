@@ -1012,7 +1012,7 @@ public class JDPSSetCharacterStream extends JDTestcase {
     if (l > 5) {
       initials = JDPSTest.COLLECTION.substring(l - 5);
     }
-    System.out.println("initials are " + initials);
+    output_.println("initials are " + initials);
     if (initials.equals("614CU") || initials.equals("615CU") || initials.equals("616CU")) {
       notApplicable("Fails with out of memory error for " + initials);
       return;

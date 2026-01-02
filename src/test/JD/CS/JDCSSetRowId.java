@@ -87,7 +87,7 @@ public class JDCSSetRowId extends JDCSSetTestcase {
       testRowId = JDReflectionUtil.createObject(
           "com.ibm.db2.jdbc.app.DB2RowId", arg);
     } else {
-   //   System.out.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT "+added);
+   //   output_.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT "+added);
       testRowId = JDReflectionUtil.createObject(
               "com.ibm.as400.access.AS400JDBCRowId", arg);
     }

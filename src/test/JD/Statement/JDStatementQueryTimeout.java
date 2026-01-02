@@ -359,7 +359,7 @@ extends JDTestcase
 
                     // If query took less than a second and a half, make it bigger and retry
                     if ((queryEnd-queryStart) < 1500) {
-			// System.out.println("Query too fast : "+query); 
+			// output_.println("Query too fast : "+query); 
                         query +=" , QSYS2.SYSCOLUMNS "+letter;
                         letter++;
                         retry = true; 
@@ -368,13 +368,13 @@ extends JDTestcase
                 catch(SQLException e)
                 {
                     // check for the right information in the query
-                    // e.printStackTrace(System.out); 
+                    // e.printStackTrace(output_); 
                     String exceptionMessage = e.toString();
                     String[]  expectedMessage = { "TimeoutException", "Operation cancelled", "Processing of the SQL statement ended", "666" } ; //sql number on all versions
                     // Because of the current toolbox implementation, the query will
                     // not even attempt to run, but will get
 		    // [SQL0666] SQL query exceeds specified time limit or storage limit.
-		    // System.out.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
+		    // output_.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
                     for (int i = 0; i < expectedMessage.length; i++){
                         if (exceptionMessage.indexOf(expectedMessage[i]) >= 0) { 
                             success = true;
@@ -383,9 +383,9 @@ extends JDTestcase
                     if (!success) { 
                         for (int i = 0; i < expectedMessage.length; i++){
 
-                            System.out.println("Unable to find "+expectedMessage[i]+" in "+exceptionMessage);
+                            output_.println("Unable to find "+expectedMessage[i]+" in "+exceptionMessage);
                         }
-                        System.out.println("Statement was "+query); 
+                        output_.println("Statement was "+query); 
                         e.printStackTrace();
                     }
                 }
@@ -405,11 +405,11 @@ extends JDTestcase
 
                 if(!success)
                 {
-                    System.out.println("Query timeout did not work, was query too fast?");
-                    System.out.println("Query was "+query); 
+                    output_.println("Query timeout did not work, was query too fast?");
+                    output_.println("Query was "+query); 
                     if(queryEnd != 0)
                     {
-                        System.out.println("Query took "+(queryEnd-queryStart)+" milliseconds"); 
+                        output_.println("Query took "+(queryEnd-queryStart)+" milliseconds"); 
                     }
                 }
                 assertCondition (success);
@@ -459,8 +459,7 @@ extends JDTestcase
     {
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE ) {
-	    // System.out.println("Var008 is toolbox only test for QRYTIMLMT");
-	    assertCondition(true);
+	    // assertCondition(true,"Var008 is toolbox only test for QRYTIMLMT");
 	    return; 
 	} 
 	StringBuffer sb = new StringBuffer(); 
@@ -726,7 +725,7 @@ extends JDTestcase
 
                     // If query took less than a second and a half, make it bigger and retry
                     if ((queryEnd-queryStart) < 1500) {
-			// System.out.println("Query too fast : "+query); 
+			// output_.println("Query too fast : "+query); 
                         query +=" , QSYS2.SYSCOLUMNS "+letter;
                         letter++;
                         retry = true; 
@@ -736,9 +735,9 @@ extends JDTestcase
                 {
                     // check for the right information in the query
                     String exceptionMessage = e.toString();
-                    e.printStackTrace(System.out); 
+                    e.printStackTrace(output_); 
                     String[]  expectedMessage = { "TimeoutException", "Operation cancelled", "Processing of the SQL statement ended" } ; 
-		    System.out.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
+		    output_.println("Got exception: '"+exceptionMessage+"' for query '"+query+"'"); 
                     for (int i = 0; i < expectedMessage.length; i++){
                         if (exceptionMessage.indexOf(expectedMessage[i]) >= 0) { 
                             success = true;
@@ -747,9 +746,9 @@ extends JDTestcase
                     if (!success) { 
                         for (int i = 0; i < expectedMessage.length; i++){
 
-                            System.out.println("Unable to find "+expectedMessage[i]+" in "+exceptionMessage);
+                            output_.println("Unable to find "+expectedMessage[i]+" in "+exceptionMessage);
                         }
-                        System.out.println("Statement was "+query); 
+                        output_.println("Statement was "+query); 
                         e.printStackTrace();
                     }
                 }
@@ -762,11 +761,11 @@ extends JDTestcase
 
                 if(!success)
                 {
-                    System.out.println("Query timeout did not work, was query too fast?");
-                    System.out.println("Query was "+query); 
+                    output_.println("Query timeout did not work, was query too fast?");
+                    output_.println("Query was "+query); 
                     if(queryEnd != 0)
                     {
-                        System.out.println("Query took "+(queryEnd-queryStart)+" milliseconds"); 
+                        output_.println("Query took "+(queryEnd-queryStart)+" milliseconds"); 
                     }
                 }
                 assertCondition (success,sb);

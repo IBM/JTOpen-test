@@ -509,7 +509,7 @@ public class JDDMDGetXxx extends JDTestcase {
     String expectedName = "DB2 UDB for AS/400";
     if (getDriver() == JDTestDriver.DRIVER_JCC) {
       expectedName = "AS";
-      System.out.println(
+      output_.println(
           "JCC expects '" + expectedName + "' as the databaseProductName");
     }
 
@@ -553,11 +553,11 @@ public class JDDMDGetXxx extends JDTestcase {
       String expectedVersion = System.getProperty("os.version");
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         expectedVersion = "QSQ05050";
-        System.out.println("JCC expects '" + expectedVersion
+        output_.println("JCC expects '" + expectedVersion
             + "' as the databaseProductVersion");
       }
 
-      System.out.println("Version = " + dmd_.getDatabaseProductVersion());
+      output_.println("Version = " + dmd_.getDatabaseProductVersion());
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX
           || getDriver() == JDTestDriver.DRIVER_JTOPENLITE) {
         // toolbox version looks like 05.05.0000 V5R5m0
@@ -1689,12 +1689,12 @@ public class JDDMDGetXxx extends JDTestcase {
       }
       boolean condition = compare(expected, dmd_.getNumericFunctions());
       if (!condition) {
-        System.out.println("numeric functions do not match");
-        System.out.println("actual  : " + dmd_.getNumericFunctions());
-        System.out.print("expected: ");
+        output_.println("numeric functions do not match");
+        output_.println("actual  : " + dmd_.getNumericFunctions());
+        output_.print("expected: ");
         for (int i = 0; i < expected.length; i++)
-          System.out.print(expected[i] + " ");
-        System.out.println();
+          output_.print(expected[i] + " ");
+        output_.println();
       }
 
       assertCondition(condition,
@@ -1726,12 +1726,12 @@ public class JDDMDGetXxx extends JDTestcase {
         }
         boolean condition = compare(expected, dmd2_.getNumericFunctions());
         if (!condition) {
-          System.out.println("numeric functions do not match");
-          System.out.println("actual  : " + dmd2_.getNumericFunctions());
-          System.out.print("expected: ");
+          output_.println("numeric functions do not match");
+          output_.println("actual  : " + dmd2_.getNumericFunctions());
+          output_.print("expected: ");
           for (int i = 0; i < expected.length; i++)
-            System.out.print(expected[i] + " ");
-          System.out.println();
+            output_.print(expected[i] + " ");
+          output_.println();
         }
 
         assertCondition(condition,
@@ -1838,12 +1838,12 @@ public class JDDMDGetXxx extends JDTestcase {
       }
       condition = compare(expectedKeywords, keywords);
       if (!condition) {
-        System.out.println("sqlKeywords do not match");
-        System.out.println("actual  : " + keywords);
-        System.out.print("expected: ");
+        output_.println("sqlKeywords do not match");
+        output_.println("actual  : " + keywords);
+        output_.print("expected: ");
         for (int i = 0; i < expectedKeywords.length; i++)
-          System.out.print(expectedKeywords[i] + " ");
-        System.out.println();
+          output_.print(expectedKeywords[i] + " ");
+        output_.println();
       }
       assertCondition(condition,
           "condition = " + condition + " and should be true");
@@ -1871,12 +1871,12 @@ public class JDDMDGetXxx extends JDTestcase {
         }
         condition = compare(expectedKeywords, keywords);
         if (!condition) {
-          System.out.println("sqlKeywords do not match");
-          System.out.println("actual  : " + keywords);
-          System.out.print("expected: ");
+          output_.println("sqlKeywords do not match");
+          output_.println("actual  : " + keywords);
+          output_.print("expected: ");
           for (int i = 0; i < expectedKeywords.length; i++)
-            System.out.print(expectedKeywords[i] + " ");
-          System.out.println();
+            output_.print(expectedKeywords[i] + " ");
+          output_.println();
         }
 
         assertCondition(condition,
@@ -1910,12 +1910,12 @@ public class JDDMDGetXxx extends JDTestcase {
         condition = compare(expected, s);
 
         if (!condition) {
-          System.out.println("StringFunctions do not match");
-          System.out.println("actual  : " + s);
-          System.out.print("expected: ");
+          output_.println("StringFunctions do not match");
+          output_.println("actual  : " + s);
+          output_.print("expected: ");
           for (int i = 0; i < expected.length; i++)
-            System.out.print(expected[i] + " ");
-          System.out.println();
+            output_.print(expected[i] + " ");
+          output_.println();
         }
         assertCondition(condition,
             "condition = " + condition + " and should be true");
@@ -1948,12 +1948,12 @@ public class JDDMDGetXxx extends JDTestcase {
           condition = compare(expected, s);
 
           if (!condition) {
-            System.out.println("StringFunctions do not match");
-            System.out.println("actual  : " + s);
-            System.out.print("expected: ");
+            output_.println("StringFunctions do not match");
+            output_.println("actual  : " + s);
+            output_.print("expected: ");
             for (int i = 0; i < expected.length; i++)
-              System.out.print(expected[i] + " ");
-            System.out.println();
+              output_.print(expected[i] + " ");
+            output_.println();
           }
           assertCondition(condition,
               "condition = " + condition + " and should be true");
@@ -2011,12 +2011,12 @@ public class JDDMDGetXxx extends JDTestcase {
 
       boolean condition = compare(expected, dmd_.getTimeDateFunctions());
       if (!condition) {
-        System.out.println("time date functions do not match");
-        System.out.println("actual  : " + dmd_.getTimeDateFunctions());
-        System.out.print("expected: ");
+        output_.println("time date functions do not match");
+        output_.println("actual  : " + dmd_.getTimeDateFunctions());
+        output_.print("expected: ");
         for (int i = 0; i < expected.length; i++)
-          System.out.print(expected[i] + " ");
-        System.out.println();
+          output_.print(expected[i] + " ");
+        output_.println();
       }
 
       assertCondition(condition,
@@ -2049,12 +2049,12 @@ public class JDDMDGetXxx extends JDTestcase {
 
         boolean condition = compare(expected, dmd2_.getTimeDateFunctions());
         if (!condition) {
-          System.out.println("time date functions do not match");
-          System.out.println("actual  : " + dmd2_.getTimeDateFunctions());
-          System.out.print("expected: ");
+          output_.println("time date functions do not match");
+          output_.println("actual  : " + dmd2_.getTimeDateFunctions());
+          output_.print("expected: ");
           for (int i = 0; i < expected.length; i++)
-            System.out.print(expected[i] + " ");
-          System.out.println();
+            output_.print(expected[i] + " ");
+          output_.println();
         }
 
         assertCondition(condition,

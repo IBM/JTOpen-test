@@ -97,20 +97,20 @@ public class FTPReconnect extends    Testcase
 
         if (initialToken_ == null)
         {
-           System.out.println("-directory is invalid, no test will be run");
+           output_.println("-directory is invalid, no test will be run");
            notWorthTrying = true;
-           System.out.println();
+           output_.println();
         }
         else
         {
           if (FTPTest.DEBUG) {
-            System.out.println("using initial token " + initialToken_);
+            output_.println("using initial token " + initialToken_);
             System.out.println();
           }
         }
 
         if ((password == null) || (password.length() < 1)) {
-          System.out.println("===> warning, variations will fail because no -password specified");
+          output_.println("===> warning, variations will fail because no -password specified");
         } else { 
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
             clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
@@ -124,15 +124,15 @@ public class FTPReconnect extends    Testcase
            system_   = systemObject_.getSystemName();
         }
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
         if ((user_ == null) || (user_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -uid specified");
+           output_.println("===> warning, variations will fail because no -uid specified");
 
         if ((system_ == null) || (system_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -system specified");
+           output_.println("===> warning, variations will fail because no -system specified");
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -158,7 +158,7 @@ public class FTPReconnect extends    Testcase
       // The third record has the timeout value 
       Record record = file.read(3);
       String value = ((String) record.getField(0)).trim(); 
-      System.out.println("Current FTP timeout is "+value+" seconds"); 
+      output_.println("Current FTP timeout is "+value+" seconds"); 
       file.close(); 
       oldTimeout = Integer.parseInt(value);  
 
@@ -168,9 +168,9 @@ public class FTPReconnect extends    Testcase
 	  CommandCall cc = new CommandCall(pwrSys_);
 	  String command = "QSYS/CHGFTPA INACTTIMO(10)";
 	  if (!cc.run(command)) {
-	      System.out.println("Warning:  '" + command + "' failed");
+	      output_.println("Warning:  '" + command + "' failed");
 	  } else {
-	      System.out.println("Changed FTP timeout using "+command); 
+	      output_.println("Changed FTP timeout using "+command); 
 	  }
 	  timeout = 1000 * 30;
       }
@@ -195,9 +195,9 @@ public class FTPReconnect extends    Testcase
 	   CommandCall cc = new CommandCall(pwrSys_);
 	String command = "QSYS/CHGFTPA INACTTIMO("+oldTimeout+")"; 
 	if (!cc.run(command)) {
-	    System.out.println("Warning:  '"+command+"' failed"); 
+	    output_.println("Warning:  '"+command+"' failed"); 
 	} else {
-	    System.out.println("Successfully change timeout using "+command); 
+	    output_.println("Successfully change timeout using "+command); 
 	} 
        }
 
@@ -207,40 +207,40 @@ public class FTPReconnect extends    Testcase
 
     void cleanUpDirs()
     {
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
        System.gc();
 
        String targetDir = "targetDirTest19";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest19a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest20";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
 
        targetDir = "targetDirTest21";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest21a";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
        targetDir = "targetDirTest22";
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on client) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on client) " + targetDir);
        cleanUpDirs2(targetDir);
-       if (FTPTest.DEBUG) System.out.println("Cleaning up (on server) " + targetDir);
+       if (FTPTest.DEBUG) output_.println("Cleaning up (on server) " + targetDir);
        cleanUpDirsFTP(targetDir);
 
-       if (FTPTest.DEBUG) System.out.println();
+       if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -251,14 +251,14 @@ public class FTPReconnect extends    Testcase
     {
        try
        {
-          if (! FTPUtilities.deleteDirectory(targetDir))
+          if (! FTPUtilities.deleteDirectory(targetDir,output_))
           {
-             System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+             output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           }
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on workstation");
           e.printStackTrace();
        }
     }
@@ -285,7 +285,7 @@ public class FTPReconnect extends    Testcase
        }
        catch (Exception e)
        {
-          System.out.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
+          output_.println("Warning!  Cleanup failed, could not delete " + targetDir + " on server");
           e.printStackTrace();
        }
     }
@@ -346,7 +346,7 @@ public class FTPReconnect extends    Testcase
 		  FTP c = new FTP(system_, user_, clearPasswordString_);
 		  c.setDataTransferType(FTP.ASCII);
 
-		  System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
+		  output_.println("==> Will now wait " + timeout + " milliseconds for a timeout");
 		  Thread.sleep(timeout);
 
 		  c.setDataTransferType(FTP.ASCII);
@@ -403,7 +403,7 @@ public class FTPReconnect extends    Testcase
              FTP c = new FTP(system_, user_, clearPasswordString_);
              c.setDataTransferType(FTP.ASCII);
 
-             System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
+             output_.println("==> Will now wait " + timeout + " milliseconds for a timeout");
              Thread.sleep(timeout);
 
              c.disconnect();
@@ -442,7 +442,7 @@ public class FTPReconnect extends    Testcase
 		  c.cd(initialToken_);
 		  c.cd(testDirectory);
 
-		  System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
+		  output_.println("==> Will now wait " + timeout + " milliseconds for a timeout");
 		  Thread.sleep(timeout);
 
 		  result = c.dir();
@@ -523,7 +523,7 @@ public class FTPReconnect extends    Testcase
              try
              {
 		 for (int i = 0; i < 4; i++) { 
-		     System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
+		     output_.println("==> Will now wait " + timeout + " milliseconds for a timeout");
 		     Thread.sleep(timeout);
 
 		     c.get("PureJava.html", source);
@@ -626,7 +626,7 @@ public class FTPReconnect extends    Testcase
              c.setDataTransferType(FTP.BINARY);
              OutputStream o = null; 
 	     for (int i = 0;  i < 4; i++) { 
-		 System.out.println("==> Will now wait " + timeout + " milliseconds for a timeout");
+		 output_.println("==> Will now wait " + timeout + " milliseconds for a timeout");
 		 Thread.sleep(timeout);
 
 		 o = c.put(target);

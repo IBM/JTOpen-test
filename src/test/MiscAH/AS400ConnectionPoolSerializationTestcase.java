@@ -77,7 +77,7 @@ public class AS400ConnectionPoolSerializationTestcase extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS400.");
+      output_.println("Unable to connect to the AS400.");
       e.printStackTrace(output_);
     }
 
@@ -113,7 +113,7 @@ public class AS400ConnectionPoolSerializationTestcase extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup failed.");
+      output_.println("Cleanup failed.");
       return;
     }
     systemObject_.disconnectService(AS400.RECORDACCESS);

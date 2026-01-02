@@ -224,7 +224,7 @@ Performs setup needed before running variations.
 	}catch(Exception e3){
 	    String message = e3.toString();
 	    if (message.indexOf("not found") < 0) {
-		System.out.println("Warning TABLE3 not dropped");
+		output_.println("Warning TABLE3 not dropped");
 		e3.printStackTrace();
 	    }
 	}
@@ -356,12 +356,12 @@ Counts the rows that match a pattern.
     private int countRows (String pattern, int expectedCount) throws SQLException {
 	int count = countRows(pattern);
 	if (count != expectedCount) {
-	    System.out.println("Did not find "+expectedCount +" rows for "+pattern);
-	    System.out.println("File contains the following names");
+	    output_.println("Did not find "+expectedCount +" rows for "+pattern);
+	    output_.println("File contains the following names");
 	    Statement s = connection_.createStatement ();
 	    ResultSet rs = s.executeQuery ("SELECT NAME FROM " + table_);
 	    while (rs.next ()) {
-		System.out.println(rs.getString(1)); 
+		output_.println(rs.getString(1)); 
 	    }
 	    rs.close ();
 	    s.close();
@@ -2130,8 +2130,8 @@ PreparedStatement and execute the PreparedStatement by itself
 			 if (conn != null) { conn.close(); }
 			 conn = null; 
 		     } catch (Exception e) {
-			 System.out.println("Warning:  Exception on testcase cleanup "+e);
-			 e.printStackTrace(System.out); 
+			 output_.println("Warning:  Exception on testcase cleanup "+e);
+			 e.printStackTrace(output_); 
 		     } 
 		 } 
 	     }
@@ -2809,7 +2809,7 @@ int updateCounts[]  = pStmt.executeBatch ();
 
 
 messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-System.out.println(messageBuffer.toString());
+output_.println(messageBuffer.toString());
 
 assertCondition(true, messageBuffer.toString());
 
@@ -2823,7 +2823,7 @@ try {
 
     stmt.executeUpdate("DROP TABLE "+tablename);
 } catch (Exception e) {
-    System.out.println("Warning:  Exception during test cleanup "+e); 
+    output_.println("Warning:  Exception during test cleanup "+e); 
 } 
 
   } 
@@ -2897,23 +2897,23 @@ PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
 // 32K row chunks. 
             // 
 for (int i = 1; i <= 270000; i++) {
-              // if (i % 1000 == 0) { System.out.print(i+"."); }
+              // if (i % 1000 == 0) { output_.print(i+"."); }
   pStmt.setInt(1, i);   
               for (int j = 2; j <= 16; j++) { 
     pStmt.setNull(j,Types.INTEGER);
               }
               pStmt.addBatch(); 
 }
-// System.out.println(); 
+// output_.println(); 
 int updateCounts[]  = pStmt.executeBatch ();
 
 ResultSet rs = stmt.executeQuery("Select sum( cast (c1 as bigint)) from "+tablename);
 rs.next();
 long answer = rs.getLong(1);
-System.out.println("The answer is "+answer); 
+output_.println("The answer is "+answer); 
 
 messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-System.out.println(messageBuffer.toString());
+output_.println(messageBuffer.toString());
 
 
 stmt.executeUpdate("DROP TABLE "+tablename);
@@ -2993,24 +2993,24 @@ PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
             // 32K rows.  Opened issue 31000 to see if limit can be increased
             // 
 for (int i = 0; i < 270000; i++) {
-              // if (i % 1000 == 0) { System.out.print(i+"."); }
+              // if (i % 1000 == 0) { output_.print(i+"."); }
               for (int j = 1; j <= 16; j++) { 
     pStmt.setNull(j,Types.INTEGER);
               }
               pStmt.addBatch(); 
 }
-// System.out.println(); 
+// output_.println(); 
 int updateCounts[]  = pStmt.executeBatch ();
 
 
 for (int i = 0; i < 270000; i++) {
-              // if (i % 1000 == 0) { System.out.print(i+"."); }
+              // if (i % 1000 == 0) { output_.print(i+"."); }
               for (int j = 1; j <= 16; j++) { 
     pStmt.setNull(j,Types.INTEGER);
               }
               pStmt.addBatch(); 
 }
-// System.out.println(); 
+// output_.println(); 
 int updateCounts2[]  = pStmt.executeBatch ();
 
 
@@ -3020,7 +3020,7 @@ pStmt.close();
 
 messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
 messageBuffer.append("Length of updateCounts2 is "+updateCounts2.length+"\n");
-System.out.println(messageBuffer.toString()); 
+output_.println(messageBuffer.toString()); 
 assertCondition(updateCounts.length == 270000 && updateCounts2.length == 270000, "updateCounts.length="+updateCounts.length+" sb 270000 updateCounts2.length="+updateCounts2.length+ " "+
                   messageBuffer.toString());
 
@@ -3314,13 +3314,13 @@ failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.to
         if (checkJdbc20 ()) {
             try {
 		/* 
-		System.out.println("Testcase pausing for 45 seconds\n");
+		output_.println("Testcase pausing for 45 seconds\n");
 		try {
 		    Thread.sleep(45000); 
 		} catch (Exception e) {
 		    e.printStackTrace(); 
 		} 
-		System.out.println("Testcase continuing\n");
+		output_.println("Testcase continuing\n");
 		*/
 
                 Statement s = connection_.createStatement ();
@@ -6832,7 +6832,7 @@ failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.to
 	           } else {
 	             String info2 = "ERROR:  did not recognize SETAUTOCOMMIT setting "+testArray[i][1]+"\n";
 	             executeBatchInfo.append(info2); 
-	             System.out.print(info2); 
+	             output_.print(info2); 
 	           }
 
 	           
@@ -6978,7 +6978,7 @@ failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.to
                 }  else if (testArray[i][0].equalsIgnoreCase("EXTRA"))  {
                   // Just ignore 
 		} else {
-		   System.out.println("FAILED:  did not recognize "+testArray[i][0]);
+		   output_.println("FAILED:  did not recognize "+testArray[i][0]);
 		   passed = false; 
 		}
 
@@ -7439,7 +7439,7 @@ addBatch()/executeBatch() - Execute the batch when the insert statement can inse
 	  String varInfo = " -- Testing maximum blocked input rows"; 
             
             StringBuffer messageBuffer = new StringBuffer(); 
-	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
+	    output_.println("Driver fix level is "+getDriverFixLevel()); 
 	    try {
         Connection connection =  testDriver_.getConnection (url+";maximum blocked input rows=1000", userId_, encryptedPassword_);
           String tablename = JDPSTest.COLLECTION+ ".JDPSBAT90";
@@ -7496,7 +7496,7 @@ rowCount=2000;
     }
 
   } else {
-System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
+output_.println("OS is "+JTOpenTestEnvironment.osVersion); 
   } 
 
           PreparedStatement pStmt = connection.prepareStatement("INSERT INTO "+tablename+
@@ -7508,17 +7508,17 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
             }
             pStmt.addBatch(); 
           }
-          // System.out.println(); 
+          // output_.println(); 
           int updateCounts[]  = pStmt.executeBatch ();
 
           ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
           rs.next();
           long answer = rs.getLong(1);
-          System.out.println("The answer is "+answer); 
+          output_.println("The answer is "+answer); 
           rs.close(); 
           
           messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-          System.out.println(messageBuffer.toString());
+          output_.println(messageBuffer.toString());
 
           pStmt.close();
 
@@ -7563,7 +7563,7 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
 	  String varInfo = " -- Testing maximum blocked input rows"; 
             
             StringBuffer messageBuffer = new StringBuffer(); 
-	    System.out.println("Driver fix level is "+getDriverFixLevel()); 
+	    output_.println("Driver fix level is "+getDriverFixLevel()); 
 	    String tablename = JDPSTest.COLLECTION+ ".JDPSBAT91";
       Connection connection = null ;
       Statement stmt = null; 
@@ -7635,7 +7635,7 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
       	   rowCount=1000;
              }
           } else {
-      	System.out.println("OS is "+JTOpenTestEnvironment.osVersion); 
+      	output_.println("OS is "+JTOpenTestEnvironment.osVersion); 
           } 
 
 
@@ -7648,17 +7648,17 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
                         }
                         pStmt.addBatch(); 
                       }
-                      // System.out.println(); 
+                      // output_.println(); 
                       int updateCounts[]  = pStmt.executeBatch ();
 
                       ResultSet rs = stmt.executeQuery("Select count (*) from "+tablename);
                       rs.next();
                       long answer = rs.getLong(1);
-                      System.out.println("The answer is "+answer); 
+                      output_.println("The answer is "+answer); 
                       rs.close(); 
                       
                       messageBuffer.append("Length of updateCounts is "+updateCounts.length+"\n");
-                      System.out.println(messageBuffer.toString());
+                      output_.println(messageBuffer.toString());
 
           try {
       	stmt.executeUpdate("DROP TABLE "+tablename);
@@ -7693,8 +7693,8 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
       	} 
 
           } catch (Exception e) {
-      	System.out.println("Warning:  Exception on testcase cleanup "+e);
-      	e.printStackTrace(System.out); 
+      	output_.println("Warning:  Exception on testcase cleanup "+e);
+      	e.printStackTrace(output_); 
           } 
       } 
 
@@ -7754,7 +7754,7 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         pStmt.setString(1, values[i]);
         pStmt.addBatch();
       }
-      // System.out.println();
+      // output_.println();
       int updateCounts[] = pStmt.executeBatch();
 
       ResultSet rs = stmt.executeQuery("Select *  from " + tablename);
@@ -7796,8 +7796,8 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         }
 
       } catch (Exception e) {
-        System.out.println("Warning:  Exception on testcase cleanup " + e);
-        e.printStackTrace(System.out);
+        output_.println("Warning:  Exception on testcase cleanup " + e);
+        e.printStackTrace(output_);
       }
     }
 
@@ -7850,7 +7850,7 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         pStmt.setString(1, values[i][0]);
         pStmt.addBatch();
       }
-      // System.out.println();
+      // output_.println();
       int updateCounts[] = pStmt.executeBatch();
 
       ResultSet rs = stmt.executeQuery("Select *  from " + tablename);
@@ -7892,8 +7892,8 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         }
 
       } catch (Exception e) {
-        System.out.println("Warning:  Exception on testcase cleanup " + e);
-        e.printStackTrace(System.out);
+        output_.println("Warning:  Exception on testcase cleanup " + e);
+        e.printStackTrace(output_);
       }
     }
 
@@ -7951,8 +7951,8 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         try {
           connection.close();
         } catch (SQLException e) {
-          System.out.println("Warning -- exception on cleanup "); 
-          e.printStackTrace(System.out);
+          output_.println("Warning -- exception on cleanup "); 
+          e.printStackTrace(output_);
         } 
       }
         
@@ -8109,8 +8109,8 @@ System.out.println("OS is "+JTOpenTestEnvironment.osVersion);
         try {
           connection.close();
         } catch (SQLException e) {
-          System.out.println("Warning -- exception on cleanup "); 
-          e.printStackTrace(System.out);
+          output_.println("Warning -- exception on cleanup "); 
+          e.printStackTrace(output_);
         } 
       }
         

@@ -23,6 +23,7 @@ package test.JTA;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -68,6 +69,7 @@ public class JTAStdCrash2Vars {
   protected static boolean useUDBDataSource = false;
 
   static String cshMsg = "Ready to Crash"; // this should be the same as in
+  private static PrintStream output_ = System.out;
                                            // JTACrash2.java
 
   protected static boolean checkIns(String table, String value)
@@ -1085,7 +1087,8 @@ public class JTAStdCrash2Vars {
     String sysName = "localhost";
     int varNum = 0;
     int serverPort = 0;
-    System.out.println("Starting JTAStdCrash2Vars: main()");
+    output_  = System.out; 
+    output_.println("Starting JTAStdCrash2Vars: main()");
     try {
       serverPort = Integer.parseInt(System.getProperty("jta.server.socket"));
     } catch (Exception e) {
@@ -1096,7 +1099,7 @@ public class JTAStdCrash2Vars {
     }
 
     if (serverPort == 0) {
-      out = new PrintWriter(System.out, true);
+      out = new PrintWriter(output_, true);
       inputReader = new BufferedReader(new InputStreamReader(System.in));
 
     } else {
@@ -1118,7 +1121,7 @@ public class JTAStdCrash2Vars {
       }
     }
     try {
-      System.out.println("In JTAStdCrash2Vars: main()");
+      output_.println("In JTAStdCrash2Vars: main()");
 
       out.println("In JTAStdCrash2Vars: main()");
       String fromCrash2;

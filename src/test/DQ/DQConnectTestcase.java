@@ -521,8 +521,8 @@ public class DQConnectTestcase extends Testcase
 			dq2.delete();
 		    }
 		}
-		System.out.println("Warning:  connection dropper testcase did not work retries="+RETRIES);
-		assertCondition(true); 
+		
+		assertCondition(true,"Warning:  connection dropper testcase did not work retries="+RETRIES); 
 
             }
             catch (Exception e)
@@ -569,8 +569,8 @@ public class DQConnectTestcase extends Testcase
 		    }
 
 		}
-		System.out.println("Warning:  connection dropper testcase did not work RETRIES="+RETRIES);
-		assertCondition(true); 
+		
+		assertCondition(true,"Warning:  connection dropper testcase did not work RETRIES="+RETRIES); 
 
             }
             catch (Exception e)

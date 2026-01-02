@@ -115,7 +115,7 @@ toString() - There are no testcases written yet.
       if (checkJdbc20StdExt ()) {
          try {
             String s = dataSource_.toString();
-            System.out.println(s);
+            output_.println(s);
             assertCondition(s.length() > 0); 
          } catch (Exception e) {
             failed(e, "Unexpected exception"); 

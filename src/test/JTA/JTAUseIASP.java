@@ -17,6 +17,7 @@
  */ 
 package test.JTA; 
 
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -35,10 +36,12 @@ public class JTAUseIASP {
 
 
 
+  private static PrintStream output_;
+
   public static void main(String args[]) {
 
     try {
-
+      output_ = System.out; 
       String libraryName="JWEIAPS";
 
       //
@@ -46,7 +49,7 @@ public class JTAUseIASP {
       //
       String aspName = executeShellCommand("system wrkcfgsts *dev *asp 2>&1 | grep AVAILABLE | head -1 | sed 's/^ *\\([^ ][^ ]*\\) .*/\\1/'");
 
-      System.out.println("IASP name is " + aspName);
+      output_.println("IASP name is " + aspName);
 
       //
       // Set the library name based on the IASP name 
@@ -105,8 +108,8 @@ public class JTAUseIASP {
       } catch (Exception e) {
 	  String message = e.toString();
 	  if (message.indexOf("not found") < 0) {
-	      System.out.println("Unexpected exception ");
-	      e.printStackTrace(System.out); 
+	      output_.println("Unexpected exception ");
+	      e.printStackTrace(output_); 
 	  }    
       }
 
@@ -119,8 +122,8 @@ public class JTAUseIASP {
       // 
       // Do some work on the iasp connection
       //
-      System.out.println("IASP " + aspName + " work");
-      System.out.println("Catalog is "+iaspConnection.getCatalog());
+      output_.println("IASP " + aspName + " work");
+      output_.println("Catalog is "+iaspConnection.getCatalog());
       xid = new test.JTA.JTATestXid();
       iaspResource.start(xid, XAResource.TMNOFLAGS);
       s = iaspConnection.createStatement();
@@ -133,8 +136,8 @@ public class JTAUseIASP {
       // Do no work on the sysbase connection -- for the buggy case, this threw
       // an exception
       //
-      System.out.println("SYSBASE no work");
-      System.out.println("Catalog is "+sysbasConnection.getCatalog()); 
+      output_.println("SYSBASE no work");
+      output_.println("Catalog is "+sysbasConnection.getCatalog()); 
       xid = new test.JTA.JTATestXid();
       sysbasResource.start(xid, XAResource.TMNOFLAGS);
       sysbasResource.end(xid, XAResource.TMSUCCESS);
@@ -143,8 +146,8 @@ public class JTAUseIASP {
       // 
       // Do some work on the iasp connection
       //
-      System.out.println("IASP " + aspName + " work");
-      System.out.println("Catalog is "+iaspConnection.getCatalog());
+      output_.println("IASP " + aspName + " work");
+      output_.println("Catalog is "+iaspConnection.getCatalog());
       xid = new test.JTA.JTATestXid();
       iaspResource.start(xid, XAResource.TMNOFLAGS);
       s = iaspConnection.createStatement();
@@ -156,8 +159,8 @@ public class JTAUseIASP {
       // 
       // Do work on the sysbase connection
       //
-      System.out.println("SYSBASE work");
-      System.out.println("Catalog is "+sysbasConnection.getCatalog());
+      output_.println("SYSBASE work");
+      output_.println("Catalog is "+sysbasConnection.getCatalog());
       xid = new test.JTA.JTATestXid();
       sysbasResource.start(xid, XAResource.TMNOFLAGS);
       s = sysbasConnection.createStatement();
@@ -169,8 +172,8 @@ public class JTAUseIASP {
       // 
       // Do some work on the iasp connection
       //
-      System.out.println("IASP " + aspName + " work");
-      System.out.println("Catalog is "+iaspConnection.getCatalog());
+      output_.println("IASP " + aspName + " work");
+      output_.println("Catalog is "+iaspConnection.getCatalog());
 
       xid = new test.JTA.JTATestXid();
       iaspResource.start(xid, XAResource.TMNOFLAGS);
@@ -183,20 +186,20 @@ public class JTAUseIASP {
       // 
       // Do no work on the sysbase connection
       //
-      System.out.println("SYSBASE no work");
-      System.out.println("Catalog is "+sysbasConnection.getCatalog());
+      output_.println("SYSBASE no work");
+      output_.println("Catalog is "+sysbasConnection.getCatalog());
       xid = new test.JTA.JTATestXid();
       sysbasResource.start(xid, XAResource.TMNOFLAGS);
       sysbasResource.end(xid, XAResource.TMSUCCESS);
       sysbasResource.commit(xid, true);
       
-      System.out.println("Testcase passed"); 
+      output_.println("Testcase passed"); 
       
     } catch (Exception e) {
-      System.out.println("Unexpected Exception: " + e.getMessage());
+      output_.println("Unexpected Exception: " + e.getMessage());
 
       e.printStackTrace();
-      System.out.println("Testcase failed"); 
+      output_.println("Testcase failed"); 
 
     }
   }

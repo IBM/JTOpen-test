@@ -61,7 +61,7 @@ public class SecPortMapperTestcase extends Testcase {
       try { 
       return super.findClass(name);
       } catch (java.lang.ClassNotFoundException ex) {
-        System.out.println("Loading "+name); 
+        output_.println("Loading "+name); 
         return fallbackLoader.loadClass(name); 
       }
     }

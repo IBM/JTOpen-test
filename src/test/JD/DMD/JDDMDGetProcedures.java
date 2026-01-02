@@ -95,7 +95,7 @@ Constructor.
 
 
     protected String getCatalogFromURL(String url) {
-      // System.out.println("BaseURL is "+baseURL_);
+      // output_.println("BaseURL is "+baseURL_);
       // must be running JCC, set to a valid value.
       int lastColon;
       if (JDTestDriver.isLUW()) {
@@ -144,11 +144,11 @@ Performs setup needed before running variations.
 		connectionCatalog_=null;
 	    } else {
 		connectionCatalog_ = getCatalogFromURL(baseURL_);
-		System.out.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
+		output_.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
 	    }
         }
         dmd_ = connection_.getMetaData ();
-        String QIWS = JDSetupProcedure.setupQIWS(systemObject_, connection_);
+        String QIWS = JDSetupProcedure.setupQIWS(systemObject_, connection_, output_);
         Statement s = connection_.createStatement ();
         s.executeUpdate ("CREATE PROCEDURE " + JDDMDTest.COLLECTION
             + ".PROCS LANGUAGE SQL READS SQL DATA P1: BEGIN DECLARE DUMMY INTEGER;"
@@ -2465,7 +2465,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getProcedures");
+		    // output_.println("Calling getProcedures");
 		    ResultSet rs = dmd_.getProcedures (connectionCatalog_,
 						       JDDMDTest.SCHEMAS_PERCENT, "PROCS_");
 		    rs.close();

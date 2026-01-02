@@ -1765,8 +1765,7 @@ public class DQWriteTestcase extends Testcase
 		    dq.delete();
 		}
 
-		System.out.println("Warning.. Threads did not force condition");
-		assertCondition(true); 
+		assertCondition(true,"Warning.. Threads did not force condition"); 
 	    }
 	    catch (Exception e)
 	    {
@@ -1818,8 +1817,7 @@ public class DQWriteTestcase extends Testcase
                   }
 		}
 
-		System.out.println("Warning.. Threads did not force condition");
-		assertCondition(true); 
+		assertCondition(true,"Warning.. Threads did not force condition"); 
 
 	    }
 	    catch (Exception e)
@@ -1873,8 +1871,7 @@ public class DQWriteTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning.. Threads did not force condition");
-		assertCondition(true); 
+		assertCondition(true,"Warning.. Threads did not force condition"); 
 
 	    }
 	    catch (Exception e)
@@ -1928,8 +1925,7 @@ public class DQWriteTestcase extends Testcase
 		    }
 		    dq.delete();
 		}
-		System.out.println("Warning.. Threads did not force condition");
-		assertCondition(true); 
+		assertCondition(true,"Warning.. Threads did not force condition"); 
 
 	    }
 	    catch (Exception e)

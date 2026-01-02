@@ -177,7 +177,7 @@ public class DDMRegressionTestcase extends Testcase
       }
       catch(Exception e)
       {
-        System.out.println("Couldn't end commitment control: "+e);
+        output_.println("Couldn't end commitment control: "+e);
       }
       try
       {
@@ -185,7 +185,7 @@ public class DDMRegressionTestcase extends Testcase
       }
       catch(Exception e)
       {
-        System.out.println("Couldn't end commitment control: "+e);
+        output_.println("Couldn't end commitment control: "+e);
       }
 
       // Delete and recreate library DDMTEST
@@ -199,7 +199,7 @@ public class DDMRegressionTestcase extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -353,7 +353,7 @@ public class DDMRegressionTestcase extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup unsuccessful. Delete file " + testLib_ + "/DDMLOCK if it exists.");
+      output_.println("Cleanup unsuccessful. Delete file " + testLib_ + "/DDMLOCK if it exists.");
       e.printStackTrace(output_);
       throw e;
     }
@@ -476,7 +476,7 @@ public class DDMRegressionTestcase extends Testcase
       else
       {
         failed("Number of records not equal: "+readRecs.length+" != 1000");
-        //for (int i=0; i<readRecs.length; ++i) System.out.println(readRecs[i].getField(0));
+        //for (int i=0; i<readRecs.length; ++i) output_.println(readRecs[i].getField(0));
         return;
       }
       succeeded();
@@ -641,7 +641,7 @@ public class DDMRegressionTestcase extends Testcase
 	  }
 	  catch (Exception e)
 	  {
-	      System.out.println("Failed to release explicit locks for " + file.getPath());
+	      output_.println("Failed to release explicit locks for " + file.getPath());
 	  }
       }
   }
@@ -1953,10 +1953,10 @@ public class DDMRegressionTestcase extends Testcase
           byte[] convertedBytes = fieldDescs[i].getDataType().toBytes(rec.getField(i));
           if (!Arrays.equals(rawBytes, convertedBytes))
           {
-            System.out.println("Bytes mismatch for field " + i);
+            output_.println("Bytes mismatch for field " + i);
             ok = false;
           }
-          ///else System.out.println("Bytes match"); //TBD temporary
+          ///else output_.println("Bytes match"); //TBD temporary
         }
         rec.setContents(baos.toByteArray());
         vec.addElement(rec);
@@ -2015,16 +2015,16 @@ public class DDMRegressionTestcase extends Testcase
         String[] fieldNames = rec.getRecordFormat().getFieldNames();
         for (int i=0; i<rec.getNumberOfFields(); i++)
         {
-          ///System.out.println("Field name: |" + fieldNames[i] +"|"); //TBD temporary
+          ///output_.println("Field name: |" + fieldNames[i] +"|"); //TBD temporary
           byte[] rawBytes = rec.getFieldAsBytes(fieldNames[i]);
           baos.write(rawBytes, 0, rawBytes.length);
           byte[] convertedBytes = fieldDescs[i].getDataType().toBytes(rec.getField(i));
           if (!Arrays.equals(rawBytes, convertedBytes))
           {
-            System.out.println("Bytes mismatch for field " + i);
+            output_.println("Bytes mismatch for field " + i);
             ok = false;
           }
-          ///else System.out.println("Bytes match"); //TBD temporary
+          ///else output_.println("Bytes match"); //TBD temporary
         }
         rec.setContents(baos.toByteArray());
         vec.addElement(rec);

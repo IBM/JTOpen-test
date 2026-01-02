@@ -96,20 +96,20 @@ public class FTPBeans
 
         if (initialToken_ == null)
         {
-           System.out.println("-directory is invalid, no test will be run");
+           output_.println("-directory is invalid, no test will be run");
            // notWorthTrying = true;
-           System.out.println();
+           output_.println();
         }
         else
         {
           if (FTPTest.DEBUG) {
-            System.out.println("using initial token " + initialToken_);
+            output_.println("using initial token " + initialToken_);
             System.out.println();
           }
         }
 
         if ((password == null) || (password.length() < 1)) {
-          System.out.println("===> warning, variations will fail because no -password specified");
+          output_.println("===> warning, variations will fail because no -password specified");
         } else { 
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(password);
             clearPassword_ = PasswordVault.decryptPassword(encryptedPassword); 
@@ -123,18 +123,18 @@ public class FTPBeans
            system_   = systemObject_.getSystemName();
         }
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
         if ((user_ == null) || (user_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -uid specified");
+           output_.println("===> warning, variations will fail because no -uid specified");
 
         if ((clearPasswordString_ == null) || (clearPasswordString_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
+           output_.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -system specified");
+           output_.println("===> warning, variations will fail because no -system specified");
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -713,20 +713,20 @@ public class FTPBeans
        try
        {
           beansCleanup();
-	  System.out.println("FTPBeans.var11: creating FTP "); 
+	  output_.println("FTPBeans.var11: creating FTP "); 
           FTP c = new FTP(system_, user_, clearPasswordString_);
           c.addFTPListener(this);
-	  System.out.println("FTPBeans.var11: calling ls.  If this hangs, check QGPL for DDM files  "); 
+	  output_.println("FTPBeans.var11: calling ls.  If this hangs, check QGPL for DDM files  "); 
           c.ls();
-	  System.out.println("FTPBeans.var11: back from ls "); 
+	  output_.println("FTPBeans.var11: back from ls "); 
           if (ftpEvent != null)
           {
              if (ftpEvent.getID() == FTPEvent.FTP_LISTED)
              {
                 beansCleanup();
-		System.out.println("FTPBeans.var11: calling dir"); 
+		output_.println("FTPBeans.var11: calling dir"); 
                 c.dir();
-		System.out.println("FTPBeans.var11:  back from dir"); 
+		output_.println("FTPBeans.var11:  back from dir"); 
                 if (ftpEvent != null)
                 {
                    if (ftpEvent.getID() == FTPEvent.FTP_LISTED)
@@ -830,7 +830,7 @@ public class FTPBeans
         }
         catch(Exception e)
         {
-          System.out.println("NOTE: If running on i5 Client verify onAS400_=true");
+          output_.println("NOTE: If running on i5 Client verify onAS400_=true");
           failed(e, "Unexpected exception occurred.");
         }
       }

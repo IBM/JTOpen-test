@@ -247,7 +247,7 @@ public class JobUnattendedTestcase extends Testcase
 	ccallPow_.run();
 	ccallPow_.setCommand("QSYS/CHGUSRPRF USRPRF("+interactiveUser_+") PASSWORD("+newPassword+")  STATUS(*ENABLED) "); 
 	if (ccallPow_.run() != true) {
-	    System.out.println("SEVERE ERROR:  Unable to change password for "+interactiveUser_); 
+	    output_.println("SEVERE ERROR:  Unable to change password for "+interactiveUser_); 
 	}
 	ccallPow_.setCommand("QSYS/GRTOBJAUT OBJ(QSYS/"+interactiveUser_+") OBJTYPE(*USRPRF) USER("+interactiveUser_+") AUT(*USE)");
 	ccallPow_.run();
@@ -263,9 +263,9 @@ public class JobUnattendedTestcase extends Testcase
 	try { 
 	  telnet.connect(); 
 	} catch (Exception e) {
-	  System.out.println("Exception from telnet session"); 
+	  output_.println("Exception from telnet session"); 
 	   e.printStackTrace(); 
-	   System.out.println(telnet.toString()); 
+	   output_.println(telnet.toString()); 
 	}
 
 
@@ -316,8 +316,8 @@ public class JobUnattendedTestcase extends Testcase
 
         if (jobName_ == null || userName_ == null || jobNumber_ == null)
         {
-	    System.out.println("---- did not find job -- jobs where");
-	    System.out.println(sb.toString());
+	    output_.println("---- did not find job -- jobs where");
+	    output_.println(sb.toString());
 
             throw new Exception("Please bring up an emulator session to " + pwrSys_.getSystemName() + ", and\nsign-on as " + interactiveUser_ + ".  Run this testcase while that\nsession is active. jobName_="+jobName_+" uesrName_="+userName_+"jobNumber_="+jobNumber_);
         }
@@ -748,7 +748,7 @@ public class JobUnattendedTestcase extends Testcase
             AS400Message msg = e.getAS400Message();
             if (msg != null && msg.getID().equals("CPF1290"))
             {
-              System.out.println("SUGGESTION:\nPlease bring up an emulator session to " + pwrSys_.getSystemName() + ", and\nsign-on as " + interactiveUser_ + ".  Run this testcase while that\nsession is active.");
+              output_.println("SUGGESTION:\nPlease bring up an emulator session to " + pwrSys_.getSystemName() + ", and\nsign-on as " + interactiveUser_ + ".  Run this testcase while that\nsession is active.");
             }
         }
         catch (Exception e)

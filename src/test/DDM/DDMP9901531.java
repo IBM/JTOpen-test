@@ -91,7 +91,7 @@ public class DDMP9901531 extends Testcase
     {
       CorrelationIDThread helper = new CorrelationIDThread(systemObject_);
       Thread t = new Thread(helper);
-      System.out.println("Starting helper thread...");
+      output_.println("Starting helper thread...");
       t.start();
       // We wait until t is started
       while (!helper.started_) { Thread.sleep(200); }
@@ -107,7 +107,7 @@ public class DDMP9901531 extends Testcase
         numSleeps++;
         newval = helper.counter_;
         int secondsLeft = ((helper.counterMax_ - newval) * (numSleeps*10)) / newval;
-        System.out.println(((newval*100)/helper.counterMax_)+"% complete. Remaining: "+secondsLeft/60+" min "+secondsLeft % 60+" sec");
+        output_.println(((newval*100)/helper.counterMax_)+"% complete. Remaining: "+secondsLeft/60+" min "+secondsLeft % 60+" sec");
       }
       if (newval == helper.counterMax_)
       {
@@ -151,7 +151,7 @@ public class DDMP9901531 extends Testcase
         f.readNext();
 
         started_ = true;
-        System.out.println("Helper thread started.");
+        output_.println("Helper thread started.");
 
         for (counter_=0; counter_ < counterMax_; ++counter_)
         {

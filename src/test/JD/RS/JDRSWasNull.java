@@ -90,7 +90,7 @@ Performs setup needed before running variations.
 	try { 
 	    connection_.setAutoCommit(false); // @E1A
 	} catch (Exception e) {
-	    System.out.println("Warning:  Unable to setAutoCommit(false)");
+	    output_.println("Warning:  Unable to setAutoCommit(false)");
 	    e.printStackTrace();  
 	} 
         statement0_ = connection_.createStatement ();

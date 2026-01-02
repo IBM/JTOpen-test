@@ -107,7 +107,7 @@ public class INetServerFileShareTestcase extends Testcase
       ISeriesNetServerFileShare[] shares = netserverPwr_.listFileShares();
       for (int i=0; i<shares.length; i++) {
         if (shares[i].getName().equals(shareName)) {
-          System.out.println("ERROR during cleanup: The share " + shareName + " was not deleted.");
+          output_.println("ERROR during cleanup: The share " + shareName + " was not deleted.");
           break;
         }
       }
@@ -345,9 +345,9 @@ public class INetServerFileShareTestcase extends Testcase
 ///    }
 
 
-    static void displayAttributeValues(ISeriesNetServerFileShare share)
+    void displayAttributeValues(ISeriesNetServerFileShare share)
     {
-      System.out.print("-------------------------\n"+
+      output_.print("-------------------------\n"+
                        "FILE SHARE " + share.getName() + ":\n"+
                        "-------------------------\n"+
                        "Descr: |" + share.getDescription() +"|\n"+
@@ -359,17 +359,17 @@ public class INetServerFileShareTestcase extends Testcase
                        "CCSID: " + share.getCcsidForTextConversion() +"\n"+
                        "Extns: ");
       String[] extensions = share.getFileExtensions();
-      if (extensions.length == 0) System.out.println("(none)");
+      if (extensions.length == 0) output_.println("(none)");
       else {
         for (int i=0; i<extensions.length; i++) {
-          System.out.print(extensions[i] + ", ");
+          output_.print(extensions[i] + ", ");
         }
-        System.out.println();
+        output_.println();
       }
-      System.out.println();
+      output_.println();
     }
 
-    private static boolean validateAttributeValues(ISeriesNetServerFileShare share)
+    boolean validateAttributeValues(ISeriesNetServerFileShare share)
     {
       boolean ok = true;
 
@@ -385,65 +385,65 @@ public class INetServerFileShareTestcase extends Testcase
 
       if (shareName.trim().length() == 0 || shareName.length() > 12) {
         ok = false;
-        System.out.println("Share name has invalid length: " + shareName.length());
+        output_.println("Share name has invalid length: " + shareName.length());
       }
       if (shareName.charAt(0) == ' ') {
         ok = false;
-        System.out.println("shareName starts with a blank: |" + shareName + "|");
+        output_.println("shareName starts with a blank: |" + shareName + "|");
       }
 
       if (maxUsers < -1) {
         ok = false;
-        System.out.println("Max Users < -1");
+        output_.println("Max Users < -1");
       }
 
       if (numUsers < 0 && numUsers != ISeriesNetServerFileShare.UNKNOWN) {
         ok = false;
-        System.out.println("Num Users < -1");
+        output_.println("Num Users < -1");
       }
       if (numUsers > 100) {
         ///ok = false;
-        System.out.println("Warning: Num Users is questionable: " + numUsers);
+        output_.println("Warning: Num Users is questionable: " + numUsers);
       }
       if (numUsers == ISeriesNetServerFileShare.UNKNOWN) {
         ///ok = false;
-        System.out.println("Warning: Num Users is unknown.");
+        output_.println("Warning: Num Users is unknown.");
       }
 
       if (desc.length() > 50) {
         ok = false;
-        System.out.println("Description is longer than 50 chars");
+        output_.println("Description is longer than 50 chars");
       }
 
       if (path.trim().length() == 0 ||
           path.length() > 1024) {
         ok = false;
-        System.out.println("Invalid path name length: " + path.length());
+        output_.println("Invalid path name length: " + path.length());
       }
       if (path.charAt(0) == ' ') {
         ok = false;
-        System.out.println("path starts with a blank: |" + path + "|");
+        output_.println("path starts with a blank: |" + path + "|");
       }
 
       if (perms != ISeriesNetServerFileShare.READ_ONLY &&
           perms != ISeriesNetServerFileShare.READ_WRITE) {
         ok = false;
-        System.out.println("Invalid permissions: " + perms);
+        output_.println("Invalid permissions: " + perms);
       }
       if (textConv != ISeriesNetServerFileShare.ENABLED &&
           textConv != ISeriesNetServerFileShare.NOT_ENABLED &&
           textConv != ISeriesNetServerFileShare.ENABLED_AND_MIXED) {
         ok = false;
-        System.out.println("Invalid textConv: " + textConv);
+        output_.println("Invalid textConv: " + textConv);
       }
       if (ccsid < 0) {
         ok = false;
-        System.out.println("Invalid ccsid: " + ccsid);
+        output_.println("Invalid ccsid: " + ccsid);
       }
       for (int i=0; i<fileExts.length; i++) {
         if (fileExts[i].trim().length() == 0) {
           ok = false;
-          System.out.println("Zero-length file extension");
+          output_.println("Zero-length file extension");
         }
       }
 
@@ -499,7 +499,7 @@ public class INetServerFileShareTestcase extends Testcase
       String[] exts_orig = share_.getFileExtensions();
 
       if (DEBUG) {
-        System.out.println("\nOriginal attributes:");
+        output_.println("\nOriginal attributes:");
         displayAttributeValues(share_);
       }
 
@@ -526,16 +526,16 @@ public class INetServerFileShareTestcase extends Testcase
       share_.setFileExtensions(exts_new);
 
       try {
-        ///System.out.println ("About to commitChanges.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("About to commitChanges.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
         netserverPwr_.commitChanges(share_);
       }
       catch (Exception e) {
         e.printStackTrace();
-        ///System.out.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
       }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after sets:");
+        output_.println("\nAttributes after sets:");
         displayAttributeValues(share_);
       }
 
@@ -558,7 +558,7 @@ public class INetServerFileShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after refresh:");
+        output_.println("\nAttributes after refresh:");
         displayAttributeValues(share_);
       }
 
@@ -587,7 +587,7 @@ public class INetServerFileShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after reset to original values:");
+        output_.println("\nAttributes after reset to original values:");
         displayAttributeValues(share_);
       }
 
@@ -611,7 +611,7 @@ public class INetServerFileShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after refresh:");
+        output_.println("\nAttributes after refresh:");
         displayAttributeValues(share_);
       }
 

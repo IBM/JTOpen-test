@@ -10,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.JTA;
 
+import java.io.PrintStream;
 import java.util.*;
 
 import test.JTATest;
@@ -26,6 +27,8 @@ implements javax.transaction.xa.Xid                           // @A1A
    protected long           myGtrid;
    protected long           myBqual;
    protected String         myColl;
+
+   PrintStream output_ = System.out;
 
    // These guys are used as a mechanism to generate new and unusued
    // transaction IDs.
@@ -214,9 +217,9 @@ implements javax.transaction.xa.Xid                           // @A1A
 	      // Silently return false 
 	      return false; 
 	  } else { 
-	      System.out.println("xaInfo.gtrid: " + xaInfo.gtrid);
-	      System.out.println("xaInfo.bqual: " + xaInfo.bqual);
-	      System.out.println("Long.parseLong was unable to successfully parse xaInfo.gtrid or xaInfo.bqual strings -- returning false to indicate no match");
+	      output_ .println("xaInfo.gtrid: " + xaInfo.gtrid);
+	      output_.println("xaInfo.bqual: " + xaInfo.bqual);
+	      output_.println("Long.parseLong was unable to successfully parse xaInfo.gtrid or xaInfo.bqual strings -- returning false to indicate no match");
 	      e.printStackTrace();	  
 	      return false;
 	  }

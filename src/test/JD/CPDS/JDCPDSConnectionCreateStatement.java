@@ -132,7 +132,7 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
 
       s.close();
       JDSetupProcedure.create(systemObject_, connection_, JDSetupProcedure.STP_CSPARMS, supportedFeatures_,
-          collection_);
+          collection_, output_);
 
       closedConnection_ = db2ConnectionPoolDataSource.getConnection();
       closedConnection_.close();
@@ -200,7 +200,7 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
       // limit.
       for (int i = 0; i < 600; ++i) {
 
-        // System.out.println("connection number " + i);
+        // output_.println("connection number " + i);
         // if (i == 26)
         // {
         // i = i;
@@ -458,9 +458,9 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
           boolean condition = ((w == null) && (type == ResultSet.TYPE_SCROLL_SENSITIVE)
               && (concurrency == ResultSet.CONCUR_READ_ONLY) && (updatable == false) && (scrollable == true));
           if (!condition) {
-            System.out.println("w = " + w);
-            System.out.println("updatable = " + updatable);
-            System.out.println("scrollable = " + scrollable);
+            output_.println("w = " + w);
+            output_.println("updatable = " + updatable);
+            output_.println("scrollable = " + scrollable);
           }
           assertCondition(condition);
         } else {
@@ -889,9 +889,9 @@ public class JDCPDSConnectionCreateStatement extends JDTestcase {
           boolean condition = ((w == null) && (type == ResultSet.TYPE_SCROLL_SENSITIVE)
               && (concurrency == ResultSet.CONCUR_READ_ONLY) && (updatable == false) && (scrollable == true));
           if (!condition) {
-            System.out.println("w = " + w);
-            System.out.println("updatable = " + updatable);
-            System.out.println("scrollable = " + scrollable);
+            output_.println("w = " + w);
+            output_.println("updatable = " + updatable);
+            output_.println("scrollable = " + scrollable);
           }
           assertCondition(condition);
         } else {

@@ -18,14 +18,10 @@
 // Classes:      JDDriverPerformance
 //
 ////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.Driver;
 
+import java.io.PrintWriter; 
 import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -132,22 +128,22 @@ public class JDDriverPerformance extends JDTestcase {
 		  sql = "DROP TABLE "+tables[i];
 		  s.executeUpdate(sql); 
 	      } catch (Exception e) {
-		  System.out.println("Warning:  error on "+sql);
-		  e.printStackTrace(System.out); 
+		  output_.println("Warning:  error on "+sql);
+		  e.printStackTrace(output_); 
 	      }
 	  }
 	  connection_.close();
 	  connection_ = null; 
 
       } catch (Exception e) {
-	  System.out.println("Error during cleanup");
-	  e.printStackTrace(System.out); 
+	  output_.println("Error during cleanup");
+	  e.printStackTrace(output_); 
       } 
 
   }
 
   public static String lastSql;
-  public static long staticInsertSetup(Connection connection,  String testname, String testSchema, String testTable,  String columnDefinition, String insertPattern, int driver) throws Exception {
+  public static long staticInsertSetup(Connection connection,  String testname, String testSchema, String testTable,  String columnDefinition, String insertPattern, int driver, PrintWriter output) throws Exception {
 
       long testTime;
     if (insertSetupDone.get(testTable) != null ) {
@@ -159,7 +155,7 @@ public class JDDriverPerformance extends JDTestcase {
       Statement stmt = connection.createStatement();
 
       // Make sure the collection exists
-      JDSetupCollection.create(connection, testSchema, false);
+      JDSetupCollection.create(connection, testSchema, false, output);
 
       // Make sure the table is gone
       try {
@@ -228,7 +224,7 @@ public class JDDriverPerformance extends JDTestcase {
       throws Exception {
 
       try {
-      long runtime  = staticInsertSetup(connection_, testname, JDDriverTest.COLLECTION, testTable,  columnDefinition, insertPattern, getDriver());
+      long runtime  = staticInsertSetup(connection_, testname, JDDriverTest.COLLECTION, testTable,  columnDefinition, insertPattern, getDriver(), output_);
 
 
 
@@ -307,7 +303,7 @@ public class JDDriverPerformance extends JDTestcase {
       if ( ! checkLongRunning("JDDriverPerformance", 1, PROBABILITY, AGE)) {
         return;
       }
-    System.out.println("Running Var001 -- Test the insertion of 100,000 (TABLEROWS) varchar(10/20) records (1 megabytes of data_");
+    output_.println("Running Var001 -- Test the insertion of 100,000 (TABLEROWS) varchar(10/20) records (1 megabytes of data_");
       boolean passed = insertSetup("JDDPerf001", JDDriverTest.COLLECTION + ".JDDPerfV1", true, "C1 VARCHAR(20)", "ROW0000000");
       finishLongRunning("JDDriverPerformance", 1, passed );
 
@@ -325,7 +321,7 @@ public class JDDriverPerformance extends JDTestcase {
     if ( ! checkLongRunning("JDDriverPerformance", 2, PROBABILITY, AGE)) {
       return;
     }
-    System.out.println("Running Var002 -- Test the query of 100,000 (TABLEROWS) varchar(10/20) records (1 megabyte of data ");
+    output_.println("Running Var002 -- Test the query of 100,000 (TABLEROWS) varchar(10/20) records (1 megabyte of data ");
     try {
       insertSetup("JDDPerf002", JDDriverTest.COLLECTION + ".JDDPerfV1", false, "C1 VARCHAR(20)", "ROW0000000");
       boolean passed = queryTest("JDDPerf002", "JDDPerfV1");
@@ -343,7 +339,7 @@ public class JDDriverPerformance extends JDTestcase {
     if ( ! checkLongRunning("JDDriverPerformance", 3, PROBABILITY, AGE)) {
       return;
     }
-    System.out.println("Running Var003 -- Test the insertion of 100,000 (TABLEROWS) varchar(40/80) records ");
+    output_.println("Running Var003 -- Test the insertion of 100,000 (TABLEROWS) varchar(40/80) records ");
     try {
       boolean passed = insertSetup("JDDPerf003", JDDriverTest.COLLECTION + ".JDDPerfV3", true, "C1 VARCHAR(80)", "123456789801234567898012345678980ROW0000000");
       finishLongRunning("JDDriverPerformance", 3, passed );
@@ -363,7 +359,7 @@ public class JDDriverPerformance extends JDTestcase {
       return;
     }
 */
-   System.out.println("Running Var004 -- Test the query of 100,000 (TABLEROWS) varchar(40/80) records ");
+   output_.println("Running Var004 -- Test the query of 100,000 (TABLEROWS) varchar(40/80) records ");
     try {
       insertSetup("JDDPerf004", JDDriverTest.COLLECTION + ".JDDPerfV3", false, "C1 VARCHAR(80)", "123456789801234567898012345678980ROW0000000");
       boolean passed =queryTest("JDDPerf004", "JDDPerfV3");
@@ -384,7 +380,7 @@ public class JDDriverPerformance extends JDTestcase {
     }
 */
 
-  System.out.println("Running Var005 -- Test the insertion of 100,000 (TABLEROWS) vargraphic(40/80) records");
+  output_.println("Running Var005 -- Test the insertion of 100,000 (TABLEROWS) vargraphic(40/80) records");
     try {
       boolean passed =insertSetup("JDDPerf005", JDDriverTest.COLLECTION + ".JDDPerfV5", true, "C1 VARGRAPHIC(80) CCSID 1200", "123456789801234567898012345678980ROW0000000");
       finishLongRunning("JDDriverPerformance", 5, passed );
@@ -403,7 +399,7 @@ public class JDDriverPerformance extends JDTestcase {
       return;
     }
 */
-  System.out.println("Running Var006 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records ");
+  output_.println("Running Var006 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records ");
 
     try {
       insertSetup("JDDPerf005", JDDriverTest.COLLECTION + ".JDDPerfV5", false, "C1 VARGRAPHIC(80) CCSID 1200", "123456789801234567898012345678980ROW0000000");
@@ -423,7 +419,7 @@ public class JDDriverPerformance extends JDTestcase {
   public void Var007() {
       Connection savedConnection = connection_;
       connection_ = null;
-  System.out.println("Running Var007 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 512 block size ");
+  output_.println("Running Var007 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 512 block size ");
     try {
 
 	int driver = getDriver();
@@ -442,12 +438,12 @@ public class JDDriverPerformance extends JDTestcase {
 		throw new Exception("unknown driver");
 	}
 
-	System.out.println("Starting insert");
+	output_.println("Starting insert");
 	long insertStart = System.currentTimeMillis();
 
 	insertSetup("JDDPerf005", JDDriverTest.COLLECTION + ".JDDPerfV5", false, "C1 VARGRAPHIC(80) CCSID 1200", "123456789801234567898012345678980ROW0000000");
 	long insertFinish = System.currentTimeMillis();
-	System.out.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
+	output_.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
 
 
       boolean passed =queryTest("JDDPerf007", "JDDPerfV5");
@@ -475,7 +471,7 @@ public class JDDriverPerformance extends JDTestcase {
       Connection savedConnection = connection_;
       connection_ = null;
 
-  System.out.println("Running Var008 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 256 block size ");
+  output_.println("Running Var008 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 256 block size ");
 
     try {
 
@@ -495,12 +491,12 @@ public class JDDriverPerformance extends JDTestcase {
 		throw new Exception("unknown driver");
 	}
 
-	System.out.println("Starting insert");
+	output_.println("Starting insert");
 	long insertStart = System.currentTimeMillis();
 
 	insertSetup("JDDPerf005", JDDriverTest.COLLECTION + ".JDDPerfV5", false, "C1 VARGRAPHIC(80) CCSID 1200", "123456789801234567898012345678980ROW0000000");
 	long insertFinish = System.currentTimeMillis();
-	System.out.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
+	output_.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
 
 
       boolean passed =queryTest("JDDPerf008", "JDDPerfV5");
@@ -529,7 +525,7 @@ public class JDDriverPerformance extends JDTestcase {
       connection_ = null;
     try {
 
-	System.out.println("Running Var009 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 1024 block size ");
+	output_.println("Running Var009 -- Test the query of 100,000 (TABLEROWS) vargraphic (40/80) records with 1024 block size ");
 	int driver = getDriver();
 	switch (driver) {
 	    case JDTestDriver.DRIVER_NATIVE:
@@ -546,12 +542,12 @@ public class JDDriverPerformance extends JDTestcase {
 		throw new Exception("unknown driver");
 	}
 
-	System.out.println("Starting insert");
+	output_.println("Starting insert");
 	long insertStart = System.currentTimeMillis();
 
 	insertSetup("JDDPerf005", JDDriverTest.COLLECTION + ".JDDPerfV5", false, "C1 VARGRAPHIC(80) CCSID 1200", "123456789801234567898012345678980ROW0000000");
 	long insertFinish = System.currentTimeMillis();
-	System.out.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
+	output_.println("Insert done:  Took "+(insertFinish - insertStart)+" milliseconds");
 
 
       boolean passed =queryTest("JDDPerf009", "JDDPerfV5");
@@ -581,7 +577,7 @@ public class JDDriverPerformance extends JDTestcase {
     if ( ! checkLongRunning("JDDriverPerformance", 3, PROBABILITY, AGE)) {
       return;
     }
-    System.out.println("Running Var010 -- Test the insertion of 100,000 (TABLEROWS) CHAR (40/80) records ");
+    output_.println("Running Var010 -- Test the insertion of 100,000 (TABLEROWS) CHAR (40/80) records ");
     try {
       boolean passed = insertSetup("JDDPerf010", JDDriverTest.COLLECTION + ".JDDPerfV10", true, "C1 CHAR(80)", "123456789801234567898012345678980ROW0000000");
       finishLongRunning("JDDriverPerformance", 10, passed );
@@ -601,7 +597,7 @@ public class JDDriverPerformance extends JDTestcase {
       return;
     }
 */
-   System.out.println("Running Var011 -- Test the query of 100,000 (TABLEROWS) char(80) records ");
+   output_.println("Running Var011 -- Test the query of 100,000 (TABLEROWS) char(80) records ");
     try {
       insertSetup("JDDPerf011", JDDriverTest.COLLECTION + ".JDDPerfV10", false, "C1 CHAR(80)", "123456789801234567898012345678980ROW0000000");
       boolean passed =queryTest("JDDPerf011", "JDDPerfV10");
@@ -624,9 +620,10 @@ public class JDDriverPerformance extends JDTestcase {
   };
 
   public static void main(String[] args) throws Exception {
+    PrintWriter output = new PrintWriter(System.out) ;
       if (args.length < 5) {
-	  System.out.println("To run stand alone:  java test.JDDriverPerformance <URL> <userid> <password> <CREATE|RUN> <testcase> [<iterations>]");
-	  System.out.println("Currently running as a testcase"); 
+	  output.println("To run stand alone:  java test.JDDriverPerformance <URL> <userid> <password> <CREATE|RUN> <testcase> [<iterations>]");
+	  output.println("Currently running as a testcase"); 
           // Note: reflection is used to get the classname, so this can be pasted easily
           // into other Testcase classes
           String[] newArgs = new String[args.length + 2];
@@ -666,9 +663,9 @@ public class JDDriverPerformance extends JDTestcase {
         }
 
         if (!testcaseFound) {
-          System.out.println("Error testcase "+testcase+" not found.  Valid testcases....");
+          output.println("Error testcase "+testcase+" not found.  Valid testcases....");
           for (int i = 0; !testcaseFound && i < testcaseInfo.length; i++ ) {
-            System.out.println(testcaseInfo[i][0]);
+            output.println(testcaseInfo[i][0]);
           }
         } else {
 
@@ -682,15 +679,15 @@ public class JDDriverPerformance extends JDTestcase {
           Connection connection = DriverManager.getConnection(url, userid, password);
 
           if (option.equalsIgnoreCase("CREATE")) {
-            System.out.println("Running CREATE for "+testcase);
-            long time = staticInsertSetup(connection,  testcase, schema, schema+"."+testTable,  columnDefinition, insertPattern, driver);
-            System.out.println("CREATE took "+time+" ms");
+            output.println("Running CREATE for "+testcase);
+            long time = staticInsertSetup(connection,  testcase, schema, schema+"."+testTable,  columnDefinition, insertPattern, driver, output);
+            output.println("CREATE took "+time+" ms");
           } else if (option.equalsIgnoreCase("RUN")) {
-            System.out.println("Running RUN for "+testcase);
+            output.println("Running RUN for "+testcase);
             long time = staticQueryTest(connection, testcase, schema, testTable, iterations);
-            System.out.println("RUN "+url+" "+testcase+" took "+time+" ms");
+            output.println("RUN "+url+" "+testcase+" took "+time+" ms");
           } else {
-            System.out.println("option '"+option+"' not recognized, should be CREATE or RUN");
+            output.println("option '"+option+"' not recognized, should be CREATE or RUN");
           }
 
 
@@ -698,7 +695,7 @@ public class JDDriverPerformance extends JDTestcase {
         }
 	  } catch (Exception e) {
 	      e.printStackTrace();
-	      System.out.println("Classpath is "+System.getProperty("java.class.path"));
+	      output.println("Classpath is "+System.getProperty("java.class.path"));
 	  }
       }
 

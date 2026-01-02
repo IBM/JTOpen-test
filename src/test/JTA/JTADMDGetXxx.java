@@ -190,7 +190,7 @@ Performs setup needed before running variations.
 	   vrm_ = testDriver_.getRelease();
        else {
 	   vrm_ = testDriver_.getRelease();
-	   System.out.println("vrm = "+vrm_);
+	   output_.println("vrm = "+vrm_);
 	   // Set the VRM constants to match driver
 	   VRM_450 = 450;
 	   VRM_510 = 510;
@@ -1094,11 +1094,11 @@ getNumericFunctions() - Should return the correct value on a connection.
 	       } 
 	       boolean condition = compare (expected, dmd_.getNumericFunctions ());
 	       if (!condition) {
-		   System.out.println("numeric functions do not match");
-		   System.out.println("actual  : " + dmd_.getNumericFunctions() );
-		   System.out.print("expected: ");
-		   for (int i = 0; i < expected.length; i++) System.out.print(expected[i]+" ");
-		   System.out.println(); 
+		   output_.println("numeric functions do not match");
+		   output_.println("actual  : " + dmd_.getNumericFunctions() );
+		   output_.print("expected: ");
+		   for (int i = 0; i < expected.length; i++) output_.print(expected[i]+" ");
+		   output_.println(); 
 	       } 
 
 	       assertCondition (condition, "condition = " + condition + " and should be true");
@@ -1263,12 +1263,12 @@ getStringFunctions() - Should return the correct value on a connection.
 		   condition = compare(expected, s);
 
 		   if (!condition) {
-		       System.out.println("StringFunctions do not match");
-		       System.out.println("actual  : "+s);
-		       System.out.print("expected: ");
+		       output_.println("StringFunctions do not match");
+		       output_.println("actual  : "+s);
+		       output_.print("expected: ");
 		       for (int i = 0; i < expected.length; i++)
-			   System.out.print(expected[i]+" ");
-		       System.out.println(); 
+			   output_.print(expected[i]+" ");
+		       output_.println(); 
 		   } 
 		   assertCondition (condition, "condition = " + condition + " and should be true");
 	       }
@@ -1375,11 +1375,11 @@ getTimeDateFunctions() - Should return the correct value on a connection.
 
 	       boolean condition = compare (expected, dmd_.getTimeDateFunctions ());
 	       if (!condition) {
-		   System.out.println("time date functions do not match");
-		   System.out.println("actual  : " + dmd_.getTimeDateFunctions() );
-		   System.out.print("expected: ");
-		   for (int i = 0; i < expected.length; i++) System.out.print(expected[i]+" ");
-		   System.out.println(); 
+		   output_.println("time date functions do not match");
+		   output_.println("actual  : " + dmd_.getTimeDateFunctions() );
+		   output_.print("expected: ");
+		   for (int i = 0; i < expected.length; i++) output_.print(expected[i]+" ");
+		   output_.println(); 
 	       } 
 
 	       assertCondition (condition, "condition = " + condition + " and should be true");

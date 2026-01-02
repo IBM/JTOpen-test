@@ -386,10 +386,10 @@ the current time.
       createFile(fileName, "Data for IFSFileAttrTest8");
       file  = new IFSFile(systemObject_, fileName);
       file2 = new IFSFile(systemObject_, fileName);
-      System.out.println("Calling file.setReadOnly"); 
+      output_.println("Calling file.setReadOnly"); 
       file.setReadOnly();
 
-      System.out.println("Calling file2.isReadOnly"); 
+      output_.println("Calling file2.isReadOnly"); 
       if (file2.isReadOnly())
          succeeded();
       else
@@ -442,7 +442,7 @@ the current time.
        IFSFile file2 = new IFSFile(systemObject_, fileName);
        file2.delete();
     }
-    catch (Exception e) {System.out.println("cleanup failed"); e.printStackTrace(); }
+    catch (Exception e) {output_.println("cleanup failed"); e.printStackTrace(); }
   }
 
   // Turn the read-only attribute on then turn it back off
@@ -586,7 +586,7 @@ the current time.
        IFSFile file2 = new IFSFile(systemObject_, fileName);
        file2.delete();
     }
-    catch (Exception e) {System.out.println("cleanup failed"); e.printStackTrace(); }
+    catch (Exception e) {output_.println("cleanup failed"); e.printStackTrace(); }
   }
 
   // Turn the hidden attribute on then turn it back off
@@ -925,10 +925,10 @@ Test creation and access date/times
       if  (d1.equals(d1b) && d2.equals(d2b))
       {
          failed("in new list dates do match");
-         System.out.println("   " + d1  + "  " + d1.getTime());
-         System.out.println("   " + d1b + "  " + d1b.getTime());
-         System.out.println("   " + d2  + "  " + d2.getTime());
-         System.out.println("   " + d2b + "  " + d2b.getTime());
+         output_.println("   " + d1  + "  " + d1.getTime());
+         output_.println("   " + d1b + "  " + d1b.getTime());
+         output_.println("   " + d2  + "  " + d2.getTime());
+         output_.println("   " + d2b + "  " + d2b.getTime());
       }
       else
       {
@@ -1183,11 +1183,11 @@ Note: If system is pre-V5R3, we expect isSymbolicLink() to always return false.
       IFSFile file2 = new IFSFile(systemObject_, symlinkName);
       IFSFile file3 = new IFSFile(systemObject_, dirName);
 ///      IFSFile file2 = new IFSFile(systemObject_, "/File31.symlink");
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 ///      if (DEBUG) output_.println("file1.isSymbolicLink(): " + file1.isSymbolicLink() +
 ///                                 " ; file2.isSymbolicLink(): " + file2.isSymbolicLink());
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
-///      System.out.println(file1.isSymbolicLink() +","+
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file3.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
@@ -1265,13 +1265,13 @@ The linked-to file is a directory.
         return;
       }
       IFSFile file2 = new IFSFile(systemObject_, symlinkName);
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
       ///boolean result = file1.isSymbolicLink();
-      ///System.out.println(result);
+      ///output_.println(result);
 ///      if (DEBUG) output_.println("file1.isSymbolicLink(): " + file1.isSymbolicLink() +
 ///                                 " ; file2.isSymbolicLink(): " + file2.isSymbolicLink());
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
-///      System.out.println(file1.isSymbolicLink() +","+
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
 ///                      file2.isFile() +","+
@@ -1354,11 +1354,11 @@ Create the IFSFile object via IFSFile.listFiles() against the parent directory.
       }
       IFSFile rootDir = new IFSFile(systemObject_, "/");
       IFSFile[] files = rootDir.listFiles("File33*");
-      ///System.out.println("IFSFileAttrTestcase.Var033: Number of files returned == " + files.length);
+      ///output_.println("IFSFileAttrTestcase.Var033: Number of files returned == " + files.length);
       IFSFile file2 = null;
-      ///System.out.println("IFSFileAttrTestcase.Var033: Seeking path |" + symlinkPath + "| ...");
+      ///output_.println("IFSFileAttrTestcase.Var033: Seeking path |" + symlinkPath + "| ...");
       for (int i=0; i<files.length && file2 == null; i++) {
-        ///System.out.println("IFSFileAttrTestcase.Var033: files[i].getPath() == |" + files[i].getPath() + "|");
+        ///output_.println("IFSFileAttrTestcase.Var033: files[i].getPath() == |" + files[i].getPath() + "|");
         if (files[i].getPath().equals(symlinkPath)) file2 = files[i];
       }
       if (file2 == null) {
@@ -1367,12 +1367,12 @@ Create the IFSFile object via IFSFile.listFiles() against the parent directory.
       }
 ///      IFSFile file2 = new IFSFile(systemObject_, symlinkPath);
 ///      IFSFile file2 = new IFSFile(systemObject_, "/File33.symlin*");
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
       // boolean result = file2.isSymbolicLink();
 ///      if (DEBUG) output_.println("file1.isSymbolicLink(): " + file1.isSymbolicLink() +
 ///                                 " ; file2.isSymbolicLink(): " + file2.isSymbolicLink());
-      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
-///      System.out.println(file1.isSymbolicLink() +","+
+      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
 ///                      file2.isFile() +","+
@@ -1441,8 +1441,8 @@ For a nonexistent symlink, ensure that IFSFile.isSymbolicLink() returns false.
 */
       IFSFile file2 = new IFSFile(systemObject_, symlinkName);
       ///boolean result = file2.isSymbolicLink();
-      ///System.out.println(result);
-///      System.out.println(file1.isSymbolicLink() +","+
+      ///output_.println(result);
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
 ///                      file2.isFile() +","+
@@ -1506,8 +1506,8 @@ Note: If system is pre-V5R3, we expect isSymbolicLink() to always return false.
       file1.delete();
 
       ///boolean result = file2.isSymbolicLink();
-      ///System.out.println(result);
-///      System.out.println(file1.isSymbolicLink() +","+
+      ///output_.println(result);
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
 ///                      file2.isFile() +","+
@@ -1575,7 +1575,7 @@ Note: If system is pre-V5R3, we expect isSymbolicLink() to always return false.
         return;
       }
       file2 = new IFSFile(systemObject_, symlinkName);
-///      System.out.println(file1.isSymbolicLink() +","+
+///      output_.println(file1.isSymbolicLink() +","+
 ///                      file2.isSymbolicLink() +","+
 ///                      file1.isFile() +","+
 ///                      file2.isFile() +","+
@@ -1732,12 +1732,12 @@ Ensure that IFSFile.getOwnerName() throws exception if file does not exist.
        }
        else
        {
-         System.out.println("isHid1Before = "+isHid1Before);
-         System.out.println("isHid2Before = "+isHid2Before);
-         System.out.println("isHid1After1 = "+isHid1After1);
-         System.out.println("isHid2After1 = "+isHid2After1);
-         System.out.println("isHid1After2 = "+isHid1After2);
-         System.out.println("isHid2After2 = "+isHid2After2);
+         output_.println("isHid1Before = "+isHid1Before);
+         output_.println("isHid2Before = "+isHid2Before);
+         output_.println("isHid1After1 = "+isHid1After1);
+         output_.println("isHid2After1 = "+isHid2After1);
+         output_.println("isHid1After2 = "+isHid1After2);
+         output_.println("isHid2After2 = "+isHid2After2);
          failed("IFSFile.clearCachedAttributes may have failed");
        }
     }
@@ -1767,7 +1767,7 @@ Ensure that IFSFile.getOwnerName() throws exception if file does not exist.
 			  try { 
 			      permision.addAuthorizedUser(userName);
 			  } catch (com.ibm.as400.access.ExtendedIllegalArgumentException ez) {
-			      System.out.println("Warning:  unable to add "+userName); 
+			      output_.println("Warning:  unable to add "+userName); 
 			  } 
 		      }
 		  }
@@ -1781,7 +1781,7 @@ Ensure that IFSFile.getOwnerName() throws exception if file does not exist.
 	      try { 
 		  if (file != null) file.delete();
 	      } catch (Exception e) {
-		  System.out.println("Warning: exception deleting file");
+		  output_.println("Warning: exception deleting file");
 		  e.printStackTrace(); 
 	      } 
 	  } 		  

@@ -117,9 +117,9 @@ public class UserSpaceChgAttrTestcase extends Testcase
         String command = "QSYS/GRTOBJAUT OBJ("+authlib_+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
         boolean success =  cmdRun(command);
         if (!success) { 
-            System.out.println("Command Failed "+command ); 
+            output_.println("Command Failed "+command ); 
         } else {
-          System.out.println("SetupUSAuthority(): Command worked "+command ); 
+          output_.println("SetupUSAuthority(): Command worked "+command ); 
         }
 
         // create user spaces needed for misc variations
@@ -164,20 +164,20 @@ public class UserSpaceChgAttrTestcase extends Testcase
                     }
                     catch (Exception x)
                     {
-                        System.out.println("Setup - create user space - failed." + x);
+                        output_.println("Setup - create user space - failed." + x);
                     }
                     pwrSys_.disconnectAllServices();
                 }
                 else
                 {
                     AS400Message[] messageList = cmd.getMessageList();
-                    System.out.println(messageList[0].toString());
+                    output_.println(messageList[0].toString());
                 }
             }
             else
             {
                 AS400Message[] messageList = cmd.getMessageList();
-                System.out.println(messageList[0].toString());
+                output_.println(messageList[0].toString());
             }
         }
     }
@@ -1086,7 +1086,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Cleanup failed." + e);
+            output_.println("Cleanup failed." + e);
         }
 
         systemObject_.disconnectAllServices();
@@ -1128,7 +1128,7 @@ public class UserSpaceChgAttrTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Cleanup failed." + e);
+            output_.println("Cleanup failed." + e);
         }
         systemObject_.disconnectAllServices();
     }

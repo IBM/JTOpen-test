@@ -172,7 +172,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                child1NumAttrs++;
              }
            }
@@ -194,7 +194,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               //output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("char1"))
@@ -230,7 +230,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("zoned"))
@@ -274,7 +274,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("bin2"))
@@ -317,7 +317,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild4AttList.length; i++) {
               String attrVal = grandChild4.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("ubin2"))
@@ -360,7 +360,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild5AttList.length; i++) {
               String attrVal = grandChild5.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-               //System.out.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
+               //output_.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("bin4"))
@@ -405,7 +405,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild6AttList.length; i++) {
               String attrVal = grandChild6.getAttributeValue(grandChild6AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild6AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild6AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("ubin4"))
@@ -450,7 +450,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild7AttList.length; i++) {
               String attrVal = grandChild7.getAttributeValue(grandChild7AttList[i]);
               if (attrVal != null) {
-               //System.out.println("grandChild4Attr: " + grandChild7AttList[i] + " = " + attrVal);
+               //output_.println("grandChild4Attr: " + grandChild7AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("bin8"))
@@ -493,7 +493,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild8AttList.length; i++) {
               String attrVal = grandChild8.getAttributeValue(grandChild8AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild8AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild8AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("packed"))
@@ -537,7 +537,7 @@ public class RMRecordConstructorTestcase extends Testcase
 //            for (int i=0; i<grandChild9AttList.length; i++) {
 //              String attrVal = grandChild9.getAttributeValue(grandChild9AttList[i]);
 //              if (attrVal != null) {
-//                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+//                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
 //               if (i== 0)
 //               {
 //                   if (!attrVal.equals("array"))
@@ -579,7 +579,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild9AttList.length; i++) {
               String attrVal = grandChild9.getAttributeValue(grandChild9AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("float4"))
@@ -623,7 +623,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild10AttList.length; i++) {
               String attrVal = grandChild10.getAttributeValue(grandChild10AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("float8"))
@@ -815,7 +815,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               //output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                if (i==0)
                   if (!attrVal.equals("FORMAT1"))
                   {
@@ -843,7 +843,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               //output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field1"))
@@ -878,7 +878,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field2"))
@@ -913,7 +913,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field3"))
@@ -950,7 +950,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild4AttList.length; i++) {
               String attrVal = grandChild4.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field4"))
@@ -986,7 +986,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild5AttList.length; i++) {
               String attrVal = grandChild5.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-               // System.out.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
+               // output_.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field5"))
@@ -1021,7 +1021,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild6AttList.length; i++) {
               String attrVal = grandChild6.getAttributeValue(grandChild6AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild6Attr: " + grandChild6AttList[i] + " = " + attrVal);
+                //output_.println("grandChild6Attr: " + grandChild6AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field6"))
@@ -1056,7 +1056,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild7AttList.length; i++) {
               String attrVal = grandChild7.getAttributeValue(grandChild7AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild7Attr: " + grandChild7AttList[i] + " = " + attrVal);
+                //output_.println("grandChild7Attr: " + grandChild7AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field7"))
@@ -1099,7 +1099,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild8AttList.length; i++) {
               String attrVal = grandChild8.getAttributeValue(grandChild8AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild8Attr: " + grandChild8AttList[i] + " = " + attrVal);
+                //output_.println("grandChild8Attr: " + grandChild8AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field8"))
@@ -1142,7 +1142,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild9AttList.length; i++) {
               String attrVal = grandChild9.getAttributeValue(grandChild9AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field9"))
@@ -1390,7 +1390,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               //output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                if (i==0)
                   if (!attrVal.equals("CUSREC"))
                   {
@@ -1418,7 +1418,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               //output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("CUSNUM"))
@@ -1461,7 +1461,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("LSTNAM"))
@@ -1497,7 +1497,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("INIT"))
@@ -1532,7 +1532,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild4AttList.length; i++) {
               String attrVal = grandChild4.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("STREET"))
@@ -1567,7 +1567,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild5AttList.length; i++) {
               String attrVal = grandChild5.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
+                //output_.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("CITY"))
@@ -1602,7 +1602,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild6AttList.length; i++) {
               String attrVal = grandChild6.getAttributeValue(grandChild6AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild6AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild6AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("STATE"))
@@ -1638,7 +1638,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild7AttList.length; i++) {
               String attrVal = grandChild7.getAttributeValue(grandChild7AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild7AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild7AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("ZIPCOD"))
@@ -1682,7 +1682,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild8AttList.length; i++) {
               String attrVal = grandChild8.getAttributeValue(grandChild8AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild8AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild8AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("CDTLMT"))
@@ -1724,7 +1724,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild9AttList.length; i++) {
               String attrVal = grandChild9.getAttributeValue(grandChild9AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("CHGCOD"))
@@ -1767,7 +1767,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild10AttList.length; i++) {
               String attrVal = grandChild10.getAttributeValue(grandChild10AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild10Attr: " + grandChild10AttList[i] + " = " + attrVal);
+                //output_.println("grandChild10Attr: " + grandChild10AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("BALDUE"))
@@ -1979,7 +1979,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               ///System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               ///output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                child1NumAttrs++;
              }
            }
@@ -2001,7 +2001,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               //output_.println("grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("datef"))
@@ -2038,7 +2038,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild2AttList.length; i++) {
              String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
              if (attrVal != null) {
-               //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+               //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("dbcsg"))
@@ -2206,7 +2206,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               //output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                if (i==0)
                   if (!attrVal.equals("FORMAT1"))
                   {
@@ -2234,7 +2234,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               // System.out.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               // output_.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD1"))
@@ -2270,7 +2270,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD2"))
@@ -2305,7 +2305,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD3"))
@@ -2350,7 +2350,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild4AttList.length; i++) {
               String attrVal = grandChild4.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
+                //output_.println("grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD4"))
@@ -2394,7 +2394,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild5AttList.length; i++) {
               String attrVal = grandChild5.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
+                //output_.println("grandChild5Attr: " + grandChild5AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD5"))
@@ -2437,7 +2437,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild6AttList.length; i++) {
               String attrVal = grandChild6.getAttributeValue(grandChild6AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild6Attr: " + grandChild6AttList[i] + " = " + attrVal);
+                //output_.println("grandChild6Attr: " + grandChild6AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD6"))
@@ -2480,7 +2480,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild7AttList.length; i++) {
               String attrVal = grandChild7.getAttributeValue(grandChild7AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild7Attr: " + grandChild7AttList[i] + " = " + attrVal);
+                //output_.println("grandChild7Attr: " + grandChild7AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD7"))
@@ -2531,7 +2531,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild8AttList.length; i++) {
               String attrVal = grandChild8.getAttributeValue(grandChild8AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild8Attr: " + grandChild8AttList[i] + " = " + attrVal);
+                //output_.println("grandChild8Attr: " + grandChild8AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD8"))
@@ -2583,7 +2583,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild9AttList.length; i++) {
               String attrVal = grandChild9.getAttributeValue(grandChild9AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
+                //output_.println("grandChild9Attr: " + grandChild9AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("FIELD9"))
@@ -2769,7 +2769,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               //output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                if (i==0)
                   if (!attrVal.equals("FORMAT1"))
                   {
@@ -2797,7 +2797,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-               // System.out.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+               // output_.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field1"))
@@ -2841,7 +2841,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field2"))
@@ -2884,7 +2884,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field3"))
@@ -2933,7 +2933,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
 	    failed(e); 
         }
         finally {
@@ -2991,7 +2991,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-	    System.out.println("Exception = " + e);
+	    output_.println("Exception = " + e);
 	    failed(e); 
         }
    }
@@ -3061,7 +3061,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
 	failed(e); 
         }
    }
@@ -3134,7 +3134,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<child1AttList.length; i++) {
              String attrVal = child1.getAttributeValue(child1AttList[i]);
              if (attrVal != null) {
-               //System.out.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
+               //output_.println("child1Attr: " + child1AttList[i] + " = " + attrVal);
                if (i==0)
                   if (!attrVal.equals("FORMAT1"))
                   {
@@ -3162,7 +3162,7 @@ public class RMRecordConstructorTestcase extends Testcase
            for (int i=0; i<grandChild1AttList.length; i++) {
              String attrVal = grandChild1.getAttributeValue(grandChild1AttList[i]);
              if (attrVal != null) {
-                //System.out.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
+                //output_.println("i=" + i + " grandChild1Attr: " + grandChild1AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field1"))
@@ -3212,7 +3212,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild2AttList.length; i++) {
               String attrVal = grandChild2.getAttributeValue(grandChild2AttList[i]);
               if (attrVal != null) {
-                //System.out.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
+                //output_.println("grandChild2Attr: " + grandChild2AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field2"))
@@ -3255,7 +3255,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild3AttList.length; i++) {
               String attrVal = grandChild3.getAttributeValue(grandChild3AttList[i]);
               if (attrVal != null) {
-                //System.out.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
+                //output_.println("i = " + i + " grandChild3Attr: " + grandChild3AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field3"))
@@ -3304,7 +3304,7 @@ public class RMRecordConstructorTestcase extends Testcase
             for (int i=0; i<grandChild4AttList.length; i++) {
               String attrVal = grandChild4.getAttributeValue(grandChild4AttList[i]);
               if (attrVal != null) {
-                //System.out.println("i = " + i + " grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
+                //output_.println("i = " + i + " grandChild4Attr: " + grandChild4AttList[i] + " = " + attrVal);
                if (i== 0)
                {
                    if (!attrVal.equals("field4"))
@@ -3349,7 +3349,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 
@@ -3381,7 +3381,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 
@@ -3405,7 +3405,7 @@ public class RMRecordConstructorTestcase extends Testcase
         catch (Exception e)
         {
 	    failed(e); 
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 
@@ -3435,7 +3435,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 
@@ -3462,7 +3462,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 
@@ -3492,7 +3492,7 @@ public class RMRecordConstructorTestcase extends Testcase
         }
         catch (Exception e)
         {
-        System.out.println("Exception = " + e);
+        output_.println("Exception = " + e);
         }
    }
 

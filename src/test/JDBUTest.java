@@ -120,7 +120,7 @@ Performs setup needed before running testcases.
           BUTESTLOB  = COLLECTION + ".BUTESTLOB";
         }
         JDSetupCollection.create (systemObject_, 
-                                  connection_, COLLECTION);
+                                  connection_, COLLECTION, out_);
 
         connection_.commit(); // for xa
     }

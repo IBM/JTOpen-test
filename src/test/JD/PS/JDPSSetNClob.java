@@ -214,7 +214,7 @@ public class JDPSSetNClob extends JDTestcase {
         try {
           argClasses[1] = Class.forName("java.sql.NClob");
         } catch (Exception e) {
-          System.out.println("Warning :" + e);
+          output_.println("Warning :" + e);
           argClasses[1] = Class.forName("com.ibm.db2.jdbc.app.NClob");
         }
         Object[] args = new Object[2];

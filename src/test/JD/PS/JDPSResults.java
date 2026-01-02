@@ -104,11 +104,11 @@ public class JDPSResults extends JDTestcase {
     s.close();
 
     JDSetupProcedure.create(systemObject_,connection_,
-        JDSetupProcedure.STP_RS0, supportedFeatures_, collection_);
+        JDSetupProcedure.STP_RS0, supportedFeatures_, collection_, output_);
     JDSetupProcedure.create(systemObject_,  connection_,
-        JDSetupProcedure.STP_RS1, supportedFeatures_, collection_);
+        JDSetupProcedure.STP_RS1, supportedFeatures_, collection_, output_);
     JDSetupProcedure.create(systemObject_,  connection_,
-        JDSetupProcedure.STP_RS3, supportedFeatures_, collection_);
+        JDSetupProcedure.STP_RS3, supportedFeatures_, collection_, output_);
     connection_.commit(); // for xa
   }
 

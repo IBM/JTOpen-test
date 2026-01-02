@@ -138,13 +138,13 @@ Performs setup needed before running variations.
                 ps.setInt(1, 1); 
                 ps.setBytes (2, new byte[0]);
                 ps.executeUpdate ();
-                //System.out.println("Inserting small Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Inserting small Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
                 
                 ps.setInt(1, 2); 
                 ps.setBytes (2, MEDIUM_);
                 ps.executeUpdate ();
-                //System.out.println("Inserting medium Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Inserting medium Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
               
                 ps.setInt(1, 3); 
@@ -152,17 +152,17 @@ Performs setup needed before running variations.
                     ps.executeUpdate ();
               
 /* -- CHANGE IT BACK !! @kkashir
-                //System.out.println("Inserting large Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Inserting large Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
                 ps.setBytes (1, VLARGE_);
-                //System.out.println("Setting Very Large bytes Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Setting Very Large bytes Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
                 ps.executeUpdate ();
 */
-                //System.out.println("Inserting Very Large Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Inserting Very Large Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
                 rs_ = statement_.executeQuery ("SELECT * FROM " + TABLE_ +" ORDER BY ID");
-                //System.out.println("Selecting Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+                //output_.println("Selecting Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
                 //time = System.currentTimeMillis();
                 ps.close ();
 	    }
@@ -182,8 +182,8 @@ initializes the Large Array to be size WIDTH_
 
 
         //long time = System.currentTimeMillis();
-        //System.out.println("Large array of size 16megs has been declared & initialized");
-        //System.out.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+        //output_.println("Large array of size 16megs has been declared & initialized");
+        //output_.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
         //time = System.currentTimeMillis();
 	File file = null; 
 	if (useTmpFile) {   
@@ -194,11 +194,11 @@ initializes the Large Array to be size WIDTH_
 	        
 	        LARGE_ = new byte[numMeg*mega];
 	        try {
-	            System.out.println("Reading from input stream"); 
+	            output_.println("Reading from input stream"); 
 	            FileInputStream fis = new FileInputStream(file); 
 	            fis.read(LARGE_);
 	            fis.close();
-	            System.out.println("Read from input stream"); 
+	            output_.println("Read from input stream"); 
 
 	        } catch (Exception e) { 
 	            e.printStackTrace(); 
@@ -227,12 +227,12 @@ initializes the Large Array to be size WIDTH_
 
 	}
 /* --- CHANGE IT BACK !!!
-        //System.out.println(" & filled with test data.");
-        //System.out.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+        //output_.println(" & filled with test data.");
+        //output_.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
         //time = System.currentTimeMillis();
         VLARGE_ = new byte[WIDTH_];
-        //System.out.println("VLarge array of size " + WIDTH_ + " bytes has been declared & initialized");
-        //System.out.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+        //output_.println("VLarge array of size " + WIDTH_ + " bytes has been declared & initialized");
+        //output_.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
         //time = System.currentTimeMillis();
 
         for (int i = 0; i < mega; i++)
@@ -247,8 +247,8 @@ initializes the Large Array to be size WIDTH_
         {
             VLARGE_[WIDTH_-mega+i] = LARGE_[15*mega+i];
 	}
-        //System.out.println(" & filled with test data.");
-        //System.out.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
+        //output_.println(" & filled with test data.");
+        //output_.println("Took: " + ((System.currentTimeMillis()-time)/1000) + " seconds");
         //time = System.currentTimeMillis();
 */
     }
@@ -604,7 +604,7 @@ length() - When the lob is not empty.
                     Blob blob = rs_.getBlob ("C_BLOB");
 		    boolean condition = (blob.length() == MEDIUM_.length);
 		    if (!condition) {
-			System.out.println("blob.length = "+blob.length());
+			output_.println("blob.length = "+blob.length());
                 }
                     assertCondition (condition, "Large lob Testcases added 01/02/2003");
                 }
@@ -909,7 +909,7 @@ found at the end of the lob, and start is right where the pattern occurs.
 		start=System.currentTimeMillis();
 
 		// Print out the time everything took. 
-		// System.out.println(sb.toString());
+		// output_.println(sb.toString());
 		// 
                 assertCondition(areEqual (b, expected) && written == 2, "Large lob Testcases added 01/02/2003");
                 rs2_.close();

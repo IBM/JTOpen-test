@@ -51,6 +51,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -65,12 +66,9 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.Permission;
-import com.ibm.as400.access.RootPermission;
+
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
 
@@ -1715,14 +1713,7 @@ public class JDRunit {
     return iniProperties;
   }
 
-  @SuppressWarnings("resource")
-  public static String createProfile(String SYSTEM, String newUserid,
-      String newPassword, String userid, char[] encryptedPassword, Vector<String> inputVector) {
-    if (newPassword == null)
-      newPassword = "abc212cb";
-    String sql = "notSet";
-    try {
-      String url = "jdbc:as400:" + SYSTEM;
+  public static ClassLoader getJt400JarClassLoader() {
 
       String[] jarLocations = { "jars/jt400.jar" };
 
@@ -1739,6 +1730,19 @@ public class JDRunit {
       }
 
       ClassLoader loader = new URLClassLoader(urls);
+      return loader; 
+  }
+  @SuppressWarnings("resource")
+  public static String createProfile(String SYSTEM, String newUserid,
+      String newPassword, String userid, char[] encryptedPassword, Vector<String> inputVector) {
+    if (newPassword == null)
+      newPassword = "abc212cb";
+    String sql = "notSet";
+    try {
+      String url = "jdbc:as400:" + SYSTEM;
+
+      ClassLoader loader = getJt400JarClassLoader();
+      
       Class<?> c = loader.loadClass("com.ibm.as400.access.AS400JDBCDriver");
       if (debug) {
         System.out.println("Debug: Class loaded " + c);
@@ -1947,7 +1951,8 @@ public class JDRunit {
     SYSTEM = SYSTEM.toUpperCase();
 
     if (driver.equals("native")) {
-        SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM); 
+        PrintWriter printWriter = new PrintWriter(System.out) ;
+        SYSTEM = JDDatabaseOverride.getDatabaseNameFromSystemName(SYSTEM, printWriter); 
     } 
 
 
@@ -2690,19 +2695,25 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     if (finalArgs != null && finalArgs.length() > 0) {
       javaCommand = javaCommand + " " + finalArgs;
     }
-
+   
     if (finalArgs != null) {
-      int proxyIndex = finalArgs.indexOf("-proxy");
-      if (proxyIndex >= 0) {
-        String loopbackInfo = finalArgs.substring(proxyIndex + 6).trim();
-        if (loopbackInfo.indexOf("loopback") == 0) {
-            
-          startLoopbackProxy(toolboxJar);
-        } else {
-          System.out.println("WARNING.  DID NOT HANDLE PROXY in " + finalArgs
-              + " loopbackInfo=" + loopbackInfo);
+      int proxy5Index = finalArgs.indexOf("-proxy5");
+      if (proxy5Index >= 0) {
+        String proxyInfo = finalArgs.substring(proxy5Index + 7).trim();
+        startSock5Proxy(proxyInfo, USERID, SYSTEM, USERID, TEXT_PASSWORD);
+      } else {
+        int proxyIndex = finalArgs.indexOf("-proxy");
+        if (proxyIndex >= 0) {
+          String loopbackInfo = finalArgs.substring(proxyIndex + 6).trim();
+          if (loopbackInfo.indexOf("loopback") == 0) {
+
+            startLoopbackProxy(toolboxJar);
+          } else {
+            System.out.println("WARNING.  DID NOT HANDLE PROXY in " + finalArgs + " loopbackInfo=" + loopbackInfo);
+          }
         }
       }
+
     }
 
     inputVector.addElement("echo Here is the Java command "); 
@@ -2759,10 +2770,17 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         // Connection failed, start the server
         char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
         char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
-        AS400 startSshAs400 = new AS400(AS400,USERID,clearPassword);
-        CommandCall cc = new CommandCall(startSshAs400); 
-        cc.run("STRTCPSVR *SSHD");
-        startSshAs400.close(); 
+        ClassLoader loader = getJt400JarClassLoader();
+
+        Object startSshAs400=getAS400(loader, AS400,USERID,new String(clearPassword));
+        
+        Class<?> cmdCallClass = loader.loadClass("com.ibm.as400.access.CommandCall");
+        
+        Object cmdCall = cmdCallClass.newInstance();
+        JDReflectionUtil.callMethod_V(cmdCall,"setSystem",startSshAs400);
+        JDReflectionUtil.callMethod_B(cmdCall,"run","STRTCPSVR SERVER(*SSHD)");
+
+        JDReflectionUtil.callMethod_V(startSshAs400,"close"); 
         Thread.sleep(1000); 
       } finally {
         socket.close();
@@ -2776,45 +2794,60 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (true) {
         char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD);
         char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
-        AS400 checkIfsAs400 = new AS400(AS400, USERID, clearPassword);
-        IFSFile homeDir = new IFSFile(checkIfsAs400, "/home/" + USERID);
+        ClassLoader loader = getJt400JarClassLoader();
 
-        if (homeDir.exists()) {
-          Permission permission = homeDir.getPermission();
-          RootPermission userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-          String dataAuthority = userPermission.getDataAuthority();
-          if (dataAuthority.indexOf("W") < 0) { 
-            IFSFile sshDir = new IFSFile(checkIfsAs400, "/home/" + USERID+"/.ssh");
-            if (sshDir.exists()) { 
-              permission = sshDir.getPermission();
-              userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-              dataAuthority = userPermission.getDataAuthority();
-              if (dataAuthority.indexOf("W") < 0) { 
-                  IFSFile authorizedKeysFile = new IFSFile (checkIfsAs400, "/home/" + USERID+"/.ssh/authorized_keys");
-                  if (authorizedKeysFile.exists()) {
-                    permission = authorizedKeysFile.getPermission();
-                    userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-                    dataAuthority = userPermission.getDataAuthority();
-                    if (dataAuthority.indexOf("W") < 0) { 
-                    } else {
-                      throw new Exception("Cannot use ssh since user permissions on " + authorizedKeysFile + " are "+dataAuthority);
-                    }
+        Object checkIfAs400=getAS400(loader, AS400,USERID,new String(clearPassword));
+
+        Class<?>[] argTypes = new Class<?>[2]; 
+        Object[] args = new Object[2]; 
+        argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+        argTypes[1]="".getClass(); 
+        args[0] = checkIfAs400; 
+        args[1] = "/home/" + USERID;
+        Object homeDir = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
+
+        if (JDReflectionUtil.callMethod_B(homeDir, "exists")) {
+          Object permission = JDReflectionUtil.callMethod_O(homeDir, "getPermission");
+          Object userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+          String dataAuthority = JDReflectionUtil.callMethod_S(userPermission, "getDataAuthority");
+          if (dataAuthority.indexOf("W") < 0) {
+            args[0] = checkIfAs400;
+            args[1] = "/home/" + USERID + "/.ssh";
+            Object sshDir = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile", argTypes, args);
+            if (JDReflectionUtil.callMethod_B(sshDir, "exists")) {
+              permission = JDReflectionUtil.callMethod_O(sshDir, "getPermission");
+              userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+              dataAuthority = (String) JDReflectionUtil.callMethod_O(userPermission, "getDataAuthority");
+              if (dataAuthority.indexOf("W") < 0) {
+                args[0] = checkIfAs400;
+                args[1] = "/home/" + USERID + "/.ssh/authorized_keys";
+                Object authorizedKeysFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile", argTypes,
+                    args);
+                if (JDReflectionUtil.callMethod_B(authorizedKeysFile, "exists")) {
+                  permission = JDReflectionUtil.callMethod_O(authorizedKeysFile, "getPermission");
+                  userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+                  dataAuthority = (String) JDReflectionUtil.callMethod_O(userPermission, "getDataAuthority");
+                  if (dataAuthority.indexOf("W") < 0) {
                   } else {
-                    throw new Exception("Cannot use ssh since " + authorizedKeysFile + " does not exist");
+                    throw new Exception(
+                        "Cannot use ssh since user permissions on " + authorizedKeysFile + " are " + dataAuthority);
                   }
+                } else {
+                  throw new Exception("Cannot use ssh since " + authorizedKeysFile + " does not exist");
+                }
               } else {
-                throw new Exception("Cannot use ssh since user permissions on " + sshDir + " are "+dataAuthority);
+                throw new Exception("Cannot use ssh since user permissions on " + sshDir + " are " + dataAuthority);
               }
-            } else { 
+            } else {
               throw new Exception("Cannot use ssh since " + sshDir + " does not exist");
             }
           } else {
-            throw new Exception("Cannot use ssh since user permissions on " + homeDir + " are "+dataAuthority);
+            throw new Exception("Cannot use ssh since user permissions on " + homeDir + " are " + dataAuthority);
           }
         } else {
           throw new Exception("Cannot use ssh since " + homeDir + " does not exist");
         }
-        checkIfsAs400.close();
+        JDReflectionUtil.callMethod_V(checkIfAs400,"close");
       }
     }
 
@@ -3918,6 +3951,182 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     return sb.toString();
   }
 
+  static Object getAS400(ClassLoader loader, String system, String pwrUsr, String pwrPass) throws Exception  { 
+    
+    Class<?> as400Class = loader.loadClass("com.ibm.as400.access.AS400");
+    Object as400 = as400Class.newInstance();
+    JDReflectionUtil.callMethod_V(as400,"setSystemName",system);
+    JDReflectionUtil.callMethod_V(as400,"setUserId",pwrUsr);
+    char[] encryptedPassword = PasswordVault.getEncryptedPassword(pwrPass);
+    char[] decryptedPassword = PasswordVault.decryptPassword(encryptedPassword);
+    JDReflectionUtil.callMethod_V(as400,"setPassword",decryptedPassword);
+    PasswordVault.clearPassword(decryptedPassword);
+    
+    return as400; 
+    
+  }
+  static void checkSshSetup(String system, String pwrUsr, String pwrPass) throws Exception {
+    // Check for local id_rsa and id_rsa.pub
+    Runtime runtime1 = Runtime.getRuntime();
+
+    String userHome = System.getProperty("user.home"); 
+    File userHomeFile = new File(userHome); 
+    if (!userHomeFile.exists()) {
+      userHomeFile.mkdirs(); 
+    }
+    File sshDir = new File (userHome+File.separator+".ssh"); 
+    if (!sshDir.exists()) {
+      sshDir.mkdirs(); 
+    }
+    String path=""; 
+    String osName = System.getProperty("os.name"); 
+    if (osName.indexOf("400")>=0) { 
+      path="/QOpenSys/QIBM/ProdData/SC1/OpenSSH/bin/"; 
+    }
+    File rsaFile = new File(userHome+File.separator+".ssh"+File.separator+"id_rsa");
+    File rsapubFile = new File(userHome+File.separator+".ssh"+File.separator+"id_rsa.pub");
+    if (!rsaFile.exists() || !rsapubFile.exists()) { 
+      System.out.println("RSA file does not exist.. creating"); 
+      String localUser=System.getProperty("user.name"); 
+      InetAddress localMachine = InetAddress.getLocalHost();
+      String hostname = localMachine.getHostName();
+      
+      String command = path+"ssh-keygen  -t rsa -b 4096  -f "+rsaFile+" -C "+localUser+"@"+hostname+" -N '' "; 
+      String[] cmdArray = new String[11];
+      cmdArray[0] = path+"ssh-keygen"; 
+      cmdArray[1] = "-t";
+      cmdArray[2] = "rsa";
+      cmdArray[3] = "-b";
+      cmdArray[4] = "4096";
+      cmdArray[5] = "-f";
+      cmdArray[6] = rsaFile.toString();
+      cmdArray[7] = "-C";
+      cmdArray[8] = localUser+"@"+hostname;
+      cmdArray[9] = "-N";
+      cmdArray[10] = "";
+      System.out.println("JDRunit: generating keys using : "+command); 
+      Process process = runtime1        .exec(cmdArray);
+      boolean completed = process.waitFor(60, TimeUnit.SECONDS);
+      if (!completed) { 
+        throw new Exception("process failed:"+command); 
+      }
+    }
+    if (!rsaFile.exists() || !rsapubFile.exists()) { 
+      throw new Exception ("A rsFile does not exist at "+rsaFile+" or "+rsapubFile); 
+    }    
+
+    FileReader fileReader = new FileReader(rsapubFile); 
+    BufferedReader bufferedReader1 = new BufferedReader(fileReader); 
+    String rsaKey = bufferedReader1.readLine(); 
+    bufferedReader1.close(); 
+    
+    // Now to make sure the host has the approriate keys
+    ClassLoader loader = getJt400JarClassLoader();
+    Object as400 = getAS400(loader, system, pwrUsr, pwrPass);
+    
+    // Check the SSH config on the target
+    // Get the home directory. 
+    Class<?> userClass = loader.loadClass("com.ibm.as400.access.User");
+    boolean rsaKeyFound = false; 
+    
+    Object hostUser = userClass.newInstance(); 
+    JDReflectionUtil.callMethod_V(hostUser,"setSystem",as400);
+    JDReflectionUtil.callMethod_V(hostUser,"setName",pwrUsr);
+    String homeDir = JDReflectionUtil.callMethod_S(hostUser,"getHomeDirectory"); 
+    String authorizedKeysPath = homeDir+"/.ssh/authorized_keys";
+    
+    Class<?>[] argTypes = new Class<?>[2]; 
+    Object[] args = new Object[2]; 
+    argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+    argTypes[1]="".getClass(); 
+    args[0] = as400; 
+    args[1] = authorizedKeysPath;
+    Object authorizedKeysFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
+
+    
+    Vector<String> authorizedKeysVector = new Vector<String>(); 
+    if (JDReflectionUtil.callMethod_B ( authorizedKeysFile,"exists")) {
+      Object ifsFileReader = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",authorizedKeysFile);
+      BufferedReader bufferedReader = new BufferedReader((Reader)ifsFileReader); 
+      String line = bufferedReader.readLine(); 
+      while (line != null) { 
+        if (rsaKey.equals(line) && !rsaKeyFound) { 
+          rsaKeyFound = true; 
+        }
+        line = bufferedReader.readLine(); 
+      }
+      bufferedReader.close(); 
+    } else {
+      JDReflectionUtil.callMethod_V( authorizedKeysFile,"createNewFile");
+    }
+    // Make sure the permissions are correct only the file. 
+    Object permission = JDReflectionUtil.createObject("com.ibm.as400.access.Permission", authorizedKeysFile); 
+    Enumeration<?> enumeration = (Enumeration<?>) JDReflectionUtil.callMethod_O(  permission,"getUserPermissions");
+    while (enumeration.hasMoreElements()) {
+      Object rootPermission =  enumeration.nextElement();
+      String permissionUser = JDReflectionUtil.callMethod_S(rootPermission,"getUserID");
+      String dataAuthority = JDReflectionUtil.callMethod_S(rootPermission,"getDataAuthority"); 
+      System.out.println("found permission "+permissionUser+" "+dataAuthority); 
+      // found permission *PUBLIC *R
+      // found permission JDPWRSYS *RW
+    }
+
+    if (!rsaKeyFound) {
+      Class<?>[] argTypes1 = new Class<?>[2];
+      Object[] args1 = new Object[2]; 
+      argTypes1[0]=authorizedKeysFile.getClass(); 
+      argTypes1[1]=Boolean.TYPE;
+      args1[0]=authorizedKeysFile;
+      args1[1] = new Boolean(true); 
+      Object fileWriter = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileWriter",argTypes1,args1);
+      JDReflectionUtil.callMethod_V(fileWriter,"write",rsaKey+"\n");
+      JDReflectionUtil.callMethod_V(fileWriter,"close"); 
+      System.out.println("To "+authorizedKeysFile+" wrote "+rsaKey); 
+      
+      // Make sure the host list is added to the local host
+      String command = path+"ssh -vvv -o StrictHostKeyChecking=accept-new "+pwrUsr+"@"+system+" pwd";  
+      System.out.println("To add host list running "+command); 
+      Process process = runtime1.exec(command);     
+      boolean completed = process.waitFor(60, TimeUnit.SECONDS);
+      if (!completed) { 
+        throw new Exception("process failed:"+command); 
+      }
+      
+    }
+  }
+
+  static void startSshServer(String system, String pwrUsr, String pwrPass) throws Exception{
+    ClassLoader loader = getJt400JarClassLoader();
+    checkSshSetup(system, pwrUsr, pwrPass);
+    // Check to see if port 22 is already up
+    try {
+      Socket socket1 = new Socket(system, 22);
+
+      // If this worked then just close the socket
+      socket1.close();
+      System.out.println("port 22 is already up"); 
+    } catch (Exception e) {
+      String exInfo = e.toString();
+      if (exInfo.indexOf("remote host refused") >= 0) {
+        // Use a classloader so that jt400.jar does not need to be on the classpath 
+        Object as400 = getAS400(loader, system, pwrUsr, pwrPass);
+        
+        Class<?> cmdCallClass = loader.loadClass("com.ibm.as400.access.CommandCall");
+        
+        Object cmdCall = cmdCallClass.newInstance();
+        JDReflectionUtil.callMethod_V(cmdCall,"setSystem",as400);
+        boolean done = JDReflectionUtil.callMethod_B(cmdCall,"run","STRTCPSVR SERVER(*SSHD)");
+        if (!done) { 
+          throw new Exception("STRTCPSVR SERVER(*SSHD) failed");
+        }
+        waitForPort(system, 22); 
+      } else {
+        e.printStackTrace();
+      }
+    }
+
+  }
+  
   static void startLoopbackProxy(String jt400jar) {
     // Check to see if port 3470 is already up
     try {
@@ -3939,13 +4148,50 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
   }
 
+  static void startSock5Proxy(String proxyInfo, String user, String system, String pwrUser, String pwrPass) throws Exception {
+    // Make sure SSH is up
+    startSshServer(system,pwrUser,pwrPass);
+    // Check to see if port is already up
+    // Parse the port and make sure host is localhost 
+    String server = proxyInfo.toLowerCase().trim(); 
+    int colonIndex=server.indexOf(":"); 
+    int port = 5005; 
+    if (colonIndex > 0) { 
+      port = Integer.parseInt(server.substring(colonIndex+1));
+      server = server.substring(0,colonIndex); 
+    }
+    if (!server.equals("localhost")) { 
+      throw new Exception("Only localhost supported:  invalid proxy: "+proxyInfo); 
+    }
+    try {
+      Socket socket1 = new Socket("localhost", port);
+
+      // If this worked then just close the socket
+      socket1.close();
+      System.out.println("port "+port+" is already up"); 
+    } catch (Exception e) {
+      String exInfo = e.toString();
+      if (exInfo.indexOf("remote host refused") >= 0) {
+        // If not up, start the proxy in the background
+        startProxy5Server(port, user, system);
+
+      } else {
+        e.printStackTrace();
+      }
+    }
+
+  }
+
+
+  
+  
   /* Wait for the proxy to become available */
-  static void waitForProxy() throws Exception {
+  static void waitForPort(String system, int port) throws Exception {
     boolean up = false;
     long endTime = System.currentTimeMillis() + 60000;
     while (!up && System.currentTimeMillis() < endTime) {
       try {
-        Socket socket1 = new Socket("localhost", 3470);
+        Socket socket1 = new Socket(system, port);
         // If this worked then just close the socket
         socket1.close();
         up = true;
@@ -3962,7 +4208,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
     }
     if (!up) {
-      throw new Exception("proxy on port 3470 did not start withing 60 seconds"); 
+      throw new Exception("host:"+system+" port "+port+" did not start withing 60 seconds"); 
     }
 
   }
@@ -3978,12 +4224,36 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       // lobs is located there.
       runtime1
           .exec(command);
-      waitForProxy();
+      waitForPort("localhost",3470);
 
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
+
+  
+  static void startProxy5Server(int port, String user, String system) {
+    Runtime runtime1 = Runtime.getRuntime();
+    try {
+        String path=""; 
+        String osName = System.getProperty("os.name"); 
+        if (osName.indexOf("400")>=0) { 
+          path="/QOpenSys/QIBM/ProdData/SC1/OpenSSH/bin/"; 
+        }
+      
+        String command = path+"ssh -D "+port+" "+user+"@"+system+" -p22 -gfTN"; 
+        System.out.println("JDRunit: starting ssh using: "+command); 
+      // Need to include testcaseCode because the source for the serialized
+      // lobs is located there.
+      runtime1
+          .exec(command);
+      waitForPort("localhost",port);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
 
   /* Set the scheduler id. Null means not to use the scheduler */
   public static void setJDSchedulerId(String id) {

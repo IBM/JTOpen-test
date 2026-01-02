@@ -12,6 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.DA;
 
+import java.io.PrintWriter;
 import java.lang.Thread;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
@@ -31,7 +32,10 @@ import java.math.BigDecimal;
 public class DataAreaStressTestcase 
    extends ProxyStressTest implements Runnable 
 {
+
+
   public static void main(String args[]) throws Exception {
+    output_ = new PrintWriter(System.out); 
     String[] newArgs = new String[args.length+2];
      newArgs[0] = "-tc";
      newArgs[1] = "DataAreaStressTestcase";
@@ -80,14 +84,14 @@ public class DataAreaStressTestcase
 
       try 
       {
-         System.out.println("     Deleting DataArea libraries..." + "(t" + curntThread_ + ")");
+         output_.println("     Deleting DataArea libraries..." + "(t" + curntThread_ + ")");
          CommandCall c= new CommandCall(sys3_); 
 	 TestDriver.deleteLibrary(c, "DATEST"+curntThread_);
 
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);
@@ -118,50 +122,50 @@ public class DataAreaStressTestcase
          {
             try 
             { 
-               System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+               output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
                
-               System.out.println("     Creating DataArea..." + "(t" + curntThread_ + ")");
+               output_.println("     Creating DataArea..." + "(t" + curntThread_ + ")");
 
                // Create DataArea with length of 24
                da_.create(24, 0, new BigDecimal("0.0"), " ", "*USE");
                
-               System.out.println("     Clearing the DataArea..." + "(t" + curntThread_ + ")");
+               output_.println("     Clearing the DataArea..." + "(t" + curntThread_ + ")");
                // Clear the DataArea
                da_.clear();
 
-               System.out.println("     Writing to DataArea..." + "(t" + curntThread_ + ")");
+               output_.println("     Writing to DataArea..." + "(t" + curntThread_ + ")");
                // Write to the DataArea
                da_.write(new BigDecimal("1.2"));
 
                if (da2.getLength() == 24) 
                {
-                  System.out.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
+                  output_.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
                }
                else 
                {
-                  System.out.println("     DataArea Length Invalid");
-                  System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                  output_.println("     DataArea Length Invalid");
+                  output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                }
 
             }
             catch(Exception e) 
             {
-               System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
             }
             // Try to delete the data area
             try 
             {
-               System.out.println("     Deleting DataArea..." + "(t" + curntThread_ + ")");
+               output_.println("     Deleting DataArea..." + "(t" + curntThread_ + ")");
                da_.delete();
-               System.out.println("   Loop #" + i + ": Delete Successful" + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": Delete Successful" + "(t" + curntThread_ + ")");
             }
             catch(Exception e) 
             {
-               System.out.println("       DataArea delete FAILED." + "(t" + curntThread_ + ")");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("       DataArea delete FAILED." + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
             }
@@ -186,7 +190,7 @@ public class DataAreaStressTestcase
 
       try 
       {
-         System.out.println("     Creating DataArea libraries..." + "(t" + curntThread_ + ")");
+         output_.println("     Creating DataArea libraries..." + "(t" + curntThread_ + ")");
 
          if (dalib_.run() != true) 
          {
@@ -198,7 +202,7 @@ public class DataAreaStressTestcase
             }
             else
             {
-               System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+               output_.println("       Setup Failed."  + "(t" + curntThread_ + ")");
                
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
@@ -208,7 +212,7 @@ public class DataAreaStressTestcase
       }
       catch(Exception e)
       {
-         System.out.println("      Exception during setup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during setup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);

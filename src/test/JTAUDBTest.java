@@ -142,7 +142,7 @@ Performs setup needed before running testcases.
       System.out.println("JTAUDBTest collection is "+COLLECTION); 
 
       JDSetupCollection.create (systemObject_, 
-                                c, COLLECTION);
+                                c, COLLECTION, out_);
 
       c.close ();
    }

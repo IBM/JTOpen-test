@@ -265,7 +265,7 @@ not an input parameter.
             failed ("Didn't throw SQLException when setting an output only parameter");
         }
         catch (Exception e) {
-            // e.printStackTrace(System.out); 
+            // e.printStackTrace(output_); 
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }

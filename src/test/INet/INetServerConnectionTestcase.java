@@ -110,7 +110,7 @@ public class INetServerConnectionTestcase extends Testcase
 
 
 
-    static void displayAttributeValues(ISeriesNetServerConnection conn)
+    void displayAttributeValues(ISeriesNetServerConnection conn)
     {
       String resName = conn.getName();
       int resType = conn.getResourceType();
@@ -122,7 +122,7 @@ public class INetServerConnectionTestcase extends Testcase
       int connType = conn.getConnectionType();
       int numUsers = conn.getNumberOfUsers();
 
-      System.out.println("-----------\n" +
+      output_.println("-----------\n" +
                          "CONNECTION:\n" +
                          "-----------\n" +
                          "Workstation or share: "+resName+"\n"+
@@ -139,7 +139,7 @@ public class INetServerConnectionTestcase extends Testcase
     }
 
 
-    static boolean validateAttributeValues(ISeriesNetServerConnection conn)
+    boolean validateAttributeValues(ISeriesNetServerConnection conn)
     {
       boolean ok = true;
 
@@ -156,75 +156,75 @@ public class INetServerConnectionTestcase extends Testcase
       if (resType != ISeriesNetServerConnection.WORKSTATION &&
           resType != ISeriesNetServerConnection.SHARE) {
         ok = false;
-        System.out.println("Invalid resType: " + resType);
+        output_.println("Invalid resType: " + resType);
       }
 
       if (resName.trim().length() == 0) {
         ok = false;
-        System.out.println("Zero-length resName.");
+        output_.println("Zero-length resName.");
       }
 
       if (resName.charAt(0) == ' ') {
         ok = false;
-        System.out.println("resName starts with a blank: |" + resName + "|");
+        output_.println("resName starts with a blank: |" + resName + "|");
       }
 
       if ((resType == ISeriesNetServerConnection.WORKSTATION && resName.length() > 124) || //@A1C
           (resType == ISeriesNetServerConnection.SHARE && resName.length() > 12)) {
         ok = false;
-        System.out.println("resName is too long: |" + resName +"|");
+        output_.println("resName is too long: |" + resName +"|");
       }
 
       if (user.trim().length() == 0 || user.length() > 10) {
         ok = false;
-        System.out.println("user name length is invalid: |" + resName +"|");
+        output_.println("user name length is invalid: |" + resName +"|");
       }
 
       if (user.charAt(0) == ' ') {
         ok = false;
-        System.out.println("user name starts with a blank: |" + user + "|");
+        output_.println("user name starts with a blank: |" + user + "|");
       }
 
       if (connId < 0) {
         ok = false;
-        System.out.println("connId < 1");
+        output_.println("connId < 1");
       }
 
       if (sessId < 1) {
         ok = false;
-        System.out.println("sessId < 1");
+        output_.println("sessId < 1");
       }
 
       if (age < 1) {
         ok = false;
-        System.out.println("age < 1");
+        output_.println("age < 1");
       }
       if (age > 10000) {
         ///ok = false;
-        System.out.println("Warning: Connection age is suspect: " + age);
+        output_.println("Warning: Connection age is suspect: " + age);
       }
 
       if (filesOpen < 0) {
         ok = false;
-        System.out.println("Invalid number of files open: " + filesOpen);
+        output_.println("Invalid number of files open: " + filesOpen);
       }
       if (filesOpen > 100) {
-        System.out.println("Warning: Number of files open is questionable: " + filesOpen);
+        output_.println("Warning: Number of files open is questionable: " + filesOpen);
       }
 
       if (connType != ISeriesNetServerConnection.DISK_DRIVE &&
           connType != ISeriesNetServerConnection.SPOOLED_OUTPUT_QUEUE) {
         ok = false;
-        System.out.println("Invalid connType: " + connType);
+        output_.println("Invalid connType: " + connType);
       }
 
       if (numUsers < 0) {
         ok = false;
-        System.out.println("Num Users < 0");
+        output_.println("Num Users < 0");
       }
       if (numUsers > 100) {
         ///ok = false;
-        System.out.println("Warning Num Users is questionable: " + numUsers);
+        output_.println("Warning Num Users is questionable: " + numUsers);
       }
 
       return ok;
@@ -244,7 +244,7 @@ public class INetServerConnectionTestcase extends Testcase
           String wsName = sess.getName();
           long sessID = sess.getID();
           if (DEBUG) {
-            System.out.println("-----------------------------------\n" +
+            output_.println("-----------------------------------\n" +
                                "CONNECTIONS FOR SESSION " +wsName+" ("+sessID+")\n" +
                                "-----------------------------------\n");
           }
@@ -280,7 +280,7 @@ public class INetServerConnectionTestcase extends Testcase
           String wsName = sess.getName();
           long sessID = sess.getID();
           if (DEBUG) {
-            System.out.println("-----------------------------------\n" +
+            output_.println("-----------------------------------\n" +
                                "CONNECTIONS FOR SESSION " +wsName+" ("+sessID+")\n" +
                                "-----------------------------------\n");
           }
@@ -318,7 +318,7 @@ public class INetServerConnectionTestcase extends Testcase
           String shareName = share.getName();
           String shareType = (share instanceof ISeriesNetServerFileShare ? "FILE" : "PRINT");
           if (DEBUG) {
-            System.out.println("-----------------------------------\n" +
+            output_.println("-----------------------------------\n" +
                                "CONNECTIONS FOR SHARE " +shareName+" ("+shareType+")\n" +
                                "-----------------------------------\n");
           }

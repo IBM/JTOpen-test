@@ -68,7 +68,7 @@ public class PTFGroupTestcase extends Testcase
       return isDigits;
     }
 
-    private static boolean validate(PTF ptf, PTF priorPTF, String groupName, int groupStatus) throws AS400Exception
+    private boolean validate(PTF ptf, PTF priorPTF, String groupName, int groupStatus) throws AS400Exception
     {
       boolean succeeded = true;
       try
@@ -77,13 +77,13 @@ public class PTFGroupTestcase extends Testcase
         int action_int = Integer.parseInt(action);
         if (action_int < 0 || action_int > 2) {
           succeeded = false;
-          System.out.println("PTFGroup.getActionRequired() returned " + action);
+          output_.println("PTFGroup.getActionRequired() returned " + action);
         }
 
         String[] apars = ptf.getAPARNumbers();
         if (apars == null) {
           succeeded = false;
-          System.out.println("PTFGroup.getAPARNumbers() returned null.");
+          output_.println("PTFGroup.getAPARNumbers() returned null.");
         }
 
         PTFCoverLetter letter0 = ptf.getCoverLetter();
@@ -93,13 +93,13 @@ public class PTFGroupTestcase extends Testcase
         PTFCoverLetter[] letters = ptf.getCoverLetters();
         if (letters == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getCoverLetters() returned null.");
+          output_.println("ERROR: PTFGroup.getCoverLetters() returned null.");
         }
 
         Date created = ptf.getCreationDate();  // this can return null
         //if (created == null) {
         //  succeeded = false;
-        //  System.out.println("ERROR: PTFGroup.getCreationDate() returned null.");
+        //  output_.println("ERROR: PTFGroup.getCreationDate() returned null.");
         //}
 
         String iplSource = ptf.getCurrentIPLSource();
@@ -108,26 +108,26 @@ public class PTFGroupTestcase extends Testcase
             !iplSource.equals(PTF.IPL_SOURCE_UNKNOWN))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getCurrentIPLSource() returned " + iplSource);
+          output_.println("ERROR: PTFGroup.getCurrentIPLSource() returned " + iplSource);
         }
 
         PTF[] deps = ptf.getDependentPTFs();
         if (deps == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getDependentPTFs() returned null.");
+          output_.println("ERROR: PTFGroup.getDependentPTFs() returned null.");
         }
 
         PTFExitProgram[] exits = ptf.getExitPrograms();
         if (exits == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getExitPrograms() returned null.");
+          output_.println("ERROR: PTFGroup.getExitPrograms() returned null.");
         }
 
         String ptfId = ptf.getID();
         if (ptfId == null || ptfId.length() != 7 || !isNumeric(ptfId.substring(2)))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getID() returned |" + ptfId + "|");
+          output_.println("ERROR: PTFGroup.getID() returned |" + ptfId + "|");
         }
 
         int iplAction = ptf.getIPLAction();
@@ -138,7 +138,7 @@ public class PTFGroupTestcase extends Testcase
             iplAction != PTF.IPL_ACTION_REMOVE_PERMANENT)
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getIPLAction() returned " + iplAction);
+          output_.println("ERROR: PTFGroup.getIPLAction() returned " + iplAction);
         }
 
         String iplReq = ptf.getIPLRequired();
@@ -147,13 +147,13 @@ public class PTFGroupTestcase extends Testcase
             !iplReq.equals(PTF.PTF_TYPE_UNKNOWN))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getIPLRequired() returned " + iplReq);
+          output_.println("ERROR: PTFGroup.getIPLRequired() returned " + iplReq);
         }
 
         String licGroup = ptf.getLICGroup();
         if (licGroup == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getLICGroup() returned null.");
+          output_.println("ERROR: PTFGroup.getLICGroup() returned null.");
         }
 
         String loaded = ptf.getLoadedStatus();
@@ -166,39 +166,39 @@ public class PTFGroupTestcase extends Testcase
             !loaded.equals(PTF.STATUS_SUPERSEDED))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getLoadedStatus() returned " + loaded);
+          output_.println("ERROR: PTFGroup.getLoadedStatus() returned " + loaded);
         }
 
         String maxLevel = ptf.getMaximumLevel();
         if (maxLevel == null || maxLevel.length() == 1 || maxLevel.length() > 2) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getMaximumLevel() returned |" + maxLevel + "|");
+          output_.println("ERROR: PTFGroup.getMaximumLevel() returned |" + maxLevel + "|");
         }
 
         String minLevel = ptf.getMinimumLevel();
         if (minLevel == null || minLevel.length() == 1 || minLevel.length() > 2) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getMinimumLevel() returned |" + minLevel + "|");
+          output_.println("ERROR: PTFGroup.getMinimumLevel() returned |" + minLevel + "|");
         }
 
         String feature = ptf.getProductFeature();
         if (feature == null || feature.length() == 0 || feature.length() > 4 || !isNumeric(feature))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getProductFeature() returned |" + feature + "|");
+          output_.println("ERROR: PTFGroup.getProductFeature() returned |" + feature + "|");
         }
 
         String prodID = ptf.getProductID();
         if (prodID == null || prodID.length() != 7) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getProductID() returned |" + prodID + "|");
+          output_.println("ERROR: PTFGroup.getProductID() returned |" + prodID + "|");
         }
 
         String prodOpt = ptf.getProductOption();
         if (prodOpt == null || prodOpt.length() == 0 || prodOpt.length() > 4 || !isNumeric(prodOpt))
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getProductOption() returned |" + prodOpt + "|");
+          output_.println("ERROR: PTFGroup.getProductOption() returned |" + prodOpt + "|");
         }
 
         String relation = null;
@@ -213,43 +213,43 @@ public class PTFGroupTestcase extends Testcase
               !relation.equals(PTF.RELATIONSHIP_NONE))
           {
             succeeded = false;
-            System.out.println("ERROR: PTFGroup.getRelationship() returned " + relation);
+            output_.println("ERROR: PTFGroup.getRelationship() returned " + relation);
           }
         }
 
         String release = ptf.getReleaseLevel();
         if (release == null || release.length() == 0 || release.length() > 7 || !release.startsWith("V")) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getReleaseLevel() returned " + release);
+          output_.println("ERROR: PTFGroup.getReleaseLevel() returned " + release);
         }
 
         if (DEBUG)
         {
-          System.out.println("  -------");
-          System.out.println("  PTF id: " + ptfId);
-          System.out.println("  PTF action: " + action);
-          System.out.println("  PTF letter0: " + letter0);
-          System.out.println("  PTF letter1: " + letter1);
-          System.out.println("  PTF created: " + created);
-          System.out.println("  PTF iplSource: " + iplSource);
-          System.out.println("  PTF iplAction: " + iplAction);
-          System.out.println("  PTF iplReq: " + iplReq);
-          System.out.println("  PTF licGroup: " + licGroup);
-          System.out.println("  PTF loaded: " + loaded);
-          System.out.println("  PTF maxLevel: " + maxLevel);
-          System.out.println("  PTF minLevel: " + minLevel);
-          System.out.println("  PTF feature: " + feature);
-          System.out.println("  PTF prodID: " + prodID);
-          System.out.println("  PTF prodOpt: " + prodOpt);
-          System.out.println("  PTF relation: " + relation);
-          System.out.println("  PTF release: " + release);
+          output_.println("  -------");
+          output_.println("  PTF id: " + ptfId);
+          output_.println("  PTF action: " + action);
+          output_.println("  PTF letter0: " + letter0);
+          output_.println("  PTF letter1: " + letter1);
+          output_.println("  PTF created: " + created);
+          output_.println("  PTF iplSource: " + iplSource);
+          output_.println("  PTF iplAction: " + iplAction);
+          output_.println("  PTF iplReq: " + iplReq);
+          output_.println("  PTF licGroup: " + licGroup);
+          output_.println("  PTF loaded: " + loaded);
+          output_.println("  PTF maxLevel: " + maxLevel);
+          output_.println("  PTF minLevel: " + minLevel);
+          output_.println("  PTF feature: " + feature);
+          output_.println("  PTF prodID: " + prodID);
+          output_.println("  PTF prodOpt: " + prodOpt);
+          output_.println("  PTF relation: " + relation);
+          output_.println("  PTF release: " + release);
         }
 
       }
       catch (AS400Exception e)
       {
         AS400Message msg = e.getAS400Message();
-        System.out.println("ERROR: AS400Exception from query of PTF " + ptf.getID() + " in group " + groupName + " (status="+groupStatus+"): " + msg.getID() + ": " + msg.getText());
+        output_.println("ERROR: AS400Exception from query of PTF " + ptf.getID() + " in group " + groupName + " (status="+groupStatus+"): " + msg.getID() + ": " + msg.getText());
         // tolerate this error
       }
       catch (Exception e) {
@@ -260,7 +260,7 @@ public class PTFGroupTestcase extends Testcase
       return succeeded;
     }
 
-    private static boolean validate(PTFGroup group) throws AS400Exception
+    private  boolean validate(PTFGroup group) throws AS400Exception
     {
       boolean succeeded = true;
       try
@@ -270,60 +270,60 @@ public class PTFGroupTestcase extends Testcase
         String desc = group.getPTFGroupDescription();
         if (desc == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getPTFGroupDescription() returned " + desc);
+          output_.println("ERROR: PTFGroup.getPTFGroupDescription() returned " + desc);
         }
 
         int level = group.getPTFGroupLevel();
         if (level < 0) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getPTFGroupLevel() returned " + level);
+          output_.println("ERROR: PTFGroup.getPTFGroupLevel() returned " + level);
         }
 
         String groupName = group.getPTFGroupName();
         if (groupName == null || groupName.length() == 0) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getPTFGroupName() returned " + groupName);
+          output_.println("ERROR: PTFGroup.getPTFGroupName() returned " + groupName);
         }
 
         int groupStatus = group.getPTFGroupStatus();
         if (groupStatus < 0 || groupStatus > 9) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getPTFGroupStatus() returned " + groupStatus);
+          output_.println("ERROR: PTFGroup.getPTFGroupStatus() returned " + groupStatus);
         }
 
         AS400 sys = group.getSystem();
         if (sys == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getSystem() returned " + sys);
+          output_.println("ERROR: PTFGroup.getSystem() returned " + sys);
         }
 
         PTFGroup[] relatedGroups = group.getRelatedPTFGroups();
         if (relatedGroups == null) {
           succeeded = false;
-          System.out.println("ERROR: PTFGroup.getRelatedPTFGroups() returned " + relatedGroups);
+          output_.println("ERROR: PTFGroup.getRelatedPTFGroups() returned " + relatedGroups);
         }
 
         if (DEBUG)
         {
-          System.out.println("-----");
-          System.out.println("Group name: " + groupName);
-          System.out.println("RelatedIncl: " + relatedIncl);
-          System.out.println("Desc: " + desc);
-          System.out.println("Level: " + level);
-          System.out.println("Status: " + groupStatus);
-          System.out.println("System: " + sys);
-          System.out.println("Number of related PTF groups: " + relatedGroups.length);
+          output_.println("-----");
+          output_.println("Group name: " + groupName);
+          output_.println("RelatedIncl: " + relatedIncl);
+          output_.println("Desc: " + desc);
+          output_.println("Level: " + level);
+          output_.println("Status: " + groupStatus);
+          output_.println("System: " + sys);
+          output_.println("Number of related PTF groups: " + relatedGroups.length);
         }
 
         PTF[] ptfs = group.getPTFs();
         if (ptfs == null) {
           //succeeded = false;
-          System.out.println("PTFGroup.getPTFs() returned null.");
+          output_.println("PTFGroup.getPTFs() returned null.");
           return false;
         }
         if (ptfs.length == 0) {
           succeeded = false;
-          System.out.println("PTFGroup.getPTFs() returned an empty list.");
+          output_.println("PTFGroup.getPTFs() returned an empty list.");
         }
         PTF priorPTF = null;
         for (int j=0; j<ptfs.length && j<10; j++)
@@ -342,7 +342,7 @@ public class PTFGroupTestcase extends Testcase
       return succeeded;
     }
 
-    private static boolean validate(PTFGroupList list) throws AS400Exception
+    private  boolean validate(PTFGroupList list) throws AS400Exception
     {
       boolean succeeded = true;
 
@@ -352,12 +352,12 @@ public class PTFGroupTestcase extends Testcase
         if (system == null)
         {
           succeeded = false;
-          System.out.println("ERROR: PTFGroupList.getSystem() returned null.");
+          output_.println("ERROR: PTFGroupList.getSystem() returned null.");
         }
 
         PTFGroup[] groups = list.getPTFGroup();
         if (groups == null || groups.length == 0) {
-          System.out.println("ERROR: No PTF groups were returned by getPTFGroup().");
+          output_.println("ERROR: No PTF groups were returned by getPTFGroup().");
           return false;
         }
 
@@ -393,7 +393,7 @@ public class PTFGroupTestcase extends Testcase
         if (JTOpenTestEnvironment.isOS400 && isLocal_ && isNative_)
         {
           AS400 localSys = new AS400();  // use *CURRENT
-          if (DEBUG) System.out.println("Local username: " + localSys.getUserId());
+          if (DEBUG) output_.println("Local username: " + localSys.getUserId());
           PTFGroupList list2 = new PTFGroupList(localSys);
           try
           {
@@ -405,7 +405,7 @@ public class PTFGroupTestcase extends Testcase
             AS400Message msg = e.getAS400Message();
             if (msg.getID().equals("CPF9802"))
             {
-              System.out.println("Tolerating \"not authorized\" error for user " + localSys.getUserId() + ": " + msg.toString());
+              output_.println("Tolerating \"not authorized\" error for user " + localSys.getUserId() + ": " + msg.toString());
             }
           }
         }
@@ -438,7 +438,7 @@ public class PTFGroupTestcase extends Testcase
         if (group.areRelatedPTFGroupsIncluded())
         {
           succeeded = false;
-          System.out.println("Error: Initial value returned by areRelatedPTFGroupsIncluded() is: true");
+          output_.println("Error: Initial value returned by areRelatedPTFGroupsIncluded() is: true");
         }
 
         group.includeRelatedPTFGroups(true);
@@ -446,7 +446,7 @@ public class PTFGroupTestcase extends Testcase
         if (!group.areRelatedPTFGroupsIncluded())
         {
           succeeded = false;
-          System.out.println("Error: Second value returned by areRelatedPTFGroupsIncluded() is: false");
+          output_.println("Error: Second value returned by areRelatedPTFGroupsIncluded() is: false");
         }
 
         group.includeRelatedPTFGroups(false);
@@ -454,7 +454,7 @@ public class PTFGroupTestcase extends Testcase
         if (group.areRelatedPTFGroupsIncluded())
         {
           succeeded = false;
-          System.out.println("Error: Third value returned by areRelatedPTFGroupsIncluded() is: true");
+          output_.println("Error: Third value returned by areRelatedPTFGroupsIncluded() is: true");
         }
 
         assertCondition(succeeded);

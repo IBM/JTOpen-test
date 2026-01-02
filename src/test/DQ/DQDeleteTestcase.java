@@ -257,8 +257,7 @@ public class DQDeleteTestcase extends Testcase
 			drop = null; 
 			raceTime--; 
 		    }
-		    System.out.println("Warning:   Threads did not force condition -- this is a race.. ");
-		    assertCondition(true); 
+		    assertCondition(true,"Warning:   Threads did not force condition -- this is a race.. "); 
                 }
                 catch (Exception e)
                 {
@@ -304,8 +303,7 @@ public class DQDeleteTestcase extends Testcase
 			drop = null; 
 			raceTime--; 
 		    }
-		    System.out.println("Warning.. ConnectionDropper:   Threads did not force condition");
-		    assertCondition(true); 
+		    assertCondition(true,"Warning.. ConnectionDropper:   Threads did not force condition"); 
                 }
                 catch (Exception e)
                 {

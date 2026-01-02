@@ -102,7 +102,7 @@ Performs setup needed before running variations.
 
 	Runtime runtime = Runtime.getRuntime();
 	long freeMemory = runtime.freeMemory();
-	System.out.println("setup:  entry freeMemory is "+freeMemory );
+	output_.println("setup:  entry freeMemory is "+freeMemory );
 
         connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 
@@ -158,13 +158,13 @@ Performs setup needed before running variations.
 	    // Check to see if there is enough memory to create a 17 M string
 	    //
 	    freeMemory = runtime.freeMemory();
-	    System.out.println("freeMemory is "+freeMemory );
+	    output_.println("freeMemory is "+freeMemory );
 	    System.gc(); 
 	    freeMemory = runtime.freeMemory();
-	    System.out.println("freeMemory after gc is "+freeMemory );
+	    output_.println("freeMemory after gc is "+freeMemory );
 	    if (freeMemory < 20000000) {
 		seventeenMegString = null ;
-		System.out.println("Warning:  Not enough memory to create seventeenMegString"); 
+		output_.println("Warning:  Not enough memory to create seventeenMegString"); 
 	    } else {
 		for (int i = 0; i < 17; i++) {
 		    sb.append(oneMegString);
@@ -172,9 +172,9 @@ Performs setup needed before running variations.
 		seventeenMegString = sb.toString();
 	    }
 	    freeMemory = runtime.freeMemory();
-	    System.out.println("freeMemory is " + freeMemory);
+	    output_.println("freeMemory is " + freeMemory);
 	    if (freeMemory < 20000000) {
-		System.out.println("Warning:  Not enough memory to create seventeenMegBytes"); 
+		output_.println("Warning:  Not enough memory to create seventeenMegBytes"); 
 		seventeenMegBytes = null;
 	    } else {
 		seventeenMegBytes = new byte[17 * 1024 * 1024];

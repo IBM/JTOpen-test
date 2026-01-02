@@ -150,7 +150,7 @@ Performs cleanup needed after running variations.
 	rs.close();
 	s.close();
 	c.close();
-      // System.out.println("Row count = " + count);
+      // output_.println("Row count = " + count);
 	return count;
     }
 
@@ -244,8 +244,8 @@ false while in the distributed transaction and true when out of it.
 		xac.close();
 		boolean condition = (autoCommit1 == false) && (autoCommit2 == true);
 		if (!condition) {
-		    System.out.println("autoCommit inside transaction should be false but is "+autoCommit1); 
-		    System.out.println("autoCommit outside transaction should be true but is "+autoCommit2); 
+		    output_.println("autoCommit inside transaction should be false but is "+autoCommit1); 
+		    output_.println("autoCommit outside transaction should be true but is "+autoCommit2); 
 		}
 		assertCondition(condition); 
 	    }
@@ -286,7 +286,7 @@ Connection.setAutoCommit() - Verify that this fails when in a global transaction
 		xar.rollback(xid);
 		xac.close();
 		if (!error) {
-		    System.out.println("Setting autocommit in global transaction did not fail as expected"); 
+		    output_.println("Setting autocommit in global transaction did not fail as expected"); 
 		}
 		assertCondition(error == true);
 	    }
@@ -325,23 +325,19 @@ but not committed.
 		}
 		catch(Exception e) {
 		    if (JTATest.verbose) { 
-			System.out.println("Exception is "+e);
+			output_.println("Exception is "+e);
 			e.printStackTrace();
 		    }
 		    error = true;
 		}
 
-		// JWE
-		  // Moved this on 8/21/02... inside transaction is between
-		  // start and end
-		  // 
 		  xar.end(xid, XAResource.TMSUCCESS);
 
 
 		xar.commit(xid, true);
 		xac.close();
 		if (!error) {
-		    System.out.println("Setting autocommit in global transaction did not fail as expected"); 
+		    output_.println("Setting autocommit in global transaction did not fail as expected"); 
 		} 
 
 		assertCondition(error == true);
@@ -528,8 +524,8 @@ but not committed.
 		xac.close();
 		boolean condition = error1 == true && error2 == false;
 		if (! condition) {
-		    System.out.println("error1 should be true but is "+error1); 
-		    System.out.println("error2 should be false but is "+error2); 
+		    output_.println("error1 should be true but is "+error1); 
+		    output_.println("error2 should be false but is "+error2); 
 		}
 		assertCondition(condition); 
 	    }
@@ -627,8 +623,8 @@ and rolled back.
 		                (rowCount == 0);
         }
 		if (!condition) {
-		    System.out.println("errorCode should be XA_RBROLLBACK but is "+errorCode);
-		    System.out.println("rowCount should b 0, but is "+rowCount); 
+		    output_.println("errorCode should be XA_RBROLLBACK but is "+errorCode);
+		    output_.println("rowCount should b 0, but is "+rowCount); 
 		}
 		assertCondition(condition);
 	    }
@@ -725,8 +721,8 @@ but not committed.
 		}
 		xac.close();
 		if (JTATest.verbose) {
-		    System.out.println("error1 should be true but is "+error1);
-		    System.out.println("error2 should be false but is "+error2); 
+		    output_.println("error1 should be true but is "+error1);
+		    output_.println("error2 should be false but is "+error2); 
 		} 
 
 		assertCondition(error1 == true && error2 == false);
@@ -861,8 +857,8 @@ no work done.
 		boolean condition;
 		condition = (error == true) && (countRows(34865) == 0);
 if (! condition) {
-    System.out.println("Expect error to be true, but is "+error);
-    System.out.println("Expected out to be 0, but is "+countRows(34865)); 
+    output_.println("Expect error to be true, but is "+error);
+    output_.println("Expected out to be 0, but is "+countRows(34865)); 
 }
 assertCondition(condition); 
 	    }
@@ -910,7 +906,7 @@ with no work done.
 condition = (error == true);
 
 if (!condition) {
-    System.out.println("Expect error to be true, but is "+error);
+    output_.println("Expect error to be true, but is "+error);
 }
 
 assertCondition(condition);
@@ -955,8 +951,8 @@ assertCondition(condition);
 		int rowCount = countRows(34865) ; 
 		boolean condition = (error == true) && (rowCount == 0);
 		if (!condition) {
-		    System.out.println("Error is "+error+" should be true");
-		    System.out.println("countRows(34865) is "+rowCount+" but should be 0"); 
+		    output_.println("Error is "+error+" should be true");
+		    output_.println("countRows(34865) is "+rowCount+" but should be 0"); 
 		} 
 		assertCondition(condition);
 	    }
@@ -1002,8 +998,8 @@ assertCondition(condition);
 		int rowCount = countRows(34865) ; 
 		boolean condition = (error == true) && (rowCount == 0);
 		if (!condition) {
-		    System.out.println("Error is "+error+" should be true");
-		    System.out.println("countRows(34865) is "+rowCount+" but should be 0"); 
+		    output_.println("Error is "+error+" should be true");
+		    output_.println("countRows(34865) is "+rowCount+" but should be 0"); 
 		} 
 		assertCondition(condition);
 	    }

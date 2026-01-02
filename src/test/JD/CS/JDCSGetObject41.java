@@ -271,7 +271,7 @@ Performs setup needed before running variations.
 	stmt.executeUpdate("SET SCHEMA "+JDCSTest.COLLECTION); 
 	stmt.executeUpdate("SET CURRENT PATH "+JDCSTest.COLLECTION); 
 	if (cleanProcedures) {
-	    System.out.println("************** cleaning procedures *********"); 
+	    output_.println("************** cleaning procedures *********"); 
 	    for (int i = 0; i < proceduresAndDefinitions.length; i++) {
 		String[] thisProc = proceduresAndDefinitions[i];
 		if (skipHash.get(thisProc[0]) == null) { 
@@ -284,7 +284,7 @@ Performs setup needed before running variations.
 			if (message.indexOf(expected) >= 0) {
 		    // ignore expected message
 			} else {
-			    System.out.println("Exception for : "+sql); 
+			    output_.println("Exception for : "+sql); 
 			    e.printStackTrace(); 
 			}
 
@@ -295,7 +295,7 @@ Performs setup needed before running variations.
 	} 
 
 
-	System.out.println("************** creating types *********");
+	output_.println("************** creating types *********");
 
 	for (int i = 0; i < typesAndDefinitions.length; i++) {
 	    String[] thisType = typesAndDefinitions[i];
@@ -306,16 +306,16 @@ Performs setup needed before running variations.
 		      // Skip booleans if not supported
 		    } else { 
 			stmt.executeUpdate(sql);
-			System.out.println("Created type "+thisType[0]); 
+			output_.println("Created type "+thisType[0]); 
 		    }
 		} catch (Exception e) {
 		    String message = e.toString();
 		    String expected = "already exists";
 		    if (message.indexOf(expected) >= 0) {
 		    // ignore expected message
-			System.out.println("Type exists "+thisType[0]); 
+			output_.println("Type exists "+thisType[0]); 
 		    } else {
-			System.out.println("Exception for : "+sql); 
+			output_.println("Exception for : "+sql); 
 			e.printStackTrace(); 
 		    }
 		}
@@ -323,7 +323,7 @@ Performs setup needed before running variations.
 	} 
 
 	// Create a set of procedures to test the different data types.
-	System.out.println("************** creating procedures *********"); 
+	output_.println("************** creating procedures *********"); 
 	for (int i = 0; i < proceduresAndDefinitions.length; i++) {
 	    String[] thisProc = proceduresAndDefinitions[i];
 	    if (skipHash.get(thisProc[0]) == null) { 
@@ -342,9 +342,9 @@ Performs setup needed before running variations.
 		    if (message.indexOf(expected) >= 0) {
 		    // ignore expected message
 		    } else {
-			System.out.flush();
+			output_.flush();
 			System.err.flush(); 
-			System.out.println("Exception for : "+sql); 
+			output_.println("Exception for : "+sql); 
 			e.printStackTrace(); 
 		    }
 

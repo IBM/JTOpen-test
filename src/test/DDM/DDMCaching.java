@@ -138,7 +138,7 @@ public class DDMCaching extends Testcase
 //    }
 //    catch(Exception e)
 //    {
-//      System.out.println("Unable to connect to the AS/400");
+//      output_.println("Unable to connect to the AS/400");
 //      e.printStackTrace();
 //      return;
 //    }
@@ -151,7 +151,7 @@ public class DDMCaching extends Testcase
    catch (Exception e)
    {
      // Testcase setup did not complete successfully
-     System.out.println("Unable to complete setup; variations not run");
+     output_.println("Unable to complete setup; variations not run");
      return;
    }
 //   System.gc();
@@ -709,7 +709,7 @@ public class DDMCaching extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
     // System.gc();
 
@@ -747,7 +747,7 @@ protected void setup()
     {
       for (int i = 0; i < msgs.length; ++i)
       {
-        System.out.println(msgs[i]);
+        output_.println(msgs[i]);
       }
       throw new Exception("");
     }
@@ -812,7 +812,7 @@ protected void cleanup()
   }
   catch(Exception e)
   {
-    System.out.println("Cleanup unsuccessful. Clear library " + testLib_ + " if it exists: CLRLIB " + testLib_);
+    output_.println("Cleanup unsuccessful. Clear library " + testLib_ + " if it exists: CLRLIB " + testLib_);
     e.printStackTrace(output_);
     throw e;
   }

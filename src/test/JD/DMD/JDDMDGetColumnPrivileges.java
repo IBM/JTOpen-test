@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetColumnPrivileges.java
@@ -27,14 +21,6 @@
  //
  // Differences between SYSIBM and legacy
  // 1.  SYSIBM will return rows for empty catalog string Var005
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
-
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -127,7 +113,7 @@ Performs setup needed before running variations.
         dmdTBROI_ = connectionTBROI_.getMetaData ();
 
         Statement s = connection_.createStatement ();
-	setupPrivileges(s, getDriver(), getRelease()); 
+	setupPrivileges(s, getDriver(), getRelease(), output_); 
         s.close ();
 
         closedConnection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
@@ -136,7 +122,7 @@ Performs setup needed before running variations.
 
     }
 
-    public static void setupPrivileges(Statement s, int driver, int release) throws SQLException {
+    public static void setupPrivileges(Statement s, int driver, int release, java.io.PrintWriter output_) throws SQLException {
 
 
 	String[] dropTables = {
@@ -154,7 +140,7 @@ Performs setup needed before running variations.
 		int errorCode = e.getErrorCode();
 		if (errorCode == -204) {
 		} else {
-		    System.out.println("Unexpected Exception errorCode="+errorCode);
+		    output_.println("Unexpected Exception errorCode="+errorCode);
 		    e.printStackTrace();
 		}
 	    }
@@ -301,7 +287,7 @@ verify all columns.
             String userName = dmd_.getUserName ();
             ResultSet rs;
             // 04/26/2006 changed last parameter to '%' instead of null to match JDBC spec
-	    System.out.println("Calling getColumnPrivileges(null,"+ JDDMDTest.COLLECTION+", CPRIVS, %)");
+	    output_.println("Calling getColumnPrivileges(null,"+ JDDMDTest.COLLECTION+", CPRIVS, %)");
             rs = dmd_.getColumnPrivileges (null, JDDMDTest.COLLECTION, "CPRIVS", "%");
             boolean success = true;
 
@@ -365,7 +351,7 @@ verify all columns.
 
                     sb.append("ROW: "+schemaName+" "+tableName+" "+columnName+"\n") ;
 
-                    // System.out.println (schemaName + ":" + tableName + ":" + columnName + ":");
+                    // output_.println (schemaName + ":" + tableName + ":" + columnName + ":");
 
                     success = success && schemaName.equals (JDDMDTest.COLLECTION);
                     success = success && tableName.equals ("CPRIVS");
@@ -386,7 +372,7 @@ verify all columns.
                     String isGrantable          = rs.getString ("IS_GRANTABLE");
                     boolean isGrantableWasNull  = rs.wasNull ();
 
-                    //  System.out.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
+                    //  output_.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
                     //                    + privilege + ":" + isGrantable + ":" + isGrantableWasNull + ":");
 
                     success = success && (grantor == null) && grantorWasNull;
@@ -402,7 +388,7 @@ verify all columns.
 
                 rs.close ();
 
-                // System.out.println ("Rows = " + rows);
+                // output_.println ("Rows = " + rows);
 
                 assertCondition ((rows == 4) && check1 && check2 && check3 && check4 && success,
                         "rows="+rows+"sb 4 message:"+sb.toString());
@@ -518,7 +504,7 @@ columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN)"))
                     check1 = true;
@@ -530,7 +516,7 @@ columns should be returned.
 
             rs.close ();
 
-            // System.out.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
+            // output_.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
 
             assertCondition (success && check1 && check2 && check3 && (rows == 4),
                 "\nsuccess="+success+" check1="+check1+" check2="+check2+" check3="+check3+" rows="+rows+" sb 4");
@@ -601,7 +587,7 @@ exactly.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
                 sb.append(column+"\n") ;
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS1(COLUMN1)"))
                     check1 = true;
@@ -675,7 +661,7 @@ All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS2(COLUMN1)"))
                     check1 = true;
@@ -896,7 +882,7 @@ exactly.  All matching columns should be returned.
 			          grantor + ":" + grantorWasNull + ":" + grantee + ":" +
 		                  privilege + ":" + isGrantable + ":\n");
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION2 + ".CPRIVS(COLUMN2)"))
                     check1 = true;
@@ -1053,7 +1039,7 @@ exactly.  All matching columns should be returned.
                     + rs.getString ("COLUMN_NAME") + ")";
 
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS1(COLUMN1)"))
                     check1 = true;
@@ -1169,7 +1155,7 @@ columns should be returned.
                     + rs.getString ("COLUMN_NAME") + ")";
 
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS2(COLUMN1)"))
                     check1 = true;
@@ -1248,7 +1234,7 @@ exactly.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN1)"))
                     check1 = true;
@@ -1294,7 +1280,7 @@ there is a match.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN)"))
                     check1 = true;
@@ -1306,7 +1292,7 @@ there is a match.  All matching columns should be returned.
                     check4 = true;
             }
 
-            // System.out.println ("rows = " + rows);
+            // output_.println ("rows = " + rows);
 
             rs.close ();
 
@@ -1357,7 +1343,7 @@ there is a match.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN1)"))
                     check1 = true;
@@ -1365,7 +1351,7 @@ there is a match.  All matching columns should be returned.
                     check2 = true;
             }
 
-            // System.out.println ("rows = " + rows);
+            // output_.println ("rows = " + rows);
 
             rs.close ();
             if (		getDriver () == JDTestDriver.DRIVER_JTOPENLITE || getDriver () == JDTestDriver.DRIVER_JCC ||  getDriver () == JDTestDriver.DRIVER_NATIVE || (getDriver () == JDTestDriver.DRIVER_TOOLBOX && isSysibmMetadata())) 
@@ -1565,7 +1551,7 @@ verify all columns.
                     String tableName    = rs.getString ("TABLE_NAME");
                     String columnName   = rs.getString ("COLUMN_NAME");
                     sb.append("ROW: "+schemaName+" "+tableName+" "+columnName+"\n");
-                    //System.out.println (schemaName + ":" + tableName + ":" + columnName + ":");
+                    //output_.println (schemaName + ":" + tableName + ":" + columnName + ":");
 
                     success = check(sb, "TABLE_SCHEM", schemaName, (JDDMDTest.COLLECTION)) && success;
                     success = check(sb, "TABLE_NAME",  tableName,  "CPRIVS") && success ;
@@ -1577,7 +1563,7 @@ verify all columns.
                     String privilege            = rs.getString ("PRIVILEGE");
                     String isGrantable          = rs.getString ("IS_GRANTABLE");
 
-                    //System.out.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
+                    //output_.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
                     //                + privilege + ":" + isGrantable + ":");
 
                     success = success && (grantor == null) && grantorWasNull;
@@ -1605,7 +1591,7 @@ verify all columns.
 
                 sb.append("ROW: "+schemaName+" "+tableName+" "+columnName+"\n") ;
 
-                // System.out.println (schemaName + ":" + tableName + ":" + columnName + ":");
+                // output_.println (schemaName + ":" + tableName + ":" + columnName + ":");
 
                 success = success && schemaName.equals (JDDMDTest.COLLECTION);
                 success = success && tableName.equals ("CPRIVS");
@@ -1626,7 +1612,7 @@ verify all columns.
                 String isGrantable          = rs.getString ("IS_GRANTABLE");
                 boolean isGrantableWasNull  = rs.wasNull ();
 
-                //  System.out.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
+                //  output_.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
                 //                    + privilege + ":" + isGrantable + ":" + isGrantableWasNull + ":");
 
                 success = success && (grantor == null) && grantorWasNull;
@@ -1642,7 +1628,7 @@ verify all columns.
 
             rs.close ();
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             assertCondition ((rows == 4) && check1 && check2 && check3 && check4 && success,
                 "rows="+rows+"sb 4 message:"+sb.toString());
@@ -1721,7 +1707,7 @@ columns should be returned.
                     String tableName    = rs.getString ("TABLE_NAME");
                     String columnName   = rs.getString ("COLUMN_NAME");
 
-                    //System.out.println (schemaName + ":" + tableName + ":" + columnName + ":");
+                    //output_.println (schemaName + ":" + tableName + ":" + columnName + ":");
 
                     success = success && schemaName.equals (JDDMDTest.COLLECTION);
                     success = success && tableName.equals ("CPRIVS");
@@ -1733,7 +1719,7 @@ columns should be returned.
                     String privilege            = rs.getString ("PRIVILEGE");
                     String isGrantable          = rs.getString ("IS_GRANTABLE");
 
-                    //System.out.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
+                    //output_.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
                     //                + privilege + ":" + isGrantable + ":");
 
                     success = success && (grantor == null) && grantorWasNull;
@@ -1759,7 +1745,7 @@ columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN)"))
                     check1 = true;
@@ -1771,7 +1757,7 @@ columns should be returned.
 
             rs.close ();
 
-            // System.out.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
+            // output_.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
 
             assertCondition (success && check1 && check2 && check3 && (rows == 4),
                 "\nsuccess="+success+" check1="+check1+" check2="+check2+" check3="+check3+" rows="+rows+" sb 4");
@@ -1851,7 +1837,7 @@ exactly.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
                 sb.append(column+"\n") ;
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS1(COLUMN1)"))
                     check1 = true;
@@ -1928,7 +1914,7 @@ All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS2(COLUMN1)"))
                     check1 = true;
@@ -2157,7 +2143,7 @@ exactly.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION2 + ".CPRIVS(COLUMN2)"))
                     check1 = true;
@@ -2344,7 +2330,7 @@ exactly.  All matching columns should be returned.
                     + rs.getString ("COLUMN_NAME") + ")";
 
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS1(COLUMN1)"))
                     check1 = true;
@@ -2484,7 +2470,7 @@ columns should be returned.
                     + rs.getString ("COLUMN_NAME") + ")";
 
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS2(COLUMN1)"))
                     check1 = true;
@@ -2572,7 +2558,7 @@ exactly.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN1)"))
                     check1 = true;
@@ -2623,7 +2609,7 @@ there is a match.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n") ;
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN)"))
                     check1 = true;
@@ -2635,7 +2621,7 @@ there is a match.  All matching columns should be returned.
                     check4 = true;
             }
 
-            // System.out.println ("rows = " + rows);
+            // output_.println ("rows = " + rows);
 
             rs.close ();
 
@@ -2689,7 +2675,7 @@ there is a match.  All matching columns should be returned.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
                 sb.append(column+"\n");
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN1)"))
                     check1 = true;
@@ -2697,7 +2683,7 @@ there is a match.  All matching columns should be returned.
                     check2 = true;
             }
 
-            // System.out.println ("rows = " + rows);
+            // output_.println ("rows = " + rows);
 
             rs.close ();
             if (getDriver () == JDTestDriver.DRIVER_NATIVE )
@@ -2852,7 +2838,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000 && System.currentTimeMillis() < endTime ; i++) {
-		    // System.out.println("Calling getColumnPrivileges");
+		    // output_.println("Calling getColumnPrivileges");
 		    ResultSet rs =
 		      dmd_.getColumnPrivileges (
 						connection_.getCatalog (),
@@ -3447,7 +3433,7 @@ getColumnPrivileges() - Use readonly connection.
                     + "." + rs.getString ("TABLE_NAME") + "("
                     + rs.getString ("COLUMN_NAME") + ")";
 
-                // System.out.println (column + ":");
+                // output_.println (column + ":");
 
                 if (column.equals (JDDMDTest.COLLECTION + ".CPRIVS(COLUMN)"))
                     check1 = true;
@@ -3459,7 +3445,7 @@ getColumnPrivileges() - Use readonly connection.
 
             rs.close ();
 
-            // System.out.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
+            // output_.println ("rows = " + rows + ":" + success + ":" + check1 + ":" + check2 + ":" + check3 + ":");
 
             assertCondition (success && check1 && check2 && check3 && (rows == 4),
                 "\nsuccess="+success+" check1="+check1+" check2="+check2+" check3="+check3+" rows="+rows+" sb 4");

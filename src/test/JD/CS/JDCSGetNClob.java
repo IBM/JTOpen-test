@@ -118,14 +118,14 @@ public class JDCSGetNClob extends JDCSGetTestcase {
     boolean equals = s.equals(b);
     if (!equals) {
       if (s.length() < 256) {
-        System.out.println(s);
+        output_.println(s);
       } else {
-        System.out.println(s.substring(0, 256) + "....");
+        output_.println(s.substring(0, 256) + "....");
       }
       if (b.length() < 256) {
-        System.out.println(b);
+        output_.println(b);
       } else {
-        System.out.println(b.substring(0, 256) + "....");
+        output_.println(b.substring(0, 256) + "....");
       }
     }
     return equals; // @B1C
@@ -1176,7 +1176,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
             } catch (Exception e) {
               String exString = e.toString();
               if (exString.toUpperCase().indexOf("NOT FOUND") == -1) {
-                System.out.println("Warning on drop procedure");
+                output_.println("Warning on drop procedure");
                 e.printStackTrace();
               }
             }
@@ -1208,8 +1208,8 @@ public class JDCSGetNClob extends JDCSGetTestcase {
 		  stmt.executeUpdate(sql);
 		  stmt.close(); 
 	      } catch (Exception e) {
-		  System.out.println("Warning.  Did not cleanup lob");
-		  e.printStackTrace(System.out); 
+		  output_.println("Warning.  Did not cleanup lob");
+		  e.printStackTrace(output_); 
 	      }
 
           }

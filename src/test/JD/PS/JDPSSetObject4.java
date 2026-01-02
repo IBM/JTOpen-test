@@ -2137,8 +2137,8 @@ extends JDTestcase
             boolean condition = rTimestampVal.equals(maxTimestampVal);
             if(!condition)
             {
-                System.out.println("Returned String Value after Updation: " + rStringVal);
-                System.out.println("Returned Timestamp Value after Updation: " + rTimestampVal);
+                output_.println("Returned String Value after Updation: " + rStringVal);
+                output_.println("Returned Timestamp Value after Updation: " + rTimestampVal);
             }
             assertCondition(condition);
 

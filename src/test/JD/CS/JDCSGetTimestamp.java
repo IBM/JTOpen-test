@@ -691,9 +691,9 @@ getTimestamp() -- Get an output parameter where the database output type isn't n
 	  Timestamp yCheck  = Timestamp.valueOf(minString);
 	  boolean condition =  (xRetVal.equals(xCheck)) && (yRetVal.equals(yCheck)) && (zRetVal == null);
 	  if (!condition) {
-	      System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
-	      System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
-	      System.out.println("zRetVal ("+zRetVal+") != null"); 
+	      output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
+	      output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
+	      output_.println("zRetVal ("+zRetVal+") != null"); 
 	  } 
 	  assertCondition(condition); 
 
@@ -738,9 +738,9 @@ getTimestamp() -- Get an output parameter where the database output type isn't n
 	  Timestamp xRetVal = cstmt.getTimestamp(1);
 	  Timestamp yRetVal = cstmt.getTimestamp(2);
 	  Timestamp zRetVal = cstmt.getTimestamp(3);
-	  System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
-	  System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
-	  System.out.println("zRetVal ("+zRetVal+")"); 
+	  output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
+	  output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
+	  output_.println("zRetVal ("+zRetVal+")"); 
 
 	  failed("Didn't throw exception"); 
 
@@ -1137,7 +1137,7 @@ getTimestamp() - Get a type that was registered as a CLOB.
 		  outputString = outputTimestamp.toString();
 	      }
 	  } catch (Exception e) {
-	      e.printStackTrace(System.out);
+	      e.printStackTrace(output_);
 	      outputString=e.toString(); 
 	  } 
           if (outputString.equals(expectedValues[i])) {

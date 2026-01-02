@@ -118,7 +118,7 @@ public class JobLogTestcase extends Testcase
             while (st.hasMoreTokens())
             {
                 s[count++] = st.nextToken();
-		//System.out.println("startCLJob:: string["+count+"] = " +s[count]);
+		//output_.println("startCLJob:: string["+count+"] = " +s[count]);
             }
             if (count == 3)
             {
@@ -1036,7 +1036,7 @@ public class JobLogTestcase extends Testcase
         // Check the input value 
         if ( message == null  || keys.isEmpty() ) 
 	{
-	    System.out.println("message == null  || keys.isEmpty()" );
+	    output_.println("message == null  || keys.isEmpty()" );
 	    return false;
         }
 
@@ -1357,10 +1357,10 @@ public class JobLogTestcase extends Testcase
             JobLog j = new JobLog();
             if (DEBUG)
             {
-                System.out.println("Name:   " + j.getName());
-                System.out.println("Number: " + j.getNumber());
-                System.out.println("System: " + j.getSystem());
-                System.out.println("User:   " + j.getUser());
+                output_.println("Name:   " + j.getName());
+                output_.println("Number: " + j.getNumber());
+                output_.println("System: " + j.getSystem());
+                output_.println("User:   " + j.getUser());
             }
             assertCondition(j.getName().equals("*") && 
 	                    j.getNumber().equals("") && 
@@ -1775,9 +1775,9 @@ public class JobLogTestcase extends Testcase
             JobLog j = new JobLog(systemObject_, job[2], job[1], job[0]);
             if (DEBUG)
             {
-                System.out.println("Name = " + job[2]);
-                System.out.println("User = " + job[1]);
-                System.out.println("Number = " + job[0]);
+                output_.println("Name = " + job[2]);
+                output_.println("User = " + job[1]);
+                output_.println("Number = " + job[0]);
             }
 
             Enumeration<QueuedMessage> e = j.getMessages();
@@ -2113,7 +2113,7 @@ public class JobLogTestcase extends Testcase
             if (usingNativeOptimizations()) {
               // When running on-thread, it's a bit more difficult to determine the name of
               // the job we're running in.
-              System.out.println("Running on-thread, so assuming the write message was successful.");
+              output_.println("Running on-thread, so assuming the write message was successful.");
               return true;
             }
             Enumeration<?> list = null; 

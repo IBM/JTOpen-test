@@ -143,7 +143,7 @@ Constructor.
     }
     catch (Exception e)
     {
-      System.out.println("Exception in createEmptyFile: <" + e.getMessage() + ">");
+      output_.println("Exception in createEmptyFile: <" + e.getMessage() + ">");
     }
   }
 
@@ -251,7 +251,7 @@ Constructor.
 
     if (DEBUG) {
       Properties properties = System.getProperties();
-      properties.store(System.out, "Dumping all JVM Properties"); 
+      properties.store(output_, "Dumping all JVM Properties"); 
     } 
   }
 
@@ -1906,10 +1906,10 @@ list() - Should return the same directory entry names as File.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in IFSJavaFile.list() but not File.list():");
+                    output_.println("Names in IFSJavaFile.list() but not File.list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
                  somethingPrinted = true; 
              }
          }
@@ -1922,10 +1922,10 @@ list() - Should return the same directory entry names as File.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in File.list() but not IFSJavaFile.list():");
+                    output_.println("Names in File.list() but not IFSJavaFile.list():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
                  somethingPrinted = true; 
              }
              Object found = trackListNames.get(name2);
@@ -1937,8 +1937,8 @@ list() - Should return the same directory entry names as File.list().
              }
          }
          if (!somethingPrinted) { 
-           System.out.println("Nothing printed");
-           System.out.println(uniqueList.toString()); 
+           output_.println("Nothing printed");
+           output_.println(uniqueList.toString()); 
          }
       }//end else
     }
@@ -2015,10 +2015,10 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
              {
                  if (print)
                  {
-                    System.out.println("Names in IFSJavaFile.list(\"*\") but not File.list():");
+                    output_.println("Names in IFSJavaFile.list(\"*\") but not File.list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -2029,10 +2029,10 @@ list(String) - Ensure that IFSJavaFile.list("*") returns the same files as File.
              {
                  if (print)
                  {
-                    System.out.println("Names in File.list() but not IFSJavaFile.list(\"*\"):");
+                    output_.println("Names in File.list() but not IFSJavaFile.list(\"*\"):");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -2311,7 +2311,7 @@ mkdirs() - Should create the directory.
       }
       catch (Exception e2)
       {
-        System.out.println ("Setup Failed");
+        output_.println ("Setup Failed");
         throw e2;
       }
 
@@ -2647,8 +2647,8 @@ toString() - Should return default values when no properties have been set.
       IFSJavaFile f = new IFSJavaFile();
       if (!f.toString().equals(File.separator))
       {
-        System.out.println ("toString <" + f.toString() + ">");
-        System.out.println ("System   <" + IFSFile.separator + ">");
+        output_.println ("toString <" + f.toString() + ">");
+        output_.println ("System   <" + IFSFile.separator + ">");
         failed("Unexpected separator value found.");
       }
       succeeded();
@@ -2746,10 +2746,10 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles() but not listFiles(\"*\"):");
+                    output_.println("Names in listFiles() but not listFiles(\"*\"):");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -2760,10 +2760,10 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.listFi
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles(\"*\") but not listFiles():");
+                    output_.println("Names in listFiles(\"*\") but not listFiles():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -2827,10 +2827,10 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.list()
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles() but not list():");
+                    output_.println("Names in listFiles() but not list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -2841,10 +2841,10 @@ listFiles() - Should return the same directory entry names as IFSJavaFile.list()
              {
                  if (print)
                  {
-                    System.out.println("Names in list() but not listFiles():");
+                    output_.println("Names in list() but not listFiles():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -2921,10 +2921,10 @@ IFSJavaFile.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles(\"*\") but not list():");
+                    output_.println("Names in listFiles(\"*\") but not list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -2935,10 +2935,10 @@ IFSJavaFile.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in list() but not listFiles(\"*\"):");
+                    output_.println("Names in list() but not listFiles(\"*\"):");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -3209,10 +3209,10 @@ list() or listFiles() is called.
              {
                  if (print)
                  {
-                    System.out.println("Names in list() but not listFiles():");
+                    output_.println("Names in list() but not listFiles():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -3223,10 +3223,10 @@ list() or listFiles() is called.
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles() but not list():");
+                    output_.println("Names in listFiles() but not list():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -3711,8 +3711,8 @@ list() or listFiles() is called.
           {
              if (url.getPort() == -1)
              {
-                //System.out.println(url.getFile());
-                //System.out.println(file1.getPath());
+                //output_.println(url.getFile());
+                //output_.println(file1.getPath());
                 if (url.getFile().equals(file1.getPath() + File.separatorChar))
                    succeeded();
                 else
@@ -4317,7 +4317,7 @@ public void Var138()                                       // @B2A
 
       sb.append("  file1.getCanonicalPath()=" + file1.getCanonicalPath()+NEWLINE);
       sb.append("  expected pathA2         =" + pathA2+NEWLINE);
-      /* System.out.println("  javaIoFile1.getCanonicalPath()=" + javaIoFile1.getCanonicalPath()); */ 
+      /* output_.println("  javaIoFile1.getCanonicalPath()=" + javaIoFile1.getCanonicalPath()); */ 
       sb.append("file1 path incorrect\n"); 
       passed = false; 
     }

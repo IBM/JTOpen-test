@@ -58,6 +58,7 @@ import com.ibm.as400.security.auth.ProfileTokenCredential;
  *  -uid       - The user profile name to use to authenticate to the server.
  *  -pwd       - The user profile password to use to authenticate to the server.
  *  -proxy     - The proxy server system name with which to connect.
+ *  -proxy5    - The socks5 proxy server system name with which to connect.
  *  -tc        - Testcase to be run.  If not specififed, all testcases will be run.  This token can be specified several times.
  *  -vars      - Variations to be run.  Several values can be specified by separating each value with a comma.  This token must be specified immediately after a -tc token, it applies to the testcase which it follows.  If not specified, all variations will be run.
  *  -misc      - Miscellaneous information that is passed to all testcases.
@@ -125,6 +126,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
   protected String password_ = null;
   protected char[]  encryptedPassword_ = null;
   protected static String proxy_;
+  protected static String proxy5_="";
   public static boolean checkPasswordLeak = false; 
   static {
     String propVal = System
@@ -444,6 +446,8 @@ public abstract class TestDriver implements TestDriverI, Runnable,
           state = PARSE_PASSWORD;
         else if (arg.equalsIgnoreCase("-proxy"))
           state = PARSE_PROXY;
+        else if (arg.equalsIgnoreCase("-proxy5"))
+          state = PARSE_PROXY5;
         else if (arg.equalsIgnoreCase("-misc"))
           state = PARSE_MISCELLANEOUS;
         else if (arg.equalsIgnoreCase("-asp"))
@@ -565,6 +569,10 @@ public abstract class TestDriver implements TestDriverI, Runnable,
         break;
       case PARSE_PROXY:
         proxy_ = arg;
+        state = START;
+        break;
+      case PARSE_PROXY5:
+        proxy5_ = arg;
         state = START;
         break;
       case PARSE_MISCELLANEOUS:
@@ -690,6 +698,8 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       throw new Exception("Incomplete password specification.");
     case PARSE_PROXY:
       throw new Exception("Incomplete proxy specification.");
+    case PARSE_PROXY5:
+      throw new Exception("Incomplete proxy5 specification.");
     case PARSE_TRACE_CATEGORY:
       throw new Exception("Incomplete trace category specification.");
     case PARSE_PWR_SYS:
@@ -809,6 +819,17 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     if (!proxy_.equals("")) {
       systemObject_.setProxyServer(proxy_);
       pwrSys_.setProxyServer(proxy_);
+    }
+    if (!proxy5_.equals("")) {
+      String proxyHost = proxy5_;
+      int proxyPort=5005;
+      int colonIndex = proxy5_.indexOf(":"); 
+      if (colonIndex > 0) { 
+        proxyHost = proxy5_.substring(0,colonIndex); 
+        proxyPort = Integer.parseInt(proxy5_.substring(colonIndex+1)); 
+      }
+      JDReflectionUtil.callMethod_V(systemObject_,"setSock5Server",proxyHost,proxyPort);
+      JDReflectionUtil.callMethod_V(pwrSys_,"setSock5Server",proxyHost,proxyPort);
     }
 
     // Generate profile token if asked.
@@ -1326,6 +1347,7 @@ public abstract class TestDriver implements TestDriverI, Runnable,
 			"  -file      - The file in which to write results.  Results are always written to standard out, if this tag is specified, results are also written to this file.",
 			"  -run       - The run mode.  Values are 'u' for unattended variations only, 'a' for attended variations only, or 'b' for both.  The default value is 'u'.",
 			"  -proxy     - The proxy server system name with which to connect.",
+                        "  -proxy5    - The socks5 proxy server system name with which to connect.",
 			"  -tc        - Testcase to be run.  If not specififed, all testcases will be run.  This token can be specified several times.",
 			"  -vars      - Variations to be run.  Several values can be specified by separating each value with a comma.  This token must be specified immediately after a -tc token, it applies to the testcase which it follows.  If not specified, all variations will be run.",
 			"  -misc      - Miscellaneous information that is passed to all testcases.",

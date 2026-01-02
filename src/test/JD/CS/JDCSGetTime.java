@@ -667,9 +667,9 @@ getTime() -- Get an output parameter where the database output type isn't necess
           else
               condition = (xRetVal.equals(xCheck)) && (yRetVal.equals(yCheck)) && (zRetVal == null);
 	  if (!condition) {
-	      System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
-	      System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
-	      System.out.println("zRetVal ("+zRetVal+") != null"); 
+	      output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
+	      output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
+	      output_.println("zRetVal ("+zRetVal+") != null"); 
 	  } 
 	  assertCondition(condition); 
 
@@ -714,9 +714,9 @@ getTime() -- Get an output parameter where the database output type isn't necess
 	  Time xRetVal = cstmt.getTime(1);
 	  Time yRetVal = cstmt.getTime(2);
 	  Time zRetVal = cstmt.getTime(3);
-	  System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
-	  System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
-	  System.out.println("zRetVal ("+zRetVal+")"); 
+	  output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
+	  output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
+	  output_.println("zRetVal ("+zRetVal+")"); 
 
 	  failed("Didn't throw exception"); 
 
@@ -760,8 +760,8 @@ getTime() - Get a type that was registered as a TIME using a calendare. Make sur
 	       Time p = csTypes_.getTime (16, Calendar.getInstance ());
 	       boolean condition =  p.equals(checkTime);
 	       if (! condition) {
-		   System.out.println("check time    = "+checkTime+" ms="+checkTime.getTime()); 
-		   System.out.println("returned time = "+p        +" ms="+p.getTime()); 
+		   output_.println("check time    = "+checkTime+" ms="+checkTime.getTime()); 
+		   output_.println("returned time = "+p        +" ms="+p.getTime()); 
 	       } 
 	       assertCondition (condition);
 	   } catch (Exception e)

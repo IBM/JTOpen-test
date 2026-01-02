@@ -145,7 +145,7 @@ Performs setup needed before running variations.
 	    int value = Integer.parseInt(randomRunTimeProperty);
 	    if (value > 0) {
 		randomRunTime = value;
-		System.out.println("randomRunTime override using property JDRSStress.randomRunTime="+value); 
+		output_.println("randomRunTime override using property JDRSStress.randomRunTime="+value); 
 	    } 
 	} 
 
@@ -671,7 +671,7 @@ Performs cleanup needed after running variations.
     tableDefinition += ")";
     
     if (verbose) {
-      System.out.println("Testing " + columns + "." + rows + "."
+      output_.println("Testing " + columns + "." + rows + "."
           + originalTestId + " " + label);
     }
     sb.append("Testing " + columns + "." + rows + "."
@@ -704,7 +704,7 @@ Performs cleanup needed after running variations.
 
       if (rows < minimumRows) {
         rows = minimumRows;
-        System.out.println("Setting minimum rows to " + rows);
+        output_.println("Setting minimum rows to " + rows);
       }
     }
     int batchCount = 0; 
@@ -737,7 +737,7 @@ Performs cleanup needed after running variations.
             if (ps != null) {
 		if (useBatching) {
 		    if (batchCount > 0) {
-			// System.out.println("Executing batch at count="+batchCount); 
+			// output_.println("Executing batch at count="+batchCount); 
 			ps.executeBatch();
 			batchCount = 0;
 		    }
@@ -796,7 +796,7 @@ Performs cleanup needed after running variations.
 		      ps.addBatch();
 		      batchCount++; 
 		      if (batchCount >= 100) {
-			  // System.out.println("Executing batch at count="+batchCount); 
+			  // output_.println("Executing batch at count="+batchCount); 
 			  ps.executeBatch();
 			  batchCount = 0; 
 		      } 
@@ -809,7 +809,7 @@ Performs cleanup needed after running variations.
             if (ps != null) {
 		if (useBatching) {
 		    if (batchCount > 0) {
-			// System.out.println("Executing batch at count="+batchCount); 
+			// output_.println("Executing batch at count="+batchCount); 
 			ps.executeBatch();
 			batchCount = 0;
 		    }
@@ -827,23 +827,23 @@ Performs cleanup needed after running variations.
 
         } catch (Exception e) {
           if (!printed) {
-            System.out.println("Statement is " + preparedInsertSQL);
-            System.out.println("parameters are " + parameters);
-            System.out.flush();
+            output_.println("Statement is " + preparedInsertSQL);
+            output_.println("parameters are " + parameters);
+            output_.flush();
             System.err.flush();
             e.printStackTrace();
-            System.out.flush();
+            output_.flush();
             System.err.flush();
             printed = true;
 
           }
-          System.out.flush();
+          output_.flush();
           System.err.flush();
 
           System.out
               .println("Warning inserting into database.. falling back to using "
                   + lastSql[0]);
-          System.out.flush();
+          output_.flush();
           System.err.flush();
 
           if (ps != null) {
@@ -866,7 +866,7 @@ Performs cleanup needed after running variations.
     if (ps != null) {
 	if (useBatching) {
 	    if (batchCount > 0) {
-		// System.out.println("Executing batch at count="+batchCount); 
+		// output_.println("Executing batch at count="+batchCount); 
 		ps.executeBatch();
 		batchCount = 0;
 	    }
@@ -925,7 +925,7 @@ Performs cleanup needed after running variations.
 
     if (failCount == 0) {
       if (skipCleanup) {
-        System.out.println("Skipping cleanup of " + tablename);
+        output_.println("Skipping cleanup of " + tablename);
       } else {
         lastSql[0] = "Drop table " + tablename;
         sb.append("Executing7 " + lastSql[0] + "\n");
@@ -1190,7 +1190,7 @@ Performs cleanup needed after running variations.
               long predictedTime = passedTime * totalVars / passCount;
               java.util.Date endTime = new java.util.Date(
                   startTime + predictedTime);
-              System.out.println(
+              output_.println(
                   "Predicting completion of " + totalVars + " tests in "
                       + (predictedTime - passedTime) + " = " + endTime);
             }

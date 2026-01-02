@@ -154,15 +154,15 @@ protected void setup () throws Exception
           commandString = "QSYS/ADDDIRE USRID(" + userName + " " + shortSysName
               + ") USRD('Test') USER(" + userName + ")";
         }
-        System.out.println("Setup: " + commandString);
+        output_.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
         commandString = "QSYS/ADDDIRE USRID(" + pwrUserName + " " + shortSysName
             + ") USRD('Test') USER(" + pwrUserName + ")";
-        System.out.println("Setup: " + commandString);
+        output_.println("Setup: " + commandString);
         runCommand(ccallPow_, commandString);
 
         commandString = "QSYS/CRTFLR FLR(TESTFLR1)";
-        System.out.println("Setup: " + commandString);
+        output_.println("Setup: " + commandString);
         runCommand(ccall_, commandString);
         runCommand(ccall_, "QSYS/CRTFLR FLR(TESTFLR)");
         runCommand(ccall_, "QSYS/CRTFLR FLR(TESTFLR2) INFLR('TESTFLR')");
@@ -195,12 +195,12 @@ protected void setup () throws Exception
         runCommand(ccallPow_, "QSYS/CRTAUTL AUTL(TESTAUTL1)");
         runCommand(ccallPow_, "QSYS/CRTAUTL AUTL(TESTAUTL8)");
       } catch (Exception ex) {
-        System.out.println(ex);
-        ex.printStackTrace(System.out);
+        output_.println(ex);
+        ex.printStackTrace(output_);
       }
     } catch (Throwable e) {
       // throws new Exception("permission");
-       System.out.println(e);
+       output_.println(e);
      }
 }
 
@@ -211,12 +211,12 @@ protected void setup () throws Exception
     boolean result = ccall.run();
     if (!result) {
 
-      System.out.println("Command failed: " + commandString);
+      output_.println("Command failed: " + commandString);
       AS400Message[] msgs = ccall.getMessageList();
       for (int j = 0; j < msgs.length; j++) {
-        System.out.println(msgs[j].getText());
+        output_.println(msgs[j].getText());
       }
-      System.out.println("----------------------");
+      output_.println("----------------------");
     }
   }
 
@@ -261,7 +261,7 @@ protected void cleanup()
       }    
       catch(Exception ex) 
       {
-           System.out.println(ex);
+           output_.println(ex);
       }
 
       {
@@ -272,7 +272,7 @@ protected void cleanup()
         } 
         catch(NullPointerException exe)
         {
-          System.out.println("The file does not exist!");
+          output_.println("The file does not exist!");
         }
       }
      
@@ -280,7 +280,7 @@ protected void cleanup()
 
 
     // Determines whether two UserPermission objects are equal.
-    static boolean areEqual(UserPermission perm1, UserPermission perm2)
+     boolean areEqual(UserPermission perm1, UserPermission perm2)
     {
       if (perm1 == null) return perm2 == null;
       if (perm2 == null) return false;
@@ -290,7 +290,7 @@ protected void cleanup()
           perm1.isAuthorizationListManagement() == perm2.isAuthorizationListManagement())
         return true;
       else {
-        System.out.println("The UserPermission object mismatch.");
+        output_.println("The UserPermission object mismatch.");
         return false;
       }
     }
@@ -5641,10 +5641,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -5659,15 +5659,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 
@@ -5711,10 +5711,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -5729,15 +5729,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 
@@ -5781,10 +5781,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -5799,15 +5799,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 
@@ -5852,10 +5852,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -5870,15 +5870,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 
@@ -5921,10 +5921,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -5939,15 +5939,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 
@@ -5990,10 +5990,10 @@ Method tested: writeObject()
 
       UserPermission uPerm0 = perm0.getUserPermission(owner0);
       /*
-       System.out.println("Original UserPermission for " + owner0 + ":"); 
-       if (uPerm0 == null) System.out.println("null");
+       output_.println("Original UserPermission for " + owner0 + ":"); 
+       if (uPerm0 == null) output_.println("null");
        else {
-       System.out.println(uPerm0.getGroupIndicator() + ", " +
+       output_.println(uPerm0.getGroupIndicator() + ", " +
        uPerm0.getUserID() + ", " +
        uPerm0.isFromAuthorizationList() + ", " +
        uPerm0.isAuthorizationListManagement());
@@ -6008,15 +6008,15 @@ Method tested: writeObject()
       Permission perm1 = new Permission(file);
       UserPermission uPerm1 = perm1.getUserPermission(owner0);
       /*
-       System.out.println("Changed UserPermission for " + owner0 + ":");
-       if (uPerm1 == null) System.out.println("null");
+       output_.println("Changed UserPermission for " + owner0 + ":");
+       if (uPerm1 == null) output_.println("null");
        else {
-       System.out.println(uPerm1.getGroupIndicator() + ", " +
+       output_.println(uPerm1.getGroupIndicator() + ", " +
        uPerm1.getUserID() + ", " +
        uPerm1.isFromAuthorizationList() + ", " +
        uPerm1.isAuthorizationListManagement());
        }
-       System.out.println("After commit(): Owner = " + perm1.getOwner());
+       output_.println("After commit(): Owner = " + perm1.getOwner());
        */
       String owner1 = perm1.getOwner();
 

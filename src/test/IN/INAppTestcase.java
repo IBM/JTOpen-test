@@ -280,11 +280,11 @@ This simulates a command-line invocation.
       ///}
         infoOutput_  = infoText.toString ();
         errorOutput_ = errorText.toString ();
-//System.out.println("  info  "+infoOutput_);
-//System.out.println("  error  "+errorOutput_);
-      ///if (DEBUG) System.out.println ("Waiting for process to complete.");
+//output_.println("  info  "+infoOutput_);
+//output_.println("  error  "+errorOutput_);
+      ///if (DEBUG) output_.println ("Waiting for process to complete.");
       ///exitVal = prc.waitFor ();
-      ///if (DEBUG) System.out.println ("Process completed.");
+      ///if (DEBUG) output_.println ("Process completed.");
       ///if (exitVal != 1) throw new Exception ("waitFor() exit value: " +
       ///                                       exitVal);
 
@@ -298,12 +298,12 @@ Runs the variations.
 public void run ()
 {
 
-    System.out.println("");
-    System.out.println("Testcase INAppTestcase -- hints for successful execution");
-    System.out.println("   Examples for -directory option");
-    System.out.println("      PC:  -directory c:\\jt400");
-    System.out.println("      AIX: -directory /abc/def/g");
-    System.out.println("");
+    output_.println("");
+    output_.println("Testcase INAppTestcase -- hints for successful execution");
+    output_.println("   Examples for -directory option");
+    output_.println("      PC:  -directory c:\\jt400");
+    output_.println("      AIX: -directory /abc/def/g");
+    output_.println("");
     
     boolean allVariations = (variationsToRun_.size () == 0);
     File dir = new File(InstallTest.targetPath + targetPath );
@@ -2679,8 +2679,8 @@ public void Var026 ()
             if(len2 ==0)
             {
                 failed(" The package is not installed successfully!");
-                System.out.println("NOTE TO TESTER: This is the first variation in this Testcase that actually goes out to the server to get files.");
-                System.out.println("Suggestion: Verify that the HTTP Server is started (STRTCPSVR *HTTP), and that WRKHTTPCFG shows the line \"Pass /* /*\".");
+                output_.println("NOTE TO TESTER: This is the first variation in this Testcase that actually goes out to the server to get files.");
+                output_.println("Suggestion: Verify that the HTTP Server is started (STRTCPSVR *HTTP), and that WRKHTTPCFG shows the line \"Pass /* /*\".");
             }
          
             else

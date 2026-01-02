@@ -318,24 +318,24 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
 
             ServiceProgramCall s = new ServiceProgramCall();
 
-            // System.out.println("about to call run, 5 parms");
+            // output_.println("about to call run, 5 parms");
 
             if (s.run(systemObject_, serviceProgramName_, "i_i", ServiceProgramCall.RETURN_INTEGER, paramList))
             {
                 Integer I = (Integer)bin4.toObject(s.getReturnValue(), 0);
                 int i = I.intValue();
-                // System.out.println("Result is: " + i + " Expected 10");
+                // output_.println("Result is: " + i + " Expected 10");
 
                 assertCondition(i == 10);
             }
             else
             {
                 failed();
-                System.out.println("Call to run() failed.");
+                output_.println("Call to run() failed.");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -465,7 +465,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
 
             ServiceProgramCall s = new ServiceProgramCall();
 
-            // System.out.println("about to call run, 5 parms");
+            // output_.println("about to call run, 5 parms");
 
             s.run(fred, serviceProgramName_, "i_i", ServiceProgramCall.RETURN_INTEGER, paramList);
 
@@ -501,7 +501,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
 
             ServiceProgramCall s = new ServiceProgramCall();
 
-            // System.out.println("about to call run, 5 parms");
+            // output_.println("about to call run, 5 parms");
 
             if (s.run(systemObject_, serviceProgramName_, "abcdefg", ServiceProgramCall.RETURN_INTEGER, paramList))
             {
@@ -518,7 +518,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
                 else
                 {
                     failed("wrong error message:");
-                    System.out.println(m.getID() + " " + m.getText());
+                    output_.println(m.getID() + " " + m.getText());
                 }
             }
         }
@@ -545,7 +545,7 @@ public class ServiceProgramCallUnattendedTestcase extends Testcase
 
             ServiceProgramCall s = new ServiceProgramCall();
 
-            // System.out.println("about to call run, 5 parms");
+            // output_.println("about to call run, 5 parms");
 
             if (s.run(systemObject_, "/QSYS.LIB/DAW.LIB/XYZ.SRVPGM", "aaa", ServiceProgramCall.RETURN_INTEGER, paramList))
             {

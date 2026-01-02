@@ -985,9 +985,9 @@ public class RMtoRecordTestcase extends Testcase
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.recFmtFloatBig");
             Record newRec = rfmlDoc.toRecord("format1");
             Float floatV = Float.valueOf(123456.789);
-System.out.println("floatV = " + floatV.floatValue() );
+output_.println("floatV = " + floatV.floatValue() );
             Float floatF = (Float) newRec.getField(0);
-System.out.println("floatF = " + floatF.floatValue() );
+output_.println("floatF = " + floatF.floatValue() );
             if (  floatF.floatValue() != floatV.floatValue())
             {
               failed("Bad value returned for first field.");
@@ -1131,8 +1131,8 @@ System.out.println("floatF = " + floatF.floatValue() );
               return;
             }
             FieldDescription field1 = recFmt.getFieldDescription(0);
- System.out.println("DataType = " + field1.getDataType());
- System.out.println("Class = " + field1.getDataType().getClass());
+ output_.println("DataType = " + field1.getDataType());
+ output_.println("Class = " + field1.getDataType().getClass());
 //            if ( field1.getDataType().getClass() == dt.getClass() &&
 //                 field1.getDataType().getByteLength() == dt.getByteLength())
 //            {
@@ -1140,10 +1140,10 @@ System.out.println("floatF = " + floatF.floatValue() );
 //              return;
 //            }
 
-System.out.println("newRec.getField class = " + newRec.getField(0).getClass());
+output_.println("newRec.getField class = " + newRec.getField(0).getClass());
             AS400ByteArray byteArray = new AS400ByteArray(100);
             byte[] bytes =  byteArray.toBytes(newRec.getField(0));
-System.out.println(newRec.getField(0).toString());
+output_.println(newRec.getField(0).toString());
             if ( !byteArray.toString().equals("010"))
             {
                 failed("Bad value returned for first field.");

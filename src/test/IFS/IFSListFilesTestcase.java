@@ -114,12 +114,12 @@ Constructor.
         if (aDirectory.exists())
         {
           if (aDirectory.isDirectory())
-              System.out.println("Directory already exists");
+              output_.println("Directory already exists");
           else
-              System.out.println("File with this name already exists");
+              output_.println("File with this name already exists");
         }
         else
-           System.out.println("Create directory failed");
+           output_.println("Create directory failed");
       }
       return code;
     }
@@ -280,7 +280,7 @@ as list(IFSFileFilter, String).
         {
           if (!(list1[i].getName().equals(list2[i])))
        {
-             System.out.println("listFiles(filter,\"*\").getName()= " + list1[i].getName() +
+             output_.println("listFiles(filter,\"*\").getName()= " + list1[i].getName() +
                                 ", list(filter,\"*\")= " + list2[i]);
              passed = false; 
           }
@@ -369,7 +369,7 @@ as list(IFSFileFilter).
         {
           if (!(list1[i].getName().equals(list2[i])))
        {
-             System.out.println("listFiles(filter).getName()= " + list1[i].getName() +
+             output_.println("listFiles(filter).getName()= " + list1[i].getName() +
                                 ", list(filter)= " + list2[i]);
              break;
           }
@@ -412,7 +412,7 @@ Ensure that listFiles(filter, "*") returns the same files as list(filter, "*").
         {
           if (!(list1[i].getName().equals(list2[i])))
        {
-             System.out.println("listFiles(filter, \"*\").getName()= " + list1[i].getName() +
+             output_.println("listFiles(filter, \"*\").getName()= " + list1[i].getName() +
                                 ", list.(filter, \"*\") " + list2[i]);
              passed =  false; 
           }
@@ -461,7 +461,7 @@ as list(filter, "Q*").
         {
           if (!(list1[i].getName().equals(list2[i])))
        {
-             System.out.println("listFiles(filter, \"Q*\").getName()= " + list1[i].getName() +
+             output_.println("listFiles(filter, \"Q*\").getName()= " + list1[i].getName() +
                                 ", list(filter, \"Q*\")= " + list2[i]);
              break;
           }
@@ -515,7 +515,7 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
           IFSFile file = new IFSFile(systemObject_, smallIfsDirName_, list2[i]);
           if (!(list1[i].getName().equals(file.getName())))
           {
-             System.out.println("listFiles().getName()= " + list1[i].getName() + " list().getName()= " + file.getName());
+             output_.println("listFiles().getName()= " + list1[i].getName() + " list().getName()= " + file.getName());
              break;
           }
           if (list1[i].getName().indexOf(IFSFile.separatorChar) != -1)
@@ -525,7 +525,7 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
             // names with delimeter's within the name.  Someone likely created
             // objects on this i5 System with LIB commands (e.g. "Net=[]\/".LIB)
 
-            //System.out.println("Path with Separator ="+list1[i].getName());
+            //output_.println("Path with Separator ="+list1[i].getName());
             i++;
             continue;
           }
@@ -540,35 +540,35 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
 		  i++;
 		  continue; 
 	      } else {
-		  System.out.println("Warning:  Unexpected exception "+eioe);
+		  output_.println("Warning:  Unexpected exception "+eioe);
 		  eioe.printStackTrace(); 
 	      } 
 	  } 
           if (isDirectory != fileIsDirectory)
           {
-             System.out.println("name: " + list1[i].getName());
-             System.out.println("path: " + list1[i].getAbsolutePath());
-             System.out.println("listFiles().isDirectory()= " + list1[i].isDirectory() + ", list().isDirectory()= " + file.isDirectory());
+             output_.println("name: " + list1[i].getName());
+             output_.println("path: " + list1[i].getAbsolutePath());
+             output_.println("listFiles().isDirectory()= " + list1[i].isDirectory() + ", list().isDirectory()= " + file.isDirectory());
              break;
           }
           if (list1[i].isFile() != file.isFile())
           {
-             System.out.println("name: " + list1[i].getName());
-             System.out.println("path: " + list1[i].getAbsolutePath());
-             System.out.println("listFiles().isFile()= " + list1[i].isFile() + ", list.File()= " + file.isFile());
+             output_.println("name: " + list1[i].getName());
+             output_.println("path: " + list1[i].getAbsolutePath());
+             output_.println("listFiles().isFile()= " + list1[i].isFile() + ", list.File()= " + file.isFile());
              break;
           }
           if ((list1[i].isFile() == list1[i].isDirectory()) && list1[i].isFile())
           {
-             System.out.println("listFiles()name: " + list1[i].getName());
-             System.out.println("path: " + list1[i].getAbsolutePath());
-             System.out.println("listFiles().isFile()= " + list1[i].isFile() + ",  listFiles().isDirectory()= " + list1[i].isDirectory());
+             output_.println("listFiles()name: " + list1[i].getName());
+             output_.println("path: " + list1[i].getAbsolutePath());
+             output_.println("listFiles().isFile()= " + list1[i].isFile() + ",  listFiles().isDirectory()= " + list1[i].isDirectory());
              break;
           }
           if (!(list1[i].getPath().equals(file.getPath())))
           {
-             System.out.println("name: " + list1[i].getName());
-             System.out.println("listFiles.getPath()= " + list1[i].getPath() + ", list.getPath()= " + file.getPath());
+             output_.println("name: " + list1[i].getName());
+             output_.println("listFiles.getPath()= " + list1[i].getPath() + ", list.getPath()= " + file.getPath());
              break;
           }
           i++;
@@ -596,10 +596,10 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles() but not list():");
+                    output_.println("Names in listFiles() but not list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -610,10 +610,10 @@ Ensure that IFSFile.listFiles() returns the same files as IFSFile.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in list() but not listFiles():");
+                    output_.println("Names in list() but not listFiles():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -705,7 +705,7 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
           IFSFile file = new IFSFile(systemObject_, ifsDirName_, list2[i]);
           if (!(list1[i].getName().equals(file.getName())))
        {
-             System.out.println("Directory="+ifsDirName_+" listFiles().getName()= " + list1[i].getName() + " File.getName()= " + file.getName());
+             output_.println("Directory="+ifsDirName_+" listFiles().getName()= " + list1[i].getName() + " File.getName()= " + file.getName());
              passed=false; 
           }
 	  try { 
@@ -718,28 +718,28 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
 		      // Ignore this case 
 		  } else { 
 
-		      System.out.println("Directory="+ifsDirName_+" name: " + name);
-		      System.out.println("listFiles().isDirectory()= " + list1[i].isDirectory() + ", File.isDirectory()= " + file.isDirectory());
+		      output_.println("Directory="+ifsDirName_+" name: " + name);
+		      output_.println("listFiles().isDirectory()= " + list1[i].isDirectory() + ", File.isDirectory()= " + file.isDirectory());
 		      passed = false;
 		  }
 	      }
 
 	      if (list1[i].isFile() != file.isFile())
 	      {
-		  System.out.println("name: " + list1[i].getName());
-		  System.out.println("listFiles().isFile()= " + list1[i].isFile() + ", File.isFile()= " + file.isFile());
+		  output_.println("name: " + list1[i].getName());
+		  output_.println("listFiles().isFile()= " + list1[i].isFile() + ", File.isFile()= " + file.isFile());
 		  passed = false; 
 	      }
 	      if ((list1[i].isFile() == list1[i].isDirectory()) && list1[i].isFile())
 	      {
-		  System.out.println("listFiles() name: " + list1[i].getName());
-		  System.out.println("listFiles().isFile()= " + list1[i].isFile() + ",  listFiles.isDirectory()= " + list1[i].isDirectory());
+		  output_.println("listFiles() name: " + list1[i].getName());
+		  output_.println("listFiles().isFile()= " + list1[i].isFile() + ",  listFiles.isDirectory()= " + list1[i].isDirectory());
 		  passed = false; 
 	      }
 	      if (!(list1[i].getPath().equals(file.getPath())))
 	      {
-		  System.out.println("name: " + list1[i].getName());
-		  System.out.println("listFiles().getPath()= " + list1[i].getPath() + ", File.getPath()= " + file.getPath());
+		  output_.println("name: " + list1[i].getName());
+		  output_.println("listFiles().getPath()= " + list1[i].getPath() + ", File.getPath()= " + file.getPath());
 		  passed = false; 
 	      }
 
@@ -780,10 +780,10 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in listFiles() but not list():");
+                    output_.println("Names in listFiles() but not list():");
                     print = false;
                  }
-                 System.out.println(name);
+                 output_.println(name);
              }
          }
          print = true;
@@ -794,10 +794,10 @@ Ensure that IFSFile.listFiles() returns the same files as File.list().
              {
                  if (print)
                  {
-                    System.out.println("Names in list() but not listFiles():");
+                    output_.println("Names in list() but not listFiles():");
                     print = false;
                  }
-                 System.out.println(name2);
+                 output_.println(name2);
              }
          }
       }//end else
@@ -901,10 +901,10 @@ Ensure listFiles caches creation and access date/times
             if  (d1.equals(d1b) && d2.equals(d2b))
             {
                failed("in new list dates do match");
-               System.out.println("   " + d1  + "  " + d1.getTime());
-               System.out.println("   " + d1b + "  " + d1b.getTime());
-               System.out.println("   " + d2  + "  " + d2.getTime());
-               System.out.println("   " + d2b + "  " + d2b.getTime());
+               output_.println("   " + d1  + "  " + d1.getTime());
+               output_.println("   " + d1b + "  " + d1b.getTime());
+               output_.println("   " + d2  + "  " + d2.getTime());
+               output_.println("   " + d2b + "  " + d2b.getTime());
             }
             else
                succeeded();
@@ -912,10 +912,10 @@ Ensure listFiles caches creation and access date/times
          else
          {
             failed("dates do not match");
-            System.out.println("   " + d1  + "  " + d1.getTime());
-            System.out.println("   " + d1a + "  " + d1a.getTime());
-            System.out.println("   " + d2  + "  " + d2.getTime());
-            System.out.println("   " + d2a + "  " + d2a.getTime());
+            output_.println("   " + d1  + "  " + d1.getTime());
+            output_.println("   " + d1a + "  " + d1a.getTime());
+            output_.println("   " + d2  + "  " + d2.getTime());
+            output_.println("   " + d2a + "  " + d2a.getTime());
          }
       }
 

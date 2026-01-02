@@ -248,10 +248,10 @@ public class CommandHelpRetrieverTestcase extends Testcase
 
 	   Throwable cause = e.getCause();
 	   while (cause != null) {
-	       System.out.flush(); 
+	       output_.flush(); 
 	       System.err.flush();
-	       System.out.println("Caused by ");
-	       System.out.flush();
+	       output_.println("Caused by ");
+	       output_.flush();
 	       System.err.flush(); 
 	       cause.printStackTrace();
 	       cause = cause.getCause();
@@ -325,17 +325,17 @@ public class CommandHelpRetrieverTestcase extends Testcase
        {
 	   failed(e, "Unexpected exception."+sb.toString());
 
-	   System.out.flush(); 
+	   output_.flush(); 
 	   System.err.flush();
-	   System.out.println("===================================="); 
-	   System.out.flush(); 
+	   output_.println("===================================="); 
+	   output_.flush(); 
 	   System.err.flush();
 	   Throwable cause = e.getCause();
 	   while (cause != null) {
-	       System.out.flush(); 
+	       output_.flush(); 
 	       System.err.flush();
-	       System.out.println("Caused by ");
-	       System.out.flush();
+	       output_.println("Caused by ");
+	       output_.flush();
 	       System.err.flush(); 
 	       cause.printStackTrace();
 	       cause = cause.getCause();
@@ -2262,11 +2262,11 @@ public class CommandHelpRetrieverTestcase extends Testcase
 	       CommandHelpRetriever commandHelp = new CommandHelpRetriever();
 	       CommandList cmdList = new CommandList(as400, "QSYS", commandAndExpected[0]);
 	       Command[] cmds = cmdList.generateList();
-	       System.out.println("-->["+commandIndex+"]Command="+commandAndExpected[0]); 
+	       output_.println("-->["+commandIndex+"]Command="+commandAndExpected[0]); 
 	       sb.append("\n-->Command="+commandAndExpected[0]+"\n");
                try {
                  if (cmds.length == 0) {
-                   System.out.println("Warning:  Command " + commandAndExpected[0] + " did not generate list");
+                   output_.println("Warning:  Command " + commandAndExpected[0] + " did not generate list");
                    sb.append("Warning:  Command " + commandAndExpected[0] + " did not generate list\n");
                  } else {
                    String help = commandHelp.generateHTML(cmds[0]);
@@ -2289,7 +2289,7 @@ public class CommandHelpRetrieverTestcase extends Testcase
 		   // Ignore any not authorized or not available 
 		   String eMessage = e.toString();
 		   if (eMessage.indexOf("CPF9802") >= 0 || eMessage.indexOf("CPF6E3B") >= 0  ) {
-		       System.out.println("Warning:  Ignoring exception: "+eMessage);
+		       output_.println("Warning:  Ignoring exception: "+eMessage);
 		       sb.append("Warning: On "+commandAndExpected[0]+" Ignoring exception: "+eMessage+"\n");
 		   } else { 
 		       passed = false;
@@ -2302,24 +2302,24 @@ public class CommandHelpRetrieverTestcase extends Testcase
 	   as400.close(); 
 	   assertCondition(passed, sb.toString());
 	   if (!passed) { 
-		   System.out.println("Fail list is "+failList.toString()); 
+		   output_.println("Fail list is "+failList.toString()); 
 		   
 	   }
        }
        catch (Exception e) {
          failed(e, "Unexpected exception." + sb.toString());
 
-         System.out.flush();
+         output_.flush();
          System.err.flush();
-         System.out.println("====================================");
-         System.out.flush();
+         output_.println("====================================");
+         output_.flush();
          System.err.flush();
          Throwable cause = e.getCause();
          while (cause != null) {
-           System.out.flush();
+           output_.flush();
            System.err.flush();
-           System.out.println("Caused by ");
-           System.out.flush();
+           output_.println("Caused by ");
+           output_.flush();
            System.err.flush();
            cause.printStackTrace();
            cause = cause.getCause();
@@ -2639,11 +2639,11 @@ public class CommandHelpRetrieverTestcase extends Testcase
                CommandHelpRetriever commandHelp = new CommandHelpRetriever();
                CommandList cmdList = new CommandList(systemObject_, "QSYS", commandAndExpected[0]);
                Command[] cmds = cmdList.generateList();
-               System.out.println("-->Command="+commandAndExpected[0]); 
+               output_.println("-->Command="+commandAndExpected[0]); 
                sb.append("\n-->Command="+commandAndExpected[0]+"\n");
                try {
                    if (cmds.length == 0) {
-                       System.out.println("Warning:  Command "+commandAndExpected[0]+" did not generate list");
+                       output_.println("Warning:  Command "+commandAndExpected[0]+" did not generate list");
                        sb.append(          "Warning:  Command "+commandAndExpected[0]+" did not generate list\n");
                    } else { 
                        String help = commandHelp.generateHTML(cmds[0]);
@@ -2665,7 +2665,7 @@ public class CommandHelpRetrieverTestcase extends Testcase
                    // Ignore any not authorized or not available 
                    String eMessage = e.toString();
                    if (eMessage.indexOf("CPF9802") >= 0 || eMessage.indexOf("CPF6E3B") >= 0  ) {
-                       System.out.println("Warning:  Ignoring exception: "+eMessage);
+                       output_.println("Warning:  Ignoring exception: "+eMessage);
                        sb.append("Warning: On "+commandAndExpected[0]+" Ignoring exception: "+eMessage+"\n");
                    } else { 
                        passed = false;
@@ -2682,17 +2682,17 @@ public class CommandHelpRetrieverTestcase extends Testcase
        {
            failed(e, "Unexpected exception."+sb.toString());
 
-           System.out.flush(); 
+           output_.flush(); 
            System.err.flush();
-           System.out.println("===================================="); 
-           System.out.flush(); 
+           output_.println("===================================="); 
+           output_.flush(); 
            System.err.flush();
            Throwable cause = e.getCause();
            while (cause != null) {
-               System.out.flush(); 
+               output_.flush(); 
                System.err.flush();
-               System.out.println("Caused by ");
-               System.out.flush();
+               output_.println("Caused by ");
+               output_.flush();
                System.err.flush(); 
                cause.printStackTrace();
                cause = cause.getCause();

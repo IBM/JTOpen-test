@@ -106,12 +106,12 @@ public class PgmOnThreadTestcase extends Testcase
      **/
     private void displayProgramValues (ProgramCall pgm)
     {
-        /*      System.out.println("pgm.getSystem () == " + pgm.getSystem ()); 
-         System.out.println("pgm.getProgram () == " + pgm.getProgram ()); 
-         System.out.println("pgm.toString () == " + pgm.toString ()); 
-         System.out.println("pgm.getSystemThread () == " + pgm.getSystemThread ()); 
-         System.out.println("pgm.isStayOnThread () == " + pgm.isStayOnThread ()); 
-         System.out.println("pgm.isThreadSafe () == " + pgm.isThreadSafe ()); 
+        /*      output_.println("pgm.getSystem () == " + pgm.getSystem ()); 
+         output_.println("pgm.getProgram () == " + pgm.getProgram ()); 
+         output_.println("pgm.toString () == " + pgm.toString ()); 
+         output_.println("pgm.getSystemThread () == " + pgm.getSystemThread ()); 
+         output_.println("pgm.isStayOnThread () == " + pgm.isStayOnThread ()); 
+         output_.println("pgm.isThreadSafe () == " + pgm.isThreadSafe ()); 
          */    }
 
     /**
@@ -646,7 +646,7 @@ public class PgmOnThreadTestcase extends Testcase
             {
                 pc.run();
                 AS400Message[] msgs = pc.getMessageList();
-                // for (int i=0; i<msgs.length; ++i) System.out.println(msgs[i]);
+                // for (int i=0; i<msgs.length; ++i) output_.println(msgs[i]);
                 assertCondition(true, "msgs="+msgs); 
             }
             catch (ObjectDoesNotExistException odnee)
@@ -688,7 +688,7 @@ public class PgmOnThreadTestcase extends Testcase
             {
                 pc.run();
                 AS400Message[] msgs = pc.getMessageList();
-                // for (int i=0; i<msgs.length; ++i) System.out.println(msgs[i]);
+                // for (int i=0; i<msgs.length; ++i) output_.println(msgs[i]);
                 assertCondition(true, "msgs="+msgs); 
             }
             catch (ObjectDoesNotExistException odnee)

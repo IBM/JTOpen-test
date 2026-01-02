@@ -94,9 +94,9 @@ Performs setup needed before running variations.
     Connection c = DriverManager.getConnection(url);
 
     if (collection_ != null)
-      JDSetupProcedure.dropProcedures(c, collection_);
+      JDSetupProcedure.dropProcedures(c, collection_, output_);
     else
-            JDSetupProcedure.dropProcedures(c);
+            JDSetupProcedure.dropProcedures(c, output_);
 
         // DROP COLLECTION always sends an inquiry message.
         // This will automatically reply so we don't hang 
@@ -146,7 +146,7 @@ Performs setup needed before running variations.
             JDLobTest.dropCollections(c);
             JDCPDSTest.dropCollections(c);
             JTATest.dropCollections(c);
-            JDSetupProcedure.dropCollections(c);
+            JDSetupProcedure.dropCollections(c, output_);
         }
 
 
@@ -190,7 +190,7 @@ Performs setup needed before running variations.
             JDLobTest.dropCollections(c);
             JDCPDSTest.dropCollections(c);
             JTATest.dropCollections(c);
-            JDSetupProcedure.dropCollections(c);
+            JDSetupProcedure.dropCollections(c, output_);
         }
 
         c.close();

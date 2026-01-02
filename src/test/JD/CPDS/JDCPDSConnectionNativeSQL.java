@@ -87,7 +87,7 @@ public class JDCPDSConnectionNativeSQL extends JDTestcase {
       if (nativeDriver_) {
         // @H1A native driver uses different notion of VRM
         vrm_ = testDriver_.getRelease();
-        System.out.println("vrm = " + vrm_);
+        output_.println("vrm = " + vrm_);
 
       } else {
         /* This cast doesn't work for native driver @H1A */
@@ -899,8 +899,8 @@ public class JDCPDSConnectionNativeSQL extends JDTestcase {
         String translated = connection_.nativeSQL(sql);
         boolean condition = translated.equalsIgnoreCase(expected);
         if (!condition) {
-          System.out.println("expected   = '" + expected + "'");
-          System.out.println("translated = '" + translated + "'");
+          output_.println("expected   = '" + expected + "'");
+          output_.println("translated = '" + translated + "'");
         }
         assertCondition(condition);
       } catch (Exception e) {
@@ -1310,8 +1310,8 @@ public class JDCPDSConnectionNativeSQL extends JDTestcase {
 
         boolean condition = translated.equalsIgnoreCase(expected);
         if (!condition) {
-          System.out.println("expected   = '" + expected + "'");
-          System.out.println("translated = '" + translated + "'");
+          output_.println("expected   = '" + expected + "'");
+          output_.println("translated = '" + translated + "'");
         }
         assertCondition(condition);
 

@@ -238,7 +238,7 @@ public class JDLobClobLocator extends JDTestcase {
           connection_.commit();
           String strdbmonCommand = "call QSYS.QCMDEXC(  'STRDBMON OUTFILE(" + dbmoncol
               + "/JDLOBMON) TYPE(*BASIC)                        ',000000065.00000)";
-          System.out.println("Starting DBMON using " + strdbmonCommand);
+          output_.println("Starting DBMON using " + strdbmonCommand);
           statement_.executeUpdate(strdbmonCommand);
 
           connection_.commit();
@@ -309,28 +309,28 @@ public class JDLobClobLocator extends JDTestcase {
             ps = connection_.prepareStatement("INSERT INTO " + TABLEHUGE_ + " (C_CLOB) VALUES (?)");
 
             StringReader hugeReader = new StringReader(HUGE_);
-            System.out.println(this + " setting HUGE via setCharacterStream");
+            output_.println(this + " setting HUGE via setCharacterStream");
             try {
               ps.setCharacterStream(1, hugeReader, HUGE_.length());
             } catch (Throwable e) {
-              System.out.println("Error seeting up huge");
-              System.out.println("HUGE_.length()=" + HUGE_.length());
-              System.out.println("CCSID 1208 HUGE_WIDTH_ = " + HUGE_WIDTH_);
+              output_.println("Error seeting up huge");
+              output_.println("HUGE_.length()=" + HUGE_.length());
+              output_.println("CCSID 1208 HUGE_WIDTH_ = " + HUGE_WIDTH_);
               byte[] utf8bytes = HUGE_.getBytes("UTF-8");
-              System.out.println("utf8 length is " + utf8bytes.length);
+              output_.println("utf8 length is " + utf8bytes.length);
               e.printStackTrace();
             }
-            System.out.println(this + " inserting HUGE");
+            output_.println(this + " inserting HUGE");
             try {
               ps.executeUpdate();
             } catch (java.lang.OutOfMemoryError t) {
-              System.out.println("WARNING:  Out of Memory Error setting up HUGE");
+              output_.println("WARNING:  Out of Memory Error setting up HUGE");
             }
-            System.out.println(this + " done inserting HUGE");
+            output_.println(this + " done inserting HUGE");
             ps.close();
           } catch (Exception e) {
 
-            System.out.println("Error in setup");
+            output_.println("Error in setup");
             Throwable t = e;
             while (t != null) {
               System.err.println("-------------------------------------");
@@ -340,7 +340,7 @@ public class JDLobClobLocator extends JDTestcase {
 
             if (connection_ instanceof AS400JDBCConnection) {
               AS400JDBCConnection as400connection = (AS400JDBCConnection) connection_;
-              System.out.println("Server job is " + as400connection.getServerJobIdentifier());
+              output_.println("Server job is " + as400connection.getServerJobIdentifier());
             }
           }
 
@@ -470,7 +470,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           cmd.execute();
         } catch (Exception e) {
-          System.out.println("Error calling " + command);
+          output_.println("Error calling " + command);
           e.printStackTrace();
         }
 
@@ -481,7 +481,7 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           cmd.execute();
         } catch (Exception e) {
-          System.out.println("Error calling " + command);
+          output_.println("Error calling " + command);
           e.printStackTrace();
         }
 
@@ -496,12 +496,12 @@ public class JDLobClobLocator extends JDTestcase {
         try {
           stmt.executeUpdate(sql);
         } catch (Exception e) {
-          System.out.println("Error running " + sql);
+          output_.println("Error running " + sql);
           e.printStackTrace();
         }
         stmt.close();
       } catch (Exception e) {
-        System.out.println("Error running " + sql);
+        output_.println("Error running " + sql);
         e.printStackTrace();
       }
 
@@ -1234,7 +1234,7 @@ public class JDLobClobLocator extends JDTestcase {
           boolean condition = (v == 1);
 
           if (!condition) {
-            System.out.println("object.position('" + searchString + "',1) returned " + v + " for " + clob);
+            output_.println("object.position('" + searchString + "',1) returned " + v + " for " + clob);
           }
           assertCondition(condition);
 
@@ -1860,12 +1860,12 @@ public class JDLobClobLocator extends JDTestcase {
 
           if ((JDLobGraphicData.checkResults(mediumClob,
               (String) JDReflectionUtil.callMethod_O(clob1, "getSubString",(long) 1,
-                  (int) JDReflectionUtil.callMethod_L(clob1, "length"))))
+                  (int) JDReflectionUtil.callMethod_L(clob1, "length")),output_))
               && (JDLobGraphicData.checkResults(medium2Clob,
                   (String) JDReflectionUtil.callMethod_O(clob2, "getSubString",(long) 1,
-                      (int) JDReflectionUtil.callMethod_L(clob2, "length"))))
+                      (int) JDReflectionUtil.callMethod_L(clob2, "length")),output_))
               && (JDLobGraphicData.checkResults(largeClob, (String) JDReflectionUtil.callMethod_O(clob3, "getSubString",
-                  (long) 1, (int) JDReflectionUtil.callMethod_L(clob3, "length")))))
+                  (long) 1, (int) JDReflectionUtil.callMethod_L(clob3, "length")),output_)))
             assertCondition(true);
           else
             failed("data mismatch");
@@ -1877,7 +1877,7 @@ public class JDLobClobLocator extends JDTestcase {
             rs1_ = statement1_.executeQuery("SELECT * FROM " + TABLE_);
 
           } catch (Exception e) {
-            e.printStackTrace(System.out);
+            e.printStackTrace(output_);
           }
 
         } catch (Exception e) {
@@ -1935,8 +1935,8 @@ public class JDLobClobLocator extends JDTestcase {
             buffer.append((char) c);
           String s3 = new String(buffer);
 
-          if ((JDLobGraphicData.checkResults(mediumClob, s1)) && (JDLobGraphicData.checkResults(medium2Clob, s2))
-              && (JDLobGraphicData.checkResults(largeClob, s3)))
+          if ((JDLobGraphicData.checkResults(mediumClob, s1,output_)) && (JDLobGraphicData.checkResults(medium2Clob, s2,output_))
+              && (JDLobGraphicData.checkResults(largeClob, s3,output_)))
             assertCondition(true);
           else
             failed("data mismatch");
@@ -1948,7 +1948,7 @@ public class JDLobClobLocator extends JDTestcase {
             rs1_ = statement1_.executeQuery("SELECT * FROM " + TABLE_);
 
           } catch (Exception e) {
-            e.printStackTrace(System.out);
+            e.printStackTrace(output_);
           }
 
         } catch (Exception e) {
@@ -2014,8 +2014,8 @@ public class JDLobClobLocator extends JDTestcase {
             buffer.append((char) c);
           String s3 = new String(buffer);
 
-          if ((JDLobGraphicData.checkResults(mediumClob, s1)) && (JDLobGraphicData.checkResults(medium2Clob, s2))
-              && (JDLobGraphicData.checkResults(largeClob, s3)))
+          if ((JDLobGraphicData.checkResults(mediumClob, s1,output_)) && (JDLobGraphicData.checkResults(medium2Clob, s2,output_))
+              && (JDLobGraphicData.checkResults(largeClob, s3,output_)))
             assertCondition(true);
           else
             failed("data mismatch");
@@ -2027,7 +2027,7 @@ public class JDLobClobLocator extends JDTestcase {
             rs1_ = statement1_.executeQuery("SELECT * FROM " + TABLE_);
 
           } catch (Exception e) {
-            e.printStackTrace(System.out);
+            e.printStackTrace(output_);
           }
 
         } catch (Exception e) {
@@ -3439,7 +3439,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs1_ = statement1_.executeQuery("SELECT * FROM " + TABLE_);
 
         } catch (Exception e) {
-          e.printStackTrace(System.out);
+          e.printStackTrace(output_);
         }
 
       }
@@ -3502,7 +3502,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs1_ = statement1_.executeQuery("SELECT * FROM " + TABLE_);
 
         } catch (Exception e) {
-          e.printStackTrace(System.out);
+          e.printStackTrace(output_);
         }
       }
     } else
@@ -3795,13 +3795,13 @@ public class JDLobClobLocator extends JDTestcase {
             rs3_.absolute(2);
             String data = rs3_.getString("C_DBCLOB");
 
-            System.out.println("clob.position('" + beginningString + "',1) returned " + v + " for " + data
+            output_.println("clob.position('" + beginningString + "',1) returned " + v + " for " + data
                 + " clobClass=" + clob.getClass().getName());
-            System.out.println("clob.position('" + beginningString + "',1) returned " + v + " for "
+            output_.println("clob.position('" + beginningString + "',1) returned " + v + " for "
                 + JDTestUtilities.getMixedString(data) + " clobClass=" + clob.getClass().getName());
 
-            System.out.println("Hex search: " + JDTestUtilities.dumpBytes(beginningString));
-            System.out.println("Hex value : " + JDTestUtilities.dumpBytes(data));
+            output_.println("Hex search: " + JDTestUtilities.dumpBytes(beginningString));
+            output_.println("Hex value : " + JDTestUtilities.dumpBytes(data));
           }
           assertCondition(condition);
 
@@ -4953,7 +4953,7 @@ public class JDLobClobLocator extends JDTestcase {
           boolean condition = (v == 1);
 
           if (!condition) {
-            System.out.println("clob.position('" + searchString + "',1) returned " + v + " for " + getClob(clob));
+            output_.println("clob.position('" + searchString + "',1) returned " + v + " for " + getClob(clob));
           }
           assertCondition(condition, DBCLOB_ADDED);
 
@@ -4979,7 +4979,7 @@ public class JDLobClobLocator extends JDTestcase {
           rs3_.absolute(2);
           Clob clob =(Clob) JDReflectionUtil.callMethod_O(rs3_, getMethod, "C_DBCLOB");
           // if( clob instanceof com.ibm.db2.jdbc.app.DB2ClobLocator)
-          // System.out.println("yes");
+          // output_.println("yes");
           String searchString = DBCLOB_MEDIUM_.substring(9, 12);
           long v = JDReflectionUtil.callMethod_L(clob, "position", searchString, (long) 1);
 
@@ -7722,7 +7722,7 @@ public class JDLobClobLocator extends JDTestcase {
               "Locator should have been freed:  Check before said " + answer1[0] + "Check after said " + answer2[0]);
 
         } catch (Exception e) {
-          System.out.println(e);
+          output_.println(e);
           failed(connection_, e, "Unexpected Exception lastSql=" + lastSql);
         }
       }
@@ -8241,7 +8241,7 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("Lob locator test\n");
       return;
     } else {
-      System.out.println("info:  lobThreshold is " + lobThreshold);
+      output_.println("info:  lobThreshold is " + lobThreshold);
     }
     if (checkJdbc40()) {
       if (checkLobSupport()) {
@@ -8286,7 +8286,7 @@ public class JDLobClobLocator extends JDTestcase {
           }
 
         } catch (Exception e) {
-          System.out.println(e);
+          output_.println(e);
           failed(connection_, e, "Unexpected Exception");
         }
       }
@@ -8340,7 +8340,7 @@ public class JDLobClobLocator extends JDTestcase {
               "Check before said " + answer1 + "Check after said " + answer2);
 
         } catch (Exception e) {
-          System.out.println(e);
+          output_.println(e);
           failed(connection_, e, "Unexpected Exception");
         }
       }
@@ -8533,14 +8533,14 @@ public class JDLobClobLocator extends JDTestcase {
         int rowCount = rs.getInt(1);
         s.close();
         if (rowCount < rows) {
-          System.out.println("Warning: number of columns(" + rowCount + ") < " + rows);
-          System.out.println("Please increase the number of columns on the system");
+          output_.println("Warning: number of columns(" + rowCount + ") < " + rows);
+          output_.println("Please increase the number of columns on the system");
 
           rows = rowCount - 25;
         }
       } catch (Exception e) {
-        System.out.println("Exception getting row count\n");
-        e.printStackTrace(System.out);
+        output_.println("Exception getting row count\n");
+        e.printStackTrace(output_);
       }
     }
 
@@ -8566,7 +8566,7 @@ public class JDLobClobLocator extends JDTestcase {
               long nowMillis = System.currentTimeMillis();
               if ((nowMillis > nextMillis) || (rowCount % 2500 == 0)) {
                 java.sql.Timestamp now = new java.sql.Timestamp(nowMillis);
-                System.out.println("On row " + rowCount + "/" + rows + " " + now);
+                output_.println("On row " + rowCount + "/" + rows + " " + now);
                 nextMillis = System.currentTimeMillis() + 60000;
               }
             }

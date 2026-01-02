@@ -51,7 +51,7 @@ public class JDLobClob8 extends JDLobClobLocator8
                namesAndVars, runMode, fileOutputStream,
                password);
 	lobThreshold="1000000000"; 
-	System.out.println("JDLobClob8 set lob threshold to "+lobThreshold); 
+	output_.println("JDLobClob8 set lob threshold to "+lobThreshold); 
     }
 
 

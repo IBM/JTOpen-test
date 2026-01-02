@@ -110,9 +110,9 @@ public class UserSpaceCrtDltTestcase extends Testcase
             String command = "QSYS/GRTOBJAUT OBJ(USAUTHLIB) OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
             boolean success =  cmdRun(command);
             if (!success) { 
-                System.out.println("Command Failed "+command ); 
+                output_.println("Command Failed "+command ); 
             } else {
-              System.out.println("SetupUSAuthority(): Command worked "+command ); 
+              output_.println("SetupUSAuthority(): Command worked "+command ); 
             }
 
             UserSpace aUSpace = new UserSpace(pwrSys_, "/QSYS.LIB/USAUTHLIB.LIB/USCRTDLT1.USRSPC");
@@ -1403,7 +1403,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
             UserSpace aUserSpace = new UserSpace(systemObject_, "/QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC");
             aUserSpace.create(11000, true, expected, (byte)0x00, "NLSUSTEST", "*ALL");
 
-            System.out.println("Does the extendedAttribute: (TEST) equal that of the user space in /QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC (Y/N)? (WRKLIB "+UserSpaceTest.COLLECTION+")");
+            output_.println("Does the extendedAttribute: (TEST) equal that of the user space in /QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC (Y/N)? (WRKLIB "+UserSpaceTest.COLLECTION+")");
             InputStreamReader r = new InputStreamReader(System.in);
             BufferedReader inBuf = new BufferedReader(r);
             String resp = inBuf.readLine();
@@ -1436,7 +1436,7 @@ public class UserSpaceCrtDltTestcase extends Testcase
 
             aUserSpace.create(11000, true, " ", (byte)0x00, expected, "*ALL");
 
-            System.out.println("Does the textDescription: (" + expected + ") equal that of the user space in /QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC (Y/N)? (WRKLIB "+UserSpaceTest.COLLECTION+")");
+            output_.println("Does the textDescription: (" + expected + ") equal that of the user space in /QSYS.LIB/"+UserSpaceTest.COLLECTION+".LIB/USCREATE.USRSPC (Y/N)? (WRKLIB "+UserSpaceTest.COLLECTION+")");
             InputStreamReader r = new InputStreamReader(System.in);
             BufferedReader inBuf = new BufferedReader(r);
             String resp = inBuf.readLine();

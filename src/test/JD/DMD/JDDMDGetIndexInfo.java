@@ -108,7 +108,7 @@ Constructor.
 
 
     protected String getCatalogFromURL(String url) {
-      // System.out.println("BaseURL is "+baseURL_);
+      // output_.println("BaseURL is "+baseURL_);
       // must be running JCC, set to a valid value.
       // jdbc:db2://y0551p2:446/*LOCAL
 
@@ -152,7 +152,7 @@ Performs setup needed before running variations.
 		// Leave as null
 	    } else {
 		connectionCatalog_ = getCatalogFromURL(baseURL_);
-		System.out.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
+		output_.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
 	    }
         }
 
@@ -645,7 +645,7 @@ indices should be returned.
                 else if (index.equals (JDDMDTest.COLLECTION + ".INDEX"))
                     check2 = true;
 		else {
-		    System.out.println("Warning:  found "+index);
+		    output_.println("Warning:  found "+index);
 		}
             }
 
@@ -712,7 +712,7 @@ exactly.  All matching rows should be returned.
                 else if (index.equals (JDDMDTest.COLLECTION + ".INDEX"))
                     check2 = true;
 		else {
-		    System.out.println("Warning:  found "+index);
+		    output_.println("Warning:  found "+index);
 		}
             }
 
@@ -2000,7 +2000,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		// Do not run for more than 10 minutes
 		long endTime = System.currentTimeMillis() + 600000;
 		for (int i = 0; i < 1000 && System.currentTimeMillis() < endTime ; i++) {
-		    // System.out.println("Calling getIndexInfo");
+		    // output_.println("Calling getIndexInfo");
 		    if (i % 5 == 0) {
 		      JDJobName.sendProgramMessage("On loop "+i+" of 1000");
 		    }
@@ -2058,7 +2058,7 @@ Created 1/31/2011 for CPS 8DHTTE.
                 else if (index.equals (JDDMDTest.COLLECTION + ".INDEX"))
                     check2 = true;
 		else {
-		    System.out.println("Warning:  found "+index);
+		    output_.println("Warning:  found "+index);
 		}
             }
 

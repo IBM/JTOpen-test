@@ -122,11 +122,11 @@ public class JDStatementDelimiters extends JDTestcase {
   collection4_ = "\"JDDe."+suffix+"\""; //test with '.'          @A1A
 
     //Create the collections
-    JDSetupCollection.create(systemObject_,  c, collection1_);
-    JDSetupCollection.create(systemObject_,  c, collection2_);
-    JDSetupCollection.create(systemObject_,  c, collection3_);
+    JDSetupCollection.create(systemObject_,  c, collection1_,output_);
+    JDSetupCollection.create(systemObject_,  c, collection2_,output_);
+    JDSetupCollection.create(systemObject_,  c, collection3_,output_);
     //Test '.'     @A1
-    JDSetupCollection.create(systemObject_,  c, collection4_);
+    JDSetupCollection.create(systemObject_,  c, collection4_,output_);
 
     // Create the tables.
     createTable(collection1_, table1_);

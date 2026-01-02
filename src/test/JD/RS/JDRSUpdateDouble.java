@@ -838,8 +838,8 @@ will throw a data truncation exception.
                 assertCondition(e instanceof DataTruncation);
                 /*
                 DataTruncation dt = (DataTruncation)e;
-                System.out.println("Data Size is " + dt.getDataSize());
-                System.out.println("Transfer Size is " + dt.getTransferSize());
+                output_.println("Data Size is " + dt.getDataSize());
+                output_.println("Transfer Size is " + dt.getTransferSize());
                 assertCondition ((dt.getIndex() == expectedColumn)
                         && (dt.getParameter() == false)
                         && (dt.getRead() == false)

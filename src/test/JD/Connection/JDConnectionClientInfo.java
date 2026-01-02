@@ -297,12 +297,12 @@ Performs cleanup needed after running variations.
                     check10 = true;
 
                 boolean check7 = clientHostname_.equals(props2.getProperty(clientHostnamePropertyName_)) ? true : false;
-		if (!check7) System.out.println("Got "+props2.getProperty(clientHostnamePropertyName_)+
+		if (!check7) output_.println("Got "+props2.getProperty(clientHostnamePropertyName_)+
 						" for "+clientHostnamePropertyName_+" sb "+clientHostname_);
 
                 boolean check8 = clientUser_.equals(props2.getProperty(clientUserPropertyName_)) ? true : false;
 
-		if (!check8) System.out.println("Got "+props2.getProperty(clientUserPropertyName_)+
+		if (!check8) output_.println("Got "+props2.getProperty(clientUserPropertyName_)+
 						" for "+clientUserPropertyName_+" sb "+clientUser_);
 
 
@@ -705,7 +705,7 @@ Performs cleanup needed after running variations.
 		    String register = expected[i][1];
 		    String value    = expected[i][2];
 
-		    /* System.out.println("Processing "+i+" "+operation+" "+register+" "+value);  */ 
+		    /* output_.println("Processing "+i+" "+operation+" "+register+" "+value);  */ 
 		    if (operation.indexOf("SET") >= 0) {
 			sql = "SET "+register;
 			JDReflectionUtil.callMethod_V(conn, "setClientInfo", register, value); 

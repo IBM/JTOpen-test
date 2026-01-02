@@ -84,11 +84,11 @@ Performs setup needed before running variations.
     try {
       connection_.setAutoCommit(false); // @E1A
     } catch (Exception e) {
-      System.out.println("Warning:  setAutCommit(false) failed");
-      System.out.flush();
+      output_.println("Warning:  setAutCommit(false) failed");
+      output_.flush();
       System.err.flush();
       e.printStackTrace();
-      System.out.flush();
+      output_.flush();
       System.err.flush();
     }
         statement0_ = connection_.createStatement ();
@@ -132,8 +132,8 @@ Performs cleanup needed after running variations.
         
         
       } catch (Exception e) { 
-        System.out.println("Warning:  Exception in JDRSTestcase.cleanup"); 
-        e.printStackTrace(System.out) ;
+        output_.println("Warning:  Exception in JDRSTestcase.cleanup"); 
+        e.printStackTrace(output_) ;
       }
         if (connection_ != null) connection_.close ();
 	connection_ = null; 
@@ -265,10 +265,10 @@ Performs cleanup needed after running variations.
                 failed ("Didn't throw SQLException but got "+retrieved+ " for "+x);
             }
             catch (SQLException e) {
-                // System.out.println("Expected exception occurred"); 
-                // System.out.println("Message : "+ e.getMessage()); 
-                // System.out.println("SQLState: "+ e.getSQLState());
-                // System.out.println("SQLCode:  "+ e.getErrorCode()); 
+                // output_.println("Expected exception occurred"); 
+                // output_.println("Message : "+ e.getMessage()); 
+                // output_.println("SQLState: "+ e.getSQLState());
+                // output_.println("SQLCode:  "+ e.getErrorCode()); 
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
             catch (Exception e2) { 

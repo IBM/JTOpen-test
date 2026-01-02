@@ -75,14 +75,14 @@ public class IFSProxyStressTestcase
       IFSFile oldFile = new IFSFile(sys_, "/ToolboxProxy/IFSFile" + curntThread_);
       try 
       {
-         System.out.println("     Deleting IFS directories..." + "(t" + curntThread_ + ")");
+         output_.println("     Deleting IFS directories..." + "(t" + curntThread_ + ")");
 
          oldFile.delete();
          aDirectory_.delete();
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);
@@ -107,9 +107,9 @@ public class IFSProxyStressTestcase
          {
             try 
             {  
-               System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+               output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
                
-               System.out.println("     Creating IFS file..." + "(t" + curntThread_ + ")");
+               output_.println("     Creating IFS file..." + "(t" + curntThread_ + ")");
 
                // Open a file object that represents the file.
                aFile_ = new IFSRandomAccessFile(sys_, aDirectory_ + "/IFSFile" + curntThread_, "rw");
@@ -125,7 +125,7 @@ public class IFSProxyStressTestcase
                   aFile_.seek(j * 1024);
                   
 
-                  System.out.println("     Writing to IFS file..." + "(t" + curntThread_ + ")");
+                  output_.println("     Writing to IFS file..." + "(t" + curntThread_ + ")");
                   
                   // Write to the file. The current
                   // offset advances by the size of
@@ -133,16 +133,16 @@ public class IFSProxyStressTestcase
                   aFile_.write(b);
                }
                
-               System.out.println("     Closing IFS file..." + "(t" + curntThread_ + ")");
+               output_.println("     Closing IFS file..." + "(t" + curntThread_ + ")");
 
                // Close the file.
                aFile_.close();
 
-               System.out.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
             }
             catch(Exception e) 
             {
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -165,7 +165,7 @@ public class IFSProxyStressTestcase
    {
       try 
       {
-         System.out.println("     Creating IFS directories..." + "(t" + curntThread_ + ")");
+         output_.println("     Creating IFS directories..." + "(t" + curntThread_ + ")");
 
          if (aDirectory_.mkdir()) 
          {
@@ -176,13 +176,13 @@ public class IFSProxyStressTestcase
             if (aDirectory_.exists() && aDirectory_.isDirectory())
             { }
             else
-               System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+               output_.println("       Setup Failed."  + "(t" + curntThread_ + ")");
          }
 
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during setup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during setup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);

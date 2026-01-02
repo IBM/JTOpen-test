@@ -144,18 +144,18 @@ Performs setup needed before running testcases.
          COLLECTION = testLib_;
       }
       JDSetupCollection.create (systemObject_,  c,
-                                COLLECTION);
+                                COLLECTION, out_);
       
       
           JDSetupCollection.create (systemObject_, 
-                  c, SCHEMAS_LEN128);
+                  c, SCHEMAS_LEN128, out_);
       
       
       
       JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this);
       JDSetupProcedure.create (systemObject_,                              //@F2A
                                  c, JDSetupProcedure.STP_RS1, supportedFeatures_,
-                                 COLLECTION);                                         //@F2A
+                                 COLLECTION, out_);                                         //@F2A
       c.close ();
    }
 

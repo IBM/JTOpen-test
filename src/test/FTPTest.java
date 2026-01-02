@@ -227,6 +227,7 @@ Creates Testcase objects for all the testcases in this component.
                                          isLocal_, onAS400_, namesAndVars_, runMode_,
                                          fileOutputStream_,  pwrSysUserID_,
                                          pwrSysPassword_);         //@A1
+      testcases[i].setProxy5(proxy5_); 
       addTestcase(testcases[i]);                                   //@A1
     }
 

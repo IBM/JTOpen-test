@@ -15,6 +15,7 @@ package test.misc;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.util.GregorianCalendar;
 
@@ -2257,6 +2258,7 @@ public class VersionSerializationMessageTestcase extends Testcase {
 
   public static void main(String args[]) {
     try {
+      PrintStream output = System.out; 
       // Note: must dynamically resolve to copyright information because
       // Copyright is an interface and the version becomes a "final"
       // version of the value.
@@ -2264,16 +2266,16 @@ public class VersionSerializationMessageTestcase extends Testcase {
           .forName("com.ibm.as400.access.Copyright");
       Field f = copyrightInterface.getField("version");
       String versionInfo = (String) f.get(null);
-      System.out.println("Testing reflection version:  " + versionInfo);
+      output.println("Testing reflection version:  " + versionInfo);
       StringBuffer sb = new StringBuffer();
       boolean passed = staticVar001(sb);
-      System.out.println("#1 passed = " + passed);
-      System.out.println(sb.toString());
+      output.println("#1 passed = " + passed);
+      output.println(sb.toString());
       
       sb.setLength(0); 
       passed = staticVar002(sb); 
-      System.out.println("#2 passed = " + passed);
-      System.out.println(sb.toString());
+      output.println("#2 passed = " + passed);
+      output.println(sb.toString());
       
         
       

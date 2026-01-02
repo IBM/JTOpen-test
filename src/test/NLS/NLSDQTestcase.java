@@ -75,7 +75,7 @@ public class NLSDQTestcase extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       e.printStackTrace();
       return;
     }

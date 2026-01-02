@@ -89,7 +89,7 @@ public class RMSetValuesTestcase extends Testcase
       {
         String expectedMsg = "<recordformat> element named '' not found in document";
         String receivedMsg = e.getMessage();
-        if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+        if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -165,7 +165,7 @@ public class RMSetValuesTestcase extends Testcase
       {
         String expectedMsg = "<recordformat> element named 'id1' not found in document";
         String receivedMsg = e.getMessage();
-        if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+        if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -209,7 +209,7 @@ public class RMSetValuesTestcase extends Testcase
       {
         String expectedMsg = "The Record object is not initialized";
         String receivedMsg = e.getMessage();
-        if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+        if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -242,7 +242,7 @@ public class RMSetValuesTestcase extends Testcase
       {
         String expectedMsg = "<recordformat> element named 'FORMAT2' not found in document";
         String receivedMsg = e.getMessage();
-        if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+        if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -544,7 +544,7 @@ public class RMSetValuesTestcase extends Testcase
         RecordFormatDocument rfmlDoc = new RecordFormatDocument();
         rfmlDoc.setValues("format1", rec);
         double field1Val = rfmlDoc.getDoubleValue("format1.field1");
-        if (DEBUG) System.out.println("field1Val == " + field1Val);
+        if (DEBUG) output_.println("field1Val == " + field1Val);
         assertCondition(field1Val == 1.2e3);
       }
       catch (Exception e)
@@ -784,7 +784,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "<recordformat> element named '' not found in document";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -850,7 +850,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "<recordformat> element named 'noSuchFormat' not found in document";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -893,7 +893,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "Insufficient input data available for this document element";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -917,7 +917,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "Insufficient input data available for this document element";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -941,7 +941,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "Excess input data was provided for this document element";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -974,8 +974,8 @@ public class RMSetValuesTestcase extends Testcase
             byte[] valsIn = new byte[] { (byte)'Z' };
             rfmlDoc.setValues("format1", valsIn);
             String valOut = (String)rfmlDoc.getValue("format1.field1");
-            if (DEBUG) System.out.println("Expected: |" + "Z" + "|");
-            if (DEBUG) System.out.println("Got:      |" + valOut + "|");
+            if (DEBUG) output_.println("Expected: |" + "Z" + "|");
+            if (DEBUG) output_.println("Got:      |" + valOut + "|");
             assertCondition(valOut.equals("Z"));
         }
         catch (Exception e)
@@ -1000,11 +1000,11 @@ public class RMSetValuesTestcase extends Testcase
             byte[] valsIn = new byte[bytes0.length-2];
             // Skip the initial "FE FF" that gets generated by getBytes().
             System.arraycopy(bytes0, 2, valsIn, 0, valsIn.length);
-            if (DEBUG) System.out.println("length of byte array: " + valsIn.length);
+            if (DEBUG) output_.println("length of byte array: " + valsIn.length);
             rfmlDoc.setValues("format1", valsIn);
             String valOut = (String)rfmlDoc.getValue("format1.field1");
-            //System.out.println("Expected: |" + "Z" + "|");
-            //System.out.println("Got:      |" + valOut + "|");
+            //output_.println("Expected: |" + "Z" + "|");
+            //output_.println("Got:      |" + valOut + "|");
             assertCondition(valOut.equals("Z"));
         }
         catch (Exception e)
@@ -1029,9 +1029,9 @@ public class RMSetValuesTestcase extends Testcase
             String valOut = (String)rfmlDoc.getValue("format1.field1");
             byte[] bytesOut = valOut.getBytes("ASCII");
             byte[] expected = new byte[] { (byte)0x3F };  // the ascii substition character
-            if (DEBUG) System.out.println("Expected:");
+            if (DEBUG) output_.println("Expected:");
             if (DEBUG) printByteArray(expected);
-            if (DEBUG) System.out.println("Got:");
+            if (DEBUG) output_.println("Got:");
             if (DEBUG) printByteArray(bytesOut);
             assertCondition(areEqual(bytesOut, expected));
         }
@@ -1091,8 +1091,8 @@ public class RMSetValuesTestcase extends Testcase
             rfmlDoc.setValues("format1", valsIn);
             Short valOutObj = (Short)rfmlDoc.getValue("format1.field1");
             short valOut = valOutObj.shortValue();
-            if (DEBUG) System.out.println("Expected: |" + "7" + "|");
-            if (DEBUG) System.out.println("Got:      |" + valOut + "|");
+            if (DEBUG) output_.println("Expected: |" + "7" + "|");
+            if (DEBUG) output_.println("Got:      |" + valOut + "|");
             assertCondition(valOut == 7);
         }
         catch (Exception e)
@@ -1241,7 +1241,7 @@ public class RMSetValuesTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.float1");
             Float valOutObj = (Float)rfmlDoc.getValue("format1.field1");
-            if (DEBUG) System.out.println("Value out: " + valOutObj.intValue() + ", " + valOutObj.floatValue() + ", " + valOutObj.toString());
+            if (DEBUG) output_.println("Value out: " + valOutObj.intValue() + ", " + valOutObj.floatValue() + ", " + valOutObj.toString());
             assertCondition(valOutObj.floatValue() == 0.0);
         }
         catch (Exception e)
@@ -1267,7 +1267,7 @@ public class RMSetValuesTestcase extends Testcase
             byte[] valsIn = new byte[] { (byte)0x43, (byte)0xA0, (byte)0x00, (byte)0x00 };  // float representation of the value 320
             rfmlDoc.setValues("format1", valsIn);
             Float valOutObj = (Float)rfmlDoc.getValue("format1.field1");
-            if (DEBUG) System.out.println("Value out: " + valOutObj.intValue() + ", " + valOutObj.floatValue() + ", " + valOutObj.toString());
+            if (DEBUG) output_.println("Value out: " + valOutObj.intValue() + ", " + valOutObj.floatValue() + ", " + valOutObj.toString());
             assertCondition(valOutObj.floatValue() == 320.0);
         }
         catch (Exception e)
@@ -1294,7 +1294,7 @@ public class RMSetValuesTestcase extends Testcase
         {
           String expectedMsg = "A PCML specification error occurred";
           String receivedMsg = e.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -1468,43 +1468,43 @@ public class RMSetValuesTestcase extends Testcase
             rfmlDoc.setValues("format1", trimmed);
 
 
-            if (DEBUG) System.out.println("Got:");
+            if (DEBUG) output_.println("Got:");
 
             String field1Out = (String)rfmlDoc.getValue("format1.field1");
-            if (DEBUG) System.out.println("field1: |" + field1Out + "|");
+            if (DEBUG) output_.println("field1: |" + field1Out + "|");
 
             Short field2Out = (Short)rfmlDoc.getValue("format1.field2");
-            if (DEBUG) System.out.println("field2: |" + field2Out + "|");
+            if (DEBUG) output_.println("field2: |" + field2Out + "|");
 
             BigDecimal field3Out = (BigDecimal)rfmlDoc.getValue("format1.field3");
-            if (DEBUG) System.out.println("field3: |" + field3Out + "|");
+            if (DEBUG) output_.println("field3: |" + field3Out + "|");
 
             BigDecimal field4Out = (BigDecimal)rfmlDoc.getValue("format1.field4");
-            if (DEBUG) System.out.println("field4: |" + field4Out.toString() + "|");
+            if (DEBUG) output_.println("field4: |" + field4Out.toString() + "|");
 
             Float field5Out = (Float)rfmlDoc.getValue("format1.field5");
-            if (DEBUG) System.out.println("field5: |" + field5Out.toString() + "|");
+            if (DEBUG) output_.println("field5: |" + field5Out.toString() + "|");
 
             byte[] field6Out = (byte[])rfmlDoc.getValue("format1.field6");
             if (DEBUG) printByteArray("field6: ", field6Out);
 
             String field7_1Out = (String)rfmlDoc.getValue("format1.field7.field1");
-            if (DEBUG) System.out.println("field7.field1: |" + field7_1Out + "|");
+            if (DEBUG) output_.println("field7.field1: |" + field7_1Out + "|");
 
             Short field7_2Out = (Short)rfmlDoc.getValue("format1.field7.field2");
-            if (DEBUG) System.out.println("field7.field2: |" + field7_2Out.shortValue() + "|");
+            if (DEBUG) output_.println("field7.field2: |" + field7_2Out.shortValue() + "|");
 
             BigDecimal field7_3Out = (BigDecimal)rfmlDoc.getValue("format1.field7.field3");
-            if (DEBUG) System.out.println("field7.field3: |" + field7_3Out.toString() + "|");
+            if (DEBUG) output_.println("field7.field3: |" + field7_3Out.toString() + "|");
 
             BigDecimal field7_4Out = (BigDecimal)rfmlDoc.getValue("format1.field7.field4");
-            if (DEBUG) System.out.println("field7.field4: |" + field7_4Out.toString() + "|");
+            if (DEBUG) output_.println("field7.field4: |" + field7_4Out.toString() + "|");
 
             Float field7_5Out = (Float)rfmlDoc.getValue("format1.field7.field5");
-            if (DEBUG) System.out.println("field7.field5: |" + field7_5Out.toString() + "|");
+            if (DEBUG) output_.println("field7.field5: |" + field7_5Out.toString() + "|");
 
             byte[] field7_6Out = (byte[])rfmlDoc.getValue("format1.field7.field6");
-            if (DEBUG) System.out.println("field7.field6: ");
+            if (DEBUG) output_.println("field7.field6: ");
             if (DEBUG) printByteArray(field7_6Out);
 
             assertCondition(
@@ -1633,46 +1633,46 @@ public class RMSetValuesTestcase extends Testcase
             rfmlDoc.setValues("format1", trimmed);
 
 
-            ///System.out.println("Got:");
+            ///output_.println("Got:");
             int[] indices1 = new int[] { 0 };
             int[] indices2 = new int[] { 0,0 };
 
             String field1Out = (String)rfmlDoc.getValue("format1.field1", indices1);
-            ///System.out.println("field1: |" + field1Out + "|");
+            ///output_.println("field1: |" + field1Out + "|");
 
             Short field2Out = (Short)rfmlDoc.getValue("format1.field2", indices1);
-            ///System.out.println("field2: |" + field2Out.shortValue() + "|");
+            ///output_.println("field2: |" + field2Out.shortValue() + "|");
 
             BigDecimal field3Out = (BigDecimal)rfmlDoc.getValue("format1.field3", indices1);
-            ///System.out.println("field3: |" + field3Out.toString() + "|");
+            ///output_.println("field3: |" + field3Out.toString() + "|");
 
             BigDecimal field4Out = (BigDecimal)rfmlDoc.getValue("format1.field4", indices1);
-            ///System.out.println("field4: |" + field4Out.toString() + "|");
+            ///output_.println("field4: |" + field4Out.toString() + "|");
 
             Float field5Out = (Float)rfmlDoc.getValue("format1.field5", indices1);
-            ///System.out.println("field5: |" + field5Out.toString() + "|");
+            ///output_.println("field5: |" + field5Out.toString() + "|");
 
             byte[] field6Out = (byte[])rfmlDoc.getValue("format1.field6", indices1);
-            ///System.out.println("field6: ");
+            ///output_.println("field6: ");
             ///printByteArray(field6Out);
 
             String field7_1Out = (String)rfmlDoc.getValue("format1.field7.field1", indices2);
-            ///System.out.println("field7.field1: |" + field7_1Out + "|");
+            ///output_.println("field7.field1: |" + field7_1Out + "|");
 
             Short field7_2Out = (Short)rfmlDoc.getValue("format1.field7.field2", indices2);
-            ///System.out.println("field7.field2: |" + field7_2Out.shortValue() + "|");
+            ///output_.println("field7.field2: |" + field7_2Out.shortValue() + "|");
 
             BigDecimal field7_3Out = (BigDecimal)rfmlDoc.getValue("format1.field7.field3", indices2);
-            ///System.out.println("field7.field3: |" + field7_3Out.toString() + "|");
+            ///output_.println("field7.field3: |" + field7_3Out.toString() + "|");
 
             BigDecimal field7_4Out = (BigDecimal)rfmlDoc.getValue("format1.field7.field4", indices2);
-            ///System.out.println("field7.field4: |" + field7_4Out.toString() + "|");
+            ///output_.println("field7.field4: |" + field7_4Out.toString() + "|");
 
             Float field7_5Out = (Float)rfmlDoc.getValue("format1.field7.field5", indices2);
-            ///System.out.println("field7.field5: |" + field7_5Out.toString() + "|");
+            ///output_.println("field7.field5: |" + field7_5Out.toString() + "|");
 
             byte[] field7_6Out = (byte[])rfmlDoc.getValue("format1.field7.field6", indices2);
-            ///System.out.println("field7.field6: ");
+            ///output_.println("field7.field6: ");
             ///printByteArray(field7_6Out);
 
 
@@ -1775,7 +1775,7 @@ public class RMSetValuesTestcase extends Testcase
             dateConv = new AS400Date(TimeZone.getDefault(),AS400Date.FORMAT_ISO);
             date = (java.sql.Date)dateConv.getDefaultValue();
             bytes0 = dateConv.toBytes(date);
-            if (DEBUG) System.out.println("date bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("date bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
@@ -1784,7 +1784,7 @@ public class RMSetValuesTestcase extends Testcase
             timeConv = new AS400Time(TimeZone.getDefault(),AS400Time.FORMAT_ISO);
             time = (java.sql.Time)timeConv.getDefaultValue();
             bytes0 = timeConv.toBytes(time);
-            if (DEBUG) System.out.println("time bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("time bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
@@ -1793,21 +1793,21 @@ public class RMSetValuesTestcase extends Testcase
             timestampConv = new AS400Timestamp(TimeZone.getDefault());
             timestamp = (java.sql.Timestamp)timestampConv.getDefaultValue();
             bytes0 = timestampConv.toBytes(timestamp);
-            if (DEBUG) System.out.println("timestamp bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("timestamp bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
 
             // format1.fieldA: The int field (8 bytes, precision 63).
             bytes0 = new AS400Bin8().toBytes(Long.valueOf(-2433234545462216467L));
-            if (DEBUG) System.out.println("signedBin8 bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("signedBin8 bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
 
             // format1.fieldB: The int field (8 bytes, precision 64).
             bytes0 = new AS400UnsignedBin8().toBytes(toBigInteger(2165379345l));
-            if (DEBUG) System.out.println("unsignedBin8 bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("unsignedBin8 bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
@@ -1886,7 +1886,7 @@ public class RMSetValuesTestcase extends Testcase
 
             // format1.fieldS.fieldA: The int field (8 bytes, precision 63).
             bytes0 = new AS400Bin8().toBytes(Long.valueOf(Long.MAX_VALUE));
-            if (DEBUG) System.out.println("signedBin8 bytes length: " + bytes0.length);
+            if (DEBUG) output_.println("signedBin8 bytes length: " + bytes0.length);
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
@@ -1894,10 +1894,10 @@ public class RMSetValuesTestcase extends Testcase
             // format1.fieldS.fieldB: The int field (8 bytes, precision 64).
             final byte[] MAX_UNSIGNED_VALUE_8_BYTES = { (byte)0, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF }; // Specify a leading '0', to prevent interpretation as a (two's-complement) negative number.
             BigInteger maxValFor8Bytes = new BigInteger(MAX_UNSIGNED_VALUE_8_BYTES);
-            if (DEBUG) System.out.println("maxValFor8Bytes.toString(): |" + maxValFor8Bytes.toString() + "|");
+            if (DEBUG) output_.println("maxValFor8Bytes.toString(): |" + maxValFor8Bytes.toString() + "|");
             bytes0 = new AS400UnsignedBin8().toBytes(maxValFor8Bytes);
-            if (DEBUG) System.out.println("unsignedBin8 bytes length (should be 8): " + bytes0.length);
-            if (DEBUG) System.out.println("maxValFor8Bytes: " + maxValFor8Bytes.toString());
+            if (DEBUG) output_.println("unsignedBin8 bytes length (should be 8): " + bytes0.length);
+            if (DEBUG) output_.println("maxValFor8Bytes: " + maxValFor8Bytes.toString());
             for (int i=0; i<bytes0.length; i++) {
               valsIn[offset++] = bytes0[i];
             }
@@ -1915,95 +1915,95 @@ public class RMSetValuesTestcase extends Testcase
             // Trim the array down to required size for a record.
             byte[] trimmed = new byte[offset];
             System.arraycopy(valsIn, 0, trimmed, 0, offset);
-            if (DEBUG) System.out.println("DEBUG: Trimmed byte array (length="+trimmed.length+")");
+            if (DEBUG) output_.println("DEBUG: Trimmed byte array (length="+trimmed.length+")");
             if (DEBUG) printByteArray(trimmed);
             rfmlDoc.setValues("format1", trimmed);
 
 
-            if (DEBUG) if (DEBUG) System.out.println("Got:");
+            if (DEBUG) if (DEBUG) output_.println("Got:");
             int[] indices1 = new int[] { 0 };
             int[] indices2 = new int[] { 0,0 };
 
             String field1Out = (String)rfmlDoc.getValue("format1.field1", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field1: |" + field1Out + "|");
+            if (DEBUG) if (DEBUG) output_.println("field1: |" + field1Out + "|");
 
             Short field2Out = (Short)rfmlDoc.getValue("format1.field2", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field2: |" + field2Out.shortValue() + "|");
+            if (DEBUG) if (DEBUG) output_.println("field2: |" + field2Out.shortValue() + "|");
 
             BigDecimal field3Out = (BigDecimal)rfmlDoc.getValue("format1.field3", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field3: |" + field3Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("field3: |" + field3Out.toString() + "|");
 
             BigDecimal field4Out = (BigDecimal)rfmlDoc.getValue("format1.field4", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field4: |" + field4Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("field4: |" + field4Out.toString() + "|");
 
             Float field5Out = (Float)rfmlDoc.getValue("format1.field5", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field5: |" + field5Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("field5: |" + field5Out.toString() + "|");
 
             byte[] field6Out = (byte[])rfmlDoc.getValue("format1.field6", indices1);
-            if (DEBUG) if (DEBUG) System.out.println("field6: ");
+            if (DEBUG) if (DEBUG) output_.println("field6: ");
             if (DEBUG) printByteArray(field6Out);
 
             java.sql.Date field7Out = (java.sql.Date)rfmlDoc.getValue("format1.field7", indices1);
-            if (DEBUG) System.out.println("field7: |" + field7Out.toString() + "|");///
+            if (DEBUG) output_.println("field7: |" + field7Out.toString() + "|");///
 
 
             java.sql.Time field8Out = (java.sql.Time)rfmlDoc.getValue("format1.field8", indices1);
-            if (DEBUG) System.out.println("field8: |" + field8Out.toString() + "|");///
+            if (DEBUG) output_.println("field8: |" + field8Out.toString() + "|");///
 
             java.sql.Timestamp field9Out = (java.sql.Timestamp)rfmlDoc.getValue("format1.field9", indices1);
-            if (DEBUG) System.out.println("field9: |" + field9Out.toString() + "|");///
+            if (DEBUG) output_.println("field9: |" + field9Out.toString() + "|");///
 
             Long fieldAOut = (Long)rfmlDoc.getValue("format1.fieldA", indices1);
-            if (DEBUG) System.out.println("fieldA: |" + fieldAOut.toString() + "|");
+            if (DEBUG) output_.println("fieldA: |" + fieldAOut.toString() + "|");
 
             BigInteger fieldBOut = (BigInteger)rfmlDoc.getValue("format1.fieldB", indices1);
-            if (DEBUG) System.out.println("fieldB: |" + fieldBOut.toString() + "|");
+            if (DEBUG) output_.println("fieldB: |" + fieldBOut.toString() + "|");
 
 //            Byte fieldCOut = (Byte)rfmlDoc.getValue("format1.fieldC", indices1);
-//            if (DEBUG) if (DEBUG) System.out.println("fieldC: |" + fieldCOut.toString() + "|");
+//            if (DEBUG) if (DEBUG) output_.println("fieldC: |" + fieldCOut.toString() + "|");
 //
 //            Short fieldDOut = (Short)rfmlDoc.getValue("format1.fieldD", indices1);
-//            if (DEBUG) if (DEBUG) System.out.println("fieldD: |" + fieldDOut.toString() + "|");
+//            if (DEBUG) if (DEBUG) output_.println("fieldD: |" + fieldDOut.toString() + "|");
 
             String fieldS_1Out = (String)rfmlDoc.getValue("format1.fieldS.field1", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field1: |" + fieldS_1Out + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field1: |" + fieldS_1Out + "|");
 
             Short fieldS_2Out = (Short)rfmlDoc.getValue("format1.fieldS.field2", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field2: |" + fieldS_2Out.shortValue() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field2: |" + fieldS_2Out.shortValue() + "|");
 
             BigDecimal fieldS_3Out = (BigDecimal)rfmlDoc.getValue("format1.fieldS.field3", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field3: |" + fieldS_3Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field3: |" + fieldS_3Out.toString() + "|");
 
             BigDecimal fieldS_4Out = (BigDecimal)rfmlDoc.getValue("format1.fieldS.field4", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field4: |" + fieldS_4Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field4: |" + fieldS_4Out.toString() + "|");
 
             Float fieldS_5Out = (Float)rfmlDoc.getValue("format1.fieldS.field5", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field5: |" + fieldS_5Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field5: |" + fieldS_5Out.toString() + "|");
 
             byte[] fieldS_6Out = (byte[])rfmlDoc.getValue("format1.fieldS.field6", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field6: ");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field6: ");
             if (DEBUG) printByteArray(fieldS_6Out);
 
             java.sql.Date fieldS_7Out = (java.sql.Date)rfmlDoc.getValue("format1.fieldS.field7", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field7: |" + fieldS_7Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field7: |" + fieldS_7Out.toString() + "|");
 
             java.sql.Time fieldS_8Out = (java.sql.Time)rfmlDoc.getValue("format1.fieldS.field8", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field8: |" + fieldS_8Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field8: |" + fieldS_8Out.toString() + "|");
 
             java.sql.Timestamp fieldS_9Out = (java.sql.Timestamp)rfmlDoc.getValue("format1.fieldS.field9", indices2);
-            if (DEBUG) if (DEBUG) System.out.println("fieldS.field9: |" + fieldS_9Out.toString() + "|");
+            if (DEBUG) if (DEBUG) output_.println("fieldS.field9: |" + fieldS_9Out.toString() + "|");
 
             Long fieldS_AOut = (Long)rfmlDoc.getValue("format1.fieldS.fieldA", indices2);
-            if (DEBUG) System.out.println("fieldS.fieldA: |" + fieldS_AOut.toString() + "|");
+            if (DEBUG) output_.println("fieldS.fieldA: |" + fieldS_AOut.toString() + "|");
 
             BigInteger fieldS_BOut = (BigInteger)rfmlDoc.getValue("format1.fieldS.fieldB", indices2);
-            if (DEBUG) System.out.println("fieldS.fieldB: |" + fieldS_BOut.toString() + "|");
+            if (DEBUG) output_.println("fieldS.fieldB: |" + fieldS_BOut.toString() + "|");
 
 //            Byte fieldS_COut = (Byte)rfmlDoc.getValue("format1.fieldS.fieldC", indices2);
-//            if (DEBUG) if (DEBUG) System.out.println("fieldS.fieldC: |" + fieldS_COut.toString() + "|");
+//            if (DEBUG) if (DEBUG) output_.println("fieldS.fieldC: |" + fieldS_COut.toString() + "|");
 //
 //            Short fieldS_DOut = (Short)rfmlDoc.getValue("format1.fieldS.fieldD", indices2);
-//            if (DEBUG) if (DEBUG) System.out.println("fieldS.fieldD: |" + fieldS_DOut.toString() + "|");
+//            if (DEBUG) if (DEBUG) output_.println("fieldS.fieldD: |" + fieldS_DOut.toString() + "|");
 
             assertCondition(
                    field1Out.equals("Z") &&

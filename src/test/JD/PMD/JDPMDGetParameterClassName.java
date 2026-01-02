@@ -1571,8 +1571,8 @@ extends JDTestcase
         
       }
       } catch (Exception e) {  
-        System.out.println("Warning:  TESTCASE error "); 
-        e.printStackTrace(System.out); 
+        output_.println("Warning:  TESTCASE error "); 
+        e.printStackTrace(output_); 
       }
       return expectedClass;
     }

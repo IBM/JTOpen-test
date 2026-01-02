@@ -114,7 +114,7 @@ public class INetServerPrintShareTestcase extends Testcase
       ISeriesNetServerPrintShare[] shares = netserverPwr_.listPrintShares();
       for (int i=0; i<shares.length; i++) {
         if (shares[i].getName().equals(shareName)) {
-          System.out.println("ERROR during cleanup: The share " + shareName + " was not deleted.");
+          output_.println("ERROR during cleanup: The share " + shareName + " was not deleted.");
           break;
         }
       }
@@ -496,7 +496,7 @@ public class INetServerPrintShareTestcase extends Testcase
 ///   }
 
 
-    private static boolean validateAttributeValues(ISeriesNetServerPrintShare share)
+    boolean validateAttributeValues(ISeriesNetServerPrintShare share)
     {
       boolean ok = true;
 
@@ -512,51 +512,51 @@ public class INetServerPrintShareTestcase extends Testcase
 
       if (shareName.length() == 0 || shareName.length() > 12) {
         ok = false;
-        System.out.println("Share name has invalid length: " + shareName.length());
+        output_.println("Share name has invalid length: " + shareName.length());
       }
       if (shareName.charAt(0) == ' ') {
         ok = false;
-        System.out.println("shareName starts with a blank: |" + shareName + "|");
+        output_.println("shareName starts with a blank: |" + shareName + "|");
       }
 
       if (desc.length() > 50) {
         ok = false;
-        System.out.println("Description is longer than 50 chars");
+        output_.println("Description is longer than 50 chars");
       }
       if (outQ.trim().length() == 0) {
         ok = false;
-        System.out.println("Zero-length output queue name");
+        output_.println("Zero-length output queue name");
       }
       if (outQ.charAt(0) == ' ') {
         ok = false;
-        System.out.println("outQ starts with a blank: |" + outQ + "|");
+        output_.println("outQ starts with a blank: |" + outQ + "|");
       }
       if (outQlib.trim().length() == 0) {
         ok = false;
-        System.out.println("Zero-length output queue library");
+        output_.println("Zero-length output queue library");
       }
       if (driver.length() > 50) {
         ok = false;
-        System.out.println("Driver is longer than 50 chars");
+        output_.println("Driver is longer than 50 chars");
       }
       if (prtFile.length() > 10) {
         ok = false;
-        System.out.println("Printer file name is longer than 10 chars");
+        output_.println("Printer file name is longer than 10 chars");
       }
       if (prtFileLib.length() > 10) {
         ok = false;
-        System.out.println("Printer file library is longer than 10 chars");
+        output_.println("Printer file library is longer than 10 chars");
       }
       if (splfType < ISeriesNetServerPrintShare.USER_ASCII ||
           splfType > ISeriesNetServerPrintShare.AUTO_DETECT) {
         ok = false;
-        System.out.println("Invalid spooled file type: " + splfType);
+        output_.println("Invalid spooled file type: " + splfType);
       }
 
       return ok;
     }
 
-    static void displayAttributeValues(ISeriesNetServerPrintShare share)
+     void displayAttributeValues(ISeriesNetServerPrintShare share)
     {
       String shareName = share.getName();
       String desc = share.getDescription();
@@ -567,7 +567,7 @@ public class INetServerPrintShareTestcase extends Testcase
       String prtFileLib = share.getPrinterFileLibrary();
       boolean published = share.isPublished();
       int splfType = share.getSpooledFileType();
-      System.out.println("--------\n" +
+      output_.println("--------\n" +
                          "PRINT SHARE " + shareName + ":\n"+
                          "--------\n" +
                          "Description: "+desc+"\n"+
@@ -629,7 +629,7 @@ public class INetServerPrintShareTestcase extends Testcase
       int splfType_orig = share_.getSpooledFileType();
 
       if (DEBUG) {
-        System.out.println("\nOriginal attributes:");
+        output_.println("\nOriginal attributes:");
         displayAttributeValues(share_);
       }
 
@@ -654,12 +654,12 @@ public class INetServerPrintShareTestcase extends Testcase
       share_.setSpooledFileType(splfType_new);
 
       try {
-        ///System.out.println ("About to commitChanges.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("About to commitChanges.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
         netserverPwr_.commitChanges(share_);
       }
       catch (Exception e) {
         e.printStackTrace();
-        ///System.out.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
       }
 
       // Change the "publish print share" attribute separately, since it can throw a non-fatal exception if LDAP is not configured and we're trying to turn "publish" on.
@@ -674,7 +674,7 @@ public class INetServerPrintShareTestcase extends Testcase
       }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after sets:");
+        output_.println("\nAttributes after sets:");
         displayAttributeValues(share_);
       }
 
@@ -700,7 +700,7 @@ public class INetServerPrintShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after refresh:");
+        output_.println("\nAttributes after refresh:");
         displayAttributeValues(share_);
       }
 
@@ -732,7 +732,7 @@ public class INetServerPrintShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after reset to original values:");
+        output_.println("\nAttributes after reset to original values:");
         displayAttributeValues(share_);
       }
 
@@ -756,7 +756,7 @@ public class INetServerPrintShareTestcase extends Testcase
       catch (Exception e) { e.printStackTrace(); }
 
       if (DEBUG) {
-        System.out.println("\nAttributes after refresh:");
+        output_.println("\nAttributes after refresh:");
         displayAttributeValues(share_);
       }
 

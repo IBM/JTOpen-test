@@ -2856,7 +2856,6 @@ public class JDSQL400 implements Runnable {
             }
           } else {
             /* Check to see if we can set like a parameter */
-            /* JWE */
             int spaceIndex = left.indexOf(" ");
             if (spaceIndex > 0) {
               String variableName = left.substring(0, spaceIndex).trim();

@@ -142,7 +142,7 @@ Performs setup needed before running variations.
 	    statementCommaSeparator2_= null;
 	    statementCommaSeparator2f_= null;
 	  } catch (SQLException e) { 
-	    System.out.flush(); 
+	    output_.flush(); 
 	    e.printStackTrace();
 	    System.err.flush(); 
 	  }
@@ -168,7 +168,7 @@ Performs setup needed before running variations.
 	    }
 	    rs_ = statement_.executeQuery (select_ + " FOR UPDATE");
           } catch (SQLException e) { 
-	    System.out.flush(); 
+	    output_.flush(); 
             e.printStackTrace();
 	    System.err.flush();
           }
@@ -190,7 +190,7 @@ Performs setup needed before running variations.
 	    statement2_= null;
 	    statement2f_= null;
 	     } catch (SQLException e) { 
-	    System.out.flush(); 
+	    output_.flush(); 
 	            e.printStackTrace();
 	    System.err.flush(); 
 
@@ -217,7 +217,7 @@ Performs setup needed before running variations.
 	    }
 	    rsCommaSeparator_ = statementCommaSeparator_.executeQuery (select_ + " FOR UPDATE");
           } catch (SQLException e) {
-	    System.out.flush(); 
+	    output_.flush(); 
 	            e.printStackTrace();
 	    System.err.flush(); 
 
@@ -334,7 +334,7 @@ to a row.
 **/
     public void Var003()
     {
-      System.out.flush(); 
+      output_.flush(); 
       System.err.flush(); 
 	setupRs(); 
         if (checkJdbc20 ()) {
@@ -905,7 +905,7 @@ NUMERIC or DECIMAL field would).
             JDRSTest.position (rs2, key_);
             float v = rs2.getFloat ("C_REAL");
             rs2.close ();
-            // System.out.println("Value is " + v);
+            // output_.println("Value is " + v);
             assertCondition (v == 4534335.5);
         }
         catch (Exception e) {
@@ -2377,7 +2377,7 @@ NUMERIC or DECIMAL field would).
             JDRSTest.position (rs2, key_);
             float v = rs2.getFloat ("C_REAL");
             rs2.close ();
-            // System.out.println("Value is " + v);
+            // output_.println("Value is " + v);
             assertCondition (v == 4534335.5, added);
         }
         catch (Exception e) {

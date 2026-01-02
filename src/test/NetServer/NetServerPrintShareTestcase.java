@@ -79,10 +79,10 @@ public class NetServerPrintShareTestcase extends Testcase
          CommandCall cmdCall = new CommandCall(pwrSys_); 
          boolean success = cmdCall.run("STRTCPSVR SERVER(*NETSVR)   ");
          if (success) { 
-           System.out.println("*NETSVR  started sleeping for 30 seconds"); 
+           output_.println("*NETSVR  started sleeping for 30 seconds"); 
            Thread.sleep(30000);
          } else {
-           System.out.println("*NETSVR not started"); 
+           output_.println("*NETSVR not started"); 
          }
           pshare_ = new NetServerPrintShare(pwrSys_, "PRTTOOLBOX");
           pshare_.setAttributeValue(NetServerPrintShare.OUTPUT_QUEUE_NAME, "QPRINT");

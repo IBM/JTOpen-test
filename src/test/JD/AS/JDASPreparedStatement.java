@@ -83,10 +83,10 @@ public class JDASPreparedStatement extends JDASTestcase {
       }
 
     } catch (Exception e) {
-      System.out.println("Setup error.");
-      System.out.println("Last sql statement was the following");
-      System.out.println(sql);
-      e.printStackTrace(System.out);
+      output_.println("Setup error.");
+      output_.println("Last sql statement was the following");
+      output_.println(sql);
+      e.printStackTrace(output_);
     }
   }
 

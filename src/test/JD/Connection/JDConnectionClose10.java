@@ -122,11 +122,11 @@ This testcase should detect this problem.
 	          String message = "JDConnectionClose.Var010 loop="+i+"/"+CONNECTIONS_TO_TEST+
                   " or timeLeft = "+timeleft+"s";
 	          JDJobName.sendProgramMessage(message );
-	          System.out.println(message);
+	          output_.println(message);
 	          nextMessage = System.currentTimeMillis() + 15000;
 	        }
 		sb.append("Create connection loop "+i+"\n");
-		// System.out.println("Create connection loop "+i+"\n");
+		// output_.println("Create connection loop "+i+"\n");
 
 		Connection conn = testDriver_.getConnection (baseURL_+";errors=full", userId_, encryptedPassword_);
 		for (int j = 0; j < STATEMENTS_PER_CONNECTION; j++) {

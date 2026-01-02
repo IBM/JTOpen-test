@@ -117,7 +117,7 @@ extends JDTestcase
                                       + " (C_KEY) VALUES ('" + key_ + "')");
 
             rs_ = statement_.executeQuery (select_ + " FOR UPDATE");
-	    System.out.println("Using table "+JDRSTest.RSTEST_UPDATE); 
+	    output_.println("Using table "+JDRSTest.RSTEST_UPDATE); 
         }
     }
 

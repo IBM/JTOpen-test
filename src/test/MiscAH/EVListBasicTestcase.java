@@ -62,7 +62,7 @@ public class EVListBasicTestcase extends Testcase
      **/
     private void createList(int count) throws Exception
     {
-        // System.out.println("Creating list of  " + count + " environment variables.");
+        // output_.println("Creating list of  " + count + " environment variables.");
 
         // Delete all existing environment variables.
         EnvironmentVariableList evl = new EnvironmentVariableList(pwrSys_);
@@ -70,7 +70,7 @@ public class EVListBasicTestcase extends Testcase
         while (enumeration.hasMoreElements())
         {
             EnvironmentVariable ev = (EnvironmentVariable)enumeration.nextElement();
-            // System.out.println("Deleting environment variable " + ev.getName() + ".");
+            // output_.println("Deleting environment variable " + ev.getName() + ".");
             ev.delete();
         }
 
@@ -79,7 +79,7 @@ public class EVListBasicTestcase extends Testcase
         {
             String evName = EV_PREFIX_ + i;
             EnvironmentVariable ev = new EnvironmentVariable(pwrSys_, evName);
-            // System.out.println("Creating environment variable " + ev.getName() + ".");
+            // output_.println("Creating environment variable " + ev.getName() + ".");
             ev.setValue("Testing EnvironmentVariableList class " + i);
         }
     }
@@ -104,7 +104,7 @@ public class EVListBasicTestcase extends Testcase
             String evName = ev.getName();
 
             if (! v.contains(evName)) {
-                System.out.println("EV name mismatch:" + evName);
+                output_.println("EV name mismatch:" + evName);
                 success = false;
             }
             else {
@@ -114,7 +114,7 @@ public class EVListBasicTestcase extends Testcase
             String evValue = ev.getValue();
             int index = Integer.parseInt(evName.substring(EV_PREFIX_.length()));
             if (!evValue.equals("Testing EnvironmentVariableList class " + index)) {
-                System.out.println("EV value mismatch:" + evValue + " != " + "Testing EnvironmentVariableList class " + index);
+                output_.println("EV value mismatch:" + evValue + " != " + "Testing EnvironmentVariableList class " + index);
                 success = false;
             }
 
@@ -122,13 +122,13 @@ public class EVListBasicTestcase extends Testcase
         }
 
         if (actual != expected) {
-            System.out.println("EV count mismatch:" + actual + " != " + expected);
+            output_.println("EV count mismatch:" + actual + " != " + expected);
             success = false;
         }
 
         if (v.size() != 0) {
             for (int i = 0; i < v.size(); ++i)
-                System.out.println("EV name " + v.elementAt(i) + " not found");
+                output_.println("EV name " + v.elementAt(i) + " not found");
             success = false;
         }
 
@@ -139,7 +139,7 @@ public class EVListBasicTestcase extends Testcase
             return success;
         }
 
-        System.out.println("nextElement() did not throw exception when list was done");
+        output_.println("nextElement() did not throw exception when list was done");
         return false;
     }
 
@@ -156,20 +156,20 @@ public class EVListBasicTestcase extends Testcase
         for (int i = 0; i < expected; ++i) {
             String evName = EV_PREFIX_ + i;
             if (!properties.containsKey(evName)) {
-                System.out.println("EV name " + evName + " not found");
+                output_.println("EV name " + evName + " not found");
                 success = false;
             }
             else {
                 String evValue = properties.getProperty(evName);
                 if (!evValue.equals("Testing EnvironmentVariableList class " + i)) {
-                    System.out.println("EV value mismatch:" + evValue + " != " + "Testing EnvironmentVariableList class " + i);
+                    output_.println("EV value mismatch:" + evValue + " != " + "Testing EnvironmentVariableList class " + i);
                     success = false;
                 }
             }
         }
 
         if (properties.size() != expected) {
-            System.out.println("EV count mismatch:" + properties.size() + " != " + expected);
+            output_.println("EV count mismatch:" + properties.size() + " != " + expected);
             success = false;
         }
 

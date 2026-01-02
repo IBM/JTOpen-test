@@ -12,6 +12,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.DDM;
 
+import java.io.PrintWriter;
 import java.lang.Thread;
 import com.ibm.as400.access.*;
 import com.ibm.as400.access.Record;
@@ -46,13 +47,13 @@ public class DDMProxyStressTestcase
    KeyedFile f2_;
 
    AS400 sys2_ = null; 
-      
 
 //Constructor
-   public DDMProxyStressTestcase(int n) 
+   public DDMProxyStressTestcase(int n, PrintWriter output) 
    {
       curntThread_ = n;
       thread_ = null;
+      output_ = output; 
       setup();
       
          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
@@ -73,13 +74,13 @@ public class DDMProxyStressTestcase
       AS400Message[] msglist_ = null;
       try 
       {
-         System.out.println("     Deleting DDM libraries..." + "(t" + curntThread_ + ")");
+         output_.println("     Deleting DDM libraries..." + "(t" + curntThread_ + ")");
 
          if (dlt.run() != true) 
          {
             msglist_ = dlt.getMessageList();
             
-            System.out.println("       Cleanup Failed."  + "(t" + curntThread_ + ")");
+            output_.println("       Cleanup Failed."  + "(t" + curntThread_ + ")");
             
             if (Trace.isTraceOn())
                Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
@@ -87,7 +88,7 @@ public class DDMProxyStressTestcase
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);
@@ -114,44 +115,44 @@ public class DDMProxyStressTestcase
          {  
             try
             {
-               System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+               output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
                
-               System.out.println("     Creating KeyedFile..." + "(t" + curntThread_ + ")");
+               output_.println("     Creating KeyedFile..." + "(t" + curntThread_ + ")");
 
                file = new KeyedFile(sys2_, "/QSYS.LIB/DDMPXY" + 
                                     curntThread_ + ".LIB/KEYSRC.FILE/MBR1.MBR");
                file.setRecordFormat(new DDMKeyFormat(sys2_));
 
-               System.out.println("     Opening KeyedFile..." + "(t" + curntThread_ + ")");
+               output_.println("     Opening KeyedFile..." + "(t" + curntThread_ + ")");
                
                file.open(AS400File.READ_WRITE, 2, AS400File.COMMIT_LOCK_LEVEL_NONE);
                
                // Verify the object state
                if (!file.isOpen())
-                  System.out.println("isOpen() not returning true.\n");
+                  output_.println("isOpen() not returning true.\n");
                if (file.isReadOnly())
-                  System.out.println("isReadOnly() returning true.\n");
+                  output_.println("isReadOnly() returning true.\n");
                if (!file.isReadWrite())
-                  System.out.println("isReadWrite() not returning true.\n");
+                  output_.println("isReadWrite() not returning true.\n");
                if (file.isWriteOnly())
-                  System.out.println("isWriteOnly() returning true.\n");
+                  output_.println("isWriteOnly() returning true.\n");
                if (file.getBlockingFactor() != 1)
-                  System.out.println("getBlockingFactor() failed\n");
+                  output_.println("getBlockingFactor() failed\n");
                if (file.getCommitLockLevel() != -1)
-                  System.out.println("getCommitLockLevel() not returning -1: " + 
+                  output_.println("getCommitLockLevel() not returning -1: " + 
                                      String.valueOf(file.getCommitLockLevel()) + ".\n");
             }
             catch(Exception e)
             {
-               System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
             }
             
             try
             {
-               System.out.println("     Writing a record..." + "(t" + curntThread_ + ")");
+               output_.println("     Writing a record..." + "(t" + curntThread_ + ")");
                
                // Ensure that we can write a record.
                Record record = file.getRecordFormat().getNewRecord();
@@ -159,8 +160,8 @@ public class DDMProxyStressTestcase
             }
             catch(Exception e)
             {
-               System.out.println("Exception writing to file\n");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("Exception writing to file\n");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -169,7 +170,7 @@ public class DDMProxyStressTestcase
             
             try
             {
-               System.out.println("     Reading a record..." + "(t" + curntThread_ + ")");
+               output_.println("     Reading a record..." + "(t" + curntThread_ + ")");
 
                // Ensure that we can read a record.
                @SuppressWarnings("unused")
@@ -179,8 +180,8 @@ public class DDMProxyStressTestcase
             }
             catch(Exception e)
             {
-               System.out.println("Exception reading from file\n");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("Exception reading from file\n");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -189,7 +190,7 @@ public class DDMProxyStressTestcase
             
             try
             {
-               System.out.println("     Updating a record..." + "(t" + curntThread_ + ")");
+               output_.println("     Updating a record..." + "(t" + curntThread_ + ")");
                
                // Ensure that we can update.
                Record record = file.getRecordFormat().getNewRecord();
@@ -197,8 +198,8 @@ public class DDMProxyStressTestcase
             }
             catch(Exception e)
             {
-               System.out.println("Exception updating file\n");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("Exception updating file\n");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -207,7 +208,7 @@ public class DDMProxyStressTestcase
             
             try
             {
-               System.out.println("     Deleting record..." + "(t" + curntThread_ + ")");
+               output_.println("     Deleting record..." + "(t" + curntThread_ + ")");
 
                // Ensure that we can delete the record.
                file.readLast(); // need this to reposition the cursor
@@ -215,8 +216,8 @@ public class DDMProxyStressTestcase
             }
             catch(Exception e)
             {
-               System.out.println("Exception deleting from file\n");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("Exception deleting from file\n");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -226,16 +227,16 @@ public class DDMProxyStressTestcase
             // Close the file
             try
             {
-               System.out.println("     Closing KeyedFile..." + "(t" + curntThread_ + ")");
+               output_.println("     Closing KeyedFile..." + "(t" + curntThread_ + ")");
 
                file.close();
 
-               System.out.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": Successful" + "(t" + curntThread_ + ")");
             }
             catch(Exception e)
             {
-               System.out.println("Failed to close file.\n");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("Failed to close file.\n");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
 
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -261,7 +262,7 @@ public class DDMProxyStressTestcase
       ddmlib_ = new CommandCall( sys2_, "QSYS/crtlib (DDMPXY" + curntThread_ + ") AUT(*ALL)");
       try 
       {
-         System.out.println("     Creating DDM libraries..." + "(t" + curntThread_ + ")");
+         output_.println("     Creating DDM libraries..." + "(t" + curntThread_ + ")");
 
          if (ddmlib_.run() != true) 
          {
@@ -273,7 +274,7 @@ public class DDMProxyStressTestcase
             }
             else
             {   
-               System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+               output_.println("       Setup Failed."  + "(t" + curntThread_ + ")");
                
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
@@ -301,7 +302,7 @@ public class DDMProxyStressTestcase
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during setup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during setup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);

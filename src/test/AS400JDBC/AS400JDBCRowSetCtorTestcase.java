@@ -82,7 +82,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     else if (jndiType.equals("ldap"))
       jndiType_ = JNDI_LDAP;
     else
-      System.out.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
+      output_.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
     authorityUsr_ = authorityUsr; // @A2A
     authorityPwd_ = authorityPwd; // @A2A
   }
@@ -92,9 +92,9 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
       System.gc(); // @A4A Garbage collection so that file can be deleted.
 
       if (!testFile_.delete()) // @A4C
-        System.out.println("WARNING... testcase cleanup could not delete: " + TEST_FILE_NAME); // @A4A
+        output_.println("WARNING... testcase cleanup could not delete: " + TEST_FILE_NAME); // @A4A
       if (!javatest_.delete()) // @A4A
-        System.out.println("WARNING... testcase cleanup could not delete: " + logDirectory_); // @A4A
+        output_.println("WARNING... testcase cleanup could not delete: " + logDirectory_); // @A4A
       char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
       dataSource_ = new AS400JDBCDataSource(systemObject_.getSystemName(), systemObject_.getUserId(), charPassword);
       PasswordVault.clearPassword(charPassword);
@@ -105,7 +105,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
       s.close();
       c.close();
     } catch (Exception e) {
-      System.out.println("AS400JDBCRowSetTestcase cleanup FAILED!");
+      output_.println("AS400JDBCRowSetTestcase cleanup FAILED!");
       e.printStackTrace();
     }
   }
@@ -118,11 +118,11 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     javatest_ = new File(logDirectory_); // A4C //@A3A
     if (!javatest_.exists()) // @A3A
     { // @A3A
-      System.out.println("Setup is creating '" + logDirectory_ + "' directory."); // @A3A
+      output_.println("Setup is creating '" + logDirectory_ + "' directory."); // @A3A
       // @A3A
       if (!javatest_.mkdir()) // @A3A
       { // @A3A
-        System.out.println("WARNING:  Setup could not create the '" + logDirectory_ + "' directory."); // @A3A
+        output_.println("WARNING:  Setup could not create the '" + logDirectory_ + "' directory."); // @A3A
       } // @A3A
     }
 
@@ -147,7 +147,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
     try {
       context_ = new InitialContext(env);
     } catch (Exception cxt) {
-      System.out.println("ERROR: testcase setup failed to initialize the JNDI context.");
+      output_.println("ERROR: testcase setup failed to initialize the JNDI context.");
       cxt.printStackTrace();
     }
 
@@ -158,7 +158,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
       testFile_ = new File(TEST_FILE_NAME);
       testFile_.createNewFile();
     } catch (IOException e) {
-      System.out.println("Exception creating " + TEST_FILE_NAME);
+      output_.println("Exception creating " + TEST_FILE_NAME);
       e.printStackTrace();
     }
   }
@@ -444,7 +444,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
         try {
           context_.bind(dataSourceName_, dataSource_);
         } catch (Exception bee) {
-          System.out.println("Data source binding error.");
+          output_.println("Data source binding error.");
           bee.printStackTrace();
         }
       }
@@ -497,7 +497,7 @@ public class AS400JDBCRowSetCtorTestcase extends Testcase {
       ps.close();
       c.close();
     } catch (Exception e) {
-      System.out.println("AS400JDBCRowSetCtorTestcase setup FAILED!"); // @A5C
+      output_.println("AS400JDBCRowSetCtorTestcase setup FAILED!"); // @A5C
       e.printStackTrace();
     }
   }

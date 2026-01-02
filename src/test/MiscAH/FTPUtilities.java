@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.io.PrintWriter; 
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -51,7 +52,7 @@ public class FTPUtilities
     /**
      *  Copies a file onto another file (replacing it if it exists).
     **/
-    static boolean compareFile(String sourceFile, String targetFile)
+    static boolean compareFile(String sourceFile, String targetFile, PrintWriter output_)
                                throws Exception, IOException
     {
       if (sourceFile == null) throw new NullPointerException ("sourceFile");
@@ -105,7 +106,7 @@ public class FTPUtilities
       }
       catch (Exception e)
       {
-         System.out.println ("Exception in compareFile: " + e.getMessage ());
+         output_.println ("Exception in compareFile: " + e.getMessage ());
          e.printStackTrace ();
       }
 
@@ -117,7 +118,7 @@ public class FTPUtilities
 /**
 Create a file.
 **/
-  static boolean createFile (File file)
+  static boolean createFile (File file, PrintWriter output_)
   {
     boolean succeeded = true;
     try
@@ -129,7 +130,7 @@ Create a file.
     }
     catch (Exception e) {
       succeeded = false;
-      System.out.println (e.toString());
+      output_.println (e.toString());
       e.printStackTrace ();
     }
     return succeeded;
@@ -140,7 +141,7 @@ Create a file.
 /**
 Create a file.
 **/
-  static boolean createFile (File file, String data)
+  static boolean createFile (File file, String data, PrintWriter output_)
   {
     boolean succeeded = true;
     try
@@ -153,16 +154,16 @@ Create a file.
     }
     catch (Exception e) {
       succeeded = false;
-      System.out.println (e.toString());
+      output_.println (e.toString());
       e.printStackTrace ();
     }
     return succeeded;
   }
 
 
-  static boolean createFile (String fileName, String data)
+  static boolean createFile (String fileName, String data, PrintWriter output_)
   {
-      return createFile (new File (fileName), data);
+      return createFile (new File (fileName), data, output_);
   }
 
 
@@ -170,27 +171,27 @@ Create a file.
 /**
 Delete a file.
 **/
-    static boolean deleteFile (File file)
+    static boolean deleteFile (File file, PrintWriter output_)
     {
       if (file.exists ())
       {
         try { file.delete (); }
         catch (Exception e) {
-          System.out.println ("Exception in deleteFile: " +
+          output_.println ("Exception in deleteFile: " +
                               e.getMessage ());
           e.printStackTrace ();
         }
         if (file.exists ())
-          System.out.println ("FTPUtilities.deleteFile(): Failed to delete file " +
+          output_.println ("FTPUtilities.deleteFile(): Failed to delete file " +
                               file.getAbsolutePath ());
       }
       return (!file.exists ());
     }
 
 
-    static boolean deleteFile (String fileName)
+    static boolean deleteFile (String fileName, PrintWriter output_)
     {
-      return deleteFile (new File (fileName));
+      return deleteFile (new File (fileName),output_);
     }
 
 
@@ -200,27 +201,27 @@ Delete a file.
 /**
 Delete a directory and all its subdirectories.
 **/
-    static boolean deleteDirectory ( File dir )
+    static boolean deleteDirectory ( File dir, PrintWriter output_ )
     {
       try
       {
          if (dir.exists () && !dir.isDirectory ())
-          System.out.println ("Not a directory: " + dir.getAbsolutePath ());
+          output_.println ("Not a directory: " + dir.getAbsolutePath ());
       }
       catch (Exception e)
       {
-          System.out.println ("Exception in deleteDirectory: " +
+          output_.println ("Exception in deleteDirectory: " +
                               e.getMessage());
           e.printStackTrace ();
       }
-      deleteFileOrDir (dir);
+      deleteFileOrDir (dir, output_);
       return (!dir.exists ());
     }
 
 
-    public static boolean deleteDirectory ( String dirName )
+    public static boolean deleteDirectory ( String dirName, PrintWriter output_ )
     {
-      return deleteDirectory (new File (dirName));
+      return deleteDirectory (new File (dirName),output_);
     }
 
 
@@ -230,36 +231,36 @@ Delete a directory and all its subdirectories.
 /**
 Delete a directory or file, and all its subdirectories (if it's a directory).
 **/
-    static void deleteFileOrDir ( File fileOrDir )
+    static void deleteFileOrDir ( File fileOrDir, PrintWriter output_ )
     {
       boolean isDirectory = false;
       boolean isFile = false;
       try {
-        if (FTPTest.DEBUG) System.out.print("FTPUtilities.deleteFileOrDir("+fileOrDir.getPath()+"): ");
+        if (FTPTest.DEBUG) output_.print("FTPUtilities.deleteFileOrDir("+fileOrDir.getPath()+"): ");
         if (fileOrDir.isDirectory ()) {
           isDirectory = true;
-          if (FTPTest.DEBUG) System.out.println("It's a directory.");
+          if (FTPTest.DEBUG) output_.println("It's a directory.");
         }
         else if (fileOrDir.isFile ()) {
           isFile = true;
-          if (FTPTest.DEBUG) System.out.println("It's a file.");
+          if (FTPTest.DEBUG) output_.println("It's a file.");
         }
         else if (!fileOrDir.exists ()) {
           isFile = true;
-          if (FTPTest.DEBUG) System.out.println("It doesn't exist.");
+          if (FTPTest.DEBUG) output_.println("It doesn't exist.");
         }
         else {
-          if (FTPTest.DEBUG) System.out.println("It's neither a file nor a directory.");
+          if (FTPTest.DEBUG) output_.println("It's neither a file nor a directory.");
         }
       }
       catch (Exception e)
       {
-          System.out.println ("Exception in deleteFileOrDir: " +
+          output_.println ("Exception in deleteFileOrDir: " +
                               e.getMessage());
           e.printStackTrace ();
       }
 
-      if (isFile) deleteFile (fileOrDir );
+      if (isFile) deleteFile (fileOrDir, output_ );
       else if (isDirectory)
       {
         String[] entriesInDir = null;
@@ -267,7 +268,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
         try { entriesInDir = fileOrDir.list (); }
         catch (Exception e)
         {
-            System.out.println ("Exception in deleteFileOrDir(2): " +
+            output_.println ("Exception in deleteFileOrDir(2): " +
                                 e.getMessage());
             e.printStackTrace ();
         }
@@ -277,14 +278,14 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
           for (int i=0; i<entriesInDir.length; i++) {
             String name = entriesInDir[i];
             File thisFile = new File (fileOrDir, name);
-            deleteFileOrDir (thisFile);
+            deleteFileOrDir (thisFile, output_);
           }
 
           // Re-list (and delete) the contents of the directory, in case any temporary ".*" files got created and left behind.  (This has been observed on AFS.)
           try { entriesInDir = fileOrDir.list(); }
           catch (Exception e)
           {
-            System.out.println ("Exception in deleteFileOrDir(3): " +
+            output_.println ("Exception in deleteFileOrDir(3): " +
                                 e.getMessage());
             e.printStackTrace ();
           }
@@ -292,7 +293,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
             for (int i=0; i<entriesInDir.length; i++) {
               String name = entriesInDir[i];
               File thisFile = new File (fileOrDir, name);
-              deleteFileOrDir (thisFile);
+              deleteFileOrDir (thisFile, output_);
             }
           }
         }
@@ -301,12 +302,12 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
         try { worked = fileOrDir.delete (); } // Now delete the empty directory
         catch (Exception e)
         {
-            System.out.println ("Exception in deleteFileOrDir(4): " +
+            output_.println ("Exception in deleteFileOrDir(4): " +
                                 e.getMessage());
             e.printStackTrace ();
         }
         if (!worked) {
-          System.out.println("Failed to delete directory " + fileOrDir);
+          output_.println("Failed to delete directory " + fileOrDir);
         }
       }
     }
@@ -320,22 +321,22 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
      *   Lists the files in (and under) the specified directory.
      *   In the returned list, files are represented as jar entrynames.
      **/
-    public static Vector<String> listFiles (File file)
+    public static Vector<String> listFiles (File file, PrintWriter output_)
     {
        if (file == null)
        {
-          System.out.println ("FTPUtilities: Argument is null.");
+          output_.println ("FTPUtilities: Argument is null.");
           return new Vector<String> ();
        }
 
        File parentDir = new File (file.getParent ());
 
-       return listFiles (file, parentDir.getAbsolutePath ());
+       return listFiles (file, parentDir.getAbsolutePath (), output_);
     }
 
 
 
-    static Vector<String> listFiles (Vector<?> fileOrDirList, String basePath)
+    static Vector<String> listFiles (Vector<?> fileOrDirList, String basePath, PrintWriter output_)
     {
        Vector<String> result = new Vector<String> ();
        Enumeration<?> e = fileOrDirList.elements ();
@@ -343,7 +344,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
        while (e.hasMoreElements ())
        {
           File fileOrDir = (File)e.nextElement ();
-          Vector<String> subList = listFiles (fileOrDir, basePath);
+          Vector<String> subList = listFiles (fileOrDir, basePath, output_);
           copyList (subList, result);  // merge subList into result
        }
 
@@ -353,7 +354,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
 
 
-  private static Vector<String> listFiles (File fileOrDir, String basePath)
+  private static Vector<String> listFiles (File fileOrDir, String basePath, PrintWriter output_)
   {
     Vector<String> result = new Vector<String> ();
     try
@@ -371,29 +372,29 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
           ///if (ifs.isDirectory()) prtln("  >>(directory)");
           ///if (ifs.isFile()) prtln("  >>(file)");
 
-          Vector<String> subList = listFiles (file, basePath);
+          Vector<String> subList = listFiles (file, basePath, output_);
           copyList (subList, result);  // merge subList into result
         }
       }
       ///else
-        result.addElement (normalize (fileOrDir, basePath));
+        result.addElement (normalize (fileOrDir, basePath, output_));
    }
     catch (Exception e)
     {
-      System.out.println ("listFiles(File,String):" + e.getMessage());
+      output_.println ("listFiles(File,String):" + e.getMessage());
       e.printStackTrace();
     }
     return result;
   }
 
 
-   private static String normalize (File fileOrDir, String basePath)
+   private static String normalize (File fileOrDir, String basePath, PrintWriter output_)
    {
       String filePath = fileOrDir.getAbsolutePath ();
       String outString = null;
 
       if (!filePath.startsWith (basePath))
-         System.out.println ("filePath doesn't start with basePath");
+         output_.println ("filePath doesn't start with basePath");
       else
       {
          String relPath = filePath.substring (basePath.length ());
@@ -406,7 +407,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
       while (outString.length () > 1 && outString.startsWith ("/"))
          outString = outString.substring (1);
 
-      if (FTPTest.DEBUG) System.out.println ("Normalized path: " + outString);
+      if (FTPTest.DEBUG) output_.println ("Normalized path: " + outString);
 
       return outString;
    }
@@ -458,16 +459,16 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
     // --------------------------------------------------------------------
 
 
-    public static boolean checkTestDir(String[] listOfStrings, int level, int TOTAL)
+    public static boolean checkTestDir(String[] listOfStrings, int level, int TOTAL, PrintWriter output_)
     {
        // boolean result = true;
        int mask = 0;
  
-       if (FTPTest.DEBUG) System.out.println("    Entering verify list");
+       if (FTPTest.DEBUG) output_.println("    Entering verify list");
 
        if (listOfStrings == null)
        {
-          System.out.println("    list of strings is null");
+          output_.println("    list of strings is null");
           return false;
        }
 
@@ -475,14 +476,14 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
 
        if (numberOfItems < 5)
        {
-          System.out.println("    list does not contain 5 items, number = " + numberOfItems);
+          output_.println("    list does not contain 5 items, number = " + numberOfItems);
           return false;
        }
 
        for (int i = 0; i < numberOfItems; i++)
        {
           String s = listOfStrings[i];
-          if (FTPTest.DEBUG) System.out.println("    " + s);
+          if (FTPTest.DEBUG) output_.println("    " + s);
 
           if (s.indexOf("a.a") >= 0)
           {
@@ -530,7 +531,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
           }
        }
 
-       if (FTPTest.DEBUG) System.out.println("    Mask is: " + mask);
+       if (FTPTest.DEBUG) output_.println("    Mask is: " + mask);
 
        if (mask == TOTAL)
           return true;
@@ -542,13 +543,13 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
     // --------------------------------------------------------------------
 
 
-    public static boolean checkForFile(String[] listOfStrings, String file)
+    public static boolean checkForFile(String[] listOfStrings, String file, PrintWriter output_)
     {
        boolean result = true;
  
        if (listOfStrings == null)
        {
-          System.out.println("    list of strings is null");
+          output_.println("    list of strings is null");
           return false;
        }
        int numberOfItems = listOfStrings.length;
@@ -556,7 +557,7 @@ Delete a directory or file, and all its subdirectories (if it's a directory).
        for (int i = 0; i < numberOfItems; i++)
        {
           String s = listOfStrings[i];
-          if (FTPTest.DEBUG) System.out.println("    " + s);
+          if (FTPTest.DEBUG) output_.println("    " + s);
 
           if (s.indexOf(file) >= 0)
           {

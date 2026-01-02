@@ -22,6 +22,7 @@
 package test.JD.Parm;
 
 import java.sql.*;
+import java.io.PrintWriter;
 
 import test.JDParmTest;
 
@@ -32,14 +33,15 @@ public class JDParmHelper {
 
     public static boolean verifyString(String column, 
                                        String value,
-                                       Connection connection) 
+                                       Connection connection,
+                                       PrintWriter output) 
     {
-	return verifyString(column,value,connection,JDParmTest.COLLECTION+".strings"); 
+	return verifyString(column,value,connection,JDParmTest.COLLECTION+".strings", output); 
     }
 
     public static boolean verifyString(String column, 
                                        String value,
-                                       Connection connection, String tablename) 
+                                       Connection connection, String tablename, PrintWriter output_) 
     {
 	try {
             Statement s = connection.createStatement();
@@ -51,7 +53,7 @@ public class JDParmHelper {
                 if (test == null) {
                     return true;
                 } else {
-		    System.out.println("verifyString returning false:  expected null but value was \""+test+"\""); 
+		    output_.println("verifyString returning false:  expected null but value was \""+test+"\""); 
                     return false;
                 }
 	    } else {
@@ -59,7 +61,7 @@ public class JDParmHelper {
 		    return true;
 		} else {
 		    if (test == null) {
-			System.out.println("verifyString returning false:  expected nonNull but value was null"); 
+			output_.println("verifyString returning false:  expected nonNull but value was null"); 
 		    } else {
 			String printValue = value;
 			String printTest = test;
@@ -71,42 +73,42 @@ public class JDParmHelper {
 			} 
 			
 			
-			System.out.println("verifyString returning false:  expected \""+printValue+"\" but value was \""+printTest+"\""); 
-			System.out.print("expected :");
+			output_.println("verifyString returning false:  expected \""+printValue+"\" but value was \""+printTest+"\""); 
+			output_.print("expected :");
 			int i; 
 			for (i = 0; i < value.length() && i < 1000; i++) {
-			    System.out.print(" 0x"+Integer.toHexString(value.charAt(i)));
+			    output_.print(" 0x"+Integer.toHexString(value.charAt(i)));
 			}
-			if ( i < value.length()) System.out.print(" ...");
+			if ( i < value.length()) output_.print(" ...");
 
-			System.out.println(); 
-			System.out.print("value    :");
+			output_.println(); 
+			output_.print("value    :");
 			for (i = 0; i < test.length() && i < 1000; i++) {
-			    System.out.print(" 0x"+Integer.toHexString(test.charAt(i)));
+			    output_.print(" 0x"+Integer.toHexString(test.charAt(i)));
 			}
-			if ( i < test.length()) System.out.print(" ..."); 
-			System.out.println();
-			System.out.println("Expected length = "+value.length()+" retrieved length = "+test.length()); 
+			if ( i < test.length()) output_.print(" ..."); 
+			output_.println();
+			output_.println("Expected length = "+value.length()+" retrieved length = "+test.length()); 
 			String firstDifferenceFound = null; 
 			for (i = 0; i < value.length() && i < test.length() ; i++ ) {
 				if (value.charAt(i) == test.charAt(i)) {
 				    if (i < 1000) { 
-					System.out.print("     ");
+					output_.print("     ");
 				    }
 				} else {
 				    if (i < 1000) { 
-					System.out.print(" XXXX");
+					output_.print(" XXXX");
 				    }
 				    if (firstDifferenceFound == null) {
 					firstDifferenceFound = "First difference found at index "+i; 
 				    } 
 				}
 			} 
-			System.out.println();
+			output_.println();
 			if (firstDifferenceFound != null) {
-			    System.out.println(firstDifferenceFound); 
+			    output_.println(firstDifferenceFound); 
 			} else {
-			    System.out.println("No difference found"); 
+			    output_.println("No difference found"); 
 			} 
 
 			
@@ -148,39 +150,39 @@ public class JDParmHelper {
             }
         } catch (SQLException e) {
             return false;
-            //System.out.println("Error during testcase verification");
+            //output_.println("Error during testcase verification");
             //e.printStackTrace();
         }
     }
 
 
-    public static void purgeStringsTable(Connection connection) {
+    public static void purgeStringsTable(Connection connection, PrintWriter output_) {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("delete from "+JDParmTest.COLLECTION+".strings");
             s.close();
         } catch (SQLException e) {
-            System.out.println("Table purge function filed.");
+            output_.println("Table purge function filed.");
         }
     }
 
-    public static void purgeStringsTable(Connection connection, String tablename) {
+    public static void purgeStringsTable(Connection connection, String tablename, PrintWriter output_) {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("delete from "+ tablename);
             s.close();
         } catch (SQLException e) {
-            System.out.println("Table purge function filed.");
+            output_.println("Table purge function filed.");
         }
     }
 
 
-    public static void handleDropException(SQLException e) {
+    public static void handleDropException(SQLException e, PrintWriter output_) {
 	String message = e.toString();
 	if (message.indexOf("not found") > 0 &&
 	    message.indexOf("type *FILE") > 0) {
 	} else {
-	    System.out.println("Warning .. could not delete strings");
+	    output_.println("Warning .. could not delete strings");
 	    e.printStackTrace();
 
 	}

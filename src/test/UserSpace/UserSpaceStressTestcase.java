@@ -80,7 +80,7 @@ public class UserSpaceStressTestcase
        }
        catch(Exception e) 
        {
-	   System.out.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
+	   output_.println("      Exception during cleanup." + "(t" + curntThread_ + ")");
 
 	   if (Trace.isTraceOn())
 	       Trace.log(Trace.ERROR, e);
@@ -107,9 +107,9 @@ public class UserSpaceStressTestcase
          {
             try 
             {
-               System.out.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
+               output_.println("\n   Loop #: " + i + " (current thread: " + curntThread_ + ")");
                
-               System.out.println("     Creating UserSpace..." + "(t" + curntThread_ + ")");
+               output_.println("     Creating UserSpace..." + "(t" + curntThread_ + ")");
 
                usp_.create(10240,                 // The initial size is 10K
                           true,                  // Replace if the user space already exists
@@ -119,39 +119,39 @@ public class UserSpaceStressTestcase
                           "*USE");               // Public has use authority to the user space
 
                // Use the write method to write bytes to the user space.
-               System.out.println("     Writing to UserSpace..." + "(t" + curntThread_ + ")");
+               output_.println("     Writing to UserSpace..." + "(t" + curntThread_ + ")");
                usp_.write("Write this string to the user space.", 0);
 
-               System.out.println("     Reading from UserSpace..." + "(t" + curntThread_ + ")");
+               output_.println("     Reading from UserSpace..." + "(t" + curntThread_ + ")");
                readString = usp_.read(0,36);
                if (readString.equals("Write this string to the user space.")) 
                {
-                  System.out.println("   Loop #" + i + ": Read Successful" + "(t" + curntThread_ + ")");
+                  output_.println("   Loop #" + i + ": Read Successful" + "(t" + curntThread_ + ")");
                }
                else 
                {
-                  System.out.println("     UserSpace read FAILED" + "(t" + curntThread_ + ")");
-                  System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+                  output_.println("     UserSpace read FAILED" + "(t" + curntThread_ + ")");
+                  output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                }
 
             }
             catch(Exception e) 
             {
-               System.out.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
-               System.out.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
+               output_.println("       Unexpected Exception." + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": FAILED" + "(t" + curntThread_ + ")");
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
             }
             // Try to delete the user space
             try 
             {
-               System.out.println("     Deleting UserSpace..." + "(t" + curntThread_ + ")");
+               output_.println("     Deleting UserSpace..." + "(t" + curntThread_ + ")");
                usp_.delete();
-               System.out.println("   Loop #" + i + ": Delete Successful" + "(t" + curntThread_ + ")");
+               output_.println("   Loop #" + i + ": Delete Successful" + "(t" + curntThread_ + ")");
             }
             catch(Exception e) 
             {
-               System.out.println("      UserSpace delete FAILED." + "(t" + curntThread_ + ")");
+               output_.println("      UserSpace delete FAILED." + "(t" + curntThread_ + ")");
                
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
@@ -178,7 +178,7 @@ public class UserSpaceStressTestcase
 
       try 
       {
-         System.out.println("     Creating UserSpace libraries..." + "(t" + curntThread_ + ")");
+         output_.println("     Creating UserSpace libraries..." + "(t" + curntThread_ + ")");
 
          if (uslib_.run() != true) 
          {
@@ -190,7 +190,7 @@ public class UserSpaceStressTestcase
             }
             else
             {
-               System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+               output_.println("       Setup Failed."  + "(t" + curntThread_ + ")");
                
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
@@ -204,7 +204,7 @@ public class UserSpaceStressTestcase
             {
                if (! msglist_[0].getText().equalsIgnoreCase("Library STRESS" + curntThread_ + " created.")) 
                {
-                  System.out.println("       Setup Failed."  + "(t" + curntThread_ + ")");
+                  output_.println("       Setup Failed."  + "(t" + curntThread_ + ")");
                   
                   if (Trace.isTraceOn())
                      Trace.log(Trace.ERROR, msglist_[0].getID() + " " + msglist_[0].getText());
@@ -214,7 +214,7 @@ public class UserSpaceStressTestcase
       }
       catch(Exception e) 
       {
-         System.out.println("      Exception during setup." + "(t" + curntThread_ + ")");
+         output_.println("      Exception during setup." + "(t" + curntThread_ + ")");
 
          if (Trace.isTraceOn())
             Trace.log(Trace.ERROR, e);

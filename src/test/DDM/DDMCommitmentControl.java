@@ -90,7 +90,7 @@ public class DDMCommitmentControl extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       e.printStackTrace();
       return;
     }
@@ -103,7 +103,7 @@ public class DDMCommitmentControl extends Testcase
     catch (Exception e)
     {
         // Testcase setup did not complete successfully
-        System.out.println("Unable to complete setup; variations not run");
+        output_.println("Unable to complete setup; variations not run");
         return;
     }
 
@@ -745,7 +745,7 @@ public class DDMCommitmentControl extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
 
@@ -1032,7 +1032,7 @@ protected void cleanup()
   }
   catch(Exception e)
   {
-    System.out.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
+    output_.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
     e.printStackTrace(output_);
     throw e;
   }
@@ -1103,13 +1103,13 @@ protected void cleanup()
       file.endCommitmentControl();
     }
     catch (AS400Exception e) {
-	System.out.println("Warning:  Exception from testcase");
-	System.out.println("Exception text="+e.getAS400Message().getText()); 
+	output_.println("Warning:  Exception from testcase");
+	output_.println("Exception text="+e.getAS400Message().getText()); 
 	e.printStackTrace(); 
 
     }
     catch(Exception e) {
-	System.out.println("Warning:  Exception from testcase");
+	output_.println("Warning:  Exception from testcase");
 	e.printStackTrace(); 
     }
 
@@ -6594,7 +6594,7 @@ protected void cleanup()
       Job[] zJobs = z.getJobs(AS400.RECORDACCESS); 
       dumpJobInfo(sb, "zJobs are", zJobs);
       
-      // System.out.println(sb.toString());
+      // output_.println(sb.toString());
       sb.append("y starting commitment control\n"); 
       AS400File.startCommitmentControl(y, AS400File.COMMIT_LOCK_LEVEL_ALL);
       sb.append("x starting commitment control\n"); 

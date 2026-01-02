@@ -122,7 +122,7 @@ public class DDMReadKey extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       e.printStackTrace();
       return;
     }
@@ -135,7 +135,7 @@ public class DDMReadKey extends Testcase
    catch (Exception e)
    {
      // Testcase setup did not complete successfully
-     System.out.println("Unable to complete setup; variations not run");
+     output_.println("Unable to complete setup; variations not run");
      return;
    }
 
@@ -749,7 +749,7 @@ public class DDMReadKey extends Testcase
   }
   catch (Exception e)
   {
-    System.out.println("Unable to complete cleanup.");
+    output_.println("Unable to complete cleanup.");
   }
 
   // Disconnect from the AS/400
@@ -782,7 +782,7 @@ protected void setup()
     {
       for (int i = 0; i < msgs.length; ++i)
       {
-        System.out.println(msgs[i]);
+        output_.println(msgs[i]);
       }
       throw new Exception("");
     }
@@ -952,7 +952,7 @@ protected void cleanup()
   }
   catch(Exception e)
   {
-    System.out.println("Cleanup unsuccessful. Delete files " + testLib_ + "/READKEY1 and " + testLib_ + "/READKEY2 if they exist");
+    output_.println("Cleanup unsuccessful. Delete files " + testLib_ + "/READKEY1 and " + testLib_ + "/READKEY2 if they exist");
     e.printStackTrace(output_);
     throw e;
   }
@@ -2991,7 +2991,7 @@ protected void cleanup()
       if (r != null)
       {
         failed("null record not returned: ");
-        System.out.println(r);
+        output_.println(r);
         f.close();
         return;
       }
@@ -3704,7 +3704,7 @@ protected void cleanup()
       if (r != null)
       {
         failed("null record not returned: ");
-        System.out.println(r);
+        output_.println(r);
         f.close();
         return;
       }
@@ -6508,7 +6508,7 @@ protected void cleanup()
       if (r != null)
       {
         failed("null record not returned: ");
-        System.out.println(r);
+        output_.println(r);
         f.close();
         return;
       }

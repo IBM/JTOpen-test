@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDGetFunctions.java
 //
 // Classes:      JDDMDGetFunctions
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +77,7 @@ public class JDDMDGetFunctions extends JDTestcase {
   }
 
   protected String getCatalogFromURL(String url) {
-    // System.out.println("BaseURL is "+baseURL_);
+    // output_.println("BaseURL is "+baseURL_);
     // must be running JCC, set to a valid value.
     // jdbc:db2://y0551p2:446/*LOCAL
 
@@ -116,7 +105,7 @@ public class JDDMDGetFunctions extends JDTestcase {
     connectionCatalog_ = connection_.getCatalog();
     if (connectionCatalog_ == null) {
       connectionCatalog_ = getCatalogFromURL(baseURL_);
-      System.out.println("Warning:  connection.getCatalog() returned null setting to " + connectionCatalog_);
+      output_.println("Warning:  connection.getCatalog() returned null setting to " + connectionCatalog_);
     }
     dmd_ = connection_.getMetaData();
 
@@ -155,7 +144,7 @@ public class JDDMDGetFunctions extends JDTestcase {
    * @param procedureParms Remainder of create function statement
    * @exception java.lang.Exception Exception is thrown if functionis not created.
    */
-  public static void createFunction(Connection connection, String function, String functionSpec) throws Exception {
+  public void createFunction(Connection connection, String function, String functionSpec) throws Exception {
     Statement s = null;
     try {
 
@@ -183,7 +172,7 @@ public class JDDMDGetFunctions extends JDTestcase {
   /**
    * Uses a connection to drop a function
    */
-  public static void dropFunction(Connection connection, String function, String functionSpec) throws Exception {
+  public  void dropFunction(Connection connection, String function, String functionSpec) throws Exception {
     Statement s = null;
     try {
 
@@ -196,7 +185,7 @@ public class JDDMDGetFunctions extends JDTestcase {
         String noArgs = function;
         int argindex = noArgs.indexOf("x ");
         while (argindex > 0) {
-          // if (debug) System.out.println("RTest: noArgs = " + noArgs
+          // if (debug) output_.println("RTest: noArgs = " + noArgs
           // + "argindex = "+argindex );
           noArgs = noArgs.substring(0, argindex) + noArgs.substring(argindex + 1);
           argindex = noArgs.indexOf("x ");
@@ -224,7 +213,7 @@ public class JDDMDGetFunctions extends JDTestcase {
             }
           }
           if (e != null) {
-            System.out.println("JDDMDGetFunctions.debug:  warning:  unable to drop function");
+            output_.println("JDDMDGetFunctions.debug:  warning:  unable to drop function");
             e.printStackTrace();
           }
         }
@@ -995,7 +984,7 @@ public class JDDMDGetFunctions extends JDTestcase {
         }
 
       } catch (Exception e) {
-        System.out.println("******* Exception Caught ******\n");
+        output_.println("******* Exception Caught ******\n");
         failed(e, message.toString());
       }
     }

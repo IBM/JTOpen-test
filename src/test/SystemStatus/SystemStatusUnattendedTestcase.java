@@ -647,9 +647,9 @@ public class SystemStatusUnattendedTestcase extends Testcase
             {           
                 SystemPool element = (SystemPool) en.nextElement();
                 int size = element.getSize();
-                System.out.print(size + ",");
+                output_.print(size + ",");
             }
-            if (j>0) System.out.println();
+            if (j>0) output_.println();
             assertCondition(j > 0);
         }
         catch (Exception e)

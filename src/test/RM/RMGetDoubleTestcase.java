@@ -54,7 +54,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
           String expectedMsg = "<data> element named '' not found in document";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -106,7 +106,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
           String expectedMsg = "<data> element named 'format1.field99' not found in document";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -124,7 +124,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.zoned1char1");
             double result = rfmlDoc.getDoubleValue("format1.field2");
-            System.out.println("DEBUG result = " + result);
+            output_.println("DEBUG result = " + result);
             failed("Did not throw exception.");
         }
         catch (Exception e)
@@ -154,7 +154,7 @@ public class RMGetDoubleTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "An index specified is out of bounds";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -180,7 +180,7 @@ public class RMGetDoubleTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "An index specified is out of bounds";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -198,7 +198,7 @@ public class RMGetDoubleTestcase extends Testcase
         {
             RecordFormatDocument rfmlDoc = new RecordFormatDocument("test.rfml.zonedNoInit");
             ///Integer resultInt = (Integer)(rfmlDoc.getValue("format1.field2"));
-            ///if (resultInt == null) System.out.println("getValue() returned null");
+            ///if (resultInt == null) output_.println("getValue() returned null");
             ///else { int result = resultInt.intValue(); }
             ///int result = rfmlDoc.getIntValue("format1.field2");
             double result = rfmlDoc.getDoubleValue("format1.field1");
@@ -209,7 +209,7 @@ public class RMGetDoubleTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "Value is not set. Processing <data> element 'format1.field1'";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -407,7 +407,7 @@ public class RMGetDoubleTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "An index specified is out of bounds";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -496,7 +496,7 @@ public class RMGetDoubleTestcase extends Testcase
         ///e.printStackTrace();
         String expectedMsg = "An index specified is out of bounds";
         String receivedMsg = e.getMessage();
-        ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+        ///output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -522,7 +522,7 @@ public class RMGetDoubleTestcase extends Testcase
         ///e.printStackTrace();
         String expectedMsg = "An index specified is out of bounds";
         String receivedMsg = e.getMessage();
-        ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+        ///output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));
@@ -548,7 +548,7 @@ public class RMGetDoubleTestcase extends Testcase
         ///e.printStackTrace();
         String expectedMsg = "The number of indices required is 2";
         String receivedMsg = e.getMessage();
-        ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+        ///output_.println("DEBUG Received msgs: " + receivedMsg);
         assertCondition(receivedMsg != null &&
                receivedMsg.indexOf(expectedMsg) != -1 &&
                exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));

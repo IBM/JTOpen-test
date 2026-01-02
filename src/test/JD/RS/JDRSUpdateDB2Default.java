@@ -182,7 +182,7 @@ Performs setup needed before running variations.
             try { 
               statement_.executeUpdate (sql);
             } catch (Exception e) {
-              System.out.println("Error on "+sql); 
+              output_.println("Error on "+sql); 
               e.printStackTrace(); 
               
             }

@@ -556,8 +556,8 @@ Constructor.
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed, could not create certtest.lib/preexist.usrspc");
-       System.out.println(e);
+       output_.println("Setup failed, could not create certtest.lib/preexist.usrspc");
+       output_.println(e);
        throw e;
     }
 
@@ -570,25 +570,25 @@ Constructor.
      if (cmd.run("QSYS/CRTUSRPRF USRPRF(CERTAUTH) PASSWORD(JTEAM2) TEXT('dennis  schroepfer 3-3073')") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
        if (cmd.run("QSYS/CRTAUTL AUTL(CERTLISTUS) AUT(*EXCLUDE)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
        if (cmd.run("QSYS/CRTLIB LIB(CERTAUTHUS) AUT(CERTLISTUS)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
       if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
 
@@ -603,8 +603,8 @@ Constructor.
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed, could not create CERTAUTHUS.lib/uswrite3.usrspc");
-       System.out.println(e);
+       output_.println("Setup failed, could not create CERTAUTHUS.lib/uswrite3.usrspc");
+       output_.println(e);
        throw e;
     }
 
@@ -626,7 +626,7 @@ Constructor.
     }
     catch(Exception e)
     {
-       System.out.println("Setup failed." + e);
+       output_.println("Setup failed." + e);
        throw e;
     }
 
@@ -660,8 +660,8 @@ Constructor.
 
       catch(Exception e)
       {
-       System.out.println("Setup failed, could not create test certificates. ");
-       System.out.println(e);
+       output_.println("Setup failed, could not create test certificates. ");
+       output_.println(e);
        throw e;
       }
 
@@ -699,15 +699,15 @@ Constructor.
        if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
 	  {
 	      AS400Message[] messageList = cmd.getMessageList();
-	      System.out.println(messageList[0].toString());
+	      output_.println(messageList[0].toString());
 	  }
 
 	  AS400CertificateTest.PwrSys.disconnectAllServices();
       }
       catch(Exception e)
       {
-	  System.out.println("Cleanup failed.");
-	  System.out.println(e);
+	  output_.println("Cleanup failed.");
+	  output_.println(e);
 	  throw e;
       }
   }
@@ -1806,7 +1806,7 @@ verify certificates returned.
 
        if (numcerts != 6)
        {
-	   System.out.println("public key list => " + numcerts);
+	   output_.println("public key list => " + numcerts);
 	   failed("List failed.");
        }
 

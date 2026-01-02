@@ -74,9 +74,9 @@ public class JDCSSetObjectBase extends JDCSSetTestcase {
       String expected = "already exists";
       String message = e.toString();
       if (message.indexOf(expected) < 0) {
-        System.out.println("Warning:  expected to find exception with "
+        output_.println("Warning:  expected to find exception with "
             + expected);
-        e.printStackTrace(System.out);
+        e.printStackTrace(output_);
       }
     }
   }
@@ -354,15 +354,15 @@ public class JDCSSetObjectBase extends JDCSSetTestcase {
         String message = e.toString();
         String expected = "not found";
         if (message.indexOf(expected) < 0) {
-          System.out.println("Warning did not find exception " + expected);
-          e.printStackTrace(System.out);
+          output_.println("Warning did not find exception " + expected);
+          e.printStackTrace(output_);
         }
       }
       String sql = getProcedureCreateSql(procedureName, dataType);
       try {
         s.executeUpdate(sql);
       } catch (Exception e) {
-        System.out.println("Exception " + e + " processing '" + sql
+        output_.println("Exception " + e + " processing '" + sql
             + "' RETHROWING");
         throw e;
       }

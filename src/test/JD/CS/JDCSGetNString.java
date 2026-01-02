@@ -963,9 +963,9 @@ extends JDCSGetTestcase
 		boolean condition = (xRetVal.equals(maxString)) && (yRetVal.equals(minString)) && (zRetVal == null);
 		if(!condition)
 		{
-		    System.out.println("xRetVal (" + xRetVal + ") != xCheck (" + maxString + ")" ); 
-		    System.out.println("yRetVal (" + yRetVal + ") != yCheck (" + minString + ")");
-		    System.out.println("zRetVal (" + zRetVal + ") != null"); 
+		    output_.println("xRetVal (" + xRetVal + ") != xCheck (" + maxString + ")" ); 
+		    output_.println("yRetVal (" + yRetVal + ") != yCheck (" + minString + ")");
+		    output_.println("zRetVal (" + zRetVal + ") != null"); 
 		}
 
 		assertCondition(condition); 

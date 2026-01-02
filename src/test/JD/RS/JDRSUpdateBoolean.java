@@ -111,7 +111,7 @@ Performs setup needed before running variations.
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
             rs_ = statement_.executeQuery (select_ + " FOR UPDATE");
-            System.out.println("Table is "+JDRSTest.RSTEST_UPDATE);
+            output_.println("Table is "+JDRSTest.RSTEST_UPDATE);
         }
     }
 

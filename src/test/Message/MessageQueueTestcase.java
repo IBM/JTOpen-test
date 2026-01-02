@@ -77,8 +77,8 @@ public class MessageQueueTestcase extends Testcase {
         setTestLib(baseTestDriver_.getTestLib());
     }
 
-    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT",userId_);
-    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY",userId_);
+    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT",userId_,output_);
+    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY",userId_,output_);
   }
 
   /**
@@ -101,10 +101,10 @@ public class MessageQueueTestcase extends Testcase {
     try {
       MessageQueue f = new MessageQueue();
       if (DEBUG) {
-        System.out.println("Path:      " + f.getPath());
-        System.out.println("Selection: " + f.getSelection());
-        System.out.println("Severity:  " + f.getSeverity());
-        System.out.println("System:    " + f.getSystem());
+        output_.println("Path:      " + f.getPath());
+        output_.println("Selection: " + f.getSelection());
+        output_.println("Severity:  " + f.getSeverity());
+        output_.println("System:    " + f.getSystem());
       }
       assertCondition(f.getPath().equals(MessageQueue.CURRENT)
           && f.getSelection().equals(MessageQueue.ALL) && f.getSeverity() == 0
@@ -395,8 +395,8 @@ public class MessageQueueTestcase extends Testcase {
       }
 
       if (DEBUG) {
-        System.out.println("counter1: " + counter1 + " count1: " + count1);
-        System.out.println("counter2: " + counter2 + " count2: " + count2);
+        output_.println("counter1: " + counter1 + " count1: " + count1);
+        output_.println("counter2: " + counter2 + " count2: " + count2);
       }
 
       assertCondition(counter1 == count1 && counter2 == count2, "lastMessage="+message);
@@ -534,7 +534,7 @@ public class MessageQueueTestcase extends Testcase {
   public void Var028() {
     try {
       if (DEBUG) {
-        System.out.println("Queue: " + sandbox_.getQueue().getPath());
+        output_.println("Queue: " + sandbox_.getQueue().getPath());
       }
 
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -556,7 +556,7 @@ public class MessageQueueTestcase extends Testcase {
     try {
       sandbox_.setNumberOfMessages(1);
       if (DEBUG) {
-        System.out.println("Queue: " + sandbox_.getQueue().getPath());
+        output_.println("Queue: " + sandbox_.getQueue().getPath());
       }
 
       MessageQueue f = new MessageQueue(systemObject_, sandbox_.getQueue()
@@ -600,9 +600,9 @@ public class MessageQueueTestcase extends Testcase {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
         if (DEBUG) {
-          System.out.print("count: " + count);
-          System.out.print(" key:  " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("count: " + count);
+          output_.print(" key:  " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
 
         QueuedMessage testMessage = f.receive(message.getKey());
@@ -610,12 +610,12 @@ public class MessageQueueTestcase extends Testcase {
         if (DEBUG) {
           String messageText = message.getText();
           String testMessageText = testMessage.getText();
-          System.out.println("key:  " + testMessage.getKey() + " -> "
+          output_.println("key:  " + testMessage.getKey() + " -> "
               + message.getKey());
-          System.out.println("text: " + testMessageText + " -> " + messageText);
-          System.out.println("length: " + testMessageText.length() + " -> "
+          output_.println("text: " + testMessageText + " -> " + messageText);
+          output_.println("length: " + testMessageText.length() + " -> "
               + messageText.length());
-          System.out.println("help: " + testMessage.getHelp() + " -> "
+          output_.println("help: " + testMessage.getHelp() + " -> "
               + message.getHelp());
         }
 
@@ -630,14 +630,14 @@ public class MessageQueueTestcase extends Testcase {
       Enumeration<QueuedMessage> e2 = f.getMessages();
 
       if (DEBUG) {
-        System.out.println("List now contains:");
+        output_.println("List now contains:");
         while (e2.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e2.nextElement();
 
-          System.out.print("key:  " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("key:  " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
-        System.out.println("End -- List now contains:");
+        output_.println("End -- List now contains:");
       }
       succeeded();
     } catch (Exception e) {
@@ -699,15 +699,15 @@ public class MessageQueueTestcase extends Testcase {
         }
 
         if (DEBUG) {
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
       }
 
       if (DEBUG) {
-        System.out.println("-- end of list 1 --");
-        System.out.println("");
-        System.out.println("Remove: Key: " + removeKey + " -> " + removeText);
+        output_.println("-- end of list 1 --");
+        output_.println("");
+        output_.println("Remove: Key: " + removeKey + " -> " + removeText);
       }
 
       f.remove(removeKey);
@@ -717,15 +717,15 @@ public class MessageQueueTestcase extends Testcase {
       if (DEBUG) {
         while (e2.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e2.nextElement();
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
-        System.out.println("-- end of list 2 --");
+        output_.println("-- end of list 2 --");
       }
 
       if (f.getLength() != messageCount - 1) {
         if (DEBUG) {
-          System.out.println("Improper length returned after remove");
+          output_.println("Improper length returned after remove");
         }
         failed("Wrong length: " + f.getLength() + " != " + (messageCount - 1));
         return;
@@ -738,15 +738,15 @@ public class MessageQueueTestcase extends Testcase {
           extra = 1;
 
           if (DEBUG) {
-            System.out.println("extra: " + extra);
+            output_.println("extra: " + extra);
           }
         }
 
         // Here we need to calculate the actual message element to compare based
         // on the index.
         if (DEBUG) {
-          System.out.print(message.getText());
-          System.out.println("  ->  " + messageList[counter + extra]
+          output_.print(message.getText());
+          output_.println("  ->  " + messageList[counter + extra]
               + " last chance");
         }
 
@@ -800,10 +800,10 @@ public class MessageQueueTestcase extends Testcase {
       if (DEBUG) {
         while (e.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e.nextElement();
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
-        System.out.println("");
+        output_.println("");
       }
 
       f.remove(MessageQueue.KEEP_UNANSWERED);
@@ -813,8 +813,8 @@ public class MessageQueueTestcase extends Testcase {
       for (int count = tracker - 1; e2.hasMoreElements(); --count) {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
         if (DEBUG) {
-          System.out.print(message.getText());
-          System.out.println(" -> " + messageList[(tracker - 1) - count]);
+          output_.print(message.getText());
+          output_.println(" -> " + messageList[(tracker - 1) - count]);
         }
 
         String t1 = message.getText();
@@ -923,10 +923,10 @@ public class MessageQueueTestcase extends Testcase {
         while (e.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e.nextElement();
 
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
-        System.out.println("");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> e = f.getMessages();
@@ -964,11 +964,11 @@ public class MessageQueueTestcase extends Testcase {
       String replyList[] = new String[messageCount];
 
       if (DEBUG)
-        System.out.println("f.remove()");
+        output_.println("f.remove()");
 
       f.remove(); // Remove old messages.
       if (DEBUG)
-        System.out.println("fReply.remove()");
+        output_.println("fReply.remove()");
 
       fReply.remove(); // Remove old messages.
 
@@ -980,9 +980,9 @@ public class MessageQueueTestcase extends Testcase {
         if (count % 2 == 0) {
           messageList[tracker] = "Informational " + tempString;
           if (DEBUG) {
-            System.out.println("message" + tracker + ": "
+            output_.println("message" + tracker + ": "
                 + messageList[tracker]);
-            System.out.println("f.sendInformational(" + messageList[tracker]
+            output_.println("f.sendInformational(" + messageList[tracker]
                 + ");");
           }
 
@@ -990,9 +990,9 @@ public class MessageQueueTestcase extends Testcase {
           tracker++;
         } else {
           if (DEBUG) {
-            System.out.println("queuepath: <"
+            output_.println("queuepath: <"
                 + sandboxReply_.getQueue().getPath() + ">");
-            System.out.println("f.sendInquiry(Inquiry " + tempString + ");");
+            output_.println("f.sendInquiry(Inquiry " + tempString + ");");
           }
           f.sendInquiry("Inquiry       " + tempString, sandboxReply_.getQueue()
               .getPath());
@@ -1004,8 +1004,8 @@ public class MessageQueueTestcase extends Testcase {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
         if (DEBUG) {
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
 
         String replyText = "This is a reply message #";
@@ -1015,8 +1015,8 @@ public class MessageQueueTestcase extends Testcase {
           replyList[replyTrack] = replyText + messageText;
 
           if (DEBUG) {
-            System.out.println("(breaks here?) count:  " + replyTrack);
-            System.out.println("Reply: key: " + message.getKey() + " "
+            output_.println("(breaks here?) count:  " + replyTrack);
+            output_.println("Reply: key: " + message.getKey() + " "
                 + replyList[replyTrack]);
           }
 
@@ -1025,7 +1025,7 @@ public class MessageQueueTestcase extends Testcase {
         }
       }
       if (DEBUG) {
-        System.out.println("");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> e2 = f.getMessages();
@@ -1033,8 +1033,8 @@ public class MessageQueueTestcase extends Testcase {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
 
         if (DEBUG) {
-          System.out.print(message.getText());
-          System.out.println(" -> " + messageList[(tracker - 1) - count]);
+          output_.print(message.getText());
+          output_.println(" -> " + messageList[(tracker - 1) - count]);
         }
 
         if (!message.getText().equals(messageList[(tracker - 1) - count])) {
@@ -1046,18 +1046,18 @@ public class MessageQueueTestcase extends Testcase {
       }
 
       if (DEBUG) {
-        System.out.println("");
-        System.out.println("Following are reply queue messages");
-        System.out.println("");
+        output_.println("");
+        output_.println("Following are reply queue messages");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> eReply = fReply.getMessages();
       for (int count = 0; eReply.hasMoreElements(); ++count) {
         QueuedMessage message = (QueuedMessage) eReply.nextElement();
         if (DEBUG) {
-          System.out.println("Last check...");
-          System.out.println(message.getText() + " -> " + replyList[count]);
-          System.out.println("");
+          output_.println("Last check...");
+          output_.println(message.getText() + " -> " + replyList[count]);
+          output_.println("");
         }
 
         if (!message.getText().equals(replyList[count])) {
@@ -1093,7 +1093,7 @@ public class MessageQueueTestcase extends Testcase {
       }
 
       if (DEBUG) {
-        System.out.println("length:   (1) " + f.getLength());
+        output_.println("length:   (1) " + f.getLength());
       }
 
       assertCondition(f.getLength() == 1 && count == 1);
@@ -1144,7 +1144,7 @@ public class MessageQueueTestcase extends Testcase {
       f.remove();
       for (int count = 0; count < messageList.length; ++count) {
         if (DEBUG) {
-          System.out.println(messageList[count]);
+          output_.println(messageList[count]);
         }
 
         f.sendInformational(messageList[count]);
@@ -1155,7 +1155,7 @@ public class MessageQueueTestcase extends Testcase {
       for (int counter = messageCount - 1; counter >= 0; --counter) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         if (DEBUG) {
-          System.out.println(message.getText() + " --> "
+          output_.println(message.getText() + " --> "
               + messageList[(messageCount - 1) - counter]);
         }
 
@@ -1188,18 +1188,18 @@ public class MessageQueueTestcase extends Testcase {
       Enumeration<QueuedMessage> e = f.getMessages();
 
       if (DEBUG) {
-        System.out.println("length   (3): " + f.getLength());
+        output_.println("length   (3): " + f.getLength());
       }
 
       while ( e.hasMoreElements()) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         if (DEBUG) {
-          System.out.println("text: " + message.getText());
+          output_.println("text: " + message.getText());
         }
 
         QueuedMessage rMessage = f.receive(message.getKey());
         if (DEBUG) {
-          System.out.println("help: " + rMessage.getHelp());
+          output_.println("help: " + rMessage.getHelp());
         }
       }
       int len = f.getLength();
@@ -1299,7 +1299,7 @@ public class MessageQueueTestcase extends Testcase {
         String theMessage = message.getText();
 
         if (DEBUG) {
-          System.out.println("message: <" + theMessage + ">");
+          output_.println("message: <" + theMessage + ">");
         }
 
         if (theMessage.indexOf(substitutionList[(messageCount - 1) - counter]
@@ -1576,7 +1576,7 @@ public class MessageQueueTestcase extends Testcase {
         if (DEBUG) {
           AS400Text converter = new AS400Text(10, systemObject_.getCcsid(),
               systemObject_);
-          System.out.println(message.getText() + " sub: "
+          output_.println(message.getText() + " sub: "
               + converter.toBytes(substitutionList[counter]));
         }
 
@@ -1632,7 +1632,7 @@ public class MessageQueueTestcase extends Testcase {
         String theMessage = message.getText();
 
         if (DEBUG) {
-          System.out.println("message: <" + theMessage + ">");
+          output_.println("message: <" + theMessage + ">");
         }
 
         if (theMessage.indexOf(substitutionList[(messageCount - 1) - counter]
@@ -1986,112 +1986,112 @@ public class MessageQueueTestcase extends Testcase {
       Enumeration<QueuedMessage> e = f.getMessages();
 
       if (DEBUG) {
-        System.out.println("length   (3): " + f.getLength());
+        output_.println("length   (3): " + f.getLength());
       }
       for (int count = 0; count < f.getLength(); count++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         if (DEBUG) {
-          System.out.println("list text: " + message.getText());
-          System.out.println("list key:  " + message.getKey());
+          output_.println("list text: " + message.getText());
+          output_.println("list key:  " + message.getKey());
         }
 
         QueuedMessage rMessage = f.receive(message.getKey());
 
         if (DEBUG) {
-          System.out.println("key: " + rMessage.getKey());
+          output_.println("key: " + rMessage.getKey());
         }
         if (rMessage.getKey() == null) {
-          System.out.println("getKey returns null");
+          output_.println("getKey returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("text: " + rMessage.getText());
+          output_.println("text: " + rMessage.getText());
         }
         if (rMessage.getText() == null) {
-          System.out.println("getText returns null");
+          output_.println("getText returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("help: " + rMessage.getHelp());
+          output_.println("help: " + rMessage.getHelp());
         }
         if (rMessage.getHelp() == null) {
-          System.out.println("getHelp returns null");
+          output_.println("getHelp returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("default reply: " + rMessage.getDefaultReply());
+          output_.println("default reply: " + rMessage.getDefaultReply());
         }
         // if (rMessage.getDefaultReply() == null)
         // {
-        // System.out.println("getDefaultReply returns null");
+        // output_.println("getDefaultReply returns null");
         // succeeded = false;
         // }
 
         if (DEBUG) {
-          System.out.println("date: " + rMessage.getDate());
+          output_.println("date: " + rMessage.getDate());
         }
         if (rMessage.getDate() == null) {
-          System.out.println("getDate returns null");
+          output_.println("getDate returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("filename: " + rMessage.getFileName());
+          output_.println("filename: " + rMessage.getFileName());
         }
         if (rMessage.getFileName() == null) {
-          System.out.println("getFileName returns null");
+          output_.println("getFileName returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("ID: " + rMessage.getID());
+          output_.println("ID: " + rMessage.getID());
         }
         if (rMessage.getID() == null) {
-          System.out.println("getID returns null");
+          output_.println("getID returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("library: " + rMessage.getLibraryName());
+          output_.println("library: " + rMessage.getLibraryName());
         }
         if (rMessage.getLibraryName() == null) {
-          System.out.println("getLibraryName returns null");
+          output_.println("getLibraryName returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("path: " + rMessage.getPath());
+          output_.println("path: " + rMessage.getPath());
         }
         if (rMessage.getPath() == null) {
-          System.out.println("getPath returns null");
+          output_.println("getPath returns null");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("severity: " + rMessage.getSeverity());
+          output_.println("severity: " + rMessage.getSeverity());
         }
         if ((rMessage.getSeverity() < 0) || (rMessage.getSeverity() > 99)) {
-          System.out.println("getSeverity returns: " + rMessage.getSeverity());
+          output_.println("getSeverity returns: " + rMessage.getSeverity());
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("substitution data: "
+          output_.println("substitution data: "
               + rMessage.getSubstitutionData());
         }
         if (rMessage.getSubstitutionData().length != 0) {
-          System.out.println("getSubstitution returns non-0 length array");
+          output_.println("getSubstitution returns non-0 length array");
           succeeded = false;
         }
 
         if (DEBUG) {
-          System.out.println("type: " + rMessage.getType());
+          output_.println("type: " + rMessage.getType());
         }
         if (rMessage.getType() < 1 || rMessage.getType() > 25) {
-          System.out.println("getType returns: " + rMessage.getType());
+          output_.println("getType returns: " + rMessage.getType());
           succeeded = false;
         }
       }

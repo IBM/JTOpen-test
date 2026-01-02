@@ -99,7 +99,7 @@ public class NLSUserSpaceTestcase extends Testcase
     }
     catch(Exception e)
     {
-        System.out.println("Setup failed.  Unexpected exception occurred." + e);
+        output_.println("Setup failed.  Unexpected exception occurred." + e);
         throw e;
     }
   }
@@ -118,7 +118,7 @@ public class NLSUserSpaceTestcase extends Testcase
      }
      catch(Exception e)
      {
-        System.out.println("Cleanup failed. " + e);
+        output_.println("Cleanup failed. " + e);
         throw e;
      }
   }
@@ -334,7 +334,7 @@ Note: This is an attended testcase.
 
 //    if (systemObject_.isLocal())
 //    {
-//       System.out.println("Does the extendedAttribute: (" + dbcs_string5 + ") equal that of the user space in " + userSpacePathName_ + "(Y/N)? (WRKLIB)");
+//       output_.println("Does the extendedAttribute: (" + dbcs_string5 + ") equal that of the user space in " + userSpacePathName_ + "(Y/N)? (WRKLIB)");
 //       InputStreamReader r = new InputStreamReader(System.in);
 //       BufferedReader inBuf = new BufferedReader(r);
 //       String resp = inBuf.readLine();
@@ -435,7 +435,7 @@ This is an attended testcase.
 
       if (systemObject_.isLocal())
       {
-         System.out.println("Does the textDescription: (" + dbcs_string50 + ") equal that of the user space in " + userSpacePathName_ + "(Y/N)? (WRKLIB)");
+         output_.println("Does the textDescription: (" + dbcs_string50 + ") equal that of the user space in " + userSpacePathName_ + "(Y/N)? (WRKLIB)");
          InputStreamReader r = new InputStreamReader(System.in);
          BufferedReader inBuf = new BufferedReader(r);
          String resp = inBuf.readLine();
@@ -518,7 +518,7 @@ Ensure that IOException is thrown if the authority parameter specified is invali
     catch(Exception e)
     {
        //int rc = ((ReturnCodeException) e).getReturnCode();
-       //System.out.println("Return code is: " + rc);
+       //output_.println("Return code is: " + rc);
        if (exceptionIs(e, "IOException"))
        {
           String message = e.getMessage();
@@ -588,7 +588,7 @@ Ensure that IOException is thrown if the domain parameter specified is invalid.
     catch(Exception e)
     {
        //int rc = ((ReturnCodeException) e).getReturnCode();
-       //System.out.println("Return code is: " + rc);
+       //output_.println("Return code is: " + rc);
        if (exceptionIs(e, "ExtendedIllegalArgumentException"))
           succeeded();
        else

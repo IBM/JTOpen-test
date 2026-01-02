@@ -110,11 +110,11 @@ Creates the testcases.
     		try
     		{
     			Job[] jobs = systemObject_.getJobs(AS400.SIGNON);
-    			System.out.println("Host Server job(s): ");
+    			out_.println("Host Server job(s): ");
 
     			for(int i = 0 ; i< jobs.length; i++)
     			{   	    	
-    				System.out.println(jobs[i]);
+    				out_.println(jobs[i]);
     			}
        	    
     		}
@@ -137,6 +137,7 @@ Creates the testcases.
         for (int i = 0; i < testcases.length; ++i)
         {
             testcases[i].setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_1, namesAndVars_, runMode_, fileOutputStream_,  pwrSysUserID_, pwrSysPassword_);
+            testcases[i].setProxy5(proxy5_); 
             addTestcase(testcases[i]);
         }
     }

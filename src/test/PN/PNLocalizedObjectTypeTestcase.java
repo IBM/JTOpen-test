@@ -404,7 +404,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
             String failed = null;
             for(int i = 0; i < supportedTypes.length; ++i) {
                 String loc = QSYSObjectTypeTable.getLocalizedObjectType(supportedTypes[i], null);
-                // System.out.println(":" + supportedTypes[i] + "=" + loc + ":");
+                // output_.println(":" + supportedTypes[i] + "=" + loc + ":");
                 if (loc == null)
                     failed = supportedTypes[i];
                 String[] extendedAttributes = QSYSObjectTypeTable.getSupportedAttributes(supportedTypes[i]);
@@ -412,7 +412,7 @@ public class PNLocalizedObjectTypeTestcase extends Testcase
                     loc = QSYSObjectTypeTable.getLocalizedObjectType(supportedTypes[i], extendedAttributes[j]);
                     if (loc == null)
                         failed = supportedTypes[i] + "," + extendedAttributes[j];
-                    // System.out.println(":" + supportedTypes[i] + "," + extendedAttributes[j] + "=" + loc + ":");
+                    // output_.println(":" + supportedTypes[i] + "," + extendedAttributes[j] + "=" + loc + ":");
                 }
             }
             assertCondition(failed == null);

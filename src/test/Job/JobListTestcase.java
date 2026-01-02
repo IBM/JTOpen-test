@@ -1936,7 +1936,7 @@ public class JobListTestcase extends Testcase
 		j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        
 		if (j.getLength() == 0)
-		    System.out.println("There are no jobs that match this selection. ");
+		    output_.println("There are no jobs that match this selection. ");
 
 		succeeded();
 		j.clearJobSelectionCriteria();
@@ -1968,7 +1968,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME,JobList.SELECTION_JOB_NAME_ALL);
        		    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -1999,7 +1999,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_NAME,JobList.SELECTION_JOB_NAME_CURRENT);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2031,7 +2031,7 @@ public class JobListTestcase extends Testcase
 			 j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2070,7 +2070,7 @@ public class JobListTestcase extends Testcase
        		     
    	    			
 		if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
 		succeeded();
 		j.clearJobSelectionCriteria();
@@ -2102,7 +2102,7 @@ public class JobListTestcase extends Testcase
 			 j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 			 if (j.getLength() == 0) {
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 				succeeded();
 			 } else {
 			     failed("FakeJob found"); 
@@ -2136,7 +2136,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_USER_NAME,JobList.SELECTION_USER_NAME_ALL);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2168,7 +2168,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_USER_NAME,JobList.SELECTION_USER_NAME_CURRENT);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2200,7 +2200,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_USER_NAME,"java");
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2233,7 +2233,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_NUMBER,JobList.SELECTION_JOB_NUMBER_ALL);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2269,7 +2269,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_NUMBER,job);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2301,7 +2301,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_TYPE,JobList.SELECTION_JOB_TYPE_ALL);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2331,7 +2331,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_TYPE,Job.JOB_TYPE_AUTOSTART);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2364,7 +2364,7 @@ public class JobListTestcase extends Testcase
        			 j.addJobSelectionCriteria(JobList.SELECTION_JOB_TYPE,Job.JOB_TYPE_BATCH);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2393,7 +2393,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2422,7 +2422,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
    	    			
        			 if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			 succeeded();
        			 j.clearJobSelectionCriteria();
@@ -2451,7 +2451,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 	    if (j.getLength() == 0)
-		System.out.println("There are no jobs that match this selection. ");
+		output_.println("There are no jobs that match this selection. ");
 
 	    succeeded();
 	    j.clearJobSelectionCriteria();
@@ -2479,7 +2479,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        		     		
    				if (j.getLength() == 0)
-   					System.out.println("There are no jobs that match this selection. ");
+   					output_.println("There are no jobs that match this selection. ");
 
    				succeeded();
    				j.clearJobSelectionCriteria();
@@ -2507,7 +2507,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
    	    	
        			if (j.getLength() == 0)
-   					System.out.println("There are no jobs that match this selection. ");
+   					output_.println("There are no jobs that match this selection. ");
 
    				succeeded();
    				j.clearJobSelectionCriteria();
@@ -2535,7 +2535,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
    		    	
        			if (j.getLength() == 0)
-   					System.out.println("There are no jobs that match this selection. ");
+   					output_.println("There are no jobs that match this selection. ");
 
    				succeeded();
    				j.clearJobSelectionCriteria();
@@ -2563,7 +2563,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_NONE);
    	    	
        			if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			succeeded();
        			j.clearJobSelectionCriteria();
@@ -2594,7 +2594,7 @@ public class JobListTestcase extends Testcase
 
    	    	
 		if (j.getLength() == 0)
-		    System.out.println("There are no jobs that match this selection. ");
+		    output_.println("There are no jobs that match this selection. ");
 		
 		succeeded();
 		j.clearJobSelectionCriteria();
@@ -2625,7 +2625,7 @@ public class JobListTestcase extends Testcase
 
 
 	       if (j.getLength() == 0)
-		   System.out.println("There are no jobs that match this selection. ");
+		   output_.println("There are no jobs that match this selection. ");
 
 	       succeeded();
 	       j.clearJobSelectionCriteria();
@@ -2656,7 +2656,7 @@ public class JobListTestcase extends Testcase
 
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2687,7 +2687,7 @@ public class JobListTestcase extends Testcase
 
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2720,7 +2720,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_CHECKPOINT);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2753,7 +2753,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_CONDITION);
    	    	
        			if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			succeeded();
        			j.clearJobSelectionCriteria();
@@ -2786,7 +2786,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_CPI_COMM);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2819,7 +2819,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DEQUEUE);
        		         	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2852,7 +2852,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DEQUEUE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2886,7 +2886,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DISKETTE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2919,7 +2919,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DISKETTE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2952,7 +2952,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DELAYED);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -2985,7 +2985,7 @@ public class JobListTestcase extends Testcase
    	    		j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_DISCONNECTED);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3018,7 +3018,7 @@ public class JobListTestcase extends Testcase
 		j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DISPLAY_AND_ACTIVE);
        	    	
 		if (j.getLength() == 0)
-		    System.out.println("There are no jobs that match this selection. ");
+		    output_.println("There are no jobs that match this selection. ");
 
 		succeeded();
 		j.clearJobSelectionCriteria();
@@ -3051,7 +3051,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DISPLAY);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3084,7 +3084,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_ENDED);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3117,7 +3117,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DATABASE_EOF_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3150,7 +3150,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_DATABASE_EOF);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3183,7 +3183,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_ENDING);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3215,7 +3215,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_EVENT);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3247,7 +3247,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_SUSPENDED);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3279,7 +3279,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_HELD);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3311,7 +3311,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_HELD_THREAD);
        			
        			if (j.getLength() == 0)
-       				System.out.println("There are no jobs that match this selection. ");
+       				output_.println("There are no jobs that match this selection. ");
 
        			succeeded();
        			j.clearJobSelectionCriteria();
@@ -3343,7 +3343,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_ICF_FILE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3375,7 +3375,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_ICF_FILE);	     
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3407,7 +3407,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_INELIGIBLE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3439,7 +3439,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_JAVA_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3471,7 +3471,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_JAVA);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3503,7 +3503,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_LOCK);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3535,7 +3535,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_LOCK_SPACE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3567,7 +3567,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_LOCK_SPACE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3599,7 +3599,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_MULTIPLE_FILES_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3631,7 +3631,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_MULTIPLE_FILES);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3663,7 +3663,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_MESSAGE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3695,7 +3695,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_MUTEX);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3727,7 +3727,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_MIXED_DEVICE_FILE);
        		        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3760,7 +3760,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_OPTICAL_DEVICE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3792,7 +3792,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_OPTICAL_DEVICE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3824,7 +3824,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_OSI);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3857,7 +3857,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_PRINT_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3889,7 +3889,7 @@ public class JobListTestcase extends Testcase
        		j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_PRINT);
    	    	
        		if (j.getLength() == 0)
-       			System.out.println("There are no jobs that match this selection. ");
+       			output_.println("There are no jobs that match this selection. ");
 
        		succeeded();
        		j.clearJobSelectionCriteria();
@@ -3921,7 +3921,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_PRESTART);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3953,7 +3953,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_RUNNING);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -3985,7 +3985,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_SELECTION);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4017,7 +4017,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_SEMAPHORE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4049,7 +4049,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_STOPPED);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4081,7 +4081,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_SIGNAL);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4113,7 +4113,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_SUSPENDED_SYSTEM_REQUEST);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4145,7 +4145,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_SAVE_FILE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4177,7 +4177,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_SAVE_FILE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4209,7 +4209,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_TAPE_DEVICE_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4241,7 +4241,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_TAPE_DEVICE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();;
@@ -4273,7 +4273,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_THREAD);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4305,7 +4305,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_TIME_INTERVAL_AND_ACTIVE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4337,7 +4337,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_ACTIVE_JOB_STATUS,Job.ACTIVE_JOB_STATUS_WAIT_TIME_INTERVAL);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4371,7 +4371,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_JOB_QUEUE_STATUS_SCHEDULE,Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4405,7 +4405,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_JOB_QUEUE_STATUS_HELD,Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4438,7 +4438,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_JOB_QUEUE_STATUS_READY,Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4471,7 +4471,7 @@ public class JobListTestcase extends Testcase
        			j.addJobSelectionCriteria(JobList.SELECTION_JOB_QUEUE,obj.getPath());
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4499,7 +4499,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4528,7 +4528,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4557,7 +4557,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4586,7 +4586,7 @@ public class JobListTestcase extends Testcase
 	    j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4612,7 +4612,7 @@ public class JobListTestcase extends Testcase
 	       j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
 	       if (j.getLength() == 0)
-		   System.out.println("There are no jobs that match this selection. ");
+		   output_.println("There are no jobs that match this selection. ");
 
 	       succeeded();
 	       j.clearJobSelectionCriteria();
@@ -4639,7 +4639,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4667,7 +4667,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4695,7 +4695,7 @@ public class JobListTestcase extends Testcase
 	       j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4723,7 +4723,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4750,7 +4750,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4777,7 +4777,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4804,7 +4804,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4831,7 +4831,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4858,7 +4858,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4885,7 +4885,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4912,7 +4912,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4939,7 +4939,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4966,7 +4966,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
 
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -4993,7 +4993,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5020,7 +5020,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5047,7 +5047,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5074,7 +5074,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5101,7 +5101,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5128,7 +5128,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5155,7 +5155,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5182,7 +5182,7 @@ public class JobListTestcase extends Testcase
 			j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        	    	
            		if (j.getLength() == 0)
-           			System.out.println("There are no jobs that match this selection. ");
+           			output_.println("There are no jobs that match this selection. ");
 
            		succeeded();
            		j.clearJobSelectionCriteria();
@@ -5330,7 +5330,7 @@ public class JobListTestcase extends Testcase
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
-             System.out.println("Tolerating lack of exception.");
+             output_.println("Tolerating lack of exception.");
              succeeded();
            }
            else failed("Exception didn't occur.");
@@ -5371,7 +5371,7 @@ public class JobListTestcase extends Testcase
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
-             System.out.println("Tolerating lack of exception.");
+             output_.println("Tolerating lack of exception.");
              //succeeded();
            }
            succeeded();
@@ -5398,7 +5398,7 @@ public class JobListTestcase extends Testcase
 		j.addJobSelectionCriteria(JobList.SELECTION_PRIMARY_JOB_STATUS_OUTQ, Boolean.FALSE);
        		
        			j.load();
-       			System.out.println("Job List length: "+ j.getLength());
+       			output_.println("Job List length: "+ j.getLength());
        			j.close();
        			succeeded();			
        	}
@@ -5430,7 +5430,7 @@ public class JobListTestcase extends Testcase
            // If we're running natively and assuming all program calls are threadsafe, we won't use the supplied uid/pwd.
            if (JTOpenTestEnvironment.isOS400 && isNative_ && isLocal_ && isRunningNativelyAndThreadsafe())
            {
-             System.out.println("Tolerating lack of exception.");
+             output_.println("Tolerating lack of exception.");
              succeeded();
            }
            else failed("Exception didn't occur." + sb.toString());
@@ -5526,15 +5526,15 @@ public class JobListTestcase extends Testcase
     String command = "QSYS/DLTUSRPRF " + userid;
     boolean results = cmdCall.run(command);
     if (!results) {
-      System.out.println("Warning : " + command + " failed");
+      output_.println("Warning : " + command + " failed");
       StringBuffer sb = new StringBuffer();
       dumpFailingCommand(sb, cmdCall);
-      System.out.println(sb);
+      output_.println(sb);
     }
     pwrSystem.disconnectAllServices();
     } catch (Exception e) { 
-      System.out.println("Warning.  exception caught in cleanupTestProfile"); 
-      e.printStackTrace(System.out) ;
+      output_.println("Warning.  exception caught in cleanupTestProfile"); 
+      e.printStackTrace(output_) ;
     }
 
   }

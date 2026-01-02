@@ -48,7 +48,7 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
      catch (Exception e)
      {
            System.out.println("Program terminated abnormally.");
-         e.printStackTrace();
+         e.printStackTrace(System.out);
         }
 
      // Needed to make the virtual machine quit.
@@ -101,11 +101,11 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
    			try
    			{
    				Job[] jobs = systemObject_.getJobs(AS400.DATABASE);
-   				System.out.println("Host Server job(s): ");
+   				out_.println("Host Server job(s): ");
 
    				for(int i = 0 ; i< jobs.length; i++)
    				{	   	    	
-   					System.out.println(jobs[i]);
+   					out_.println(jobs[i]);
    				}
    	    
    			}
@@ -113,7 +113,7 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
    	    
    			try 
    			{
-   				System.out.println ("Toolbox is paused. Press ENTER to continue.");
+   				out_.println ("Toolbox is paused. Press ENTER to continue.");
    				System.in.read ();
    			} 
    			catch (Exception exc) {};   	   
@@ -181,7 +181,7 @@ public class AS400JDBCConnectionPoolTest extends TestDriver
       // Put out error message for each invalid testcase name.
       for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
       {
-         System.out.println("Testcase " + e.nextElement() + " not found.");
+         out_.println("Testcase " + e.nextElement() + " not found.");
       }
    }
 }

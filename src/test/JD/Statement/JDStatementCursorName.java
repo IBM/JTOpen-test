@@ -128,7 +128,7 @@ public class JDStatementCursorName extends JDTestcase {
     boolean success = (actualValue == expectedValue);
 
     if (!success)
-      System.out.println(actualValue + " sb " + expectedValue);
+      output_.println(actualValue + " sb " + expectedValue);
 
     // Cleanup.
     rs.close();
@@ -499,9 +499,9 @@ public class JDStatementCursorName extends JDTestcase {
 
       long after1000time = testSetCursorNameTime(s1, null);
 
-      System.out.println("firstTime     =" + firstTime);
-      System.out.println("After 100 PS  =" + after100time);
-      System.out.println("After 1000 PS =" + after1000time);
+      output_.println("firstTime     =" + firstTime);
+      output_.println("After 100 PS  =" + after100time);
+      output_.println("After 1000 PS =" + after1000time);
       conn.close();
       s1.close();
       String maxTimeInfo;
@@ -542,9 +542,9 @@ public class JDStatementCursorName extends JDTestcase {
 
       long after1000time = testSetCursorNameTimeChange(s1, "JDSCN15");
 
-      System.out.println("firstTime     =" + firstTime);
-      System.out.println("After 100 PS  =" + after100time);
-      System.out.println("After 1000 PS =" + after1000time);
+      output_.println("firstTime     =" + firstTime);
+      output_.println("After 100 PS  =" + after100time);
+      output_.println("After 1000 PS =" + after1000time);
       conn.close();
       s1.close();
       assertCondition(after1000time <= 3.5 * firstTime, "after1000time is not less than 3.5 * firstTime");

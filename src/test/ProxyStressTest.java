@@ -31,6 +31,7 @@ import test.IFS.IFSProxyStressTestcase;
 import test.ServiceProgram.ServicePgmCallStressTestcase;
 import test.UserSpace.UserSpaceStressTestcase;
 
+import java.io.PrintWriter;
 
 
 public class ProxyStressTest  
@@ -51,7 +52,7 @@ public class ProxyStressTest
    private static Connection connect_ = null;
    private static String pwrUid_ = null;
    private static char[] encryptedPwrPwd_ = null;
-  
+   protected static PrintWriter output_ = null; 
    
 // Default Constructor
    public ProxyStressTest() 
@@ -64,7 +65,7 @@ public class ProxyStressTest
    {
       if (args.length == 0 || args.length < 10) 
       {
-         System.out.println("\n");
+         output_.println("\n");
          usage();
       }
       try 
@@ -73,7 +74,7 @@ public class ProxyStressTest
       }
       catch(Exception e)
       {
-         System.out.println(e);
+         output_.println(e);
          System.exit(0);
       }
          
@@ -85,70 +86,71 @@ public class ProxyStressTest
          pwrSys_ = new AS400(systemName_, pwrUid_, charPassword);
          PasswordVault.clearPassword(charPassword);
       } else
-         System.out.println("\n-pwrSys option missing, JDBC testcases may fail.\n");
+         output_.println("\n-pwrSys option missing, JDBC testcases may fail.\n");
    }
 
  
    public static void main (String args[]) throws Exception 
    {
+      output_ = new PrintWriter(System.out) ;
       ProxyStressTest pst = new ProxyStressTest(args);
-      System.out.println("Created pst"+pst); 
+      output_.println("Created pst"+pst); 
       for (int i=1; i<=maxThreads_; i++) 
       {
          if (tc_ == null || tc_.equals("CmdStressTestcase"))
          {  Trace.setTraceThreadOn(true);
-            System.out.println("");
-            System.out.println(" Cmd Thread " + i + " Starting...");
-            System.out.println("");
+            output_.println("");
+            output_.println(" Cmd Thread " + i + " Starting...");
+            output_.println("");
             CmdStressTestcase t = new CmdStressTestcase(i);
             t.start();
          }
          if (tc_ == null || tc_.equals("UserSpaceStressTestcase") )
          {
-            System.out.println("");
-            System.out.println(" UserSpace Thread " + i + " Starting...");
-            System.out.println("");
+            output_.println("");
+            output_.println(" UserSpace Thread " + i + " Starting...");
+            output_.println("");
             UserSpaceStressTestcase t1 = new UserSpaceStressTestcase(i);
             t1.start();
          }
          if (tc_ == null || tc_.equals("DataAreaStressTestcase") )
          {   
-            System.out.println("");
-            System.out.println(" DataArea Thread " + i + " Starting...");
-            System.out.println("");
+            output_.println("");
+            output_.println(" DataArea Thread " + i + " Starting...");
+            output_.println("");
             DataAreaStressTestcase t2 = new DataAreaStressTestcase(i);
             t2.start();
          }
          if (tc_ == null || tc_.equals("IFSProxyStressTestcase") )
          {   
-            System.out.println("");
-            System.out.println(" IFS Thread " + i + " Starting...");
-            System.out.println("");
+            output_.println("");
+            output_.println(" IFS Thread " + i + " Starting...");
+            output_.println("");
             IFSProxyStressTestcase t3 = new IFSProxyStressTestcase(i);
             t3.start();
          }
          if (tc_ == null || tc_.equals("ServicePgmCallStressTestcase") )
          {
-            System.out.println("");
-            System.out.println(" ServicePgmCall Thread " + i + " Starting...");
-            System.out.println("");
+            output_.println("");
+            output_.println(" ServicePgmCall Thread " + i + " Starting...");
+            output_.println("");
             ServicePgmCallStressTestcase t4 = new ServicePgmCallStressTestcase(i);
             t4.start();
          }
          if (tc_ == null || tc_.equals("DDMProxyStressTestcase") )
          {   
-            System.out.println("");
-            System.out.println(" RecordLevelAccess Thread " + i + " Starting...");
-            System.out.println("");
-            DDMProxyStressTestcase t5 = new DDMProxyStressTestcase(i);
+            output_.println("");
+            output_.println(" RecordLevelAccess Thread " + i + " Starting...");
+            output_.println("");
+            DDMProxyStressTestcase t5 = new DDMProxyStressTestcase(i, output_);
             t5.start();
          }
          if (tc_ == null || tc_.equals("JDBCProxyStressTestcase") )
          {
-            System.out.println("");
-            System.out.println(" JDBC Thread " + i + " Starting...");
+            output_.println("");
+            output_.println(" JDBC Thread " + i + " Starting...");
             if (tc_ == null)
-               System.out.println("");
+               output_.println("");
 
             try
             {   
@@ -171,7 +173,7 @@ public class ProxyStressTest
             }
             catch(SQLException e)
             {
-               System.out.println("ERROR: " + e.getMessage());
+               output_.println("ERROR: " + e.getMessage());
                if (Trace.isTraceOn())
                   Trace.log(Trace.ERROR, e);
             }
@@ -227,7 +229,7 @@ public class ProxyStressTest
          systemName_ = s;
       else
       {
-         System.out.println("\n Missing -system parameter. \n");
+         output_.println("\n Missing -system parameter. \n");
          usage();
       }
 
@@ -236,7 +238,7 @@ public class ProxyStressTest
          userId_ = u;
       else
       {
-         System.out.println("\n Missing -uid parameter. \n");
+         output_.println("\n Missing -uid parameter. \n");
          usage();
       }
 
@@ -245,7 +247,7 @@ public class ProxyStressTest
          encryptedPassword_ = PasswordVault.getEncryptedPassword(p);
       else
       {
-         System.out.println(" \n Missing -pwd parameter. \n");
+         output_.println(" \n Missing -pwd parameter. \n");
          usage();
       }
 
@@ -272,7 +274,7 @@ public class ProxyStressTest
          maxThreads_ = (Integer.valueOf(th)).intValue();
       else
       {
-         System.out.println("\n Missing -threads parameter. \n");
+         output_.println("\n Missing -threads parameter. \n");
          usage();
       }
 
@@ -281,7 +283,7 @@ public class ProxyStressTest
          maxIterations_ = (Integer.valueOf(l)).intValue();
       else
       {
-         System.out.println("\n Missing -loop parameter. \n");
+         output_.println("\n Missing -loop parameter. \n");
          usage();
       }
 
@@ -310,7 +312,7 @@ public class ProxyStressTest
             else if (category.equalsIgnoreCase("conversion"))
                Trace.setTraceConversionOn(true);
             else
-               System.out.println("Unknown trace category '" + category + "'.");
+               output_.println("Unknown trace category '" + category + "'.");
          }
       }
 
@@ -325,16 +327,16 @@ public class ProxyStressTest
 
    public void usage() 
    {
-      System.out.println ("USAGE: java test.ProxyStressTest (-h) -system <systemName> -uid <userid> -pwd <password> " + 
+      output_.println ("USAGE: java test.ProxyStressTest (-h) -system <systemName> -uid <userid> -pwd <password> " + 
                           "-threads <number> -loop <number> [-tc <testcase> ][-trace <category>]");
-      System.out.println ("-h | -help | -?       help ");
-      System.out.println ("-system | -s          systemName ");
-      System.out.println ("-uid | -u             userid ");
-      System.out.println ("-pwd | -p             password ");
-      System.out.println ("-threads | -th        number of threads to start ");
-      System.out.println ("-loop | -l            number of times each thread will loop");
-      System.out.println ("[-tc]                 Proxy testcase name");
-      System.out.println ("[-trace | -tr]        diagnostic,error,warning,information,proxy");
+      output_.println ("-h | -help | -?       help ");
+      output_.println ("-system | -s          systemName ");
+      output_.println ("-uid | -u             userid ");
+      output_.println ("-pwd | -p             password ");
+      output_.println ("-threads | -th        number of threads to start ");
+      output_.println ("-loop | -l            number of times each thread will loop");
+      output_.println ("[-tc]                 Proxy testcase name");
+      output_.println ("[-trace | -tr]        diagnostic,error,warning,information,proxy");
       System.exit(0);
    }
 

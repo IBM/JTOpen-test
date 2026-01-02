@@ -1895,7 +1895,7 @@ setString() - Set a DECFLOAT 16 parameter to valid values.  This should work.
             }
             catch (Exception e) {
 		if (getDriver() == JDTestDriver.DRIVER_JCC) {
-		    System.out.println("Info: jcc doesn't allow NaN value for DECFLOAT");
+		    output_.println("Info: jcc doesn't allow NaN value for DECFLOAT");
 		    String exMessage = e.toString();
 		    String expectedMessage = "Invalid data conversion:  Parameter instance NaN";
 		    assertCondition(exMessage.indexOf(expectedMessage) > 0,
@@ -1968,7 +1968,7 @@ setString() - Set a DECFLOAT 16 parameter to random values.  This should work.
 		} /* while */
 
 		ps.close ();
-		System.out.println("      Insert DFP16:  "+count+" Samples tried in "+runMillis+" milliseconds");
+		output_.println("      Insert DFP16:  "+count+" Samples tried in "+runMillis+" milliseconds");
                 assertCondition (errorCount == 0, added + " table="+ JDPSTest.PSTEST_SETDFP16 + sb.toString());
 
             }
@@ -2206,7 +2206,7 @@ setString() - Set a DECFLOAT 34 parameter to valid values.  This should work.
             }
             catch (Exception e) {
 		if (getDriver() == JDTestDriver.DRIVER_JCC) {
-		    System.out.println("Info: jcc doesn't allow NaN value for DECFLOAT");
+		    output_.println("Info: jcc doesn't allow NaN value for DECFLOAT");
 		    String exMessage = e.toString();
 		    String expectedMessage = "Invalid data conversion:  Parameter instance NaN";
 		    assertCondition(exMessage.indexOf(expectedMessage) > 0,
@@ -2281,7 +2281,7 @@ setString() - Set a DECFLOAT 34 parameter to random values.  This should work.
 		} /* while */
 
 		ps.close ();
-		System.out.println("      Insert DFP34:  "+count+" Samples tried in "+runMillis+" milliseconds");
+		output_.println("      Insert DFP34:  "+count+" Samples tried in "+runMillis+" milliseconds");
                 assertCondition (errorCount == 0, added + " table="+ JDPSTest.PSTEST_SETDFP34 + sb.toString());
 
             }
@@ -3198,8 +3198,8 @@ setString() - Set an XML  parameter using invalid data.
        try {
 	   if (ps != null)   ps.close(); 
        } catch (Exception e) { 
-         System.out.println("Unexpected error "); 
-         e.printStackTrace(System.out); 
+         output_.println("Unexpected error "); 
+         e.printStackTrace(output_); 
        }
    } 
 

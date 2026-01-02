@@ -167,7 +167,7 @@ public class JDRSGetClob extends JDTestcase {
       String s = JDReflectionUtil.callMethod_S(i, "getSubString", 1L, length);
       boolean theSame = s.equals(b);
       if (!theSame) {
-        System.out.println("CLOB \"" + s + "\" <> \"" + b + "\"");
+        output_.println("CLOB \"" + s + "\" <> \"" + b + "\"");
       }
       return theSame;
     } catch (Exception e) {

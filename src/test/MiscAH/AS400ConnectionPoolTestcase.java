@@ -124,8 +124,8 @@ extends Testcase
         {
           String currentUser = System.getProperty("user.name");
           if (DEBUG) {
-            System.out.println("user.name     == |" + currentUser + "|");
-            System.out.println("userId_       == |" + userId_ + "|");
+            output_.println("user.name     == |" + currentUser + "|");
+            output_.println("userId_       == |" + userId_ + "|");
           }
           if (currentUser == null || currentUser.length() == 0) {
             currentUser = systemObject_.getUserId();
@@ -150,7 +150,7 @@ extends Testcase
         }
         if (DEBUG)
         {
-          System.out.println("swapToUserID_ == |" + swapToUserID_ + "|");
+          output_.println("swapToUserID_ == |" + swapToUserID_ + "|");
 
           output_.println("Running under: " + operatingSystem_);
           output_.println("DOS-based file structure: " + DOS_);
@@ -171,7 +171,7 @@ extends Testcase
 	if (e instanceof ConnectionPoolException) {
 	    ConnectionPoolException cpe = (ConnectionPoolException) e;
 	    Exception nextException = cpe.getException();
-	    System.out.println("ConnectionPoolException caught.  Next exception is "); 
+	    output_.println("ConnectionPoolException caught.  Next exception is "); 
 	    nextException.printStackTrace(); 
 	} 
 	super.failed(e, info); 
@@ -573,7 +573,7 @@ extends Testcase
         {
             int defaultCcsid = systemObject_.getCcsid();
             int newCcsid = (defaultCcsid == 37 ? 1200 : 37);
-            if (DEBUG) System.out.println("defaultCcsid: "+defaultCcsid+"; newCcsid: "+newCcsid);
+            if (DEBUG) output_.println("defaultCcsid: "+defaultCcsid+"; newCcsid: "+newCcsid);
             AS400ConnectionPool p = new AS400ConnectionPool();
             p.setCCSID(newCcsid);
             int service = AS400.FILE;
@@ -7016,7 +7016,7 @@ char[] passwordChars =null;
 	      // If the maintenance process runs, then the avaiableConnectionCount will be zero.
 	      // Just print a warning.
 		if (availableConnectionCount == 0) {
-		    System.out.println("Warning.  Lost the race and availableConnectionCount is zero");
+		    output_.println("Warning.  Lost the race and availableConnectionCount is zero");
 		} else { 
 		    failed ("[C] Incorrect connection counts (sb 1,1): " +
 			    p.getAvailableConnectionCount(systemObject_.getSystemName(), systemObject_.getUserId()) + ", " +
@@ -7455,7 +7455,7 @@ Check removeFromPool(AS400) does not affect connections in use-- other connectio
             		}
             	}
             }
-            System.out.println("INFO:  Test established "+connectionCount+" connections in "+
+            output_.println("INFO:  Test established "+connectionCount+" connections in "+
             		(MILLISECONDS_TO_TEST/1000) +" seconds"); 
             assertCondition(conn1.isConnected(service) && conn2.isConnected(service) && 
             		p.getAvailableConnectionCount(systemObject_.getSystemName(), swapToUserID_) == 0);

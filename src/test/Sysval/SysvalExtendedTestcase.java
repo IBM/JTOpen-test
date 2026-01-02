@@ -2101,7 +2101,7 @@ public class SysvalExtendedTestcase extends Testcase
         return;
       }
 
-      System.out.println("  " + name + "\'s value is " + obj.toString());
+      output_.println("  " + name + "\'s value is " + obj.toString());
       succeeded();
     }
 

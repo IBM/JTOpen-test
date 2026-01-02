@@ -1470,7 +1470,7 @@ getSQLXML() - Get a type that was registered as a BIGINT.
 		  } catch (Exception e) {
 		      String exString = e.toString();
 		      if (exString.toUpperCase().indexOf("NOT FOUND") == -1) {
-			  System.out.println("Warning on drop procedure");
+			  output_.println("Warning on drop procedure");
 			  e.printStackTrace();
 		      }
 		  }
@@ -1501,8 +1501,8 @@ getSQLXML() - Get a type that was registered as a BIGINT.
 		      stmt.executeUpdate(sql);
 		      stmt.close(); 
 		  } catch (Exception e) {
-		      System.out.println("Warning.  Did not cleanup lob");
-		      e.printStackTrace(System.out); 
+		      output_.println("Warning.  Did not cleanup lob");
+		      e.printStackTrace(output_); 
 		  }
 
 	      }

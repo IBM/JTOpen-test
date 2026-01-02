@@ -1823,7 +1823,7 @@ public class DQKeyedReadTestcase extends Testcase
 	    dq.create(10,80);
 	    try
 	    {
-		DQWriter writer = new DQWriter(dq);
+		DQWriter writer = new DQWriter(dq,output_);
 		writer.start();
 		byte key[] = (new String("wait ")).getBytes("UnicodeBigUnmarked");
 		KeyedDataQueueEntry data = dq.read(key, -1, "EQ");
@@ -1901,7 +1901,7 @@ public class DQKeyedReadTestcase extends Testcase
 			dq.delete();
 		    }
 		}
-		System.out.println("Drop test did not work in "+DROPPER_RETRIES);
+		output_.println("Drop test did not work in "+DROPPER_RETRIES);
 		assertCondition(true); 
 		
 	    }
@@ -1963,7 +1963,7 @@ public class DQKeyedReadTestcase extends Testcase
 		     dq.delete();
 		 }
 	     }
-	     System.out.println("Drop test did not work in "+DROPPER_RETRIES);
+	     output_.println("Drop test did not work in "+DROPPER_RETRIES);
 	     assertCondition(true); 
 
 		

@@ -131,7 +131,7 @@ Performs setup needed before running variations.
             if (areLobsSupported ()) {
 //		long threshold = (long)Math.pow(2,31) - 1;
 		long threshold = 1;
-		// System.out.println("threshold = "+threshold);
+		// output_.println("threshold = "+threshold);
                 String url = baseURL_
                              + ";user=" + systemObject_.getUserId()
                              + ";password=" + PasswordVault.decryptPasswordLeak(encryptedPassword_) 
@@ -145,7 +145,7 @@ Performs setup needed before running variations.
 
                 initTable(statement_,  TABLE_,  "(ID INTEGER, C_CLOB CLOB(" + (2*1024*mega-1) + "))");
 
-		// System.out.println("Table Name is "+TABLE_);
+		// output_.println("Table Name is "+TABLE_);
 
                 PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
                                                                      + TABLE_ + " (ID, C_CLOB) VALUES (?,?)");
@@ -1180,9 +1180,9 @@ Playing around with VLARGE_ field by checking getSubString, length methods
 			String expected = VLARGE_.substring( 0, length);
 			VLARGE_ = VLARGE_.substring( length);
 			if( !actual.equals(expected)){
-			    System.out.println(""+startIndex);
-			    System.out.println("   Actual: '"+actual+"'");
-			    System.out.println(" Expected: '"+expected+"'");
+			    output_.println(""+startIndex);
+			    output_.println("   Actual: '"+actual+"'");
+			    output_.println(" Expected: '"+expected+"'");
 			    success = false;
 			}
 			startIndex += length;
@@ -1218,7 +1218,7 @@ See Issue 44488 for more information
 	sb.setLength(0); 
         if (checkJdbc20 ()) {
 	    if (checkLobSupport ()) {
-	        System.out.println("Running testcase 33"); 
+	        output_.println("Running testcase 33"); 
 		String lobTable =  JDLobTest.COLLECTION  + ". JDLBLRG233";
 		String statsTable =  JDLobTest.COLLECTION  + ". JDJOBMEM"; 
 		try { 
@@ -1248,14 +1248,14 @@ See Issue 44488 for more information
 		    PreparedStatement ps = connection_.prepareStatement(sql); 
 
 		    ps.setString(1, VLARGE_); 
-		    System.out.println("Inserting"); 
+		    output_.println("Inserting"); 
 		    for (int i = 0; i < 10; i++) {
 			ps.executeUpdate(); 
 		    }
 		    ps.close();
 		    stmt.close();
 		    connection_.commit();
-                    System.out.println("Done Inserting"); 
+                    output_.println("Done Inserting"); 
 
 
 		// Create the testConnection
@@ -1332,7 +1332,7 @@ See Issue 44488 for more information
 
 
 		    if (largest == 0 && count < 10) {
-			System.out.println("Largest = 0, count("+count+") < 10 sleeping for 10 minutes");
+			output_.println("Largest = 0, count("+count+") < 10 sleeping for 10 minutes");
 			Thread.sleep(600000); 
 		    } 
 		    int maxSize = 85;   /* in v7r2 changed to 85 from 70 */ 
@@ -1351,8 +1351,8 @@ See Issue 44488 for more information
 			stmt.executeUpdate(sql);
 			stmt.close(); 
 		    } catch (Exception e) {
-			System.out.println("Error during test cleanup");
-			e.printStackTrace(System.out); 
+			output_.println("Error during test cleanup");
+			e.printStackTrace(output_); 
 		    } 
 
                 }

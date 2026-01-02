@@ -323,9 +323,9 @@ Performs setup needed before running variations.
 	try {
 	    s.executeUpdate(sql);
 	} catch (Exception e) {
-	    System.out.println("------------------------------------------------------");
-	    System.out.println("Exception on "+sql);
-	    System.out.println("------------------------------------------------------");
+	    output_.println("------------------------------------------------------");
+	    output_.println("Exception on "+sql);
+	    output_.println("------------------------------------------------------");
 	    e.printStackTrace();
 	}
     }
@@ -510,9 +510,9 @@ SQL400 - The native driver reports the update and delete rules in the following
                 String fktableName      = rs.getString ("FKTABLE_NAME");
                 String fkcolumnName     = rs.getString ("FKCOLUMN_NAME");
 
-                // System.out.println (pktableCat + ":" + pktableSchem + ":" +
+                // output_.println (pktableCat + ":" + pktableSchem + ":" +
                 // pktableName + ":" + pkcolumnName + ":");
-                // System.out.println (fktableCat + ":" + fktableSchem + ":" +
+                // output_.println (fktableCat + ":" + fktableSchem + ":" +
                 // fktableName + ":" + fkcolumnName + ":");
 
 		if (pktableCat == null && catalog_ == null) {
@@ -557,7 +557,7 @@ SQL400 - The native driver reports the update and delete rules in the following
                 String pkName           = rs.getString ("PK_NAME");
                 short deferrability     = rs.getShort ("DEFERRABILITY");
 
-             // System.out.println (keySeq + ":" + updateRule + ":" +
+             // output_.println (keySeq + ":" + updateRule + ":" +
               // deleteRule + ":" + fkName + ":" + pkName + ":" + deferrability
               // + ":");
 		if (!(keySeq == 1)) {
@@ -595,7 +595,7 @@ SQL400 - The native driver reports the update and delete rules in the following
 		}
 	    } /* while rs.next(); */
 
-             // System.out.println ("Rows = " + rows);
+             // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition ((rows == 1) && success, "\nrows="+rows+" sb 1"+ message);
@@ -1161,7 +1161,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		DatabaseMetaData dmd = connection.getMetaData ();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getImportedKeys");
+		    // output_.println("Calling getImportedKeys");
 		    ResultSet rs = dmd.getImportedKeys (catalog_,
 							 JDDMDTest.COLLECTION2, "LCNIK4");
 		    rs.close();
