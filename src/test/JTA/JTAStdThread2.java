@@ -143,7 +143,7 @@ public class JTAStdThread2 extends JTATestcase {
 	 try {
 	     setupStatement.execute(command);
 	 } catch (SQLException e) {
-	     System.out.println("Exception on -- "+command);
+	     output_.println("Exception on -- "+command);
 	     Thread.sleep(60000); 
 	     throw e; 
 	 } 

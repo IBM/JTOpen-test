@@ -1520,9 +1520,9 @@ public class SecCtorTestcase extends Testcase {
         testas4002.setGuiAvailable(false);
         
         
-        if (debug) System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        if (debug) output_.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
         testas4002.connectService(AS400.COMMAND);
-        if (debug) System.out.println("Successfully connected.");
+        if (debug) output_.println("Successfully connected.");
         testas4002.close(); 
         
         PasswordVault.clearPassword(charPassword);
@@ -1559,10 +1559,10 @@ public class SecCtorTestcase extends Testcase {
         testptc.setTimeoutInterval(60);
         testptc.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
         testptc.setTokenExtended(userId_, charPassword);
-        if (debug) System.out.println("Generated the profile token.");
+        if (debug) output_.println("Generated the profile token.");
         String remoteIpAddress = testptc.getRemoteIPAddress(); 
-        if (debug) System.out.println("Generated token has verification id="+testptc.getVerificationID());
-        if (debug) System.out.println("Generated token has remote ip address="+remoteIpAddress); 
+        if (debug) output_.println("Generated token has verification id="+testptc.getVerificationID());
+        if (debug) output_.println("Generated token has remote ip address="+remoteIpAddress); 
         if (remoteIpAddress == null) { 
           // the remoteIpAddress will come back null if the server does not support
           // enhanced profile tokens.  Set to a valid values so that the call to 
@@ -1579,9 +1579,9 @@ public class SecCtorTestcase extends Testcase {
         testas4002.setGuiAvailable(false);
         
         
-        if (debug) System.out.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        if (debug) output_.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
         testas4002.connectService(AS400.COMMAND);
-        if (debug) System.out.println("Successfully connected.");
+        if (debug) output_.println("Successfully connected.");
         testas4002.close(); 
         
         PasswordVault.clearPassword(charPassword);

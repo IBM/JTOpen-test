@@ -2389,8 +2389,7 @@ public class DQCreateTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts");
-		assertCondition(true); 
+	assertCondition(true,"Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts"); 
             }
             catch (Exception e)
             {
@@ -2437,8 +2436,7 @@ public class DQCreateTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts");
-		assertCondition(true); 
+	assertCondition(true,"Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts"); 
 
             }
             catch (Exception e)
@@ -2490,8 +2488,7 @@ public class DQCreateTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts");
-		assertCondition(true); 
+		assertCondition(true,"Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts"); 
 
             }
             catch (Exception e)
@@ -2540,8 +2537,7 @@ public class DQCreateTestcase extends Testcase
 			return; 
 		    }
 		}
-		System.out.println("Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts");
-		assertCondition(true); 
+/*JWE*/		assertCondition(true,"Warning:  connection not dropped after "+DROPPER_RETRIES+" attempts"); 
 
             }
             catch (Exception e)

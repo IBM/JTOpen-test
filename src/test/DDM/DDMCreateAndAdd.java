@@ -116,7 +116,7 @@ public class DDMCreateAndAdd extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -196,7 +196,7 @@ public class DDMCreateAndAdd extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
 
@@ -221,7 +221,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -231,7 +231,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
@@ -244,7 +244,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -254,7 +254,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
@@ -268,7 +268,7 @@ public class DDMCreateAndAdd extends Testcase
       }
       catch(Exception e)
       {
-        System.out.println("Unable to create necessary dds source files.");
+        output_.println("Unable to create necessary dds source files.");
         e.printStackTrace();
         f.close(); 
         throw e;
@@ -289,7 +289,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -299,7 +299,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -309,7 +309,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
@@ -319,7 +319,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
@@ -329,7 +329,7 @@ public class DDMCreateAndAdd extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         //throw new Exception("");   // Tolerate this failure - it will always fail for Turkish
       }
@@ -357,7 +357,7 @@ public class DDMCreateAndAdd extends Testcase
 			if (!(msgs[0].getID().equals("CPC2194") || msgs[0].getID().equals("CPC2191")
 					|| msgs[0].getID().equals("CPF2110"))) {
 				for (int i = 0; i < msgs.length; ++i) {
-					System.out.println(msgs[i]);
+					output_.println(msgs[i]);
 				}
 			}
 		}

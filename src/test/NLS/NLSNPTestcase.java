@@ -84,7 +84,7 @@ public class NLSNPTestcase extends Testcase
     }
     else
     {
-      System.out.println("Warning: NLSNPTestcase: Printer name not specified.");
+      output_.println("Warning: NLSNPTestcase: Printer name not specified.");
     }
   }
 

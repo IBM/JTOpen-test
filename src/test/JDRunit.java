@@ -68,15 +68,6 @@ import java.util.TimeZone;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.CommandCall;
-import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileReader;
-import com.ibm.as400.access.IFSFileWriter;
-import com.ibm.as400.access.Permission;
-import com.ibm.as400.access.RootPermission;
-import com.ibm.as400.access.User;
-import com.ibm.as400.access.UserPermission;
 
 import test.JD.DataSource.JDDatabaseOverride;
 import test.JTA.JTACleanupTx;
@@ -2778,10 +2769,17 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         // Connection failed, start the server
         char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
         char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
-        AS400 startSshAs400 = new AS400(AS400,USERID,clearPassword);
-        CommandCall cc = new CommandCall(startSshAs400); 
-        cc.run("STRTCPSVR *SSHD");
-        startSshAs400.close(); 
+        ClassLoader loader = getJt400JarClassLoader();
+
+        Object startSshAs400=getAS400(loader, AS400,USERID,new String(clearPassword));
+        
+        Class<?> cmdCallClass = loader.loadClass("com.ibm.as400.access.CommandCall");
+        
+        Object cmdCall = cmdCallClass.newInstance();
+        JDReflectionUtil.callMethod_V(cmdCall,"setSystem",startSshAs400);
+        JDReflectionUtil.callMethod_B(cmdCall,"run","STRTCPSVR SERVER(*SSHD)");
+
+        JDReflectionUtil.callMethod_V(startSshAs400,"close"); 
         Thread.sleep(1000); 
       } finally {
         socket.close();
@@ -2795,45 +2793,60 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       if (true) {
         char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD);
         char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
-        AS400 checkIfsAs400 = new AS400(AS400, USERID, clearPassword);
-        IFSFile homeDir = new IFSFile(checkIfsAs400, "/home/" + USERID);
+        ClassLoader loader = getJt400JarClassLoader();
 
-        if (homeDir.exists()) {
-          Permission permission = homeDir.getPermission();
-          RootPermission userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-          String dataAuthority = userPermission.getDataAuthority();
-          if (dataAuthority.indexOf("W") < 0) { 
-            IFSFile sshDir = new IFSFile(checkIfsAs400, "/home/" + USERID+"/.ssh");
-            if (sshDir.exists()) { 
-              permission = sshDir.getPermission();
-              userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-              dataAuthority = userPermission.getDataAuthority();
-              if (dataAuthority.indexOf("W") < 0) { 
-                  IFSFile authorizedKeysFile = new IFSFile (checkIfsAs400, "/home/" + USERID+"/.ssh/authorized_keys");
-                  if (authorizedKeysFile.exists()) {
-                    permission = authorizedKeysFile.getPermission();
-                    userPermission = (RootPermission) permission.getUserPermission("*PUBLIC"); 
-                    dataAuthority = userPermission.getDataAuthority();
-                    if (dataAuthority.indexOf("W") < 0) { 
-                    } else {
-                      throw new Exception("Cannot use ssh since user permissions on " + authorizedKeysFile + " are "+dataAuthority);
-                    }
+        Object checkIfAs400=getAS400(loader, AS400,USERID,new String(clearPassword));
+
+        Class<?>[] argTypes = new Class<?>[2]; 
+        Object[] args = new Object[2]; 
+        argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+        argTypes[1]="".getClass(); 
+        args[0] = checkIfAs400; 
+        args[1] = "/home/" + USERID;
+        Object homeDir = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
+
+        if (JDReflectionUtil.callMethod_B(homeDir, "exists")) {
+          Object permission = JDReflectionUtil.callMethod_O(homeDir, "getPermission");
+          Object userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+          String dataAuthority = JDReflectionUtil.callMethod_S(userPermission, "getDataAuthority");
+          if (dataAuthority.indexOf("W") < 0) {
+            args[0] = checkIfAs400;
+            args[1] = "/home/" + USERID + "/.ssh";
+            Object sshDir = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile", argTypes, args);
+            if (JDReflectionUtil.callMethod_B(sshDir, "exists")) {
+              permission = JDReflectionUtil.callMethod_O(sshDir, "getPermission");
+              userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+              dataAuthority = (String) JDReflectionUtil.callMethod_O(userPermission, "getDataAuthority");
+              if (dataAuthority.indexOf("W") < 0) {
+                args[0] = checkIfAs400;
+                args[1] = "/home/" + USERID + "/.ssh/authorized_keys";
+                Object authorizedKeysFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile", argTypes,
+                    args);
+                if (JDReflectionUtil.callMethod_B(authorizedKeysFile, "exists")) {
+                  permission = JDReflectionUtil.callMethod_O(authorizedKeysFile, "getPermission");
+                  userPermission = JDReflectionUtil.callMethod_O(permission, "getUserPermission", "*PUBLIC");
+                  dataAuthority = (String) JDReflectionUtil.callMethod_O(userPermission, "getDataAuthority");
+                  if (dataAuthority.indexOf("W") < 0) {
                   } else {
-                    throw new Exception("Cannot use ssh since " + authorizedKeysFile + " does not exist");
+                    throw new Exception(
+                        "Cannot use ssh since user permissions on " + authorizedKeysFile + " are " + dataAuthority);
                   }
+                } else {
+                  throw new Exception("Cannot use ssh since " + authorizedKeysFile + " does not exist");
+                }
               } else {
-                throw new Exception("Cannot use ssh since user permissions on " + sshDir + " are "+dataAuthority);
+                throw new Exception("Cannot use ssh since user permissions on " + sshDir + " are " + dataAuthority);
               }
-            } else { 
+            } else {
               throw new Exception("Cannot use ssh since " + sshDir + " does not exist");
             }
           } else {
-            throw new Exception("Cannot use ssh since user permissions on " + homeDir + " are "+dataAuthority);
+            throw new Exception("Cannot use ssh since user permissions on " + homeDir + " are " + dataAuthority);
           }
         } else {
           throw new Exception("Cannot use ssh since " + homeDir + " does not exist");
         }
-        checkIfsAs400.close();
+        JDReflectionUtil.callMethod_V(checkIfAs400,"close");
       }
     }
 
@@ -4020,13 +4033,20 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     JDReflectionUtil.callMethod_V(hostUser,"setName",pwrUsr);
     String homeDir = JDReflectionUtil.callMethod_S(hostUser,"getHomeDirectory"); 
     String authorizedKeysPath = homeDir+"/.ssh/authorized_keys";
-    IFSFile authorizedKeysFile = new IFSFile(); 
-    authorizedKeysFile.setSystem((AS400) as400);
-    authorizedKeysFile.setPath(authorizedKeysPath);
+    
+    Class<?>[] argTypes = new Class<?>[2]; 
+    Object[] args = new Object[2]; 
+    argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+    argTypes[1]="".getClass(); 
+    args[0] = as400; 
+    args[1] = authorizedKeysPath;
+    Object authorizedKeysFile = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
+
+    
     Vector<String> authorizedKeysVector = new Vector<String>(); 
-    if (authorizedKeysFile.exists()) {
-      IFSFileReader ifsFileReader = new IFSFileReader(authorizedKeysFile);
-      BufferedReader bufferedReader = new BufferedReader(ifsFileReader); 
+    if (JDReflectionUtil.callMethod_B ( authorizedKeysFile,"exists")) {
+      Object ifsFileReader = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileReader",authorizedKeysFile);
+      BufferedReader bufferedReader = new BufferedReader((Reader)ifsFileReader); 
       String line = bufferedReader.readLine(); 
       while (line != null) { 
         if (rsaKey.equals(line) && !rsaKeyFound) { 
@@ -4036,24 +4056,30 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       }
       bufferedReader.close(); 
     } else {
-      authorizedKeysFile.createNewFile();
+      JDReflectionUtil.callMethod_V( authorizedKeysFile,"createNewFile");
     }
     // Make sure the permissions are correct only the file. 
-    Permission permission = new Permission(authorizedKeysFile);
-    Enumeration<UserPermission> enumeration = permission.getUserPermissions();
+    Object permission = JDReflectionUtil.createObject("com.ibm.as400.access.Permission", authorizedKeysFile); 
+    Enumeration<?> enumeration = (Enumeration<?>) JDReflectionUtil.callMethod_O(  permission,"getUserPermissions");
     while (enumeration.hasMoreElements()) {
-      RootPermission rootPermission = (RootPermission) enumeration.nextElement();
-      String permissionUser = rootPermission.getUserID();
-      String dataAuthority = rootPermission.getDataAuthority(); 
+      Object rootPermission =  enumeration.nextElement();
+      String permissionUser = JDReflectionUtil.callMethod_S(rootPermission,"getUserID");
+      String dataAuthority = JDReflectionUtil.callMethod_S(rootPermission,"getDataAuthority"); 
       System.out.println("found permission "+permissionUser+" "+dataAuthority); 
       // found permission *PUBLIC *R
       // found permission JDPWRSYS *RW
     }
 
     if (!rsaKeyFound) {
-      IFSFileWriter fileWriter = new IFSFileWriter(authorizedKeysFile, true);
-      fileWriter.write(rsaKey+"\n");
-      fileWriter.close(); 
+      Class<?>[] argTypes1 = new Class<?>[2];
+      Object[] args1 = new Object[2]; 
+      argTypes1[0]=authorizedKeysFile.getClass(); 
+      argTypes1[1]=Boolean.TYPE;
+      args1[0]=authorizedKeysFile;
+      args1[1] = new Boolean(true); 
+      Object fileWriter = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileWriter",argTypes1,args1);
+      JDReflectionUtil.callMethod_V(fileWriter,"write",rsaKey+"\n");
+      JDReflectionUtil.callMethod_V(fileWriter,"close"); 
       System.out.println("To "+authorizedKeysFile+" wrote "+rsaKey); 
       
       // Make sure the host list is added to the local host

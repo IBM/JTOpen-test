@@ -81,7 +81,7 @@ public class NLSCmdTestcase extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       e.printStackTrace();
       return;
     }
@@ -202,14 +202,14 @@ public class NLSCmdTestcase extends Testcase
         AS400Message[] msglist = cmd.getMessageList();
         if (msglist.length == 1)
         {
-            // System.out.println(msglist[0].getID().equals("CPC2102"));
-            // System.out.println(msglist[0].getType()==1);
-            // System.out.println(msglist[0].getFileName().trim().equals("QCPFMSG"));
-            // System.out.println(msglist[0].getLibraryName().trim().startsWith("QSYS"));
-            // System.out.println(msglist[0].getSeverity()==0);
-            // System.out.println((msglist[0].getText().indexOf(cmd_lib_name) > -1));
-            // System.out.println(msglist[0].getText());
-            // System.out.println(cmd_lib_name);
+            // output_.println(msglist[0].getID().equals("CPC2102"));
+            // output_.println(msglist[0].getType()==1);
+            // output_.println(msglist[0].getFileName().trim().equals("QCPFMSG"));
+            // output_.println(msglist[0].getLibraryName().trim().startsWith("QSYS"));
+            // output_.println(msglist[0].getSeverity()==0);
+            // output_.println((msglist[0].getText().indexOf(cmd_lib_name) > -1));
+            // output_.println(msglist[0].getText());
+            // output_.println(cmd_lib_name);
 
             String msgid = msglist[0].getID();
             if (msgid.equals("CPC2102")
@@ -476,49 +476,49 @@ public class NLSCmdTestcase extends Testcase
         {
             failMsg.append("command1 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 1 of 7 completed.");
+        output_.println("Command 1 of 7 completed.");
 
         cmd.setCommand("mkdir dir('" + extDir + "')");
         if (cmd.run()==false)
         {
             failMsg.append("command2 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 2 of 7 completed.");
+        output_.println("Command 2 of 7 completed.");
 
         cmd.setCommand("rmdir dir('" + extDir + "')");
         if (cmd.run()==false)
         {
             failMsg.append("command3 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 3 of 7 completed.");
+        output_.println("Command 3 of 7 completed.");
 
         cmd.setCommand("rmdir dir('" + baseDir + "')");
         if (cmd.run()==false)
         {
             failMsg.append("command4 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 4 of 7 completed.");
+        output_.println("Command 4 of 7 completed.");
 
         cmd.setCommand("mkdir dir('blah')");
         if (cmd.run()==false)
         {
             failMsg.append("command5 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 5 of 7 completed.");
+        output_.println("Command 5 of 7 completed.");
 
         cmd.setCommand("rmdir dir('blah')");
         if (cmd.run()==false)
         {
             failMsg.append("command6 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 6 of 7 completed.");
+        output_.println("Command 6 of 7 completed.");
 
         cmd.setCommand(cmd_crt_lib);
         if (cmd.run()==false)
         {
             failMsg.append("command7 failed: "+cmd.getMessageList()[0].getID()+" "+cmd.getMessageList()[0].getText()+"\n");
         }
-        System.out.println("Command 7 of 7 completed.");
+        output_.println("Command 7 of 7 completed.");
 
         AS400Message[] msglist = cmd.getMessageList();
         if (msglist.length == 1)

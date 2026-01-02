@@ -51,8 +51,8 @@ public class ConvTableBidiBytesTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Testcase setup error: " + e.getMessage());
-            e.printStackTrace(System.out);
+            output_.println("Testcase setup error: " + e.getMessage());
+            e.printStackTrace(output_);
             if (endIfSetupFails_ == true)
             {
                 return;

@@ -179,7 +179,7 @@ Checks a particular selection meta data.
 /**
 Checks a particular selection meta data.
 **/
-    static boolean verifySortMetaData(ResourceMetaData[] smd, 
+    boolean verifySortMetaData(ResourceMetaData[] smd, 
                                             Object attributeID, 
                                             Class attributeType,
                                             boolean readOnly, 
@@ -195,7 +195,7 @@ Checks a particular selection meta data.
         }
 
         if (found < 0) {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -542,7 +542,7 @@ getSelectionMetaData() with 1 parameter - Try each of them.
                                                              smd[i].isValueLimited(),
                                                              smd[i].areMultipleAllowed());
                 if (!thisOne) {
-                    System.out.println("Comparison failed for: " + smd[i] + ".");
+                    output_.println("Comparison failed for: " + smd[i] + ".");
                     success = false;
                 }
             }
@@ -1063,8 +1063,8 @@ setSortValue(Object AttributeID) -- Test valid use
                job2 = (RJob) f.resourceAt(i-1);
                String attr2 = (String) job1.getAttributeValue(RJob.JOB_SUBTYPE);
                String attr1 = (String) job2.getAttributeValue(RJob.JOB_SUBTYPE);
-System.out.println("attr1 =" + attr1 + "..");
-System.out.println("attr2 =" + attr2 + "..");
+output_.println("attr1 =" + attr1 + "..");
+output_.println("attr2 =" + attr2 + "..");
                if (compareStrings(attr1,attr2) > 0)
                {
                  failed("Sort order bad.");

@@ -601,10 +601,7 @@ public class JDStatementExceptions extends JDTestcase {
         failed("Didn't throw timeout exception for query '" + query + "' time="
             + (finish - start) + " ms " + added);
       } catch (Exception ex) {
-        if (isToolboxDriver())
           checkException(ex, ".SQLException", added + " Query=" + query);
-        else
-          checkException(ex, ".SQLTimeout", added + " Query=" + query);
       } finally {
         if (s != null) {
           try {

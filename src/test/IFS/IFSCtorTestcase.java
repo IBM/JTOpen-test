@@ -1471,7 +1471,7 @@ Ensure that IFSFileOutputStream(AS400, String) creates a file if it doesn't exis
     {
       failed(e);
     }
-    ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+    ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
     deleteFile(ifsPathNameX);
   }
 
@@ -6476,8 +6476,7 @@ could not easily be determined because the retrun code was missing.
   public void Var220()
   {
     if (true) {
-      System.out.println("Skipping Var220 because it requires QSERVER subsystem to be ended and restarted\n");
-      assertCondition(true);
+      assertCondition(true,"Skipping Var220 because it requires QSERVER subsystem to be ended and restarted\n");
       return; 
     }
       String added = " -- Added 8/24/2011 to verify exception when exit program disallows access.";

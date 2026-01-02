@@ -83,7 +83,7 @@ public class CmdOnThreadTestcase extends Testcase
      **/
     protected void cleanup() throws Exception
     {
-        if (DEBUG) System.out.println("CmdOnThreadTestcase.cleanup()");
+        if (DEBUG) output_.println("CmdOnThreadTestcase.cleanup()");
         CommandCall cmd = new CommandCall(systemObject_);
 	deleteLibrary(cmd, LIBRARY); 
     }
@@ -94,7 +94,7 @@ public class CmdOnThreadTestcase extends Testcase
     public void dump(AS400Message[] messageList)
     {
         for (int i = 0; i < messageList.length; ++i)
-            System.out.println(i + ". " + messageList[i]);
+            output_.println(i + ". " + messageList[i]);
     }
 
     private final boolean isRunningNatively()
@@ -112,18 +112,18 @@ public class CmdOnThreadTestcase extends Testcase
     public boolean checkMessage(AS400Message message, String fileName, String id, int severity, int type)
     {
         /*
-         System.out.println("Date:                " + message.getDate());
-         System.out.println("Default reply:       " + message.getDefaultReply());
-         System.out.println("File name:           " + message.getFileName());
-         System.out.println("Help:                " + message.getHelp());
-         System.out.println("ID:                  " + message.getID());
-         System.out.println("Library name:        " + message.getLibraryName());
-         System.out.println("Path:                " + message.getPath());
-         System.out.println("Severity:            " + message.getSeverity());
-         System.out.println("Subsitution data:    " + message.getSubstitutionData());
-         System.out.println("Text:                " + message.getText());
-         System.out.println("Type:                " + message.getType());
-         System.out.println("toString:            " + message.toString());
+         output_.println("Date:                " + message.getDate());
+         output_.println("Default reply:       " + message.getDefaultReply());
+         output_.println("File name:           " + message.getFileName());
+         output_.println("Help:                " + message.getHelp());
+         output_.println("ID:                  " + message.getID());
+         output_.println("Library name:        " + message.getLibraryName());
+         output_.println("Path:                " + message.getPath());
+         output_.println("Severity:            " + message.getSeverity());
+         output_.println("Subsitution data:    " + message.getSubstitutionData());
+         output_.println("Text:                " + message.getText());
+         output_.println("Type:                " + message.getType());
+         output_.println("toString:            " + message.toString());
          */
 
         boolean success = true;
@@ -150,7 +150,7 @@ public class CmdOnThreadTestcase extends Testcase
         AS400Message[] messageList = cmd.getMessageList();
         if (messageList != null) {
             for (int i=0; i<messageList.length; i++)
-                System.out.println("Message["+i+"] = " +
+                output_.println("Message["+i+"] = " +
                                    messageList[i].getFileName() + ", " +
                                    messageList[i].getID() + ", " +
                                    messageList[i].getText());
@@ -164,15 +164,15 @@ public class CmdOnThreadTestcase extends Testcase
     {
       try
       {
-        System.out.println("cmd.getSystem() == " + cmd.getSystem()); 
-        System.out.println("cmd.getCommand() == " + cmd.getCommand()); 
-        System.out.println("cmd.toString() == " + cmd.toString()); 
-        System.out.println("cmd.getSystemThread() == " + cmd.getSystemThread()); 
-        System.out.println("cmd.isStayOnThread() == " + cmd.isStayOnThread()); 
-        System.out.println("cmd.isThreadSafe() == " + cmd.isThreadSafe());
+        output_.println("cmd.getSystem() == " + cmd.getSystem()); 
+        output_.println("cmd.getCommand() == " + cmd.getCommand()); 
+        output_.println("cmd.toString() == " + cmd.toString()); 
+        output_.println("cmd.getSystemThread() == " + cmd.getSystemThread()); 
+        output_.println("cmd.isStayOnThread() == " + cmd.isStayOnThread()); 
+        output_.println("cmd.isThreadSafe() == " + cmd.isThreadSafe());
       }
       catch (Exception e) {
-        System.out.println("Error while attempting to display command values:");
+        output_.println("Error while attempting to display command values:");
         e.printStackTrace();
       }
     }
@@ -246,7 +246,7 @@ public class CmdOnThreadTestcase extends Testcase
             CommandCall cmd = new CommandCall(systemObject_, QUALIFIED_THREADSAFE_CMD);
             if (DEBUG) {
               displayCommandValues(cmd);
-              System.out.println("isRunningNatively() == "+isRunningNatively()+"; "+
+              output_.println("isRunningNatively() == "+isRunningNatively()+"; "+
                                  "isSystemV5orHigher_ == "+isSystemV5orHigher_+"; "+
                                  "cmd.getSystemThread() == "+cmd.getSystemThread()+"; "+
                                  "cmd.isStayOnThread() == "+cmd.isStayOnThread()+"; "+
@@ -495,7 +495,7 @@ public class CmdOnThreadTestcase extends Testcase
                 CommandCall cmd = new CommandCall(systemObject_, THREADSAFE_CMD);
 
 /*
-                System.out.println(cmd.getSystemThread() + ", " +
+                output_.println(cmd.getSystemThread() + ", " +
                                    cmd.isStayOnThread() + ", " +
                                    cmd.isThreadSafe());
 */

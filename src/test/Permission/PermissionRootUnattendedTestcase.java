@@ -107,7 +107,7 @@ protected void setup () //throws Exception
         }    
         catch(Exception ex) 
         {
-            System.out.println(ex);
+            output_.println(ex);
         }
      }
      catch(Exception e)
@@ -135,7 +135,7 @@ protected void cleanup()
       }    
       catch(Exception ex) 
       {
-           System.out.println(ex);
+           output_.println(ex);
       }
      
       {
@@ -146,7 +146,7 @@ protected void cleanup()
         } 
         catch(NullPointerException exe)
         {
-          System.out.println("The file does not exist!");
+          output_.println("The file does not exist!");
         }
       }
 }
@@ -1050,8 +1050,8 @@ Method tested: getDataAuthority() and setDataAuthority() on a symbolic link.
        AS400Message[] msgs = cmd.getMessageList();
        for (int i=0; i<msgs.length; i++) {
          if (!msgs[i].getID().equals("CPFA0A0")) { // "Object already exists."
-           System.out.println("Failed to create symbolic link.");
-           System.out.println(msgs[i]);
+           output_.println("Failed to create symbolic link.");
+           output_.println(msgs[i]);
          }
        }
      }
@@ -1066,7 +1066,7 @@ Method tested: getDataAuthority() and setDataAuthority() on a symbolic link.
        RootPermission f1a = (RootPermission) pers1a.getUserPermission("TESTUSER43");
        if (!f1a.getDataAuthority().equals("*RW")) {
          succeeded = false;
-         System.out.println("Failed to set user permission of resolved object.");
+         output_.println("Failed to set user permission of resolved object.");
        }
      }
 
@@ -1080,18 +1080,18 @@ Method tested: getDataAuthority() and setDataAuthority() on a symbolic link.
        RootPermission f2a = (RootPermission) pers2a.getUserPermission("TESTUSER43");
        if (f2a != null) {
          if (PwrSys_.getVRM() < 0x00050400) {
-           System.out.println("Tolerating failure to set symlink-only permission, since system is pre-V5R4.");
+           output_.println("Tolerating failure to set symlink-only permission, since system is pre-V5R4.");
          }
          else {
            succeeded = false;
-           System.out.println("Failed to set user permission of symlink.");
+           output_.println("Failed to set user permission of symlink.");
          }
        }
        Permission pers2b = new Permission(PwrSys_,symlinkName,true,true);  // follow links
        RootPermission f2b = (RootPermission) pers2b.getUserPermission("TESTUSER43");
        if (!f2b.getDataAuthority().equals("*RW")) {
          succeeded = false;
-         System.out.println("User permission of resolved object wasn't preserved.");
+         output_.println("User permission of resolved object wasn't preserved.");
        }
      }
 

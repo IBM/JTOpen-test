@@ -307,7 +307,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 			dq.delete();
 		    }
 		}
-		System.out.println("Connection dropper testcase did not work with RETRIES="+RETRIES);
+		output_.println("Connection dropper testcase did not work with RETRIES="+RETRIES);
 		assertCondition(true); 
 
 	    }
@@ -354,7 +354,7 @@ public class DQRefreshAttributesTestcase extends Testcase
 			dq.delete();
 		    }
 		}
-		System.out.println("Connection dropper testcase did not work with RETRIES="+RETRIES);
+		output_.println("Connection dropper testcase did not work with RETRIES="+RETRIES);
 		assertCondition(true); 
 
 	    }

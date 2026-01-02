@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter; 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
@@ -64,12 +65,12 @@ public class PCMiscTestcase extends Testcase
 
 
   // Uses the system classloader to copy a file (specified by resource name, e.g. "test/jungle.txt") to a destination file.  If the resource resides in a jar or zip file, then it is extracted to the destination.
-  static boolean extractFile(String resourceName, File destination) throws FileNotFoundException, IOException
+  static boolean extractFile(String resourceName, File destination, PrintWriter output_) throws FileNotFoundException, IOException
   {
     boolean succeeded = false;
     InputStream is = ClassLoader.getSystemResourceAsStream(resourceName);
     if (is == null) {
-      System.out.println("Resource not found: |" + resourceName + "|");
+      output_.println("Resource not found: |" + resourceName + "|");
     }
     else
     {
@@ -145,7 +146,7 @@ public class PCMiscTestcase extends Testcase
                     AS400Message[] messagelist = pgm.getMessageList();
                     for (int i = 0; i < messagelist.length; ++i)
                     {
-                        System.out.println(messagelist[i]);
+                        output_.println(messagelist[i]);
                     }
                 }
                 return;
@@ -180,7 +181,7 @@ public class PCMiscTestcase extends Testcase
                     AS400Message[] messagelist = pgm.getMessageList();
                     for (int i = 0; i < messagelist.length; ++i)
                     {
-                        System.out.println(messagelist[i]);
+                        output_.println(messagelist[i]);
                     }
                 }
                 return;
@@ -216,7 +217,7 @@ public class PCMiscTestcase extends Testcase
                     AS400Message[] messagelist = pgm.getMessageList();
                     for (int i = 0; i < messagelist.length; ++i)
                     {
-                        System.out.println(messagelist[i]);
+                        output_.println(messagelist[i]);
                     }
                 }
                 return;
@@ -276,7 +277,7 @@ public class PCMiscTestcase extends Testcase
       {
         // Extract the XPCML XSD specification file (from the Toolbox jar) to the local directory, so that the XML parser can find it.
         xpcmlSchemaFile = new File("xpcml.xsd");
-        extractFile ("com/ibm/as400/data/xpcml.xsd", xpcmlSchemaFile);
+        extractFile ("com/ibm/as400/data/xpcml.xsd", xpcmlSchemaFile, output_);
 
         ProgramCallDocument pcmlDoc = new ProgramCallDocument(systemObject_, "test.xpcml.qgyolaus.xpcml");
 
@@ -305,46 +306,46 @@ public class PCMiscTestcase extends Testcase
           if (calledPgm != null) {
             AS400Message[] messagelist = calledPgm.getMessageList();
             for (int i = 0; i < messagelist.length; ++i) {
-              System.out.println(messagelist[i]);
+              output_.println(messagelist[i]);
             }
           }
           return;
         }
 
         // listInfo
-        if (DEBUG) System.out.println("listInfo fields:");
+        if (DEBUG) output_.println("listInfo fields:");
 
         int totalRcds = pcmlDoc.getIntValue(pgmName+".listInformation.totalRcds", new int[] {0});
-        if (DEBUG) System.out.println("totalRcds: " + totalRcds);
+        if (DEBUG) output_.println("totalRcds: " + totalRcds);
 
         int rcdsReturned = pcmlDoc.getIntValue(pgmName+".listInformation.rcdsReturned", new int[] {0});
-        if (DEBUG) System.out.println("rcdsReturned: " + rcdsReturned);
+        if (DEBUG) output_.println("rcdsReturned: " + rcdsReturned);
 
         byte[] rqsHandle = (byte[])pcmlDoc.getValue(pgmName+".listInformation.rqsHandle", new int[] {0});
-        if (DEBUG) System.out.println("rqsHandle: " +
+        if (DEBUG) output_.println("rqsHandle: " +
                            ( rqsHandle==null ? "null" : Trace.toHexString(rqsHandle)));
 
         String infoComplete = pcmlDoc.getStringValue(pgmName+".listInformation.infoComplete", new int[] {0});
-        if (DEBUG) System.out.println("infoComplete: " + infoComplete);
+        if (DEBUG) output_.println("infoComplete: " + infoComplete);
 
         Object dateCreated = pcmlDoc.getValue(pgmName+".listInformation.dateCreated", new int[] {0});
-        if (DEBUG) System.out.println("dateCreated: " +
+        if (DEBUG) output_.println("dateCreated: " +
                            ( dateCreated==null ? "null" :
                                    dateFormatterGMT_.format(dateCreated)));
         Object timeCreated = pcmlDoc.getValue(pgmName+".listInformation.timeCreated", new int[] {0});
 
-        if (DEBUG) System.out.println("timeCreated: " +
+        if (DEBUG) output_.println("timeCreated: " +
                            ( timeCreated==null ? "null" :
                                 timeFormatterGMT_.format(timeCreated)));
 
         String listStatus = pcmlDoc.getStringValue(pgmName+".listInformation.listStatus", new int[] {0});
-        if (DEBUG) System.out.println("listStatus: " + listStatus);
+        if (DEBUG) output_.println("listStatus: " + listStatus);
 
         int lengthOfInfo = pcmlDoc.getIntValue(pgmName+".listInformation.lengthOfInfo", new int[] {0});
-        if (DEBUG) System.out.println("lengthOfInfo: " + lengthOfInfo);
+        if (DEBUG) output_.println("lengthOfInfo: " + lengthOfInfo);
 
         returnedName = (String)pcmlDoc.getValue(pgmName+".receiverVariable.profileName", new int[] {0});
-        if (DEBUG) System.out.println("returnedName: " + returnedName);
+        if (DEBUG) output_.println("returnedName: " + returnedName);
 
         Job job1 = calledPgm.getServerJob();
         if (DEBUG && job1 != null) {

@@ -130,7 +130,7 @@ protected void setup () //throws Exception
         }    
         catch(Exception ex) 
         {
-            System.out.println(ex);
+            output_.println(ex);
         }
      }
      catch(Exception e)
@@ -152,7 +152,7 @@ protected void cleanup()
       }    
       catch(Exception ex) 
       {
-           System.out.println(ex);
+           output_.println(ex);
       }
      
       {
@@ -163,17 +163,17 @@ protected void cleanup()
         } 
         catch(NullPointerException exe)
         {
-          System.out.println("The file does not exist!");
+          output_.println("The file does not exist!");
         }
       }
 }
 
   void dumpSetupStringBuffer() {
     if (!setupStringBufferPrinted) {
-      System.out.println("Setup information\n");
-      System.out.println("-------------------------------------");
-      System.out.println(setupStringBuffer.toString());
-      System.out.println("-------------------------------------");
+      output_.println("Setup information\n");
+      output_.println("-------------------------------------");
+      output_.println(setupStringBuffer.toString());
+      output_.println("-------------------------------------");
       setupStringBufferPrinted = true;
     }
   }
@@ -450,7 +450,7 @@ Method tested: getDataAuthority() and setDataAuthority()
         }
         catch(Exception e)
         {
-System.out.println(" exception :"+e);            
+output_.println(" exception :"+e);            
                 failed(e, "Unexpected exception occurred.");
         }
 }       
@@ -635,7 +635,7 @@ Method tested: commit()                                           //@A2A
    {
      Permission perm = new Permission(PermissionTestDriver.PwrSys, "/QDLS/TESTFLR1");
      DLOPermission publicPerm = (DLOPermission)(perm.getUserPermission("*PUBLIC"));
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
      boolean tst1 = ToExcludePrivate_OneStep(perm, publicPerm);
      boolean tst2 = ToExcludePrivate_TwoSteps(perm, publicPerm);
@@ -651,128 +651,128 @@ Method tested: commit()                                           //@A2A
  }
 
  // Go from *ALL, NONE to *EXCLUDE, PRIVATE in one commit() step          //@A2A
- public static boolean ToExcludePrivate_OneStep(Permission perm, DLOPermission publicPerm)
+ public  boolean ToExcludePrivate_OneStep(Permission perm, DLOPermission publicPerm)
  {
    boolean success = true;
    try
    {
      // Set default auth = "*ALL", sens lvl = NONE
      setAllNoneDefault(perm, publicPerm);
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
      // Now, set the public authority to "*EXCLUDE", which SHOULD allow the sensitivity level to be set to PRIVATE
      publicPerm.setDataAuthority("*EXCLUDE");
      perm.setSensitivityLevel(SENSLVL_PRIVATE);
      perm.commit();            
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
-     if (DEBUG) System.out.println("SUCCESS!  (Going from *ALL,NONE  to  *EXCLUDE,PRIVATE in 1 step");
+     if (DEBUG) output_.println("SUCCESS!  (Going from *ALL,NONE  to  *EXCLUDE,PRIVATE in 1 step");
    }
    catch(Exception e )
    {
      success = false;
-     if (DEBUG) System.out.println("Error in ToExcludePrivate_OneStep - Could not set auth = *EXCLUDE, sens lvl = PRIVATE in one step");
+     if (DEBUG) output_.println("Error in ToExcludePrivate_OneStep - Could not set auth = *EXCLUDE, sens lvl = PRIVATE in one step");
      e.printStackTrace();
    }
 
-   if (DEBUG) System.out.println("----------------------------------------------------");
+   if (DEBUG) output_.println("----------------------------------------------------");
    return(success);
  }
 
  // Go from *ALL, NONE to *EXCLUDE, PRIVATE in two commit() steps         //@A2A
- public static boolean ToExcludePrivate_TwoSteps(Permission perm, DLOPermission publicPerm)
+ public  boolean ToExcludePrivate_TwoSteps(Permission perm, DLOPermission publicPerm)
  {
    boolean success = true;
    try
    {
      // Set default auth = "*ALL", sens lvl = NONE
      setAllNoneDefault(perm, publicPerm);
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
      // Now, set the public authority to "*EXCLUDE", which SHOULD allow the sensitivity level to be set to PRIVATE
      publicPerm.setDataAuthority("*EXCLUDE");
      perm.commit();
      perm.setSensitivityLevel(SENSLVL_PRIVATE);
      perm.commit();            
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
-     if (DEBUG) System.out.println("SUCCESS!  (Going from *ALL,NONE  to  *EXCLUDE,PRIVATE in 2 steps");
+     if (DEBUG) output_.println("SUCCESS!  (Going from *ALL,NONE  to  *EXCLUDE,PRIVATE in 2 steps");
    }
    catch(Exception e )
    {
      success = false;
-     if (DEBUG) System.out.println("Error in ToExcludePrivate_TwoSteps - Could not set auth = *EXCLUDE, sens lvl = PRIVATE in two steps");
+     if (DEBUG) output_.println("Error in ToExcludePrivate_TwoSteps - Could not set auth = *EXCLUDE, sens lvl = PRIVATE in two steps");
      e.printStackTrace();
    }
 
-   if (DEBUG) System.out.println("----------------------------------------------------");
+   if (DEBUG) output_.println("----------------------------------------------------");
    return(success);
  }
 
  // Go from *EXCLUDE, PRIVATE  to  ALL, NONE in 1 commit() step           //@A2A
- public static boolean FromExcludePrivate_OneStep(Permission perm, DLOPermission publicPerm)
+ public  boolean FromExcludePrivate_OneStep(Permission perm, DLOPermission publicPerm)
  {
    boolean success = true;
    try
    {            
      // Make sure the public auth is set to *EXCLUDE with PRIVATE 
      setExcludePrivateDefault(perm, publicPerm);
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
      // Now, set the public authority to "*ALL", sens lvl = NONE in 1 step
      publicPerm.setDataAuthority("*ALL");
      perm.setSensitivityLevel(SENSLVL_NONE);
      perm.commit();            
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
-     if (DEBUG) System.out.println("SUCCESS!  (Going from *EXCLUDE,PRIVATE  to  *ALL,NONE in 1 step");
+     if (DEBUG) output_.println("SUCCESS!  (Going from *EXCLUDE,PRIVATE  to  *ALL,NONE in 1 step");
    }
    catch(Exception e )
    {
      success = false;
-     if (DEBUG) System.out.println("Error going from *EXCLUDE, PRIVATE  to  *ALL, NONE in 1 step");
+     if (DEBUG) output_.println("Error going from *EXCLUDE, PRIVATE  to  *ALL, NONE in 1 step");
      e.printStackTrace();
    }
 
-   if (DEBUG) System.out.println("----------------------------------------------------");
+   if (DEBUG) output_.println("----------------------------------------------------");
    return(success);
  }
 
 
  // Go from *EXCLUDE, PRIVATE  to  ALL, NONE in 2 commit() steps          //@A2A
- public static boolean FromExcludePrivate_TwoSteps(Permission perm, DLOPermission publicPerm)
+ public  boolean FromExcludePrivate_TwoSteps(Permission perm, DLOPermission publicPerm)
  {
    boolean success = true;
    try
    {
      // Make sure the public auth is set to *EXCLUDE with PRIVATE 
      setExcludePrivateDefault(perm, publicPerm);
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
      // Now, set public authority to "*ALL", sens lvl = NONE in 2 steps
      perm.setSensitivityLevel(SENSLVL_NONE);
      perm.commit();
      publicPerm.setDataAuthority("*ALL");
      perm.commit();
-     if (DEBUG) System.out.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
+     if (DEBUG) output_.println("DataAuth/Sensitivity=" +publicPerm.getDataAuthority()+"/"+perm.getSensitivityLevel());
 
-     if (DEBUG) System.out.println("SUCCESS!  (Going from *EXCLUDE,PRIVATE  to  *ALL,NONE in 2 steps");
+     if (DEBUG) output_.println("SUCCESS!  (Going from *EXCLUDE,PRIVATE  to  *ALL,NONE in 2 steps");
    }
    catch(Exception e )
    {
      success = false;
-     if (DEBUG) System.out.println("Error going from *EXCLUDE, PRIVATE  to  *ALL, NONE in 2 steps");
+     if (DEBUG) output_.println("Error going from *EXCLUDE, PRIVATE  to  *ALL, NONE in 2 steps");
      e.printStackTrace();
    }
 
-   if (DEBUG) System.out.println("----------------------------------------------------");
+   if (DEBUG) output_.println("----------------------------------------------------");
    return(success);
  }
 
  //========================================================================================
 
  // Set the default Public authority to *EXCLUDE with sensitivity level of PRIVATE //@A2A
- public static void setExcludePrivateDefault(Permission perm, DLOPermission publicPerm)
+ public  void setExcludePrivateDefault(Permission perm, DLOPermission publicPerm)
  {
    try
    {
@@ -785,13 +785,13 @@ Method tested: commit()                                           //@A2A
    }
    catch(Exception e )
    {
-     if (DEBUG) System.out.println("setExcludePrivateDefault() - Error setting authority to *EXCLUDE and sensitivity level to PRIVATE");
+     if (DEBUG) output_.println("setExcludePrivateDefault() - Error setting authority to *EXCLUDE and sensitivity level to PRIVATE");
      e.printStackTrace();
    }
  }
 
  // Set the default Public authority to *ALL with sensitivity level of NONE  //@A2A
- public static void setAllNoneDefault(Permission perm, DLOPermission publicPerm)
+ public  void setAllNoneDefault(Permission perm, DLOPermission publicPerm)
  {
    try
    {
@@ -804,7 +804,7 @@ Method tested: commit()                                           //@A2A
    }
    catch(Exception e )
    {
-     if (DEBUG) System.out.println("setAllNoneDefault() - Error setting authority to *ALL and sensitivity level to NONE");
+     if (DEBUG) output_.println("setAllNoneDefault() - Error setting authority to *ALL and sensitivity level to NONE");
      e.printStackTrace();
    }
  }

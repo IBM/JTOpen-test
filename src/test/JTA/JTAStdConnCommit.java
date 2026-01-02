@@ -515,7 +515,7 @@ Performs cleanup needed after running variations.
 		   xaRes.rollback(Xid);
                }
                catch (Exception e) {
-		   System.out.println("Cleanup Rollback Error");
+		   output_.println("Cleanup Rollback Error");
 		   e.printStackTrace(); 
                }
 
@@ -525,7 +525,7 @@ Performs cleanup needed after running variations.
                   xaConn.close();
                }
                catch (Exception e) {
-		   System.out.println("Cleanup Connection Error");
+		   output_.println("Cleanup Connection Error");
 		   e.printStackTrace(); 
                }
             }

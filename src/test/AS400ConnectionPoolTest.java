@@ -110,11 +110,11 @@ Creates the testcases.
     		try
     		{
     			Job[] jobs = systemObject_.getJobs(AS400.SIGNON);
-    			System.out.println("Host Server job(s): ");
+    			out_.println("Host Server job(s): ");
 
     			for(int i = 0 ; i< jobs.length; i++)
     			{   	    	
-    				System.out.println(jobs[i]);
+    				out_.println(jobs[i]);
     			}
        	    
     		}

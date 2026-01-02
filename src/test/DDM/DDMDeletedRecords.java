@@ -74,7 +74,7 @@ public class DDMDeletedRecords extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -86,7 +86,7 @@ public class DDMDeletedRecords extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -123,7 +123,7 @@ public class DDMDeletedRecords extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }

@@ -104,7 +104,7 @@ public class DDMReadRN extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -116,11 +116,11 @@ public class DDMReadRN extends Testcase
     catch (Exception e)
     {
         // Testcase setup did not complete successfully
-        System.out.println("Unable to complete setup; variations not run");
+        output_.println("Unable to complete setup; variations not run");
         return;
     }
 
-    System.out.println("Blocking factor of " + String.valueOf(bf_) + " was specified for " + name_ + ".");
+    output_.println("Blocking factor of " + String.valueOf(bf_) + " was specified for " + name_ + ".");
 
     if ((allVariations || variationsToRun_.contains("1")) &&
         runMode_ != ATTENDED)
@@ -234,7 +234,7 @@ public class DDMReadRN extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -259,7 +259,7 @@ public class DDMReadRN extends Testcase
     {
       for (int i = 0; i < msgs.length; ++i)
       {
-        System.out.println(msgs[i]);
+        output_.println(msgs[i]);
       }
       throw new Exception("");
     }
@@ -312,7 +312,7 @@ protected void cleanup()
   }
   catch(Exception e)
   {
-    System.out.println("Cleanup unsuccessful. Delete file " + testLib_ + "/READRN if it exists");
+    output_.println("Cleanup unsuccessful. Delete file " + testLib_ + "/READRN if it exists");
     e.printStackTrace(output_);
     throw e;
   }

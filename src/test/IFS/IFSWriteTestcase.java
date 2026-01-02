@@ -1221,7 +1221,7 @@ Test IFSFileWriter.flush().
       os.write('1');
       os.flush();
       char firstChar = (char)is.read();
-      ///if (DEBUG) System.out.println("First char: " + firstChar);
+      ///if (DEBUG) output_.println("First char: " + firstChar);
       os.close(); 
       is.close(); 
       assertCondition(firstChar == '1');
@@ -1245,9 +1245,9 @@ Test IFSFileWriter.getCCSID() and getEncoding(), using system default settings.
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSFileWriter os = new IFSFileWriter(file);
       if (DEBUG) {
-        System.out.println("For IFSFileWriter: CCSID == " + os.getCCSID() + "; encoding == " + os.getEncoding());
-        System.out.println("For IFSFile: CCSID == " + file.getCCSID());
-        System.out.println("For AS400: CCSID == " + systemObject_.getCcsid() + "; encoding == " + systemObject_.getJobCCSIDEncoding());
+        output_.println("For IFSFileWriter: CCSID == " + os.getCCSID() + "; encoding == " + os.getEncoding());
+        output_.println("For IFSFile: CCSID == " + file.getCCSID());
+        output_.println("For AS400: CCSID == " + systemObject_.getCcsid() + "; encoding == " + systemObject_.getJobCCSIDEncoding());
       }
       assertCondition(os.getCCSID() == file.getCCSID() &&
                       os.getEncoding().equals(NLS.ccsidToEncoding(file.getCCSID())));
@@ -1272,9 +1272,9 @@ Test IFSFileWriter.getCCSID() and getEncoding(), after specifying CCSID.
       IFSFile file = new IFSFile(systemObject_, ifsPathName_);
       IFSFileWriter os = new IFSFileWriter(file, 13488);
       if (DEBUG) {
-        System.out.println("For IFSFileWriter: CCSID == " + os.getCCSID() + "; encoding == " + os.getEncoding());
-        System.out.println("For IFSFile: CCSID == " + file.getCCSID());
-        System.out.println("For AS400: CCSID == " + systemObject_.getCcsid() + "; encoding == " + systemObject_.getJobCCSIDEncoding());
+        output_.println("For IFSFileWriter: CCSID == " + os.getCCSID() + "; encoding == " + os.getEncoding());
+        output_.println("For IFSFile: CCSID == " + file.getCCSID());
+        output_.println("For AS400: CCSID == " + systemObject_.getCcsid() + "; encoding == " + systemObject_.getJobCCSIDEncoding());
       }
       assertCondition(os.getCCSID() == 13488 &&
                       os.getEncoding().equals(NLS.ccsidToEncoding(13488)));

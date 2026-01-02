@@ -104,10 +104,10 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             else if (jndiType.equals("ldap"))
                 jndiType_ = JNDI_LDAP;
             else
-                System.out.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
+                output_.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
         }
         else
-            System.out.println("WARNING... jndi type not specified.  Using default.");
+            output_.println("WARNING... jndi type not specified.  Using default.");
 
         ldapUsr_ = pwrSysUser;  //@A2A
         ldapPwd_ = pwrSysPwd;  //@A2A
@@ -144,7 +144,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Log check failed.");
+            output_.println("Log check failed.");
             e.printStackTrace();
         }
 
@@ -162,12 +162,12 @@ public class AS400JDBCDataSourceTestcase extends Testcase
 
         File cleanupFile = new File("log.out"); //@A4A
         if (!cleanupFile.delete()) //@A4A
-            System.out.println("WARNING... \"log.out\" could not be deleted.");   //@A4A
+            output_.println("WARNING... \"log.out\" could not be deleted.");   //@A4A
 
         if (!testFile_.delete())
-            System.out.println("WARNING... \"" + logFileName_ + "\" could not be deleted.");
+            output_.println("WARNING... \"" + logFileName_ + "\" could not be deleted.");
         if (!javatest_.delete())  //@A4A
-            System.out.println("WARNING... testcase cleanup could not delete: " + logDirectory_); //@A4A
+            output_.println("WARNING... testcase cleanup could not delete: " + logDirectory_); //@A4A
     }
 
     /**
@@ -181,11 +181,11 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             javatest_ = new File(logDirectory_);  //@A4C
             if (!javatest_.exists())
             {
-                System.out.println("Setup is creating 'javatest' directory.");
+                output_.println("Setup is creating 'javatest' directory.");
 
                 if (!javatest_.mkdir())
                 {
-                    System.out.println("WARNING:  Setup could not create the 'javatest' directory.");
+                    output_.println("WARNING:  Setup could not create the 'javatest' directory.");
                 }
             }
 
@@ -197,7 +197,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             }
             catch (Exception e)
             {
-                System.out.println("WARNING... testcase setup could not create the log file: " + logFileName_);
+                output_.println("WARNING... testcase setup could not create the log file: " + logFileName_);
                 e.printStackTrace();
             }
 
@@ -206,7 +206,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
 
         // Determine the environment.
         String os = System.getProperty("os.name");
-        System.out.println("Environment: " + os);
+        output_.println("Environment: " + os);
 
         if (JTOpenTestEnvironment.isOS400)
             environment_ = OS_AS400;
@@ -2752,7 +2752,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                 if (!ds.getTimeSeparator().equals(value[i]))
                 {
                     failed = true;
-                    System.out.println(i);
+                    output_.println(i);
                     break;
                 }
             }
@@ -2830,7 +2830,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
                 if (!ds.getTransactionIsolation().equals(value[i]))
                 {
                     failed = true;
-                    System.out.println(i);
+                    output_.println(i);
                     break;
                 }
             }
@@ -2984,8 +2984,8 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             try {
               s.executeUpdate("GRANT ALL ON SCHEMA " + collection + " TO USER " + userId_);
             } catch (SQLException e) {
-              System.out.println("Warning: error on GRANT");
-              e.printStackTrace(System.out);
+              output_.println("Warning: error on GRANT");
+              e.printStackTrace(output_);
             }
 
 
@@ -3025,7 +3025,7 @@ public class AS400JDBCDataSourceTestcase extends Testcase
             }
             catch (SQLException close)
             {
-                System.out.println("WARNING... testcase cleanup failed.  Could not drop table: " + collection + "/" + table);
+                output_.println("WARNING... testcase cleanup failed.  Could not drop table: " + collection + "/" + table);
                 close.printStackTrace();
             }
         }
@@ -3068,8 +3068,8 @@ public class AS400JDBCDataSourceTestcase extends Testcase
 			     "did not find 'password is set' and 'connection created' in trace buffer \n"+traceBuffer.toString());   //@A3A
             if (!passed) { 
               Thread.sleep(1000); 
-              System.out.println("---------------------------------------------------------------------------"); 
-              System.out.println("---------------------------------------------------------------------------"); 
+              output_.println("---------------------------------------------------------------------------"); 
+              output_.println("---------------------------------------------------------------------------"); 
             }
             //@A3D succeeded();
         }
@@ -4096,8 +4096,8 @@ public class AS400JDBCDataSourceTestcase extends Testcase
 	}
 	catch (Exception e)
 	{
-	    System.out.println("Unexpected exception for connectCleanly");
-	    e.printStackTrace(System.out); 
+	    output_.println("Unexpected exception for connectCleanly");
+	    e.printStackTrace(output_); 
 	}
 
     }
@@ -5532,7 +5532,7 @@ notApplicable("SSLight Testcase");
 				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
 				 rs.next();
 				 String currentUser = rs.getString(1); 
-				 System.out.println("current MFA user is "+currentUser); 
+				 output_.println("current MFA user is "+currentUser); 
 				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
 						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
 
@@ -5560,7 +5560,7 @@ notApplicable("SSLight Testcase");
 				 ResultSet rs = s.executeQuery("VALUES CURRENT USER"); 
 				 rs.next();
 				 String currentUser = rs.getString(1); 
-				 System.out.println("current MFA user is "+currentUser); 
+				 output_.println("current MFA user is "+currentUser); 
 				 assertCondition(c != null && mfaUserid_.equalsIgnoreCase(currentUser), 
 						 "currentUser="+currentUser+" MFAUserID="+mfaUserid_);
 
@@ -5759,14 +5759,14 @@ notApplicable("SSLight Testcase");
         }
         catch (Exception e)
         {
-            System.out.println("ERROR... deserialization failed for: \"" + serializeFileName);
+            output_.println("ERROR... deserialization failed for: \"" + serializeFileName);
             e.printStackTrace();
         }
         finally
         {
             File f = new File (serializeFileName);
             if (!f.delete())
-                System.out.println("WARNING... serialization file: \"" + serializeFileName + "\" could not be deleted.");
+                output_.println("WARNING... serialization file: \"" + serializeFileName + "\" could not be deleted.");
         }
         return ds2;
     }

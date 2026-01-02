@@ -194,7 +194,7 @@ Performs cleanup needed after running variations.
                setupStatement.execute("DROP TABLE " + TABLE);
             }
             catch (Exception e) {
-		System.out.println(e.toString());
+		output_.println(e.toString());
 		skipDrop = true; 
                JTATest.verboseOut("JTA Local Tx Drop failed: " + e);
                if (JTATest.verbose) {

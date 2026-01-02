@@ -93,7 +93,7 @@ TEXT_DESCRIPTION - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TEXT_DESCRIPTION, String.class, false, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TEXT_DESCRIPTION, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -188,7 +188,7 @@ TOTAL_COPIES - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TOTAL_COPIES, Integer.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TOTAL_COPIES, Integer.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -240,7 +240,7 @@ TOTAL_PAGES - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TOTAL_PAGES, Integer.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.TOTAL_PAGES, Integer.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -292,7 +292,7 @@ USER_NAME - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.USER_NAME, String.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.USER_NAME, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -344,7 +344,7 @@ WAITING_FOR_DATA_STATUS - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_DATA_STATUS, Boolean.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_DATA_STATUS, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -396,7 +396,7 @@ WAITING_FOR_DEVICE_STATUS - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_DEVICE_STATUS, Boolean.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_DEVICE_STATUS, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -448,7 +448,7 @@ WAITING_FOR_MESSAGE_STATUS - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_MESSAGE_STATUS, Boolean.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WAITING_FOR_MESSAGE_STATUS, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -499,7 +499,7 @@ WRITER_JOB_NAME - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_NAME, String.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_NAME, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -550,7 +550,7 @@ WRITER_JOB_NUMBER - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_NUMBER, String.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_NUMBER, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -602,7 +602,7 @@ WRITER_JOB_USER_NAME - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_USER_NAME, String.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_JOB_USER_NAME, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -653,7 +653,7 @@ WRITER_STARTED - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_STARTED, Boolean.class, true, 0, null, false, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_STARTED, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -705,7 +705,7 @@ WRITER_STATUS - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_STATUS, byte[].class, true, 5, null, true, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITER_STATUS, byte[].class, true, 5, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -762,7 +762,7 @@ WRITING_STATUS - Check the attribute meta data in the entire list.
         try {
             RPrinter u = new RPrinter();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITING_STATUS, String.class, true, 4, null, true, false));
+            assertCondition(RPrinterGenericAttributeTestcase.verifyAttributeMetaData(amd, RPrinter.WRITING_STATUS, String.class, true, 4, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

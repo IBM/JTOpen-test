@@ -105,7 +105,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         else if (jndiType.equals("ldap"))
             jndiType_ = JNDI_LDAP;
         else
-            System.out.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
+            output_.println("WARNING... Unknown jndi type '" + jndiType + "' using default.");
         ldapUsr_ = ldapUsr;
         ldapPwd_ = ldapPwd;
         systemNameLocal_ = systemName;
@@ -113,7 +113,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         // See if there's a serialized object; if so, deserialize it and use it.
         File serFile = new File(SERIAL_FILE_NAME);
         if (serFile.exists()) {
-          System.out.println("Deserializing the datasource object from file \"" + SERIAL_FILE_NAME + "\"");
+          output_.println("Deserializing the datasource object from file \"" + SERIAL_FILE_NAME + "\"");
           try {
             FileInputStream in = new FileInputStream(serFile);
             ObjectInputStream s2 = new ObjectInputStream(in);
@@ -130,12 +130,12 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             s2.close(); 
           }
           catch (Exception e) {
-            System.out.println("ERROR: Failed to read file: " + SERIAL_FILE_NAME);
+            output_.println("ERROR: Failed to read file: " + SERIAL_FILE_NAME);
             e.printStackTrace();
           }
         }
         else {
-          System.out.println("Serialized file \""+SERIAL_FILE_NAME+"\" not found.  Creating a new DataSource object.");
+          output_.println("Serialized file \""+SERIAL_FILE_NAME+"\" not found.  Creating a new DataSource object.");
           dataSource_ = new AS400JDBCDataSource();
           dataSource_.setServerName(systemNameLocal_);
           dataSource_.setUser(systemObject_.getUserId());
@@ -149,21 +149,21 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         }
 
         // Save away a clone for use when restoring to original state.
-        dataSourceClone_ = cloneDataSource(dataSource_, encryptedPassword_);
+        dataSourceClone_ = cloneDataSource(dataSource_, encryptedPassword_, output_);
 
     }
 
 
     // Clone a data source object.
-    private static AS400JDBCDataSource cloneDataSource(AS400JDBCDataSource original, char[] encryptedPassword)
+    private static AS400JDBCDataSource cloneDataSource(AS400JDBCDataSource original, char[] encryptedPassword, PrintWriter output)
     {
       // Make a clone for restoring the state.
       AS400JDBCDataSource ds = new AS400JDBCDataSource();
-      copyFromTo(original, ds, encryptedPassword); 
+      copyFromTo(original, ds, encryptedPassword, output); 
       return ds;
     }
 
-    private static void copyFromTo(AS400JDBCDataSource original, AS400JDBCDataSource target, char[] encryptedPassword)
+    private static void copyFromTo(AS400JDBCDataSource original, AS400JDBCDataSource target, char[] encryptedPassword, PrintWriter output)
     {
       try
       {
@@ -171,7 +171,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         AS400JDBCDataSource ds0 = original;
 
         if (ds0.getLogWriter() == null) {
-          System.out.println("WARNING: Original DataSource has null-valued LogWriter.");
+          output.println("WARNING: Original DataSource has null-valued LogWriter.");
         }
         else {
           ds.setLogWriter(ds0.getLogWriter());
@@ -265,7 +265,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Log check failed.");
+            output_.println("Log check failed.");
             e.printStackTrace();
         }
 
@@ -282,7 +282,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         writer_.close();
 
         // Serialize the datasource object.
-        System.out.println("Serializing the datasource object to file \"" + SERIAL_FILE_NAME + "\"");
+        output_.println("Serializing the datasource object to file \"" + SERIAL_FILE_NAME + "\"");
         File file = new File(SERIAL_FILE_NAME);
         if (file.exists()) file.delete();
         FileOutputStream f = new FileOutputStream(file);
@@ -292,12 +292,12 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         s.close(); 
         File cleanupFile = new File("log.out");
         if (!cleanupFile.delete())
-            System.out.println("WARNING... \"log.out\" could not be deleted.");
+            output_.println("WARNING... \"log.out\" could not be deleted.");
 
         if (!testFile_.delete())
-            System.out.println("WARNING... \"" + logFileName_ + "\" could not be deleted.");
+            output_.println("WARNING... \"" + logFileName_ + "\" could not be deleted.");
         if (!javatest_.delete())
-            System.out.println("WARNING... testcase cleanup could not delete: " + logDirectory_);
+            output_.println("WARNING... testcase cleanup could not delete: " + logDirectory_);
     }
 
     /**
@@ -310,11 +310,11 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             javatest_ = new File(logDirectory_);
             if (!javatest_.exists())
             {
-                System.out.println("Setup is creating 'javatest' directory.");
+                output_.println("Setup is creating 'javatest' directory.");
 
                 if (!javatest_.mkdir())
                 {
-                    System.out.println("WARNING:  Setup could not create the 'javatest' directory.");
+                    output_.println("WARNING:  Setup could not create the 'javatest' directory.");
                 }
             }
 
@@ -326,7 +326,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             }
             catch (Exception e)
             {
-                System.out.println("WARNING... testcase setup could not create the log file: " + logFileName_);
+                output_.println("WARNING... testcase setup could not create the log file: " + logFileName_);
                 e.printStackTrace();
             }
 
@@ -334,7 +334,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
 
         // Determine the environment.
         String os = System.getProperty("os.name");
-        System.out.println("Environment: " + os);
+        output_.println("Environment: " + os);
 
         if (JTOpenTestEnvironment.isOS400) 
             environment_ = OS_AS400;
@@ -2860,7 +2860,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
                 if (!ds.getTimeSeparator().equals(value[i]))
                 {
                     failed = true;
-                    System.out.println(i);
+                    output_.println(i);
                     break;
                 }
             }
@@ -2938,7 +2938,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
                 if (!ds.getTransactionIsolation().equals(value[i]))
                 {
                     failed = true;
-                    System.out.println(i);
+                    output_.println(i);
                     break;
                 }
             }
@@ -3096,8 +3096,8 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             try {
               s.executeUpdate("GRANT ALL ON SCHEMA " + collection + " TO USER " + userId_);
             } catch (SQLException e) {
-              System.out.println("Warning: error on GRANT");
-              e.printStackTrace(System.out);
+              output_.println("Warning: error on GRANT");
+              e.printStackTrace(output_);
             }
 
             try
@@ -3136,7 +3136,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             }
             catch (SQLException close)
             {
-                System.out.println("WARNING... testcase cleanup failed.  Could not drop table: " + collection + "/" + table);
+                output_.println("WARNING... testcase cleanup failed.  Could not drop table: " + collection + "/" + table);
                 close.printStackTrace();
             }
             if (oldNaming != null)
@@ -3942,7 +3942,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
             failed(e, "Unexpected exception.");
         }
         finally {
-          copyFromTo(dataSourceClone_, dataSource_, encryptedPassword_);
+          copyFromTo(dataSourceClone_, dataSource_, encryptedPassword_, output_);
         }
     }
 
@@ -4615,7 +4615,7 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
     {       
         // testcase does not work when on AS/400 the password for th current user is
         // automatically allocated .
-	System.out.println("osVersion is "+JTOpenTestEnvironment.osVersion); 
+	output_.println("osVersion is "+JTOpenTestEnvironment.osVersion); 
         if (JTOpenTestEnvironment.isOS400)
         {                            
            succeeded();
@@ -4770,14 +4770,14 @@ public class AS400JDBCDataSourceSerialTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("ERROR... deserialization failed for: \"" + serializeFileName);
+            output_.println("ERROR... deserialization failed for: \"" + serializeFileName);
             e.printStackTrace();
         }
         finally
         {
             File f = new File (serializeFileName);
             if (!f.delete())
-                System.out.println("WARNING... serialization file: \"" + serializeFileName + "\" could not be deleted.");
+                output_.println("WARNING... serialization file: \"" + serializeFileName + "\" could not be deleted.");
         }
         return ds2;
     }

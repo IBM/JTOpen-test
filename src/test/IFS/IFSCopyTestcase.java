@@ -113,26 +113,26 @@ Constructor.
 
 
 
-  private static boolean filesMatch(IFSFile file1, IFSFile file2)
+  boolean filesMatch(IFSFile file1, IFSFile file2)
     throws IOException, AS400SecurityException
   {
     if (file1.isDirectory()) return directoriesMatch(file1, file2);
 
     long length1 = file1.length();
     if (length1 != file2.length()) {
-      System.out.println("Length of " + file1.getPath() + ": " + file1.length());
-      System.out.println("Length of " + file2.getPath() + ": " + file2.length());
+      output_.println("Length of " + file1.getPath() + ": " + file1.length());
+      output_.println("Length of " + file2.getPath() + ": " + file2.length());
       return false;
     }
     IFSFileInputStream stream1 = new IFSFileInputStream(file1);
     if (stream1.available() != length1) {
-      System.out.println("stream1.available() != length1");
+      output_.println("stream1.available() != length1");
       stream1.close(); 
       return false;
     }
     IFSFileInputStream stream2 = new IFSFileInputStream(file2);
     if (stream2.available() != length1) {
-      System.out.println("stream2.available() != length1");
+      output_.println("stream2.available() != length1");
       stream1.close(); 
       stream2.close(); 
       return false;
@@ -141,7 +141,7 @@ Constructor.
       if (DEBUG) {
         int byte1 = stream1.read();
         int byte2 = stream2.read();
-        ///System.out.println("Byte " + i + ": " + byte1 + " ; " + byte2);
+        ///output_.println("Byte " + i + ": " + byte1 + " ; " + byte2);
         if (byte1 != byte2) {
           stream1.close(); 
           stream2.close(); 
@@ -163,31 +163,31 @@ Constructor.
   }
 
 
-  private static boolean directoriesMatch(IFSFile dir1, IFSFile dir2)
+ boolean directoriesMatch(IFSFile dir1, IFSFile dir2)
     throws IOException, AS400SecurityException
   {
     if (!dir2.isDirectory()) {
-      System.out.println(dir2.getPath() + " is not a directory.");
+      output_.println(dir2.getPath() + " is not a directory.");
     }
     long length1 = dir1.length();
     if (length1 != dir2.length()) {
-      System.out.println("FYI: Directory lengths mismatch: " + dir1.getPath() + " (" + length1 + ") , " + dir2.getPath() + " (" + dir2.length() + ")");
+      output_.println("FYI: Directory lengths mismatch: " + dir1.getPath() + " (" + length1 + ") , " + dir2.getPath() + " (" + dir2.length() + ")");
       ///return false;
     }
     IFSFile[] dir1Contents = dir1.listFiles();
     IFSFile[] dir2Contents = dir2.listFiles();
     if (DEBUG && dir1Contents.length == 0) {
-      System.out.println(dir1.getPath() + " contains " + dir1Contents.length + " files.");
-      System.out.println(dir2.getPath() + " contains " + dir2Contents.length + " files.");
+      output_.println(dir1.getPath() + " contains " + dir1Contents.length + " files.");
+      output_.println(dir2.getPath() + " contains " + dir2Contents.length + " files.");
     }
     if (dir1Contents.length != dir2Contents.length) {
-      System.out.println(dir1.getPath() + " contains " + dir1Contents.length + " files.");
-      System.out.println(dir2.getPath() + " contains " + dir2Contents.length + " files.");
+      output_.println(dir1.getPath() + " contains " + dir1Contents.length + " files.");
+      output_.println(dir2.getPath() + " contains " + dir2Contents.length + " files.");
       return false;
     }
     for (int i=0; i<dir1Contents.length; i++) {
       if (DEBUG) {
-        System.out.println("dir1Contents["+i+"], dir2Contents["+i+"] == " + dir1Contents[i] +" ," + dir2Contents[i]);
+        output_.println("dir1Contents["+i+"], dir2Contents["+i+"] == " + dir1Contents[i] +" ," + dir2Contents[i]);
       }
       if (!filesMatch(dir1Contents[i], dir2Contents[i])) return false;
     }
@@ -418,7 +418,7 @@ But try it to pre-V5R3 anyway, to see what happens.
 ///    }
 ///    catch(Exception e)
 ///    {
-///      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e1) {};
+///      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e1) {};
 ///      assertExceptionIs(e, "ExtendedIOException", "Directory entry exists.");
 ///    }
 ///    finally {
@@ -556,16 +556,16 @@ Verify that an ObjectAlreadyExists exception is thrown.
 ///      }
 ///
 ///      // Copy directory.
-///      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+///      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 ///      sourceDir.copyTo(targetDirPath);
-///      ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
+///      ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception e) {};
 ///
 ///      // Verify that the target dir matches source dir.
 ///      assertCondition(!directoriesMatch(sourceDir,new IFSFile(systemObject_, targetDirPath)));
 ///    }
 ///    catch(Exception e)
 ///    {
-///      ///System.out.println ("Caught exception.  Press ENTER to continue"); try { System.in.read (); } catch (Exception e1) {};
+///      ///output_.println ("Caught exception.  Press ENTER to continue"); try { System.in.read (); } catch (Exception e1) {};
 ///      failed(e);
 ///    }
 ///    finally {

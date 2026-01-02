@@ -85,7 +85,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_1, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_1, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -217,7 +217,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_2, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_2, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -349,7 +349,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_3, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_3, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -481,7 +481,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_4, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAILING_ADDRESS_LINE_4, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -613,7 +613,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAIL_NOTIFICATION, String.class, false, 3, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAIL_NOTIFICATION, String.class, false, 3, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -783,7 +783,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MANAGER_CODE, Boolean.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MANAGER_CODE, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -850,7 +850,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAXIMUM_ALLOWED_STORAGE , Integer.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MAXIMUM_ALLOWED_STORAGE , Integer.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1047,7 +1047,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_NOTIFICATION, Boolean.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_NOTIFICATION, Boolean.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1143,7 +1143,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_DELIVERY_METHOD, String.class, false, 4, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_DELIVERY_METHOD, String.class, false, 4, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1317,7 +1317,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1416,7 +1416,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
                 AS400Message[] messageList = commandCall.getMessageList();
                 for (int i = 0; i < messageList.length; ++i)
                 {
-                    System.out.println(messageList[i]);
+                    output_.println(messageList[i]);
                 }
             }
 
@@ -1506,7 +1506,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_SEVERITY , Integer.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_SEVERITY , Integer.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1698,7 +1698,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MIDDLE_NAME, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.MIDDLE_NAME, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1832,7 +1832,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.NETWORK_USER_ID, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.NETWORK_USER_ID, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -1977,7 +1977,7 @@ public class UserSpecificAttributeMtoNTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.NO_PASSWORD_INDICATOR, Boolean.class, true, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.NO_PASSWORD_INDICATOR, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {

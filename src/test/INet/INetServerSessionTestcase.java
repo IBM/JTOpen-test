@@ -133,18 +133,18 @@ public class INetServerSessionTestcase extends Testcase
         try
         {
             ISeriesNetServerSession session = sessionList_[0];
-            ///System.out.println("session ID: " + session.getID());
-            ///System.out.println ("About to call listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
+            ///output_.println("session ID: " + session.getID());
+            ///output_.println ("About to call listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
             ISeriesNetServerConnection[] connectionsList = pwrNetserver_.listConnectionsForSession(session.getID());
-            ///System.out.println ("Called listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
+            ///output_.println ("Called listConnectionsForSession().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
             if (connectionsList != null) {
               succeeded();
-              if (connectionsList.length == 0) System.out.println("No connections found for session " + session.getName());
+              if (connectionsList.length == 0) output_.println("No connections found for session " + session.getName());
               else {
                 if (DEBUG) {
-                  System.out.println("Connections found for session " + session.getName() + ":");
+                  output_.println("Connections found for session " + session.getName() + ":");
                   for (int i=0; i<connectionsList.length; i++) {
-                    System.out.println(connectionsList[i].getUserName() + " connected to " + connectionsList[i].getName());
+                    output_.println(connectionsList[i].getUserName() + " connected to " + connectionsList[i].getName());
                   }
                 }
               }
@@ -154,7 +154,7 @@ public class INetServerSessionTestcase extends Testcase
         }
         catch(Exception e)
         {
-            ///System.out.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
+            ///output_.println ("Caught exception.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {}
             failed(e, "Unexpected Exception");
         }
     }
@@ -345,7 +345,7 @@ public class INetServerSessionTestcase extends Testcase
     }
 
 
-    static void displayAttributeValues(ISeriesNetServerSession sess)
+    void displayAttributeValues(ISeriesNetServerSession sess)
     {
       String wsName = sess.getName();
       long id = sess.getID();
@@ -356,7 +356,7 @@ public class INetServerSessionTestcase extends Testcase
       boolean encrypted = sess.isPasswordEncrypted();
       boolean guest = sess.isGuest();
       String user = sess.getUserName();
-      System.out.println("--------\n" +
+      output_.println("--------\n" +
                          "SESSION:\n" +
                          "--------\n" +
                          "Workstation: "+wsName+"\n"+
@@ -387,57 +387,57 @@ public class INetServerSessionTestcase extends Testcase
 
       if (wsName.trim().length() == 0 || wsName.length() > 124) { //@A1C
         ok = false;
-        System.out.println("Workstation name has invalid length: " + wsName.length());
+        output_.println("Workstation name has invalid length: " + wsName.length());
       }
       if (wsName.charAt(0) == ' ') {
         ok = false;
-        System.out.println("wsName starts with a blank: |" + wsName + "|");
+        output_.println("wsName starts with a blank: |" + wsName + "|");
       }
 
       if (id < 1) {
         ok = false;
-        System.out.println("Invalid session ID: " + id);
+        output_.println("Invalid session ID: " + id);
       }
       if (numConns < 0) {
         ok = false;
-        System.out.println("Invalid number of connections: " + numConns);
+        output_.println("Invalid number of connections: " + numConns);
       }
       if (numConns > 100) {
-        System.out.println("Warning: Number of connections is questionable: " + numConns);
+        output_.println("Warning: Number of connections is questionable: " + numConns);
       }
       if (age < 0) {
         ok = false;
-        System.out.println("Invalid age: " + age);
+        output_.println("Invalid age: " + age);
       }
       if (age > 60*60*48) {  // See if session is older than 48 hours
         ok = false;
-        System.out.println("Warning: Session age is questionable: " + age);
+        output_.println("Warning: Session age is questionable: " + age);
       }
       if (filesOpen < 0) {
         ok = false;
-        System.out.println("Invalid number of files open: " + filesOpen);
+        output_.println("Invalid number of files open: " + filesOpen);
       }
       if (filesOpen > 100) {
-        System.out.println("Warning: Number of files open is questionable: " + filesOpen);
+        output_.println("Warning: Number of files open is questionable: " + filesOpen);
       }
       if (idleTime < 0) {
         ok = false;
-        System.out.println("Invalid idle time: " + idleTime);
+        output_.println("Invalid idle time: " + idleTime);
       }
       int idleTimeout = netserver_.getIdleTimeout();
       if (idleTimeout > 0 &&
           idleTime > idleTimeout) {
         ok = false;
-        System.out.println("Idle time ("+idleTime+") exceeds NetServer idle timeout ("+idleTimeout+")");
+        output_.println("Idle time ("+idleTime+") exceeds NetServer idle timeout ("+idleTimeout+")");
       }
 
       if (user.trim().length() == 0 || user.length() > 10) {
         ok = false;
-        System.out.println("User name has invalid length: " + user.length());
+        output_.println("User name has invalid length: " + user.length());
       }
       if (user.charAt(0) == ' ') {
         ok = false;
-        System.out.println("user starts with a blank: |" + user + "| guest="+guest+" encrypted="+encrypted);
+        output_.println("user starts with a blank: |" + user + "| guest="+guest+" encrypted="+encrypted);
       }
 
       return ok;

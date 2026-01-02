@@ -115,7 +115,7 @@ public class DDMEvents extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -415,7 +415,7 @@ public class DDMEvents extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
   }
 
@@ -438,7 +438,7 @@ public class DDMEvents extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
         throw new Exception("");
       }
@@ -476,14 +476,14 @@ public class DDMEvents extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
-        System.out.println("Either library DDMTESTSAV does not exist or you");
-        System.out.println("do not have authority to it.");
-        System.out.println("ftp DDMTESTSAV.SAVF in binary from");
-        System.out.println("the test/ directory in GIT");
-        System.out.println("to the AS/400 system to which you are running.");
-        System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
+        output_.println("Either library DDMTESTSAV does not exist or you");
+        output_.println("do not have authority to it.");
+        output_.println("ftp DDMTESTSAV.SAVF in binary from");
+        output_.println("the test/ directory in GIT");
+        output_.println("to the AS/400 system to which you are running.");
+        output_.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
         throw new Exception("Authority problem or create failure");
       }
     }
@@ -513,7 +513,7 @@ public class DDMEvents extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Cleanup unsuccessful. Delete files " + testLib_ + "/FILE1 and FILE2 if they exist");
+      output_.println("Cleanup unsuccessful. Delete files " + testLib_ + "/FILE1 and FILE2 if they exist");
       e.printStackTrace(output_);
       throw e;
     }

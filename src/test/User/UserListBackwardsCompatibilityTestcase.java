@@ -109,7 +109,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
 
             if (expectedNonContentsV.contains(userName))
             {
-                System.out.println("nextElement() returned unexpected element " + userName + ".");
+                output_.println("nextElement() returned unexpected element " + userName + ".");
                 return false;
             }
         }
@@ -118,7 +118,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         try
         {
             enumeration.nextElement();
-            System.out.println("nextElement() did not throw exception when enumeration is done.");
+            output_.println("nextElement() did not throw exception when enumeration is done.");
             return false;
         }
         catch (NoSuchElementException e)
@@ -128,7 +128,7 @@ public class UserListBackwardsCompatibilityTestcase extends Testcase
         // If there are still elements in the vector, than something that we expected did not come up in the enumeration.
         if (expectedUsersV.size() > 0)
         {
-            System.out.println(expectedUsersV.size() + " expected users were not included in the enumeration.");
+            output_.println(expectedUsersV.size() + " expected users were not included in the enumeration.");
             return false;
         }
 

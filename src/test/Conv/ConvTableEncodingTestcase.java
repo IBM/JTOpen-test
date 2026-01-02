@@ -37,9 +37,7 @@ public class ConvTableEncodingTestcase extends Testcase
     static Locale[] locales_;
     static
     {
-        System.out.print("Loading locales...");
         locales_ = Collator.getAvailableLocales();
-        System.out.println("Done.");
     }
 
     boolean isProxified_ = false;

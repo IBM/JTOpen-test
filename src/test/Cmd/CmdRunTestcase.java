@@ -78,7 +78,7 @@ public class CmdRunTestcase extends Testcase
     {
         for (int i = 0; i < messageList.length; ++i)
         {
-            System.out.println(i + ". " + messageList[i]);
+            output_.println(i + ". " + messageList[i]);
         }
     }
 
@@ -90,18 +90,18 @@ public class CmdRunTestcase extends Testcase
     private boolean checkMessage(AS400Message message, String fileName, String id, int severity, int type, String help, StringBuffer sb) throws AS400SecurityException, IOException
     {
         /*
-         System.out.println("Date:                " + message.getDate());
-         System.out.println("Default reply:       " + message.getDefaultReply());
-         System.out.println("File name:           " + message.getFileName());
-         System.out.println("Help:                " + message.getHelp());
-         System.out.println("ID:                  " + message.getID());
-         System.out.println("Library name:        " + message.getLibraryName());
-         System.out.println("Path:                " + message.getPath());
-         System.out.println("Severity:            " + message.getSeverity());
-         System.out.println("Subsitution data:    " + message.getSubstitutionData());
-         System.out.println("Text:                " + message.getText());
-         System.out.println("Type:                " + message.getType());
-         System.out.println("toString:            " + message.toString());
+         output_.println("Date:                " + message.getDate());
+         output_.println("Default reply:       " + message.getDefaultReply());
+         output_.println("File name:           " + message.getFileName());
+         output_.println("Help:                " + message.getHelp());
+         output_.println("ID:                  " + message.getID());
+         output_.println("Library name:        " + message.getLibraryName());
+         output_.println("Path:                " + message.getPath());
+         output_.println("Severity:            " + message.getSeverity());
+         output_.println("Subsitution data:    " + message.getSubstitutionData());
+         output_.println("Text:                " + message.getText());
+         output_.println("Type:                " + message.getType());
+         output_.println("toString:            " + message.toString());
          */
 
         boolean success = true;
@@ -192,12 +192,12 @@ public class CmdRunTestcase extends Testcase
     {
         AS400Message[] messageList = cmd.getMessageList();
         if (messageList == null || messageList.length == 0)
-          System.out.println("No messages were returned from command " + cmd.getCommand());
+          output_.println("No messages were returned from command " + cmd.getCommand());
         else
         {
             for (int i=0; i<messageList.length; ++i)
             {
-                System.out.println("Message["+i+"] = " + messageList[i].getFileName() + ", " + messageList[i].getID() + ", " + messageList[i].getText());
+                output_.println("Message["+i+"] = " + messageList[i].getFileName() + ", " + messageList[i].getID() + ", " + messageList[i].getText());
             }
         }
     }

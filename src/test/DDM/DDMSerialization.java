@@ -83,7 +83,7 @@ public class DDMSerialization extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to connect to the AS400.");
+      output_.println("Unable to connect to the AS400.");
       e.printStackTrace(output_);
     }
 
@@ -93,16 +93,16 @@ public class DDMSerialization extends Testcase
       try { 
 	  cleanup();
       } catch (Exception e) {
-	  System.out.println("Ignoring exception from cleanup");
+	  output_.println("Ignoring exception from cleanup");
 	  e.printStackTrace();
-	  System.out.println("--------------------------------");
+	  output_.println("--------------------------------");
       } 
       output_.println("Performing setup for DDMSerialization testcase run...");
       setup();
     }
     catch (Exception e)
     {
-      System.out.println("Unable to run setup because of exception.");
+      output_.println("Unable to run setup because of exception.");
       e.printStackTrace(); 
       systemObject_.disconnectService(AS400.RECORDACCESS);
       return;
@@ -171,7 +171,7 @@ public class DDMSerialization extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup failed.");
+      output_.println("Cleanup failed.");
       return;
     }
     systemObject_.disconnectService(AS400.RECORDACCESS);
@@ -354,7 +354,7 @@ public class DDMSerialization extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
+      output_.println("Cleanup unsuccessful.  Some files may have been left in " + testLib_ + " and QGPL");
       e.printStackTrace(output_);
       throw e;
     }

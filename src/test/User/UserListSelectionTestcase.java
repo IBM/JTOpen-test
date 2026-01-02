@@ -76,7 +76,7 @@ public class UserListSelectionTestcase extends Testcase
     /**
      Checks a particular selection meta data.
      **/
-    static boolean verifySelectionMetaData(ResourceMetaData[] smd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    boolean verifySelectionMetaData(ResourceMetaData[] smd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
     {
         int found = -1;
         for (int i = 0; (i < smd.length) && (found < 0); ++i)
@@ -86,7 +86,7 @@ public class UserListSelectionTestcase extends Testcase
 
         if (found < 0)
         {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -201,7 +201,7 @@ public class UserListSelectionTestcase extends Testcase
                 boolean thisOne = verifySelectionMetaData(u.getSelectionMetaData(smd[i].getID()), smd[i].getID(), smd[i].getType(), smd[i].isReadOnly(), smd[i].getPossibleValues().length, smd[i].getDefaultValue(), smd[i].isValueLimited(), smd[i].areMultipleAllowed());
                 if (!thisOne)
                 {
-                    System.out.println("Comparison failed for: " + smd[i] + ".");
+                    output_.println("Comparison failed for: " + smd[i] + ".");
                     success = false;
                 }
             }
@@ -374,7 +374,7 @@ public class UserListSelectionTestcase extends Testcase
             boolean success = true;
             for (int i = 0; i < smd.length; ++i)
             {
-                // System.out.println("Getting selection " + smd[i] + ".");
+                // output_.println("Getting selection " + smd[i] + ".");
                 Object value = u.getSelectionValue(smd[i].getID());
                 Class<?> valueClass = value.getClass();
                 Class<?> type = smd[i].getType();
@@ -384,8 +384,8 @@ public class UserListSelectionTestcase extends Testcase
                 {
                     if (!valueClass.isArray())
                     {
-                        System.out.println("Error getting selection " + smd[i] + ".");
-                        System.out.println("Type array mismatch: " + valueClass + " is not an array, but multiple values are allowed.");
+                        output_.println("Error getting selection " + smd[i] + ".");
+                        output_.println("Type array mismatch: " + valueClass + " is not an array, but multiple values are allowed.");
                         success = false;
                     }
                     else
@@ -393,16 +393,16 @@ public class UserListSelectionTestcase extends Testcase
                         Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type))
                         {
-                            System.out.println("Error getting selection " + smd[i] + ".");
-                            System.out.println("Type mismatch: " + componentType + " != " + type + ".");
+                            output_.println("Error getting selection " + smd[i] + ".");
+                            output_.println("Type mismatch: " + componentType + " != " + type + ".");
                             success = false;
                         }
                     }
                 }
                 else if (!valueClass.equals(type))
                 {
-                    System.out.println("Error getting selection " + smd[i] + ".");
-                    System.out.println("Type mismatch: " + valueClass + " != " + type + ".");
+                    output_.println("Error getting selection " + smd[i] + ".");
+                    output_.println("Type mismatch: " + valueClass + " != " + type + ".");
                     success = false;
                 }
 
@@ -423,8 +423,8 @@ public class UserListSelectionTestcase extends Testcase
 
                             if (!found)
                             {
-                                System.out.println("Error getting selection " + smd[i] + ".");
-                                System.out.println("Value: " + asArray[k] + " is not a valid possible value.");
+                                output_.println("Error getting selection " + smd[i] + ".");
+                                output_.println("Value: " + asArray[k] + " is not a valid possible value.");
                                 success = false;
                             }
                         }
@@ -438,8 +438,8 @@ public class UserListSelectionTestcase extends Testcase
 
                         if (!found)
                         {
-                            System.out.println("Error getting selection " + smd[i] + ".");
-                            System.out.println("Value: " + value + " is not a valid possible value.");
+                            output_.println("Error getting selection " + smd[i] + ".");
+                            output_.println("Value: " + value + " is not a valid possible value.");
                             success = false;
                         }
                     }

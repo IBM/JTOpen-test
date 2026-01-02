@@ -829,12 +829,12 @@ Create a file to be used for the testcases.
               }
            }
            else
-              System.out.println("Setup - create file - failed");
+              output_.println("Setup - create file - failed");
         }
      }
      catch(Exception e)
      {
-        System.out.println(e);
+        output_.println(e);
      }
   }
 
@@ -997,7 +997,7 @@ Create a file to be used for the testcases.
     }
     catch(Exception e)
     {
-      System.out.println("Exception in createFile: <" + e.getMessage() + ">");
+      output_.println("Exception in createFile: <" + e.getMessage() + ">");
     }
   }
 
@@ -1022,7 +1022,7 @@ Create a file to be used for the testcases.
     }
     catch(Exception e)
     {
-      System.out.println("Exception in createFile: <" + e.getMessage() + ">");
+      output_.println("Exception in createFile: <" + e.getMessage() + ">");
       e.printStackTrace(); 
     }
   }
@@ -1131,7 +1131,7 @@ Create a file to be used for the testcases.
     }
     catch(Exception e)
     {
- System.out.println("Exception in createFile: <" + e.getMessage() + ">");
+ output_.println("Exception in createFile: <" + e.getMessage() + ">");
 e.printStackTrace();
 }
   }

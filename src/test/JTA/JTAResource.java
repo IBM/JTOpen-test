@@ -147,17 +147,17 @@ public class JTAResource extends JTATestcase {
     } catch (SQLException e) {
       if (e.getMessage().indexOf("in use") > 0) {
         e.printStackTrace();
-        System.out.println("Dumping global IDS");
+        output_.println("Dumping global IDS");
         for (int i = 0; i < globalIds.length; i++) {
           if (globalIds[i] != null) {
-            System.out.print(i + ": X'");
+            output_.print(i + ": X'");
             for (int j = 0; j < globalIds[i].length; j++) {
               int value = globalIds[i][j];
               if (value < 16)
-                System.out.print("0");
-              System.out.print(Integer.toHexString(value));
+                output_.print("0");
+              output_.print(Integer.toHexString(value));
             }
-            System.out.println("'");
+            output_.println("'");
           }
         }
       }
@@ -179,7 +179,7 @@ public class JTAResource extends JTATestcase {
     rs.close();
     s.close();
     c.close();
-    // System.out.println("Row count = " + count);
+    // output_.println("Row count = " + count);
     return count;
   }
 
@@ -220,9 +220,9 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_NOTA)
               && (countRows(4) == 0);
           if (!condition) {
-            System.out.println("errorCode -<" + errorCode
+            output_.println("errorCode -<" + errorCode
                 + ">- should be XAER_NOTA" + XAException.XAER_NOTA);
-            System.out.println("countRows(4) -< " + countRows(4)
+            output_.println("countRows(4) -< " + countRows(4)
                 + " >- should be 0 ");
             if (saveException != null)
               saveException.printStackTrace();
@@ -550,9 +550,9 @@ public class JTAResource extends JTATestcase {
           System.out
               .println("errorCode1 should be XAException.XA_RBROLLBACK but is "
                   + errorCode1);
-          System.out.println("errorCode2 should be " + expectedErrorCode2
+          output_.println("errorCode2 should be " + expectedErrorCode2
               + " but is " + errorCode2);
-          System.out.println("countRows(5) should be 0, but is " + rowCount);
+          output_.println("countRows(5) should be 0, but is " + rowCount);
         }
 
         assertCondition(condition);
@@ -596,9 +596,9 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_NOTA)
               && (countRows(-8432) == 0);
           if (!condition) {
-            System.out.println("errorCode -<" + errorCode
+            output_.println("errorCode -<" + errorCode
                 + ">- should be XAER_NOTA" + XAException.XAER_NOTA);
-            System.out.println("countRows(-8432) -< " + countRows(-8432)
+            output_.println("countRows(-8432) -< " + countRows(-8432)
                 + " >- should be 0 ");
           }
 
@@ -662,7 +662,7 @@ public class JTAResource extends JTATestcase {
               .println("errorCode should be XAException.XAER_NOTA, but is "
                   + errorCode
                   + " note.. in V5R4 this will fail -- see issue 29649");
-          System.out.println("countRows(-4432) should be 0 but is " + rowCount);
+          output_.println("countRows(-4432) should be 0 but is " + rowCount);
         }
         assertCondition(condition);
       } catch (Exception e) {
@@ -705,7 +705,7 @@ public class JTAResource extends JTATestcase {
             && (countRows(-12) == 0));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-        System.out.println("For Toolbox driver, opened issue 29717 12-22-05");
+        output_.println("For Toolbox driver, opened issue 29717 12-22-05");
       }
     }
   }
@@ -759,9 +759,9 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_INVAL)
               && (countRows(234) == 0);
           if (!condition) {
-            System.out.println("errorCode = " + errorCode
+            output_.println("errorCode = " + errorCode
                 + " should be  XAER_INVAL" + XAException.XAER_INVAL);
-            System.out.println("countRows(234) = " + countRows(234)
+            output_.println("countRows(234) = " + countRows(234)
                 + " should be 0");
           }
           assertCondition(condition);
@@ -773,7 +773,7 @@ public class JTAResource extends JTATestcase {
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-        System.out.println("For Toolbox driver, opened issue 29717 12-22-05");
+        output_.println("For Toolbox driver, opened issue 29717 12-22-05");
       }
     }
   }
@@ -892,7 +892,7 @@ public class JTAResource extends JTATestcase {
           System.out
               .println("errorCode1 should be XAException.XA_RBROLLBACK but is "
                   + errorCode1);
-          System.out.println("countRows(-23400) should be  0 but is "
+          output_.println("countRows(-23400) should be  0 but is "
               + rowCount);
         }
         assertCondition(condition);
@@ -955,7 +955,7 @@ public class JTAResource extends JTATestcase {
             System.out
                 .println("errorCode should be XAException.XAER_INVAL, but is "
                     + errorCode);
-            System.out.println("countRows(-234077) should be 0 but is "
+            output_.println("countRows(-234077) should be 0 but is "
                 + rowCount);
           }
           assertCondition(condition);
@@ -1000,9 +1000,9 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_NOTA)
               && (countRows(68432) == 0);
           if (!condition) {
-            System.out.println("errorCode -<" + errorCode
+            output_.println("errorCode -<" + errorCode
                 + ">- should be XAER_NOTA" + XAException.XAER_NOTA);
-            System.out.println("countRows(68432) -< " + countRows(68432)
+            output_.println("countRows(68432) -< " + countRows(68432)
                 + " >- should be 0 ");
           }
           assertCondition(condition);
@@ -1012,9 +1012,9 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_INVAL)
               && (countRows(68432) == 0);
           if (!condition) {
-            System.out.println("errorCode -<" + errorCode
+            output_.println("errorCode -<" + errorCode
                 + ">- should be XAER_INVAL" + XAException.XAER_INVAL);
-            System.out.println("countRows(68432) -< " + countRows(68432)
+            output_.println("countRows(68432) -< " + countRows(68432)
                 + " >- should be 0 ");
           }
           assertCondition(condition);
@@ -1782,7 +1782,7 @@ public class JTAResource extends JTATestcase {
             System.out
                 .println("errorCode1 should be XAException.XA_RBROLLBACK, but is "
                     + errorCode1);
-            System.out.println("errorCode2 should be 0, but is " + errorCode2);
+            output_.println("errorCode2 should be 0, but is " + errorCode2);
             System.out
                 .println("countRows(576) should be 0, but is " + rowCount);
           }
@@ -1857,7 +1857,7 @@ public class JTAResource extends JTATestcase {
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           condition = (rowCount == 0);
           if (!condition) {
-            System.out.println("countRows(-165476) should be 0, but is "
+            output_.println("countRows(-165476) should be 0, but is "
                 + rowCount);
           }
         } else {
@@ -1867,7 +1867,7 @@ public class JTAResource extends JTATestcase {
             System.out
                 .println("errorCode1 should be XAException.XA_RBROLLBACK, but is "
                     + errorCode1);
-            System.out.println("countRows(-165476) should be 0, but is "
+            output_.println("countRows(-165476) should be 0, but is "
                 + rowCount);
           }
         }
@@ -1949,16 +1949,16 @@ public class JTAResource extends JTATestcase {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && useUDBDataSource) {
           condition = (errorCode == 0) && (rowCount == 1);
           if (!condition) {
-            System.out.println("errorCode should be  0, but is " + errorCode);
-            System.out.println("countRows(323476) should be 1, but is "
+            output_.println("errorCode should be  0, but is " + errorCode);
+            output_.println("countRows(323476) should be 1, but is "
                 + rowCount);
           }
         } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           //  toolbox
           condition = (errorCode == 0) && (rowCount == 1);
           if (!condition) {
-            System.out.println("errorCode should be 0 , but is " + errorCode);
-            System.out.println("countRows(323476) should be 1, but is "
+            output_.println("errorCode should be 0 , but is " + errorCode);
+            output_.println("countRows(323476) should be 1, but is "
                 + rowCount);
 
           }
@@ -1968,7 +1968,7 @@ public class JTAResource extends JTATestcase {
             System.out
                 .println("errorCode should be  XAException.XAER_NOTA, but is "
                     + errorCode);
-            System.out.println("countRows(323476) should be 1, but is "
+            output_.println("countRows(323476) should be 1, but is "
                 + rowCount);
           }
         }
@@ -2065,7 +2065,7 @@ public class JTAResource extends JTATestcase {
           /* XAER_NOTA -- xid is not valid */
           boolean condition = (errorCode == XAException.XAER_NOTA);
           if (!condition) {
-            System.out.println("errorCode is " + errorCode
+            output_.println("errorCode is " + errorCode
                 + " but should be XAER_NOTA = " + XAException.XAER_NOTA);
             if (e2 != null)
               e2.printStackTrace();
@@ -2181,7 +2181,7 @@ public class JTAResource extends JTATestcase {
           expectedErrorCode = XAException.XAER_PROTO;
         }
         if (!condition) {
-          System.out.println("errorCode should be " + expectedErrorCode
+          output_.println("errorCode should be " + expectedErrorCode
               + ", but is " + errorCode + " for connection " + c);
           if (e2 != null)
             e2.printStackTrace();
@@ -2232,10 +2232,10 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_PROTO)
               && (countRows(-96065) == 1);
           if (!condition) {
-            System.out.println("errorCode = " + errorCode
+            output_.println("errorCode = " + errorCode
                 + " should be XAException.XAER_PROTO = "
                 + XAException.XAER_PROTO);
-            System.out.println("countRows(-96065) = " + countRows(-96065)
+            output_.println("countRows(-96065) = " + countRows(-96065)
                 + " should be 1");
             if (e2 != null) {
               e2.printStackTrace();
@@ -2248,10 +2248,10 @@ public class JTAResource extends JTATestcase {
           boolean condition = (errorCode == XAException.XAER_DUPID)
               && (countRows(-96065) == 1);
           if (!condition) {
-            System.out.println("errorCode = " + errorCode
+            output_.println("errorCode = " + errorCode
                 + " should be XAException.XAER_DUPID = "
                 + XAException.XAER_DUPID);
-            System.out.println("countRows(-96065) = " + countRows(-96065)
+            output_.println("countRows(-96065) = " + countRows(-96065)
                 + " should be 1");
             if (e2 != null) {
               e2.printStackTrace();
@@ -2293,10 +2293,10 @@ public class JTAResource extends JTATestcase {
         try {
           xar.start(xid2, XAResource.TMNOFLAGS);
         } catch (XAException e) {
-          System.out.println("xar.start(xid2=" + xid2 + ") failed with " + e);
+          output_.println("xar.start(xid2=" + xid2 + ") failed with " + e);
           errorCode1 = e.errorCode;
           if (is != null) {
-            System.out.println("Interactive:  press enter to continue");
+            output_.println("Interactive:  press enter to continue");
             is.readLine();
 
           }
@@ -2313,8 +2313,8 @@ public class JTAResource extends JTATestcase {
           int rowCount = countRows(-96965);
           boolean condition = (errorCode1 == 0) && (rowCount == 2);
           if (!condition) {
-            System.out.println("errorCode1 should be 0, but is " + errorCode1);
-            System.out.println("rowCount should be 2, but is " + rowCount);
+            output_.println("errorCode1 should be 0, but is " + errorCode1);
+            output_.println("rowCount should be 2, but is " + rowCount);
           }
           assertCondition(condition);
         } else if (!useUDBDataSource) {
@@ -2342,8 +2342,8 @@ public class JTAResource extends JTATestcase {
           int rowCount = countRows(-96965);
           boolean condition = (errorCode1 == 0) && (rowCount == 2);
           if (!condition) {
-            System.out.println("errorCode1 should be 0, but is " + errorCode1);
-            System.out.println("rowCount should be 2, but is " + rowCount);
+            output_.println("errorCode1 should be 0, but is " + errorCode1);
+            output_.println("rowCount should be 2, but is " + rowCount);
           }
           assertCondition(condition);
 
@@ -2385,7 +2385,7 @@ public class JTAResource extends JTATestcase {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource) {
           boolean condition = (errorCode == -90001);
           if (!condition) {
-            System.out.println("Error code should be -90001, but is "
+            output_.println("Error code should be -90001, but is "
                 + errorCode);
           }
           assertCondition(condition);
@@ -2431,7 +2431,7 @@ public class JTAResource extends JTATestcase {
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && !useUDBDataSource) {
           boolean condition = (errorCode == -90001);
           if (!condition) {
-            System.out.println("Error code should be -90001, but is "
+            output_.println("Error code should be -90001, but is "
                 + errorCode);
           }
           assertCondition(condition);

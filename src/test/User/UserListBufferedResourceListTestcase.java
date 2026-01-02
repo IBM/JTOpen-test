@@ -2053,7 +2053,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2090,7 +2090,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2121,7 +2121,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2152,7 +2152,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2235,7 +2235,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2272,7 +2272,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2303,7 +2303,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2334,7 +2334,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }
@@ -2366,7 +2366,7 @@ public class UserListBufferedResourceListTestcase extends Testcase
             {
                 if (u.resourceAt(i) == null)
                 {
-                    System.out.println("Resource " + i + " is null.");
+                    output_.println("Resource " + i + " is null.");
                     success = false;
                 }
             }

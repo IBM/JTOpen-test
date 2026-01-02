@@ -207,7 +207,7 @@ public class DDMConstructors extends Testcase
     catch(Exception e)
     {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
 
@@ -265,7 +265,7 @@ public class DDMConstructors extends Testcase
     catch(Exception e)
     {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
 
@@ -303,7 +303,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "NullPointerException", "system"))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -342,7 +342,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "NullPointerException", "name"))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -384,7 +384,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "IllegalPathNameException", fileName + ": Length of the member name is not valid."))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -426,7 +426,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "IllegalPathNameException", fileName + ": Object type is not valid."))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -488,7 +488,7 @@ public class DDMConstructors extends Testcase
         if (!exceptionIs(e, "ExtendedIllegalStateException"))
         {
           failMsg.append("\nWrong exception/text\n");
-          System.out.println(e.getMessage());
+          output_.println(e.getMessage());
           e.printStackTrace();
         }
       }
@@ -553,7 +553,7 @@ public class DDMConstructors extends Testcase
     catch(Exception e)
     {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
 
@@ -611,7 +611,7 @@ public class DDMConstructors extends Testcase
     catch(Exception e)
     {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
 
@@ -649,7 +649,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "NullPointerException", "system"))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -688,7 +688,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "NullPointerException", "name"))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }
@@ -771,7 +771,7 @@ public class DDMConstructors extends Testcase
       if (!exceptionIs(e, "IllegalPathNameException", fileName + ": Object type is not valid."))
       {
         failMsg.append("\nWrong exception/text\n");
-        System.out.println(e.getMessage());
+        output_.println(e.getMessage());
         e.printStackTrace();
       }
     }

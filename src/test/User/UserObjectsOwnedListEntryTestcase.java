@@ -56,13 +56,13 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
     try
     {
       UserObjectsOwnedListEntry[] entries1 = list1.getObjectList();
-      System.out.println("Print out entries1 list: ");
-      System.out.println(list1);
+      output_.println("Print out entries1 list: ");
+      output_.println(list1);
       if (DEBUG)
       {
         for (int i=0; i<entries1.length; ++i)
         {
-          System.out.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]); // Calls the UserObjAuthOwnEntry.toString() method
+          output_.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]); // Calls the UserObjAuthOwnEntry.toString() method
         }
       }
       succeeded();	
@@ -104,7 +104,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(pool != null)
       {
-        System.out.println(pool);
+        output_.println(pool);
         succeeded();	
       }
       else
@@ -145,12 +145,12 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(pool == null)
       {
-        System.out.println(pool);
+        output_.println(pool);
         succeeded();
       }
       else
       {
-        System.out.println(pool);
+        output_.println(pool);
         failed("Should return null.");
       }	 
     } 
@@ -189,7 +189,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(pool != null)
       {
-        System.out.println(pool);
+        output_.println(pool);
         succeeded();	
       }
       else
@@ -230,7 +230,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(attribute != null)
       {
-        System.out.println(attribute);
+        output_.println(attribute);
         succeeded();	
       }
       else
@@ -269,7 +269,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean holder = entries1[0].getAuthorityHolder();
 
-      System.out.println(holder);
+      output_.println(holder);
       succeeded();	
 
     } 
@@ -305,7 +305,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean authority = entries1[0].getAuthorityListManagement();
 
-      System.out.println(authority);
+      output_.println(authority);
       succeeded();	
 
     } 
@@ -340,7 +340,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       String authority = entries1[0].getAuthorityValue();
 
-      System.out.println(authority);
+      output_.println(authority);
       succeeded();	 
     } 
     catch (Exception e) 
@@ -374,7 +374,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean data = entries1[0].getDataAdd();
 
-      System.out.println(data);
+      output_.println(data);
       succeeded();
 
 
@@ -410,7 +410,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean data = entries1[0].getDataDelete();
 
-      System.out.println(data);
+      output_.println(data);
       succeeded();
 
     } 
@@ -446,7 +446,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean data = entries1[0].getDataExecute();
 
-      System.out.println(data);
+      output_.println(data);
       succeeded();
 
     } 
@@ -482,7 +482,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean data = entries1[0].getDataRead();
 
-      System.out.println(data);
+      output_.println(data);
       succeeded();
 
     } 
@@ -518,7 +518,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean data = entries1[0].getDataUpdate();
 
-      System.out.println(data);
+      output_.println(data);
       succeeded();
 
 
@@ -557,12 +557,12 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(library != null)
       {
-        System.out.println(library);
+        output_.println(library);
         succeeded();
       }
       else
       {
-        System.out.println(library);
+        output_.println(library);
         failed("getLibraryName() Returned null.");
       }	 
     } 
@@ -600,12 +600,12 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(library == null)
       {
-        System.out.println(library);
+        output_.println(library);
         succeeded();
       }
       else
       {
-        System.out.println(library);
+        output_.println(library);
         failed("Should return null.");
       }	 
     } 
@@ -641,7 +641,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean alter = entries1[0].getObjectAlter();
 
-      System.out.println(alter);
+      output_.println(alter);
       succeeded();
     } 
     catch (Exception e) 
@@ -676,7 +676,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean existence = entries1[0].getObjectExistence();
 
-      System.out.println(existence);
+      output_.println(existence);
       succeeded();
     } 
     catch (Exception e) 
@@ -710,7 +710,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean management = entries1[0].getObjectManagement();
 
-      System.out.println(management);
+      output_.println(management);
       succeeded();
     } 
     catch (Exception e) 
@@ -747,7 +747,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(name != null)
       {
-        System.out.println(name);
+        output_.println(name);
         succeeded();
       }
       else
@@ -789,7 +789,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(name == null)
       {
-        System.out.println(name);
+        output_.println(name);
         succeeded();
       }
       else
@@ -830,7 +830,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean operational = entries1[0].getObjectOperational();
 
-      System.out.println(operational);
+      output_.println(operational);
       succeeded();
 
     } 
@@ -866,7 +866,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       boolean reference = entries1[0].getObjectReference();
 
-      System.out.println(reference);
+      output_.println(reference);
       succeeded();
 
     } 
@@ -903,7 +903,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       String type = entries1[0].getObjectType();
 
-      System.out.println(type);
+      output_.println(type);
       succeeded();
     }
     catch (Exception e) 
@@ -939,7 +939,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       String ownship = entries1[0].getOwnership();
 
 
-      System.out.println(ownship);
+      output_.println(ownship);
       succeeded();
 
     } 
@@ -977,7 +977,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(path != null)
       {	     
-        System.out.println(path);
+        output_.println(path);
         succeeded();
       }
       else
@@ -1020,7 +1020,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(path == null)
       {	     
-        System.out.println(path);
+        output_.println(path);
         succeeded();
       }
       else
@@ -1060,7 +1060,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
       }
       String desc = entries1[0].getTextDescription();
 
-      System.out.println(desc);
+      output_.println(desc);
       succeeded();
 
     } 
@@ -1178,7 +1178,7 @@ public class  UserObjectsOwnedListEntryTestcase extends Testcase
 
       if(object != null)
       {	     
-        System.out.println(object);
+        output_.println(object);
         succeeded();
       }
       else

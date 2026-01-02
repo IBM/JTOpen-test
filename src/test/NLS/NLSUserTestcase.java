@@ -186,7 +186,7 @@ Verify that the User description is what is expected.
       if(cmd.run("QSYS/CHGOBJD OBJ(QSYS/" + uid + ") OBJTYPE(*USRPRF) TEXT('" + newDesc + "')") == false)
       {
         AS400Message[] messageList = cmd.getMessageList();
-        System.out.println("QSYS/CHGOBJD failed.  " + messageList[0].toString());
+        output_.println("QSYS/CHGOBJD failed.  " + messageList[0].toString());
         failed("Unable to change user description.");
         return;
       }
@@ -205,8 +205,8 @@ Verify that the User description is what is expected.
         succeeded();
       else
       {
-        System.out.println("Expected: " + newDesc);
-        System.out.println("Got:      " + desc);
+        output_.println("Expected: " + newDesc);
+        output_.println("Got:      " + desc);
         failed();
       }
 

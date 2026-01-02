@@ -80,14 +80,14 @@ public class AS400FTPBeans
 
         if (initialToken_ == null)
         {
-           System.out.println("-directory is invalid, no test will be run");
+           output_.println("-directory is invalid, no test will be run");
            notWorthTrying = true;
-           System.out.println();
+           output_.println();
         }
         else
         {
           if (FTPTest.DEBUG) {
-            System.out.println("using initial token " + initialToken_);
+            output_.println("using initial token " + initialToken_);
             System.out.println();
           }
         }
@@ -100,18 +100,18 @@ public class AS400FTPBeans
            system_   = systemObject_.getSystemName();
         }
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
         if ((user_ == null) || (user_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -uid specified");
+           output_.println("===> warning, variations will fail because no -uid specified");
 
         if ((password == null) || (password.length() < 1))
-           System.out.println("===> warning, variations will fail because no -password specified");
+           output_.println("===> warning, variations will fail because no -password specified");
 
         if ((system_ == null) || (system_.length() < 1))
-           System.out.println("===> warning, variations will fail because no -system specified");
+           output_.println("===> warning, variations will fail because no -system specified");
 
-        if (FTPTest.DEBUG) System.out.println();
+        if (FTPTest.DEBUG) output_.println();
 
     }
 
@@ -697,7 +697,7 @@ public class AS400FTPBeans
         }
         catch(Exception e)
         {
-          System.out.println("NOTE: If running on i5 Client verify onAS400_=true");
+          output_.println("NOTE: If running on i5 Client verify onAS400_=true");
           failed(e, "Unexpected exception occurred.");
         }
       }
