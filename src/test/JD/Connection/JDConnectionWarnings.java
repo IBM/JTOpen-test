@@ -794,9 +794,9 @@ is closed.
             savedOut = null; 
             
             String traceOut = new String(outputStream.toByteArray()); 
-            // System.out.println("----------------------Trace begin ----------------"); 
-            // System.out.println(traceOut); 
-            // System.out.println("----------------------Trace end ----------------"); 
+            // output_.println("----------------------Trace begin ----------------"); 
+            // output_.println(traceOut); 
+            // output_.println("----------------------Trace end ----------------"); 
             if (traceOut.length() < 100) { 
             	passed = false; 
             	sb.append("\nTrace is too small.  Update jt400.jar"); 

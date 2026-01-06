@@ -126,7 +126,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
 	if (isNative_) {
 	    nativeSystemObject = new AS400(); 
-	    System.out.println("nativeSystemObject created"); 
+	    output_.println("nativeSystemObject created"); 
 	}
 
 	try {
@@ -706,11 +706,11 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
 
                   if (DEBUG)
                   {
-                    System.out.println("userID: " + swappedConnection.getUserId());
+                    output_.println("userID: " + swappedConnection.getUserId());
                     CommandCall cmd = new CommandCall(swappedConnection);
                     cmd.setThreadSafe(true);
                     Job job = cmd.getServerJob();
-                    System.out.println("Server job: " + job.toString());
+                    output_.println("Server job: " + job.toString());
                   }
 
                   swapUid = swappedConnection.getUserId();
@@ -1320,20 +1320,20 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
            ph.setSystem(sys);
            ph.setHandle();
            
-           if (DEBUG) System.out.println("***************** doing creating profile token credentials *******************");
+           if (DEBUG) output_.println("***************** doing creating profile token credentials *******************");
            ProfileTokenCredential pt = new ProfileTokenCredential();
-           if (DEBUG) System.out.println("***************** setting enhanced information *******************");
+           if (DEBUG) output_.println("***************** setting enhanced information *******************");
            ProfileTokenEnhancedInfo enhancedInfo = new ProfileTokenEnhancedInfo("MY_APP", "127.0.0.1",444,"127.0.0.1",666); 
            pt.setEnhancedInfo(enhancedInfo);
-           if (DEBUG) System.out.println("***************** setting system  *******************");
+           if (DEBUG) output_.println("***************** setting system  *******************");
            pt.setSystem(sys);
            pt.addCredentialListener(this);
            pt.setTokenType(ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE);
-           if (DEBUG) System.out.println("***************** setting uid/pwd "+SecAuthTest.uid2+"/***   *******************");
+           if (DEBUG) output_.println("***************** setting uid/pwd "+SecAuthTest.uid2+"/***   *******************");
            pt.setTokenExtended(SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray());
 
            byte[] rawToken = pt.getToken(); 
-           if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+           if (DEBUG) output_.println("***************** creating ProfileTokenCredential from raw token   *******************");
            
            // Create a profile token from the raw token
            ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600,"MY_APP","127.0.0.1",444,"127.0.0.1",666);
@@ -1346,9 +1346,9 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
            try
            {
                // Swap.
-             if (DEBUG) System.out.println("***************** doing swap to pt2 *******************");
+             if (DEBUG) output_.println("***************** doing swap to pt2 *******************");
                AS400Credential cr = pt2.swap(true);
-               if (DEBUG) System.out.println("***************** swap completed ***************"); 
+               if (DEBUG) output_.println("***************** swap completed ***************"); 
                AS400 as400 = new AS400(); 
                String swap1uid = as400.getUserId();
                as400.close(); 
@@ -1391,13 +1391,13 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
           ph.setSystem(sys);
           ph.setHandle();
           
-          if (DEBUG) System.out.println("***************** doing raw profile token create *******************");
+          if (DEBUG) output_.println("***************** doing raw profile token create *******************");
 
           byte[] rawToken =  generateRawTokenExtended(
               sys,  SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),"".toCharArray(), 
               ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600); 
               
-          if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+          if (DEBUG) output_.println("***************** creating ProfileTokenCredential from raw token   *******************");
           
           // Create a profile token from the raw token
           ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600);
@@ -1410,9 +1410,9 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
           try
           {
               // Swap.
-            if (DEBUG) System.out.println("***************** doing swap to pt2 *******************");
+            if (DEBUG) output_.println("***************** doing swap to pt2 *******************");
               AS400Credential cr = pt2.swap(true);
-              if (DEBUG) System.out.println("***************** swap completed ***************"); 
+              if (DEBUG) output_.println("***************** swap completed ***************"); 
               AS400 as400 = new AS400(); 
               String swap1uid = as400.getUserId();
               as400.close(); 
@@ -1460,13 +1460,13 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
              systemName="localhost";
          }
          
-         if (DEBUG) System.out.println("***************** doing raw profile token create *******************");
+         if (DEBUG) output_.println("***************** doing raw profile token create *******************");
 
          byte[] rawToken =  generateRawTokenExtended(
              sys,  SecAuthTest.uid2, SecAuthTest.pwd2.toCharArray(),"".toCharArray(), 
              ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600); 
              
-         if (DEBUG) System.out.println("***************** creating ProfileTokenCredential from raw token   *******************");
+         if (DEBUG) output_.println("***************** creating ProfileTokenCredential from raw token   *******************");
          
          // Create a profile token from the raw token
          ProfileTokenCredential pt2 = new ProfileTokenCredential(sys, rawToken,ProfileTokenCredential.TYPE_MULTIPLE_USE_RENEWABLE,3600);
@@ -1476,7 +1476,7 @@ public class SecPTActionTestcase extends Testcase implements AS400CredentialList
          resetState();
 
          // Perform test.
-         if (DEBUG) System.out.println("***************** creating 400  *******************");
+         if (DEBUG) output_.println("***************** creating 400  *******************");
          AS400 userAs400 = new AS400(systemName,pt2); 
          CommandCall userCommandCall = new CommandCall(userAs400); 
          userCommandCall.run("DSPLIBL"); 
@@ -1509,7 +1509,7 @@ public void Var037()
         }
         
         
-        if (DEBUG) System.out.println("***************** creating profile token using PW_NOPWDCHK  *******************");
+        if (DEBUG) output_.println("***************** creating profile token using PW_NOPWDCHK  *******************");
 
         ProfileTokenCredential pt = new ProfileTokenCredential();
         pt.setSystem(pwrSys_);
@@ -1518,7 +1518,7 @@ public void Var037()
         pt.setToken(SecAuthTest.uid2, ProfileTokenCredential.PW_NOPWDCHK);
         
         // Perform test.
-        if (DEBUG) System.out.println("***************** creating 400 from profile token  *******************");
+        if (DEBUG) output_.println("***************** creating 400 from profile token  *******************");
         AS400 userAs400 = new AS400(systemName,pt); 
         CommandCall userCommandCall = new CommandCall(userAs400); 
         userCommandCall.run("DSPLIBL"); 

@@ -656,17 +656,17 @@ Created 1/31/2011 for CPS 8DHTTE.
 			// Try user naming
 			stmt.execute("CALL QSYS.QCMDEXC('Chgjob  DFTWAIT(1)       ',000000020.00000)");
 		    } catch (Exception e2) {
-			System.out.println("Warning, could not change job ");
+			output_.println("Warning, could not change job ");
 			e2.printStackTrace();
 		    }
 		}
 		for (int i = 0; i < 1000 && (System.currentTimeMillis() < endTime); i++) {
-		    // System.out.println("Calling getSchemas");
+		    // output_.println("Calling getSchemas");
 		    ResultSet rs = dmd_.getSchemas ();
 
 		    rs.close();
 		}
-		System.out.println("Loop of 1000 took "+(System.currentTimeMillis() - startTime)+" ms");
+		output_.println("Loop of 1000 took "+(System.currentTimeMillis() - startTime)+" ms");
 		Statement stmt2 = connection_.createStatement();
 		int beginningHandle = JDReflectionUtil.callMethod_I(stmt,"getStatementHandle");
 		int endingHandle = JDReflectionUtil.callMethod_I(stmt2,"getStatementHandle");

@@ -429,9 +429,9 @@ setTimestamp() - Set a CHAR(50) parameter.
 		    Timestamp cTs = Timestamp.valueOf(check); 
 		    boolean condition = cTs.equals(eTs);
 		    if (!condition) {
-			System.out.println("check is  '"+check+"'");
-			System.out.println("should be '"+expected+"'");
-			System.out.println("tz = "+tz); 
+			output_.println("check is  '"+check+"'");
+			output_.println("should be '"+expected+"'");
+			output_.println("tz = "+tz); 
             }
 		    
                     assertCondition(condition); // @F4C
@@ -952,8 +952,8 @@ setTimestamp() - Set a CHAR(50) parameter.
 		    Timestamp cTs = Timestamp.valueOf(check); 
 		    boolean condition = cTs.equals(eTs);
 		    if (!condition) {
-			System.out.println("check is  '"+check+"'");
-			System.out.println("should be '"+expected+"'"); 
+			output_.println("check is  '"+check+"'");
+			output_.println("should be '"+expected+"'"); 
             }
 		    
                     assertCondition(condition); // @F4C
@@ -1005,8 +1005,8 @@ setTimestamp() - Set a VARCHAR(50) parameter.
 		    Timestamp cTs = Timestamp.valueOf(check); 
 		    boolean condition = cTs.equals(eTs);
 		    if (!condition) {
-			System.out.println("check is  '"+check+"'");
-			System.out.println("should be '"+expected+"'"); 
+			output_.println("check is  '"+check+"'");
+			output_.println("should be '"+expected+"'"); 
             }
 
 		    assertCondition(condition); // @F4C
@@ -1369,7 +1369,7 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
 		  outputString = outputTimestamp.toString();
 	      }
 	  } catch (Exception e) {
-	      e.printStackTrace(System.out);
+	      e.printStackTrace(output_);
 	      outputString=e.toString(); 
 	  } 
           if (outputString.equals(testValues[i][1])) {

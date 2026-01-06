@@ -127,7 +127,7 @@ Performs cleanup needed after running variations.
        } 
        public void run() {
 	   try {
-	       // System.out.println("SocketAcceptThread running"); 
+	       // output_.println("SocketAcceptThread running"); 
 	       clientSocket = serverSocket.accept();
 	   } catch (Exception e) {
 	       e.printStackTrace();
@@ -137,25 +137,25 @@ Performs cleanup needed after running variations.
 
    void showProcessOutput(Process p) {
        try {
-	   System.out.println("\nOutput of process : "+p);
-           System.out.println("---------------------------------"); 
+	   output_.println("\nOutput of process : "+p);
+           output_.println("---------------------------------"); 
 	   InputStream iStream = p.getInputStream();
 	   int readByte;
 	   readByte = iStream.read();
 	   while (readByte != -1 ) {
-	       System.out.write((char) readByte);
+	       output_.write((char) readByte);
 	       readByte = iStream.read();
 	   }
-           System.out.println("\n---------------------------------"); 
-	   System.out.println("ErrorOutput of process : "+p); 
-           System.out.println("---------------------------------"); 
+           output_.println("\n---------------------------------"); 
+	   output_.println("ErrorOutput of process : "+p); 
+           output_.println("---------------------------------"); 
 	   iStream = p.getErrorStream(); 
 	   readByte = iStream.read();
 	   while (readByte != -1 ) {
-	       System.out.write((char) readByte);
+	       output_.write((char) readByte);
 	       readByte = iStream.read();
 	   }
-           System.out.println("\n---------------------------------"); 
+           output_.println("\n---------------------------------"); 
 
        } catch (Exception e) {
 	   e.printStackTrace();
@@ -245,11 +245,11 @@ Performs cleanup needed after running variations.
 	 int waitTime = 0; 
 	 while ( clientSocket == null) {
 	     if (waitTime > WAIT_FOR_CLIENT_MILLIS) {
-		 System.out.println("ERROR:  Client not connecting after "+WAIT_FOR_CLIENT_MILLIS+" milliseconds");
-		 System.out.println("Destroying process");
+		 output_.println("ERROR:  Client not connecting after "+WAIT_FOR_CLIENT_MILLIS+" milliseconds");
+		 output_.println("Destroying process");
 		 p.destroy(); 
-                 System.out.println("Command was "+command); 
-                 System.out.println("Here is process's output");
+                 output_.println("Command was "+command); 
+                 output_.println("Here is process's output");
                  showProcessOutput(p); 
 		 throw new Exception("Client not responding");
       }

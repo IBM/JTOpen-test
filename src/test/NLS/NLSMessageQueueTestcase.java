@@ -112,8 +112,8 @@ public class NLSMessageQueueTestcase extends Testcase {
    * Runs the variations.
    **/
   public void run() {
-    sandbox_ = new NLSMessageSandbox(systemObject_, testLib_, "MQT", systemObject_.getUserId());
-    sandboxReply_ = new NLSMessageSandbox(systemObject_, testLib_, "MQTREPLY", systemObject_.getUserId());
+    sandbox_ = new NLSMessageSandbox(systemObject_, testLib_, "MQT", systemObject_.getUserId(), output_);
+    sandboxReply_ = new NLSMessageSandbox(systemObject_, testLib_, "MQTREPLY", systemObject_.getUserId(),output_);
 
     String specificName = systemObject_.getUserId().substring(4);
     if (!specificName.equals("JAP") && !specificName.equals("KOR")
@@ -239,10 +239,10 @@ public class NLSMessageQueueTestcase extends Testcase {
         while (e.hasMoreElements()) {
           QueuedMessage message = (QueuedMessage) e.nextElement();
 
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
-        System.out.println("");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> e = f.getMessages();
@@ -256,10 +256,10 @@ public class NLSMessageQueueTestcase extends Testcase {
 
         String expected;
         if (message2.getID() == null) {
-          System.out.println("ID is null");
+          output_.println("ID is null");
           expected = inquiryText;
         } else {
-          System.out.println("ID is: |" + message2.getID() + "|");
+          output_.println("ID is: |" + message2.getID() + "|");
           expected = message2.getID() + " " + inquiryText;
         }
         expected = expected.trim(); // ??? TBD: Should this be necessary?
@@ -335,9 +335,9 @@ public class NLSMessageQueueTestcase extends Testcase {
         QueuedMessage message = (QueuedMessage) e.nextElement();
 
         if (DEBUG) {
-          System.out.print("Count: "+count); 
-          System.out.print("Key: " + message.getKey());
-          System.out.println(" -> " + message.getText());
+          output_.print("Count: "+count); 
+          output_.print("Key: " + message.getKey());
+          output_.println(" -> " + message.getText());
         }
 
         String replyText = "[Reply] " + dbcs_string10;
@@ -347,8 +347,8 @@ public class NLSMessageQueueTestcase extends Testcase {
           replyList[replyTrack] = replyText + messageText;
 
           if (DEBUG) {
-            System.out.println("count:  " + replyTrack);
-            System.out.println("Reply: key: " + message.getKey() + " "
+            output_.println("count:  " + replyTrack);
+            output_.println("Reply: key: " + message.getKey() + " "
                 + replyList[replyTrack]);
           }
 
@@ -357,7 +357,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         }
       }
       if (DEBUG) {
-        System.out.println("");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> e2 = f.getMessages();
@@ -365,8 +365,8 @@ public class NLSMessageQueueTestcase extends Testcase {
         QueuedMessage message = (QueuedMessage) e2.nextElement();
 
         if (DEBUG) {
-          System.out.print(message.getText());
-          System.out.println(" -> " + messageList[count]); // @A1C
+          output_.print(message.getText());
+          output_.println(" -> " + messageList[count]); // @A1C
         }
         if (!message.getText().equals(messageList[count])) // @A1C
         {
@@ -378,17 +378,17 @@ public class NLSMessageQueueTestcase extends Testcase {
       }
 
       if (DEBUG) {
-        System.out.println("");
-        System.out.println("Following are reply queue messages");
-        System.out.println("");
+        output_.println("");
+        output_.println("Following are reply queue messages");
+        output_.println("");
       }
 
       Enumeration<QueuedMessage> eReply = fReply.getMessages();
       for (int count = 0; eReply.hasMoreElements(); count++) {
         QueuedMessage message = (QueuedMessage) eReply.nextElement();
         if (DEBUG) {
-          System.out.println(message.getText() + " -> " + replyList[count]);
-          System.out.println("");
+          output_.println(message.getText() + " -> " + replyList[count]);
+          output_.println("");
         }
 
         if (!message.getText().equals(replyList[count])) {
@@ -427,7 +427,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       }
 
       if (DEBUG) {
-        System.out.println("length:   (1) " + f.getLength());
+        output_.println("length:   (1) " + f.getLength());
       }
 
       assertCondition((f.getLength() == 1) && (count == 1) && (message != null)
@@ -481,7 +481,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       f.remove();
       for (int count = 0; count < messageList.length; count++) {
         if (DEBUG) {
-          System.out.println(messageList[count]);
+          output_.println(messageList[count]);
         }
 
         f.sendInformational(messageList[count]);
@@ -492,7 +492,7 @@ public class NLSMessageQueueTestcase extends Testcase {
       for (int counter = 0; counter < messageCount; counter++) {
         QueuedMessage message = (QueuedMessage) e.nextElement();
         if (DEBUG) {
-          System.out.println(message.getText() + " --> "
+          output_.println(message.getText() + " --> "
               + messageList[(messageCount - 1) - counter]);
         }
 
@@ -522,9 +522,9 @@ public class NLSMessageQueueTestcase extends Testcase {
    * 
    * Enumeration e = f.getMessages();
    * 
-   * if (DEBUG) { System.out.println ("length   (3): " + f.getLength()); for
+   * if (DEBUG) { output_.println ("length   (3): " + f.getLength()); for
    * (int count=0; count<f.getLength();count++) { QueuedMessage message =
-   * (QueuedMessage) e.nextElement(); System.out.println ("text: " +
+   * (QueuedMessage) e.nextElement(); output_.println ("text: " +
    * message.getText()); } }
    * 
    * assertCondition (f.getLength () == 3); } catch (Exception e) { failed (e,
@@ -644,14 +644,14 @@ public class NLSMessageQueueTestcase extends Testcase {
         if (DBCS_mode == false) { // SBCS language here
 
           if (DEBUG) {
-            System.out.println("message: <" + theMessage + ">");
-            System.out.println("nl_string4 = <" + nl_string4 + ">");
-            System.out.println("substitutionList["
+            output_.println("message: <" + theMessage + ">");
+            output_.println("nl_string4 = <" + nl_string4 + ">");
+            output_.println("substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#1 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(0,
                     8).trim() + ">");
-            System.out.println("substitutionList["
+            output_.println("substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#2 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(8)
@@ -669,14 +669,14 @@ public class NLSMessageQueueTestcase extends Testcase {
         } else { // DBCS language here
 
           if (DEBUG) {
-            System.out.println("message: <" + theMessage + ">");
-            System.out.println("nl_string4 = <" + nl_string4 + ">");
-            System.out.println("substitutionList["
+            output_.println("message: <" + theMessage + ">");
+            output_.println("nl_string4 = <" + nl_string4 + ">");
+            output_.println("substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#1 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(0,
                     5).trim() + ">");
-            System.out.println("substitutionList["
+            output_.println("substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#2 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(5,
@@ -751,7 +751,7 @@ public class NLSMessageQueueTestcase extends Testcase {
         if (DEBUG) {
           AS400Text converter = new AS400Text(10, systemObject_.getCcsid(),
               systemObject_);
-          System.out.println(message.getText() + " sub: "
+          output_.println(message.getText() + " sub: "
               + converter.toBytes(substitutionList[counter])); // $$$BTW This is
                                                                // bad
         }
@@ -826,21 +826,21 @@ public class NLSMessageQueueTestcase extends Testcase {
         String theMessage = message.getText();
 
         if (DEBUG) {
-          System.out.println("Counter = <" + counter + ">");
-          System.out.println("");
-          System.out.println("message: <" + theMessage + ">");
-          System.out.println("nl_string4 = <" + nl_string4 + ">");
+          output_.println("Counter = <" + counter + ">");
+          output_.println("");
+          output_.println("message: <" + theMessage + ">");
+          output_.println("nl_string4 = <" + nl_string4 + ">");
         }
 
         if (DBCS_mode == false) { // SBCS
 
           if (DEBUG == true) {
-            System.out.println("s0 substitutionList["
+            output_.println("s0 substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#1 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(0,
                     8).trim() + ">");
-            System.out.println("s0 substitutionList["
+            output_.println("s0 substitutionList["
                 + ((messageCount - 1) - counter)
                 + "] (#2 string) = <"
                 + substitutionList[((messageCount - 1) - counter)].substring(8)
@@ -859,12 +859,12 @@ public class NLSMessageQueueTestcase extends Testcase {
           if (counter == 0) {
 
             if (DEBUG) {
-              System.out.println("d1 substitutionList["
+              output_.println("d1 substitutionList["
                   + /* (messageCount - 1) - */counter
                   + "] (#1 string) = <"
                   + substitutionList[/* (messageCount -1) - */counter]
                       .substring(0, 3).trim() + ">");
-              System.out.println("d1 substitutionList["
+              output_.println("d1 substitutionList["
                   + /* (messageCount - 1) - */counter
                   + "] (#2 string) = <"
                   + substitutionList[/* (messageCount -1) - */counter]
@@ -882,12 +882,12 @@ public class NLSMessageQueueTestcase extends Testcase {
             }
           } else if (counter == 1) {
             if (DEBUG) {
-              System.out.println("d2 substitutionList["
+              output_.println("d2 substitutionList["
                   + /* (messageCount - 1) - */counter
                   + "] (#1 string) = <"
                   + substitutionList[/* (messageCount -1) - */counter]
                       .substring(0, 8).trim() + ">");
-              System.out.println("d2 substitutionList["
+              output_.println("d2 substitutionList["
                   + /* (messageCount - 1) - */counter
                   + "] (#2 string) = <"
                   + substitutionList[/* (messageCount -1) - */counter]
@@ -941,12 +941,12 @@ public class NLSMessageQueueTestcase extends Testcase {
       f.sendInformational("CAE9058", "/QSYS.LIB/QCPFMSG.MSGF");
       // Note: CAE0041 in english is: "TOO MANY FILES AND TABLES OPEN."
 
-      System.out.println("Sent message");
-      // /System.out.print("Press ENTER to continue."); try {System.in.read();}
+      output_.println("Sent message");
+      // /output_.print("Press ENTER to continue."); try {System.in.read();}
       // catch(Exception e) {}
       Enumeration<QueuedMessage> e = f.getMessages();
       if (!e.hasMoreElements()) {
-        System.out.println("No messages received.");
+        output_.println("No messages received.");
         succeeded = false;
       }
       Vector<MessageKey> msgKeys = new Vector<MessageKey>();
@@ -962,10 +962,10 @@ public class NLSMessageQueueTestcase extends Testcase {
         byte[] msgKey = ((MessageKey) e1.nextElement()).getKey();
         QueuedMessage message = f.receive(msgKey);
 
-        System.out.println("Message ID: " + message.getID());
-        System.out.println("Message text: " + message.getText());
-        System.out.println("Default reply: " + message.getDefaultReply());
-        System.out.println("Message help text: " + message.getHelp());
+        output_.println("Message ID: " + message.getID());
+        output_.println("Message text: " + message.getText());
+        output_.println("Default reply: " + message.getDefaultReply());
+        output_.println("Message help text: " + message.getHelp());
       }
 
       assertCondition(succeeded == true);

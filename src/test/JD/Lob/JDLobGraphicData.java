@@ -170,8 +170,8 @@ Performs setup needed before running variations.
               }
               catch (Exception e)
               {
-                 System.out.println("   Setup warning, create table failed!!!!");
-                 System.out.println("   " + e.getMessage());
+                 output_.println("   Setup warning, create table failed!!!!");
+                 output_.println("   " + e.getMessage());
               }   
 
               String str;
@@ -269,7 +269,7 @@ Performs setup needed before running variations.
           }
           catch (Exception e)
           {
-             System.out.println("Warning, setup failed!!!!");
+             output_.println("Warning, setup failed!!!!");
              e.printStackTrace();
           }   
        }
@@ -303,14 +303,14 @@ Performs cleanup needed after running variations.
     }
 
 
-    static boolean checkResults(String testString, String resultString)
+    static boolean checkResults(String testString, String resultString, java.io.PrintWriter output_)
     {
        if (!testString.equals(resultString))
        {
-          System.out.println();
-          System.out.println("   failed, strings do not match");
-          System.out.println("   source string length: " + testString.length());
-          System.out.println("   result string length: " + resultString.length());
+          output_.println();
+          output_.println("   failed, strings do not match");
+          output_.println("   source string length: " + testString.length());
+          output_.println("   result string length: " + resultString.length());
           return false;
        }               
        return true;
@@ -320,7 +320,7 @@ Performs cleanup needed after running variations.
 
 
 
-    static boolean checkResultsBytes(byte[] source, byte[] result)
+    static boolean checkResultsBytes(byte[] source, byte[] result, java.io.PrintWriter output_)
     {      
        if (source.length == result.length)
        {
@@ -333,15 +333,15 @@ Performs cleanup needed after running variations.
              return true;
           else
           {          
-             System.out.println();
-             System.out.println("   failed, byte arrays do not match");
+             output_.println();
+             output_.println("   failed, byte arrays do not match");
              return false;                
           }   
        }               
        else
        {
-          System.out.println();
-          System.out.println("   lengths do not match.  Source byte array length: " + source.length + " Result byte array length: " + result.length);
+          output_.println();
+          output_.println("   lengths do not match.  Source byte array length: " + source.length + " Result byte array length: " + result.length);
           return false;
        }
     }
@@ -416,9 +416,9 @@ Performs cleanup needed after running variations.
           {
              clob = rs.getClob(1);
              String value = clob.getSubString(1, (int) clob.length());
-             if (!checkResults(sourceString, value))
+             if (!checkResults(sourceString, value,output_))
              {
-               System.out.println("Clob(1) does not contain original data.");
+               output_.println("Clob(1) does not contain original data.");
                return false;
              }
              str = "insert into " + TABLE_ + " (col1_int, " + column + ") values(?,?)";
@@ -432,23 +432,23 @@ Performs cleanup needed after running variations.
              rs.next();
              value = rs.getString(1);
 
-             returnValue = checkResults(sourceString, value);
+             returnValue = checkResults(sourceString, value,output_);
           }
           else
           {
-             System.out.println("   No matching record for key: " + row);
+             output_.println("   No matching record for key: " + row);
              return false;
           }
        }
        catch (Exception e)
        {
-          System.out.println("unexpected exception");
+          output_.println("unexpected exception");
           e.printStackTrace();
        }     
        
-       if (s != null) try { s.close(); } catch(Exception e) { System.out.println("warning, statement cleanup failed"); e.printStackTrace(); }
-       if (pstmt  != null) try { pstmt.close();  } catch(Exception e) { System.out.println("warning, ps  cleanup failed"); e.printStackTrace(); }
-       if (pstmt2 != null) try { pstmt2.close(); } catch(Exception e) { System.out.println("warning, ps2 cleanup failed"); e.printStackTrace(); }
+       if (s != null) try { s.close(); } catch(Exception e) { output_.println("warning, statement cleanup failed"); e.printStackTrace(); }
+       if (pstmt  != null) try { pstmt.close();  } catch(Exception e) { output_.println("warning, ps  cleanup failed"); e.printStackTrace(); }
+       if (pstmt2 != null) try { pstmt2.close(); } catch(Exception e) { output_.println("warning, ps2 cleanup failed"); e.printStackTrace(); }
 
        return returnValue;
     }
@@ -533,31 +533,31 @@ Performs cleanup needed after running variations.
                    {
                             buffer.append((char)c);
                    }
-                   returnValue = checkResults(sourceString, new String(buffer));
+                   returnValue = checkResults(sourceString, new String(buffer),output_);
                 }                                                     
                 catch (Exception e)
                 {
-                   System.out.println("unexpected exception");
+                   output_.println("unexpected exception");
                    e.printStackTrace();
                 }     
              }
              else
              {
-                System.out.println("   Reader is not ready. ");
+                output_.println("   Reader is not ready. ");
              }
           }
           else
           {
-             System.out.println("   No matching record for key: " + row);
+             output_.println("   No matching record for key: " + row);
           }
        }
        catch (Exception e)
        {
-          System.out.println("unexpected exception");
+          output_.println("unexpected exception");
           e.printStackTrace();
        }     
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
        
        return returnValue;
  
@@ -643,31 +643,31 @@ Performs cleanup needed after running variations.
                    {
                             buffer.append((char)c);
                    }
-                   returnValue = checkResults(sourceString, new String(buffer));
+                   returnValue = checkResults(sourceString, new String(buffer),output_);
                 }                                                     
                 catch (Exception e)
                 {
-                   System.out.println("unexpected exception");
+                   output_.println("unexpected exception");
                    e.printStackTrace();
                 }     
              }
              else
              {
-                System.out.println("   Reader is not ready. ");
+                output_.println("   Reader is not ready. ");
              }
           }
           else
           {
-             System.out.println("   No matching record for key: " + row);
+             output_.println("   No matching record for key: " + row);
           }
        }
        catch (Exception e)
        {
-          System.out.println("unexpected exception");
+          output_.println("unexpected exception");
           e.printStackTrace();
        }     
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
        
        return returnValue;
  
@@ -740,20 +740,20 @@ Performs cleanup needed after running variations.
           {   
               clob = rs.getClob(1);             
               String result = clob.getSubString(1, (int)clob.length());
-              returnValue = checkResults(sourceString, result);
+              returnValue = checkResults(sourceString, result,output_);
           }
           else
           {
-             System.out.println("   No matching record for key: " + row);
+             output_.println("   No matching record for key: " + row);
           }
        }
        catch (Exception e)
        {
-          System.out.println("unexpected exception");
+          output_.println("unexpected exception");
           e.printStackTrace();
        }     
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) {  output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
        
        return returnValue;
  
@@ -829,20 +829,20 @@ Performs cleanup needed after running variations.
           if (rs.next())
           {   
               String result = rs.getString(1);
-              returnValue = checkResults(sourceString, result);
+              returnValue = checkResults(sourceString, result,output_);
           }
           else
           {
-             System.out.println("   No matching record for key: " + row);
+             output_.println("   No matching record for key: " + row);
           }
        }
        catch (Exception e)
        {
-          System.out.println("unexpected exception");
+          output_.println("unexpected exception");
           e.printStackTrace();
        }     
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
        
        return returnValue;
     }
@@ -870,11 +870,11 @@ Performs cleanup needed after running variations.
           if (rs.next())
           {   
               String result = rs.getString(1);
-              assertCondition(checkResults(smallClob, result));
+              assertCondition(checkResults(smallClob, result,output_));
           }
           else
           {
-             System.out.println("   No matching record for key: 10 ");
+             output_.println("   No matching record for key: 10 ");
              failed();
           }
        }
@@ -883,7 +883,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
 
@@ -911,11 +911,11 @@ Performs cleanup needed after running variations.
           if (rs.next())
           {   
               byte[] result = rs.getBytes(1);
-              assertCondition(checkResultsBytes(smallBlob, result));
+              assertCondition(checkResultsBytes(smallBlob, result,output_));
           }
           else
           {
-             System.out.println("   No matching record for key: 11 ");
+             output_.println("   No matching record for key: 11 ");
              failed();
           }
        }
@@ -924,7 +924,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
     public void Var043()
@@ -943,11 +943,11 @@ Performs cleanup needed after running variations.
           if (rs.next())
           {   
               byte[] result = rs.getBytes(1);
-              assertCondition(checkResultsBytes(biggerBlob, result));
+              assertCondition(checkResultsBytes(biggerBlob, result,output_));
           }
           else
           {
-             System.out.println("   No matching record for key: 12 ");
+             output_.println("   No matching record for key: 12 ");
              failed();
           }
        }
@@ -956,7 +956,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
     public void Var044()
@@ -976,11 +976,11 @@ Performs cleanup needed after running variations.
           {                                
               Blob blob = rs.getBlob(1);
               byte[] result = blob.getBytes(1, (int) blob.length());
-              assertCondition(checkResultsBytes(smallBlob, result));
+              assertCondition(checkResultsBytes(smallBlob, result,output_));
           }
           else
           {
-             System.out.println("   No matching record for key: 11 ");
+             output_.println("   No matching record for key: 11 ");
              failed();
           }
        }
@@ -989,7 +989,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
     public void Var045()
@@ -1009,11 +1009,11 @@ Performs cleanup needed after running variations.
           {   
               Blob blob = rs.getBlob(1);
               byte[] result = blob.getBytes(1, (int) blob.length());
-              assertCondition(checkResultsBytes(biggerBlob, result));
+              assertCondition(checkResultsBytes(biggerBlob, result,output_));
           }
           else
           {
-             System.out.println("   No matching record for key: 12 ");
+             output_.println("   No matching record for key: 12 ");
              failed();
           }
        }
@@ -1022,7 +1022,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
     public void Var046()
@@ -1056,17 +1056,17 @@ Performs cleanup needed after running variations.
               {                                                       
                  Blob blob2 = rs.getBlob(1);
                  byte[] result = blob2.getBytes(1, (int) blob2.length());
-                 assertCondition(checkResultsBytes(smallBlob, result));
+                 assertCondition(checkResultsBytes(smallBlob, result,output_));
               }
               else
               {
-                System.out.println("   No matching record for key: 110 ");
+                output_.println("   No matching record for key: 110 ");
                 failed();
               }
           }
           else
           {
-             System.out.println("   No matching record for key: 11 ");
+             output_.println("   No matching record for key: 11 ");
              failed();
           }
        }
@@ -1075,7 +1075,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
     public void Var047()
@@ -1109,17 +1109,17 @@ Performs cleanup needed after running variations.
               {                                                       
                  Blob blob2 = rs.getBlob(1);
                  byte[] result = blob2.getBytes(1, (int) blob2.length());
-                 assertCondition(checkResultsBytes(biggerBlob, result));
+                 assertCondition(checkResultsBytes(biggerBlob, result,output_));
               }
               else
               {
-                System.out.println("   No matching record for key: 120 ");
+                output_.println("   No matching record for key: 120 ");
                 failed();
               }
           }
           else
           {
-             System.out.println("   No matching record for key: 11 ");
+             output_.println("   No matching record for key: 11 ");
              failed();
           }
        }
@@ -1128,7 +1128,7 @@ Performs cleanup needed after running variations.
           failed(e, "unexpected exception");
        }
 
-       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { System.out.println("warning, ps cleanup failed"); e.printStackTrace(); }
+       if (pstmt != null) try { pstmt.close(); } catch(Exception e) { output_.println("warning, ps cleanup failed"); e.printStackTrace(); }
     }
 
 

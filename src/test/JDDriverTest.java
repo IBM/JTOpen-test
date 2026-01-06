@@ -103,7 +103,7 @@ extends JDTestDriver
         {
             COLLECTION = testLib_;
         }
-        JDSetupCollection.create(systemObject_,  c, COLLECTION);
+        JDSetupCollection.create(systemObject_,  c, COLLECTION, out_);
         try { 
         c.commit(); // for xa
         } catch (Exception e) {} 
@@ -163,9 +163,11 @@ extends JDTestDriver
 	     	 catch (Exception exc) {};   	   
 	   	 } 
    	 
-        addTestcase(new JDDriverAcceptsURL(systemObject_,
-                                           namesAndVars_, runMode_, fileOutputStream_, 
-                                           password_));
+   	JDDriverAcceptsURL tcAcceptsUrl = new JDDriverAcceptsURL(systemObject_,
+            namesAndVars_, runMode_, fileOutputStream_, 
+            password_);
+   	tcAcceptsUrl.setProxy5(proxy5_);
+        addTestcase(tcAcceptsUrl);
 
         
         addTestcase(new JDDriverGetPropertyInfo(systemObject_,
@@ -176,13 +178,13 @@ extends JDTestDriver
         JDDriverMisc jdDriverMisc =new JDDriverMisc(systemObject_,
             namesAndVars_, runMode_, fileOutputStream_, 
             password_, pwrSysUserID_, pwrSysPassword_) ;
-        System.out.println("DEBUG: JDDriverTest proxy is "+proxy_); 
         // Make sure the proxy value is set
          
         jdDriverMisc.setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, 
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_, 
                                  pwrSysUserID_, pwrSysPassword_);
+        jdDriverMisc.setProxy5(proxy5_); 
                                   
         addTestcase(jdDriverMisc);
 
@@ -191,12 +193,14 @@ extends JDTestDriver
             namesAndVars_, runMode_, fileOutputStream_, 
             password_, pwrSysUserID_, pwrSysPassword_) ;
         System.out.println("DEBUG: JDDriverTest proxy is "+proxy_); 
+        System.out.println("DEBUG: JDDriverTest proxy5 is "+proxy5_); 
         // Make sure the proxy value is set
          
         jdDriverTimestamp.setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, 
                                  proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
                                  namesAndVars_, runMode_, fileOutputStream_, 
                                  pwrSysUserID_, pwrSysPassword_);
+        jdDriverTimestamp.setProxy5(proxy5_); 
                                   
         addTestcase(jdDriverTimestamp);
         
@@ -215,6 +219,8 @@ extends JDTestDriver
             proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, 
             namesAndVars_, runMode_, fileOutputStream_, 
             pwrSysUserID_, pwrSysPassword_);
+        jdDriverConnect.setProxy5(proxy5_); 
+
         addTestcase(jdDriverConnect);
 
 

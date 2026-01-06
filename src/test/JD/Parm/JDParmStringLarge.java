@@ -157,34 +157,34 @@ Performs setup needed before running variations.
 	   vargraphictable =  JDParmTest.COLLECTION+".jdparmlrgA";
 
            try { s.executeUpdate("drop table "+ chartable );    } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
 }
            try { s.executeUpdate("drop table "+ varchartable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
  }
            try { s.executeUpdate("drop table "+ clobtable );    } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
  }
 	   try { s.executeUpdate("drop table "+ dbclobtable );  } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
 }
            try { s.executeUpdate("drop table "+ wchartable );   } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
  }
            try { s.executeUpdate("drop table "+ wvarchartable );} catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
 }
 	   try { s.executeUpdate("drop table "+ numerictable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
  }
            try { s.executeUpdate("drop table "+ decimaltable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
 }
            try { s.executeUpdate("drop table "+ graphictable );   } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e);
+	       JDParmHelper.handleDropException(e,output_);
  }
            try { s.executeUpdate("drop table "+ vargraphictable );} catch (SQLException e) {
-JDParmHelper.handleDropException(e);
+JDParmHelper.handleDropException(e,output_);
 
  }
 
@@ -279,7 +279,7 @@ JDParmHelper.handleDropException(e);
 	   }
 
        } catch (Exception e) {
-           System.out.println("Caught exception: " + e.getMessage());
+           output_.println("Caught exception: " + e.getMessage());
            e.printStackTrace();
        }
     }
@@ -295,34 +295,34 @@ This is the place to put all cleanup work for the testcase.
 	  Statement s = connection.createStatement();
 
 	  try { s.executeUpdate("drop table "+ chartable );    } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ varchartable ); } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ clobtable );    } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ dbclobtable );  } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ wchartable );   } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ wvarchartable );} catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ numerictable ); } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ decimaltable ); } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ graphictable );   } catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 	  }
 	  try { s.executeUpdate("drop table "+ vargraphictable );} catch (SQLException e) {
-	      JDParmHelper.handleDropException(e);
+	      JDParmHelper.handleDropException(e,output_);
 
 	  }
 
@@ -333,7 +333,7 @@ This is the place to put all cleanup work for the testcase.
          connection.close();
 
       } catch (Exception e) {
-         System.out.println("Caught exception: ");
+         output_.println("Caught exception: ");
          e.printStackTrace();
       }
    }
@@ -364,7 +364,7 @@ Test:  char large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, chartable);
+		JDParmHelper.purgeStringsTable(connection, chartable,output_);
 	    }
 	}
     }
@@ -395,7 +395,7 @@ Test:  char huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, chartable);
+		JDParmHelper.purgeStringsTable(connection, chartable,output_);
 	    }
 	}
     }
@@ -421,7 +421,7 @@ Test:  clob large
 		cclob.setString(1, largeValue);
 		int count = cclob.executeUpdate();
 		if (count == 1)
-		    assertCondition(JDParmHelper.verifyString("cclob", largeValue, connection, clobtable), message);
+		    assertCondition(JDParmHelper.verifyString("cclob", largeValue, connection, clobtable,output_), message);
 		else
 		    failed ("invalid update count"+message);
 
@@ -432,7 +432,7 @@ Test:  clob large
 		failed (e, "Unexpected Throwable"+message);
 
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, clobtable);
+		JDParmHelper.purgeStringsTable(connection, clobtable,output_);
 	    }
 	}
     }
@@ -464,7 +464,7 @@ Test:  clob huge
 		cclob.setString(1, hugeValue);
 		int count = cclob.executeUpdate();
 		if (count == 1)
-		    assertCondition(JDParmHelper.verifyString("cclob", hugeValue, connection, clobtable),message);
+		    assertCondition(JDParmHelper.verifyString("cclob", hugeValue, connection, clobtable,output_),message);
 		else
 		    failed ("invalid update count"+message);
 
@@ -475,7 +475,7 @@ Test:  clob huge
 		failed (e, "Unexpected Throwable"+message);
 
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, clobtable);
+		JDParmHelper.purgeStringsTable(connection, clobtable,output_);
 	    }
 	}
     }
@@ -505,7 +505,7 @@ Test:  varchar large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, varchartable);
+		JDParmHelper.purgeStringsTable(connection, varchartable,output_);
 	    }
 	}
     }
@@ -534,7 +534,7 @@ Test:  varchar huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, varchartable);
+		JDParmHelper.purgeStringsTable(connection, varchartable,output_);
 	    }
 	}
     }
@@ -563,7 +563,7 @@ Test:  wchar large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, wchartable);
+		JDParmHelper.purgeStringsTable(connection, wchartable,output_);
 	    }
 	}
     }
@@ -592,7 +592,7 @@ Test:  wchar huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, wchartable);
+		JDParmHelper.purgeStringsTable(connection, wchartable,output_);
 	    }
 	}
     }
@@ -618,7 +618,7 @@ Test:  dbclob large
 		cdbclob.setString(1, largeValue);
 		int count = cdbclob.executeUpdate();
 		if (count == 1)
-		    assertCondition(JDParmHelper.verifyString("cdbclob", largeValue, connection, dbclobtable),message);
+		    assertCondition(JDParmHelper.verifyString("cdbclob", largeValue, connection, dbclobtable,output_),message);
 		else
 		    failed ("invalid update count"+message);
 
@@ -629,7 +629,7 @@ Test:  dbclob large
 		failed (e, "Unexpected Throwable"+message);
 
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, dbclobtable);
+		JDParmHelper.purgeStringsTable(connection, dbclobtable,output_);
 	    }
 	}
     }
@@ -656,7 +656,7 @@ Test:  dbclob huge
 		cdbclob.setString(1, hugeValue);
 		int count = cdbclob.executeUpdate();
 		if (count == 1)
-		    assertCondition(JDParmHelper.verifyString("cdbclob", hugeValue, connection, dbclobtable),message);
+		    assertCondition(JDParmHelper.verifyString("cdbclob", hugeValue, connection, dbclobtable,output_),message);
 		else
 		    failed ("invalid update count"+message);
 
@@ -667,7 +667,7 @@ Test:  dbclob huge
 		failed (e, "Unexpected Throwable"+message);
 
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, dbclobtable);
+		JDParmHelper.purgeStringsTable(connection, dbclobtable,output_);
 	    }
 	}
     }
@@ -697,7 +697,7 @@ Test:  wvarchar large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, wvarchartable);
+		JDParmHelper.purgeStringsTable(connection, wvarchartable,output_);
 	    }
 	}
     }
@@ -726,7 +726,7 @@ Test:  wvarchar huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, wvarchartable);
+		JDParmHelper.purgeStringsTable(connection, wvarchartable,output_);
 	    }
 	}
     }
@@ -753,7 +753,7 @@ Test:  numeric large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, numerictable);
+		JDParmHelper.purgeStringsTable(connection, numerictable,output_);
 	    }
 	}
     }
@@ -780,7 +780,7 @@ Test:  numeric huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, numerictable);
+		JDParmHelper.purgeStringsTable(connection, numerictable,output_);
 	    }
 	}
     }
@@ -805,7 +805,7 @@ Test:  decimal large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, decimaltable);
+		JDParmHelper.purgeStringsTable(connection, decimaltable,output_);
 	    }
 	}
     }
@@ -830,7 +830,7 @@ Test:  decimal huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, decimaltable);
+		JDParmHelper.purgeStringsTable(connection, decimaltable,output_);
 	    }
 	}
     }
@@ -859,7 +859,7 @@ Test:  graphic large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, graphictable);
+		JDParmHelper.purgeStringsTable(connection, graphictable,output_);
 	    }
 	}
     }
@@ -887,7 +887,7 @@ Test:  graphic huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, graphictable);
+		JDParmHelper.purgeStringsTable(connection, graphictable,output_);
 	    }
 	}
     }
@@ -917,7 +917,7 @@ Test:  vargraphic large
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }
@@ -946,7 +946,7 @@ Test:  vargraphic huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }
@@ -971,7 +971,7 @@ Test:  vargraphic huge
 		    if (stmt != null) stmt.close();
 		} catch (Exception e) {
 		}
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }
@@ -999,7 +999,7 @@ Test:  vargraphic huge
 		    if (stmt != null) stmt.close();
 		} catch (Exception e) {
 		}
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }
@@ -1020,7 +1020,7 @@ Test:  vargraphic huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }
@@ -1041,7 +1041,7 @@ Test:  vargraphic huge
 	    } catch (Throwable e) {
 		failed (e, "Unexpected Throwable"+message);
 	    } finally {
-		JDParmHelper.purgeStringsTable(connection, vargraphictable);
+		JDParmHelper.purgeStringsTable(connection, vargraphictable,output_);
 	    }
 	}
     }

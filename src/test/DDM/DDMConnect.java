@@ -61,7 +61,7 @@ public class DDMConnect extends Testcase {
       as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
 
@@ -86,7 +86,7 @@ public class DDMConnect extends Testcase {
       as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
     com.ibm.as400.access.ClassDecoupler.forceENCUSRPWD = false; 
@@ -112,7 +112,7 @@ public class DDMConnect extends Testcase {
       as400.close(); 
     } catch (Exception e) {
       failMsg.append("Unexpected exception");
-      System.out.println(e.getMessage());
+      output_.println(e.getMessage());
       e.printStackTrace();
     }
     com.ibm.as400.access.ClassDecoupler.forceENCUSRPWD = false; 

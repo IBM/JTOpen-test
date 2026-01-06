@@ -1305,7 +1305,7 @@ public class JDRSTest extends JDTestDriver {
       }
 
       JDSetupCollection.create(systemObject_,  connection_,
-          COLLECTION);
+          COLLECTION, out_);
 
       statement_ = connection_.createStatement();
 

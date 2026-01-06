@@ -671,7 +671,7 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
        if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") SPCAUT(*SECADM)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
     }
     catch (Exception e) {}
@@ -708,8 +708,8 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
       catch(Exception e)
       {
-       System.out.println("Setup failed, could not create test certificates. ");
-       System.out.println(e);
+       output_.println("Setup failed, could not create test certificates. ");
+       output_.println(e);
        throw e;
       }
   }
@@ -729,15 +729,15 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
        if (cmd.run("QSYS/CHGUSRPRF USRPRF(" + systemObject_.getUserId() + ") USRCLS(*USER) SPCAUT(*JOBCTL *IOSYSCFG)") != true)
        {
            AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           output_.println(messageList[0].toString());
        }
 
        AS400CertificateTest.PwrSys.disconnectAllServices();
      }
      catch(Exception e)
      {
-      System.out.println("Cleanup failed.");
-      System.out.println(e);
+      output_.println("Cleanup failed.");
+      output_.println(e);
       throw e;
      }
   }

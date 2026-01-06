@@ -103,7 +103,7 @@ Constructor.
 	try { 
 	    statement_.executeUpdate(create);
 	} catch (Exception e) {
-	    System.out.println("Error on "+create); 
+	    output_.println("Error on "+create); 
 	    e.printStackTrace(); 
 	} 
 
@@ -1566,7 +1566,7 @@ getRow()
 	      ps.addBatch();
 	      batchCount++;
 	      if (batchCount == 1000) {
-		  System.out.println("Inserting batch at "+i); 
+		  output_.println("Inserting batch at "+i); 
 		  ps.executeBatch();
 		  batchCount = 0; 
 	      } 
@@ -1617,7 +1617,7 @@ getRow()
         rs.next();
         int rowCount = rs.getInt(1);
         rs.close();
-        System.out.println("Table has " + rowCount + " rows ");
+        output_.println("Table has " + rowCount + " rows ");
         if (rowCount != TABLESIZE) {
           failed("Created table only has " + rowCount + " rows sb " + TABLESIZE);
         } else {
@@ -1776,7 +1776,7 @@ getRow()
 
           }
 
-          System.out.println(log.size() + " methods executed beginning with "
+          output_.println(log.size() + " methods executed beginning with "
               + firstMethodString);
 
           if (!success) {
@@ -1833,7 +1833,7 @@ getRow()
                 rs.next(); 
 		int rowCount = rs.getInt(1); 
 		rs.close();
-		System.out.println("Table has "+rowCount+" rows "); 
+		output_.println("Table has "+rowCount+" rows "); 
 		if (rowCount != TABLESIZE ) {
                   failed("Created table only has "+rowCount+" rows sb "+TABLESIZE); 
                 } else {
@@ -1972,7 +1972,7 @@ getRow()
                   
                   } 
                   
-                  System.out.println(log.size()+" methods executed first method="+firstMethodString); 
+                  output_.println(log.size()+" methods executed first method="+firstMethodString); 
                   stmt.close(); 
 		  if (!success) {
 		      doTable49cleanup = false; 

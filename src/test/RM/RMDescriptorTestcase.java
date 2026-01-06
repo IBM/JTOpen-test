@@ -141,7 +141,7 @@ public class RMDescriptorTestcase extends Testcase
           Exception e1 = e.getException();
           String expectedMsg = "RFML document source 'test.rfml.noSuchFile' cannot be found";
           String receivedMsg = e1.getMessage();
-          if (DEBUG) System.out.println("DEBUG Received msgs: " + receivedMsg);
+          if (DEBUG) output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e1, "java.util.MissingResourceException"));
@@ -169,7 +169,7 @@ public class RMDescriptorTestcase extends Testcase
           ///e.printStackTrace();
           String expectedMsg = "A parse error occurred";
           String receivedMsg = e.getMessage();
-          ///System.out.println("DEBUG Received msgs: " + receivedMsg);
+          ///output_.println("DEBUG Received msgs: " + receivedMsg);
           assertCondition(receivedMsg != null &&
                  receivedMsg.indexOf(expectedMsg) != -1 &&
                  exceptionIsInstanceOf(e, "com.ibm.as400.data.XmlException"));

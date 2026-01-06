@@ -121,7 +121,7 @@ public class NLSIFSTestcase extends Testcase
       {
         dir.mkdir();
         if (!dir.exists())
-          System.out.println("Failure creating '" + dir.getPath() + "'");
+          output_.println("Failure creating '" + dir.getPath() + "'");
       }
     }
     catch(Exception e)
@@ -143,7 +143,7 @@ public class NLSIFSTestcase extends Testcase
         new IFSRandomAccessFile(systemObject_, pathName, "rw");
       raf.close();
       if (!file.exists())
-        System.out.println("The file '" + pathName + "' could not be " + 
+        output_.println("The file '" + pathName + "' could not be " + 
                            "created.");
     }
     catch(Exception e)
@@ -166,7 +166,7 @@ public class NLSIFSTestcase extends Testcase
       raf.writeChars(data);
       raf.close();
       if (!file.exists())
-        System.out.println("The file '" + pathName + "' could not be " +
+        output_.println("The file '" + pathName + "' could not be " +
                            "created.");
     }
     catch(Exception e)
@@ -188,7 +188,7 @@ public class NLSIFSTestcase extends Testcase
       raf.write(data);
       raf.close();
       if (!file.exists())
-        System.out.println("The file '" + pathName + "' could not be " +
+        output_.println("The file '" + pathName + "' could not be " +
                            "created.");
     }
     catch(Exception e)
@@ -206,7 +206,7 @@ public class NLSIFSTestcase extends Testcase
         file.delete();
       }
       if (file.exists())
-        System.out.println("Unable to delete '" + file.getPath() +
+        output_.println("Unable to delete '" + file.getPath() +
                            "'.");
     }
     catch(Exception e)
@@ -1968,7 +1968,7 @@ public void Var033()
        os.setPath(rootFile);
        ///os.setCCSID(0x01b5);
        os.setCCSID(systemObject_.getCcsid());
-       System.out.println("CCSID of AS/400 is: " + systemObject_.getCcsid());
+       output_.println("CCSID of AS/400 is: " + systemObject_.getCcsid());
        os.write(s);
        os.close();
        IFSTextFileInputStream is =
@@ -2041,11 +2041,11 @@ public void Var034()
        ///String expected = ifs_dbcs_string5;
        if (!Testcase.isEqual(dataOut1, dbcs_bytes5))
        {
-         System.out.println("After overwrite: Expected: \n" + dbcs_bytes5.toString() + "\nGot: \n" + dataOut1.toString());
+         output_.println("After overwrite: Expected: \n" + dbcs_bytes5.toString() + "\nGot: \n" + dataOut1.toString());
        }
        String str1 = (String)(new AS400Text (available1, systemObject_.getCcsid(), systemObject_)).toObject( dbcs_bytes5 );
-       System.out.println("Wrote string [" + str1 + "] to file: " + rootFile);
-       //System.out.print("Press ENTER to continue");
+       output_.println("Wrote string [" + str1 + "] to file: " + rootFile);
+       //output_.print("Press ENTER to continue");
        try { System.in.read(); } catch(Exception e) {}
 
        // Set up for appending the file.
@@ -2070,7 +2070,7 @@ public void Var034()
        {
          String exp = (String)(new AS400Text (available2, systemObject_.getCcsid(), systemObject_)).toObject( dbcs_bytes55 );
          String got = (String)(new AS400Text (available2, systemObject_.getCcsid(), systemObject_)).toObject( dataOut2 );
-         System.out.println("Expected: \n" + exp + "\nGot: \n" + got);
+         output_.println("Expected: \n" + exp + "\nGot: \n" + got);
          failed();
        }
        is.close();
@@ -2122,10 +2122,10 @@ public void Var035()
        String expected = ifs_dbcs_string5;
        if (!got.equals(expected))
        {
-         System.out.println("After overwrite: Expected: \n" + expected + "\nGot: \n" + got);
+         output_.println("After overwrite: Expected: \n" + expected + "\nGot: \n" + got);
        }
-       System.out.println("Wrote string [" + ifs_dbcs_string5 + "] to file: " + rootFile);
-       //System.out.print("Press ENTER to continue");
+       output_.println("Wrote string [" + ifs_dbcs_string5 + "] to file: " + rootFile);
+       //output_.print("Press ENTER to continue");
        try { System.in.read(); } catch(Exception e) {}
 
        // Set up for appending the file.
@@ -2144,7 +2144,7 @@ public void Var035()
          succeeded();
        else
        {
-         System.out.println("Expected: \n" + expected + "\nGot: \n" + got);
+         output_.println("Expected: \n" + expected + "\nGot: \n" + got);
          failed();
        }
        is.close();

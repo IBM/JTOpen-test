@@ -149,18 +149,18 @@ public class UserSpacePgmCallTestcase extends Testcase
 	String command = "QSYS/CRTLIB LIB("+authlib+")";
         boolean success =  cmdRun(command);
         if (!success) { 
-            System.out.println("Command Failed "+command ); 
+            output_.println("Command Failed "+command ); 
         } else {
-          System.out.println("SetupUSAuthority(): Command worked "+command ); 
+          output_.println("SetupUSAuthority(): Command worked "+command ); 
         }
 
         /* grant access to library to all */ 
        command = "QSYS/GRTOBJAUT OBJ("+authlib+") OBJTYPE(*LIB) USER(*PUBLIC) AUT(*USE) ";   
        success =  cmdRun(command);
        if (!success) { 
-           System.out.println("Command Failed "+command ); 
+           output_.println("Command Failed "+command ); 
        } else {
-         System.out.println("SetupUSAuthority(): Command worked "+command ); 
+         output_.println("SetupUSAuthority(): Command worked "+command ); 
        }
            
        UserSpace aUSpace = new UserSpace(pwrSys_, authorityUserSpace_);
@@ -172,7 +172,7 @@ public class UserSpacePgmCallTestcase extends Testcase
     }
     catch (Exception e)
     {
-       System.out.println("Setup failed." + e);
+       output_.println("Setup failed." + e);
     }
   }
 
@@ -223,7 +223,7 @@ public class UserSpacePgmCallTestcase extends Testcase
       }
 catch (Exception ex)
       {
-         System.out.println("PgmRun Failed: " + ex);
+         output_.println("PgmRun Failed: " + ex);
       }
       return collectorWrite;
    }
@@ -271,13 +271,13 @@ catch (Exception ex)
          {
             AS400Message[] messageList = collector.getMessageList();
             for (int msg = 0; msg < messageList.length; msg++)
-               System.out.println("PgmError: " + messageList[msg].toString());
+               output_.println("PgmError: " + messageList[msg].toString());
          }
       }
       catch (Exception ex)
       {
          String message = (start) ? "started! ":"ended! ";
-         System.out.println("PgmRun: Collector failed to " + message + ex);
+         output_.println("PgmRun: Collector failed to " + message + ex);
       }
    }
 
@@ -2065,7 +2065,7 @@ Ensure that a second UserSpace object can write to a open user space.(same AS400
     {
         try {
            secondUS.close();
-        }catch (Exception e) { System.out.println("Testcase cleanup failed. " + e); }
+        }catch (Exception e) { output_.println("Testcase cleanup failed. " + e); }
         deleteUserSpace(aUserSpace);
     }
   }
@@ -2103,7 +2103,7 @@ Ensure that a second UserSpace object can write to a user space after it is clos
     {
        try {
           secondUS.close();
-       }catch (Exception e) { System.out.println("Cleanup failed - UserSpace.close: " + e);
+       }catch (Exception e) { output_.println("Cleanup failed - UserSpace.close: " + e);
        }
        deleteUserSpace(aUserSpace);
     }
@@ -3178,7 +3178,7 @@ Ensure that a second UserSpace object can read from a open user space.(same AS40
     {
         try {
            secondUS.close();
-        }catch (Exception e) { System.out.println("Testcase cleanup failed. " + e); }
+        }catch (Exception e) { output_.println("Testcase cleanup failed. " + e); }
         deleteUserSpace(aUserSpace);
     }
   }
@@ -3217,7 +3217,7 @@ Ensure that a second UserSpace object can read from a user space after it is clo
        try {
           secondUS.close();
        }
-       catch (Exception e) { System.out.println("Testcase cleanup failed. " + e);
+       catch (Exception e) { output_.println("Testcase cleanup failed. " + e);
        }
        deleteUserSpace(aUserSpace);
     }

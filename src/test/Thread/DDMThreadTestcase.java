@@ -83,7 +83,7 @@ public class DDMThreadTestcase extends ThreadedTestcase
   catch (Exception e)
   {
     // Testcase setup did not complete successfully
-    System.out.println("Unable to complete setup; variations not run");
+    output_.println("Unable to complete setup; variations not run");
     // Run cleanup in case some of the setup work got done
     try
     {
@@ -156,7 +156,7 @@ public class DDMThreadTestcase extends ThreadedTestcase
   }
   catch (Exception e)
   {
-    System.out.println("Unable to complete cleanup.");
+    output_.println("Unable to complete cleanup.");
   }
 
   // Disconnect from the AS/400
@@ -290,7 +290,7 @@ String runCommand(String command)
     }
     catch(Exception e)
     {
-      System.out.println("Cleanup unsuccessful.  Some files may have been left in DDMTEST and QGPL");
+      output_.println("Cleanup unsuccessful.  Some files may have been left in DDMTEST and QGPL");
       e.printStackTrace(output_);
       throw e;
     }

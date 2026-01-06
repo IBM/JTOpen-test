@@ -126,7 +126,7 @@ Performs setup needed before running variations.
         
         statement_ = connection_.createStatement();
 
-	JDSetupProcedure.setupQIWS(systemObject_,  connection_);
+	JDSetupProcedure.setupQIWS(systemObject_,  connection_, output_);
 	
 
         connection_.commit();

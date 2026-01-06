@@ -29,6 +29,8 @@ class JTACleanupTxTransInfo {
 
   static boolean debug = false;
 
+  private static PrintStream output_;
+
   // set default to null
   protected String state = null;
   protected String gtrid = null;
@@ -94,7 +96,7 @@ class JTACleanupTxTransInfo {
     cmdA[0] = "/usr/bin/qsh";
     cmdA[1] = "-c";
     cmdA[2] = "system 'WRKCMTDFN JOB(*ALL) STATUS(*XOPEN) OUTPUT(*PRINT)'";
-    System.out.println("Running: " + cmdA[0] + " " + cmdA[1] + " \"" + cmdA[2]
+    output_.println("Running: " + cmdA[0] + " " + cmdA[1] + " \"" + cmdA[2]
         + "\"");
     boolean end = false;
     Process p = Runtime.getRuntime().exec(cmdA);
@@ -109,18 +111,18 @@ class JTACleanupTxTransInfo {
     InputStreamReader ir = new InputStreamReader(is, "Cp037");
     BufferedReader buf = new BufferedReader(ir);
     if (debug)
-      System.out.println("..Reading lines from output");
+      output_.println("..Reading lines from output");
     while (!end) {
       String s = buf.readLine();
       if (debug)
-        System.out.println("Read line1:" + s);
+        output_.println("Read line1:" + s);
       if (s == null)
         end = true;
       else {
         if (s.indexOf("X/Open global transaction") != -1) {
           s = buf.readLine();
           if (debug)
-            System.out.println("Read line2:" + s);
+            output_.println("Read line2:" + s);
 
           if ((s.indexOf("Transaction manager name") != -1)
               && ((s.indexOf("Q_UDB_JTA") != -1) || (s.indexOf("QZDATM") != -1))) { /*
@@ -133,7 +135,7 @@ class JTACleanupTxTransInfo {
             JTACleanupTxTransInfo match = new JTACleanupTxTransInfo();
             s = buf.readLine();
             if (debug)
-              System.out.println("Read line3:" + s);
+              output_.println("Read line3:" + s);
             {
               // count++;
             }
@@ -141,7 +143,7 @@ class JTACleanupTxTransInfo {
               /* Skip extra line added in V7R1 */
               s = buf.readLine();
               if (debug)
-                System.out.println("Read line3:" + s);
+                output_.println("Read line3:" + s);
             }
 
             if ((i = s.indexOf("Transaction branch state")) != -1) {
@@ -151,26 +153,26 @@ class JTACleanupTxTransInfo {
               state = state.trim();
               match.setState(state);
             } else {
-              System.out
+              output_
                   .println("WARNING getTransInfo() WRKCMTDFN: Unexpected line for state: "
                       + s);
             }
 
             s = buf.readLine();
             if (debug)
-              System.out.println("Read line4:" + s);
+              output_.println("Read line4:" + s);
             if (s.indexOf("Format ID") != -1) {
               // Skip the format ID
               s = buf.readLine();
               if (debug)
-                System.out.println("Read line5:" + s);
+                output_.println("Read line5:" + s);
             }
             if ((i = s.indexOf("Global transaction identifier")) != -1) {
               // this line has gt id in this format.
               int startGtid = s.indexOf("X", i) + 2;
               int endGtid = startGtid + s.substring(startGtid).indexOf("'") - 1;
               if (endGtid < startGtid) {
-                System.out
+                output_
                     .println("WARNING getTransInfo() WRKCMTDFN: gtrid too "
                         + "long to handle simply in line: " + s);
                 match.setGlobalTransactionId("none found");
@@ -181,21 +183,21 @@ class JTACleanupTxTransInfo {
                 match.setGlobalTransactionId(gtid);
               }
             } else {
-              System.out
+              output_
                   .println("WARNING getTransInfo() WRKCMTDFN: Unexpected line for gtrid: "
                       + s);
             }
 
             s = buf.readLine();
             if (debug)
-              System.out.println("Read line6:" + s);
+              output_.println("Read line6:" + s);
             if ((i = s.indexOf("Branch qualifier")) != -1) {
               // this line has bqual
               int startBqual = s.indexOf("X", i) + 2;
               int endBqual = startBqual + s.substring(startBqual).indexOf("'")
                   - 1;
               if (endBqual < startBqual) {
-                System.out
+                output_
                     .println("WARNING getTransInfo() WRKCMTDFN: bqual too "
                         + "long to handle simply in line: " + s);
                 match.setBranchQualifier("none found");
@@ -215,7 +217,7 @@ class JTACleanupTxTransInfo {
                 }
               }
             } else {
-              System.out
+              output_
                   .println("WARNING getTransInfo() WRKCMTDFN: Unexpected line for bqual: "
                       + s);
             }
@@ -228,7 +230,7 @@ class JTACleanupTxTransInfo {
       }
     }
     if (debug)
-      System.out.println("..Done reading lines from output");
+      output_.println("..Done reading lines from output");
     if (v.size() == 0) {
       return null;
     }
@@ -283,10 +285,12 @@ class JTACleanupTxRecoveryTargeter {
 
 public class JTACleanupTx {
 
+  private static PrintStream output_ = System.out;
+
   public static void usage() {
-    System.out
+    output_
         .println("Usage: java JTACleanupTx <rdbname|localhost> 'ThisIsDangerous' [all]");
-    System.out
+    output_
         .println("  The parameter 'ThisIsDangerous' is required because this is\n"
             + "  a dangerous thing to do on a system that might have 'other than\n"
             + "  test' X/Open transactions on it\n"
@@ -305,7 +309,9 @@ public class JTACleanupTx {
 
   public static void main(String[] args) {
     try {
-      System.out
+      output_  = System.out; 
+
+      output_
           .println("Recover in-doubt or heuristically completed transactions");
       if (args.length < 2 || args.length > 3
           || !args[1].equals("ThisIsDangerous")) {
@@ -339,11 +345,11 @@ public class JTACleanupTx {
         Object xaRes = null;
         // Connection conn;
         if (resourceIndex / 2 == 0) {
-	    System.out
+	    output_
 	      .println("Now, using NATIVE XAResource.recover() to find all "
 		       + "transactions in-doubt transactions");
 
-          System.out.println("resourceIndex="+resourceIndex+" using UDBXADataSource"); 
+          output_.println("resourceIndex="+resourceIndex+" using UDBXADataSource"); 
           XADataSource xaDs;
           xaDs = (XADataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBXADataSource");
           JDReflectionUtil.callMethod_V(xaDs,"setDatabaseName",args[0]);
@@ -354,11 +360,11 @@ public class JTACleanupTx {
 
         } else if ((resourceIndex / 2) == 1) {
 
-	    System.out
+	    output_
 	      .println("Now, using toolbox XAResource.recover() to find all "
 		       + "transactions in-doubt transactions");
 
-          System.out.println("resourceIndex="+resourceIndex+" using AS400JDBCXADataSource"); 
+          output_.println("resourceIndex="+resourceIndex+" using AS400JDBCXADataSource"); 
 
           AS400JDBCXADataSource xaDs = new AS400JDBCXADataSource();
           xaDs.setServerName(args[0]);
@@ -367,7 +373,7 @@ public class JTACleanupTx {
           xaConn = xaDs.getXAConnection();
 
         } else {
-          System.out.println("resourceIndex="+resourceIndex+" DONE"); 
+          output_.println("resourceIndex="+resourceIndex+" DONE"); 
           masterDone = true;
         }
         resourceIndex ++; 
@@ -383,7 +389,7 @@ public class JTACleanupTx {
           xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
               javax.transaction.xa.XAResource.TMSTARTRSCAN);
           if (xids == null || xids.length == 0) {
-            System.out
+            output_
                 .println("There are currently no In-Doubt transactions detected");
           } else {
 
@@ -405,40 +411,40 @@ public class JTACleanupTx {
             }
 
             while (!done) {
-              System.out.println("Scan found " + xids.length
+              output_.println("Scan found " + xids.length
                   + " in-doubt transactions");
               // count += xids.length;
               for (int i = 0; i < xids.length; ++i) {
                 // Skip any XIDs that are not targetted by this tool.
                 if (!targeter.isATarget(xids[i])) {
-                  System.out.println("Skipping non targeted Xid "
+                  output_.println("Skipping non targeted Xid "
                       + xidToString(xids[i]));
                   continue;
                 }
                 // Attempt to roll back the thransaction.
-                System.out.println("Rollback: " + xidToString(xids[i]));
+                output_.println("Rollback: " + xidToString(xids[i]));
                 heuRollback = false;
                 heuCommit = false;
                 heuMix = false;
                 try {
                   JDReflectionUtil.callMethod_V(xaRes, "rollback", xids[i]);
-                  System.out.println("Rollback completed");
+                  output_.println("Rollback completed");
                 } catch (Exception e) {
                   // Expect a couple of possible exceptions that aren't
                   // necessarily
                   // a bad thing.
-                  System.out.println("Rollback rc="
+                  output_.println("Rollback rc="
                       + JDReflectionUtil.getField_I(e, "errorCode"));
                   if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURCOM) {
-                    System.out
+                    output_
                         .println("The transaction was already committed XA_HEURCOM");
                     heuCommit = true;
                   } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURRB) {
-                    System.out
+                    output_
                         .println("The transaction was already rolled back XA_HEURRB");
                     heuRollback = true;
                   } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURMIX) {
-                    System.out
+                    output_
                         .println("The transaction was already committed and rolled back XA_HEURMIX");
                     heuMix = true;
                   } else {
@@ -447,20 +453,20 @@ public class JTACleanupTx {
                   }
                 }
                 if (heuRollback || heuCommit || heuMix) {
-                  System.out
+                  output_
                       .println("Forget about heurisically completed transaction:"
                           + xidToString(xids[i]));
                   JDReflectionUtil.callMethod_V(xaRes, "forget", xids[i]);
                 } else {
-                  System.out.println("Skipped Forget");
+                  output_.println("Skipped Forget");
                 }
               }
 
-              System.out.println("Finding more transactions");
+              output_.println("Finding more transactions");
               xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
                   javax.transaction.xa.XAResource.TMNOFLAGS);
               if (xids == null || xids.length == 0) {
-                System.out.println("End of in-doubt transactions");
+                output_.println("End of in-doubt transactions");
                 done = true;
               }
             }
@@ -468,27 +474,27 @@ public class JTACleanupTx {
         }
       } while (!masterDone);
     } catch (Exception e) {
-      System.out.println("Exception: " + e);
+      output_.println("Exception: " + e);
       e.printStackTrace();
     }
 
-    System.out.println("Looking for more transactions");
+    output_.println("Looking for more transactions");
     wrkcmtdfnBlock: try {
       JTACleanupTxTransInfo list[] = JTACleanupTxTransInfo.getTransInfo();
       if (list == null || list.length == 0) {
-        System.out.println("No more transactions.");
+        output_.println("No more transactions.");
         break wrkcmtdfnBlock;
       }
-      System.out.println("Transactions still in flight:");
+      output_.println("Transactions still in flight:");
       for (int i = 0; i < list.length; ++i) {
-        System.out.println(list[i]);
+        output_.println(list[i]);
       }
     } catch (Exception e) {
-      System.out.println("Exception: " + e);
+      output_.println("Exception: " + e);
       e.printStackTrace();
     }
 
-    System.out.println("Done");
+    output_.println("Done");
     /* System.exit(0); */
 
 

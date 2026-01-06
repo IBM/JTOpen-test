@@ -304,7 +304,7 @@ and then verify it was set.
     {
         if (checkJdbc20StdExt()) {
             try {
-                PrintWriter pw = new PrintWriter(System.out);
+                PrintWriter pw = output_; 
                 JDReflectionUtil.callMethod_V(dataSource_,"setLogWriter",pw);
                 ctx_.rebind(bindName_, dataSource_);
                 Object ds = ctx_.lookup(bindName_);
@@ -911,7 +911,7 @@ to check that the correct (default) value is returned.
                 ctx_.rebind(bindName_, dataSource_);
                 Object ds = ctx_.lookup(bindName_);
                 assertCondition(JDReflectionUtil.callMethod_S(ds, "getLibraries").equals(""));
-                System.out.println(JDReflectionUtil.callMethod_S(ds, "getLibraries"));
+                output_.println(JDReflectionUtil.callMethod_S(ds, "getLibraries"));
                 ctx_.unbind(bindName_);
             }
             catch (Exception e) {

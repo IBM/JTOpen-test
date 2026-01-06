@@ -460,7 +460,7 @@ Performs cleanup needed after running variations.
 			    JDReflectionUtil.callMethod_V(xaRes,"rollback",Xid);
 			}
 		    } catch (Exception e) {
-			System.out.println("Exception caught during cleanup ");
+			output_.println("Exception caught during cleanup ");
 			e.printStackTrace(); 
 		    } 
 		}	
@@ -470,7 +470,7 @@ Performs cleanup needed after running variations.
                      JDReflectionUtil.callMethod_V(xaConn,"close");
                   }
                   catch (Throwable e) {
-		      System.out.println("Throwable caught during cleanup ");
+		      output_.println("Throwable caught during cleanup ");
 		      e.printStackTrace(); 
                   }
 

@@ -126,7 +126,7 @@ Constructor.
     CallableStatement cstmt = localConnection_
         .prepareCall("CALL QGPL.QCMDEXC(?,000000200.00000)");
     String commandString = shellCommand.toString();
-    System.out.println("Running " + commandString);
+    output_.println("Running " + commandString);
     cstmt.setString(1, commandString);
     cstmt.executeUpdate();
     cstmt.close();
@@ -194,11 +194,11 @@ Performs setup needed before running variations.
 		        String commandString = varyCommand.toString(); 
 		        boolean runOk = cmdCall.run(commandString);
 		        if (!runOk) {
-		          System.out.println("Command failed: "+commandString); 
+		          output_.println("Command failed: "+commandString); 
 		          AS400Message[] messageList = cmdCall.getMessageList();
 		          if (messageList != null) { 
 		             for (int i = 0; i < messageList.length; i++) { 
-		               System.out.println(messageList[i]); 
+		               output_.println(messageList[i]); 
 		             }
 		          }
               throw new SQLException("Varyon failed"); 
@@ -208,7 +208,7 @@ Performs setup needed before running variations.
 	          long endTime = System.currentTimeMillis() + 10 * 60 * 1000; 
 	          while (iaspAvailableCount == 0 &&
 	           System.currentTimeMillis() < endTime ) {
-	            System.out.println("Waiting for IAP to come up");
+	            output_.println("Waiting for IAP to come up");
 	            Thread.sleep(15000);
 	            getIaspInfo(); 
 	          } 
@@ -217,11 +217,11 @@ Performs setup needed before running variations.
 	          if (iaspAvailableCount > 0) {
 	        iaspAvailable = true;
 	          } else {
-	        System.out.println("Error.. IASP did not vary on within 10 minutes"); 
+	        output_.println("Error.. IASP did not vary on within 10 minutes"); 
 	        iaspAvailable = false;
 	          } 
 		      } catch (Exception e) { 
-		         System.out.println("Error.. Varyon processing failed .. sleeping for 120 seconds ");
+		         output_.println("Error.. Varyon processing failed .. sleeping for 120 seconds ");
 		         e.printStackTrace(); 
 		         Thread.sleep(120000); 
 		          iaspAvailable = false;

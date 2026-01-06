@@ -15,6 +15,7 @@ package test;
 
 import java.util.Enumeration;
 
+import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Message;
 import com.ibm.as400.access.CommandCall;
@@ -45,12 +46,14 @@ public class MessageSandbox {
 
   protected MessageQueue queue_ = null;
 
+  protected PrintWriter output_;
+
   /**
    * Constructor.
    **/
-  public MessageSandbox(AS400 system, String libraryName, String queueName, String userId) {
+  public MessageSandbox(AS400 system, String libraryName, String queueName, String userId, PrintWriter output) {
     // Create the library if necessary.
-
+    output_ = output; 
     CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB LIB(" + libraryName
         + ") TEXT(\'AS/400 Toolbox for Java Testing\')");
     try {

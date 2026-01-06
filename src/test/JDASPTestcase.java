@@ -404,7 +404,7 @@ Performs cleanup needed after running variations.
           try { s.executeUpdate(sql); } catch (Exception e) { System.out.println("  Warning, setup error"); System.out.println("  " + e.getMessage()); System.out.println("  Don't worry if message is file not found, will create file next"); }
 
  
-	  JDSetupCollection.create(c, collection_1, false); 
+	  JDSetupCollection.create(c, collection_1, false, output_); 
  
           sql = "CREATE TABLE " + name_1 + " (parm_int INTEGER, parm_string VARCHAR(20))";
           try { s.executeUpdate(sql); } catch (Exception e) { System.out.println("  Warning, setup error"); System.out.println("  " + e.getMessage()); setupWorked_ = false; }

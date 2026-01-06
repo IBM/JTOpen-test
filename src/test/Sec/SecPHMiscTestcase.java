@@ -67,7 +67,7 @@ public class SecPHMiscTestcase extends Testcase
      
 	if (isNative_) {
 	    nativeSystemObject = new AS400(); 
-	    System.out.println("nativeSystemObject created"); 
+	    output_.println("nativeSystemObject created"); 
 	}
 
 	try {
@@ -87,11 +87,11 @@ public class SecPHMiscTestcase extends Testcase
           try {
             ran = pwrCall.run(command);
             if (!ran) {
-              System.out.println("Warning: COMMAND FAILED -- " + command);
+              output_.println("Warning: COMMAND FAILED -- " + command);
             }
           } catch (Exception e) {
-            System.out.println("Exception running command " + command);
-            e.printStackTrace(System.out);
+            output_.println("Exception running command " + command);
+            e.printStackTrace(output_);
           }
           testPass = password.toCharArray();
         }
@@ -103,11 +103,11 @@ public class SecPHMiscTestcase extends Testcase
           try {
             boolean ran = pwrCall.run(command);
             if (!ran) {
-              System.out.println("Warning: COMMAND FAILED -- " + command);
+              output_.println("Warning: COMMAND FAILED -- " + command);
             }
           } catch (Exception e) {
-            System.out.println("Exception running command " + command);
-            e.printStackTrace(System.out);
+            output_.println("Exception running command " + command);
+            e.printStackTrace(output_);
           }
 
         }

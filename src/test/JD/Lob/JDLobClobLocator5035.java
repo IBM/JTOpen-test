@@ -146,7 +146,7 @@ Constructor.
       }
 
 
-      System.out.println(this+" setting up HUGE with width"+HUGE_WIDTH_); 
+      output_.println(this+" setting up HUGE with width"+HUGE_WIDTH_); 
       buffer = new StringBuffer (HUGE_WIDTH_/3);
       actualLength = HUGE_WIDTH_/3 - 2;
       for (int i = 1; i <= actualLength; ++i)
@@ -246,11 +246,11 @@ Performs cleanup needed after running variations.
 
 		ResultSet rs = stmt.executeQuery("SELECT * from "+TABLE120_);
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 	    /* Clob clob = rs.getClob(1); */ 
 		String s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		stmt.close(); 
 
@@ -285,17 +285,17 @@ Performs cleanup needed after running variations.
 
 		ResultSet rs = pstmt.executeQuery(); 
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 		String s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		rs = pstmt.executeQuery();
 		rs.next();
-		// System.out.println("Getting clob");
+		// output_.println("Getting clob");
 
 		s = rs.getString(1); 
-		// System.out.println("Clob retrieved");
+		// output_.println("Clob retrieved");
 
 		pstmt.close(); 
 

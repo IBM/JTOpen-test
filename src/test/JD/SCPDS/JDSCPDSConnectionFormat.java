@@ -116,7 +116,7 @@ Performs setup needed before running variations.
             // Create the table.
             connection_ = dataSource.getConnection ();
             Statement s = connection_.createStatement ();
-            JDSetupCollection.create(connection_, JDSCPDSTest.COLLECTION);
+            JDSetupCollection.create(connection_, JDSCPDSTest.COLLECTION, output_);
             s.executeUpdate ("CREATE TABLE " + table_
                              + " (COL1 DECIMAL(5,1), COL2 DATE, COL3 TIME)");
             s.close ();

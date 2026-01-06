@@ -1008,7 +1008,7 @@ public class RFSerialization extends Testcase
       }
       if (!deserr.toString().equals(matchRec.toString()))
       {
-        System.out.println("deserr: " + deserr.toString() + ".");
+        output_.println("deserr: " + deserr.toString() + ".");
         System.out.println("match : " + matchRec.toString() + ".");
         failed("toString()");
         return;
@@ -1091,15 +1091,15 @@ public class RFSerialization extends Testcase
       {
         for (int i = 0; i < msgs.length; ++i)
         {
-          System.out.println(msgs[i]);
+          output_.println(msgs[i]);
         }
-        System.out.println("Either library DDMTESTSAV does not exist or you");
+        output_.println("Either library DDMTESTSAV does not exist or you");
         System.out.println("do not have authority to it.");
-        System.out.println("ftp DDMTESTSAV.SAVF in binary from");
+        output_.println("ftp DDMTESTSAV.SAVF in binary from");
         System.out.println("the test/ git directory");
-        System.out.println("to the AS/400 system to which you are running.");
+        output_.println("to the AS/400 system to which you are running.");
         System.out.println("Use RSTLIB to restore library DDMTESTSAV to the system.");
-        System.out.println("ran = "+ran); 
+        output_.println("ran = "+ran); 
         throw new Exception("No DDMTESTSAV available");
       }
     }

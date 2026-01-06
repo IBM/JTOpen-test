@@ -120,7 +120,7 @@ Performs setup needed before running variations.
 	    connection_.commit();
 
         } catch (Exception e) {
-            System.out.println("Caught exception: " + e.getMessage());
+            output_.println("Caught exception: " + e.getMessage());
 
         }
     }
@@ -139,7 +139,7 @@ This is the place to put all cleanup work for the testcase.
             connection_=null; 
 
         } catch (Exception e) {
-            System.out.println("Caught exception: ");
+            output_.println("Caught exception: ");
 
         }
     }
@@ -155,7 +155,7 @@ This is the place to put all cleanup work for the testcase.
                 if (connection_ != null)
                     connection_.close();
             } catch (SQLException e) {
-                System.out.println("Critical Error - couldn't close connection");
+                output_.println("Critical Error - couldn't close connection");
             }
 
 	    String nowUrl = url+";"+connectionParms;
@@ -178,13 +178,13 @@ This is the place to put all cleanup work for the testcase.
             connection_.commit();
 
         } catch (Exception e) {
-            System.out.println("Caught exception: " + e.getMessage());
+            output_.println("Caught exception: " + e.getMessage());
         } finally {
             try {
                 if (s != null)
                     s.close();
             } catch (SQLException e) {
-                System.out.println("Critical Error closing statement()");
+                output_.println("Critical Error closing statement()");
             }
         }
     }
@@ -282,21 +282,21 @@ This is the place to put all cleanup work for the testcase.
 
             int index = rs.getInt(1);
             if (index != count) {
-                System.out.println("Index value was bad - failed verify");
+                output_.println("Index value was bad - failed verify");
                 // success = false;
                 break;
             } else {
-                System.out.println("Index value is right.");
+                output_.println("Index value is right.");
             }
 
             byte[] blobValue = rs.getBytes(2);
             int compareValue = blobValue[0];
             if (compareValue != index) {
-                System.out.println("Blob value was incorrect - failed verify");
+                output_.println("Blob value was incorrect - failed verify");
                 // success = false;
                 break;
             } else {
-                System.out.println("Blob value is right.");
+                output_.println("Blob value is right.");
             }
 
             count++;
@@ -1235,7 +1235,7 @@ This is the place to put all cleanup work for the testcase.
             // handle the first row...
             rs.next();
             if ((rs.getInt(1) != 0 ) ||(rs.getInt(2) != 0 )||(rs.getInt(3) != 0 )) {
-                System.out.println("Failed on first row.");
+                output_.println("Failed on first row.");
                 success2 = false;
             }
 
@@ -1251,13 +1251,13 @@ This is the place to put all cleanup work for the testcase.
                         boolean thirdNull = rs.wasNull();
                         
                         if ((rs.getInt(1) != count ) || (secondNull != true)||(thirdNull != true )) {
-                            System.out.println("Failed on row " + count+"first="+first+" second="+second+" third="+third);
+                            output_.println("Failed on row " + count+"first="+first+" second="+second+" third="+third);
                             success2 = false;
                             break;
                         }
                     } else {
                         if ((rs.getInt(1) != count ) ||(rs.getInt(2) != count )||(rs.getInt(3) != count )) {
-                            System.out.println("Failed on row " + count);
+                            output_.println("Failed on row " + count);
                             success2 = false;
                             break;
                         }

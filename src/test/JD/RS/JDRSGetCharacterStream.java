@@ -1241,7 +1241,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
 
         Statement s = connection_.createStatement();
 	String sql = "SELECT * FROM " + JDRSTest.RSTEST_GETXML+" a order by RRN(a)";
-	System.out.println("SQL is "+sql); 
+	output_.println("SQL is "+sql); 
         ResultSet rs = s
             .executeQuery(sql);
         rs.next();

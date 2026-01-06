@@ -2502,8 +2502,8 @@ public class JDLobClob extends JDTestcase {
         String res = clob.getSubString(4, (int) length); // 1-based
         rs2_.close();
         String extracted = res.substring((int) length - 3, (int) length); // 0-based
-//		    System.out.println("length of res = "+res.length()+" sb "+length);
-//		    System.out.println("res is '"+extracted+"' sb 3 spaces");
+//		    output_.println("length of res = "+res.length()+" sb "+length);
+//		    output_.println("res is '"+extracted+"' sb 3 spaces");
         failed("Didn't throw SQLException but got " + extracted);
       } catch (Exception e) {
         // Updated 10/2/2013 -- toolbox allows extraction beyond length of lob.

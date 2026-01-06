@@ -1308,7 +1308,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getBestRowIdentifier");
+		    // output_.println("Calling getBestRowIdentifier");
 		      ResultSet rs = dmd_.getBestRowIdentifier (
 						 catalog_,
 						 JDDMDTest.COLLECTION,

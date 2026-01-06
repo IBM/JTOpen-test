@@ -100,7 +100,7 @@ public class UserListBasicTestcase extends Testcase
         // Verify the system.
         if (userList.getSystem() != pwrSys_)
         {
-            System.out.println("System object did not match expected.");
+            output_.println("System object did not match expected.");
             return false;
         }
 
@@ -127,7 +127,7 @@ public class UserListBasicTestcase extends Testcase
                 {
                     if (name.equals(expectedNonContents[j]))
                     {
-                        System.out.println("List contained unexpected name: " + name + ".");
+                        output_.println("List contained unexpected name: " + name + ".");
                         return false;
                     }
                 }
@@ -136,7 +136,7 @@ public class UserListBasicTestcase extends Testcase
 
         if (checkList.size() > 0)
         {
-            System.out.println("Expected name " + checkList.elementAt(0) + " was not found.");
+            output_.println("Expected name " + checkList.elementAt(0) + " was not found.");
             return false;
         }
 
@@ -1882,7 +1882,7 @@ public class UserListBasicTestcase extends Testcase
         // Verify the system.
         if (userList.getSystem() != pwrSys_)
         {
-            System.out.println("System object did not match expected.");
+            output_.println("System object did not match expected.");
             return false;
         }
 
@@ -1915,7 +1915,7 @@ public class UserListBasicTestcase extends Testcase
                     {
                         if (name.equals(expectedNonContents[j]))
                         {
-                            System.out.println("List contained unexpected name: " + name + ".");
+                            output_.println("List contained unexpected name: " + name + ".");
                             return false;
                         }
                     }
@@ -1924,7 +1924,7 @@ public class UserListBasicTestcase extends Testcase
 
             if (checkList.size() > 0)
             {
-                System.out.println("Expected name " + checkList.elementAt(0) + " was not found.");
+                output_.println("Expected name " + checkList.elementAt(0) + " was not found.");
                 return false;
             }
 

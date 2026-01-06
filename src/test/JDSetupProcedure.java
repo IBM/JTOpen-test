@@ -13,6 +13,7 @@
 
 package test;
 
+import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 
@@ -160,17 +161,18 @@ public class JDSetupProcedure {
     public static void create (AS400 system,
                         
                         Connection connection,
-                        String stp)
+                        String stp,
+                        PrintWriter output)
     throws Exception
     {
         JDSupportedFeatures supportedFeatures = new JDSupportedFeatures();
-        create (system,  connection, stp, supportedFeatures);                       
+        create (system,  connection, stp, supportedFeatures, output);                       
     }
 
   /**
    * Determines if a connection is to an IASP
    **/
-  public static boolean isIASP(Connection connection) {
+  public static boolean isIASP(Connection connection, PrintWriter output) {
 
     if (JDTestDriver.getDatabaseTypeStatic() != JDTestDriver.DB_SYSTEMI) {
       return false;
@@ -184,8 +186,8 @@ public class JDSetupProcedure {
       ResultSet rs = stmt.executeQuery(sql);
       boolean hasRows = rs.next();
       /*
-       * if (hasRows) { System.out.println("System is an IASP with #"+
-       * rs.getString(1)); } else { System.out.println("System is NOT IASP"); }
+       * if (hasRows) { output.println("System is an IASP with #"+
+       * rs.getString(1)); } else { output.println("System is NOT IASP"); }
        */
       rs.close();
       stmt.close();
@@ -193,8 +195,8 @@ public class JDSetupProcedure {
       return hasRows;
 
     } catch (Exception e) {
-      System.out.println("WARNING:  Error running " + sql);
-      System.out
+      output.println("WARNING:  Error running " + sql);
+      output
           .println("This exception can be ignored if running to LUW system");
       e.printStackTrace();
       return false;
@@ -248,17 +250,17 @@ public class JDSetupProcedure {
    * setup QIWS or equivlant for testcase
    */
   public static String setupQIWS(AS400 system,
-      Connection connection) {
+      Connection connection, PrintWriter output ) {
     String dataCollection = "QIWS";
     //
     // if running to an IASP then copy the necessary files into the IASP
     //
-    if (isIASP(connection)) {
+    if (isIASP(connection, output)) {
       try {
         Statement stmt = connection.createStatement();
         dataCollection = "QIWSIASP";
-        JDSetupCollection.create(system,  connection, dataCollection);
-        /* System.out.println(dataCollection + " created."); */
+        JDSetupCollection.create(system,  connection, dataCollection, output);
+        /* output.println(dataCollection + " created."); */
         String file = "QCUSTCDT";
         try {
           stmt.execute("SELECT * From " + dataCollection + "." + file);
@@ -270,7 +272,7 @@ public class JDSetupProcedure {
               + ") ASPDEV(*SYSBAS) TOASPDEV(*CURASPGRP) DATA(*YES)                                          ', 0000000145.00000)";
           try {
             stmt.executeUpdate(sql);
-            System.out.println(file + " copied to " + dataCollection);
+            output.println(file + " copied to " + dataCollection);
           } catch (Exception e2) {
             e2.printStackTrace();
           }
@@ -412,7 +414,7 @@ public class JDSetupProcedure {
 
     }
 
-    /* System.out.println("COLLECTION changed to " + COLLECTION); */
+    /* output.println("COLLECTION changed to " + COLLECTION); */
 
   }
 
@@ -433,13 +435,13 @@ public class JDSetupProcedure {
    *          Lib to create the stored procs in
    **/
   public static void create(AS400 system,  Connection connection,
-      String stp, JDSupportedFeatures supportedFeatures, String collection)
+      String stp, JDSupportedFeatures supportedFeatures, String collection, PrintWriter output)
       throws Exception {
     if (collection == null) collection = COLLECTION; 
     resetCollection(collection);
     String proc = stp.substring(stp.indexOf(".") + 1);
     String newstp = COLLECTION + "." + proc;
-    create(system,  connection, newstp, supportedFeatures);
+    create(system,  connection, newstp, supportedFeatures, output);
   }
 
   /**
@@ -455,22 +457,22 @@ public class JDSetupProcedure {
    *           What features are supported
    **/
   public static void create(AS400 system, Connection connection, String stp, 
-      JDSupportedFeatures supportedFeatures) throws Exception {
+      JDSupportedFeatures supportedFeatures, PrintWriter output) throws Exception {
     boolean ZOS;
     boolean isLUW;
     ZOS = JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_ZOS;
     isLUW = JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_LUW;
     // Setup a special collection for all stored procedures.
     if (!collectionCreated_) {
-      JDSetupCollection.create(system,  connection, COLLECTION);
-      System.out.println(COLLECTION + " created.");
+      JDSetupCollection.create(system,  connection, COLLECTION, output);
+      output.println(COLLECTION + " created.");
       collectionCreated_ = true;
     }
 
     String dataCollection = "QIWS";
     String sql = null;
 
-    dataCollection = setupQIWS(system,  connection);
+    dataCollection = setupQIWS(system,  connection, output);
 
     // Stored procedure returns 0 result sets.
     if (stp.equals(STP_RS0)) {
@@ -886,7 +888,7 @@ public class JDSetupProcedure {
       }
       buffer.append(" END JDCSTYPESX");
       sql = buffer.toString();
-      System.out.println("JDSetupProcdure:  SQL=" + sql);
+      output.println("JDSetupProcdure:  SQL=" + sql);
     }
 
     else if (stp.equals(STP_CSTYPESOUTX)) {
@@ -966,7 +968,7 @@ public class JDSetupProcedure {
       }
       buffer.append(" END JDCSTYPESX");
       sql = buffer.toString();
-      System.out.println("JDSetupProcdure:  SQL=" + sql);
+      output.println("JDSetupProcdure:  SQL=" + sql);
     }
 
     // Stored procedure has IN, OUT, and INOUT parameters
@@ -1586,44 +1588,44 @@ public class JDSetupProcedure {
     else if (stp.equals(STP_CSARRSIN)) {
 
       String typeName = "SMALLINT";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of ints
     else if (stp.equals(STP_CSARRIN)) {
       String typeName = "INTEGER";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of booleans
     else if (stp.equals(STP_CSARRBOO)) {
       String typeName = "BOOLEAN";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of bigints
     else if (stp.equals(STP_CSARRBIN)) {
       String typeName = "BIGINT";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRREA)) {
       String typeName = "REAL";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRFLO)) {
       String typeName = "FLOAT";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRDOU)) {
       String typeName = "DOUBLE";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRDEC)) {
       String typeName = "DECIMAL(10,5)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRNUM)) {
       String typeName = "NUMERIC(10,5)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRCH1)) {
       // ???luw does not like char(1) com.ibm.db2.jcc.a.rm: DB2 SQL Error:
@@ -1631,59 +1633,59 @@ public class JDSetupProcedure {
       // DRIVER=4.0.100
       // but I think it is valid
       String typeName = "CHAR(1)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRCH50)) {
       String typeName = "CHAR(50)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRVCH)) {
       String typeName = "VARCHAR(50)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRGR)) {
       String typeName = "GRAPHIC ccsid 1200";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRVGR)) {
       String typeName = "VARGRAPHIC(50) ccsid 1200";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRCLO)) {
       String typeName = "CLOB(100)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRBLO)) {
       String typeName = "BLOB(100)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRDAT)) {
       String typeName = "DATE";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     } // Stored procedure of Array of
     else if (stp.equals(STP_CSARRTIM)) {
       String typeName = "TIME";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRTS)) {
       String typeName = "TIMESTAMP";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRBY)) {
       String typeName = "BINARY(50)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRVBY)) {
       String typeName = "VARBINARY(50)";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
     // Stored procedure of Array of
     else if (stp.equals(STP_CSARRXML)) {
       String typeName = "XML";
-      sql = getProcArray(stp, typeName, connection);
+      sql = getProcArray(stp, typeName, connection,output);
     }
 
     // Throw an exception if a bad stored procedure id
@@ -1701,19 +1703,19 @@ public class JDSetupProcedure {
       procedureDefinitions.put(stp, sql);
       created = true;
     } catch (SQLException e) {
-      System.out.print("Unable to create procedure using: " + sql + "\n");
+      output.print("Unable to create procedure using: " + sql + "\n");
       String sqlState = e.getSQLState(); // @A1A
       if (sqlState == null)
         sqlState = "";
       if ((!sqlState.equals("42733")) // @A1C
           && (!sqlState.equals("42723")) // @A1A
           && (!sqlState.equals("42710"))) { // @A2A
-        System.out.println("SQLState is " + sqlState);
+        output.println("SQLState is " + sqlState);
         JDTestcase.dumpServerJobLog(connection);
 
-        e.printStackTrace(System.out);
+        e.printStackTrace(output);
       } else {
-        System.out.println(" ignored states 42733,42723,42710");
+        output.println(" ignored states 42733,42723,42710");
       }
       created = false;
     }
@@ -1739,7 +1741,7 @@ public class JDSetupProcedure {
         s.executeUpdate(
             "GRANT ALL PRIVILEGES ON PROCEDURE " + stp + " TO PUBLIC");
       } catch (Exception e) {
-        System.out.println("Exception using driver " + driverName);
+        output.println("Exception using driver " + driverName);
         e.printStackTrace();
       }
     }
@@ -1747,13 +1749,13 @@ public class JDSetupProcedure {
     s.close();
   }
 
-  public static void dropCollections(Connection c) {
-    dropCollection(c, COLLECTION);
+  public static void dropCollections(Connection c, PrintWriter output) {
+    dropCollection(c, COLLECTION, output);
   }
 
-  public static void dropCollection(Connection c, String collection) {
+  public static void dropCollection(Connection c, String collection, PrintWriter output ) {
     try {
-      System.out.println("Dropping collection " + collection + ".");
+      output.println("Dropping collection " + collection + ".");
 
       Statement s = c.createStatement();
       try {
@@ -1766,7 +1768,7 @@ public class JDSetupProcedure {
       s.executeUpdate("DROP COLLECTION " + collection);
       s.close();
     } catch (SQLException e) {
-      System.out.println(e.getMessage());
+      output.println(e.getMessage());
     }
   }
 
@@ -1774,16 +1776,16 @@ public class JDSetupProcedure {
   /**
    * Drops a procedure created by the test suite.
    **/
-  public static void dropProcedure(Connection c, String stp) {
+  public static void dropProcedure(Connection c, String stp, PrintWriter output) {
     try {
-      System.out.println("Dropping procedure " + stp + ".");
+      output.println("Dropping procedure " + stp + ".");
 
       Statement s = c.createStatement();
       s.executeUpdate("DROP PROCEDURE " + stp);
       s.close();
     } catch (SQLException e) {
       if (JDCleanup.isImportantException(e)) { 
-        System.out.println(e.getMessage());
+        output.println(e.getMessage());
       }
     }
   }
@@ -1792,29 +1794,29 @@ public class JDSetupProcedure {
   /**
    * Drops all procedures created by the test suite.
    **/
-  public static void dropProcedures(Connection c) {
-    dropProcedure(c, STP_RS0);
-    dropProcedure(c, STP_RS1);
-    dropProcedure(c, STP_RS1S);
-    dropProcedure(c, STP_RS3);
-    dropProcedure(c, STP_CS0);
-    dropProcedure(c, STP_CS1); // @E1A
-    dropProcedure(c, STP_CSRV); // @C2A
-    dropProcedure(c, STP_CSPARMS);
-    dropProcedure(c, STP_CSPARMSRS);
-    dropProcedure(c, STP_CSPARMSRV); // @C2A
-    dropProcedure(c, STP_CSPARMSRSRV); // @C2A
-    dropProcedure(c, STP_CSTYPESOUT);
-    dropProcedure(c, STP_CSTYPESOUTX);
-    dropProcedure(c, STP_CSTYPESOUTB);
-    dropProcedure(c, STP_CSTYPESIN);
-    dropProcedure(c, STP_CSTYPESINOUT);
-    dropProcedure(c, STP_CSTYPESINOUTX);
-    dropProcedure(c, STP_CSTYPESNULL);
-    dropProcedure(c, STP_CSINOUT); // @D1A
-    dropProcedure(c, STP_CSNULLTEST);
-    dropProcedure(c, STP_CSSRS); // @KBA
-    dropProcedure(c, STP_CSMSRS); // @KBA
+  public static void dropProcedures(Connection c, PrintWriter output) {
+    dropProcedure(c, STP_RS0, output);
+    dropProcedure(c, STP_RS1, output);
+    dropProcedure(c, STP_RS1S, output);
+    dropProcedure(c, STP_RS3, output);
+    dropProcedure(c, STP_CS0, output);
+    dropProcedure(c, STP_CS1, output); // @E1A
+    dropProcedure(c, STP_CSRV, output); // @C2A
+    dropProcedure(c, STP_CSPARMS, output);
+    dropProcedure(c, STP_CSPARMSRS, output);
+    dropProcedure(c, STP_CSPARMSRV, output); // @C2A
+    dropProcedure(c, STP_CSPARMSRSRV, output); // @C2A
+    dropProcedure(c, STP_CSTYPESOUT, output);
+    dropProcedure(c, STP_CSTYPESOUTX, output);
+    dropProcedure(c, STP_CSTYPESOUTB, output);
+    dropProcedure(c, STP_CSTYPESIN, output);
+    dropProcedure(c, STP_CSTYPESINOUT, output);
+    dropProcedure(c, STP_CSTYPESINOUTX, output);
+    dropProcedure(c, STP_CSTYPESNULL, output);
+    dropProcedure(c, STP_CSINOUT, output); // @D1A
+    dropProcedure(c, STP_CSNULLTEST, output);
+    dropProcedure(c, STP_CSSRS, output); // @KBA
+    dropProcedure(c, STP_CSMSRS, output); // @KBA
     /*
      * No need to drop, these are created/droped in TC dropProcedure(c,
      * STP_CSARRSUM); dropProcedure(c, STP_CSARRINT); dropProcedure(c,
@@ -1847,7 +1849,7 @@ public class JDSetupProcedure {
    * Drops all procedures created by the test suite, created in a specific
    * collection @C1A
    **/
-  public static void dropProcedures(Connection c, String Collection) {
+  public static void dropProcedures(Connection c, String Collection, PrintWriter output) {
     COLLECTION = Collection;
     STP_RS0 = COLLECTION + ".JDRSNONE";
     STP_RS1 = COLLECTION + ".JDRSONE";
@@ -1899,60 +1901,60 @@ public class JDSetupProcedure {
      * STP_CSARRVBY = COLLECTION + ".JDCSARRVBY"; //array of varbinary
      * STP_CSARRXML = COLLECTION + ".JDCSARRXML"; //array of xml
      */
-    dropProcedure(c, STP_RS0);
-    dropProcedure(c, STP_RS1);
-    dropProcedure(c, STP_RS1S);
-    dropProcedure(c, STP_RS3);
-    dropProcedure(c, STP_CS0);
-    dropProcedure(c, STP_CS1); // @E1A
-    dropProcedure(c, STP_CSRV); // @C2A
-    dropProcedure(c, STP_CSPARMS);
-    dropProcedure(c, STP_CSPARMSRS);
-    dropProcedure(c, STP_CSPARMSRV); // @C2A
-    dropProcedure(c, STP_CSPARMSRSRV); // @C2A
-    dropProcedure(c, STP_CSTYPESOUT);
-    dropProcedure(c, STP_CSTYPESOUTX);
-    dropProcedure(c, STP_CSTYPESOUTB);
-    dropProcedure(c, STP_CSTYPESIN);
-    dropProcedure(c, STP_CSTYPESINOUT);
-    dropProcedure(c, STP_CSTYPESINOUTX);
-    dropProcedure(c, STP_CSTYPESNULL);
-    dropProcedure(c, STP_CSINOUT); // @D1A
-    dropProcedure(c, STP_CSNULLTEST); // @D1A
-    dropProcedure(c, STP_CSSRS); // @KBA
-    dropProcedure(c, STP_CSMSRS); // @KBA
-    dropProcedure(c, STP_CSARRSUM);
-    dropProcedure(c, STP_CSARRINT);
-    dropProcedure(c, STP_CSARRINT4);
-    dropProcedure(c, STP_CSARRINT2);
-    dropProcedure(c, STP_CSARRINT3);
-    dropProcedure(c, STP_CSARRINTN);
-    dropProcedure(c, STP_CSARRVCH3); // array of varchar(50) and non=arraytype
+    dropProcedure(c, STP_RS0, output);
+    dropProcedure(c, STP_RS1,output);
+    dropProcedure(c, STP_RS1S, output);
+    dropProcedure(c, STP_RS3, output);
+    dropProcedure(c, STP_CS0, output);
+    dropProcedure(c, STP_CS1, output); // @E1A
+    dropProcedure(c, STP_CSRV, output); // @C2A
+    dropProcedure(c, STP_CSPARMS, output);
+    dropProcedure(c, STP_CSPARMSRS, output);
+    dropProcedure(c, STP_CSPARMSRV, output); // @C2A
+    dropProcedure(c, STP_CSPARMSRSRV, output); // @C2A
+    dropProcedure(c, STP_CSTYPESOUT, output);
+    dropProcedure(c, STP_CSTYPESOUTX, output);
+    dropProcedure(c, STP_CSTYPESOUTB, output);
+    dropProcedure(c, STP_CSTYPESIN, output);
+    dropProcedure(c, STP_CSTYPESINOUT, output);
+    dropProcedure(c, STP_CSTYPESINOUTX, output);
+    dropProcedure(c, STP_CSTYPESNULL, output);
+    dropProcedure(c, STP_CSINOUT, output); // @D1A
+    dropProcedure(c, STP_CSNULLTEST, output); // @D1A
+    dropProcedure(c, STP_CSSRS, output); // @KBA
+    dropProcedure(c, STP_CSMSRS, output); // @KBA
+    dropProcedure(c, STP_CSARRSUM, output);
+    dropProcedure(c, STP_CSARRINT, output);
+    dropProcedure(c, STP_CSARRINT4, output);
+    dropProcedure(c, STP_CSARRINT2, output);
+    dropProcedure(c, STP_CSARRINT3, output);
+    dropProcedure(c, STP_CSARRINTN, output);
+    dropProcedure(c, STP_CSARRVCH3, output); // array of varchar(50) and non=arraytype
 
-    dropProcedure(c, STP_CSARRSIN); // array of smallints
-    dropProcedure(c, STP_CSARRIN); // array of ints
-    dropProcedure(c, STP_CSARRIN2); // array of ints 2
-    dropProcedure(c, STP_CSARRBIN); // array of bigints
-    dropProcedure(c, STP_CSARRBOO); // array of booleans
-    dropProcedure(c, STP_CSARRREA); // array of read
-    dropProcedure(c, STP_CSARRFLO); // array of float
-    dropProcedure(c, STP_CSARRDOU); // array of double
-    dropProcedure(c, STP_CSARRDEC); // array of decimal
-    dropProcedure(c, STP_CSARRNUM); // array of numeric
-    dropProcedure(c, STP_CSARRCH1); // array of char(1)
-    dropProcedure(c, STP_CSARRCH50); // array of char(50)
-    dropProcedure(c, STP_CSARRVCH); // array of varchar(50)
-    dropProcedure(c, STP_CSARRVCH2); // array of varchar(50) and non=arraytype
-    dropProcedure(c, STP_CSARRGR); // array of graphic
-    dropProcedure(c, STP_CSARRVGR); // array of vargraphic
-    dropProcedure(c, STP_CSARRCLO); // array of CLOB(100)
-    dropProcedure(c, STP_CSARRBLO); // array of bLOB(100)
-    dropProcedure(c, STP_CSARRDAT); // array of date
-    dropProcedure(c, STP_CSARRTIM); // array of time
-    dropProcedure(c, STP_CSARRTS); // array of timestamp
-    dropProcedure(c, STP_CSARRBY); // array of binary
-    dropProcedure(c, STP_CSARRVBY); // array of varbinary
-    dropProcedure(c, STP_CSARRXML);
+    dropProcedure(c, STP_CSARRSIN, output); // array of smallints
+    dropProcedure(c, STP_CSARRIN, output); // array of ints
+    dropProcedure(c, STP_CSARRIN2, output); // array of ints 2
+    dropProcedure(c, STP_CSARRBIN,output); // array of bigints
+    dropProcedure(c, STP_CSARRBOO,output); // array of booleans
+    dropProcedure(c, STP_CSARRREA,output); // array of read
+    dropProcedure(c, STP_CSARRFLO,output); // array of float
+    dropProcedure(c, STP_CSARRDOU,output); // array of double
+    dropProcedure(c, STP_CSARRDEC,output); // array of decimal
+    dropProcedure(c, STP_CSARRNUM,output); // array of numeric
+    dropProcedure(c, STP_CSARRCH1,output); // array of char(1)
+    dropProcedure(c, STP_CSARRCH50,output); // array of char(50)
+    dropProcedure(c, STP_CSARRVCH,output); // array of varchar(50)
+    dropProcedure(c, STP_CSARRVCH2,output); // array of varchar(50) and non=arraytype
+    dropProcedure(c, STP_CSARRGR,output); // array of graphic
+    dropProcedure(c, STP_CSARRVGR,output); // array of vargraphic
+    dropProcedure(c, STP_CSARRCLO,output); // array of CLOB(100)
+    dropProcedure(c, STP_CSARRBLO,output); // array of bLOB(100)
+    dropProcedure(c, STP_CSARRDAT,output); // array of date
+    dropProcedure(c, STP_CSARRTIM,output); // array of time
+    dropProcedure(c, STP_CSARRTS,output); // array of timestamp
+    dropProcedure(c, STP_CSARRBY,output); // array of binary
+    dropProcedure(c, STP_CSARRVBY,output); // array of varbinary
+    dropProcedure(c, STP_CSARRXML,output);
 
   }
 
@@ -1960,7 +1962,7 @@ public class JDSetupProcedure {
   // 2 generate sql to create proc
   // proc simply reverses order of an input array and returns it as output parm
   public static String getProcArray(String stp, String typeName,
-      Connection con) {
+      Connection con, PrintWriter output) {
     // array type called COLLECTION (same stp collection) + "ARR" +
     // type-initials
     String arrayTypeName = stp.substring(0, stp.indexOf("JDCSARR"))
@@ -1977,7 +1979,7 @@ public class JDSetupProcedure {
             || (message.indexOf("-204") >= 0)) {
           // type is not found
         } else {
-          System.out.println("WARNING: Error dropping type " + arrayTypeName);
+          output.println("WARNING: Error dropping type " + arrayTypeName);
           e.printStackTrace();
         }
       }
@@ -1990,7 +1992,7 @@ public class JDSetupProcedure {
             || (message.indexOf("-204") >= 0)) {
           // procedure is not found
         } else {
-          System.out.println("WARNING: Error dropping procedure " + stp);
+          output.println("WARNING: Error dropping procedure " + stp);
           e.printStackTrace();
         }
       }
@@ -2073,8 +2075,9 @@ public class JDSetupProcedure {
    * @B2AC - make it run with native driver also
    **/
   public static void main(String[] args) {
+    PrintWriter output = new PrintWriter(System.out) ;
     if ((args.length != 3) && (args.length != 4)) {
-      System.out
+      output
           .println("Usage: java JDSetupProcedure systemName userid password");
       System.exit(0);
     }
@@ -2104,7 +2107,7 @@ public class JDSetupProcedure {
       Statement statement2 = connection.createStatement();
       while (rs.next()) {
         String stp = rs.getString(1);
-        System.out.println("Dropping stored procedure " + stp + ".");
+        output.println("Dropping stored procedure " + stp + ".");
         try {
           statement2.executeUpdate("DROP PROCEDURE " + COLLECTION + "." + stp);
         } catch (SQLException e) {
@@ -2116,7 +2119,7 @@ public class JDSetupProcedure {
       statement.close();
       connection.close();
     } catch (SQLException e) {
-      e.printStackTrace(System.out);
+      e.printStackTrace(output);
     }
   }
 
@@ -2162,7 +2165,7 @@ public class JDSetupProcedure {
       cs.registerOutParameter(3, Types.REAL);
       // jcc requires this to be a float
       if (driver == JDTestDriver.DRIVER_JCC) {
-        // System.out.println("Registering parm 4 as Types.REAL for "+stp);
+        // output.println("Registering parm 4 as Types.REAL for "+stp);
         cs.registerOutParameter(4, Types.REAL);
       } else {
         cs.registerOutParameter(4, Types.DOUBLE);
@@ -2549,11 +2552,11 @@ public class JDSetupProcedure {
    *          Do not check for this parameter
    **/
   public static boolean checkAllButForOne(CallableStatement cs, String stp,
-      JDSupportedFeatures supportedFeatures, int except) throws Exception {
+      JDSupportedFeatures supportedFeatures, int except, PrintWriter output ) throws Exception {
 
     int count = 26;
     if (!stp.equals(STP_CSTYPESINOUT) && (!stp.equals(STP_CSTYPESINOUTX))) {
-      System.out.println("checkAll2 defined only for " + STP_CSTYPESINOUT);
+      output.println("checkAll2 defined only for " + STP_CSTYPESINOUT);
       return false;
     }
     String checkString[] = new String[count];
@@ -2562,33 +2565,33 @@ public class JDSetupProcedure {
       check[i] = true;
 
     if (except != 1)
-      check[1] = comp(((Integer) cs.getObject(1)).intValue(), -33 + 23);
+      check[1] = comp(((Integer) cs.getObject(1)).intValue(), -33 + 23,output);
     if (except != 2)
-      check[2] = comp(((Integer) cs.getObject(2)).intValue(), 52 * -2);
+      check[2] = comp(((Integer) cs.getObject(2)).intValue(), 52 * -2,output);
     if (except != 3)
-      check[3] = comp(((Float) cs.getObject(3)).floatValue(), 3.4f * -1);
+      check[3] = comp(((Float) cs.getObject(3)).floatValue(), 3.4f * -1,output);
     if (except != 4)
-      check[4] = comp(((Double) cs.getObject(4)).doubleValue(), 4.5 + 543.2);
+      check[4] = comp(((Double) cs.getObject(4)).doubleValue(), 4.5 + 543.2,output);
     if (except != 5)
-      check[5] = comp(((Double) cs.getObject(5)).doubleValue(), 5.6 - 54.54);
+      check[5] = comp(((Double) cs.getObject(5)).doubleValue(), 5.6 - 54.54,output);
     if (except != 6)
-      check[6] = comp(((BigDecimal) cs.getObject(6)).doubleValue(), 7 - 3);
+      check[6] = comp(((BigDecimal) cs.getObject(6)).doubleValue(), 7 - 3,output);
     if (except != 7)
       check[7] = comp(((BigDecimal) cs.getObject(7)).doubleValue(),
-          30777.77803);
+          30777.77803,output);
     if (except != 8)
-      check[8] = comp(((BigDecimal) cs.getObject(8)).doubleValue(), 8889 + 1);
+      check[8] = comp(((BigDecimal) cs.getObject(8)).doubleValue(), 8889 + 1,output);
     if (except != 9)
       check[9] = comp(((BigDecimal) cs.getObject(9)).doubleValue(),
-          -9999.99998 - 1);
+          -9999.99998 - 1,output);
     if (except != 10)
-      check[10] = comp((String) cs.getObject(10), "C");
+      check[10] = comp((String) cs.getObject(10), "C",output);
     if (except != 11)
       check[11] = comp((String) cs.getObject(11),
-          "Jim                                               ");
+          "Jim                                               ",output);
 
     if (except != 12)
-      check[12] = comp((String) cs.getObject(12), "MjJDBC");
+      check[12] = comp((String) cs.getObject(12), "MjJDBC",output);
 
     // TODO: Murck is in EBCDIC coding and not ASCII coding, so we need to check
     // somehow differently
@@ -2614,12 +2617,12 @@ public class JDSetupProcedure {
 
     }
     if (except != 15)
-      check[15] = comp(((Date) cs.getObject(15)).toString(), "1998-04-15");
+      check[15] = comp(((Date) cs.getObject(15)).toString(), "1998-04-15",output);
     if (except != 16)
-      check[16] = comp(((Time) cs.getObject(16)).toString(), "08:42:30");
+      check[16] = comp(((Time) cs.getObject(16)).toString(), "08:42:30",output);
     if (except != 17)
       check[17] = comp(((Timestamp) cs.getObject(17)).toString(),
-          "2001-11-18 13:42:22.123456");
+          "2001-11-18 13:42:22.123456",output);
 
     if (supportedFeatures.lobSupport) {
       if (except != 18)
@@ -2633,31 +2636,31 @@ public class JDSetupProcedure {
       }
       if (except != 20) {
         Clob c = (Clob) cs.getObject(20);
-        check[20] = comp(c.getSubString(1, (int) c.length()), "Welcome");
+        check[20] = comp(c.getSubString(1, (int) c.length()), "Welcome",output);
       }
       if (except != 21) {
         Clob c = (Clob) cs.getObject(21);
-        check[21] = comp(c.getSubString(1, (int) c.length()), "Goodbye");
+        check[21] = comp(c.getSubString(1, (int) c.length()), "Goodbye",output);
       }
     }
 
     if (except != 22)
       if (supportedFeatures.bigintSupport)
         check[22] = comp(((Long) cs.getObject(22)).longValue(),
-            987662234567.00);
+            987662234567.00,output);
 
     if (except != 23)
       if (supportedFeatures.decfloatSupport)
-        check[23] = comp(cs.getString(23), "1234561234567891");
+        check[23] = comp(cs.getString(23), "1234561234567891",output);
 
     if (except != 24)
       if (supportedFeatures.decfloatSupport)
         check[24] = comp(cs.getString(24),
-            "1234123456789012345678901234567891");
+            "1234123456789012345678901234567891",output);
 
     if (except != 25)
       if (supportedFeatures.booleanSupport)
-        check[25] = comp(cs.getString(25), "0");
+        check[25] = comp(cs.getString(25), "0",output);
 
     boolean success = true;
     for (int i = 0; i < check.length; i++)
@@ -2674,7 +2677,7 @@ public class JDSetupProcedure {
           e.printStackTrace();
           stringValue = "'Exception caught: " + e.toString() + "'";
         }
-        System.out.println("Failed on parameter (1-based #): " + i
+        output.println("Failed on parameter (1-based #): " + i
             + " string = " + stringValue);
       }
 
@@ -2692,40 +2695,40 @@ public class JDSetupProcedure {
    *          What features are supported?
    **/
   public static boolean checkAllForOne(CallableStatement cs, String stp,
-      JDSupportedFeatures supportedFeatures, int accept) throws Exception {
+      JDSupportedFeatures supportedFeatures, int accept, PrintWriter output) throws Exception {
 
     if (!stp.equals(STP_CSTYPESINOUT) && (!stp.equals(STP_CSTYPESINOUTX))) {
-      System.out.println("checkAll2 defined only for " + STP_CSTYPESINOUT);
+      output.println("checkAll2 defined only for " + STP_CSTYPESINOUT);
       return false;
     }
 
     if (accept == 1)
-      return comp(((Integer) cs.getObject(1)).intValue(), -34 + 23);
+      return comp(((Integer) cs.getObject(1)).intValue(), -34 + 23, output);
     if (accept == 2)
-      return comp(((Integer) cs.getObject(2)).intValue(), 53 * -2);
+      return comp(((Integer) cs.getObject(2)).intValue(), 53 * -2, output);
     if (accept == 3)
-      return comp(((Float) cs.getObject(3)).floatValue(), 3.5f * -1);
+      return comp(((Float) cs.getObject(3)).floatValue(), 3.5f * -1, output);
     if (accept == 4)
       return comp(((Double) cs.getObject(4)).doubleValue(), 4.6 + 543.2,
-          0.00001);
+          0.00001, output);
     if (accept == 5)
-      return comp(((Double) cs.getObject(5)).doubleValue(), 5.7 - 54.54);
+      return comp(((Double) cs.getObject(5)).doubleValue(), 5.7 - 54.54, output);
     if (accept == 6)
-      return comp(((BigDecimal) cs.getObject(6)).doubleValue(), 8 - 3);
+      return comp(((BigDecimal) cs.getObject(6)).doubleValue(), 8 - 3, output);
     if (accept == 7)
-      return comp(((BigDecimal) cs.getObject(7)).doubleValue(), 30777.77903);
+      return comp(((BigDecimal) cs.getObject(7)).doubleValue(), 30777.77903, output);
     if (accept == 8)
-      return comp(((BigDecimal) cs.getObject(8)).doubleValue(), 8899 + 1);
+      return comp(((BigDecimal) cs.getObject(8)).doubleValue(), 8899 + 1, output);
     if (accept == 9)
-      return comp(((BigDecimal) cs.getObject(9)).doubleValue(), -9999.9998 - 1);
+      return comp(((BigDecimal) cs.getObject(9)).doubleValue(), -9999.9998 - 1, output);
     if (accept == 10)
-      return comp((String) cs.getObject(10), "C");
+      return comp((String) cs.getObject(10), "C", output);
     if (accept == 11)
       return comp((String) cs.getObject(11),
-          "Jim                                               ");
+          "Jim                                               ", output);
 
     if (accept == 12)
-      return comp((String) cs.getObject(12), "MkJDBC");
+      return comp((String) cs.getObject(12), "MkJDBC", output);
 
     // TODO: Murck is in EBCDIC coding and not ASCII coding, so we need to check
     // somehow differently
@@ -2757,12 +2760,12 @@ public class JDSetupProcedure {
 
     }
     if (accept == 15)
-      return comp(((Date) cs.getObject(15)).toString(), "1998-04-15");
+      return comp(((Date) cs.getObject(15)).toString(), "1998-04-15",output);
     if (accept == 16)
-      return comp(((Time) cs.getObject(16)).toString(), "08:42:30");
+      return comp(((Time) cs.getObject(16)).toString(), "08:42:30",output);
     if (accept == 17)
       return comp(((Timestamp) cs.getObject(17)).toString(),
-          "2001-11-18 13:42:22.123456");
+          "2001-11-18 13:42:22.123456",output);
 
     if (supportedFeatures.lobSupport) {
       if (accept == 18)
@@ -2777,56 +2780,56 @@ public class JDSetupProcedure {
 
       if (accept == 20) {
         Clob c = (Clob) cs.getObject(20);
-        return comp(c.getSubString(1, (int) c.length()), "Welcome");
+        return comp(c.getSubString(1, (int) c.length()), "Welcome",output);
       }
       if (accept == 21) {
         Clob c = (Clob) cs.getObject(21);
-        return comp(c.getSubString(1, (int) c.length()), "Goodbye");
+        return comp(c.getSubString(1, (int) c.length()), "Goodbye",output);
       }
     }
 
     if (accept == 22)
       if (supportedFeatures.bigintSupport)
-        return comp(((Long) cs.getObject(22)).longValue(), 987662234567.00);
+        return comp(((Long) cs.getObject(22)).longValue(), 987662234567.00,output);
 
     if (accept == 23)
       if (supportedFeatures.decfloatSupport)
-        return comp(cs.getString(23), "1234561234567891");
+        return comp(cs.getString(23), "1234561234567891",output);
 
     if (accept == 24)
       if (supportedFeatures.decfloatSupport)
-        return comp(cs.getString(24), "1234123456789012345678901234567891");
+        return comp(cs.getString(24), "1234123456789012345678901234567891",output);
 
     if (accept == 25)
       if (supportedFeatures.booleanSupport)
-        return comp(cs.getString(25), "true");
+        return comp(cs.getString(25), "true",output);
 
     return true;
 
   }
 
-  public static boolean comp(double actual, double expected) {
+  public static boolean comp(double actual, double expected, PrintWriter output) {
     if (actual != expected) {
-      System.out.println(actual + " sb " + expected);
+      output.println(actual + " sb " + expected);
       return false;
     }
     return true;
   }
 
   public static boolean comp(double actual, double expected,
-      double acceptableDiff) {
+      double acceptableDiff, PrintWriter output) {
     if (actual != expected) {
       if (!(Math.abs(actual - expected) <= Math.abs(acceptableDiff))) {
-        System.out.println(actual + " sb " + expected);
+        output.println(actual + " sb " + expected);
         return false;
       }
     }
     return true;
   }
 
-  public static boolean comp(String actual, String expected) {
+  public static boolean comp(String actual, String expected, PrintWriter output) {
     if (!actual.equals(expected)) {
-      System.out.println(actual + " sb " + expected);
+      output.println(actual + " sb " + expected);
       return false;
     }
     return true;

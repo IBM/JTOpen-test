@@ -14,6 +14,7 @@
 package test.JD.Statement;
 
 import java.sql.*;
+import java.io.PrintWriter; 
 
 import test.JDTestcase;
 
@@ -24,17 +25,19 @@ public class JDStatementStressCallable extends Thread {
     private String collection;
 
     private boolean successful = true;
-    StringBuffer errorInfo = new StringBuffer(); 
+    StringBuffer errorInfo = new StringBuffer();
+    private PrintWriter output_; 
     static Object lockObject = new Object();
     
 
     /**
      Constructor.
      **/
-    public JDStatementStressCallable(Connection connection, int instNum, String collection) {
+    public JDStatementStressCallable(Connection connection, int instNum, String collection, PrintWriter output) {
         this.connection = connection;
         this.instNum = instNum;
         this.collection = collection;
+        this.output_ = output; 
     }
 
     /**
@@ -42,7 +45,7 @@ public class JDStatementStressCallable extends Thread {
      **/
     public void run()
     {
-        System.out.println("JDStatementStressCallable instance " + instNum + " is starting with name " + getName());
+        output_.println("JDStatementStressCallable instance " + instNum + " is starting with name " + getName());
         try {
             PreparedStatement stmnt = connection.prepareStatement("CALL " + collection + ".STRPRC(?) ");
             ResultSet rs = null;
@@ -56,11 +59,11 @@ public class JDStatementStressCallable extends Thread {
                         rs.close();
                     }     
                 } catch (Exception e) {
-                    System.out.println("JDStatementStressCallable: Unexpected Exception." + "(" + getName() + ")");
-                    System.out.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
+                    output_.println("JDStatementStressCallable: Unexpected Exception." + "(" + getName() + ")");
+                    output_.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
                     e.printStackTrace();
                     rs.close();
-                    System.out.println();
+                    output_.println();
                     
                     errorInfo.append("JDStatementStressCallable: Unexpected Exception." + "(" + getName() + ")\n");
                     errorInfo.append("   Loop #" + i + ": FAILED" + "(" + getName() + ")\n");
@@ -77,7 +80,7 @@ public class JDStatementStressCallable extends Thread {
         }
         catch (Exception e) {
             successful = false;
-            System.out.println("Prepared Statement failed (" + getName() + ")");
+            output_.println("Prepared Statement failed (" + getName() + ")");
             e.printStackTrace();
             
             errorInfo.append("Prepared Statement failed (" + getName() + ")\n");

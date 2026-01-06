@@ -68,13 +68,13 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
         }
     }
 
-    static boolean verifyBuff(byte[] buffer, byte value)
+    boolean verifyBuff(byte[] buffer, byte value)
     {
         for (int i = 0; i < buffer.length; ++i)
         {
             if (buffer[i] != value)
             {
-                System.out.println("Buffer Compare Failed: " + buffer[i]);
+                output_.println("Buffer Compare Failed: " + buffer[i]);
                 return false;
             }
         }
@@ -309,11 +309,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("Call to run() failed.");
+                output_.println("Call to run() failed.");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -442,11 +442,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             if (!s.run())
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
                 return;
             }
@@ -489,11 +489,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -520,11 +520,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -557,11 +557,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -602,11 +602,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -656,11 +656,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -699,11 +699,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -751,11 +751,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -794,11 +794,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -942,11 +942,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1090,11 +1090,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1145,11 +1145,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1205,11 +1205,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1268,11 +1268,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1339,11 +1339,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1467,11 +1467,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1521,11 +1521,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1563,11 +1563,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1595,11 +1595,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             if (!s.run())
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
                 return;
             }
@@ -1670,11 +1670,11 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             else
             {
                 failed();
-                System.out.println("call to run() failed");
+                output_.println("call to run() failed");
                 AS400Message[] messageList = s.getMessageList();
                 for (int msg = 0; msg < messageList.length; ++msg)
                 {
-                    System.out.println(messageList[msg].toString());
+                    output_.println(messageList[msg].toString());
                 }
             }
         }
@@ -1759,7 +1759,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
           count++;
           String jrnLib  = (String)jrn.getValue(attribute1);
           String jrnName = (String)jrn.getValue(attribute2);
-          if (DEBUG) System.out.println(jrnLib+"/"+jrnName);
+          if (DEBUG) output_.println(jrnLib+"/"+jrnName);
 
           // Call the service program that lists the entries in the journal.
           // This service program requires that the first parm be 16-byte aligned.
@@ -1788,7 +1788,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
     }
 
 
-  public  static final boolean listJournalEntries(AS400 system, String jrn_Lib_Name, String jrn_Name, StringBuffer sb)
+  public   boolean listJournalEntries(AS400 system, String jrn_Lib_Name, String jrn_Name, StringBuffer sb)
   {
     boolean succeeded = true;
     AS400Bin4 bin4 = new AS400Bin4();
@@ -1868,7 +1868,7 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
       int numEntries = BinaryConverter.byteArrayToInt(out, offset+8);
       @SuppressWarnings("deprecation")
       String contHandle = BinaryConverter.bytesToString(out, offset+12, 1);
-      if (DEBUG) { System.out.println(bytesReturned+","+offsetToFirst+","+numEntries+","+contHandle);
+      if (DEBUG) { output_.println(bytesReturned+","+offsetToFirst+","+numEntries+","+contHandle);
       }
       succeeded = true;  // if we got this far, consider it a success
     }
@@ -1885,8 +1885,8 @@ public class ServiceProgramCallTestcase extends Testcase implements VetoableChan
             CommandCall cc = new CommandCall(system);
             cc.run("DSPJOBLOG OUTPUT(*PRINT)"); 
           } catch (Exception e) { 
-            System.out.println("Error printing job log"); 
-            e.printStackTrace(System.out); 
+            output_.println("Error printing job log"); 
+            e.printStackTrace(output_); 
           }
           succeeded = false;
           sb.append("Hit error "+messageList[i].getID() + ": "

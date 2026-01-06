@@ -81,8 +81,8 @@ public class JDStatementCloseOnCompletion extends JDTestcase {
       String expectedException = "NOT FOUND"; 
       String message = e.toString().toUpperCase(); 
       if (message.indexOf(expectedException)< 0) {
-        System.out.println("WARNING:  Unexpected exception when deleting table.");
-        System.out.flush(); 
+        output_.println("WARNING:  Unexpected exception when deleting table.");
+        output_.flush(); 
         e.printStackTrace();
         System.err.flush(); 
       }
@@ -126,7 +126,7 @@ public class JDStatementCloseOnCompletion extends JDTestcase {
     " EXECUTE PS1 USING VALUE; "+
     " end "; 
 
-    System.out.println("creating procedure using sql "+sql); 
+    output_.println("creating procedure using sql "+sql); 
     stmt.executeUpdate(sql);
     
     CALLINSERT =  "CALL "+callInsertProcedure+"(?,?)";

@@ -349,12 +349,12 @@ public class UserGetSetDtoGTestcase extends Testcase
 		    if (messageString.indexOf("User profile UGSDFT not found") >= 0) {
 			// Just ignore
 		    } else { 
-			System.out.println("Messages from DLTUSRPRF "+message);
+			output_.println("Messages from DLTUSRPRF "+message);
 		    }
 		}
 	    } catch (Exception e) {
-		System.out.println("Exception on DLTUSRPRF");
-		e.printStackTrace(System.out); 
+		output_.println("Exception on DLTUSRPRF");
+		e.printStackTrace(output_); 
 	    }
             CommandCall cmd = new CommandCall(pwrSys_, "QSYS/CRTUSRPRF USRPRF(UGSDFT) PASSWORD(*NONE)");
             cmd.setThreadSafe(false);

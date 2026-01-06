@@ -81,7 +81,7 @@ public class UserGetSetNtoQTestcase extends Testcase
 		if ((message != null) && 
 		    (message.length > 0) && 
 		    (message[0].toString().indexOf("CPF2214") > 0)) {
-		    System.out.println("Warning "+message[0].toString()); 
+		    output_.println("Warning "+message[0].toString()); 
 		} else { 
 		    throw new AS400Exception(message);
 		}

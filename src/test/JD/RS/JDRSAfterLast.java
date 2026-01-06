@@ -294,7 +294,7 @@ afterLast() - Should work on a "simple" result set.
                 String s1 = rs.getString ("TABLE_TYPE");
                 rs.close ();
                 if (s1 == null) {
-                  System.out.println("TABLE_TYPE returned null"); 
+                  output_.println("TABLE_TYPE returned null"); 
                   s1=""; 
                 }
                 assertCondition (s1.length () > 0);
@@ -1655,7 +1655,7 @@ afterLast() - Should work on a "simple" result set.
                 String s1 = rs.getString ("TABLE_TYPE");
                 rs.close ();
                 if (s1 == null) {
-                  System.out.println("TABLE_TYPE returned null"); 
+                  output_.println("TABLE_TYPE returned null"); 
                   s1=""; 
                 }
                 assertCondition (s1.length () > 0);

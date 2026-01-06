@@ -126,7 +126,7 @@ public class RFRecordMisc extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete setup");
+      output_.println("Unable to complete setup");
       return;
     }
 
@@ -4763,7 +4763,7 @@ public class RFRecordMisc extends Testcase
       if (!rec.toString().equals(contentsAsString))
       {
         failed("Wrong string returned from toString");
-        System.out.println("toString()      : " + rec.toString() + ".");
+        output_.println("toString()      : " + rec.toString() + ".");
         System.out.println("contentsAsString: " + contentsAsString + ".");
         return;
       }
@@ -4797,7 +4797,7 @@ public class RFRecordMisc extends Testcase
       if (!rec.toString().equals(contentsAsStringWithNull))
       {
         failed("Wrong string returned from toString");
-        System.out.println("toString()      : " + rec.toString() + ".");
+        output_.println("toString()      : " + rec.toString() + ".");
         System.out.println("contentsAsString: " + contentsAsStringWithNull + ".");
         return;
       }
@@ -4830,7 +4830,7 @@ public class RFRecordMisc extends Testcase
       if (!rec.toString().equals(defaultContents))
       {
         failed("Wrong string returned from toString");
-        System.out.println("toString()      : " + rec.toString() + ".");
+        output_.println("toString()      : " + rec.toString() + ".");
         System.out.println("defaultContents : " + defaultContents + ".");
         return;
       }
@@ -4889,7 +4889,7 @@ public class RFRecordMisc extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println(e.toString());
+      output_.println(e.toString());
       throw e;
     }
   }

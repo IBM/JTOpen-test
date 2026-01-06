@@ -927,7 +927,7 @@ public class JDCSSetDate extends JDCSSetTestcase {
         cs.setDate("P_TIMESTAMP", t, Calendar.getInstance());
         cs.execute();
         Timestamp check = cs.getTimestamp(17);
-        // System.out.println("Value is " + check);
+        // output_.println("Value is " + check);
         String userTimeZone = System.getProperty("user.timezone");
         String tz = userTimeZone;
         if (userTimeZone == null)

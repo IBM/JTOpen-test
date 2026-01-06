@@ -1096,11 +1096,11 @@ public class JDPSSetInt extends JDTestcase {
           } else { /* Not jtopenlit, toolbox, native driver */
 
             if (e instanceof DataTruncation) {
-              // System.out.println("SQL Exception occurred");
-              // System.out.println("Message : "+ e.getMessage());
-              // System.out.println("SQLState: "+
+              // output_.println("SQL Exception occurred");
+              // output_.println("Message : "+ e.getMessage());
+              // output_.println("SQLState: "+
               // ((SQLException)e).getSQLState());
-              // System.out.println("SQLCode: "+
+              // output_.println("SQLCode: "+
               // ((SQLException)e).getErrorCode());
               succeeded("got DataTruncation as expected");
               return;
@@ -1142,13 +1142,13 @@ public class JDPSSetInt extends JDTestcase {
       ps.setInt(1, 2147483647);
       SQLWarning warn = ps.getWarnings();
       if (warn != null) {
-        System.out.println("warning=" + warn.toString() + " STATE="
+        output_.println("warning=" + warn.toString() + " STATE="
             + warn.getSQLState() + " CODE=" + warn.getErrorCode());
       }
       ps.executeQuery();
       warn = ps.getWarnings();
       if (warn != null) {
-        System.out.println("warning=" + warn.toString() + " STATE="
+        output_.println("warning=" + warn.toString() + " STATE="
             + warn.getSQLState() + " CODE=" + warn.getErrorCode());
       }
       failed("Didn't throw SQLException " + added);

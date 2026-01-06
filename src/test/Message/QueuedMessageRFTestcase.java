@@ -89,8 +89,8 @@ public class QueuedMessageRFTestcase extends Testcase {
         setTestLib(baseTestDriver_.getTestLib());
     }
 
-    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT", systemObject_.getUserId());
-    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY", systemObject_.getUserId());
+    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT", systemObject_.getUserId(),output_);
+    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY", systemObject_.getUserId(),output_);
   }
 
   /**
@@ -193,10 +193,10 @@ public class QueuedMessageRFTestcase extends Testcase {
           || msgDate.getYear() != curDate.getYear()
           || msgDate.getDay() != curDate.getDay()
           || msgDate.getHours() != curDate.getHours()) {
-        System.out.println(msgDate.getMonth() + " <-> " + curDate.getMonth());
-        System.out.println(msgDate.getYear() + " <-> " + curDate.getYear());
-        System.out.println(msgDate.getDay() + " <-> " + curDate.getDay());
-        System.out.println(msgDate.getHours() + " <-> " + curDate.getHours());
+        output_.println(msgDate.getMonth() + " <-> " + curDate.getMonth());
+        output_.println(msgDate.getYear() + " <-> " + curDate.getYear());
+        output_.println(msgDate.getDay() + " <-> " + curDate.getDay());
+        output_.println(msgDate.getHours() + " <-> " + curDate.getHours());
         failed("Bad DATE_SENT value returned.");
         return;
       }

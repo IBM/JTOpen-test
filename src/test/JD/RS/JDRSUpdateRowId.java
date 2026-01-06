@@ -143,7 +143,7 @@ Performs cleanup needed after running variations.
         if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 	   testRowId = JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2RowId", arg); 
         } else {
-           //System.out.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT"); 
+           //output_.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT"); 
             testRowId = JDReflectionUtil.createObject("com.ibm.as400.access.AS400JDBCRowId", arg);
         }
 	return testRowId; 

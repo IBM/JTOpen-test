@@ -70,7 +70,7 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
      * Make sure everything is set up
      */
 
-    public static void setup(Connection conn) throws Exception  {
+    public static void setup(Connection conn, PrintWriter output) throws Exception  {
         //
         // If we're still set up, then just return
         // 
@@ -85,15 +85,15 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
 	ResultSet rs = dmd.getTables(null, "JDJSTPENV", "BLOBS", null);
 	if ( ! rs.next()) {
 	    if (debug) System.out.println("BLOB table does not exist...creating");
-	    JDSetupCollection.create(conn, "JDJSTPENV", false);
+	    JDSetupCollection.create(conn, "JDJSTPENV", false, output);
 	    execStatement(stmt, "create table JDJSTPENV.BLOBS(blobName varchar(200), b blob(15M))",true);
 	}
 	rs.close(); 
     } 
 
-    public static void copyToBlob(Connection conn, String filename, String blobname) throws Exception  {
+    public static void copyToBlob(Connection conn, String filename, String blobname, PrintWriter output) throws Exception  {
 	synchronized(conn) { 
-	    setup(conn);
+	    setup(conn, output);
 
 	    JDJSTPBlobUtil blob = new JDJSTPBlobUtil(filename);
 	    execStatement(stmt, "delete from JDJSTPENV.BLOBS where blobName='"+blobname+"'", true); 
@@ -106,9 +106,9 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
 	}
     } 
 
-    public static void copyFromBlob(Connection conn, String filename, String blobname) throws Exception {
+    public static void copyFromBlob(Connection conn, String filename, String blobname, PrintWriter output) throws Exception {
 	synchronized(conn) {
-	    setup(conn); 
+	    setup(conn, output); 
 	    ResultSet rs = stmt.executeQuery("select b from JDJSTPENV.BLOBS where blobName='"+blobname+"'");
 	    if (rs.next()) {
 		Blob blob = rs.getBlob(1); 
@@ -150,6 +150,7 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
      */
     public static void main(String[] args) {
       try {
+        PrintWriter output= new PrintWriter(System.out) ;
 	String url = null; 
 	if (args.length < 3) {
 	    usage(); 
@@ -166,9 +167,9 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
   
 	  Connection conn = DriverManager.getConnection (url);
 	  if ( args[0].equals("CopyToBlob")) {
-	      copyToBlob(conn, args[2], args[3]); 
+	      copyToBlob(conn, args[2], args[3], output); 
 	  } else if ( args[0].equals("CopyFromBlob")) {
-	      copyFromBlob(conn, args[2], args[3]); 
+	      copyFromBlob(conn, args[2], args[3], output); 
 	  } else {
 	      System.out.println("Unrecognized option:  \""+args[0]+"\"");
 	      usage(); 

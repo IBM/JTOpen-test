@@ -1057,7 +1057,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
         }
         catch (Exception e)
         {
-            System.out.println("Cleanup failed - User Space NOT DELETED.");
+            output_.println("Cleanup failed - User Space NOT DELETED.");
         }
     }
     /**
@@ -1100,7 +1100,7 @@ public class UserSpaceBeans extends Testcase implements PropertyChangeListener, 
         }
         catch (Exception e)
         {
-            System.out.println("Cleanup failed - User Space NOT DELETED.");
+            output_.println("Cleanup failed - User Space NOT DELETED.");
         }
     }
 

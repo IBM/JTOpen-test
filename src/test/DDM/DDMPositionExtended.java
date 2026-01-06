@@ -100,7 +100,7 @@ public class DDMPositionExtended extends Testcase
       setup();
     } catch (Exception e) {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 

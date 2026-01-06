@@ -605,7 +605,7 @@ public class DQPeekTestcase extends Testcase
 	    dq.create(80);
 	    try
 	    {
-		DQWriter writer = new DQWriter(dq);
+		DQWriter writer = new DQWriter(dq,output_);
 		writer.start();
 		DataQueueEntry data = dq.peek(-1);
 		if (!new String(data.getData(), "UnicodeBig").equals("Infinite wait data"))
@@ -669,8 +669,7 @@ public class DQPeekTestcase extends Testcase
 			dq.delete();
 		    }
 		}
-		System.out.println("Warning connection dropper did not work");
-		assertCondition(true); 
+		assertCondition(true,"Warning connection dropper did not work"); 
 	    }
 	    catch (Exception e)
 	    {
@@ -723,8 +722,7 @@ public class DQPeekTestcase extends Testcase
 			dq.delete();
 		    }
 		}
-		System.out.println("Connection dropper did not work");
-		assertCondition(true); 
+		assertCondition(true,"Connection dropper did not work"); 
 	    }
 	    catch (Exception e)
 	    {

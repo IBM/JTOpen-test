@@ -93,19 +93,18 @@ public class JDStatementScroll extends JDTestcase {
       for (int i = 0; i < endIteration; i++) {
 	  if (i % 100000 == 1001) {
 	      long currentTime = System.currentTimeMillis(); 
-	      System.out.println("i=" + i + " Elapsed="+(currentTime-startTime)+" Time = "
+	      output_.println("i=" + i + " Elapsed="+(currentTime-startTime)+" Time = "
 				 + new Timestamp(currentTime));
 	      double predictedTimePerIteration = ((double) (currentTime-startTime)) / (i);
 	      long  predictedDuration = (long) (predictedTimePerIteration * endIteration);
 
 	      long   predictedTime = startTime + predictedDuration; 
 
-	      System.out.println("     Remaining="+(predictedTime-currentTime)+" ms Est="+new Timestamp(predictedTime));
+	      output_.println("     Remaining="+(predictedTime-currentTime)+" ms Est="+new Timestamp(predictedTime));
 
 	      if (predictedDuration > 600000) {
-		  System.out.println("Exiting test because predicted duration ("+predictedDuration +" ms) is more than 10 minutes");
-		  System.out.println("Typically this occurs on remote connections. ");
-		  assertCondition(true);
+		  output_.println("Exiting test because predicted duration ("+predictedDuration +" ms) is more than 10 minutes");
+		  assertCondition(true,"Typically this occurs on remote connections. ");
 		  return; 
 	      } 
 

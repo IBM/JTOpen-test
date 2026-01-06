@@ -112,14 +112,14 @@ Performs setup needed before running variations.
        //build a table to query
        conn_ = DriverManager.getConnection(baseURL_);
        stmt_ = conn_.createStatement ();
-       JDSetupCollection.create (systemObject_,  conn_, COLLECTION_);
+       JDSetupCollection.create (systemObject_,  conn_, COLLECTION_, output_);
        boolean tableCreated;
        try {
             stmt_.executeUpdate("CREATE TABLE " + TABLE_ + "(C_ONE VARCHAR(50))");
             tableCreated = true;
        }
        catch (Exception e) {
-            System.out.println("Possible Setup Failure: ");
+            output_.println("Possible Setup Failure: ");
             e.printStackTrace();
             tableCreated = false;
        }
@@ -200,7 +200,7 @@ row set.
                    return;
              }
           }
-          System.out.println ("Warning: Key " + key + " not found.");
+          output_.println ("Warning: Key " + key + " not found.");
        }
     }
 
@@ -1105,12 +1105,12 @@ rowInserted()
 		int rowCount = 0;
 		while (JDReflectionUtil.callMethod_B(crs,"next"))
 		{
-		    System.out.println(crs.getString(1));
+		    output_.println(crs.getString(1));
 		    rowCount++;
 		}
-		System.out.println("rowCount = " + rowCount);
-		System.out.println("check1 = " + check1);
-		System.out.println("check2 = " + check2);
+		output_.println("rowCount = " + rowCount);
+		output_.println("check1 = " + check1);
+		output_.println("check2 = " + check2);
 		assertCondition((rowCount == 6) && check1 && !check2);
 
 		JDReflectionUtil.callMethod_V(crs,"close");
@@ -1145,7 +1145,7 @@ acceptChanges()
 		while (JDReflectionUtil.callMethod_B(crs,"next"))
 		{
 		    rowCount++;
-		    System.out.println(crs.getString(1));
+		    output_.println(crs.getString(1));
 		}
 		assertCondition((rowCount == 5) && check1);
 
@@ -1186,7 +1186,7 @@ acceptChanges()
 		while (JDReflectionUtil.callMethod_B(crs,"next"))
 		{
 		    rowCount++;
-		    System.out.println(crs.getString(1));
+		    output_.println(crs.getString(1));
 		}
 		assertCondition((rowCount == 5) && check1 && !check2);
 

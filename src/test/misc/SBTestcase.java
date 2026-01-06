@@ -139,13 +139,13 @@ public class SBTestcase extends Testcase
       }
     }
 
-    static void delete(Subsystem sbs)
+     void delete(Subsystem sbs)
     {
       if (sbs == null) return;
-      if (DEBUG) System.out.println("DEBUG: Deleting subsystem: " + sbs.getPath());
+      if (DEBUG) output_.println("DEBUG: Deleting subsystem: " + sbs.getPath());
       try {
         sbs.delete();
-        if (sbs.exists()) System.out.println("ERROR: Subsystem still exists after delete(): " + sbs.getName());
+        if (sbs.exists()) output_.println("ERROR: Subsystem still exists after delete(): " + sbs.getName());
       }
       catch (Exception e) { e.printStackTrace(); }
     }
@@ -175,14 +175,14 @@ public class SBTestcase extends Testcase
 
 
     // Validate all of the attribute values of a Subsystem object.
-    private static boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses, String testLib)
+    private boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses, String testLib)
     {
       return validateAttributeValues(sbs, refreshed, started, expectedStatuses, testLib, "TESTSBS1");
     }
 
 
     // Validate all of the attribute values of a Subsystem object.
-    private static boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses, String expectedLib, String expectedName)
+    private  boolean validateAttributeValues(Subsystem sbs, boolean refreshed, boolean started, String[] expectedStatuses, String expectedLib, String expectedName)
     {
       boolean ok = true;
 
@@ -207,41 +207,41 @@ public class SBTestcase extends Testcase
 
         if (system1.getSystemName().length() == 0) {
           ok = false;
-          System.out.println("System has zero-length name");
+          output_.println("System has zero-length name");
         }
 
         if (system1.getUserId().length() == 0) {
           ok = false;
-          System.out.println("System userid is zero-length");
+          output_.println("System userid is zero-length");
         }
 
         if (!lib1.equals(expectedLib)) {
           ok = false;
-          System.out.println("Library name is incorrect");
+          output_.println("Library name is incorrect");
         }
 
         if (!name1.equals(expectedName)) {
           ok = false;
-          System.out.println("Subsystem name is incorrect");
+          output_.println("Subsystem name is incorrect");
         }
 
         String pathQ = new QSYSObjectPathName(expectedLib, expectedName, "SBSD").getPath();
 
         if (!path1.equals(pathQ)) {
           ok = false;
-          System.out.println("Subsystem path is incorrect");
+          output_.println("Subsystem path is incorrect");
         }
 
         if (expectedStatuses == null) {
           if (status1 != null) {
             ok = false;
-            System.out.println("Status is not null");
+            output_.println("Status is not null");
           }
         }
         else {
           if (status1 == null) {
             ok = false;
-            System.out.println("Status is null");
+            output_.println("Status is null");
           }
           else {
             boolean matched = false;
@@ -250,97 +250,97 @@ public class SBTestcase extends Testcase
             }
             if (!matched) {
               ok = false;
-              System.out.println("Status is not as expected.  Got: " + status1);
+              output_.println("Status is not as expected.  Got: " + status1);
             }
           }
         }
 
         if (!exists1) {
           ok = false;
-          System.out.println("Existence is incorrect");
+          output_.println("Existence is incorrect");
         }
 
         if (numJobs1 < 0) {
           ok = false;
-          System.out.println("Number of jobs is invalid (less than 0)");
+          output_.println("Number of jobs is invalid (less than 0)");
         }
 
         if (numJobs1 > 100000) {
           ok = false;
-          System.out.println("Number of jobs is invalid (greater than 100000)");
+          output_.println("Number of jobs is invalid (greater than 100000)");
         }
 
         if (maxJobs1 < -1) { // Note that -1 indicates "no maximum".
           ok = false;
-          System.out.println("Max jobs is invalid (less than -1)");
+          output_.println("Max jobs is invalid (less than -1)");
         }
 
         if (maxJobs1 > 100000) {
           ok = false;
-          System.out.println("Max jobs is invalid (greater than 100000)");
+          output_.println("Max jobs is invalid (greater than 100000)");
         }
 
         String nameFromObjDesc = (String)objDesc1.getValue(ObjectDescription.NAME);
         if (!name1.equals(nameFromObjDesc)) {
           ok = false;
-          System.out.println("Name is inconsistent with ObjectDescription");
+          output_.println("Name is inconsistent with ObjectDescription");
         }
 
         String libFromObjDesc = (String)objDesc1.getValue(ObjectDescription.LIBRARY);
         if (!lib1.equals(libFromObjDesc)) {
           ok = false;
-          System.out.println("Library is inconsistent with ObjectDescription");
+          output_.println("Library is inconsistent with ObjectDescription");
         }
 
         if (sbsAsString1.trim().length() == 0) {
           ok = false;
-          System.out.println("toString() returned a zero-length string");
+          output_.println("toString() returned a zero-length string");
         }
 
         if (refreshed)
         {
           if (desc1 == null) {
             ok = false;
-            System.out.println("Description is null");
+            output_.println("Description is null");
           }
           else if (desc1.length() > 50) {
             ok = false;
-            System.out.println("Description is longer than 50 chars");
+            output_.println("Description is longer than 50 chars");
           }
 
           if (dspFilePath1 == null) {
             ok = false;
-            System.out.println("Display file path is null");
+            output_.println("Display file path is null");
           }
 
           if (langLib1 == null) {
             ok = false;
-            System.out.println("Language library is null");
+            output_.println("Language library is null");
           }
 
           if (started)
           {
             if (monitorJob1 == null) {
               ok = false;
-              System.out.println("Monitor job is null");
+              output_.println("Monitor job is null");
             }
             else if (monitorJob1.getName().trim().length() == 0) {
               ok = false;
-              System.out.println("Monitor job has zero-length name");
+              output_.println("Monitor job has zero-length name");
             }
           }
           else // not started
           {
             if (monitorJob1 != null) {
               ok = false;
-              System.out.println("Monitor job is not null");
+              output_.println("Monitor job is not null");
             }
           }
 
           String descFromObjDesc = (String)objDesc1.getValue(ObjectDescription.TEXT_DESCRIPTION);
           if (desc1 != null && !desc1.equals(descFromObjDesc)) {
             ok = false;
-            System.out.println("Description is inconsistent with ObjectDescription");
+            output_.println("Description is inconsistent with ObjectDescription");
           }
         }
 
@@ -348,22 +348,22 @@ public class SBTestcase extends Testcase
         {
           if (desc1 != null) {
             ok = false;
-            System.out.println("Description is not null");
+            output_.println("Description is not null");
           }
 
           if (monitorJob1 != null) {
             ok = false;
-            System.out.println("Monitor job is not null");
+            output_.println("Monitor job is not null");
           }
 
           if (dspFilePath1 != null) {
             ok = false;
-            System.out.println("Display file path is not null");
+            output_.println("Display file path is not null");
           }
 
           if (langLib1 != null) {
             ok = false;
-            System.out.println("Language library is not null");
+            output_.println("Language library is not null");
           }
 
 
@@ -378,7 +378,7 @@ public class SBTestcase extends Testcase
 
     // Verify that the attribute values of two Subsystem objects match.
     // Note: If matchAll==false, then certain attributes are not compared, because they are expected to mismatch.
-    private static boolean attributeValuesMatch(Subsystem sbs1, Subsystem sbs2/*, boolean matchAll*/)
+    private  boolean attributeValuesMatch(Subsystem sbs1, Subsystem sbs2/*, boolean matchAll*/)
     {
       boolean ok = true;
       boolean matchAll = true;
@@ -416,95 +416,95 @@ public class SBTestcase extends Testcase
 
         if (!system1.getSystemName().equals(system2.getSystemName())) {
           ok = false;
-          System.out.println("Attribute mismatch: systemName ("+system1.getSystemName()+" vs " + system2.getSystemName() + ")");
+          output_.println("Attribute mismatch: systemName ("+system1.getSystemName()+" vs " + system2.getSystemName() + ")");
         }
 
         if (!system1.getUserId().equals(system2.getUserId())) {
           ok = false;
-          System.out.println("Attribute mismatch: userID ("+system1.getUserId()+" vs " + system2.getUserId() + ")");
+          output_.println("Attribute mismatch: userID ("+system1.getUserId()+" vs " + system2.getUserId() + ")");
         }
 
         if (!lib1.equals(lib2)) {
           ok = false;
-          System.out.println("Attribute mismatch: lib ("+lib1+" vs " + lib2 + ")");
+          output_.println("Attribute mismatch: lib ("+lib1+" vs " + lib2 + ")");
         }
 
         if (matchAll && !name1.equals(name2)) {
           ok = false;
-          System.out.println("Attribute mismatch: name ("+name1+" vs " + name2 + ")");
+          output_.println("Attribute mismatch: name ("+name1+" vs " + name2 + ")");
         }
 
         if (matchAll && !path1.equals(path2)) {
           ok = false;
-          System.out.println("Attribute mismatch: path ("+path1+" vs " + path2 + ")");
+          output_.println("Attribute mismatch: path ("+path1+" vs " + path2 + ")");
         }
 
         if (status1 == null) {
           if (status2 != null) {
             ok = false;
-            System.out.println("Attribute mismatch: status ("+status1+" vs " + status2 + ")");
+            output_.println("Attribute mismatch: status ("+status1+" vs " + status2 + ")");
           }
         }
         else if (!status1.equals(status2)) {
           ok = false;
-          System.out.println("Attribute mismatch: status ("+status1+" vs " + status2 + ")");
+          output_.println("Attribute mismatch: status ("+status1+" vs " + status2 + ")");
         }
 
         if (monitorJob1 == null) {
           if (monitorJob2 != null) {
             ok = false;
-            System.out.println("Attribute mismatch: monitorJob ("+monitorJob1+" vs " + monitorJob2 + ")");
+            output_.println("Attribute mismatch: monitorJob ("+monitorJob1+" vs " + monitorJob2 + ")");
           }
         }
         else if (monitorJob2 == null) {
           ok = false;
-          System.out.println("Attribute mismatch: monitorJob ("+monitorJob1.getNumber()+" vs " + monitorJob2 + ")");
+          output_.println("Attribute mismatch: monitorJob ("+monitorJob1.getNumber()+" vs " + monitorJob2 + ")");
         }
         else if (!monitorJob1.getNumber().equals(monitorJob2.getNumber())) {
           ok = false;
-          System.out.println("Attribute mismatch: monitorJob ("+monitorJob1.getNumber()+" vs " + monitorJob2.getNumber() + ")");
+          output_.println("Attribute mismatch: monitorJob ("+monitorJob1.getNumber()+" vs " + monitorJob2.getNumber() + ")");
         }
 
         if (exists1 != exists2) {
           ok = false;
-          System.out.println("Attribute mismatch: exists ("+exists1+" vs " + exists2 + ")");
+          output_.println("Attribute mismatch: exists ("+exists1+" vs " + exists2 + ")");
         }
 
         if (numJobs1 != numJobs2) {
           ok = false;
-          System.out.println("Attribute mismatch: numJobs ("+numJobs1+" vs " + numJobs2 + ")");
+          output_.println("Attribute mismatch: numJobs ("+numJobs1+" vs " + numJobs2 + ")");
         }
 
         if (maxJobs1 != maxJobs2) {
           ok = false;
-          System.out.println("Attribute mismatch: maxJobs ("+maxJobs1+" vs " + maxJobs2 + ")");
+          output_.println("Attribute mismatch: maxJobs ("+maxJobs1+" vs " + maxJobs2 + ")");
         }
 
         if (desc1 == null) {
           if (desc2 != null) {
             ok = false;
-            System.out.println("Attribute mismatch: desc ("+desc1+" vs " + desc2 + ")");
+            output_.println("Attribute mismatch: desc ("+desc1+" vs " + desc2 + ")");
           }
         }
         else if (!desc1.equals(desc2)) {
           ok = false;
-          System.out.println("Attribute mismatch: desc ("+desc1+" vs " + desc2 + ")");
+          output_.println("Attribute mismatch: desc ("+desc1+" vs " + desc2 + ")");
         }
 
         if (dspFilePath1 == null) {
           if (dspFilePath2 != null) {
             ok = false;
-            System.out.println("Attribute mismatch: dspFilePath ("+dspFilePath1+" vs " + dspFilePath2 + ")");
+            output_.println("Attribute mismatch: dspFilePath ("+dspFilePath1+" vs " + dspFilePath2 + ")");
           }
         }
         else if (!dspFilePath1.equals(dspFilePath2)) {
           ok = false;
-          System.out.println("Attribute mismatch: dspFilePath ("+dspFilePath1+" vs " + dspFilePath2 + ")");
+          output_.println("Attribute mismatch: dspFilePath ("+dspFilePath1+" vs " + dspFilePath2 + ")");
         }
 
         if (matchAll && !objDesc1.equals(objDesc2)) {
           ok = false;
-          System.out.println("Attribute mismatch: objDesc ("+objDesc1+" vs " + objDesc2 + ")");
+          output_.println("Attribute mismatch: objDesc ("+objDesc1+" vs " + objDesc2 + ")");
         }
 
       }
@@ -515,10 +515,10 @@ public class SBTestcase extends Testcase
 
 
     // Display all attributes of a Subsystem object.
-    private static void display(Subsystem sbs)
+    private  void display(Subsystem sbs)
     {
       if (sbs == null) {
-        System.out.println("\n(null)");
+        output_.println("\n(null)");
         return;
       }
       try
@@ -539,36 +539,36 @@ public class SBTestcase extends Testcase
         boolean exists = sbs.exists();
         SystemPool[] pools = sbs.getPools();
 
-        System.out.println("\nSubsystem attribute values:");
-        System.out.println("   path: " + path);
-        System.out.println("   name: " + name);
-        System.out.println("   library: " + lib);
-        System.out.println("   desc: " + desc);
-        System.out.println("   system: " + (system == null ? "null" : system.getSystemName()));
-        System.out.println("   status: " + status);
-        System.out.println("   monitorJob: " + (monitorJob == null ? "null" : monitorJob.getNumber()) );
-        System.out.println("   numJobs: " + numJobs);
-        System.out.println("   maxJobs: " + maxJobs);
-        System.out.println("   exists: " + exists);
-        System.out.println("   dspFilePath: " + dspFilePath);
-        System.out.println("   langLib: " + langLib);
-        System.out.println("   ObjectDescription: "+objDesc);
-        System.out.println("   Pools: ");
-        if (pools == null) System.out.println("      null list");
+        output_.println("\nSubsystem attribute values:");
+        output_.println("   path: " + path);
+        output_.println("   name: " + name);
+        output_.println("   library: " + lib);
+        output_.println("   desc: " + desc);
+        output_.println("   system: " + (system == null ? "null" : system.getSystemName()));
+        output_.println("   status: " + status);
+        output_.println("   monitorJob: " + (monitorJob == null ? "null" : monitorJob.getNumber()) );
+        output_.println("   numJobs: " + numJobs);
+        output_.println("   maxJobs: " + maxJobs);
+        output_.println("   exists: " + exists);
+        output_.println("   dspFilePath: " + dspFilePath);
+        output_.println("   langLib: " + langLib);
+        output_.println("   ObjectDescription: "+objDesc);
+        output_.println("   Pools: ");
+        if (pools == null) output_.println("      null list");
         else for (int i=0; i<pools.length; i++) {
-          System.out.println("      " + (pools[i] == null ? "null" : pools[i].getName()));
+          output_.println("      " + (pools[i] == null ? "null" : pools[i].getName()));
         }
-        System.out.println("   String representation: " + sbsAsString);
-        System.out.println();
+        output_.println("   String representation: " + sbsAsString);
+        output_.println();
       }
       catch (Exception e) { e.printStackTrace(); }
     }
 
-    static void display(SystemPool[] pools)
+    void display(SystemPool[] pools)
     {
       for (int i=0; i<pools.length; i++)
       {
-        System.out.println("SBTestcase.display(pools["+i+"])");
+        output_.println("SBTestcase.display(pools["+i+"])");
         display(pools[i]);
       }
     }
@@ -584,35 +584,35 @@ public class SBTestcase extends Testcase
 
 
     @SuppressWarnings("deprecation")
-    static void display(SystemPool pool)
+   void display(SystemPool pool)
     {
       if (pool == null) {
-        System.out.println("\n(null)");
+        output_.println("\n(null)");
         return;
       }
       try
       {
-        System.out.println("\nAttributes of pool named |" + pool.getName() + "|");
-        System.out.println("  ActiveToIneligible: " + pool.getActiveToIneligible());
-        System.out.println("  ActiveToWait: " + pool.getActiveToWait());
-        System.out.println("  DatabaseFaults: " + pool.getDatabaseFaults());
-        System.out.println("  DatabasePages: " + pool.getDatabasePages());
-        System.out.println("  Description: " + pool.getDescription());
-        System.out.println("  MaximumActiveThreads: " + pool.getMaximumActiveThreads());
-        System.out.println("  PoolActivityLevel: " + pool.getActivityLevel());
-        System.out.println("  NonDatabaseFaults: " + pool.getNonDatabaseFaults());
-        System.out.println("  NonDatabasePages: " + pool.getNonDatabasePages());
-        System.out.println("  PagingOption: " + pool.getPagingOption());
-        System.out.println("  PoolIdentifier: " + pool.getIdentifier());
-        System.out.println("  PoolSize: " + pool.getSize());
-        System.out.println("  ReservedSize: " + pool.getReservedSize());
-        System.out.println("  SubsystemLibrary: " + pool.getSubsystemLibrary());
-        System.out.println("  SubsystemName: " + pool.getSubsystemName());
-        System.out.println("  getSystem: " + pool.getSystem().getSystemName());
-        System.out.println("  WaitToIneligible: " + pool.getWaitToIneligible());
-        System.out.println("  isCaching: " + pool.isCaching());
-        System.out.println("  isShared: " + pool.isShared());
-        System.out.println();
+        output_.println("\nAttributes of pool named |" + pool.getName() + "|");
+        output_.println("  ActiveToIneligible: " + pool.getActiveToIneligible());
+        output_.println("  ActiveToWait: " + pool.getActiveToWait());
+        output_.println("  DatabaseFaults: " + pool.getDatabaseFaults());
+        output_.println("  DatabasePages: " + pool.getDatabasePages());
+        output_.println("  Description: " + pool.getDescription());
+        output_.println("  MaximumActiveThreads: " + pool.getMaximumActiveThreads());
+        output_.println("  PoolActivityLevel: " + pool.getActivityLevel());
+        output_.println("  NonDatabaseFaults: " + pool.getNonDatabaseFaults());
+        output_.println("  NonDatabasePages: " + pool.getNonDatabasePages());
+        output_.println("  PagingOption: " + pool.getPagingOption());
+        output_.println("  PoolIdentifier: " + pool.getIdentifier());
+        output_.println("  PoolSize: " + pool.getSize());
+        output_.println("  ReservedSize: " + pool.getReservedSize());
+        output_.println("  SubsystemLibrary: " + pool.getSubsystemLibrary());
+        output_.println("  SubsystemName: " + pool.getSubsystemName());
+        output_.println("  getSystem: " + pool.getSystem().getSystemName());
+        output_.println("  WaitToIneligible: " + pool.getWaitToIneligible());
+        output_.println("  isCaching: " + pool.isCaching());
+        output_.println("  isShared: " + pool.isShared());
+        output_.println();
       }
       catch (Exception e) { e.printStackTrace(); }
     }
@@ -669,14 +669,14 @@ public class SBTestcase extends Testcase
 
         if (!validateAttributeValues(sbs1, !REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
-          System.out.println("Attributes not valid before first refresh().");
+          output_.println("Attributes not valid before first refresh().");
         }
 
         sbs1.refresh();
         expectedStatuses = new String[] {"*INACTIVE"};
         if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
-          System.out.println("Attributes not valid after refresh() but before start().");
+          output_.println("Attributes not valid after refresh() but before start().");
         }
 
         sbspwr.start();
@@ -685,7 +685,7 @@ public class SBTestcase extends Testcase
         expectedStatuses = new String[] {"*ACTIVE"};
         if (!validateAttributeValues(sbs1, REFRESHED, STARTED, expectedStatuses,testLib_)) {
           ok = false;
-          System.out.println("Attributes not valid after start().");
+          output_.println("Attributes not valid after start().");
         }
 
         sbspwr.endImmediately();
@@ -694,7 +694,7 @@ public class SBTestcase extends Testcase
         expectedStatuses = new String[] {"*INACTIVE", "*ENDING"};
         if (!validateAttributeValues(sbs1, REFRESHED, !STARTED, expectedStatuses,testLib_)) {
           ok = false;
-          System.out.println("Attributes not valid after endImmediately().");
+          output_.println("Attributes not valid after endImmediately().");
         }
 
         if (ok) succeeded();
@@ -722,14 +722,14 @@ public class SBTestcase extends Testcase
 
         if (!validateAttributeValues(sbs1, !REFRESHED, STARTED, expectedStatuses, sbslib, sbsName)) {
           ok = false;
-          System.out.println("Attributes not valid before first refresh().");
+          output_.println("Attributes not valid before first refresh().");
         }
 
         sbs1.refresh();
         expectedStatuses = new String[] {"*ACTIVE"};
         if (!validateAttributeValues(sbs1, REFRESHED, STARTED, expectedStatuses, sbslib, sbsName)) {
           ok = false;
-          System.out.println("Attributes not valid after refresh() but before start().");
+          output_.println("Attributes not valid after refresh() but before start().");
         }
 
         if (ok) succeeded();
@@ -755,13 +755,13 @@ public class SBTestcase extends Testcase
 
         if (!attributeValuesMatch(sbs1, sbs2)) {
           ok = false;
-          System.out.println("Attributes mismatch before first refresh().");
+          output_.println("Attributes mismatch before first refresh().");
         }
         sbs1.refresh();
         sbs2.refresh();
         if (!attributeValuesMatch(sbs1, sbs2)) {
           ok = false;
-          System.out.println("Attributes mismatch after refresh() but before start().");
+          output_.println("Attributes mismatch after refresh() but before start().");
         }
 
         sbspwr.start();
@@ -770,7 +770,7 @@ public class SBTestcase extends Testcase
         sbs2.refresh();
         if (!attributeValuesMatch(sbs1, sbs2)) {
           ok = false;
-          System.out.println("Attributes mismatch after start().");
+          output_.println("Attributes mismatch after start().");
         }
 
         sbspwr.endImmediately();
@@ -779,7 +779,7 @@ public class SBTestcase extends Testcase
         sbs2.refresh();
         if (!attributeValuesMatch(sbs1, sbs2)) {
           ok = false;
-          System.out.println("Attributes mismatch after endImmediately().");
+          output_.println("Attributes mismatch after endImmediately().");
         }
 
         if (ok) succeeded();
@@ -849,13 +849,13 @@ public class SBTestcase extends Testcase
       {
         Subsystem sbs1 = new Subsystem(systemObject_, testLib_, "NONESUCH");
         if (sbs1.exists()) {
-          System.out.println("exists() reported true for subsystem NONESUCH");
+          output_.println("exists() reported true for subsystem NONESUCH");
           ok = false;
         }
 
         Subsystem sbs2 = new Subsystem(systemObject_, "QSYS", "QINTER");
         if (!sbs2.exists()) {
-          System.out.println("exists() reported false for subsystem QINTER");
+          output_.println("exists() reported false for subsystem QINTER");
           ok = false;
         }
 
@@ -971,13 +971,13 @@ public class SBTestcase extends Testcase
         sbspwr.changeDisplayFilePath(newValue);
         sbs.refresh();
         if (!sbs.getDisplayFilePath().equals(newValue)) {
-          System.out.println("First set failed");
+          output_.println("First set failed");
           ok = false;
         }
         sbspwr.changeDisplayFilePath(oldValue);
         sbs.refresh();
         if (!sbs.getDisplayFilePath().equals(oldValue)) {
-          System.out.println("Reset failed");
+          output_.println("Reset failed");
           ok = false;
         }
 
@@ -1005,21 +1005,21 @@ public class SBTestcase extends Testcase
         sbspwr.changeLanguageLibrary(newValue);
         sbs.refresh();
         if (!sbs.getLanguageLibrary().equals(newValue)) {
-          System.out.println("First set failed");
+          output_.println("First set failed");
           ok = false;
         }
 
         sbspwr.changeLanguageLibrary("");
         sbs.refresh();
         if (!sbs.getLanguageLibrary().equals("*NONE")) {
-          System.out.println("Second set failed");
+          output_.println("Second set failed");
           ok = false;
         }
 
         sbspwr.changeLanguageLibrary(oldValue);
         sbs.refresh();
         if (!sbs.getLanguageLibrary().equals(oldValue)) {
-          System.out.println("Third set failed");
+          output_.println("Third set failed");
           ok = false;
         }
 
@@ -1099,65 +1099,65 @@ public class SBTestcase extends Testcase
 
         // Check attributes of pool #1.
         if (!pools[0].getName().equals("*BASE")) {
-          System.out.println("[A] Name of pool 1 not correct.  Expected: *BASE ; Got: " + pools[0].getName());
+          output_.println("[A] Name of pool 1 not correct.  Expected: *BASE ; Got: " + pools[0].getName());
           ok = false;
         }
 
 
         // Check attributes of pool #2.
         if (!pools[1].getName().equals("2")) {
-          System.out.println("[A] Name of pool 2 not correct.  Expected: 2 ; Got: " + pools[1].getName());
+          output_.println("[A] Name of pool 2 not correct.  Expected: 2 ; Got: " + pools[1].getName());
           ok = false;
         }
 
         if (pools[1].getSize() != 256) {
-          System.out.println("[A] Size of pool 2 not correct.  Expected: 256 ; Got: " + pools[1].getSize());
+          output_.println("[A] Size of pool 2 not correct.  Expected: 256 ; Got: " + pools[1].getSize());
           ok = false;
         }
 
         if (pools[1].getActivityLevel() != 5) {
-          System.out.println("[A] Activity level of pool 2 not correct.  Expected: 5 ; Got: " + pools[1].getActivityLevel());
+          output_.println("[A] Activity level of pool 2 not correct.  Expected: 5 ; Got: " + pools[1].getActivityLevel());
           ok = false;
         }
 
 
         // Check attributes of pool #3.
         if (!pools[2].getName().equals("*SHRPOOL1")) {
-          System.out.println("[A] Name of pool 3 not correct.  Expected: *SHRPOOL1 ; Got: " + pools[2].getName());
+          output_.println("[A] Name of pool 3 not correct.  Expected: *SHRPOOL1 ; Got: " + pools[2].getName());
           ok = false;
         }
 
         // Note: For shared pools, the actually-allocated size is unpredictable (it depends on how much system storage is available).  Check that it's between 0 and the requested ("defined") size.
         if (pools[2].getSize() < 0 || pools[2].getSize() > NEWSIZE) {
-          System.out.println("[A] Size of pool 3 not correct.  Expected: " + NEWSIZE + " ; Got: " + pools[2].getSize());
+          output_.println("[A] Size of pool 3 not correct.  Expected: " + NEWSIZE + " ; Got: " + pools[2].getSize());
           ok = false;
         }
 
         if (pools[2].getActivityLevel() != 1 && changedSharedPoolAttributes) {
-          System.out.println("[A] Activity level of pool 3 not correct.  Expected: 1 ; Got: " + pools[2].getActivityLevel());
+          output_.println("[A] Activity level of pool 3 not correct.  Expected: 1 ; Got: " + pools[2].getActivityLevel());
           ok = false;
         }
 
 
         // Check attributes of pool #4.
         if (!pools[3].getName().equals("4")) {
-          System.out.println("[A] Name of pool 4 not correct.  Expected: 4 ; Got: " + pools[3].getName());
+          output_.println("[A] Name of pool 4 not correct.  Expected: 4 ; Got: " + pools[3].getName());
           ok = false;
         }
 
         if (pools[3].getSize() != 1024) {
-          System.out.println("[A] Size of pool 4 not correct.  Expected: 1024 ; Got: " + pools[3].getSize());
+          output_.println("[A] Size of pool 4 not correct.  Expected: 1024 ; Got: " + pools[3].getSize());
           ok = false;
         }
 
         if (pools[3].getActivityLevel() != 6) {
-          System.out.println("[A] Activity level of pool 4 not correct.  Expected: 6 ; Got: " + pools[3].getActivityLevel());
+          output_.println("[A] Activity level of pool 4 not correct.  Expected: 6 ; Got: " + pools[3].getActivityLevel());
           ok = false;
         }
 
         for (int i=4; i<10; i++) {
           if (pools[i] != null) {
-            System.out.println("[A] pools["+i+"] is non-null.");
+            output_.println("[A] pools["+i+"] is non-null.");
             ok = false;
           }
         }
@@ -1177,55 +1177,55 @@ public class SBTestcase extends Testcase
 
         // Check attributes of pool #1.
         if (!pools[0].getName().equals("*BASE")) {
-          System.out.println("[B] Name of pool 1 not correct.  Expected: *BASE ; Got: " + pools[0].getName());
+          output_.println("[B] Name of pool 1 not correct.  Expected: *BASE ; Got: " + pools[0].getName());
           ok = false;
         }
 
 
         // Check attributes of pool #2.
         if (pools[1] != null) {
-          System.out.println("[B] Pool 2 not null.  Got: " + pools[1].getName());
+          output_.println("[B] Pool 2 not null.  Got: " + pools[1].getName());
           ok = false;
         }
 
 
         // Check attributes of pool #3.
         if (!pools[2].getName().equals("*SHRPOOL1")) {
-          System.out.println("[B] Name of pool 3 not correct.  Expected: *SHRPOOL1 ; Got: " + pools[2].getName());
+          output_.println("[B] Name of pool 3 not correct.  Expected: *SHRPOOL1 ; Got: " + pools[2].getName());
           ok = false;
         }
 
         // Note: For shared pools, the actually-allocated size is unpredictable (it depends on how much system storage is available).  Check that it's between 0 and the requested ("defined") size.
         if (pools[2].getSize() < 0 || pools[2].getSize() > NEWSIZE) {
-          System.out.println("[B] Size of pool 3 not correct.  Expected: " + NEWSIZE + " ; Got: " + pools[2].getSize());
+          output_.println("[B] Size of pool 3 not correct.  Expected: " + NEWSIZE + " ; Got: " + pools[2].getSize());
           ok = false;
         }
 
         if (pools[2].getActivityLevel() != 1 && changedSharedPoolAttributes) {
-          System.out.println("[B] Activity level of pool 3 not correct.  Expected: 1 ; Got: " + pools[2].getActivityLevel());
+          output_.println("[B] Activity level of pool 3 not correct.  Expected: 1 ; Got: " + pools[2].getActivityLevel());
           ok = false;
         }
 
 
         // Check attributes of pool #4.
         if (!pools[3].getName().equals("4")) {
-          System.out.println("[B] Name of pool 4 not correct.  Expected: 4 ; Got: " + pools[3].getName());
+          output_.println("[B] Name of pool 4 not correct.  Expected: 4 ; Got: " + pools[3].getName());
           ok = false;
         }
 
         if (pools[3].getSize() != 1024) {
-          System.out.println("[B] Size of pool 4 not correct.  Expected: 1024 ; Got: " + pools[3].getSize());
+          output_.println("[B] Size of pool 4 not correct.  Expected: 1024 ; Got: " + pools[3].getSize());
           ok = false;
         }
 
         if (pools[3].getActivityLevel() != 6) {
-          System.out.println("[B] Activity level of pool 4 not correct.  Expected: 6 ; Got: " + pools[3].getActivityLevel());
+          output_.println("[B] Activity level of pool 4 not correct.  Expected: 6 ; Got: " + pools[3].getActivityLevel());
           ok = false;
         }
 
         for (int i=4; i<10; i++) {
           if (pools[i] != null) {
-            System.out.println("[B] pools["+i+"] is non-null.");
+            output_.println("[B] pools["+i+"] is non-null.");
             ok = false;
           }
         }
@@ -1251,9 +1251,9 @@ public class SBTestcase extends Testcase
       {
         Subsystem[] list = Subsystem.listAllSubsystems(systemObject_);
         if (DEBUG) {
-          System.out.println("All subsystems on "+systemObject_.getSystemName()+":");
+          output_.println("All subsystems on "+systemObject_.getSystemName()+":");
           for (int i=0; i<list.length; i++) {
-            System.out.println("  "+list[i].getLibrary()+"/"+list[i].getName());
+            output_.println("  "+list[i].getLibrary()+"/"+list[i].getName());
           }
         }
 

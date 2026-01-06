@@ -209,7 +209,7 @@ public class JDCSGetTestcase extends JDTestcase {
        if (b == null) {
            return true; 
        } else {
-           System.out.println("JDCSGetTestcase.compare():  clob is null"); 
+           output_.println("JDCSGetTestcase.compare():  clob is null"); 
            return false;
            
        } 
@@ -218,14 +218,14 @@ public class JDCSGetTestcase extends JDTestcase {
          boolean equals = s.equals (b); 
          if (!equals) {
          if (s.length() < 256 ) { 
-           System.out.println(s);
+           output_.println(s);
          } else {
-           System.out.println(s.substring(0,256)+"....");
+           output_.println(s.substring(0,256)+"....");
          }
          if (b.length() < 256 ) { 
-           System.out.println(b);
+           output_.println(b);
          } else {
-           System.out.println(b.substring(0,256)+"....");
+           output_.println(b.substring(0,256)+"....");
          }
          }
          return equals ;    // @B1C

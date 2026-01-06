@@ -50,8 +50,8 @@ public class ConvTableDoubleBytesTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Testcase setup error: " + e.getMessage());
-            e.printStackTrace(System.out);
+            output_.println("Testcase setup error: " + e.getMessage());
+            e.printStackTrace(output_);
             if (endIfSetupFails_ == true)
             {
                 return;
@@ -142,7 +142,7 @@ public class ConvTableDoubleBytesTestcase extends Testcase
 	  table[0xd800] = '\uFFFD'; 
 	  table[0xd801] = '\uFFFD';
       } else {
-	  System.out.println("Warning:  table length for CCSID 61952 is "+table.length);
+	  output_.println("Warning:  table length for CCSID 61952 is "+table.length);
       } 
   }
 	if (ccsid == 61952 || table.length <= baseSize) {

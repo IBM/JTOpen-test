@@ -118,8 +118,8 @@ public class JDCCoverage extends JDJSTPTestcase {
     //
     {
 	Connection setupConnection_ =    (Connection) testDriver_.getConnection(baseURL_ , userId_, encryptedPassword_);
-	JDSetupCollection.create(setupConnection_,collection,false);
-  JDSetupCollection.create(setupConnection_,collection2,false);
+	JDSetupCollection.create(setupConnection_,collection,false, output_);
+  JDSetupCollection.create(setupConnection_,collection2,false, output_);
 	setupConnection_.close();
     }
 
@@ -137,7 +137,7 @@ public class JDCCoverage extends JDJSTPTestcase {
     connectionConnect(connection_, "JDCCoverage");
 
     try {
-	JDSetupCollection.create(connection_, collection, false);
+	JDSetupCollection.create(connection_, collection, false, output_);
 
       connection_ = (Connection) testDriver_.getConnection(baseURL_ + "/"
           + collection, userId_, encryptedPassword_);

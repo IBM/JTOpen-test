@@ -206,7 +206,7 @@ public class RMtoRecordFormatTestcase extends Testcase
 //           recFmt.addFieldDescription(field1);
 //           Record newRec = new Record(recFmt);
 //           String[] fieldNames = recFmt2.getFieldNames();
-//           System.out.println("Field name = " + fieldNames[0] );
+//           output_.println("Field name = " + fieldNames[0] );
 //           failed("Exception not thrown.");
         }
         catch (Exception e)
@@ -692,7 +692,7 @@ public class RMtoRecordFormatTestcase extends Testcase
                   !((CharacterFieldDescription) field5).getCCSID().equals("37") ||
                   !((CharacterFieldDescription) field6).getCCSID().equals("37") )
              {
-System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID());
+output_.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID());
                 failed("Bad CCSID returned for char field.");
                 return;
              }
@@ -746,7 +746,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
 //           recFmt.addFieldDescription(field1);
 //           Record newRec = new Record(recFmt);
 //           String[] fieldNames = recFmt2.getFieldNames();
-//           System.out.println("Field name = " + fieldNames[0] );
+//           output_.println("Field name = " + fieldNames[0] );
 //           failed("Exception not thrown.");
         }
         catch (Exception e)
@@ -1826,7 +1826,7 @@ System.out.println("ccsid = " + ((CharacterFieldDescription) field2).getCCSID())
           nextLine = raFile1.readLine();
         }
 
-        ///System.out.println("File contents:\n" + buffer.toString());
+        ///output_.println("File contents:\n" + buffer.toString());
         StringBuffer expected = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><!DOCTYPE rfml SYSTEM \"rfml.dtd\"><rfml version=\"4.0\">  <recordformat name=\"FORMAT1\">    <data name=\"field1\" type=\"char\" length=\"25\"/>    <data name=\"field2\" type=\"packed\" length=\"10\" precision=\"2\" init=\"77888899908.7777\"/>    <data name=\"field3\" type=\"int\" length=\"2\" keyfield=\"true\"/>    <data name=\"field4\" type=\"int\" length=\"4\"/>    <data name=\"field5\" type=\"float\" length=\"4\"/>    <data name=\"field6\" type=\"float\" length=\"8\"/>    <data name=\"field7\" type=\"zoned\" length=\"22\" precision=\"0\"/>    <data name=\"field8\" type=\"byte\" length=\"12\" keyfield=\"true\"/>    <data name=\"field9hasALongName\" type=\"byte\" length=\"12\" keyfield=\"true\"/>  </recordformat></rfml>");
 
         assertCondition(RMToXmlTestcase.areEqualXml(buffer, expected));

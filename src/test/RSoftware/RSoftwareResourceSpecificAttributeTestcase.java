@@ -127,7 +127,7 @@ LEVEL - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LEVEL, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LEVEL, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -200,7 +200,7 @@ LOAD_ERROR_INDICATOR - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_ERROR_INDICATOR, String.class, true, 2, null, true, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_ERROR_INDICATOR, String.class, true, 2, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -250,7 +250,7 @@ LOAD_ID - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_ID, String.class, true, 1, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_ID, String.class, true, 1, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -320,7 +320,7 @@ LOAD_STATE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_STATE, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_STATE, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -371,7 +371,7 @@ LOAD_TYPE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_TYPE, String.class, true, 2, null, true, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.LOAD_TYPE, String.class, true, 2, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -440,7 +440,7 @@ MINIMUM_BASE_VRM - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.MINIMUM_BASE_VRM, String.class, true, 1, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.MINIMUM_BASE_VRM, String.class, true, 1, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -508,7 +508,7 @@ MINIMUM_TARGET_RELEASE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.MINIMUM_TARGET_RELEASE, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.MINIMUM_TARGET_RELEASE, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -559,7 +559,7 @@ PRIMARY_LANGUAGE_LOAD_ID - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRIMARY_LANGUAGE_LOAD_ID, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRIMARY_LANGUAGE_LOAD_ID, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -628,7 +628,7 @@ PRODUCT_ID - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRODUCT_ID, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRODUCT_ID, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -696,7 +696,7 @@ PRODUCT_OPTION - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRODUCT_OPTION, String.class, true, 1, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.PRODUCT_OPTION, String.class, true, 1, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -765,7 +765,7 @@ REGISTRATION_TYPE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REGISTRATION_TYPE, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REGISTRATION_TYPE, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -816,7 +816,7 @@ REGISTRATION_VALUE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REGISTRATION_VALUE, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REGISTRATION_VALUE, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -867,7 +867,7 @@ RELEASE_LEVEL - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.RELEASE_LEVEL, String.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.RELEASE_LEVEL, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -935,7 +935,7 @@ REQUIREMENTS_MET - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REQUIREMENTS_MET, String.class, true, 4, null, true, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.REQUIREMENTS_MET, String.class, true, 4, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1002,7 +1002,7 @@ SUPPORTED_FLAG - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.SUPPORTED_FLAG, Boolean.class, true, 0, null, false, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.SUPPORTED_FLAG, Boolean.class, true, 0, null, false, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1081,7 +1081,7 @@ SUPPORTED_FLAG - Get the attribute value, for an unsupported load.
     //     Product[] prods = list.getProducts();
     //     for (int i=0; i<prods.length; i++) {
     //       Product prod = prods[i];
-    //       if (!prod.isSupported()) System.out.println(prod.toString());
+    //       if (!prod.isSupported()) output_.println(prod.toString());
     //     }
 
 
@@ -1095,7 +1095,7 @@ SYMBOLIC_LOAD_STATE - Check the attribute meta data in the entire list.
         try {
             RSoftwareResource u = new RSoftwareResource();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.SYMBOLIC_LOAD_STATE, String.class, true, 6, null, true, false));
+            assertCondition(RSoftwareResourceGenericAttributeTestcase.verifyAttributeMetaData(amd, RSoftwareResource.SYMBOLIC_LOAD_STATE, String.class, true, 6, null, true, false,output_));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");

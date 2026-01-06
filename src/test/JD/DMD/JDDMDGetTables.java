@@ -131,7 +131,7 @@ Constructor.
 
 
     protected String getCatalogFromURL(String url) {
-      // System.out.println("BaseURL is "+baseURL_);
+      // output_.println("BaseURL is "+baseURL_);
       // must be running JCC, set to a valid value.
       int lastColon;
       if (JDTestDriver.isLUW()) {
@@ -177,7 +177,7 @@ Performs setup needed before running variations.
             connectionCatalog_=null;
         } else {
             connectionCatalog_ = getCatalogFromURL(baseURL_);
-            System.out.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
+            output_.println("Warning:  connection.getCatalog() returned null setting to "+connectionCatalog_);
         }
     }
 
@@ -307,7 +307,7 @@ Performs setup needed before running variations.
                 s.executeUpdate(sql);
             }
             catch(Exception e){
-                System.out.println("Warning.. create table failed " + sql);
+                output_.println("Warning.. create table failed " + sql);
                 e.printStackTrace();
             }
         }
@@ -361,7 +361,7 @@ Performs cleanup needed after running variations.
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
             }
             catch(Exception e){
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
         }
@@ -1505,7 +1505,7 @@ tables should be returned.
 		    if ((table.equals (JDDMDTest.COLLECTION + ".TABLES"))){	// @C1
 			if ( type.equals("TABLE") )	{			// @C1
 check1 = true;					// @C1
-// System.out.println("... check 1  type = "+type+" sb TABLE");
+// output_.println("... check 1  type = "+type+" sb TABLE");
       }
 		    }
                     else if ((table.equals (JDDMDTest.COLLECTION2 + ".TABLESV2"))
@@ -1513,7 +1513,7 @@ check1 = true;					// @C1
                         check2 = true;
                     else if ((table.equals (JDDMDTest.COLLECTIONXX + ".SYSTABLES"))
 			     && (type.equals ("SYSTEM TABLE")))
-			// System.out.println(table+" "+type);
+			// output_.println(table+" "+type);
 			check3 = true;
 		}
 	    }
@@ -1708,7 +1708,7 @@ exactly.  All matching tables should be returned.
 		    if ((table.equals (JDDMDTest.COLLECTION + ".TABLES"))){	// @C1
 			if ( type.equals("TABLE") ) {			// @C1
 check1 = true;					// @C1
-// System.out.println("... type = "+type+" sb TABLE");
+// output_.println("... type = "+type+" sb TABLE");
       }
 		    }
                     else if ((table.equals (JDDMDTest.COLLECTION2 + ".TABLESV2"))
@@ -1717,7 +1717,7 @@ check1 = true;					// @C1
                     else if ((table.equals (JDDMDTest.COLLECTIONXX + ".SYSTABLES"))
                              && (type.equals ("SYSTEM TABLE") || type.equals ("VIEW") ))
                         check3 = true;
-		 //   System.out.println(table+" "+type);
+		 //   output_.println(table+" "+type);
                 }
             }
 
@@ -1888,7 +1888,7 @@ to one ResultSet per DatabaseMetaData object at a time.
                 String type = rs.getString ("TABLE_TYPE");
 
 		if( !type.equals("TABLE") && !type.equals("SYSTEM TABLE") &&!type.equals("VIEW") &&!type.equals("ALIAS") && !type.equals("MATERIALIZED QUERY TABLE")){
-                    System.out.println("type = "+type+" and table="+table);
+                    output_.println("type = "+type+" and table="+table);
 		    success = false;
 		}
 
@@ -1896,7 +1896,7 @@ to one ResultSet per DatabaseMetaData object at a time.
 
             rs.close ();
 
-	    // System.out.println("ALL: rows = "+rows);
+	    // output_.println("ALL: rows = "+rows);
 
 	    assertCondition(rows != 0 && success );
 	    allRows = rows;
@@ -1927,13 +1927,13 @@ to one ResultSet per DatabaseMetaData object at a time.
                 String type = rs.getString ("TABLE_TYPE");
 
 		if( !type.equals("TABLE") ){
-		    System.out.println("type = "+type+" sb TABLE table="+table);
+		    output_.println("type = "+type+" sb TABLE table="+table);
 		    success = false;
 		    break;
 		}
 
 	    }
-	    // System.out.println("TABLE only: rows = "+rows);
+	    // output_.println("TABLE only: rows = "+rows);
 	    assertCondition(rows != 0 && success);
 	    allRows -= rows;
 
@@ -1970,12 +1970,12 @@ to one ResultSet per DatabaseMetaData object at a time.
                 String type = rs.getString ("TABLE_TYPE");
 
 		if( !type.equals("SYSTEM TABLE") ){
-                    System.out.println("Non system table found "+table);
+                    output_.println("Non system table found "+table);
 		    success = false;
 		    break;
 		}
 	    }
-	    // System.out.println("SYSTEM TABLE: rows = "+rows);
+	    // output_.println("SYSTEM TABLE: rows = "+rows);
 	    assertCondition(rows != 0 && success, "rows="+rows+" > 0 success="+success);
 	    allRows -= rows;
 
@@ -2005,12 +2005,12 @@ to one ResultSet per DatabaseMetaData object at a time.
 
 		if( !type.equals("VIEW") ){
 		    if (table.indexOf("LOGICAL") < 0) { 
-			System.out.println("type="+type+" table="+table);
+			output_.println("type="+type+" table="+table);
 			success = false;
 		    }
 		}
 	    }
-	    // System.out.println("VIEW: rows = "+rows);
+	    // output_.println("VIEW: rows = "+rows);
             if(getDriver() == JDTestDriver.DRIVER_TOOLBOX || getDriver() == JDTestDriver.DRIVER_JCC  || isSysibmMetadata() )
                 assertCondition(rows != 0 && success, "success="+success+" rows="+rows);
             else
@@ -2031,7 +2031,7 @@ This testcase is like Var025, but checks columns 6 - 10 for JDBC 3.0
 
 	String s = rs.getString(column);
 	if (s != null) {
-	    System.out.println("Column "+column+" is not null but "+s);
+	    output_.println("Column "+column+" is not null but "+s);
 	    success = false;
 	}
 
@@ -2043,7 +2043,7 @@ This testcase is like Var025, but checks columns 6 - 10 for JDBC 3.0
 
 	String s = rs.getString(column);
 	if (s != null) {
-	    System.out.println("Column "+column+" is not null but "+s);
+	    output_.println("Column "+column+" is not null but "+s);
 	    success = false;
 	}
 
@@ -2055,11 +2055,11 @@ This testcase is like Var025, but checks columns 6 - 10 for JDBC 3.0
 
 	String s = rs.getString(column);
 	if (s != null) {
-	    System.out.println("Column "+column+" is not null but "+s);
+	    output_.println("Column "+column+" is not null but "+s);
 	    success = false;
 	} else {
 	    if ( ! rs.wasNull()) {
-		System.out.println("wasNull for column "+column+" returned false instead of true");
+		output_.println("wasNull for column "+column+" returned false instead of true");
 		success = false;
 	    }
 	}
@@ -2072,11 +2072,11 @@ This testcase is like Var025, but checks columns 6 - 10 for JDBC 3.0
 
 	String s = rs.getString(column);
 	if (s != null) {
-	    System.out.println("Column "+column+" is not null but "+s);
+	    output_.println("Column "+column+" is not null but "+s);
 	    success = false;
 	} else {
 	    if ( ! rs.wasNull()) {
-		System.out.println("wasNull for column "+column+" returned false instead of true");
+		output_.println("wasNull for column "+column+" returned false instead of true");
 		success = false;
 	    }
 	}
@@ -2147,7 +2147,7 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 		    success = checkColumnForNull(rs, "TYPE_SCHEM", success);
 		    success = checkColumnForNull(rs, "TYPE_NAME", success);
 		    if (JDTestDriver.isLUW()) {
-			System.out.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
+			output_.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
 			success = checkColumnForNull(rs, "SELF_REF_COL_NAME", success);
 		    } else {
 			success = checkColumnForNull(rs, "SELF_REFERENCING_COL_NAME", success);
@@ -2556,7 +2556,7 @@ getTables() - check the metadata for the RS -- getColumnLabel
 	String expected14LUW[] = {null, "TABLE_CAT",  "TABLE_SCHEM",  "TABLE_NAME",  "TABLE_TYPE",  "REMARKS",  "TYPE_CAT",  "TYPE_SCHEM",  "TYPE_NAME",  "SELF_REF_COL_NAME",  "REF_GENERATION"};
 
 	if (JDTestDriver.isLUW()) {
-	    System.out.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
+	    output_.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
 
 	    checkExpectedMDStrings(expected13, expected14LUW, expected14LUW, GETCOLUMNLABEL);
 	} else {
@@ -2573,7 +2573,7 @@ getTables() - check the metadata for the RS -- getColumnName
        String expected13[] = {null,  "TABLE_CAT",  "TABLE_SCHEM",  "TABLE_NAME",  "TABLE_TYPE",  "REMARKS"};
        String expected14[] = {null, "TABLE_CAT",  "TABLE_SCHEM",  "TABLE_NAME",  "TABLE_TYPE",  "REMARKS",  "TYPE_CAT",  "TYPE_SCHEM",  "TYPE_NAME",  "SELF_REFERENCING_COL_NAME",  "REF_GENERATION"};
 	if (JDTestDriver.isLUW()) {
-	    System.out.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
+	    output_.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
 	    String expected14LUW[] = {null, "TABLE_CAT",  "TABLE_SCHEM",  "TABLE_NAME",  "TABLE_TYPE",  "REMARKS",  "TYPE_CAT",  "TYPE_SCHEM",  "TYPE_NAME",  "SELF_REF_COL_NAME",  "REF_GENERATION"};
 	    checkExpectedMDStrings(expected13, expected14LUW, expected14LUW, GETCOLUMNNAME);
 	} else {
@@ -2731,7 +2731,7 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 		    success = checkColumnForNull2(rs, "TYPE_SCHEM", success);
 		    success = checkColumnForNull2(rs, "TYPE_NAME", success);
 		    if (JDTestDriver.isLUW()) {
-			System.out.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
+			output_.println("Warning:  LUW has bug and accesses SELF_REF_COL_NAME");
 			success = checkColumnForNull2(rs, "SELF_REF_COL_NAME", success);
 		    } else {
 			success = checkColumnForNull2(rs, "SELF_REFERENCING_COL_NAME", success);
@@ -3683,7 +3683,7 @@ setupVersion ="expectedRows71";
 		    } else if (!is400 && exceptionAction.equals("Q")) {
 			// ignore this too
 		    } else {
-			System.out.println("Exception action = "+exceptionAction+" Exception "+e+" on "+sql+"\n");
+			output_.println("Exception action = "+exceptionAction+" Exception "+e+" on "+sql+"\n");
 			message.append("Exception "+e+" on "+sql+"\n");
 			throw e;
 		    }
@@ -3998,7 +3998,7 @@ getTables() - check the metadata for the RS -- getCatalogName
            catalog =  connection_.getCatalog();
            if (catalog == null) {
          catalog = getCatalogFromURL(baseURL_);
-         System.out.println("Retrieved "+catalog+" from URL:"+baseURL_);
+         output_.println("Retrieved "+catalog+" from URL:"+baseURL_);
            }
        } catch (Exception e) {
            e.printStackTrace();
@@ -4148,7 +4148,7 @@ Created 1/27/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getTables");
+		    // output_.println("Calling getTables");
 		    ResultSet rs = dmd_.getTables(catalog, schema, table, types);
 
 		    rs.close();

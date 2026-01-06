@@ -98,7 +98,7 @@ Performs setup needed before running variations.
 							   ResultSet.CONCUR_READ_ONLY);
 		statement2_.setMaxRows (50);
 	    } catch (Exception e) {
-		System.out.println("Warning: Exception during setup");
+		output_.println("Warning: Exception during setup");
 		e.printStackTrace(); 
 	    } 
         }
@@ -475,7 +475,7 @@ true.
     success = rs.absolute (3);
     s1 = rs.getString ("TABLE_TYPE");
                 if (s1 == null) {
-                  System.out.println("TABLE_TYPE returned null"); 
+                  output_.println("TABLE_TYPE returned null"); 
                   s1=""; 
                 }
                 rs.close ();
@@ -534,7 +534,7 @@ the cursor on the last row and return true.
     success = rs.absolute (-1);
     s1 = rs.getString ("TABLE_TYPE");
                 if (s1 == null) {
-                  System.out.println("TABLE_TYPE returned null"); 
+                  output_.println("TABLE_TYPE returned null"); 
                   s1=""; 
                 }
                 rs.close ();

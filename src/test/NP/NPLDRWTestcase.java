@@ -260,7 +260,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -309,7 +309,7 @@ public class NPLDRWTestcase extends Testcase
           //     os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           // }
           // catch (Exception e) {
-          //     System.out.println("Error occurred creating spooled file");
+          //     output_.println("Error occurred creating spooled file");
           //     e.printStackTrace();
           // }
            
@@ -366,7 +366,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -428,7 +428,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -484,7 +484,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -542,7 +542,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -600,7 +600,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -658,7 +658,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -717,7 +717,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -769,7 +769,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -833,7 +833,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -899,7 +899,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -965,7 +965,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -1030,7 +1030,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            
@@ -1095,7 +1095,7 @@ public class NPLDRWTestcase extends Testcase
               os = new SpooledFileOutputStream(system_, parms, null, outQ);   
           }
           catch (Exception e) {
-              System.out.println("Error occurred creating spooled file");
+              output_.println("Error occurred creating spooled file");
               e.printStackTrace();
           }
            

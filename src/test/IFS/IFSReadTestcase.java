@@ -24,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter; 
 import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -103,8 +104,8 @@ Constructor.
         profileTokenSystemObject_.connectService(AS400.FILE); 
 
         } catch (Exception e) { 
-          System.out.println("Warning: exception during setup"); 
-          e.printStackTrace(System.out); 
+          output_.println("Warning: exception during setup"); 
+          e.printStackTrace(output_); 
         }
     }
 
@@ -1537,7 +1538,7 @@ Ensure that IFSRandomAccessFile.readFully(byte[]) blocks at end of file.
       int totalBytes = 0;
 
       // Start the readFully thread
-      IFSReadFullyThread readThread = new IFSReadFullyThread(55, file, done);
+      IFSReadFullyThread readThread = new IFSReadFullyThread(55, file, done, output_);
       readThread.start();
 
       // Give the readFully thread time to get running
@@ -1749,7 +1750,7 @@ file.
       int totalBytes = 0;
 
       // Start the readFully thread
-      IFSReadFullyThread readThread = new IFSReadFullyThread(62, file, done);
+      IFSReadFullyThread readThread = new IFSReadFullyThread(62, file, done, output_);
       readThread.start();
 
       // Give the readFully thread time to get running
@@ -2810,7 +2811,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
         ready1 = is.ready();
         singleChar = is.read();
         ready2 = is.ready();
-        if (DEBUG) System.out.println("singleChar == " + singleChar);
+        if (DEBUG) output_.println("singleChar == " + singleChar);
       }
       catch(java.io.UnsupportedEncodingException e)
       {
@@ -2856,7 +2857,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
        int numCharsRead = is.read(charBuf);
        ready2 = is.ready();
        String str = String.valueOf(charBuf, 0, numCharsRead);
-       if (DEBUG) System.out.println("str == |" + str + "|");
+       if (DEBUG) output_.println("str == |" + str + "|");
        assertCondition(numCharsRead == s.length() && str.equals(s) &&
                        ready1 == true && ready2 == false);
        is.close();
@@ -2888,7 +2889,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
        char[] charBuf = new char[s.length() + 20];
        int numCharsRead = is.read(charBuf);
        String str = String.valueOf(charBuf, 0, numCharsRead);
-       if (DEBUG) System.out.println("str == |" + str + "|");
+       if (DEBUG) output_.println("str == |" + str + "|");
        assertCondition(numCharsRead == s.length() &&
                        str.equals(s));
        is.close();
@@ -3082,7 +3083,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
        os.write('5');
        os.flush();
        char firstChar = (char)is.read();
-       if (DEBUG) System.out.println("First char: " + firstChar);
+       if (DEBUG) output_.println("First char: " + firstChar);
        os.close(); 
        assertCondition(firstChar == '5');
      }
@@ -3266,7 +3267,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
 
        sb.append("Classloader using URL="+urls[0]+"\n"); 
        @SuppressWarnings("resource")
-      ClassLoader ifsReadClassLoader = new IFSURLClassLoader(urls);
+      ClassLoader ifsReadClassLoader = new IFSURLClassLoader(urls,output_);
 
        Class<?> as400Class = ifsReadClassLoader.loadClass("com.ibm.as400.access.AS400"); 
        
@@ -3757,8 +3758,10 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
    
   class IFSURLClassLoader extends URLClassLoader {
     ClassLoader fallbackLoader; 
-    public IFSURLClassLoader(URL[] urls) {
+    PrintWriter output_; 
+    public IFSURLClassLoader(URL[] urls, PrintWriter output) {
       super(urls, null);
+      output_ = output; 
       fallbackLoader = URLClassLoader.newInstance(urls); 
     }
 
@@ -3767,7 +3770,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
       try { 
       return super.findClass(name);
       } catch (java.lang.ClassNotFoundException ex) {
-        System.out.println("Loading "+name); 
+        output_.println("Loading "+name); 
         return fallbackLoader.loadClass(name); 
       }
     }
@@ -3777,9 +3780,11 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
     boolean[] done = null;
     IFSRandomAccessFile file = null;
     int varToRun;
+    PrintWriter output_ = null; 
 
-    IFSReadFullyThread(int varToRun, IFSRandomAccessFile file, boolean[] done)
+    IFSReadFullyThread(int varToRun, IFSRandomAccessFile file, boolean[] done, PrintWriter output)
     {
+      output_ = output; 
       this.varToRun = varToRun;
       this.file = file;
       this.done = done;
@@ -3807,7 +3812,7 @@ Ensure that IFSFileReader.read() returns -1 at the end of file.
       }
       catch(Exception e)
       {
-        System.out.println("Unexpected exception.");
+        output_.println("Unexpected exception.");
         done[0] = false;
       }
     }

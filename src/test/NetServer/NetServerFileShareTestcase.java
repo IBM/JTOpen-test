@@ -156,7 +156,7 @@ public class NetServerFileShareTestcase extends Testcase
             if (DEBUG) {
               for (int i=0; i<shareList.getListLength(); i++) {
                 NetServerFileShare share = (NetServerFileShare)shareList.resourceAt(i);
-                System.out.println("Share path: |" + (String)share.getAttributeValue(NetServerFileShare.PATH));
+                output_.println("Share path: |" + (String)share.getAttributeValue(NetServerFileShare.PATH));
               }
             }
             NetServerFileShare share = (NetServerFileShare)shareList.resourceAt(0);

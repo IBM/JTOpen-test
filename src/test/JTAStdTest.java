@@ -135,7 +135,7 @@ Performs setup needed before running testcases.
          JTATest.COLLECTION = COLLECTION; 
       }
       JDSetupCollection.create (systemObject_, 
-                                c, COLLECTION);
+                                c, COLLECTION, out_);
 
       c.close ();
    }

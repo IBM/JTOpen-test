@@ -935,8 +935,8 @@ public class MessageFileTestcase extends Testcase
 
             if (!m.getHelp().equalsIgnoreCase(helpText))
             {
-                System.out.println(m.getHelp().length());
-                System.out.println(helpText.length());
+                output_.println(m.getHelp().length());
+                output_.println(helpText.length());
                 String fred = m.getHelp().replace(' ', '$');
                 failed("wrong help CPI8E7E: \n" + m.getHelp() + "\n" + fred + "\n" + helpText);
                 return;
@@ -1545,9 +1545,9 @@ public class MessageFileTestcase extends Testcase
 
            Date nowDate = new Date(); 
            Date createDate = (Date) JDReflectionUtil.callMethod_O(m, "getCreateDate"); 
-           //System.out.println("createDate is "+createDate); 
+           //output_.println("createDate is "+createDate); 
            Date modifiedDate = (Date) JDReflectionUtil.callMethod_O(m, "getModificationDate");
-           //System.out.println("modifiedDate is "+modifiedDate); 
+           //output_.println("modifiedDate is "+modifiedDate); 
            
            assertCondition(nowDate.compareTo(createDate) > 0 && 
                            nowDate.compareTo(modifiedDate) > 0, 
@@ -1578,9 +1578,9 @@ public class MessageFileTestcase extends Testcase
           Date yesterdayDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000); 
           
           Date createDate = (Date) JDReflectionUtil.callMethod_O(m, "getCreateDate"); 
-          //System.out.println("createDate is "+createDate); 
+          //output_.println("createDate is "+createDate); 
           Date modifiedDate = (Date) JDReflectionUtil.callMethod_O(m, "getModificationDate");
-          //System.out.println("modifiedDate is "+modifiedDate); 
+          //output_.println("modifiedDate is "+modifiedDate); 
           
           assertCondition(yesterdayDate.compareTo(createDate) > 0 && 
                           yesterdayDate.compareTo(modifiedDate) < 0, 
@@ -1611,9 +1611,9 @@ public class MessageFileTestcase extends Testcase
          Date yesterdayDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000); 
          
          Date createDate = (Date) JDReflectionUtil.callMethod_O(m, "getCreateDate"); 
-         //System.out.println("createDate is "+createDate); 
+         //output_.println("createDate is "+createDate); 
          Date modifiedDate = (Date) JDReflectionUtil.callMethod_O(m, "getModificationDate");
-         //System.out.println("modifiedDate is "+modifiedDate); 
+         //output_.println("modifiedDate is "+modifiedDate); 
          
          assertCondition(yesterdayDate.compareTo(createDate) < 0 && 
                          yesterdayDate.compareTo(modifiedDate) < 0, 
@@ -1641,10 +1641,10 @@ public void Var048()
 
         Date nowDate = new Date(); 
         Date createDate = (Date) JDReflectionUtil.callMethod_O(m, "getCreateDate"); 
-        //System.out.println("createDate is "+createDate);
+        //output_.println("createDate is "+createDate);
         JDReflectionUtil.callMethod_V(m, "setCreateDate", nowDate); 
         Date changedCreateDate = (Date) JDReflectionUtil.callMethod_O(m, "getCreateDate");
-        //System.out.println("changedCreateDate is "+changedCreateDate); 
+        //output_.println("changedCreateDate is "+changedCreateDate); 
         
         assertCondition(nowDate.compareTo(createDate) > 0 && 
                         nowDate.compareTo(changedCreateDate) == 0, 
@@ -1672,10 +1672,10 @@ public void Var049()
 
        Date nowDate = new Date(); 
        Date modificationDate = (Date) JDReflectionUtil.callMethod_O(m, "getModificationDate"); 
-       //System.out.println("modificationDate is "+modificationDate);
+       //output_.println("modificationDate is "+modificationDate);
        JDReflectionUtil.callMethod_V(m, "setModificationDate", nowDate); 
        Date changedModificationDate = (Date) JDReflectionUtil.callMethod_O(m, "getModificationDate");
-       //System.out.println("changedmodificationDate is "+changedmodificationDate); 
+       //output_.println("changedmodificationDate is "+changedmodificationDate); 
        
        assertCondition(nowDate.compareTo(modificationDate) > 0 && 
                        nowDate.compareTo(changedModificationDate) == 0, 

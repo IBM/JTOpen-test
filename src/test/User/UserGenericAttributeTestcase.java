@@ -103,7 +103,8 @@ public class UserGenericAttributeTestcase extends Testcase
     /**
      Checks a particular attribute meta data.
      **/
-    public static boolean verifyAttributeMetaData(ResourceMetaData[] amd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, boolean valueLimited, boolean multipleAllowed)
+    public static boolean verifyAttributeMetaData(ResourceMetaData[] amd, Object attributeID, Class<?> attributeType, boolean readOnly, int possibleValueCount, Object defaultValue, 
+        boolean valueLimited, boolean multipleAllowed, java.io.PrintWriter output_)
     {
         int found = -1;
         for (int i = 0; i < amd.length && found < 0; ++i)
@@ -113,7 +114,7 @@ public class UserGenericAttributeTestcase extends Testcase
 
         if (found < 0)
         {
-            System.out.println("Attribute ID " + attributeID + " not found.");
+            output_.println("Attribute ID " + attributeID + " not found.");
             return false;
         }
 
@@ -439,7 +440,10 @@ public class UserGenericAttributeTestcase extends Testcase
             ResourceMetaData[] amd = u.getAttributeMetaData();
             //boolean found = false;
             // I did not hardcode an exact length...otherwise, we have to change this every time we add a property.
-            assertCondition(amd.length > 50 && verifyAttributeMetaData(amd, RUser.ACCOUNTING_CODE, String.class, false, 0, null, false, false) && verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_DELIVERY_METHOD, String.class, false, 4, null, true, false) && verifyAttributeMetaData(amd, RUser.USER_PROFILE_NAME, String.class, true, 0, null, false, false));
+            assertCondition(amd.length > 50 && 
+                verifyAttributeMetaData(amd, RUser.ACCOUNTING_CODE, String.class, false, 0, null, false, false,output_) && 
+                verifyAttributeMetaData(amd, RUser.MESSAGE_QUEUE_DELIVERY_METHOD, String.class, false, 4, null, true, false,output_) && 
+                verifyAttributeMetaData(amd, RUser.USER_PROFILE_NAME, String.class, true, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -547,7 +551,7 @@ public class UserGenericAttributeTestcase extends Testcase
                 boolean thisOne = verifyAttributeMetaData(u.getAttributeMetaData(amd[i].getID()), amd[i].getID(), amd[i].getType(), amd[i].isReadOnly(), amd[i].getPossibleValues().length, amd[i].getDefaultValue(), amd[i].isValueLimited(), amd[i].areMultipleAllowed());
                 if (!thisOne)
                 {
-                    System.out.println("Comparison failed for: " + amd[i] + ".");
+                    output_.println("Comparison failed for: " + amd[i] + ".");
                     success = false;
                 }
             }
@@ -955,8 +959,8 @@ public class UserGenericAttributeTestcase extends Testcase
                 {
                     if (!valueClass.isArray())
                     {
-                        System.out.println("Error getting attribute " + amd[i] + ".");
-                        System.out.println("Type array mismatch: " + valueClass + " is not an array, " + "but multiple values are allowed.");
+                        output_.println("Error getting attribute " + amd[i] + ".");
+                        output_.println("Type array mismatch: " + valueClass + " is not an array, " + "but multiple values are allowed.");
                         success = false;
                     }
                     else
@@ -964,16 +968,16 @@ public class UserGenericAttributeTestcase extends Testcase
                         Class<?> componentType = valueClass.getComponentType();
                         if (!componentType.equals(type))
                         {
-                            System.out.println("Error getting attribute " + amd[i] + ".");
-                            System.out.println("Type mismatch: " + componentType + " != " + type + ".");
+                            output_.println("Error getting attribute " + amd[i] + ".");
+                            output_.println("Type mismatch: " + componentType + " != " + type + ".");
                             success = false;
                         }
                     }
                 }
                 else if (!valueClass.equals(type))
                 {
-                    System.out.println("Error getting attribute " + amd[i] + ".");
-                    System.out.println("Type mismatch: " + valueClass + " != " + type + ".");
+                    output_.println("Error getting attribute " + amd[i] + ".");
+                    output_.println("Type mismatch: " + valueClass + " != " + type + ".");
                     success = false;
                 }
 
@@ -992,8 +996,8 @@ public class UserGenericAttributeTestcase extends Testcase
 
                             if (! found)
                             {
-                                System.out.println("Error getting attribute " + amd[i] + ".");
-                                System.out.println("Value: " + asArray[k] + " is not a valid possible value.");
+                                output_.println("Error getting attribute " + amd[i] + ".");
+                                output_.println("Value: " + asArray[k] + " is not a valid possible value.");
                                 success = false;
                             }
                         }
@@ -1007,8 +1011,8 @@ public class UserGenericAttributeTestcase extends Testcase
 
                         if (! found)
                         {
-                            System.out.println("Error getting attribute " + amd[i] + ".");
-                            System.out.println("Value: " + value + " is not a valid possible value.");
+                            output_.println("Error getting attribute " + amd[i] + ".");
+                            output_.println("Value: " + value + " is not a valid possible value.");
                             success = false;
                         }
                     }

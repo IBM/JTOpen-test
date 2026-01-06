@@ -77,11 +77,11 @@ Constructor.
 
 
     void executeCommand(String command) throws Exception { 
-	System.out.flush();
-	System.out.println("Attempting:"+command); 
+	output_.flush();
+	output_.println("Attempting:"+command); 
 	Process p = JDJSTPTestcase.exec(command);
 	JDJSTPTestcase.showProcessOutput(p,"stdout", JDJSTPOutputThread.ENCODING_UNKNOWN); 
-	System.out.flush();
+	output_.flush();
 	p.waitFor();
     }
 
@@ -90,14 +90,14 @@ Constructor.
 
     protected void executeSetupCommand(String command) {
 	try {
-	    System.out.println("SetupCommand:  "+command); 
+	    output_.println("SetupCommand:  "+command); 
 	    String sql = "CALL QSYS.QCMDEXC('"+command+
 	      "                                                                          ',"+
 	      " 0000000080.00000)"; 
 	    statement_.executeUpdate(sql);
 
 	} catch (Exception e) {
-	    e.printStackTrace(System.out);
+	    e.printStackTrace(output_);
 	}
 
     } 
@@ -110,7 +110,7 @@ Performs setup needed before running variations.
     throws Exception
     {
 
-       System.out.println("setup");
+       output_.println("setup");
 
        collection = JDLobTest.COLLECTION;
        if (collection.length() < 10) {
@@ -123,19 +123,19 @@ Performs setup needed before running variations.
        userid5035="JJAPAN"+letter;
 
        if (isJdbc20 ()) {
-       System.out.println("jdbc20"); 
+       output_.println("jdbc20"); 
             if (areLobsSupported ()) {
-		System.out.println("lobs supported"); 
+		output_.println("lobs supported"); 
 		if (getDriver () == JDTestDriver.DRIVER_NATIVE) {
 
-		    System.out.println("nativeDriver"); 
+		    output_.println("nativeDriver"); 
 		    password5035="PASS"+ ( System.currentTimeMillis() % 10000);
 
 
 		    try {
-			System.out.println("Current user is "+System.getProperty("user.name")); 
-			System.out.println("Attempting setIGC(5035)");
-			System.out.flush(); 
+			output_.println("Current user is "+System.getProperty("user.name")); 
+			output_.println("Attempting setIGC(5035)");
+			output_.flush(); 
 			JDJobName.setIGC(5035);
 
 			String command = "system CRTUSRPRF "+userid5035+" 'CCSID(5035)' 'PASSWORD(GARBAGE)'"; 
@@ -301,7 +301,7 @@ get a remote clob with 5035 data
 			Statement stmt = connection.createStatement();
 			try {
 
-			    JDSetupCollection.create(connection, collection, false);
+			    JDSetupCollection.create(connection, collection, false, output_);
 			    connection.commit(); 
 			} catch (Exception e) {
 			    // assume it exists 
