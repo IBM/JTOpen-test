@@ -870,13 +870,15 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
     {
         try
         {
+            // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+            String expected = "IBM037";
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, "Cp037");
             String enc = ctr.getEncoding();
             ctr.close();
-            if (enc == null || !enc.equals("Cp037"))
+            if (enc == null || !enc.equals(expected))
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+ " sb "+expected);
             }
             else
             {
@@ -901,13 +903,17 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
     {
         try
         {
-            FileInputStream fis = new FileInputStream(testfile_);
+          // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          String expected = "UTF-16";
+
+          
+          FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 13488);
             String enc = ctr.getEncoding();
             ctr.close();
-            if (enc == null || (!enc.equals("Unicode") && !enc.equals("UnicodeBig")) )
+            if (enc == null || (!enc.equals("Unicode") && !enc.equals("UnicodeBig")  && !enc.equals(expected)) )
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+" sb "+expected);
             }
             else
             {
@@ -932,13 +938,15 @@ public class ConvTableReaderTestcase extends Testcase implements Runnable
     {
         try
         {
+          // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          String expected = "IBM01142";
             FileInputStream fis = new FileInputStream(testfile_);
             ConvTableReader ctr = new ConvTableReader(fis, 1142, BidiStringType.ST11);
             String enc = ctr.getEncoding();
             ctr.close();
-            if (enc == null || !enc.equals("Cp1142"))
+            if (enc == null || !enc.equals(expected))
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+" sb "+expected);
             }
             else
             {

@@ -180,6 +180,10 @@ public class GenEncodingCcsidConversionMap {
         mappingCount++; 
       }
       finalSb.append("   encodingCcsid_.put(\""+bestName+"\", \""+ccsidInteger+"\");\n\n"); 
+      // 
+      // Add the preferred encoding name
+      // 
+      finalSb.append("   ccsidEncoding_.put(\""+ccsidInteger+"\", \""+bestName+"\");\n\n"); 
       mappingCount++; 
     }
     System.out.println("// entry count = "+mappingCount );
