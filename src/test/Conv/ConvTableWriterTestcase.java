@@ -1224,13 +1224,16 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
     {
         try
         {
+          // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          String expected = "IBM037";
+
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, "Cp037");
             String enc = ctw.getEncoding();
             ctw.close();
-            if (enc == null || !enc.equals("Cp037"))
+            if (enc == null || !enc.equals(expected))
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+" sb "+expected);
             }
             else
             {
@@ -1255,13 +1258,16 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
     {
         try
         {
+          // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          String expected = "UTF-16";
+
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 13488);
             String enc = ctw.getEncoding();
             ctw.close();
-            if (enc == null || (!enc.equals("Unicode") && !enc.equals("UnicodeBig")) )
+            if (enc == null || (!enc.equals("Unicode") && !enc.equals("UnicodeBig") && !enc.equals(expected) ))
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+ " sb "+expected);
             }
             else
             {
@@ -1286,13 +1292,16 @@ public class ConvTableWriterTestcase extends Testcase implements Runnable
     {
         try
         {
+          // Expected name is the canonical name as given by https://www.iana.org/assignments/character-sets/character-sets.xhtml
+          String expected = "IBM01142";
+
             FileOutputStream fos = new FileOutputStream(testfile_);
             ConvTableWriter ctw = new ConvTableWriter(fos, 1142, BidiStringType.ST11);
             String enc = ctw.getEncoding();
             ctw.close();
-            if (enc == null || !enc.equals("Cp1142"))
+            if (enc == null || !enc.equals(expected))
             {
-                failed("Incorrect encoding: "+enc);
+                failed("Incorrect encoding: "+enc+" sb "+expected);
             }
             else
             {
