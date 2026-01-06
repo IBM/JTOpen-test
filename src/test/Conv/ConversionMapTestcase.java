@@ -13,6 +13,8 @@
 
 package test.Conv;
 
+import java.nio.charset.Charset;
+import java.nio.charset.UnsupportedCharsetException; 
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Enumeration;
@@ -124,6 +126,8 @@ public class ConversionMapTestcase extends Testcase
 
     /**
      Verifies all of the ccsid entries in the encodingCcsid table.
+     Note: the encodingCcsid table may have several names for each CCSID, so the there is
+     no longer a one to one mapping between the two. 
      Result: Variation should be successful.
      **/
     public void Var003()
@@ -131,6 +135,8 @@ public class ConversionMapTestcase extends Testcase
         int ccsid = -1;
         try
         {
+           boolean passed = true; 
+           StringBuffer sb = new StringBuffer(); 
             @SuppressWarnings("unchecked")
             Hashtable<String,String> table = ConversionMaps.encodingCcsid_;
             Enumeration<String> enumeration = table.keys();
@@ -142,70 +148,43 @@ public class ConversionMapTestcase extends Testcase
                 try
                 {
                     Converter c = new Converter(ccsid);
-                    if (!c.getEncoding().equals(key))
+                    String converterEncoding = c.getEncoding(); 
+                    String enc = converterEncoding; 
+                    // Use the JVM to get the canonical name for the encoding. 
+                    Charset charset = Charset.forName(key); 
+                    String canonicalName = charset.name();
+                    if (!converterEncoding.equals(canonicalName))
                     {
-                        // Some encodings map to the same ccsid
-                        String enc = c.getEncoding();
-                        if ((enc.equals("Cp874") && key.equals("MS874")) ||
-                            (enc.equals("MS874") && key.equals("Cp874")) ||
-                            (enc.equals("Cp874") && key.equals("TIS620")) ||
-                            (enc.equals("TIS620") && key.equals("Cp874")) ||
-                            (enc.equals("TIS620") && key.equals("MS874")) ||
-                            (enc.equals("MS874") && key.equals("TIS620")) ||
-                            (enc.equals("Cp950") && key.equals("MS950")) ||
-                            (enc.equals("MS950") && key.equals("Cp950")) ||
-                            (enc.equals("Cp950") && key.equals("Big5")) ||
-                            (enc.equals("MS950") && key.equals("Big5")) ||
-                            (enc.equals("Big5") && key.equals("MS950")) ||
-                            (enc.equals("Big5") && key.equals("Cp950")) ||
-                            (enc.equals("MS950") && key.equals("Big5")) ||
-                            (enc.equals("Cp950") && key.equals("Big5")) ||
-                            (enc.equals("EUC_CN") && key.equals("Cp1383")) ||
-                            (enc.equals("Cp1383") && key.equals("EUC_CN")) ||
-                            (enc.equals("Cp949") && key.equals("MS949")) ||
-                            (enc.equals("MS949") && key.equals("Cp949")) ||
-                            (enc.equals("Cp949") && key.equals("KSC5601")) ||
-                            (enc.equals("KSC5601") && key.equals("Cp949")) ||
-                            (enc.equals("KSC5601") && key.equals("MS949")) ||
-                            (enc.equals("MS949") && key.equals("KSC5601")) ||
-                            (enc.equals("Cp943") && key.equals("MS932")) ||
-                            (enc.equals("MS932") && key.equals("Cp943")) ||
-                            (enc.equals("Cp943") && key.equals("SJIS")) ||
-                            (enc.equals("SJIS") && key.equals("Cp943")) ||
-                            (enc.equals("SJIS") && key.equals("MS932")) ||
-                            (enc.equals("MS932") && key.equals("SJIS")) ||
-                            (enc.equals("MS936") && key.equals("GBK")) ||
-                            (enc.equals("GBK") && key.equals("MS936")) ||
-                            (enc.equals("Cp970") && key.equals("EUC_KR")) ||
-                            (enc.equals("EUC_KR") && key.equals("Cp970")) ||
-                            (enc.equals("Cp964") && key.equals("EUC_TW")) ||
-                            (enc.equals("EUC_TW") && key.equals("Cp964")) ||
-                            (enc.equals("CNS11643") && key.equals("EUC_TW")) ||
-                            (enc.equals("EUC_TW") && key.equals("CNS11643")) ||
-                            (enc.equals("Cp964") && key.equals("CNS11643")) ||
-                            (enc.equals("CNS11643") && key.equals("Cp964")) ||
-                            (enc.equals("Cp33722") && key.equals("EUC_JP")) ||
-                            (enc.equals("EUC_JP") && key.equals("Cp33722")) ||
-                            (enc.equals("Cp1381") && key.equals("GB2312")) ||
-                            (enc.equals("GB2312") && key.equals("Cp1381")) ||
-                            (enc.equals("Unicode") && key.equals("UnicodeBig")) ||
-                            (enc.equals("UTF-8") && key.equals("UTF8")) ||
-                            (enc.equals("UnicodeBig") && key.equals("Unicode")))
-                        {
-                        }
-                        else
-                        {
-                            failed("Incorrect encoding returned for ccsid " + ccsid + ": " + c.getEncoding() + " != " + key);
-                            return;
-                        }
+                        String[][] equivalentCombos = {
+                          {"GB2312","x-IBM1381"},
+                          {"windows-31j","x-IBM943"},
+                          {"Big5","x-IBM950"},
+                       };
+                       boolean equivalent=false; 
+                       for (int i = 0; i < equivalentCombos.length; i++) { 
+                         if (canonicalName.equals(equivalentCombos[i][0]) &&
+                             enc.equals(equivalentCombos[i][1])) {
+                           equivalent = true; 
+                         }
+                       }
+                      // Some combinations are equivalent
+                      if (! equivalent) {
+                        passed = false;
+                        sb.append("For key=" + key + " ccsid=" + ccsid + " canonicalName(" + canonicalName
+                            + ") != converterEncoding(" + converterEncoding + ")\n");
+                      }
                     }
                 }
                 catch (UnsupportedEncodingException uee)
                 {
                     output_.println("Warning: JVM does not support CCSID/encoding " + ccsidStr + "/" + key + ".");
                 }
+                catch (UnsupportedCharsetException uee)
+                {
+                    output_.println("Warning: JVM does not support CCSID/encoding " + ccsidStr + "/" + key + ".");
+                }
             }
-            succeeded();
+            assertCondition(passed, sb);
         }
         catch (Exception e)
         {
@@ -261,6 +240,8 @@ public class ConversionMapTestcase extends Testcase
         String localeStr = "";
         try
         {
+            boolean passed = true; 
+            StringBuffer sb = new StringBuffer(); 
             @SuppressWarnings("unchecked")
             Hashtable<String,String> table = ConversionMaps.localeCcsidMap_;
             Enumeration<String> enumeration = table.keys();
@@ -286,11 +267,11 @@ public class ConversionMapTestcase extends Testcase
                 int ccsid = Integer.parseInt((String)table.get(localeStr));
                 if (c.getCcsid() != ccsid)
                 {
-                    failed("Incorrect ccsid returned for locale " + localeStr + ": " + c.getCcsid() + " != " + ccsid);
-                    return;
+                    sb.append("Incorrect ccsid returned for locale " + localeStr + ": " + c.getCcsid() + " != " + ccsid+"\n");
+                    passed = false; 
                 }
             }
-            succeeded();
+            assertCondition(passed, sb );
         }
         catch (Exception e)
         {
@@ -313,6 +294,8 @@ public class ConversionMapTestcase extends Testcase
         String localeStr = "";
         try
         {
+          boolean passed = true; 
+          StringBuffer sb = new StringBuffer(); 
             Hashtable<String,String> table = ConversionMaps.localeNlvMap_;
             Enumeration<String> enumeration = table.keys();
             while (enumeration.hasMoreElements())
@@ -338,11 +321,11 @@ public class ConversionMapTestcase extends Testcase
                 int ee = Integer.parseInt(ExecutionEnvironment.getNlv(Locale.getDefault()));
                 if (ee != nlv)
                 {
-                    failed("Incorrect nlv returned for locale " + localeStr + ": " + ee + " != " + nlv);
-                    return;
+                    sb.append("Incorrect nlv returned for locale " + localeStr + ": " + ee + " != " + nlv+"\n");
+                    passed=false; 
                 }
             }
-            succeeded();
+            assertCondition(passed, sb); 
         }
         catch (Exception e)
         {
@@ -364,6 +347,8 @@ public class ConversionMapTestcase extends Testcase
     {
         try
         {
+          boolean passed = true; 
+          StringBuffer sb = new StringBuffer(); 
             for (int i = 0; i < ConvTest.allCcsids_.length; ++i)
             {
                 // Class c = Class.forName("com.ibm.as400.access.ConvTable" + ConvTest.allCcsids_[i]);
@@ -380,8 +365,8 @@ public class ConversionMapTestcase extends Testcase
                 {
                     if (!tableCcsid.equals(tableEncoding))
                     {
-                        failed("Incorrect ccsid/encoding match: " + tableCcsid + " != " + tableEncoding);
-                        return;
+                        sb.append("Incorrect ccsid/encoding match: " + tableCcsid + " != " + tableEncoding+"\n");
+                        passed = false; 
                     }
                 }
                 else
@@ -394,14 +379,15 @@ public class ConversionMapTestcase extends Testcase
                         }
                         else
                         {
-                            failed("Incorrect ccsid match for encoding " + tableEncoding + ": " + lookupCcsid + " != " + tableCcsid);
-                            return;
+                            sb.append("Incorrect ccsid match for encoding " + tableEncoding + ": " + lookupCcsid + " != " + tableCcsid+"\n");
+                            passed = false; 
+                          
                         }
                     }
                 }
             }
-            succeeded();
-        }
+            assertCondition(passed, sb); 
+       }
         catch (Exception e)
         {
             failed(e, "Unexpected exception.");

@@ -24,8 +24,11 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.Collections;
 
 import com.ibm.as400.access.ConversionMaps;
+
+
 
 public class GenEncodingCcsidConversionMap {
   public static void main(String args[]) {
@@ -69,7 +72,10 @@ public class GenEncodingCcsidConversionMap {
     // Build the mapping from the charset name to the CCSID.
 
     Set<String> keySet = charsetMap.keySet();
-    Iterator<String> i = keySet.iterator();
+    Vector<String> sortedKeys = new Vector<String>(keySet); 
+    Collections.sort(sortedKeys); 
+    Collections.reverse(sortedKeys); 
+    Iterator<String> i = sortedKeys.iterator();
     while (i.hasNext()) {
       String ccsid = null;
       String name = (String) i.next();
@@ -183,7 +189,9 @@ public class GenEncodingCcsidConversionMap {
       // 
       // Add the preferred encoding name
       // 
-      finalSb.append("   ccsidEncoding_.put(\""+ccsidInteger+"\", \""+bestName+"\");\n\n"); 
+      Charset charset = Charset.forName(bestName);
+      String canonicalName = charset.name(); 
+      finalSb.append("   ccsidEncoding_.put(\""+ccsidInteger+"\", \""+canonicalName+"\");\n\n"); 
       mappingCount++; 
     }
     System.out.println("// entry count = "+mappingCount );
