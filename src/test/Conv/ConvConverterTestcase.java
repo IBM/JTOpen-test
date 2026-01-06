@@ -295,15 +295,16 @@ public class ConvConverterTestcase extends Testcase
   {
     try
     {
+      String expected = "IBM037"; 
       Converter conv = new Converter(37);
       String ret = conv.getEncoding();
-      if (ret.compareTo("Cp037") == 0)
+      if (ret.compareTo(expected) == 0)
       {
         succeeded();
       }
       else
       {
-        failed("Unexpected value");
+        failed("Unexpected value "+ret+" sb "+expected);
       }
     }
     catch (Exception e)

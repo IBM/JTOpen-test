@@ -639,6 +639,7 @@ public class DTTextTestcase extends Testcase
         String failMsg = "";
         try
         {
+            String expectedEncoding = "IBM037";  /* this is the canonical name */ 
             Locale.setDefault(Locale.US);
             AS400Text conv = null;
             String ret = "";
@@ -646,16 +647,16 @@ public class DTTextTestcase extends Testcase
             {
                 conv = new AS400Text(10);
                 ret = conv.getEncoding();
-                if (ret.compareTo("Cp037") != 0)
+                if (ret.compareTo(expectedEncoding) != 0)
                 {
-                    failMsg += "\nAS400Text getEncoding() failed: Expected Cp037, returned "+ret+".";
+                    failMsg += "\nAS400Text getEncoding() failed: Expected "+expectedEncoding+", returned "+ret+".";
                 }
 
                 conv = new AS400Text(10, 37);
                 ret = conv.getEncoding();
-                if (ret.compareTo("Cp037") != 0)
+                if (ret.compareTo(expectedEncoding) != 0)
                 {
-                    failMsg += "\nAS400Text (37) getEncoding() failed: Expected Cp037, returned "+ret+".";
+                    failMsg += "\nAS400Text (37) getEncoding() failed: Expected "+expectedEncoding+", returned "+ret+".";
                 }
 
                 conv = new AS400Text(10, "Cp037");
@@ -667,9 +668,9 @@ public class DTTextTestcase extends Testcase
             }
             conv = new AS400Text(10, 37, systemObject_);
             ret = conv.getEncoding();
-            if (ret.compareTo("Cp037") != 0)
+            if (ret.compareTo(expectedEncoding) != 0)
             {
-                failMsg += "\nAS400Text (37, AS400) getEncoding() failed: Expected Cp037, returned "+ret+".";
+                failMsg += "\nAS400Text (37, AS400) getEncoding() failed: Expected "+expectedEncoding+", returned "+ret+".";
             }
 
             if (failMsg.length() == 0)
