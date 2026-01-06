@@ -12,6 +12,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 package test.DQ;
 
+import java.io.PrintWriter;
+
 import com.ibm.as400.access.DataQueue;
 import com.ibm.as400.access.DataQueueEntry;
 
@@ -22,12 +24,14 @@ public class DQRunnable implements Runnable {
   String operation_;
   Exception savedException_ = null;
   private int opCount_ = 0;
+  PrintWriter output_; 
 
-  public DQRunnable(DataQueue dq, String operation, int runSeconds) throws Exception {
+  public DQRunnable(DataQueue dq, String operation, int runSeconds, PrintWriter output) throws Exception {
     if (operation.equals("READ") || operation.equals("WRITE")) {
       dq_ = dq;
       operation_ = operation;
       runSeconds_ = runSeconds;
+      output_ = output;
     } else {
       throw new Exception("Invalid operation " + operation);
     }
@@ -56,9 +60,9 @@ public class DQRunnable implements Runnable {
 
       }
     } catch (Exception e) {
-      synchronized (System.out) {
-        System.out.println("Thread " + operation_ + " hit error ");
-        e.printStackTrace(System.out);
+      synchronized (output_) {
+        output_.println("Thread " + operation_ + " hit error ");
+        e.printStackTrace(output_);
       }
       savedException_ = e;
     }

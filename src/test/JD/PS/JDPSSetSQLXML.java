@@ -1296,7 +1296,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
           if (isToolboxDriver()) {
-            System.out.println(
+            output_.println(
                 "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
 
           }

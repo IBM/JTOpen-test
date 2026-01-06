@@ -105,7 +105,7 @@ Performs setup needed before running variations.
 	    } catch (Exception e) {
 	        clearPassword_ = PasswordVault.decryptPasswordLeak(encryptedPassword_);
 	        if (clearPassword_ == null) {
-	          System.out.println("Warning... clearPassword_ is null!!!!");
+	          output_.println("Warning... clearPassword_ is null!!!!");
 	        }
 		JDReflectionUtil.callMethod_V(dataSource,"setPassword",clearPassword_); 
 	    }
@@ -113,7 +113,7 @@ Performs setup needed before running variations.
             // Create the table.
             connection_ = dataSource.getConnection ();
             Statement s = connection_.createStatement ();
-            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION);
+            JDSetupCollection.create(connection_, JDCPDSTest.COLLECTION, output_);
             s.executeUpdate ("CREATE TABLE " + table_
                              + " (COL1 DECIMAL(5,1), COL2 DATE, COL3 TIME)");
             s.close ();

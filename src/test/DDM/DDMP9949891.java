@@ -142,7 +142,7 @@ public class DDMP9949891 extends Testcase implements Runnable
 
     public void run()
     {
-      //System.out.println("DDMOperation thread running ("+filename_+").");
+      //output_.println("DDMOperation thread running ("+filename_+").");
       SequentialFile sf = file_;
       try
       {

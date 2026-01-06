@@ -125,7 +125,7 @@ extends JDTestcase
 	    vrm_ = testDriver_.getRelease();
 	}
         } catch (Exception e) {
-          System.out.println("ERROR:  Exception in setup with URL="+baseURL_);
+          output_.println("ERROR:  Exception in setup with URL="+baseURL_);
           throw e;
         }
     }
@@ -450,11 +450,11 @@ extends JDTestcase
                     String url = baseURL_ + ";server trace=63" + ";user=" + pwrSysUserID_
                     + ";password=" + PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
 
-                    System.out.println();
-                    System.out.println();
-                    System.out.println("Starting server trace testcase   ");
-                    System.out.println();
-                    System.out.println();
+                    output_.println();
+                    output_.println();
+                    output_.println("Starting server trace testcase   ");
+                    output_.println();
+                    output_.println();
 
                     DriverManager.registerDriver(new com.ibm.as400.access.AS400JDBCDriver());
                     connection = DriverManager.getConnection(url + ";login timeout=1000;errors=full"); //up socket timeout since v7r1 takes a long time to return
@@ -468,9 +468,9 @@ extends JDTestcase
                             cmd.run();
                             AS400Message[] messageList = cmd.getMessageList();
                             for(int i = 0; i < messageList.length; ++i)
-                                System.out.println(messageList[i]);
+                                output_.println(messageList[i]);
                         } catch (Exception e) {
-                            System.out.println("Warning:  ADDRPYLE failed with exception: "+e);
+                            output_.println("Warning:  ADDRPYLE failed with exception: "+e);
 
                         }
                         // We need to change the database server job to use
@@ -491,12 +491,12 @@ extends JDTestcase
                     connection.close();
                     connection = null;
 
-                    System.out.println();
-                    System.out.println();
+                    output_.println();
+                    output_.println();
                     System.out
                     .println("Server trace testcase complete.  Read http://daw/jdbcServerTrace.html to make sure the files are on the server.  The server job id is part of the stuff dumped to standard out. ");
-                    System.out.println();
-                    System.out.println();
+                    output_.println();
+                    output_.println();
 
                     succeeded();
                 } catch (Exception e) {
@@ -548,14 +548,14 @@ extends JDTestcase
                              + ";user=" + pwrSysUserID_
                              + ";password=" + PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);
 
-                System.out.println();
-                System.out.println();
-                System.out.println("Starting server trace testcase 2 ");
-                System.out.println("To make sure trace can be started from the command line, rerun this testcase as ");
-                System.out.println();
-                System.out.println("java -Dcom.ibm.as400.access.ServerTrace.JDBC=63 test.JDDriverTest -uid java -pwd jteam1 -system rchasdm3 -tc JDDriverMisc -var 11");
-                System.out.println();
-                System.out.println();
+                output_.println();
+                output_.println();
+                output_.println("Starting server trace testcase 2 ");
+                output_.println("To make sure trace can be started from the command line, rerun this testcase as ");
+                output_.println();
+                output_.println("java -Dcom.ibm.as400.access.ServerTrace.JDBC=63 test.JDDriverTest -uid java -pwd jteam1 -system rchasdm3 -tc JDDriverMisc -var 11");
+                output_.println();
+                output_.println();
 
                 DriverManager.registerDriver(new com.ibm.as400.access.AS400JDBCDriver());
                 connection = DriverManager.getConnection(url);
@@ -568,11 +568,11 @@ extends JDTestcase
                 connection.close();
                 connection = null;
 
-                System.out.println();
-                System.out.println();
-                System.out.println("Server trace testcase complete 2.  Read http://daw/jdbcServerTrace.html to make sure the files are on the server. ");
-                System.out.println();
-                System.out.println();
+                output_.println();
+                output_.println();
+                output_.println("Server trace testcase complete 2.  Read http://daw/jdbcServerTrace.html to make sure the files are on the server. ");
+                output_.println();
+                output_.println();
 
                 succeeded();
             }
@@ -900,7 +900,7 @@ extends JDTestcase
             try{
                 DriverManager.getConnection(baseURL_ + ";prompt=false;errors=full", "noname", "nopass");
                 //should not have to internally loop through all drivers
-		System.out.println("Warning.  getConnection did not get an error");
+		output_.println("Warning.  getConnection did not get an error");
 
             }catch(Exception e){
                 //ignore
@@ -950,6 +950,11 @@ extends JDTestcase
             return;
         }
 
+       if (proxy5_ != null && (!proxy5_.equals(""))) {
+         notApplicable("SQLConversionSettings test not applicable for socks5 proxy driver");
+         return;
+     }
+
     try {
       // Tools APIs to checkout are only in JDK 1.6.
       if (checkJdbc40()) {
@@ -961,9 +966,9 @@ extends JDTestcase
         runUtility.startJVM();
         runUtility.waitForExit();
         String[] topList = runUtility.getTopList();
-        System.out.println("topList is ");
+        output_.println("topList is ");
         if (topList == null) {
-          System.out.println("Error:  topList is null.  was exit called?");
+          output_.println("Error:  topList is null.  was exit called?");
           passed = false;
         } else {
           for (int i = 0; i < topList.length; i++) {
@@ -971,7 +976,7 @@ extends JDTestcase
               passed = false;
               sb.append("Error:  " + topList[i] + " found\n");
             }
-            System.out.println((i + 1) + ": " + topList[i]);
+            output_.println((i + 1) + ": " + topList[i]);
           }
         }
         sb.append("OUTPUT\n");
@@ -1019,7 +1024,7 @@ extends JDTestcase
             sb.append("ReceiveBufferSize is " + serverSocket.getReceiveBufferSize()+"\n"); 
           } catch (IOException ioe ) { 
             port ++; 
-            System.out.println("Caught "+ioe+" moving to port "+port+"\n");
+            output_.println("Caught "+ioe+" moving to port "+port+"\n");
             retry = true; 
           }
         }
@@ -1056,6 +1061,50 @@ extends JDTestcase
 
   }
 
+  /* Make sure socks5 works as expected */
+  public void Var018() {
+    if (baseURL_.indexOf("use sock5") < 0) {
+      notApplicable("socks5 proxy testcase");
+    } else {
+    StringBuffer sb = new StringBuffer(); 
+    try {
+      boolean success = true;
+      Connection connection = testDriver_.getConnection(baseURL_ , userId_,
+          encryptedPassword_);
+      Statement statement = connection.createStatement();
+
+      String sql = "select b.JOB_NAME, a.remote_address, a.remote_port"
+          + " from qsys2.netstat_job_info A,  qsys2.netstat_job_info b "
+          + " where a.JOB_NAME=qsys2.JOB_NAME and "
+          + " b.local_address=a.remote_address and b.local_port=a.remote_port";
+      sb.append("Running: "+sql+"\n"); 
+      ResultSet rs = statement.executeQuery(sql);
+      if (rs.next()) { 
+        String jobname=rs.getString(1); 
+        rs.close(); 
+        sql = "select * from qsys2.netstat_job_info A where JOB_NAME='"+jobname+"' and LOCAL_PORT=22";
+        sb.append("Running: "+sql+"\n"); 
+        rs = statement.executeQuery(sql);
+        if (rs.next()) { 
+           sb.append("Testcase passed because SSH job found"); 
+        } else {
+          sb.append("Failed: did not find ssh port in ssh job\n" );
+          success = false; 
+        }
+        rs.close(); 
+      } else {
+         sb.append("Failed: Did not find ssh job\n "); 
+         success = false; 
+         rs.close(); 
+      }
+      statement.close(); 
+      connection.close(); 
+      assertCondition(success, sb); 
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception "+sb.toString());
+    }
+    }
+  }
 
   
   

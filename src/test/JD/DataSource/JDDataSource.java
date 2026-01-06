@@ -159,7 +159,7 @@ should take less time than getting five regular connections and performing the s
                 Statement s;
                 ResultSet rs;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -175,8 +175,8 @@ should take less time than getting five regular connections and performing the s
                 s.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime);
             }
             catch( Exception e )
             {
@@ -218,15 +218,15 @@ getting 2 regular connections.
                 long endTime;
                 long totalTime;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
  PasswordVault.clearPassword(passwordChars);
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime);
             }
             catch( Exception e )
             {
@@ -263,7 +263,7 @@ five regular connections.
                 long totalTime;
 
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -273,8 +273,8 @@ five regular connections.
  PasswordVault.clearPassword(passwordChars);
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime);
                 succeeded();
             }
             catch( Exception e )
@@ -320,7 +320,7 @@ should take less time than getting five regular connections and performing the s
                 Statement s;
                 ResultSet rs;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -339,8 +339,8 @@ should take less time than getting five regular connections and performing the s
                 s.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime+" count="+count);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime+" count="+count);
                 succeeded();
             }
             catch( Exception e )
@@ -386,7 +386,7 @@ should take less time than getting 3 regular connections and performing the same
                 Statement s;
                 ResultSet rs;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -403,8 +403,8 @@ should take less time than getting 3 regular connections and performing the same
                 s.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime+" count="+count);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime+" count="+count);
                 succeeded();
             }
             catch( Exception e )
@@ -448,7 +448,7 @@ should take less time than getting five regular connections and performing the s
                 ResultSet rs;
                 ResultSet rs1;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -476,8 +476,8 @@ should take less time than getting five regular connections and performing the s
                 s1.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime+" count="+count);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime+" count="+count);
                 succeeded();
             }
             catch( Exception e )
@@ -522,7 +522,7 @@ should take less time than getting five regular connections and performing the s
                 Statement s;
                 ResultSet rs;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -540,8 +540,8 @@ should take less time than getting five regular connections and performing the s
                 s.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime);
                 succeeded();
             }
             catch( Exception e )
@@ -589,7 +589,7 @@ fails and this variation usually is successful.
                 Statement s;
                 ResultSet rs;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -605,8 +605,8 @@ fails and this variation usually is successful.
                 s.close();
                 endTime = System.currentTimeMillis();
                 totalTime = endTime - beginTime;
-                System.out.println("End Time " + endTime);
-                System.out.println("Total Time " + totalTime);
+                output_.println("End Time " + endTime);
+                output_.println("Total Time " + totalTime);
                 succeeded();
             }
             catch( Exception e )
@@ -649,7 +649,7 @@ Getting 6 connections.
                 long totalTime;
                 Connection c6;
                 beginTime = System.currentTimeMillis();
-                System.out.println("Start Time " + beginTime);
+                output_.println("Start Time " + beginTime);
           char[] passwordChars = PasswordVault.decryptPassword(encryptedPassword_); 
                 c1 = ds.getConnection(systemObject_.getUserId(), passwordChars);
                 c2 = ds.getConnection(systemObject_.getUserId(), passwordChars);
@@ -659,9 +659,9 @@ Getting 6 connections.
                 c6 = ds.getConnection(systemObject_.getUserId(), passwordChars);
  PasswordVault.clearPassword(passwordChars);
                 endTime = System.currentTimeMillis();
-                System.out.println("End Time " + endTime);
+                output_.println("End Time " + endTime);
                 totalTime = endTime - beginTime;
-                System.out.println("Total Time " + totalTime);
+                output_.println("Total Time " + totalTime);
                 succeeded();
                 c6.close();
             }

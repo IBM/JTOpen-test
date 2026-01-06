@@ -52,10 +52,10 @@ public class JDDatabaseOverride {
 
     private static Properties databaseOverride = null;
 
-    public static String getDatabaseNameFromSystemName(String systemName) throws UnknownHostException  {
+    public static String getDatabaseNameFromSystemName(String systemName, java.io.PrintWriter output_) throws UnknownHostException  {
     if (systemName.equals("localhost")) {
       systemName = getDatabaseNameFromSystemName(InetAddress.getLocalHost()
-          .getHostName());
+          .getHostName(), output_);
 
     }
     String databaseName = systemName.toUpperCase();
@@ -70,8 +70,8 @@ public class JDDatabaseOverride {
       FileInputStream inputStream = new FileInputStream("ini/databaseOverride.ini"); 
       databaseOverride.load(inputStream);
       } catch (Exception e) { 
-        System.out.println("Warning loading ini/databaseOverride.ini "); 
-        e.printStackTrace(System.out);
+        output_.println("Warning loading ini/databaseOverride.ini "); 
+        e.printStackTrace(output_);
       }
     } 
     

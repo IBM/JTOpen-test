@@ -104,14 +104,14 @@ Performs cleanup needed after running variations.
 			int shrinkTime) {
 	if (checkNative()) {
 	    long cliFixLevel =getCliFixLevel();
-	    System.out.println("cliFixLevel is "+cliFixLevel);
+	    output_.println("cliFixLevel is "+cliFixLevel);
 
 
 	    PrintStream writer = null;
 	    File outputFile = null;
  	    try {
 		String filename = "/tmp/JDConnectionStress."+System.currentTimeMillis(); 
-		System.out.println("Running with output to "+filename); 
+		output_.println("Running with output to "+filename); 
 		 outputFile = new File (filename);
 
 		writer = new PrintStream(new FileOutputStream(outputFile));

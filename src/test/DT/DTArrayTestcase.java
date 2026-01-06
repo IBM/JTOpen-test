@@ -1879,7 +1879,7 @@ public class DTArrayTestcase extends Testcase
             if (ret != 4)
             {
                 valid = false;
-                System.out.println("Test 1: ret = " + ret);
+                output_.println("Test 1: ret = " + ret);
             }
             if (data[0] != (byte)0x40 ||
                 data[1] != (byte)0x40 ||
@@ -1887,18 +1887,18 @@ public class DTArrayTestcase extends Testcase
                 data[3] != (byte)0x40)
             {
                 valid = false;
-                System.out.println("Test 1: data 0-3 bad");
-                System.out.println("Test 1: data[0] = " + data[0]);
-                System.out.println("Test 1: data[1] = " + data[1]);
-                System.out.println("Test 1: data[2] = " + data[2]);
-                System.out.println("Test 1: data[3] = " + data[3]);
+                output_.println("Test 1: data 0-3 bad");
+                output_.println("Test 1: data[0] = " + data[0]);
+                output_.println("Test 1: data[1] = " + data[1]);
+                output_.println("Test 1: data[2] = " + data[2]);
+                output_.println("Test 1: data[3] = " + data[3]);
             }
             for (int i = 4; i < 12; ++i)
             {
                 if (data[i] != (byte)0xEE)
                 {
                     valid = false;
-                    System.out.println("Test 1: data bad i = " + i);
+                    output_.println("Test 1: data bad i = " + i);
                 }
             }
 
@@ -1910,14 +1910,14 @@ public class DTArrayTestcase extends Testcase
             if (ret != 4)
             {
                 valid = false;
-                System.out.println("Test 2: ret = " + ret);
+                output_.println("Test 2: ret = " + ret);
             }
             for (int i = 0; i <= 2; ++i)
             {
                 if (data[i] != (byte)0xEE)
                 {
                     valid = false;
-                    System.out.println("Test 2: data bad i = " + i);
+                    output_.println("Test 2: data bad i = " + i);
                 }
             }
             if (data[3] != (byte)0x40 ||
@@ -1926,14 +1926,14 @@ public class DTArrayTestcase extends Testcase
                 data[6] != (byte)0x40)
             {
                 valid = false;
-                System.out.println("Test 2: data 3-6 bad");
+                output_.println("Test 2: data 3-6 bad");
             }
             for (int i = 7; i < 12; ++i)
             {
                 if (data[i] != (byte)0xEE)
                 {
                     valid = false;
-                    System.out.println("Test 2: data bad i = " + i);
+                    output_.println("Test 2: data bad i = " + i);
                 }
             }
 
@@ -1945,14 +1945,14 @@ public class DTArrayTestcase extends Testcase
             if (ret != 4)
             {
                 valid = false;
-                System.out.println("Test 3: ret = " + ret);
+                output_.println("Test 3: ret = " + ret);
             }
             for (int i = 0; i <= 7; ++i)
             {
                 if (data[i] != (byte)0xEE)
                 {
                     valid = false;
-                    System.out.println("Test 3: data bad i = " + i);
+                    output_.println("Test 3: data bad i = " + i);
                 }
             }
             if (data[8]  != (byte)0x40 ||
@@ -1961,7 +1961,7 @@ public class DTArrayTestcase extends Testcase
                 data[11] != (byte)0x40)
             {
                 valid = false;
-                System.out.println("Test 2: data 8-11 bad");
+                output_.println("Test 2: data 8-11 bad");
             }
 
             assertCondition(valid);

@@ -67,7 +67,7 @@ public class AS400CertificateTest extends TestDriver
        catch (Exception e)
            {
            System.out.println("Program terminated abnormally.");
-           e.printStackTrace();
+           e.printStackTrace(System.out);
            }
 
        // Needed to make the virtual machine quit.
@@ -101,12 +101,12 @@ Cleanup some of the AS400 objects created during the test.
         if(cmd.run("QSYS/DLTUSRPRF USRPRF(CERTTEST) OWNOBJOPT(*DLT)") == false)
         {
             AS400Message[] messageList = cmd.getMessageList();
-           System.out.println(messageList[0].toString());
+           out_.println(messageList[0].toString());
         }
      }
      catch(Exception e)
      {
-        System.out.println("Cleanup failed. " + e);
+        out_.println("Cleanup failed. " + e);
         throw e;
      }
   }
@@ -159,8 +159,8 @@ Creates Testcase objects for all the testcases in this component.
      }
      catch (Exception e)
      {
-        System.out.println("Setup failed. " + e);
-        e.printStackTrace();
+        out_.println("Setup failed. " + e);
+        e.printStackTrace(out_);
      }
 
     if (allTestcases) {    }
@@ -219,7 +219,7 @@ Creates Testcase objects for all the testcases in this component.
     // Put out error message for each invalid testcase name.
     for (Enumeration<String> e = namesAndVars_.keys(); e.hasMoreElements();)
     {
-      System.out.println("Testcase " + e.nextElement() + " not found.");
+      out_.println("Testcase " + e.nextElement() + " not found.");
     }
   }
 }

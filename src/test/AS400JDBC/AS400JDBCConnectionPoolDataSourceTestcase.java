@@ -88,7 +88,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
    {
      // Determine the environment.
      String os = System.getProperty("os.name");	  //@A7A
-     System.out.println("Environment: " + os);	  //@A7A
+     output_.println("Environment: " + os);	  //@A7A
 
      if (JTOpenTestEnvironment.isOS400)
        environment_ = OS_AS400;	   //@A7A
@@ -101,11 +101,11 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	javatest_ = new File(logDirectory_); //@A4C                                     //@A3A
 	if (!javatest_.exists())                                                        //@A3A
 	{                                                                               //@A3A
-	    System.out.println("Setup is creating '" + logDirectory_ + "' directory.");  //@A3A
+	    output_.println("Setup is creating '" + logDirectory_ + "' directory.");  //@A3A
 										      //@A3A
 	    if(!javatest_.mkdir())                                                       //@A3A
 	    {                                                                            //@A3A
-		System.out.println("WARNING:  Setup could not create the '" + logDirectory_ + "' directory.");//@A3A
+		output_.println("WARNING:  Setup could not create the '" + logDirectory_ + "' directory.");//@A3A
 	    }                                                                            //@A3A
 	}                                                                               //@A3A
 
@@ -115,7 +115,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
 	}
 	catch (Exception e)
 	{
-	    System.out.println("Setup failed for "+filename_+".\n");
+	    output_.println("Setup failed for "+filename_+".\n");
 	    e.printStackTrace();
 	}
      }
@@ -185,7 +185,7 @@ public class AS400JDBCConnectionPoolDataSourceTestcase extends Testcase
       else if (jndiType.equals("ldap"))     //@A2A
          jndiType_ = JNDI_LDAP;             //@A2A
       else
-         System.out.println("WARNING... Unknown jndi type '" + jndiType + "' using default of FILE.");  //@A2A
+         output_.println("WARNING... Unknown jndi type '" + jndiType + "' using default of FILE.");  //@A2A
 
       ldapUsr_ = ldapUsr;  //@A2A
       ldapPwd_ = ldapPwd;  //@A2A
@@ -1589,13 +1589,13 @@ public void Var033()
 	 writer_.close();  //@A4A Close writer so file can be deleted below.
          File file = new File(filename_);
          if (!file.delete()) //@A4C
-	     System.out.println("WARNING... testcase cleanup could not delete: " + filename_); //@A4A
+	     output_.println("WARNING... testcase cleanup could not delete: " + filename_); //@A4A
 	 if (!javatest_.delete()) //@A4A
-             System.out.println("WARNING... testcase cleanup could not delete: " + logDirectory_); //@A4A         
+             output_.println("WARNING... testcase cleanup could not delete: " + logDirectory_); //@A4A         
       }
       catch (Exception e)
       {
-         System.out.println("Cleanup failed:\n");
+         output_.println("Cleanup failed:\n");
          e.printStackTrace();
       }
    }
@@ -1622,7 +1622,7 @@ public void Var033()
 	 out.close(); //@A4C Close output stream so file can be cleaned up below.
 	 File f = new File (serializeFileName);
 	 if (!f.delete()) //@A4C
-            System.out.println("WARNING... testcase cleanup could not delete: " + serializeFileName); //@A4A
+            output_.println("WARNING... testcase cleanup could not delete: " + serializeFileName); //@A4A
       }
       return ds2;
    }

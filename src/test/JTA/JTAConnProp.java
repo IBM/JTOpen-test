@@ -828,7 +828,7 @@ Performs cleanup needed after running variations.
 	       try {
 		   conn.commit();
 	       } catch (Exception e) {
-		   System.out.println("Exception after test completion");
+		   output_.println("Exception after test completion");
 		   e.printStackTrace(); 
 	       } 
             }
@@ -896,7 +896,7 @@ Performs cleanup needed after running variations.
 	       try { 
 		   conn.commit();
 	       } catch (Exception e) {
-		   System.out.println("Exception after test completion");
+		   output_.println("Exception after test completion");
 		   e.printStackTrace(); 
 	       } 
             }

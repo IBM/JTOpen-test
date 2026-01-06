@@ -143,10 +143,10 @@ public class JDASAffinityFailback extends JDASTestcase {
       }
 
     } catch (Exception e) {
-      System.out.println("Setup error.");
-      System.out.println("Last sql statement was the following");
-      System.out.println(sql);
-      e.printStackTrace(System.out);
+      output_.println("Setup error.");
+      output_.println("Last sql statement was the following");
+      output_.println(sql);
+      e.printStackTrace(output_);
     }
   }
 
@@ -170,7 +170,7 @@ public class JDASAffinityFailback extends JDASTestcase {
             cleanupString = cleanupString.replaceAll("COLLECTION",  collection);
             s.execute(cleanupString);
           } catch (Exception e) {
-            e.printStackTrace(System.out);
+            e.printStackTrace(output_);
           }
         }
         connection.close();
@@ -203,7 +203,7 @@ public class JDASAffinityFailback extends JDASTestcase {
         ResultSet rs = stmt.executeQuery(SERVER_IP_ADDRESS_QUERY);
         rs.next(); 
         String currentIpAddress = rs.getString(1);
-	System.out.println("Current address(primary)="+currentIpAddress); 
+	output_.println("Current address(primary)="+currentIpAddress); 
         if (!currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
           sb.append("CurrentIpAddress is "+currentIpAddress+"\n"); 
@@ -219,7 +219,7 @@ public class JDASAffinityFailback extends JDASTestcase {
         rs = stmt.executeQuery(SERVER_IP_ADDRESS_QUERY);
         rs.next(); 
         currentIpAddress = rs.getString(1); 
-	System.out.println("Current address(secondary)="+currentIpAddress); 
+	output_.println("Current address(secondary)="+currentIpAddress); 
         if (currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
           sb.append("Still on primary "+currentIpAddress+"\n"); 
@@ -241,7 +241,7 @@ public class JDASAffinityFailback extends JDASTestcase {
         rs = stmt.executeQuery(SERVER_IP_ADDRESS_QUERY);
         rs.next(); 
         currentIpAddress = rs.getString(1); 
-	System.out.println("Current address(secondary)="+currentIpAddress); 
+	output_.println("Current address(secondary)="+currentIpAddress); 
         if (currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
           sb.append("Still on primary "+currentIpAddress+"\n"); 
@@ -261,7 +261,7 @@ public class JDASAffinityFailback extends JDASTestcase {
         rs = stmt.executeQuery(SERVER_IP_ADDRESS_QUERY);
         rs.next(); 
         currentIpAddress = rs.getString(1); 
-	System.out.println("Current address(primary)="+currentIpAddress); 
+	output_.println("Current address(primary)="+currentIpAddress); 
         if (!currentIpAddress.equals(primaryIpAddress)) {
           passed = false; 
           sb.append("CurrentIpAddress is "+currentIpAddress+"\n"); 

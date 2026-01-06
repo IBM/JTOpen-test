@@ -241,7 +241,7 @@ public class SecSignonInfoTestcase extends Testcase {
     try {
       int expire = sys.getSystemPasswordExpirationWarningDays();
       int globalExpire = AS400.getPasswordExpirationWarningDays();
-      // System.out.println(".. globalExpire="+globalExpire+" expire="+expire);
+      // output_.println(".. globalExpire="+globalExpire+" expire="+expire);
       // Values seen for working case are -1 and 7
       if (isNative_) {
         // For the native case, they will be the same, since the value is not cached.

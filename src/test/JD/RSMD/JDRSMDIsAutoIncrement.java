@@ -635,7 +635,7 @@ isAutoIncrement() - Check an XML column.
 	    if (isAutoIncrementTime == 0) isAutoIncrementTime = 1;
 	    double ratio = (double) queryTime / (double) isAutoIncrementTime;
 
-	    /* System.out.println("The ratio is "+ratio);  */
+	    /* output_.println("The ratio is "+ratio);  */
 	    assertCondition(ratio > 20, " Ratio is "+ratio+" sb > 20  queryTime="+queryTime+" isAutoIncrementTime="+isAutoIncrementTime+added);
 
 	}

@@ -81,8 +81,8 @@ public class MessageQueueRFTestcase extends Testcase {
         setTestLib(baseTestDriver_.getTestLib());
     }
 
-    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT",userId_);
-    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY",userId_);
+    sandbox_ = new MessageSandbox(systemObject_, testLib_, "MQT",userId_,output_);
+    sandboxReply_ = new MessageSandbox(systemObject_, testLib_, "MQTREPLY",userId_,output_);
   }
 
   /**
@@ -277,7 +277,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPQ1", userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPQ1", userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPQ1", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -1543,7 +1543,7 @@ public class MessageQueueRFTestcase extends Testcase {
 
     try {
 
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -1941,7 +1941,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -2319,7 +2319,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -2548,7 +2548,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -2791,7 +2791,7 @@ public class MessageQueueRFTestcase extends Testcase {
 
     try {
 
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3033,7 +3033,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3347,7 +3347,7 @@ public class MessageQueueRFTestcase extends Testcase {
     MessageSandbox sbox_ = null;
 
     try {
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       RMessageQueue f = new RMessageQueue(systemObject_, path);
@@ -3552,7 +3552,7 @@ public class MessageQueueRFTestcase extends Testcase {
         queuedMsg = (RQueuedMessage) g.resourceAt(i);
         if (((Integer) queuedMsg.getAttributeValue(RQueuedMessage.MESSAGE_TYPE))
             .intValue() != QueuedMessage.INFORMATIONAL) {
-          System.out.println("Message type not informational.");
+          output_.println("Message type not informational.");
           failed("Bad message type.");
           return;
         }
@@ -3574,7 +3574,7 @@ public class MessageQueueRFTestcase extends Testcase {
         queuedMsg = (RQueuedMessage) g.resourceAt(i);
         if (((Integer) queuedMsg.getAttributeValue(RQueuedMessage.MESSAGE_TYPE))
             .intValue() != QueuedMessage.INQUIRY) {
-          System.out.println("Message type not inquiry.");
+          output_.println("Message type not inquiry.");
           failed("Bad message type.");
           return;
         } else if (!((String) queuedMsg
@@ -4564,7 +4564,7 @@ public class MessageQueueRFTestcase extends Testcase {
 
     try {
       sb.append("Creating MessageSandbox\n");
-      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_);
+      sbox_ = new MessageSandbox(systemObject_, testLib_, "TEMPMQ",userId_,output_);
 
       String path = QSYSObjectPathName.toPath(testLib_, "TEMPMQ", "MSGQ");
       sb.append("Creating Message queue " + path + "\n");

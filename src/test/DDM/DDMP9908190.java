@@ -207,7 +207,7 @@ public class DDMP9908190 extends Testcase implements Runnable
       }
       catch(Exception e)
       {
-        System.out.println("ERROR on "+Thread.currentThread());
+        output_.println("ERROR on "+Thread.currentThread());
         e.printStackTrace();
       }
       alreadyDone_ = true;

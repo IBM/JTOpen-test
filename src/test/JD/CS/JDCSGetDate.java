@@ -465,12 +465,12 @@ calendar specifed.
          try {
 
 	    Calendar cal = Calendar.getInstance ();
-	    System.out.println("Using "+cal); 
+	    output_.println("Using "+cal); 
 	    // Passing the calendar means to use this calendar to get the timezone offset.
             // Passing a buddhist calendar to jcc will get return the expected string.
 	    // 
             Date p = csTypes_.getDate (15, cal);
-	    System.out.println("Result is "+p.getClass().getName()+"="+p); 
+	    output_.println("Result is "+p.getClass().getName()+"="+p); 
 	    String out = p.toString();
 	    String expected = "1998-04-15"; 
             assertCondition (out.equals(expected), "Got "+out+" expected "+expected+" for "+cal+" class="+csTypes_.getClass());
@@ -661,9 +661,9 @@ getDate() -- Get an output parameter where the database output type isn't necess
 	  Date yCheck  = Date.valueOf(minString);
 	  boolean condition =  (xRetVal.equals(xCheck)) && (yRetVal.equals(yCheck)) && (zRetVal == null);
 	  if (!condition) {
-	      System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
-	      System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
-	      System.out.println("zRetVal ("+zRetVal+") != null"); 
+	      output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") != xCheck ("+xCheck+"="+xCheck.getTime()+")" ); 
+	      output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+") != yCheck ("+yCheck+"="+xCheck.getTime()+")");
+	      output_.println("zRetVal ("+zRetVal+") != null"); 
 	  } 
 	  assertCondition(condition); 
 
@@ -718,9 +718,9 @@ getDate() -- Get an output parameter where the database output type isn't necess
 	  Date xRetVal = cstmt.getDate(1);
 	  Date yRetVal = cstmt.getDate(2);
 	  Date zRetVal = cstmt.getDate(3);
-	  System.out.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
-	  System.out.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
-	  System.out.println("zRetVal ("+zRetVal+")"); 
+	  output_.println("xRetVal ("+xRetVal+"="+xRetVal.getTime()+") "); 
+	  output_.println("yRetVal ("+yRetVal+"="+yRetVal.getTime()+")"); 
+	  output_.println("zRetVal ("+zRetVal+")"); 
 
 	  failed("Didn't throw exception"); 
 

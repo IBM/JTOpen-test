@@ -13,6 +13,7 @@
 
 package test.NLS;
 
+import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400Bin4;
 import com.ibm.as400.access.AS400Message;
@@ -53,8 +54,9 @@ class NLSMessageSandbox extends MessageSandbox {
   /**
    * Constructor.
    **/
-  public NLSMessageSandbox(AS400 system, String library, String queueName, String userId) {
-    super(system, library, queueName, userId);
+  public NLSMessageSandbox(AS400 system, String library, String queueName, String userId, PrintWriter output) {
+    super(system, library, queueName, userId, output);
+   
     // Create the library if necessary.
     String libraryName = library;
     CommandCall cmd = new CommandCall(system, "QSYS/CRTLIB LIB(" + libraryName
@@ -65,11 +67,11 @@ class NLSMessageSandbox extends MessageSandbox {
       if (debug) {
         AS400Message[] messageList = cmd.getMessageList();
         for (int i = 0; i < messageList.length; ++i)
-          System.out.println(messageList[i]);
+          output_.println(messageList[i]);
       }
     } catch (Exception e) {
       if (debug)
-        System.out.println("Could not create library  " + libraryName + ".");
+        output_.println("Could not create library  " + libraryName + ".");
     }
 
     String path = QSYSObjectPathName.toPath(libraryName, queueName, "MSGQ");
@@ -83,13 +85,13 @@ class NLSMessageSandbox extends MessageSandbox {
       if (debug) {
         AS400Message[] messageList = cmd.getMessageList();
         for (int i = 0; i < messageList.length; ++i)
-          System.out.println(messageList[i]);
+          output_.println(messageList[i]);
       }
 
       queue_ = new MessageQueue(system, path);
     } catch (Exception e) {
       if (debug)
-        System.out.println("Could not create message queue " + path + ".");
+        output_.println("Could not create message queue " + path + ".");
     }
 
   }
@@ -236,10 +238,10 @@ class NLSMessageSandbox extends MessageSandbox {
 
         AS400Message[] msgList = prog1.getMessageList();
 
-        System.out.println("The program did not run.  AS/400 messages:");
+        output_.println("The program did not run.  AS/400 messages:");
 
         for (int i = 0; i < msgList.length; i++) {
-          System.out.println(msgList[i].getText());
+          output_.println(msgList[i].getText());
         }
       }
 
@@ -251,15 +253,15 @@ class NLSMessageSandbox extends MessageSandbox {
        * 
        * String cmdText = "SNDPGMMSG MSGID(" + msgID + ") " + "MSGF(" +
        * msgFilePath + ") " + "TOMSGQ(" + queueName+ ")";
-       * System.out.println(cmdText);
+       * output_.println(cmdText);
        * 
        * // Send the message. CommandCall cmd = new CommandCall
        * (queue_.getSystem(), cmdText); try { cmd.run ();
        * 
        * if (debug) { AS400Message[] messageList = cmd.getMessageList (); for
-       * (int i = 0; i < messageList.length; ++i) System.out.println
+       * (int i = 0; i < messageList.length; ++i) output_.println
        * (messageList[i]); } } catch (Exception e) { if (debug)
-       * System.out.println ("Could not create message queue " + queueName +
+       * output_.println ("Could not create message queue " + queueName +
        * "."); }
        */
     } catch (Exception e) {
@@ -276,7 +278,7 @@ class NLSMessageSandbox extends MessageSandbox {
       for (int i = 0; i < count; ++i)
         queue_.sendInformational(dbcs_string10 + " [" + i + "]");
     } catch (Exception e) {
-      System.out.println("Could not set the number of messages on "
+      output_.println("Could not set the number of messages on "
           + "message queue " + queue_.getPath() + ".");
     }
   }

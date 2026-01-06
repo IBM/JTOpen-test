@@ -1798,7 +1798,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
         ps.executeUpdate ();
         SQLWarning warning = ps.getWarnings();
         if (warning != null) {
-          System.out.println("Got warning "+warning+" from "+input); 
+          output_.println("Got warning "+warning+" from "+input); 
         }
         ps.close ();
         

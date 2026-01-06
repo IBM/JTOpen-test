@@ -327,14 +327,14 @@ Constructor.
           if (System.currentTimeMillis() > checkStatusTime) {
             long elapsedMillis = System.currentTimeMillis() - startTime;
             double rate = (1000.0 * i) / (elapsedMillis);
-            System.out.println("Processing at ccsid " + i + " rate = " + rate
+            output_.println("Processing at ccsid " + i + " rate = " + rate
                 + " per second for " + elapsedMillis + " ms \n");
             checkStatusTime = System.currentTimeMillis() + 60000;
           }
 
           if (!skipCcsid(i)) {
             if (testedByBase(i)) {
-              System.out.println(" CCSID "+i+" tested by JDStatementStressTest"); 
+              output_.println(" CCSID "+i+" tested by JDStatementStressTest"); 
             } else { 
               if (!testCcsid(i, sb)) {
                 passed = false;

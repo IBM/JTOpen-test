@@ -978,7 +978,7 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
 
         String s = rsmd2.getColumnLabel(1);
         if (!s.equals(label)) {
-          System.out.println("Column Label size = " + i + " '" + s + "' != '"
+          output_.println("Column Label size = " + i + " '" + s + "' != '"
               + label + "'");
           passed = false;
         }

@@ -646,7 +646,7 @@ public void Var006()
     {
         //                                       get rid of File:/
         // String fred = File.separator + urlStr.substring(6) + "ACCESS.LVL";
-        // System.out.println(fred);
+        // output_.println(fred);
         // daw -- cannot get java 1.1.x and java 2 to produce same strings
         // if (exceptionIs(e, "FileNotFoundException", fred))
         if (exceptionIs(e, "FileNotFoundException"))

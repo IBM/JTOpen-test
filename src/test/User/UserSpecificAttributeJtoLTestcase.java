@@ -81,7 +81,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.JOB_DESCRIPTION, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.JOB_DESCRIPTION, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -264,7 +264,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.JOB_TITLE, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.JOB_TITLE, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -396,7 +396,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.KEYBOARD_BUFFERING, String.class, false, 4, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.KEYBOARD_BUFFERING, String.class, false, 4, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -549,7 +549,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LANGUAGE_ID, String.class, false, 1, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LANGUAGE_ID, String.class, false, 1, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -717,7 +717,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LAST_NAME, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LAST_NAME, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {
@@ -851,7 +851,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LIMIT_CAPABILITIES, String.class, false, 3, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LIMIT_CAPABILITIES, String.class, false, 3, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -983,7 +983,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LIMIT_DEVICE_SESSIONS, String.class, false, 3, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LIMIT_DEVICE_SESSIONS, String.class, false, 3, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1115,7 +1115,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCALE_JOB_ATTRIBUTES, String.class, false, 8, null, true, true));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCALE_JOB_ATTRIBUTES, String.class, false, 8, null, true, true,output_));
         }
         catch (Exception e)
         {
@@ -1393,7 +1393,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCALE_PATH_NAME, String.class, false, 4, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCALE_PATH_NAME, String.class, false, 4, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1567,7 +1567,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCAL_DATA_INDICATOR, String.class, true, 2, null, true, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCAL_DATA_INDICATOR, String.class, true, 2, null, true, false,output_));
         }
         catch (Exception e)
         {
@@ -1634,7 +1634,7 @@ public class UserSpecificAttributeJtoLTestcase extends Testcase
         {
             RUser u = new RUser();
             ResourceMetaData[] amd = u.getAttributeMetaData();
-            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCATION, String.class, false, 0, null, false, false));
+            assertCondition(UserGenericAttributeTestcase.verifyAttributeMetaData(amd, RUser.LOCATION, String.class, false, 0, null, false, false,output_));
         }
         catch (Exception e)
         {

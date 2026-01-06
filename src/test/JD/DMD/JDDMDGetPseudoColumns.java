@@ -203,7 +203,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
         String expectedInfo = "NOT FOUND";
         String exInfo = e.toString().toUpperCase();
         if (exInfo.indexOf(expectedInfo) < 0) {
-          System.out.println("Warning.. Expected " + expectedInfo + ": drop table failed " + dropStatements[i]);
+          output_.println("Warning.. Expected " + expectedInfo + ": drop table failed " + dropStatements[i]);
           e.printStackTrace();
         }
       }
@@ -214,7 +214,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
       try {
         s.executeUpdate(createStatements[i]);
       } catch (Exception e) {
-        System.out.println("Warning.. create table failed " + createStatements[i]);
+        output_.println("Warning.. create table failed " + createStatements[i]);
         e.printStackTrace();
       }
     }
@@ -241,7 +241,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
       try {
         s.executeUpdate(dropStatements[i]);
       } catch (Exception e) {
-        System.out.println("Warning.. drop table failed " + dropStatements[i]);
+        output_.println("Warning.. drop table failed " + dropStatements[i]);
         e.printStackTrace();
       }
     }
@@ -703,7 +703,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -785,7 +785,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -842,7 +842,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -897,7 +897,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -975,7 +975,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1053,7 +1053,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1105,7 +1105,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1157,7 +1157,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1234,7 +1234,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1313,7 +1313,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1365,7 +1365,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1419,7 +1419,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
             String outCatalog = rs.getString("TABLE_CAT");
             if (outCatalog == null) {
             } else {
-              System.out.println("Expected null, got " + outCatalog);
+              output_.println("Expected null, got " + outCatalog);
               success = false;
             }
           } else {
@@ -1486,10 +1486,10 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
       if (row[2].equals(expected[i][2]) && row[4].equals(expected[i][4])) {
         // We've found the right row.. it now must match
         /*
-         * System.out.println("\nRECEIVED \n"+ "*********"); for(int j = 2; j<
-         * row.length; j++) System.out.print(row[j]+": ");
-         * System.out.println("\nEXPECTED \n"+ "*********"); for(int j = 2; j<
-         * row.length; j++) System.out.print(expected[i][j]+": ");
+         * output_.println("\nRECEIVED \n"+ "*********"); for(int j = 2; j<
+         * row.length; j++) output_.print(row[j]+": ");
+         * output_.println("\nEXPECTED \n"+ "*********"); for(int j = 2; j<
+         * row.length; j++) output_.print(expected[i][j]+": ");
          */
         boolean ok = true;
         for (int j = 2; j < row.length; j++) {
@@ -1565,7 +1565,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
           //
 
           for (int i = 1; i <= count; i++) {
-            // System.out.println("Getting "+i);
+            // output_.println("Getting "+i);
             oneRow[i] = rs.getString(i);
           }
 
@@ -2032,7 +2032,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
         messageColumnName = column;
         String tableCat = rs.getString("TABLE_CAT");
         if (!check(tableCat, catalog, "TABLE_CAT ")) {
-          System.out.println("Expected catalog " + "+ got " + tableCat);
+          output_.println("Expected catalog " + "+ got " + tableCat);
           success = false;
         }
         column = rs.getString("TABLE_SCHEM") + "." + rs.getString("TABLE_NAME") + "(" + rs.getString("COLUMN_NAME")
@@ -2043,7 +2043,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
       }
 
       if (!allFound) {
-        System.out.println("Rows are missing");
+        output_.println("Rows are missing");
         missingRows(searchStrings, message);
       }
       rs.close();
@@ -2173,7 +2173,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
           Statement stmt = connection_.createStatement();
 
           for (int i = 0; i < 1000; i++) {
-            // System.out.println("Calling getPseudoColumns");
+            // output_.println("Calling getPseudoColumns");
             ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_OSSSS(dmd_, "getPseudoColumns", null,
                 JDDMDTest.COLLECTION, "COLUMNS", "%");
             rs.close();

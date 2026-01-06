@@ -149,7 +149,7 @@ Performs setup needed before running variations.
            }
 
         } catch (Exception e) {
-           System.out.println("Caught exception: " + e.getMessage());
+           output_.println("Caught exception: " + e.getMessage());
            e.printStackTrace();
         }
     }
@@ -166,7 +166,7 @@ This is the place to put all cleanup work for the testcase.
          connection.close();
 
       } catch (Exception e) {
-         System.out.println("Caught exception: ");
+         output_.println("Caught exception: ");
          e.printStackTrace();
       }
    }
@@ -181,7 +181,7 @@ Test:  Decimal(1, 0) - value is just right.
          col1.setString(1, "1");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "1", connection));
+            assertCondition(JDParmHelper.verifyString("col1", "1", connection,output_));
          else
             failed ("invalid update count");
 
@@ -189,7 +189,7 @@ Test:  Decimal(1, 0) - value is just right.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -207,9 +207,9 @@ Test:  Decimal(1, 0) - empty string.  This is an error condition - an empty stri
           // have the words incorrect conversion in it.
           // TODO:  Look this stuff up in the real SQL reference....
           assertCondition(true);
-          //System.out.println(e.getMessage());
+          //output_.println(e.getMessage());
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -229,7 +229,7 @@ Test:  Decimal(1, 0) - empty string.  This is an error condition - an empty stri
           // TODO:  Look this stuff up in the real SQL reference....
           assertCondition(true);
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -243,7 +243,7 @@ Test:  Decimal(1, 0) - null value.  This is legal.
          col1.setString(1, null);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", null, connection));
+            assertCondition(JDParmHelper.verifyString("col1", null, connection,output_));
          else
             failed ("invalid update count");
 
@@ -251,7 +251,7 @@ Test:  Decimal(1, 0) - null value.  This is legal.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -278,7 +278,7 @@ Test:  Decimal(1, 0) - value too big.  This is expected to throw a data truncati
 
 
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -293,7 +293,7 @@ Test:  Decimal(1, 0) - value with a decimal point - this is expected to work wit
           col1.setString(1, "1.2");
           int count = col1.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col1", "1", connection));
+             assertCondition(JDParmHelper.verifyString("col1", "1", connection,output_));
           else
              failed ("invalid update count");
 
@@ -301,7 +301,7 @@ Test:  Decimal(1, 0) - value with a decimal point - this is expected to work wit
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -315,7 +315,7 @@ Test:  Decimal(5, 0) - value is just right.
          col2.setString(1, "12345");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "12345", connection));
+            assertCondition(JDParmHelper.verifyString("col2", "12345", connection,output_));
          else
             failed ("invalid update count");
 
@@ -323,7 +323,7 @@ Test:  Decimal(5, 0) - value is just right.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -337,7 +337,7 @@ Test:  Decimal(5, 0) - value is a single digit.
          col2.setString(1, "1");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "1", connection));
+            assertCondition(JDParmHelper.verifyString("col2", "1", connection,output_));
          else
             failed ("invalid update count");
 
@@ -345,7 +345,7 @@ Test:  Decimal(5, 0) - value is a single digit.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -364,7 +364,7 @@ Test:  Decimal(5, 0) - empty string.  This is an error condition - an empty stri
           // TODO:  Look this stuff up in the real SQL reference....
           assertCondition(true);
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -378,7 +378,7 @@ Test:  Decimal(5, 0) - null value.  This is legal.
          col2.setString(1, null);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", null, connection));
+            assertCondition(JDParmHelper.verifyString("col2", null, connection,output_));
          else
             failed ("invalid update count");
 
@@ -386,7 +386,7 @@ Test:  Decimal(5, 0) - null value.  This is legal.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -412,7 +412,7 @@ Test:  Decimal(5, 0) - value too big.  This is expected to throw a data truncati
 	  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in latest toolbox ");
 
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -430,7 +430,7 @@ Test:  Decimal(5, 0) - value with a decimal point - this is expected to work wit
           col2.setString(1, "12345.6");
           int count = col2.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col2", "12345", connection));
+             assertCondition(JDParmHelper.verifyString("col2", "12345", connection,output_));
           else
              failed ("invalid update count");
 
@@ -438,7 +438,7 @@ Test:  Decimal(5, 0) - value with a decimal point - this is expected to work wit
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -452,7 +452,7 @@ Test:  Decimal(10, 0) - value is just right.
          col3.setString(1, "1234567890");
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", "1234567890", connection));
+            assertCondition(JDParmHelper.verifyString("col3", "1234567890", connection,output_));
          else
             failed ("invalid update count");
 
@@ -460,7 +460,7 @@ Test:  Decimal(10, 0) - value is just right.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -474,7 +474,7 @@ Test:  Decimal(10, 0) - value is a single digit.
          col3.setString(1, "1");
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", "1", connection));
+            assertCondition(JDParmHelper.verifyString("col3", "1", connection,output_));
          else
             failed ("invalid update count");
 
@@ -482,7 +482,7 @@ Test:  Decimal(10, 0) - value is a single digit.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -501,7 +501,7 @@ Test:  Decimal(10, 0) - empty string.  This is an error condition - an empty str
           // TODO:  Look this stuff up in the real SQL reference....
           assertCondition(true);
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -515,7 +515,7 @@ Test:  Decimal(10, 0) - null value.  This is legal.
          col3.setString(1, null);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", null, connection));
+            assertCondition(JDParmHelper.verifyString("col3", null, connection,output_));
          else
             failed ("invalid update count");
 
@@ -523,7 +523,7 @@ Test:  Decimal(10, 0) - null value.  This is legal.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -539,7 +539,7 @@ Test:  Decimal(10, 0) - value too big.  This is expected to throw a data truncat
          col3.setString(1, value);
          int count = col3.executeUpdate();
          failed("inserted a value without truncation "+count);
-         assertCondition(JDParmHelper.verifyString("col3", "12345", connection));
+         assertCondition(JDParmHelper.verifyString("col3", "12345", connection,output_));
 
       } catch (DataTruncation dt) {
          assertCondition ((dt.getIndex() == 1)
@@ -551,7 +551,7 @@ Test:  Decimal(10, 0) - value too big.  This is expected to throw a data truncat
           	  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in latest toolbox ");
 
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -566,7 +566,7 @@ Test:  Decimal(10, 0) - value with a decimal point - this is expected to work wi
           col3.setString(1, "1234567890.1");
           int count = col3.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col3", "1234567890", connection));
+             assertCondition(JDParmHelper.verifyString("col3", "1234567890", connection,output_));
           else
              failed ("invalid update count");
 
@@ -574,7 +574,7 @@ Test:  Decimal(10, 0) - value with a decimal point - this is expected to work wi
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -588,7 +588,7 @@ Test:  Decimal(5, 5) - value is just right (has leading 0).
          col4.setString(1, "0.12345");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection));
+            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection,output_));
          else
             failed ("invalid update count");
 
@@ -596,7 +596,7 @@ Test:  Decimal(5, 5) - value is just right (has leading 0).
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -610,7 +610,7 @@ Test:  Decimal(5, 5) - value is just right (no leading 0).
          col4.setString(1, ".12345");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection));
+            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection,output_));
          else
             failed ("invalid update count");
 
@@ -618,7 +618,7 @@ Test:  Decimal(5, 5) - value is just right (no leading 0).
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -637,7 +637,7 @@ Note:  Decimal and decimal are 0 padded to the precision when they are
          col4.setString(1, ".1");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", "0.10000", connection));
+            assertCondition(JDParmHelper.verifyString("col4", "0.10000", connection,output_));
          else
             failed ("invalid update count");
 
@@ -645,7 +645,7 @@ Note:  Decimal and decimal are 0 padded to the precision when they are
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -664,7 +664,7 @@ Test:  Decimal(5, 5) - empty string.  This is an error condition - an empty stri
           // TODO:  Look this stuff up in the real SQL reference....
           assertCondition(true);
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -678,7 +678,7 @@ Test:  Decimal(5, 5) - null value.  This is legal.
          col4.setString(1, null);
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", null, connection));
+            assertCondition(JDParmHelper.verifyString("col4", null, connection,output_));
          else
             failed ("invalid update count");
 
@@ -686,7 +686,7 @@ Test:  Decimal(5, 5) - null value.  This is legal.
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -700,7 +700,7 @@ Test:  Decimal(5, 5) - value too big.  This is expected to work.  The extra prec
          col4.setString(1, ".123456");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection));
+            assertCondition(JDParmHelper.verifyString("col4", "0.12345", connection,output_));
          else
             failed ("invalid update count");
 
@@ -708,7 +708,7 @@ Test:  Decimal(5, 5) - value too big.  This is expected to work.  The extra prec
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection);
+         JDParmHelper.purgeStringsTable(connection,output_);
       }
    }
 
@@ -747,7 +747,7 @@ Test:  Decimal(5, 5) - value with a integer component - this is expected to fail
 	   assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in latest toolbox ");
 
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -760,7 +760,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           col5.setString(1, "0.");
           int count = col5.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col5", "0.0", connection));
+             assertCondition(JDParmHelper.verifyString("col5", "0.0", connection,output_));
           else
              failed ("invalid update count");
 
@@ -768,7 +768,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -782,7 +782,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           col5.setString(1, "0.2");
           int count = col5.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col5", "0.2", connection));
+             assertCondition(JDParmHelper.verifyString("col5", "0.2", connection,output_));
           else
              failed ("invalid update count");
 
@@ -790,7 +790,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 
@@ -803,7 +803,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           col5.setString(1, "000000.");
           int count = col5.executeUpdate();
           if (count == 1)
-             assertCondition(JDParmHelper.verifyString("col5", "0.0", connection));
+             assertCondition(JDParmHelper.verifyString("col5", "0.0", connection,output_));
           else
              failed ("invalid update count");
 
@@ -811,7 +811,7 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
           failed (e, "Unexpected Exception");
           
        } finally {
-          JDParmHelper.purgeStringsTable(connection);
+          JDParmHelper.purgeStringsTable(connection,output_);
        }
    }
 

@@ -180,19 +180,19 @@ public class DTDateTimeTestcase extends Testcase
 
       obj = new AS400Date().getDefaultValue();
       if (!(obj instanceof java.sql.Date) || !obj.equals(new java.sql.Date(0L))) {
-        System.out.println("Wrong default for AS400Date.");
+        output_.println("Wrong default for AS400Date.");
         succeeded = false;
       }
 
       obj = new AS400Time().getDefaultValue();
       if (!(obj instanceof java.sql.Time) || !obj.equals(new java.sql.Time(0L))) {
-        System.out.println("Wrong default for AS400Time.");
+        output_.println("Wrong default for AS400Time.");
         succeeded = false;
       }
 
       obj = new AS400Timestamp().getDefaultValue();
       if (!(obj instanceof java.sql.Timestamp) || !obj.equals(new java.sql.Timestamp(0L))) {
-        System.out.println("Wrong default for AS400Timestamp.");
+        output_.println("Wrong default for AS400Timestamp.");
         succeeded = false;
       }
 
@@ -259,7 +259,7 @@ public class DTDateTimeTestcase extends Testcase
           {
             converter.setFormat(formats[ff]);
             if (converter.getByteLength() != lengths[ff]) {
-              System.out.println("Incorrect length for AS400Date format " + ff);
+              output_.println("Incorrect length for AS400Date format " + ff);
               succeeded = false;
             }
             for (int vv = 0; vv < values.length; vv++)
@@ -311,7 +311,7 @@ public class DTDateTimeTestcase extends Testcase
           {
             converter.setFormat(formats[ff]);
             if (converter.getByteLength() != lengths[ff]) {
-              System.out.println("Incorrect length for AS400Time format " + ff);
+              output_.println("Incorrect length for AS400Time format " + ff);
               succeeded = false;
             }
             for (int vv = 0; vv < values.length; vv++)
@@ -346,7 +346,7 @@ public class DTDateTimeTestcase extends Testcase
     {
       AS400Timestamp converter = new AS400Timestamp();
       if (converter.getByteLength() != 26) {
-        System.out.println("Incorrect length for AS400TimeStamp: " + converter.getByteLength());
+        output_.println("Incorrect length for AS400TimeStamp: " + converter.getByteLength());
         succeeded = false;
       }
 
@@ -433,8 +433,8 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
+          output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName());
         }
       }
       assertCondition(ok);
@@ -467,8 +467,8 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
+          output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName());
         }
       }
       assertCondition(ok);
@@ -502,9 +502,9 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          //System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("Timestamp object failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
+          //output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("Timestamp object failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName());
         }
       //}
       assertCondition(ok);
@@ -537,9 +537,9 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName());
-          System.out.println("conv = "+conv);
+          output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName());
+          output_.println("conv = "+conv);
         }
       }
       assertCondition(ok);
@@ -572,8 +572,8 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
+          output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
         }
       }
       assertCondition(ok);
@@ -607,9 +607,9 @@ public class DTDateTimeTestcase extends Testcase
              !defaultVal.equals(newObj))
         {
           ok = false;
-          //System.out.println("Format " + fmt + " failed to round-trip correctly.");
-          System.out.println("Timestamp object failed to round-trip correctly.");
-          System.out.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
+          //output_.println("Format " + fmt + " failed to round-trip correctly.");
+          output_.println("Timestamp object failed to round-trip correctly.");
+          output_.println("newObj is of type " + newObj.getClass().getName()+" conv="+conv);
         }
       //}
       assertCondition(ok);

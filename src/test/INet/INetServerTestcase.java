@@ -101,11 +101,11 @@ public class INetServerTestcase extends Testcase
       if (original_NetServer_Name != null) {
         original_NetServer_Name = original_NetServer_Name.toUpperCase();
       }
-      else System.out.println("ERROR: Original Netserver name is null.");
+      else output_.println("ERROR: Original Netserver name is null.");
 ///      original_NetServer_NamePending = new String(netserver_.getSystemName().toUpperCase());
       if (DEBUG) {
-        System.out.println("Original NetServer name: " + original_NetServer_Name);
-///        System.out.println("Original NetServer name (pending): " + original_NetServer_NamePending);
+        output_.println("Original NetServer name: " + original_NetServer_Name);
+///        output_.println("Original NetServer name (pending): " + original_NetServer_NamePending);
       }
 
 ///       ISeriesNetServer server = new ISeriesNetServer(pwrSys_);
@@ -130,7 +130,7 @@ public class INetServerTestcase extends Testcase
     }
 
     protected void localCleanup() throws Exception {
-      if (DEBUG) System.out.println("Performing INetServerTestcase localCleanup...");
+      if (DEBUG) output_.println("Performing INetServerTestcase localCleanup...");
       if (original_NetServer_Name != null) {
         ISeriesNetServer server = new ISeriesNetServer(pwrSys_);
         server.setName(original_NetServer_Name);
@@ -198,57 +198,57 @@ public class INetServerTestcase extends Testcase
 
       if (system.getSystemName().length() == 0) {
         ok = false;
-        System.out.println("System has zero-length name"+allowSysName+" "+autostart+" "+logonServer+" "+winsServer);
+        output_.println("System has zero-length name"+allowSysName+" "+autostart+" "+logonServer+" "+winsServer);
       }
 
       if (system.getUserId().length() == 0) {
         ok = false;
-        System.out.println("System userid is zero-length");
+        output_.println("System userid is zero-length");
       }
 
       if (authMethod < 0 || authMethod > 2) {
         ok = false;
-        System.out.println("Auth method is invalid: " + authMethod);
+        output_.println("Auth method is invalid: " + authMethod);
       }
       if (desc.length() > 50) {
         ok = false;
-        System.out.println("Description is longer than 50 chars");
+        output_.println("Description is longer than 50 chars");
       }
       if (domain.length() > 50) {
         ok = false;
-        System.out.println("Domain is longer than 15 chars");
+        output_.println("Domain is longer than 15 chars");
       }
       if (guestUser.length() > 10) {
         ok = false;
-        System.out.println("Guest user is longer than 10 chars");
+        output_.println("Guest user is longer than 10 chars");
       }
       if (serverName.length() > 15) {
         ok = false;
-        System.out.println("serverName is longer than 15 chars");
+        output_.println("serverName is longer than 15 chars");
       }
       if (winsPrim.length() > 15) {
         ok = false;
-        System.out.println("winsPrim is longer than 15 chars");
+        output_.println("winsPrim is longer than 15 chars");
       }
       if (winsScope.length() > 224) {
         ok = false;
-        System.out.println("winsScope is longer than 224 chars");
+        output_.println("winsScope is longer than 224 chars");
       }
       if (winsSec.length() > 15) {
         ok = false;
-        System.out.println("winsSec is longer than 15 chars");
+        output_.println("winsSec is longer than 15 chars");
       }
       if (browseInt < 0 || browseInt > 720000) {
         ok = false;
-        System.out.println("browseInt is invalid: " + browseInt);
+        output_.println("browseInt is invalid: " + browseInt);
       }
       if (ccsid < 0) {
         ok = false;
-        System.out.println("ccsid is invalid: " + ccsid);
+        output_.println("ccsid is invalid: " + ccsid);
       }
       if (idleTimeout <= 0 && idleTimeout != ISeriesNetServer.NO_AUTO_DISCONNECT) {
         ok = false;
-        System.out.println("idleTimeout is invalid: " + idleTimeout);
+        output_.println("idleTimeout is invalid: " + idleTimeout);
       }
 
       return ok;
@@ -383,17 +383,17 @@ public class INetServerTestcase extends Testcase
       throws Exception
     {
       if (netserverPwr_.isStarted()) {
-        ///if (DEBUG) System.out.println("NetServer is already running.");
+        ///if (DEBUG) output_.println("NetServer is already running.");
         return true;
       }
       netserverPwr_.start(reset);
-      if (DEBUG) System.out.println("Waiting " + START_WAIT_SECONDS + " seconds for NetServer to start ...");
+      if (DEBUG) output_.println("Waiting " + START_WAIT_SECONDS + " seconds for NetServer to start ...");
       Thread.sleep(START_WAIT_SECONDS*1000);  // Sometimes it takes awhile to end.
       if (!netserverPwr_.isStarted()) {
-        System.out.println("NetServer is not restarted yet.  Waiting " + 3*START_WAIT_SECONDS + " more seconds ...");
+        output_.println("NetServer is not restarted yet.  Waiting " + 3*START_WAIT_SECONDS + " more seconds ...");
         Thread.sleep(3*START_WAIT_SECONDS*1000);
         if (!netserverPwr_.isStarted()) {
-          System.out.println("ERROR: NetServer is still not restarted, " + 4*START_WAIT_SECONDS + " seconds after end().");
+          output_.println("ERROR: NetServer is still not restarted, " + 4*START_WAIT_SECONDS + " seconds after end().");
           return false;
         }
       }
@@ -404,28 +404,28 @@ public class INetServerTestcase extends Testcase
       throws Exception
     {
       netserverPwr_.end();
-      if (DEBUG) System.out.println("Waiting " + STOP_WAIT_SECONDS + " seconds for NetServer to end ...");
+      if (DEBUG) output_.println("Waiting " + STOP_WAIT_SECONDS + " seconds for NetServer to end ...");
       Thread.sleep(STOP_WAIT_SECONDS*1000);  // Sometimes it takes awhile to end.
       if (netserverPwr_.isStarted()) {
-        System.out.println("NetServer is still running.  Waiting " + 3*STOP_WAIT_SECONDS + " more seconds ...");
+        output_.println("NetServer is still running.  Waiting " + 3*STOP_WAIT_SECONDS + " more seconds ...");
         Thread.sleep(3*STOP_WAIT_SECONDS*1000);
         if (netserverPwr_.isStarted()) {
-          System.out.println("ERROR: NetServer is still running, " + 4*STOP_WAIT_SECONDS + " seconds after end().");
+          output_.println("ERROR: NetServer is still running, " + 4*STOP_WAIT_SECONDS + " seconds after end().");
           return false;
         }
       }
       netserverPwr_.start(reset);
-      if (DEBUG) System.out.println("Waiting " + START_WAIT_SECONDS + " seconds for NetServer to start ...");
+      if (DEBUG) output_.println("Waiting " + START_WAIT_SECONDS + " seconds for NetServer to start ...");
       Thread.sleep(START_WAIT_SECONDS*1000);  // Sometimes it takes awhile to end.
       if (!netserverPwr_.isStarted()) {
-        System.out.println("NetServer is not restarted yet.  Waiting " + 3*START_WAIT_SECONDS + " more seconds ...");
+        output_.println("NetServer is not restarted yet.  Waiting " + 3*START_WAIT_SECONDS + " more seconds ...");
         Thread.sleep(3*START_WAIT_SECONDS*1000);
         if (!netserverPwr_.isStarted()) {
-          System.out.println("ERROR: NetServer is still not restarted, " + 4*START_WAIT_SECONDS + " seconds after end().  Issuing another start()...");
+          output_.println("ERROR: NetServer is still not restarted, " + 4*START_WAIT_SECONDS + " seconds after end().  Issuing another start()...");
           netserverPwr_.start(reset);
           Thread.sleep(START_WAIT_SECONDS*1000);
           if (!netserverPwr_.isStarted()) {
-            System.out.println("NetServer did not restart.");
+            output_.println("NetServer did not restart.");
             return false;
           }
         }
@@ -462,7 +462,7 @@ public class INetServerTestcase extends Testcase
 
             if (!stopAndStart(false)) {
               failed();
-              ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
+              ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
               return;
             }
 
@@ -470,13 +470,13 @@ public class INetServerTestcase extends Testcase
             String name3 = netserverPwr_.getName();
             boolean allowSysName3 = netserverPwr_.isAllowSystemName();
             if (DEBUG) {
-              System.out.println(name2 + ", " + name1 + ", " + allowSysName2 + ", " + allowSysName1);
-              System.out.println(name3 + ", " + newName + ", " + allowSysName3 + ", true" );
+              output_.println(name2 + ", " + name1 + ", " + allowSysName2 + ", " + allowSysName1);
+              output_.println(name3 + ", " + newName + ", " + allowSysName3 + ", true" );
             }
 
             assertCondition((name2.equals(name1)) && (allowSysName2 == allowSysName1) &&
                             (name3.equals(newName)) && (allowSysName3 == allowSysNameNew));
-            ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
+            ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
 
         }
         catch (Exception e)
@@ -549,7 +549,7 @@ public class INetServerTestcase extends Testcase
             netserverPwr_.refresh();
             String value = netserverPwr_.getName();
 
-            ///System.out.println(value + ", " + original_NetServer_NamePending);
+            ///output_.println(value + ", " + original_NetServer_NamePending);
             assertCondition(value.equalsIgnoreCase(original_NetServer_Name));
             ///assertCondition(value.equals(original_NetServer_Name));
         }
@@ -868,7 +868,7 @@ public class INetServerTestcase extends Testcase
             long id = sess.getID();
             String name = sess.getName();
             String user = sess.getUserName();
-            System.out.println("Ending NetServer session: Workstation: " + name + ", User: "  + user + " ...");
+            output_.println("Ending NetServer session: Workstation: " + name + ", User: "  + user + " ...");
             netserverPwr_.endSession(id);
             // Give it a few seconds to complete.
             Thread.sleep(3*1000);
@@ -910,7 +910,7 @@ public class INetServerTestcase extends Testcase
               return;
             }
             String name = sessionList[0].getName();
-            System.out.println("Ending all NetServer sessions for workstation " + name + " ...");
+            output_.println("Ending all NetServer sessions for workstation " + name + " ...");
             netserverPwr_.endSessionsForWorkstation(name);
             // Give it a few seconds to complete.
             Thread.sleep(3*1000);
@@ -1041,9 +1041,9 @@ public class INetServerTestcase extends Testcase
         {
             ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
             String asString = netser.toString();
-            ///System.out.println("DEBUG: toString() returned: |" + asString + "|");
+            ///output_.println("DEBUG: toString() returned: |" + asString + "|");
             String expected = "ISeriesNetServer (system: "+systemObject_.getSystemName() +"; name: ";
-            ///System.out.println("DEBUG: expected: |" + expected +"|");
+            ///output_.println("DEBUG: expected: |" + expected +"|");
             assertCondition(asString.startsWith(expected));
         }
         catch (Exception e)
@@ -1078,9 +1078,9 @@ public class INetServerTestcase extends Testcase
             startIfStopped(false);
             netserverPwr_.refresh();
             String asString = netserverPwr_.toString();
-            ///System.out.println("DEBUG: toString() returned: |" + asString + "|");
+            ///output_.println("DEBUG: toString() returned: |" + asString + "|");
             String expected = "ISeriesNetServer (system: "+pwrSys_.getSystemName()+"; name: "+netserverPwr_.getName()+"):";
-            ///System.out.println("DEBUG: expected: |" + expected +"|");
+            ///output_.println("DEBUG: expected: |" + expected +"|");
             assertCondition(asString.startsWith(expected));
         }
         catch (Exception e)
@@ -1134,7 +1134,7 @@ public class INetServerTestcase extends Testcase
                     st.append(s[i]);
             }
 
-	    System.out.println("Shares were "+st.toString());
+	    output_.println("Shares were "+st.toString());
 
             ///if(st.indexOf("QIBM: /QIBM: IBM Product DirectoriesROOT: /:") != -1)
             if(st.toString().indexOf("QIBM: /QIBM: ") != -1)
@@ -1271,7 +1271,7 @@ public class INetServerTestcase extends Testcase
         ISeriesNetServerFileShare[] fileShares = netserverPwr_.listFileShares();
         ISeriesNetServerPrintShare[] printShares = netserverPwr_.listPrintShares();
         if (DEBUG) {
-          System.out.println("Total shares: " + allShares.length +"; file shares: " + fileShares.length+"; print shares: " + printShares.length);
+          output_.println("Total shares: " + allShares.length +"; file shares: " + fileShares.length+"; print shares: " + printShares.length);
         }
         if (allShares.length != (fileShares.length + printShares.length)) {
           failed("List lengths mismatch: " + allShares.length +"/"+ fileShares.length +"/"+ printShares.length);
@@ -1296,18 +1296,18 @@ public class INetServerTestcase extends Testcase
           String shareName = (String)enumeration.nextElement();
           if (fileShareNames.contains(shareName)) {
             if (printShareNames.contains(shareName)) {
-              System.out.println("Share " + shareName + " was reported by both listFileShares() or listPrintShares().");
+              output_.println("Share " + shareName + " was reported by both listFileShares() or listPrintShares().");
               ok = false;
             }
           }
           else if (printShareNames.contains(shareName)) {
             if (fileShareNames.contains(shareName)) {
-              System.out.println("Share " + shareName + " was reported by both listFileShares() or listPrintShares().");
+              output_.println("Share " + shareName + " was reported by both listFileShares() or listPrintShares().");
               ok = false;
             }
           }
           else {
-            System.out.println("Share " + shareName + " was reported by listShares() but not by either listFileShares() or listPrintShares().");
+            output_.println("Share " + shareName + " was reported by listShares() but not by either listFileShares() or listPrintShares().");
             ok = false;
           }
         }
@@ -1461,7 +1461,7 @@ public class INetServerTestcase extends Testcase
 ///          }
 ///            ISeriesNetServer netser = new ISeriesNetServer(systemObject_);
 //////            ISeriesNetServer netser = new ISeriesNetServer(pwrSys_);
-///            ///System.out.println ("About to call listSessions().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+///            ///output_.println ("About to call listSessions().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 ///            ISeriesNetServerSession[] sessionList = netser.listSessions();
 ///            long listLength = sessionList.length;
 ///            String[] s = new String[(int)listLength];
@@ -1482,7 +1482,7 @@ public class INetServerTestcase extends Testcase
 ///            else
 ///                succeeded("The following sessions were listed:\n" + st);
 ///                ///failed("Incorrect string returned.\n" + st);
-///            ///System.out.println ("Called listSessions().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+///            ///output_.println ("Called listSessions().  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 ///
 ///        }
 ///        catch (Exception e)
@@ -1586,20 +1586,20 @@ public class INetServerTestcase extends Testcase
             ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
             boolean oldVal = ns.isAllowSystemName();
             boolean newVal = (oldVal ? false : true);
-            System.out.println("Allow System Name: old: " + oldVal + "; new: " + newVal);
+            output_.println("Allow System Name: old: " + oldVal + "; new: " + newVal);
             ns.setAllowSystemName(newVal);
-            ///System.out.println ("About to commit changes.  Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
+            ///output_.println ("About to commit changes.  Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
             ns.commitChanges();
-            ///System.out.println ("Committed changes.  Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
+            ///output_.println ("Committed changes.  Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
             if (!stopAndStart(false)) {
               failed();
               return;
             }
 
-            ///System.out.println ("Stopped/restarted.  About to refresh. Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+            ///output_.println ("Stopped/restarted.  About to refresh. Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 
             ns.refresh();
-            ///System.out.println ("Refreshed.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+            ///output_.println ("Refreshed.  Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 
             if (ns.isAllowSystemName() != newVal)
                failed("ISeriesNetServer allow system name was not changed.");
@@ -1665,7 +1665,7 @@ public class INetServerTestcase extends Testcase
         {
             boolean orig = netserverPwr_.isAutoStart();
             boolean newVal = (orig ? false : true);
-            ///System.out.println("AutoStart: original=="+orig+"; new=="+newVal);
+            ///output_.println("AutoStart: original=="+orig+"; new=="+newVal);
             netserverPwr_.setAutoStart(newVal);
             netserverPwr_.commitChanges();
             // Note: setAutoStart() doesn't require a restart in order to take effect.
@@ -1860,7 +1860,7 @@ public class INetServerTestcase extends Testcase
 ///            ISeriesNetServer ns = new ISeriesNetServer(pwrSys_);
 ///            String orig = ns.getDomainName();
 ///            String newVal = systemObject_.getSystemName();
-///            System.out.println("Domain name: Original==|"+orig+"|, new==|"+newVal+"|");
+///            output_.println("Domain name: Original==|"+orig+"|, new==|"+newVal+"|");
 ///            ns.setDomainName(newVal);
 ///            ns.commitChanges();
 ///            stopAndStart(false);
@@ -1923,22 +1923,22 @@ public class INetServerTestcase extends Testcase
               for (int i = 0; i < messagelist.length; ++i)
               {
                 // Show each message.
-                  System.out.println(messagelist[i].getText());
+                  output_.println(messagelist[i].getText());
               }
               return;
             }
 
             String orig = ns.getGuestUserProfile();
 
-            System.out.println("Original guest user profile: |" + orig + "|");
+            output_.println("Original guest user profile: |" + orig + "|");
 
             ns.setGuestUserProfile("NETSRVTEST");
             ns.commitChanges();
             stopAndStart(true);
             ns.refresh();
 
-            System.out.println("Updated guest user profile: |" + ns.getGuestUserProfile() + "|");
-            ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+            output_.println("Updated guest user profile: |" + ns.getGuestUserProfile() + "|");
+            ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 
             if (ns.getGuestUserProfile().equals("NETSRVTEST"))
                succeeded();
@@ -1950,7 +1950,7 @@ public class INetServerTestcase extends Testcase
             stopAndStart(true);
 
             if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
-               System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
+               output_.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
         }
         catch (Exception e)
         {
@@ -2478,13 +2478,13 @@ public class INetServerTestcase extends Testcase
           else
             failed("ISeriesNetServer authentication method pending is invalid.");
 
-          ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+          ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
         }
         else  // Kerberos is not configured
         {
           try {
             ns.commitChanges();
-            System.out.println("Exception was not thrown.  Kerberos might be configured on the system.");
+            output_.println("Exception was not thrown.  Kerberos might be configured on the system.");
             stopAndStart(false);
             ns.refresh();
             if (ns.getAuthenticationMethod() == newVal)
@@ -2631,7 +2631,7 @@ public class INetServerTestcase extends Testcase
           else notApplicable("Server is pre-V5R4.");
         }
 
-        ///System.out.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("Press ENTER to continue."); try { System.in.read (); } catch (Exception exc) {};
 
         return;
       }
@@ -2758,12 +2758,12 @@ public class INetServerTestcase extends Testcase
       {
         CommandCall cmd = new CommandCall(pwrSys_);
         if (!cmd.run("QSYS/CRTUSRPRF USRPRF(NETSRVTEST) PASSWORD(JTEAM1) TEXT('Toolbox test profile ')")) {
-          System.out.println("Setup for this variation failed.");
+          output_.println("Setup for this variation failed.");
           AS400Message[] messagelist = cmd.getMessageList();
           for (int i = 0; i < messagelist.length; ++i)
           {
             // Show each message.
-            System.out.println(messagelist[i].getText());
+            output_.println(messagelist[i].getText());
           }
           failed("Unable to setup test Guest User Profile.");
           return;
@@ -2789,8 +2789,8 @@ public class INetServerTestcase extends Testcase
         minimumMessageSeverity_orig = nsPower.getMinimumMessageSeverity();
         lanManagerAuthentication_orig = nsPower.getLANManagerAuthentication();
 
-        System.out.println("Original settings:");
-        System.out.println(
+        output_.println("Original settings:");
+        output_.println(
         allowSysName_orig + ", " +
         authMethod_orig + ", " +
         autostart_orig + ", " +
@@ -2833,8 +2833,8 @@ public class INetServerTestcase extends Testcase
         int minimumMessageSeverity_new = (minimumMessageSeverity_orig == -1 ? 0 : -1);
         int lanManagerAuthentication_new = (lanManagerAuthentication_orig == 0 ? 1 : 0);
 
-        System.out.println("New settings:");
-        System.out.println(
+        output_.println("New settings:");
+        output_.println(
         allowSysName_new + ", " +
         authMethod_new + ", " +
         autostart_new + ", " +
@@ -2877,7 +2877,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 0:
         // Verify that the getters still report the original values.  (Changes shouldn't take effect until restart.)
-        System.out.println("DEBUG: BLOCK 0");
+        output_.println("DEBUG: BLOCK 0");
         if (ns.isAllowSystemName() != allowSysName_orig) results[0][0] = false;
         if (ns.getAuthenticationMethod() != authMethod_orig) results[0][1] = false;
         ///if (ns.isAutoStart() != false) results[0][2] = false;  // If no *IOSYSCFG, isAutoStart() throws exception.
@@ -2903,7 +2903,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 1:
         // Verify that the getters still report the original values.  (Changes shouldn't take effect until restart.)
-        System.out.println("DEBUG: BLOCK 1");
+        output_.println("DEBUG: BLOCK 1");
         if (ns.isAllowSystemName() != allowSysName_orig) results[1][0] = false;
         if (ns.getAuthenticationMethod() != authMethod_orig) results[1][1] = false;
         ///if (ns.isAutoStart() != autostart_orig) {} results[1][2] = false;  // If no *IOSYSCFG, isAutoStart() throws exception.
@@ -2929,7 +2929,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 2:
         // Verify that the getters still report the original values.  (Changes shouldn't take effect until restart.)
-        System.out.println("DEBUG: BLOCK 2");
+        output_.println("DEBUG: BLOCK 2");
         if (ns.isAllowSystemName() != allowSysName_orig) results[2][0] = false;
         if (ns.getAuthenticationMethod() != authMethod_orig) results[2][1] = false;
         ///if (ns.isAutoStart() != autostart_orig) {} results[2][2] = false;  // If no *IOSYSCFG, isAutoStart() throws exception.
@@ -2951,7 +2951,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 3:
         // Verify that the getters still report the original values.  (Changes shouldn't take effect until restart.)
-        System.out.println("DEBUG: BLOCK 3");
+        output_.println("DEBUG: BLOCK 3");
         if (nsPower.isAllowSystemName() != allowSysName_orig) results[3][0] = false;
         if (nsPower.getAuthenticationMethod() != authMethod_orig) results[3][1] = false;
         // Note: Changes in autostart attribute take effect upon commitChanges().
@@ -2982,7 +2982,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 4:
         // Verify that the getters now report the new values.
-        System.out.println("DEBUG: BLOCK 4");
+        output_.println("DEBUG: BLOCK 4");
         if (ns.isAllowSystemName() != allowSysName_new) results[4][0] = false;
         if (ns.getAuthenticationMethod() != authMethod_new) results[4][1] = false;
         ///if (ns.isAutoStart() != autostart_new) {} results[4][2] = false;  // If no *IOSYSCFG, isAutoStart() throws exception.
@@ -3007,7 +3007,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 5:
         // Verify that the getters now report the new values.
-        System.out.println("DEBUG: BLOCK 5");
+        output_.println("DEBUG: BLOCK 5");
         if (nsPower.isAllowSystemName() != allowSysName_new) results[5][0] = false;
         if (nsPower.getAuthenticationMethod() != authMethod_new) results[5][1] = false;
         if (nsPower.isAutoStart() != autostart_new) results[5][2] = false;
@@ -3030,7 +3030,7 @@ public class INetServerTestcase extends Testcase
           if (nsPower.getLANManagerAuthentication() != lanManagerAuthentication_new) results[5][17] = false;
         }
 
-        ///System.out.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
+        ///output_.println ("Press ENTER to continue"); try { System.in.read (); } catch (Exception exc) {};
 
         // Restore the original values.
         nsPower.setAllowSystemName(allowSysName_orig);
@@ -3058,7 +3058,7 @@ public class INetServerTestcase extends Testcase
 
         // BLOCK 6:
         // Verify that the getters now report the original values.
-        System.out.println("DEBUG: BLOCK 6");
+        output_.println("DEBUG: BLOCK 6");
         if (ns.isAllowSystemName() != allowSysName_orig) results[6][0] = false;
         if (ns.getAuthenticationMethod() != authMethod_orig) results[6][1] = false;
         ///if (ns.isAutoStart() != autostart_orig) {} results[6][2] = false;  // If no *IOSYSCFG, isAutoStart() throws exception.
@@ -3079,7 +3079,7 @@ public class INetServerTestcase extends Testcase
         if (ns.getLANManagerAuthentication() != lanManagerAuthentication_orig) results[6][17] = false;
 
         if (!cmd.run("QSYS/DLTUSRPRF USRPRF(NETSRVTEST)"))
-          System.out.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
+          output_.println("QSYS/DLTUSRPRF USRPRF(NETSRVTEST) - failed.  Manually delete profile on AS/400");
 
         boolean ok=true;
         for (int i=0; i<NUM_BLOCKS; i++) {
@@ -3095,11 +3095,11 @@ public class INetServerTestcase extends Testcase
         }
         else {
           for (int i=0; i<NUM_BLOCKS; i++) {
-            System.out.print("BLOCK " + i + ":");
+            output_.print("BLOCK " + i + ":");
             for (int j=0; j<NUM_ATTRS; j++) {
-              System.out.print(" " + results[i][j]);
+              output_.print(" " + results[i][j]);
             }
-            System.out.println();
+            output_.println();
           }
           failed();
         }

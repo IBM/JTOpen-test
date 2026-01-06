@@ -14,7 +14,7 @@
 package test.JD.Statement;
 
 import java.sql.*;
-
+import java.io.PrintWriter; 
 import test.JDTestDriver;
 import test.JDTestcase;
 
@@ -33,14 +33,16 @@ public class JDStatementStressSelect extends Thread {
     String selectStatement; 
     int lowKey; 
     int highKey;
+    PrintWriter output_; 
 
     /**
      Constructor.
      **/
-    public JDStatementStressSelect(Connection connection, int instNum, String collection) {
+    public JDStatementStressSelect(Connection connection, int instNum, String collection, PrintWriter output) {
         this.connection = connection;
         this.instNum = instNum;
         this.collection = collection;
+        this.output_ = output; 
         
         this.runType = 1; 
 
@@ -82,7 +84,7 @@ public class JDStatementStressSelect extends Thread {
      What this thread does when it runs is here...
      **/
     public void run1() {
-        System.out.println("JDStatementStressSelect instance " + instNum + " is starting with name " + getName());
+        output_.println("JDStatementStressSelect instance " + instNum + " is starting with name " + getName());
         boolean crashed = false;
         for (int i = 1; !crashed && i<= 200; ++i) {
             try {
@@ -98,8 +100,8 @@ public class JDStatementStressSelect extends Thread {
 
                 stmnt.close();                 
             } catch (Exception e) {
-                System.out.println("JDStatementStressSelect: Unexpected Exception." + "(" + getName() + ")");
-                System.out.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
+                output_.println("JDStatementStressSelect: Unexpected Exception." + "(" + getName() + ")");
+                output_.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
                 e.printStackTrace();
                 crashed = true;
                 successful = false;
@@ -121,7 +123,7 @@ public class JDStatementStressSelect extends Thread {
     
     public void run2() {
       long endTime = System.currentTimeMillis() + runMillis; 
-      System.out.println("JDStatementStressSelect instance " + instNum + " is starting with name " + getName());
+      output_.println("JDStatementStressSelect instance " + instNum + " is starting with name " + getName());
       
       try {
           int i = 0;
@@ -136,8 +138,8 @@ public class JDStatementStressSelect extends Thread {
                 }
                 rs.close(); 
               } catch (Exception e) {
-                  System.out.println("JDStatementStressSelect: Unexpected Exception." + "(" + getName() + ")");
-                  System.out.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
+                  output_.println("JDStatementStressSelect: Unexpected Exception." + "(" + getName() + ")");
+                  output_.println("   Loop #" + i + ": FAILED" + "(" + getName() + ")");
                   e.printStackTrace();
                   successful = false;
                   
@@ -155,7 +157,7 @@ public class JDStatementStressSelect extends Thread {
           connection.close(); 
       } catch (Exception e) {
           successful = false;
-          System.out.println("Prepared Statement failed (" + getName() + ")");
+          output_.println("Prepared Statement failed (" + getName() + ")");
           e.printStackTrace();
 
           errorInfo.append("Prepared Statement failed (" + getName() + ")\n");
@@ -163,7 +165,7 @@ public class JDStatementStressSelect extends Thread {
 
       
       }
-      System.out.println("JDStatementStressSelect instance " + instNum + " is ending with name " + getName());
+      output_.println("JDStatementStressSelect instance " + instNum + " is ending with name " + getName());
   }
 
 

@@ -144,7 +144,7 @@ Performs setup needed before running variations.
 		int errorCode = e.getErrorCode();
 		if (errorCode == -204) {
 		} else {
-		    System.out.println("Unexpected Exception errorCode="+errorCode);
+		    output_.println("Unexpected Exception errorCode="+errorCode);
 		    e.printStackTrace();
 		}
 	    }
@@ -176,7 +176,7 @@ Performs setup needed before running variations.
                 s.executeUpdate(sql);
             }
             catch(Exception e){
-                System.out.println("Warning.. create table failed " + sql);
+                output_.println("Warning.. create table failed " + sql);
                 e.printStackTrace();
             }
         }
@@ -222,7 +222,7 @@ Performs cleanup needed after running variations.
                 s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
             }
             catch(Exception e){
-                System.out.println("Warning.. drop table failed");
+                output_.println("Warning.. drop table failed");
                 e.printStackTrace();
             }
         }
@@ -1368,7 +1368,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		int i = 0;
 		int maxLoop = 1000;
 		for (i = 0; i < maxLoop && System.currentTimeMillis() < endTime ; i++) {
-		    // System.out.println("Calling getTablePrivileges");
+		    // output_.println("Calling getTablePrivileges");
 		    ResultSet rs =
 		      dmd_.getTablePrivileges (connection_.getCatalog (),
 					       JDDMDTest.COLLECTION,
@@ -1378,7 +1378,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		}
 
 		if (i < maxLoop) {
-		    System.out.println("Warning:  Only executed "+i+" of "+maxLoop+" loops");
+		    output_.println("Warning:  Only executed "+i+" of "+maxLoop+" loops");
 		}
 		Statement stmt2 = connection_.createStatement();
 

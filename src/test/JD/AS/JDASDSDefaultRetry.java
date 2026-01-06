@@ -131,9 +131,9 @@ public class JDASDSDefaultRetry extends JDASTestcase
                sb.append("Proxy1 failedConnectCount: "+ proxy1FailedConnectCount+"\n");
                sb.append("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount()+"\n");
 				    } else {
-				       System.out.println("Test took "+testTime+" ms");
-				       System.out.println("Proxy1 failedConnectCount: "+socketProxy1.getFailedConnectCount());
-               System.out.println("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount());
+				       output_.println("Test took "+testTime+" ms");
+				       output_.println("Proxy1 failedConnectCount: "+socketProxy1.getFailedConnectCount());
+               output_.println("Proxy2 failedConnectCount: "+socketProxy2.getFailedConnectCount());
 				      
 				    }
 

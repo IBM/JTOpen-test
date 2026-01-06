@@ -697,8 +697,8 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
 
       catch(Exception e)
       {
-       System.out.println("Setup failed, could not create test certificates. ");
-       System.out.println(e);
+       output_.println("Setup failed, could not create test certificates. ");
+       output_.println(e);
       }
 
 
@@ -719,8 +719,8 @@ public class AS400CertificateVldlBeans extends Testcase implements PropertyChang
      }
      catch(Exception e)
      {
-      System.out.println("Cleanup failed.");
-      System.out.println(e);
+      output_.println("Cleanup failed.");
+      output_.println(e);
       throw e;
      }
   }

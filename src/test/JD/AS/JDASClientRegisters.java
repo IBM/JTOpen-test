@@ -1083,11 +1083,11 @@ public class JDASClientRegisters extends JDASTestcase {
       if (server.equals(currentServer)) {
         return true; 
       } else {
-	  System.out.println("Warning: Invalid server : RDB("+server+") != CURRENT SERVER("+currentServer+")"); 
+	  output_.println("Warning: Invalid server : RDB("+server+") != CURRENT SERVER("+currentServer+")"); 
 	      return false;
       }
     } catch (Exception e) {
-      System.out.println(" Warning server "+server+" had exception "+e+" sql="+sql); 
+      output_.println(" Warning server "+server+" had exception "+e+" sql="+sql); 
       return false; 
     } finally {
       if (testConnection != null) { 
@@ -1117,12 +1117,12 @@ public class JDASClientRegisters extends JDASTestcase {
 
     try { 
       // Find two RDBENTRIES that are usable.
-      System.out.println("  Var015 getting conection using jdbc:as400:"+systemName+" , " +systemObject_.getUserId()); 
+      output_.println("  Var015 getting conection using jdbc:as400:"+systemName+" , " +systemObject_.getUserId()); 
       Connection connection = testDriver_.getConnection("jdbc:as400:"+systemName,systemObject_.getUserId(), encryptedPassword_);
       Statement stmt = connection.createStatement(); 
-      System.out.println("  Var015 running query"); 
+      output_.println("  Var015 running query"); 
       ResultSet rs = stmt.executeQuery(query); 
-      System.out.println("  Var015 fetching query"); 
+      output_.println("  Var015 fetching query"); 
 
      while (rs.next() && (server3 == null)) {
         String server = rs.getString(1); 

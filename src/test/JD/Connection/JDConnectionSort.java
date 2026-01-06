@@ -133,13 +133,13 @@ Verifies that the server is sorting.
 	    if (count < expected.length) {
 		if (expected[count].equals(current)) {
 		    if (check == false)
-			System.out.println("Expected "+expected[count]+ " and found "+current);
+			output_.println("Expected "+expected[count]+ " and found "+current);
 		} else {
-		    System.out.println("Expected "+expected[count]+ " but found "+current);
+		    output_.println("Expected "+expected[count]+ " but found "+current);
 		    check = false; 
 		} 
 	    } else {
-		System.out.println("ERROR.. string "+current+" not expected"); 
+		output_.println("ERROR.. string "+current+" not expected"); 
 		check = false;
 	    }
             ++count;

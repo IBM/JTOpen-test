@@ -115,7 +115,7 @@ public class JDPSSetRowId extends JDTestcase {
       testRowId = JDReflectionUtil
           .createObject("com.ibm.as400.access.AS400JDBCRowId", arg);
     } else {
-      System.out.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT");
+      output_.println("DRIVER NEEDS TO ADD CODE TO CREATE ROWID OBJECT");
     }
     return testRowId;
   }

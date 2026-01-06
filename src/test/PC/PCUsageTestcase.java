@@ -123,7 +123,7 @@ public class PCUsageTestcase extends Testcase
       if (rc) {
           retrieveServerFile("/tmp/"+testname+".pcml",currentDirectory+"/"+testname+".pcml" ); 
       } else { 
-          System.out.println("Warning: Failure of "+command);
+          output_.println("Warning: Failure of "+command);
           // Copy the PCML from the server to the current directory. 
           copyLocalFile("test/rpg/"+testname+".pcml",  currentDirectory+"/"+testname+".pcml");
           
@@ -132,14 +132,14 @@ public class PCUsageTestcase extends Testcase
           " dbgview(*list) ";
           rc = cmd_.run(command);
           if (!rc) { 
-            System.out.println("Warning: Failure of "+command);
+            output_.println("Warning: Failure of "+command);
           }          
       }
 
       
       command = "QSYS/crtsrvpgm "+COLLECTION+"/"+testname+" module("+COLLECTION+"/"+testname+") export(*all)"; 
       rc = cmd_.run(command);
-      if (!rc) System.out.println("Warning: Failure of "+command); 
+      if (!rc) output_.println("Warning: Failure of "+command); 
 
       
     }

@@ -108,7 +108,7 @@ public class DDMSQLCompatibility extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to connect to the AS/400");
+      output_.println("Unable to connect to the AS/400");
       return;
     }
 
@@ -121,7 +121,7 @@ public class DDMSQLCompatibility extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -158,7 +158,7 @@ public class DDMSQLCompatibility extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -188,10 +188,10 @@ public class DDMSQLCompatibility extends Testcase
     CommandCall c = new CommandCall();
     c.setSystem(pwrSys_);
     String command = "QSYS/CHGUSRPRF "+userId_+" CCSID(65535)";
-    System.out.println("Running "+command); 
+    output_.println("Running "+command); 
     boolean worked = c.run(command);
     if (!worked) { 
-       System.out.println("Failed to "+command); 
+       output_.println("Failed to "+command); 
     }
       } catch (Exception e) { 
         e.printStackTrace(); 
@@ -206,7 +206,7 @@ public class DDMSQLCompatibility extends Testcase
 	if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open)
 	{
   	   // CCSID of CURRENT job must be 65535
-	    System.out.println("Native test so setting job ccsid to 65535"); 
+	    output_.println("Native test so setting job ccsid to 65535"); 
 	   JDJobName.setIGC(65535); 
 	}
 
@@ -248,7 +248,7 @@ public class DDMSQLCompatibility extends Testcase
 	       cmd.run("SETIGC CHANGE(*BOTH) VALUE(*YES)");
 	   } catch (Exception e) 
 	   {
-	       System.out.println("Could not change SETIGC to *YES ");
+	       output_.println("Could not change SETIGC to *YES ");
 	       e.printStackTrace();
 	   }
 
@@ -405,14 +405,14 @@ public class DDMSQLCompatibility extends Testcase
     catch(Exception e)
     {
       e.printStackTrace(output_);
-      System.out.println("Error occurred during cleanup of testcase.");
+      output_.println("Error occurred during cleanup of testcase.");
     }
 
     try {
     CommandCall c = new CommandCall();
     c.setSystem(pwrSys_);
     String command = "QSYS/CHGUSRPRF "+userId_+" CCSID(37)";
-    System.out.println("Running "+command); 
+    output_.println("Running "+command); 
     c.run(command); 
     } catch (Exception e) { 
       e.printStackTrace(); 
@@ -426,7 +426,7 @@ public class DDMSQLCompatibility extends Testcase
 	    cmd.run("SETIGC CHANGE(*BOTH) VALUE(*NO)");
 	} catch (Exception e) 
 	{
-	    System.out.println("Could not change SETIGC back to *NO ");
+	    output_.println("Could not change SETIGC back to *NO ");
 	    e.printStackTrace();
 	}
 

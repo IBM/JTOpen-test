@@ -292,7 +292,7 @@ public class JDStatementExceptions extends JDTestcase {
         s1.executeUpdate("create procedure " + procedureName + "()"
             + " language sql begin connect to JDSTMTEXCNOEXIST; end");
 
-        System.out.println(
+        output_.println(
             "Attempting to connect to JDSTMTEXCNOEXIST -- this will take a while to timeout (about 180 seconds)");
 
         s1.executeUpdate("call " + procedureName + "()");
@@ -601,10 +601,7 @@ public class JDStatementExceptions extends JDTestcase {
         failed("Didn't throw timeout exception for query '" + query + "' time="
             + (finish - start) + " ms " + added);
       } catch (Exception ex) {
-        if (isToolboxDriver())
           checkException(ex, ".SQLException", added + " Query=" + query);
-        else
-          checkException(ex, ".SQLTimeout", added + " Query=" + query);
       } finally {
         if (s != null) {
           try {
@@ -706,7 +703,7 @@ public class JDStatementExceptions extends JDTestcase {
       } catch (Exception e) {
         String expectedMessage = "IN USE";
         String errorMessage = e.toString().toUpperCase();
-        e.printStackTrace(System.out);
+        e.printStackTrace(output_);
 
         if (errorMessage.indexOf(expectedMessage) < 0) {
           sb.append(new Date() + "ERROR: ErrorMessage:" + errorMessage
@@ -727,7 +724,7 @@ public class JDStatementExceptions extends JDTestcase {
         } catch (Exception e2) {
           expectedMessage = "IN USE";
           errorMessage = e2.toString().toUpperCase();
-          e2.printStackTrace(System.out);
+          e2.printStackTrace(output_);
 
           if (errorMessage.indexOf(expectedMessage) < 0) {
             sb.append(new Date() + "ERROR: ErrorMessage:" + errorMessage

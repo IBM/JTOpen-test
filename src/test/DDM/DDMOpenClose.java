@@ -224,7 +224,7 @@ public void run()
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete final cleanup.");
+      output_.println("Unable to complete final cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service
@@ -4061,7 +4061,7 @@ public void Var045()
   KeyedFile file = null;
   try
   {
-    System.out.println("... Var045 opening /QSYS.LIB/%CURLIB%.LIB/"+keySource+".FILE/MBR1.MBR");
+    output_.println("... Var045 opening /QSYS.LIB/%CURLIB%.LIB/"+keySource+".FILE/MBR1.MBR");
     file = new KeyedFile(systemObject_,
                               "/QSYS.LIB/%CURLIB%.LIB/"+keySource+".FILE/MBR1.MBR");
     file.setRecordFormat(new DDMChar10KeyFormat(systemObject_));

@@ -2269,7 +2269,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
           try {
             cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
           } catch (Exception e) {
-            System.out.println("Unable to delete user JTEST");
+            output_.println("Unable to delete user JTEST");
           }
         }
       } else {
@@ -2314,7 +2314,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
           try {
             cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
           } catch (Exception e) {
-            System.out.println("Unable to delete user JTEST");
+            output_.println("Unable to delete user JTEST");
           }
         }
       } else {
@@ -2358,7 +2358,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
           try {
             cmd.run("QSYS/DLTUSRPRF   USRPRF(JTEST) OWNOBJOPT(*DLT)");
           } catch (Exception e) {
-            System.out.println("Unable to delete user JTEST");
+            output_.println("Unable to delete user JTEST");
           }
         }
       } else {
@@ -2396,8 +2396,8 @@ public class UserGetSetTtoZTestcase extends Testcase {
           if (got.equals(expected))
             succeeded();
           else {
-            System.out.println("Expected: |" + expected.toString() + "|");
-            System.out.println("Got:      |" + got.toString() + "|");
+            output_.println("Expected: |" + expected.toString() + "|");
+            output_.println("Got:      |" + got.toString() + "|");
             failed("Dates should be the same. ");
           }
 
@@ -2442,8 +2442,8 @@ public class UserGetSetTtoZTestcase extends Testcase {
           if (got.equals(expected))
             succeeded();
           else {
-            System.out.println("Expected: |" + dfm.format(expected) + "|");
-            System.out.println("Got:      |" + dfm.format(got) + "|");
+            output_.println("Expected: |" + dfm.format(expected) + "|");
+            output_.println("Got:      |" + dfm.format(got) + "|");
             failed("Dates should be the same.");
           }
 
@@ -2476,7 +2476,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
 
     try {
       a = dfm.parse("2007-01-28 00:00:00");
-      System.out.println(a);
+      output_.println(a);
 
       if (systemObject_.getVersion() >= 7) {
 
@@ -2517,7 +2517,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
     try {
 
       a = dfm.parse("2007-01-28 00:00:00");
-      System.out.println(a);
+      output_.println(a);
 
       AS400 system = new AS400(systemObject_.getSystemName(), "JAVAX12345", "password".toCharArray());
       system.setGuiAvailable(false);
@@ -2743,7 +2743,7 @@ public class UserGetSetTtoZTestcase extends Testcase {
         } catch (Exception e) {
           String isavldck = "CPD0161 Not authorized to program ISAVLDCK in QSYS.";
           String exceptionString = e.getMessage();
-          // System.out.println("exceptionString is "+exceptionString);
+          // output_.println("exceptionString is "+exceptionString);
           // This exception may appear on some system
           if (exceptionString.indexOf(isavldck) >= 0) {
             assertExceptionIs(e, "AS400Exception", isavldck);

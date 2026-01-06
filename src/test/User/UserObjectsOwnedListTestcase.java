@@ -82,7 +82,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
     }
     catch(Exception e)
     {
-      System.out.println("Unable to complete setup some variations will fail.");
+      output_.println("Unable to complete setup some variations will fail.");
       e.printStackTrace();
       return;
     }
@@ -119,15 +119,15 @@ public class UserObjectsOwnedListTestcase extends Testcase
         AS400Message[] msgs = cmd.getMessageList();
         for (int i=0; i<msgs.length; i++)
         {
-          System.out.println(msgs[i].getText());
+          output_.println(msgs[i].getText());
         }
-        System.out.println("Failed to delete profile USRTEST.  Manually delete profile on system.");
+        output_.println("Failed to delete profile USRTEST.  Manually delete profile on system.");
       }
-      else System.out.println("Deleted profile USRTEST, cleanup done.");
+      else output_.println("Deleted profile USRTEST, cleanup done.");
     }
     catch (Exception e)
     {
-      System.out.println("Cleanup failed.");
+      output_.println("Cleanup failed.");
       e.printStackTrace();
     }
 
@@ -150,25 +150,25 @@ public class UserObjectsOwnedListTestcase extends Testcase
  PasswordVault.clearPassword(charPassword); 
  UserObjectsOwnedList list1 = new UserObjectsOwnedList(system, "JAVA", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
       UserObjectsOwnedListEntry[] entries1 = list1.getObjectList();
-      System.out.println(list1);
+      output_.println(list1);
 
       if (DEBUG)
       {
         for (int i=0; i<entries1.length; ++i)
         {
-          System.out.println("Entry[" + i + "/"+entries1.length + "]= " + entries1[i]);
+          output_.println("Entry[" + i + "/"+entries1.length + "]= " + entries1[i]);
         }
       }
 
       list1.setSelectionObjectRelation(UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED);
       entries1 = list1.getObjectList();
-      System.out.println(list1);
+      output_.println(list1);
 
       if (DEBUG)
       {
         for (int i=0; i<entries1.length; ++i)
         {
-          System.out.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
+          output_.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
         }
       }
 
@@ -495,13 +495,13 @@ public class UserObjectsOwnedListTestcase extends Testcase
  
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_LIBRARY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED_OR_AUTHORIZED);
       UserObjectsOwnedListEntry[] entries1 = list.getObjectList();
-      System.out.println(list);
+      output_.println(list);
 
       if (DEBUG)
       {
         for (int i=0; i<entries1.length; ++i)
         {
-          System.out.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
+          output_.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
         }
       }
 
@@ -524,7 +524,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
         for (int i=0; i<entries1.length; i++)
         {
           UserObjectsOwnedListEntry entry = entries1[i];
-          System.out.println(entry.getLibraryName()+"/"+entry.getObjectName());
+          output_.println(entry.getLibraryName()+"/"+entry.getObjectName());
         }
       }
 
@@ -1089,7 +1089,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, systemObject_.getUserId());
 
-      System.out.println(list.toString());
+      output_.println(list.toString());
       succeeded();
 
     }
@@ -1124,7 +1124,7 @@ public class UserObjectsOwnedListTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, systemObject_.getUserId());
 
-      System.out.println(list.toString());
+      output_.println(list.toString());
       succeeded();
 
     }
@@ -1159,14 +1159,14 @@ public class UserObjectsOwnedListTestcase extends Testcase
       system = new AS400(systemObject_.getSystemName(),"USRTEST" ,"user23ts".toCharArray());
       UserObjectsOwnedList list = new UserObjectsOwnedList(system, "USRTEST", UserObjectsOwnedList.SELECTION_FILE_SYSTEM_DIRECTORY, UserObjectsOwnedList.SELECTION_OBJECT_RELATION_OWNED);
       UserObjectsOwnedListEntry[] entries1 = list.getObjectList();
-      System.out.println(list);
+      output_.println(list);
 
       if (DEBUG || (entries1.length != 3))
       {
-	  System.out.println("entries1.length="+entries1.length); 
+	  output_.println("entries1.length="+entries1.length); 
         for (int i=0; i < entries1.length; ++i)
         {
-          System.out.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
+          output_.println("Entry[" + i + "/" + entries1.length + "]= " + entries1[i]);
         }
       }
 

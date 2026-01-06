@@ -13,6 +13,8 @@
 
 package test.DQ;
 
+import java.io.PrintWriter;
+
 import com.ibm.as400.access.DataQueue;
 import com.ibm.as400.access.KeyedDataQueue;
 
@@ -33,29 +35,33 @@ public class DQWriter extends Thread
     String key = "wait ";
 
     String documentData;
-
-    public DQWriter(DataQueue dq)
+    PrintWriter output_; 
+    public DQWriter(DataQueue dq,PrintWriter output)
     {
 	super();
+	output_=output; 
 	this.dq = new DataQueue(dq.getSystem(), dq.getPath());
     }
 
-    public DQWriter(KeyedDataQueue dq)
+    public DQWriter(KeyedDataQueue dq,PrintWriter output)
     {
 	super();
+        output_=output; 
 	this.kdq = new KeyedDataQueue(dq.getSystem(), dq.getPath());
     }
 
-    public DQWriter(DataQueue x, String s)
+    public DQWriter(DataQueue x, String s,PrintWriter output)
     {
 	super();
+        output_=output; 
 	this.dq2 = x;
 	documentData = s;
     }
 
-    public DQWriter(KeyedDataQueue x, String key, String s)
+    public DQWriter(KeyedDataQueue x, String key, String s,PrintWriter output)
     {
 	super();
+        output_=output; 
 	this.kdq2 = x;
 	this.key2 = key;
 	documentData = s;
@@ -88,7 +94,7 @@ public class DQWriter extends Thread
 	}
 	catch (Exception e)  // can't throw exception cuz parent didn't
 	{
-	    System.out.println("Exception during write");
+	    output_.println("Exception during write");
 	    e.printStackTrace();
 	}
     }

@@ -1226,7 +1226,7 @@ setNCharacterStream() - Set a large CLOB parameter.
 	if (l > 5) {
 	    initials =  JDPSTest.COLLECTION.substring(l - 5); 
 	}
-	System.out.println("initials are "+initials); 
+	output_.println("initials are "+initials); 
 	if (initials.equals("614CU") ||
 	    initials.equals("615CU") ||
 	    initials.equals("616CU")    ) {

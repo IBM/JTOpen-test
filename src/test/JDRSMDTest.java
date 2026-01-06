@@ -153,7 +153,7 @@ extends JDTestDriver
 
 	}
         JDSetupCollection.create (systemObject_, 
-                                  connection_, COLLECTION);
+                                  connection_, COLLECTION, out_);
 
         
         statement_ = connection_.createStatement ();

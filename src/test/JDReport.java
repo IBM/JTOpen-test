@@ -409,6 +409,8 @@ public class JDReport {
       return true;
     case '2':
       return true;
+    case '5':
+      return true; // description += "JDBC Toolbox Socks5 Proxy"; break;
     case 'A':
       return true; // description += "TOOLBOX "; break;
     case 'B':
@@ -635,6 +637,9 @@ public class JDReport {
       break;
     case '2':
       description += "JDBC Toolbox running jar from last release";
+      break;
+    case '5':
+      description += "JDBC Toolbox SOCKS5 Proxy";
       break;
     case 'A':
       description += "TOOLBOX ";
@@ -968,7 +973,7 @@ public class JDReport {
 
    
     
-    String[] toolboxProxySuffixes = { "V.html" };
+    String[] toolboxProxySuffixes = { "V.html", "5.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
         toolboxTimestamp,nativeConnection, webDirectory);
@@ -1183,7 +1188,7 @@ public class JDReport {
         "JDBC TOOLBOX NATIVE TESTING " + toolboxInfo, jdbcToolboxNativeSuffixes,
         toolboxTimestamp,nativeConnection, webDirectory);
 
-    String[] toolboxProxySuffixes = { "V.html" };
+    String[] toolboxProxySuffixes = { "V.html","5.html" };
     totalRunMinutes += addSection(writer, sortedSet,
         "JDBC TOOLBOX PROXY TESTING " + toolboxInfo, toolboxProxySuffixes,
         toolboxTimestamp,nativeConnection, webDirectory);

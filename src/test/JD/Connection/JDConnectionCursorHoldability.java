@@ -97,7 +97,7 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
-	System.out.println("Setup:  collection is "+JDConnectionTest.COLLECTION); 
+	output_.println("Setup:  collection is "+JDConnectionTest.COLLECTION); 
         if ( areCursorHoldabilitySupported() )
         {
             table_ = JDConnectionTest.COLLECTION + ".HOLDCURSOR";
@@ -117,7 +117,7 @@ Performs setup needed before running variations.
 		JDSetupProcedure.resetCollection(JDConnectionTest.COLLECTION); 
                 JDSetupProcedure.create (systemObject_, c,
                                          JDSetupProcedure.STP_RS1,
-                                         supportedFeatures_, collection_);
+                                         supportedFeatures_, collection_, output_);
 
             dmd_ = c.getMetaData ();
 
@@ -127,7 +127,7 @@ Performs setup needed before running variations.
 	    } catch (Exception e) {
 		String exMessage =e.toString();
 		if (exMessage.indexOf("not found") < 0) {
-		    System.out.println("Warning.. unable to drop table"); 
+		    output_.println("Warning.. unable to drop table"); 
 		    e.printStackTrace();
 		}
 	    } 
@@ -194,7 +194,7 @@ Checks that a ResultSet object is still usable.
 		/* DUMP THE EXCEPTION SO WE CAN FIX IT  */
 		/* ALL EXCEPTIONS THAT WE EXPECT AS WELL AS THE */
 		/* EXPECTED RESULT SHOULD BE EXPLICILY SPECIFIED */
-		    System.out.println("cursorOpen encountered unexpected exception "+e);
+		    output_.println("cursorOpen encountered unexpected exception "+e);
 		    e.printStackTrace();
 		}		
 	    }

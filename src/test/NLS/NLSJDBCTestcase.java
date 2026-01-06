@@ -114,11 +114,11 @@ Performs setup needed before running variations.
             jdbc_dbcs_words[i-1] = getResource("JDBC_DBCS_WORDS"+i);
 
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTION);
+            localConnection_, COLLECTION, output_);
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTION2);
+            localConnection_, COLLECTION2, output_);
         JDSetupCollection.create (systemObject_, 
-            localConnection_, COLLECTIONXX);
+            localConnection_, COLLECTIONXX, output_);
     }
 
 
@@ -223,7 +223,7 @@ One row should be returned. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -326,7 +326,7 @@ no patterns for all arguments.  No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -371,7 +371,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
                 String tableName    = rs.getString ("TABLE_NAME");
                 String columnName   = rs.getString ("COLUMN_NAME");
 
-                // System.out.println (schemaName + ":" + tableName + ":" + columnName + ":");
+                // output_.println (schemaName + ":" + tableName + ":" + columnName + ":");
 
                 success = success && schemaName.equals (COLLECTION);
                 success = success && tableName.equals ("CPRIVS");
@@ -392,7 +392,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
                 String isGrantable          = rs.getString ("IS_GRANTABLE");
                 boolean isGrantableWasNull  = rs.wasNull ();
 
-                //  System.out.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
+                //  output_.println (grantor + ":" + grantorWasNull + ":" + grantee + ":"
                 //                    + privilege + ":" + isGrantable + ":" + isGrantableWasNull + ":");
 
                 success = success && (grantor == null) && grantorWasNull;
@@ -408,7 +408,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
 
             rs.close ();
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             assertCondition ((rows == 4) && check1 && check2 && check3 && check4 && success);
         }
@@ -432,7 +432,7 @@ all parameters.  One row should be returned.  No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -623,7 +623,7 @@ containing "%" and "_" wildcards.  No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -727,7 +727,7 @@ One procedure should be returned. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -816,7 +816,7 @@ One row should be returned. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -879,8 +879,8 @@ catalog argument. No Exceptions should be thrown.
 
                 String table = rs.getString ("TABLE_NAME");
                 String remarks = rs.getString ("REMARKS");
-                // System.out.println ("Table = " + table + ":");
-                // System.out.println ("Remarks = " + remarks + ":");
+                // output_.println ("Table = " + table + ":");
+                // output_.println ("Remarks = " + remarks + ":");
                 if (table.equals ("TABLES"))
                     success = success && remarks.equals ("");
                 else if (table.equals ("TABLES1"))
@@ -891,7 +891,7 @@ catalog argument. No Exceptions should be thrown.
                     success = success && remarks.equals ("Client Access/400");
             }
 
-            // System.out.println ("Rows = " + rows);
+            // output_.println ("Rows = " + rows);
 
             rs.close ();
             assertCondition ((rows == 4) && success);
@@ -929,7 +929,7 @@ catalog argument. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -1019,7 +1019,7 @@ One row should be returned. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -1073,8 +1073,8 @@ One row should be returned. No Exceptions should be thrown.
                 short decimalDigits   = rs.getShort ("DECIMAL_DIGITS");
                 short pseudoColumn    = rs.getShort ("PSEUDO_COLUMN");
 
-                // System.out.println (scope + ":" + columnName + ":" + dataType + ":" + typeName + ":");
-                // System.out.println (columnSize + ":" + bufferLength + ":" + decimalDigits + ":" + pseudoColumn + ":");
+                // output_.println (scope + ":" + columnName + ":" + dataType + ":" + typeName + ":");
+                // output_.println (columnSize + ":" + bufferLength + ":" + decimalDigits + ":" + pseudoColumn + ":");
 
                 success = success && (scope == 0);
                 success = success && (pseudoColumn == DatabaseMetaData.versionColumnNotPseudo);
@@ -1116,7 +1116,7 @@ One row should be returned. No Exceptions should be thrown.
                 s.close ();
             }
             catch (SQLException e) {
-                e.printStackTrace (System.out);
+                e.printStackTrace (output_);
             }
         }
     }
@@ -1484,7 +1484,7 @@ INOUT parameter.
         try {
             // Variation cleanup.
             JDSetupProcedure.create (systemObject_, localConnection_, 
-                JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C
+                JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, output_); // @D0C
 
             CallableStatement csTypes = JDSetupProcedure.prepare (localConnection_,
                 JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_); // @D0C
@@ -1761,7 +1761,7 @@ than 1 character in the name.
 // Can't use getColumns on a DDM file since it wasn't created with SQL (and not catalogued).
 
             // Test reading DBCS records from a DDM file using JDBC getString
-            System.out.println("Reading records (w/ getString) from SMPDBCSxxx in JAVANLS ...");
+            output_.println("Reading records (w/ getString) from SMPDBCSxxx in JAVANLS ...");
             ResultSet rsNLS = stmt.executeQuery("SELECT "+fieldList+" FROM "+table);
             String[][] recs = new String[2][4];
             int count = 0;
@@ -1769,8 +1769,8 @@ than 1 character in the name.
                 for (int i=0; i<4; i++) {
                     recs[count][i] = rsNLS.getString(i+1);
 
-                    //System.out.println("string got = ." + recs[count][i] + ".");
-                    //System.out.println("profile string = ." + propfile_recs[count][i] + ".");
+                    //output_.println("string got = ." + recs[count][i] + ".");
+                    //output_.println("profile string = ." + propfile_recs[count][i] + ".");
 
                     if (!recs[count][i].equals(propfile_recs[count][i])) {
                         failMsg.append("  Mismatched strings from getString: \n");
@@ -1785,7 +1785,7 @@ than 1 character in the name.
 
             // Test reading DBCS records from a DDM file using JDBC getUnicodeStream
 /* getUnicodeStream() has been deprecated in JDK 1.2.   -JPL
-      System.out.println("Reading records (w/ getUnicodeStream) from SMPDBCSxxx in JAVANLS ...");
+      output_.println("Reading records (w/ getUnicodeStream) from SMPDBCSxxx in JAVANLS ...");
       rsNLS = stmt.executeQuery("SELECT "+fieldList+" FROM "+table);
       InputStream[][] recUS = new InputStream[2][4];
       byte[] dataread = new byte[40];
@@ -1802,7 +1802,7 @@ than 1 character in the name.
           System.arraycopy(dataread, 0, result, 0, numOfBytes);
           String temp = new String(result, "Unicode");
           //output_.println("\ntemp.length() = " + temp.length());
-          //System.out.println("temp = ."+temp+".");
+          //output_.println("temp = ."+temp+".");
           if (!temp.equals(propfile_recs[count][i]))
           {
             failMsg.append("  Mismatched strings from getUnicodeStream: \n");
@@ -1817,7 +1817,7 @@ than 1 character in the name.
 */
 
             // Test writing DBCS records to the DDM file using JDBC
-            System.out.println("Writing records just read back to SMPDBCSxxx in JAVANLS ...");
+            output_.println("Writing records just read back to SMPDBCSxxx in JAVANLS ...");
             for (int i=0; i<2; i++) {
                 String ins = "INSERT INTO "+table+"("+fieldList+") VALUES(";
                 ins += "'"+recs[i][0]+"',";
@@ -1826,12 +1826,12 @@ than 1 character in the name.
                 ins += "'"+recs[i][3].substring(0, recs[i][3].length()-7)+"',";
                 ins = ins.substring(0,ins.length()-1);
                 ins += ")";
-                //System.out.println("Insert statement = " + ins);
+                //output_.println("Insert statement = " + ins);
                 stmt.executeUpdate(ins);
             }
 
             // Verify written records by reading them back using getString
-            System.out.println("Verifying records written to SMPDBCSxxx in JAVANLS ...");
+            output_.println("Verifying records written to SMPDBCSxxx in JAVANLS ...");
             rsNLS = stmt.executeQuery("SELECT "+fieldList+" FROM "+table);
             String[][] recs2 = new String[4][4];
             count = 0;
@@ -1851,7 +1851,7 @@ than 1 character in the name.
             rsNLS.close();
 
             // Update each field in the last record written.
-            System.out.println("Updating the last record ...");
+            output_.println("Updating the last record ...");
             {
                 // Assign correct field names, depending on DBCS language being tested.
                 String upd = new String();
@@ -1872,12 +1872,12 @@ than 1 character in the name.
                     upd += "WHERE ("+specificName+"EITHER='"+recs[0][3]+"' ";
                     upd += "AND "+specificName+"OPEN='"+recs[1][0]+"')";
                 }
-                //System.out.println("Update statement = " + upd);
+                //output_.println("Update statement = " + upd);
                 stmt.executeUpdate(upd);
             }
 
             // Verify updated record by reading it back using getString
-            System.out.println("Verifying last record was updated in SMPDBCSxxx in JAVANLS ...");
+            output_.println("Verifying last record was updated in SMPDBCSxxx in JAVANLS ...");
             rsNLS = stmt.executeQuery("SELECT "+fieldList+" FROM "+table);
             count = 0;
             while (rsNLS.next()) {
@@ -1894,14 +1894,14 @@ than 1 character in the name.
             rsNLS.close();
 
             // Delete the last 2 records written to put file back to original state.
-            System.out.println("Deleting 2 records to restore file to original state ...");
+            output_.println("Deleting 2 records to restore file to original state ...");
             try {
                 if (specificName.equals("JAP"))
                     stmt.executeUpdate("DELETE FROM "+table+" WHERE DBCSEITHEJ='"+recs[0][3]+"'");
                 else
                     stmt.executeUpdate("DELETE FROM "+table+" WHERE "+specificName+"EITHER='"+recs[0][3]+"'");
             } catch (Exception e) {
-                System.out.println(e+"\n\nCleanup failed.  Setup will put file back to original state on next run"+
+                output_.println(e+"\n\nCleanup failed.  Setup will put file back to original state on next run"+
                 " as long as 'noclean' option is NOT used.");
             }
 
@@ -1975,22 +1975,22 @@ than 1 character in the name.
         try {
             Statement statement = connection.createStatement ();
             String ins = "INSERT INTO "+qualifiedTable+" (UNICODECOL) VALUES (G'"+jdbc_dbcs_words[17]+"')";
-            //System.out.println("first stmt = " + ins + " .\n");
+            //output_.println("first stmt = " + ins + " .\n");
             statement.executeUpdate (ins);
 
             String ins2 = "INSERT INTO "+qualifiedTable+" (UNICODECOL) VALUES (G'"+jdbc_dbcs_words[18]+"')";
-            //System.out.println("second stmt = " + ins2 + " .\n");
+            //output_.println("second stmt = " + ins2 + " .\n");
             statement.executeUpdate (ins2);
 
-            //System.out.println("Look at file JDBCTEST/UCSTEST; press ENTER to proceed.\n");
+            //output_.println("Look at file JDBCTEST/UCSTEST; press ENTER to proceed.\n");
             //System.in.read();
 
             ResultSet rs = statement.executeQuery ("SELECT * FROM " + COLLECTION + ".UCSTEST");
 
             rs.next ();
             String ucsread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
-            //System.out.println("ucsread = ."+ucsread+".\n");
+            //output_.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
+            //output_.println("ucsread = ."+ucsread+".\n");
             //System.in.read();
             if (!ucsread.equals(jdbc_dbcs_words[17] + "        ")) {
                 failMsg.append("Read found mismatched records: "+ucsread+" != "+jdbc_dbcs_words[17]+".\n");
@@ -1998,8 +1998,8 @@ than 1 character in the name.
 
             rs.next ();
             ucsread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
-            //System.out.println("ucsread = ."+ucsread+".\n");
+            //output_.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
+            //output_.println("ucsread = ."+ucsread+".\n");
             //System.in.read();
             if (!ucsread.equals(jdbc_dbcs_words[18] + "        ")) {
                 failMsg.append("Read found mismatched records: "+ucsread+" != "+jdbc_dbcs_words[18]+".\n");
@@ -2082,22 +2082,22 @@ than 1 character in the name.
         try {
             Statement statement = connection.createStatement ();
             String ins = "INSERT INTO "+qualifiedTable+" (UNICODECOL) VALUES (G'"+jdbc_dbcs_words[17]+"')";
-            //System.out.println("first stmt = " + ins + " .\n");
+            //output_.println("first stmt = " + ins + " .\n");
             statement.executeUpdate (ins);
 
             String ins2 = "INSERT INTO "+qualifiedTable+" (UNICODECOL) VALUES (G'"+jdbc_dbcs_words[18]+"')";
-            //System.out.println("second stmt = " + ins2 + " .\n");
+            //output_.println("second stmt = " + ins2 + " .\n");
             statement.executeUpdate (ins2);
 
-            //System.out.println("Look at file JDBCTEST/UCSTEST; press ENTER to proceed.\n");
+            //output_.println("Look at file JDBCTEST/UCSTEST; press ENTER to proceed.\n");
             //System.in.read();
 
             ResultSet rs = statement.executeQuery ("SELECT * FROM " + COLLECTION + ".UCSTEST");
 
             rs.next ();
             String ucsread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
-            //System.out.println("ucsread = ."+ucsread+".\n");
+            //output_.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
+            //output_.println("ucsread = ."+ucsread+".\n");
             //System.in.read();
             if (!ucsread.equals(jdbc_dbcs_words[17])) {
                 failMsg.append("Read found mismatched records: "+ucsread+" != "+jdbc_dbcs_words[17]+".\n");
@@ -2105,8 +2105,8 @@ than 1 character in the name.
 
             rs.next ();
             ucsread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
-            //System.out.println("ucsread = ."+ucsread+".\n");
+            //output_.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
+            //output_.println("ucsread = ."+ucsread+".\n");
             //System.in.read();
             if (!ucsread.equals(jdbc_dbcs_words[18])) {
                 failMsg.append("Read found mismatched records: "+ucsread+" != "+jdbc_dbcs_words[18]+".\n");
@@ -2186,22 +2186,22 @@ than 1 character in the name.
         try {
             Statement statement = connection.createStatement ();
             String ins = "INSERT INTO "+qualifiedTable+" (VARGCOL) VALUES (G'"+jdbc_dbcs_words[17]+"')";
-            //System.out.println("first stmt = " + ins + " .\n");
+            //output_.println("first stmt = " + ins + " .\n");
             statement.executeUpdate (ins);
 
             String ins2 = "INSERT INTO "+qualifiedTable+" (VARGCOL) VALUES (G'"+jdbc_dbcs_words[18]+"')";
-            //System.out.println("second stmt = " + ins2 + " .\n");
+            //output_.println("second stmt = " + ins2 + " .\n");
             statement.executeUpdate (ins2);
 
-            //System.out.println("Look at file JDBCTEST/VARGTEST; press ENTER to proceed.\n");
+            //output_.println("Look at file JDBCTEST/VARGTEST; press ENTER to proceed.\n");
             //System.in.read();
 
             ResultSet rs = statement.executeQuery ("SELECT * FROM " + COLLECTION + ".VARGTEST");
 
             rs.next ();
             String vargread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
-            //System.out.println("vargread = ."+vargread+".\n");
+            //output_.println("jdbc_dbcs_words[17] = ." + jdbc_dbcs_words[17] + ".");
+            //output_.println("vargread = ."+vargread+".\n");
             //System.in.read();
             if (!vargread.equals(jdbc_dbcs_words[17])) {
                 failMsg.append("Read found mismatched records: "+vargread+" != "+jdbc_dbcs_words[17]+".\n");
@@ -2209,8 +2209,8 @@ than 1 character in the name.
 
             rs.next ();
             vargread = rs.getString(1);
-            //System.out.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
-            //System.out.println("vargread = ."+vargread+".\n");
+            //output_.println("jdbc_dbcs_words[18] = ." + jdbc_dbcs_words[18] + ".");
+            //output_.println("vargread = ."+vargread+".\n");
             //System.in.read();
             if (!vargread.equals(jdbc_dbcs_words[18])) {
                 failMsg.append("Read found mismatched records: "+vargread+" != "+jdbc_dbcs_words[18]+".\n");

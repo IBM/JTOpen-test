@@ -107,7 +107,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 			COLLECTION2 = collection_+"2";
 		}
 		JDSetupCollection.create (systemObject_,  c,
-								  COLLECTION2);
+								  COLLECTION2, output_);
 		c.close ();
 
 		String piece = COLLECTION2;
@@ -475,7 +475,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 			c.close ();
                         boolean condition = defaultSchema.equalsIgnoreCase ("");
 			if (!condition) {
-			    System.out.println("defaultSchema is "+defaultSchema+" URL is "+thisURL);
+			    output_.println("defaultSchema is "+defaultSchema+" URL is "+thisURL);
 			}
 			// assertCondition (defaultSchema.equalsIgnoreCase (JDConnectionTest.COLLECTION));
 			assertCondition (condition);
@@ -1816,15 +1816,15 @@ libraries - Specify library list with *LIBL before 2 other libraries.
             setupConnection = testDriver_.getConnection (setupURL, userId_, encryptedPassword_);
             setupStatement  = setupConnection.createStatement();
             try{
-                JDSetupCollection.create(setupConnection, collectionWithSP);
+                JDSetupCollection.create(setupConnection, collectionWithSP, output_);
             }catch(Exception e){}//ignore warning
             try { setupStatement.executeUpdate("CREATE TABLE " + table + " (p1_int integer)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate("INSERT INTO " + table + " VALUES (98765)" ); } catch (Exception e) { }
-            try { setupStatement.executeUpdate( SP ); } catch (Exception e) { System.out.println(e); }
+            try { setupStatement.executeUpdate( SP ); } catch (Exception e) { output_.println(e); }
 		   }
 		   catch (Exception e)
 		   {
-		      System.out.println("warning, setup failed " + e.getMessage());
+		      output_.println("warning, setup failed " + e.getMessage());
 		   }
 
 			connection = testDriver_.getConnection (testURL, userId_, encryptedPassword_);
@@ -1832,7 +1832,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
          callableStatement.setString(1, "Hi Mom");
          rs = callableStatement.executeQuery();
          rs.next();
-      // System.out.println(rs.getString(1));
+      // output_.println(rs.getString(1));
          succeeded();
 		}
 		catch (Exception e)
@@ -1912,14 +1912,14 @@ libraries - Specify library list with *LIBL before 2 other libraries.
 		   {
             setupConnection = testDriver_.getConnection (setupURL, userId_, encryptedPassword_);
             setupStatement  = setupConnection.createStatement();
-            JDSetupCollection.create(setupConnection,  collectionWithSP);
+            JDSetupCollection.create(setupConnection,  collectionWithSP, output_);
             try { setupStatement.executeUpdate("CREATE TABLE " + table + " (p1_int integer)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate("INSERT INTO " + table + " VALUES (98765)" ); } catch (Exception e) { }
             try { setupStatement.executeUpdate( SP ); } catch (Exception e) { }
 		   }
 		   catch (Exception e)
 		   {
-		      System.out.println("warning, setup failed " + e.getMessage());
+		      output_.println("warning, setup failed " + e.getMessage());
 		   }
 
 			connection = testDriver_.getConnection (testURL, userId_, encryptedPassword_);
@@ -1927,7 +1927,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
          callableStatement.setString(1, "Hi Mom");
          rs = callableStatement.executeQuery();
          rs.next();
-     //  System.out.println(rs.getString(1));
+     //  output_.println(rs.getString(1));
          succeeded();
 		}
 		catch (Exception e)
@@ -1981,15 +1981,15 @@ libraries - Specify library list with *LIBL before 2 other libraries.
 					"0000000040.00000 )";
 		       s2.executeUpdate(command);
 		   } catch (Exception e) {
-		       System.out.println("Exception creating library using "+command);
-		       e.printStackTrace(System.out); 
+		       output_.println("Exception creating library using "+command);
+		       e.printStackTrace(output_); 
 		   }
 		   try {
 		       command = "CALL QSYS.QCMDEXC('CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("+iniLibrary+") DATA(*YES)    ',0000000080.00000 )"; 
 		       s2.executeUpdate(command);
 		   } catch (Exception e) {
-		       System.out.println("Exception creating ini using "+command);
-		       e.printStackTrace(System.out); 
+		       output_.println("Exception creating ini using "+command);
+		       e.printStackTrace(output_); 
 
 		   }
 		   c.commit();
@@ -2006,11 +2006,11 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                    //for (int i = 0; i < messageList.length; ++i)
                    //{
                        // Show each message.
-                   //    System.out.println(messageList[i].getText());
+                   //    output_.println(messageList[i].getText());
                        // Load additional message information.
                    //    messageList[i].load();
                        //Show help text.
-                   //    System.out.println(messageList[i].getHelp());
+                   //    output_.println(messageList[i].getHelp());
                    //}
                    Connection c = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
                    Statement s2 = c.createStatement();
@@ -2063,7 +2063,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
           try {
             timeoutThread.join();
           } catch (InterruptedException e1) {
-            e1.printStackTrace(System.out);
+            e1.printStackTrace(output_);
           } 
         }
         if ((timeoutThread != null) && (timeoutThread.getCallbackFired()))  {
@@ -2102,8 +2102,8 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                    }
                    catch(Exception e)
                    {
-		       System.out.println("Warning: Exception during testcase cleanup");
-		       e.printStackTrace(System.out); 
+		       output_.println("Warning: Exception during testcase cleanup");
+		       e.printStackTrace(output_); 
                    }
                }
 	   }
@@ -2210,7 +2210,7 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                c.close ();
                boolean condition = defaultSchema.equalsIgnoreCase ("");
                if (!condition) {
-                   System.out.println("defaultSchema is "+defaultSchema);
+                   output_.println("defaultSchema is "+defaultSchema);
                }
 
                assertCondition (condition, "future host support required.");
@@ -2311,9 +2311,9 @@ libraries - Specify library list with *LIBL before 2 other libraries.
      Statement s = (Statement) args[0]; 
      s.cancel(); 
     } catch (Exception e) { 
-      synchronized (System.out)  {
-        System.out.println("doCallback failed with "); 
-        e.printStackTrace(System.out); 
+      synchronized (output_)  {
+        output_.println("doCallback failed with "); 
+        e.printStackTrace(output_); 
       }
     }
   }

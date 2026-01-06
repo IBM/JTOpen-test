@@ -141,7 +141,7 @@ Performs setup needed before running testcases.
 	//
         // Make sure the collection exists
         //
-	JDSetupCollection.create(connection_, COLLECTION, false);
+	JDSetupCollection.create(connection_, COLLECTION, false, out_);
 
 
         connection_.commit(); // for xa

@@ -98,7 +98,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         catch (Exception e)
         {
             e.printStackTrace();
-            System.out.println("Setup error during Trace file creation.");
+            output_.println("Setup error during Trace file creation.");
         }
     }
 
@@ -110,7 +110,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         MyPoolListener listener = new MyPoolListener();
         pool.addConnectionPoolListener(listener);
 
-        System.out.println("   Testcase wait... (" + (numberOfChecks * timeIntervalInMillis) + " milliseconds)");
+        output_.println("   Testcase wait... (" + (numberOfChecks * timeIntervalInMillis) + " milliseconds)");
 
         int count = 0;
         for (int i=0; i< numberOfChecks; i++)
@@ -118,7 +118,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             try
             {
                 Date time = new Date();
-                System.out.println("   Testcase wait...(" + timeIntervalInMillis + " milliseconds)");
+                output_.println("   Testcase wait...(" + timeIntervalInMillis + " milliseconds)");
                 Thread.sleep(timeIntervalInMillis);
 
                 if (listener.lastMaintenance() > time.getTime())
@@ -156,7 +156,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         }
         catch (Exception e)
         {
-            System.out.println("Log check failed.");
+            output_.println("Log check failed.");
             e.printStackTrace();
         }
         return equal;
@@ -174,14 +174,14 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             String line = reader.readLine();
             while (line != null)
             {
-              System.out.println(line);
+              output_.println(line);
                 line = reader.readLine();
             }
             reader.close();
         }
         catch (Exception e)
         {
-            System.out.println("Log display failed.");
+            output_.println("Log display failed.");
             e.printStackTrace();
         }
     }    
@@ -194,7 +194,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
         try
         {
           if (!testFile_.delete())
-            System.out.println("WARNING... Testcase cleanup failed to delete: " + traceFileName_);
+            output_.println("WARNING... Testcase cleanup failed to delete: " + traceFileName_);
         }
         catch (Throwable e) { e.printStackTrace(); }
     }
@@ -753,7 +753,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
                 c[i] = pool.getConnection();
             }
 
-            System.out.println("   Testcase wait... (5 minutes)");
+            output_.println("   Testcase wait... (5 minutes)");
             Thread.sleep(1000*60*5);
 
             pool.setCleanupInterval(1000*60*1);   // 1min  Time interval daemon runs.
@@ -761,7 +761,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             pool.setMaxUseTime(1000*60*5);        // 5min Max usage limit.
             pool.setMaxUseCount(1);               // 1 Time  connection can be reused.
 
-            System.out.println("   Testcase wait... (5 minutes)");
+            output_.println("   Testcase wait... (5 minutes)");
             Thread.sleep(1000*60*5);
 
             finishLongRunning("AS400JDBCConnectionPoolTestcase", 17, true );
@@ -952,7 +952,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
                 c[i] = pool.getConnection();
             }
 
-            System.out.println("   Testcase wait... (2 minutes)");
+            output_.println("   Testcase wait... (2 minutes)");
             Thread.sleep(1000*60*2);
 
             if (pool.getActiveConnectionCount() + pool.getAvailableConnectionCount() == initial) {
@@ -1032,7 +1032,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c1 = pool.getConnection();
 
-            System.out.println("   Testcase wait... (1 minutes)");
+            output_.println("   Testcase wait... (1 minutes)");
             Thread.sleep(60000);    // wait 1 minute.
 
             c1.close();
@@ -1286,7 +1286,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
                 pool.fill(2);
                 int before = pool.getAvailableConnectionCount();
 
-                System.out.println("   Testcase wait... (2 minutes)");
+                output_.println("   Testcase wait... (2 minutes)");
                 Thread.sleep(1000*120);
 
                 boolean passed = pool.getAvailableConnectionCount() == 0 && before == 2;
@@ -2081,7 +2081,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
             boolean passed = pool.getActiveConnectionCount() == 1 &&
             pool.getAvailableConnectionCount() == 0; 
@@ -2136,7 +2136,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
 
             boolean passed = pool.getActiveConnectionCount() == 0 &&
@@ -2192,7 +2192,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
 
             c.createStatement();
@@ -2251,7 +2251,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             int before = pool.getAvailableConnectionCount();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
             boolean passed = pool.getAvailableConnectionCount() == 0 && before != 0; 
             finishLongRunning("AS400JDBCConnectionPoolTestcase", 58, passed );
@@ -2308,13 +2308,13 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
 
             int before = pool.getActiveConnectionCount();
             c.close();
 
-            System.out.println("   Testcase wait... (15 seconds)");
+            output_.println("   Testcase wait... (15 seconds)");
             Thread.sleep(15000);
 
             boolean passed = before == 1 && pool.getActiveConnectionCount() == 0 &&
@@ -2385,7 +2385,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             boolean cleanupFinished = false;
             for (int i=0; i<2 && !cleanupFinished; i++)
             {
-              System.out.println("   Testcase wait... (30 seconds)");
+              output_.println("   Testcase wait... (30 seconds)");
               Thread.sleep(threshold + 30000);
 
               if (checkLog("ConnectionPool cleanup finished."))
@@ -2472,7 +2472,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             boolean cleanupFinished = false;
             for (int i=0; i<2 && !cleanupFinished; i++)
             {
-              System.out.println("   Testcase wait... (30 seconds)");
+              output_.println("   Testcase wait... (30 seconds)");
               Thread.sleep(threshold + 30000);
               if (checkLog("ConnectionPool cleanup finished."))
               {
@@ -2565,11 +2565,11 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             {
                 System.gc();
 
-                System.out.println("   Testcase wait... (10 seconds)");
+                output_.println("   Testcase wait... (10 seconds)");
                 Thread.sleep(10000);
                 System.gc();
 
-                System.out.println("   Testcase wait... (25 seconds)");
+                output_.println("   Testcase wait... (25 seconds)");
                 Thread.sleep(25000);
             }
             catch (InterruptedException ie) {
@@ -2615,11 +2615,11 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
             c.close();
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
             finishLongRunning("AS400JDBCConnectionPoolTestcase", 63, true);
             succeeded();
@@ -2671,7 +2671,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             pool.setRunMaintenance(true);
             pool.fill(2);
 
-            System.out.println("   Testcase wait... (30 seconds)");
+            output_.println("   Testcase wait... (30 seconds)");
             Thread.sleep(threshold + 30000);
 
             finishLongRunning("AS400JDBCConnectionPoolTestcase", 64, true);
@@ -2804,7 +2804,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             c.close();
 
-            System.out.println("   Testcase wait... (90 seconds)");
+            output_.println("   Testcase wait... (90 seconds)");
             Thread.sleep(1000*90);
 
             boolean passed = pool.getAvailableConnectionCount() == (expected - reduce); 
@@ -2975,7 +2975,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
             Connection c2 = pool.getConnection();
             Connection c3 = pool.getConnection();
 
-            System.out.println("   Testcase wait... (45 seconds)");
+            output_.println("   Testcase wait... (45 seconds)");
             Thread.sleep(1000*45);
 
             c1.close();
@@ -3034,7 +3034,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             boolean before = pool.isRunMaintenance();
 
-            System.out.println("   Testcase wait... (45 seconds)");
+            output_.println("   Testcase wait... (45 seconds)");
             Thread.sleep(1000*45);
             pool.setRunMaintenance(false);
 
@@ -3080,11 +3080,11 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c = pool.getConnection();
 
-            System.out.println("   Testcase wait... (20 seconds)");
+            output_.println("   Testcase wait... (20 seconds)");
             Thread.sleep(19998);
             c.close();
 
-            System.out.println("   Testcase wait... (10 seconds)");
+            output_.println("   Testcase wait... (10 seconds)");
             Thread.sleep(10000);
 
             assertCondition(pool.getAvailableConnectionCount() == expected );
@@ -3141,7 +3141,7 @@ public class AS400JDBCConnectionPoolTestcase extends Testcase
 
             Connection c1 = pool.getConnection();
 
-            System.out.println("   Testcase wait... (1 minutes)");
+            output_.println("   Testcase wait... (1 minutes)");
             Thread.sleep(60000);    // wait 1 minute.
 
             c1.close();

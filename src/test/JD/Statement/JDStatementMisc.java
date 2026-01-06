@@ -870,7 +870,7 @@ for(int i=0; i<maxCount; i++)
 query.append(" from types1");         
 
 int queryLength = query.length(); 
-System.out.println("Var030 Running queryLength= "+
+output_.println("Var030 Running queryLength= "+
   	   queryLength+" : " +
   	   query.substring(0,30)+"..."+
   	   query.substring(queryLength-30)); 
@@ -1049,7 +1049,7 @@ if(s != null)
                 }
                 else
                 {
-                    System.out.println("Row count is "+rows);    /*@F2A*/
+                    output_.println("Row count is "+rows);    /*@F2A*/
                     failed("Row count != 12.. Warning...Earlier version of testcase did not detect failure"); 
                 } 
             }
@@ -1089,7 +1089,7 @@ if(s != null)
                 }
                 else
                 {
-                    System.out.println("Row count is "+rows);    /*@F2A*/
+                    output_.println("Row count is "+rows);    /*@F2A*/
                     failed("Row count != 12.. Warning...Earlier version of testcase did not detect failure"); 
                 } 
             }
@@ -1129,7 +1129,7 @@ if(s != null)
                 }
                 else
                 {
-                    System.out.println("Row count is "+rows);    /*@F2A*/
+                    output_.println("Row count is "+rows);    /*@F2A*/
                     failed("Row count != 12.. Warning...Earlier version of testcase did not detect failure"); 
                 } 
 
@@ -1171,7 +1171,7 @@ if(s != null)
                 }
                 else
                 {
-                    System.out.println("Row count is "+rows);    /*@F2A*/
+                    output_.println("Row count is "+rows);    /*@F2A*/
                     failed("Row count != 0.. Warning...Earlier version of testcase did not detect failure"); 
                 } 
 
@@ -1212,7 +1212,7 @@ if(s != null)
                 }
                 else
                 {
-                    System.out.println("Row count is "+rows);    /*@F2A*/
+                    output_.println("Row count is "+rows);    /*@F2A*/
                     failed("Row count != 12.. Warning...Earlier version of testcase did not detect failure"); 
                 } 
             }
@@ -1291,8 +1291,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1301,8 +1301,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -1368,8 +1368,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1378,8 +1378,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -1443,8 +1443,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1453,8 +1453,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
                     }
                 }
             }
@@ -1513,8 +1513,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1523,8 +1523,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
                     }
                 }
             }
@@ -1579,8 +1579,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1589,8 +1589,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
                     }
                 }
             }
@@ -1648,8 +1648,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1658,8 +1658,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
                     }
                 }
             }
@@ -1721,8 +1721,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1731,8 +1731,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -1796,8 +1796,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
                     }
                     try
                     {
@@ -1805,8 +1805,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -1862,8 +1862,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1872,8 +1872,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -1927,8 +1927,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -1937,8 +1937,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2005,8 +2005,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2015,8 +2015,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2081,8 +2081,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2091,8 +2091,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2153,8 +2153,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2163,8 +2163,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2223,8 +2223,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2233,8 +2233,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2289,8 +2289,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2299,8 +2299,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2401,15 +2401,15 @@ if(s != null)
             statement.execute("DROP TABLE " + LARGE_PRECISION_TABLE);
             statement.close();
           } catch (SQLException sqlx) {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
           }
           try {
             connection.close();
           } catch (SQLException sqlx) {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
           }
         }
@@ -2511,8 +2511,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2521,8 +2521,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2626,8 +2626,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2636,8 +2636,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2729,7 +2729,7 @@ if(s != null)
                                        " 0000000050.00000 )");
 		} catch (Exception e) {
                   if (DEBUG) {
-                    System.out.println("EXCEPTION CHANGING ENVIRONMENT VARIABLE");
+                    output_.println("EXCEPTION CHANGING ENVIRONMENT VARIABLE");
                     e.printStackTrace();
                   }
 		} 
@@ -2784,8 +2784,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                     try
@@ -2794,8 +2794,8 @@ if(s != null)
                     }
                     catch(SQLException sqlx)
                     {
-			System.out.println("Warning:  error during cleanup"); 
-			sqlx.printStackTrace(System.out); 
+			output_.println("Warning:  error during cleanup"); 
+			sqlx.printStackTrace(output_); 
 
                     }
                 }
@@ -2845,8 +2845,8 @@ if(s != null)
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
                 try
@@ -2855,8 +2855,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
             }
@@ -2907,8 +2907,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
                 try
@@ -2917,8 +2917,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
             }
@@ -2967,8 +2967,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
                 try
@@ -2977,8 +2977,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
             }
@@ -3207,8 +3207,8 @@ try {
   
   statement.close();
 } catch (Exception e1) {
-  System.out.println("Warning:  cleanup exception");
-  e.printStackTrace(System.out); 
+  output_.println("Warning:  cleanup exception");
+  e.printStackTrace(output_); 
 
 } 
             failed(e, "Unexpected Exception.  Added by Toolbox 6/29/2006 to test query storage limit support Check QGPL/JDSMVAR70 for job log ");
@@ -3225,7 +3225,7 @@ try {
                 }
                 catch(SQLException sqlx)
                 {
-                    System.out.println("EXCEPTION DELETING TABLE");
+                    output_.println("EXCEPTION DELETING TABLE");
                     sqlx.printStackTrace();
                 }
                 try
@@ -3234,8 +3234,8 @@ try {
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
             }
@@ -3305,7 +3305,7 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-                    System.out.println("EXCEPTION DELETING TABLE");
+                    output_.println("EXCEPTION DELETING TABLE");
                     sqlx.printStackTrace();
                 }
                 try
@@ -3314,8 +3314,8 @@ sqlx.printStackTrace(System.out);
                 }
                 catch(SQLException sqlx)
                 {
-System.out.println("Warning:  error during cleanup"); 
-sqlx.printStackTrace(System.out); 
+output_.println("Warning:  error during cleanup"); 
+sqlx.printStackTrace(output_); 
 
                 }
             }
@@ -3403,7 +3403,7 @@ sqlx.printStackTrace(System.out);
 	    int[]  testLength = { 1000,10000,100000,1000000,1048576  };
 	    String char100 = "                                                                                                    "; 
 	    for (int i = 0; i < testLength.length; i++) {
-		System.out.println("Testing "+testLength[i]); 
+		output_.println("Testing "+testLength[i]); 
 		StringBuffer sb = new StringBuffer(0);
 		sb.append(before);
 		length = before.length() + after.length();
@@ -3766,7 +3766,7 @@ sqlx.printStackTrace(System.out);
 		    sb.append("Caught exception on drop "+e.toString()+"\n"); 
 		    String eMessage = e.toString().toUpperCase();
 		    if (eMessage.indexOf("NOT FOUND") < 0) {
-			System.out.println("Warning:  unexpected exception on drop");
+			output_.println("Warning:  unexpected exception on drop");
 			e.printStackTrace(); 
 		    } 
 		} 
@@ -4038,7 +4038,7 @@ catch(Exception e)
             long expirationMillis = startMillis + 61000;
             long currentMillis = System.currentTimeMillis(); 
             long sleepMillis = expirationMillis - currentMillis; 
-            System.out.println(".. sleeping for "+sleepMillis+" ms for TOTP("+mfaFactorString+") to expire"); 
+            output_.println(".. sleeping for "+sleepMillis+" ms for TOTP("+mfaFactorString+") to expire"); 
             Thread.sleep(sleepMillis);
             while (retry) {
               sb.append("\nAt top of loop"); 

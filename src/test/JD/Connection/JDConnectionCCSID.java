@@ -107,7 +107,7 @@ Performs setup needed before running variations.
 		    s.execute("call QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/QP0ZMAINT) OBJTYPE(*PGM) USER(" +currentUser+") AUT(*USE)                                                                  ',000000080.00000)");
 		    c.close();
 		} catch (Exception e) {
-		    System.out.println("Warning:  unable to grant currentUser access to QP0ZMAINT"); 
+		    output_.println("Warning:  unable to grant currentUser access to QP0ZMAINT"); 
 		} 
 	    }
 	}
@@ -195,7 +195,7 @@ Performs setup needed before running variations.
 	    try { 
 		cmd.execute();
 	    } catch (Exception e) {
-		System.out.println("Error calling "+command); 
+		output_.println("Error calling "+command); 
 		e.printStackTrace(); 
 	    }
 
@@ -205,7 +205,7 @@ Performs setup needed before running variations.
 	    try {
 		cmd.execute();
 	    } catch (Exception e) {
-		System.out.println("Error calling "+command); 
+		output_.println("Error calling "+command); 
 		e.printStackTrace(); 
 	    }
 
@@ -221,7 +221,7 @@ Performs setup needed before running variations.
 	    try {
 		stmt.executeUpdate(sql); 
 	    } catch (Exception e) {
-		System.out.println("Error running "+sql); 
+		output_.println("Error running "+sql); 
 		e.printStackTrace(); 
 	    }
 	    stmt.close(); 
@@ -262,8 +262,8 @@ Performs cleanup needed after running variations.
           try { 
             s.executeUpdate(sql);
           } catch (Exception e) {
-              System.out.println("Warning.  unable to create profile using "+sql); 
-              e.printStackTrace(System.out); 
+              output_.println("Warning.  unable to create profile using "+sql); 
+              e.printStackTrace(output_); 
           }
           s.executeUpdate("CALL QSYS.QCMDEXC('" + "QSYS/CHGUSRPRF USRPRF(" + profile
               + ") PASSWORD("+PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDConnectionCCSID.1")+") CCSID("+ccsid+")"
@@ -293,7 +293,7 @@ Performs cleanup needed after running variations.
         }
         s.close(); 
       } catch (Exception e) {
-        System.out.println("Exception in cleanupProfiles:  sql="+sql); 
+        output_.println("Exception in cleanupProfiles:  sql="+sql); 
         e.printStackTrace(); 
       }
     }
@@ -316,7 +316,7 @@ Performs cleanup needed after running variations.
 	cmd[2] = "/QSYS.LIB/QP0ZMAINT.PGM '30' "+jobNumber+" '0' '1' | grep ':001250' | sed 's/.*:...... ........ ........ \\(....\\).*/\\1/'";
 
 	int ccsid = 0; 
-	// System.out.println("Debug:  Running "+cmd[2]);
+	// output_.println("Debug:  Running "+cmd[2]);
 	try {
 	    Process p = rt.exec(cmd);
 	    InputStream iStream = p.getInputStream();
@@ -510,7 +510,7 @@ Performs cleanup needed after running variations.
 
 	    if (interactive_ && (!passed)) {
 		BufferedReader is = new BufferedReader (new InputStreamReader(System.in));
-		System.out.println("Pausing for failure with test.  Id is "+profile); 
+		output_.println("Pausing for failure with test.  Id is "+profile); 
 		is.readLine(); 
 	    } 
 

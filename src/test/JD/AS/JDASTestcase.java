@@ -2955,8 +2955,8 @@ public class JDASTestcase extends JDTestcase {
               transactionCount++;
               minimumTransactionMilliseconds = MINIMUM_TRANSACTION_MILLISECONDS;
             } catch (SQLException e) {
-              // System.out.println("-----------------");
-              // e.printStackTrace(System.out);
+              // output_.println("-----------------");
+              // e.printStackTrace(output_);
               int sqlcode = e.getErrorCode();
               killCount++;
               if (sqlcode != -4498) {
@@ -2997,13 +2997,13 @@ public class JDASTestcase extends JDTestcase {
         killThread.shutdown();
         killThread.join();
         infoAppend(sb,"Final killCount =" + killCount + "\n");
-        // System.out.println("Testcase done: killCount="+killCount);
+        // output_.println("Testcase done: killCount="+killCount);
         if (transactionCount == 0) {
           infoAppend(sb,"Transactions attempted = " + transactionsAttempted + "\n");
           infoAppend(sb,"Error -- no transactions completed\n");
           passed = false;
         } else {
-          System.out.println("Transactions attempted = "
+          output_.println("Transactions attempted = "
               + transactionsAttempted + " transactions completed="
               + transactionCount);
         }
@@ -3069,7 +3069,7 @@ public class JDASTestcase extends JDTestcase {
   
   public static boolean printInfo = false; 
   public static boolean propertyChecked = false; 
-  public static void infoAppend(StringBuffer sb, String info) { 
+  public void infoAppend(StringBuffer sb, String info) { 
     synchronized(sb) {
     if (!propertyChecked) { 
       String prop = System.getProperty("com.ibm.as400.access.Trace.category"); 
@@ -3082,8 +3082,8 @@ public class JDASTestcase extends JDTestcase {
     info = currentTimestamp.toString()+":"+info; 
     sb.append(info); 
     if (printInfo) {
-      System.out.print(info);
-      System.out.flush(); 
+      output_.print(info);
+      output_.flush(); 
     }
     }
   }
@@ -3395,8 +3395,8 @@ public class JDASTestcase extends JDTestcase {
               transactionCount++;
               minimumTransactionMilliseconds = MINIMUM_TRANSACTION_MILLISECONDS;
             } catch (SQLException e) {
-              // System.out.println("-----------------");
-              // e.printStackTrace(System.out);
+              // output_.println("-----------------");
+              // e.printStackTrace(output_);
               int sqlcode = e.getErrorCode();
               killCount++;
               if (sqlcode != -4498) {
@@ -3437,17 +3437,17 @@ public class JDASTestcase extends JDTestcase {
         killThread.shutdown();
         killThread.join();
         infoAppend(sb,"Final killCount =" + killCount + "\n");
-        // System.out.println("Testcase done: killCount="+killCount);
+        // output_.println("Testcase done: killCount="+killCount);
         if (transactionCount == 0) {
           infoAppend(sb,"Transactions attempted = " + transactionsAttempted + "\n");
           infoAppend(sb,"Error -- no transactions completed\n");
           passed = false;
         } else {
-          System.out.println("Transactions attempted = "
+          output_.println("Transactions attempted = "
               + transactionsAttempted + " transactions completed="
               + transactionCount);
           if (debug) {
-        	  System.out.println(sb.toString()); 
+        	  output_.println(sb.toString()); 
           }
         }
         /* Close the connection */

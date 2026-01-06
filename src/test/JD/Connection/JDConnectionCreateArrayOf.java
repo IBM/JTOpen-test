@@ -401,7 +401,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
       String message = e.toString();
       if ((message.indexOf(expectedException) < 0)
           && (sqlcode != e.getErrorCode())) {
-        System.out.println("Warning: Unexpected exception from " + sql);
+        output_.println("Warning: Unexpected exception from " + sql);
         e.printStackTrace();
       }
     }
@@ -434,7 +434,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
 
         createdProcedures.put(name, typeDefinition);
       } catch (SQLException e) {
-        System.out.println(
+        output_.println(
             "Exception in verifyExistsInputOutputProcedure sql=" + sql);
         throw e;
       }
@@ -468,7 +468,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
       cstmt.close();
 
     } catch (SQLException e) {
-      System.out.println("Exception in callInputOutputProcedure sql=" + sql);
+      output_.println("Exception in callInputOutputProcedure sql=" + sql);
       throw e;
 
     }
@@ -745,7 +745,7 @@ public class JDConnectionCreateArrayOf extends JDTestcase {
 	boolean passed3 = true;
 	if (rsmd == null) { 
 	    if (isToolboxDriver()) {
-		System.out.println("Warning.  For toolbox rs.getMetaData returned null");
+		output_.println("Warning.  For toolbox rs.getMetaData returned null");
 	    } else { 
 		passed3 = false;
 		sb.append("rs.getMetaData returned null");

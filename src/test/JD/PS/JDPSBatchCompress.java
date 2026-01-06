@@ -11,21 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSBatchCompress.java
 //
 // Classes:      JDPSBatchCompress
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -75,7 +65,7 @@ extends JDTestcase {
      static int RUN_MINUTES = 1; 
      static {
        try { 
-         // System.out.print("Checking env for JDPSBatchCompressMinutes ...");
+         // output_.print("Checking env for JDPSBatchCompressMinutes ...");
          String value = System.getenv("JDPSBatchCompressMinutes");
          if (value != null) { 
             RUN_MINUTES = Integer.parseInt(value); 
@@ -1656,7 +1646,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
         marker381Ffound = 0;
       } else {
         if (inSent) {
-          // System.out.print("SentLine: " + sentLine + " : ");
+          // output_.print("SentLine: " + sentLine + " : ");
           sb.append("sentLine: " + sentLine + ":");
           int markerIndex = line.indexOf("38 1F", 39);
           if (markerIndex == 39) {
@@ -1674,13 +1664,13 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
             }
           }
           if (markerIndex > 0) {
-            // System.out.print("381F at " + markerIndex + " : ");
+            // output_.print("381F at " + markerIndex + " : ");
             sb.append("381F at " + markerIndex + " : ");
           } else {
             if (marker381Ffound > 0) {
               int marker80Index = line.indexOf(" 80 ", marker381Ffound);
               if (marker80Index == marker381Ffound) {
-                // System.out.print("80 at " + marker80Index);
+                // output_.print("80 at " + marker80Index);
                 sb.append("80 at " + marker80Index);
                 compressionUsed = true;
               }
@@ -1693,7 +1683,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
           sentLine++;
         }
       }
-      // System.out.println(line);
+      // output_.println(line);
       line = reader.readLine();
     }
     reader.close();
@@ -1724,23 +1714,23 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
             if (line.charAt(i) == ' ') {
               sentBytes++; 
             } else {
-              // System.out.println("Parse error on "+line+" at index "+i); 
+              // output_.println("Parse error on "+line+" at index "+i); 
             }
           }
           if (debug)  { 
-          System.out.println("SentLine: " + sentLine + " : "+line+" : totalBytes="+sentBytes);
+          output_.println("SentLine: " + sentLine + " : "+line+" : totalBytes="+sentBytes);
           }
           sentLine++;
         }
       }
-      // System.out.println(line);
+      // output_.println(line);
       line = reader.readLine();
     }
     reader.close();
     } catch (Exception e) { 
       e.printStackTrace(); 
     }
-    // System.out.println("Count done:  returning "+sentBytes); 
+    // output_.println("Count done:  returning "+sentBytes); 
     return sentBytes;
   }
 
@@ -1794,22 +1784,22 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
       	   goalMet = true; 
              }
              if (runCount % compressedTime.length == 0) { 
-      	   System.out.println("Count="+runCount+" ratio="+ratio+" expected="+expectedRatio+
+      	   output_.println("Count="+runCount+" ratio="+ratio+" expected="+expectedRatio+
       			      " compressedTime="+totalCompressedTime+" uncompressedTime="+totalUncompressedTime); 
              }
          }
            } /* while not goal met */ 
-           System.out.println("Test info                 ="+testInfo); 
-           System.out.println("Run milliseconds          ="+(System.currentTimeMillis() - testStartTime));
-           System.out.println("Run count                 ="+runCount); 
-           System.out.println("Compressed milliseconds   ="+totalCompressedTime); 
-           System.out.println("Uncompressed milliseconds ="+totalUncompressedTime);
+           output_.println("Test info                 ="+testInfo); 
+           output_.println("Run milliseconds          ="+(System.currentTimeMillis() - testStartTime));
+           output_.println("Run count                 ="+runCount); 
+           output_.println("Compressed milliseconds   ="+totalCompressedTime); 
+           output_.println("Uncompressed milliseconds ="+totalUncompressedTime);
            sb.append("Run count                 ="+runCount+"\n"); 
            sb.append("Compressed milliseconds   ="+totalCompressedTime+"\n"); 
            sb.append("Uncompressed milliseconds ="+totalUncompressedTime+"\n");
            double ratio = (((double)totalCompressedTime)/((double)totalUncompressedTime));
-           System.out.println("Ratio                     ="+ ratio);
-           System.out.println("Expected ratio            ="+ expectedRatio);
+           output_.println("Ratio                     ="+ ratio);
+           output_.println("Expected ratio            ="+ expectedRatio);
            if (ratio > expectedRatio) { 
          sb.append("FAILED:  expectedRatio="+expectedRatio+" ratio="+ratio+"\n");
          passed = false; 
@@ -1870,13 +1860,13 @@ while (passed && runCount < 10 ) {
 
     runCount++; 
 }
-System.out.println("Test name: "+testInfo); 
-System.out.println("Run count                 ="+runCount); 
-System.out.println("Compressed bytes   ="+compressedBytes); 
-System.out.println("Uncompressed bytes ="+uncompressedBytes);
+output_.println("Test name: "+testInfo); 
+output_.println("Run count                 ="+runCount); 
+output_.println("Compressed bytes   ="+compressedBytes); 
+output_.println("Uncompressed bytes ="+uncompressedBytes);
 double ratio = (((double)compressedBytes)/((double)uncompressedBytes));
-System.out.println("Ratio              ="+ ratio);
-System.out.println("Expected ratio     ="+ expectedRatio);
+output_.println("Ratio              ="+ ratio);
+output_.println("Expected ratio     ="+ expectedRatio);
 
 if (ratio > expectedRatio) {
     sb.append("Expected ratio="+expectedRatio+" but got "+ratio+"\n"); 
@@ -1915,13 +1905,13 @@ if (useCompressConnection) {
       sb.append(displayDataTypes(dataTypes)); 
       int rowSize = rowSize(dataTypes); 
       if (rowTooBig(dataTypes)) {
-        System.out.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
+        output_.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
         return true; 
       }
       try { 
          createTable(tablename, dataTypes, sb);
       } catch (Exception e) { 
-        System.out.println("create table failed:  row size = "+rowSize); 
+        output_.println("create table failed:  row size = "+rowSize); 
         sb.append("FAILED:  Exception caught on createTable:  row size = "+rowSize); 
         printStackTraceToStringBuffer(e, sb); 
         return false; 
@@ -1977,7 +1967,7 @@ if (useCompressConnection) {
       sb.append("Testing ");
       int rowSize = rowSize(dataTypes); 
       if (rowTooBig(dataTypes)) {
-        System.out.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
+        output_.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
         return true; 
       }
 
@@ -1985,7 +1975,7 @@ if (useCompressConnection) {
       try { 
       createTable(tablename, dataTypes, sb);
       } catch (Exception e) { 
-        System.out.println("create table failed:  row size = "+rowSize); 
+        output_.println("create table failed:  row size = "+rowSize); 
         sb.append("FAILED:  Exception caught on createTable:  row size = "+rowSize); 
         printStackTraceToStringBuffer(e, sb); 
         return false; 
@@ -2012,13 +2002,13 @@ if (useCompressConnection) {
 
       int rowSize = rowSize(dataTypes); 
       if (rowTooBig(dataTypes)) {
-	  System.out.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
+	  output_.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
 	  return true; 
       }
       try { 
         createTable(tablename, dataTypes, sb);
       } catch (Exception e) { 
-        System.out.println("create table failed:  row size = "+rowSize); 
+        output_.println("create table failed:  row size = "+rowSize); 
         sb.append("FAILED:  Exception caught on createTable:  row size = "+rowSize); 
         printStackTraceToStringBuffer(e, sb); 
         return false; 
@@ -2048,14 +2038,14 @@ if (useCompressConnection) {
       sb.append(displayDataTypes(dataTypes)); 
       int rowSize = rowSize(dataTypes); 
       if (rowTooBig(dataTypes)) {
-        System.out.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
+        output_.println("Warning:  Row for "+tablename+" too big ("+rowSize+"): "+displayDataTypes(dataTypes)); 
         return true; 
       }
       try { 
       createTable(tablename, dataTypes, sb);
 
       } catch (Exception e) { 
-        System.out.println("create table failed:  row size = "+rowSize); 
+        output_.println("create table failed:  row size = "+rowSize); 
         sb.append("FAILED:  Exception caught on createTable:  row size = "+rowSize); 
         printStackTraceToStringBuffer(e, sb); 
         return false; 
@@ -2450,7 +2440,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 	  return; 
       } 
 
-    System.out.println("Var033 is testing combinations for "+RUN_MINUTES+" minutes"); 
+    output_.println("Var033 is testing combinations for "+RUN_MINUTES+" minutes"); 
     Random random = new Random(); 
     long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
     boolean passed = true; 
@@ -2468,7 +2458,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 
        }
        int rowsCount = 100 + random.nextInt(1000);
-       System.out.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+       output_.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
        passed = testInsertCompressionCase("JDPSBC"+tableCount, dataTypes, rowsCount, sb);
        tableCount++; 
     }
@@ -2541,7 +2531,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 	    return; 
 	} 
 
-        System.out.println("Var039 is testing combinations including compressions for "+RUN_MINUTES+" minutes"); 
+        output_.println("Var039 is testing combinations including compressions for "+RUN_MINUTES+" minutes"); 
         Random random = new Random(); 
         long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
         boolean passed = true; 
@@ -2573,7 +2563,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
            
           }
            int rowsCount = 100 + random.nextInt(1000);
-           System.out.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+           output_.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
            passed = testInsertCompressionCase("JDPSBC"+tableCount, dataTypes, rowsCount, sb);
            tableCount++; 
         }
@@ -2664,7 +2654,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 	    return; 
 	} 
 
-              System.out.println("Var048 is testing update combinations for "+RUN_MINUTES+" minutes"); 
+              output_.println("Var048 is testing update combinations for "+RUN_MINUTES+" minutes"); 
               Random random = new Random(); 
               long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
               boolean passed = true; 
@@ -2683,7 +2673,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
                  }
                  
                  int rowsCount = 100 + random.nextInt(1000);
-                 System.out.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+                 output_.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
                  passed = testUpdateCompressionCase("JDPSBC"+tableCount, dataTypes, rowsCount, sb);
                  tableCount++; 
               }
@@ -2762,7 +2752,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 		} 
 	    }
 
-              System.out.println("Var055 is testing update combinations for "+RUN_MINUTES+" minutes"); 
+              output_.println("Var055 is testing update combinations for "+RUN_MINUTES+" minutes"); 
               Random random = new Random(); 
               long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
               boolean passed = true; 
@@ -2781,7 +2771,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
                  }
                  
                  int rowsCount = 100 + random.nextInt(1000);
-                 System.out.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+                 output_.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
                  passed = testDeleteCompressionCase("JDPSBC"+tableCount, dataTypes, rowsCount, sb);
                  tableCount++; 
               }
@@ -2975,7 +2965,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
              * Randomly test combinations for 1 minutes
              */
             public void Var073() {
-		System.out.println("Var062 is testing merge combinations for "+RUN_MINUTES+" minutes"); 
+		output_.println("Var062 is testing merge combinations for "+RUN_MINUTES+" minutes"); 
               Random random = new Random(); 
               long endTime = System.currentTimeMillis()+ RUN_MINUTES * 60000; 
               boolean passed = true; 
@@ -3004,7 +2994,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
                  }
                  
                  int rowsCount = 100 + random.nextInt(1000);
-                 System.out.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+                 output_.println("Test "+tableCount+": Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
                  passed = testMergeCompressionCase("JDPSBC"+tableCount, dataTypes, rowsCount, sb);
                  tableCount++; 
               }
@@ -3114,7 +3104,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
 	int[] dataTypes = { TYPE_NUMERIC152, TYPE_VARCHARHEX255, TYPE_TIMESTAMP, };
   
 	StringBuffer sb = new StringBuffer(); 
-       System.out.println("Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
+       output_.println("Testing "+rowsCount+" rows of : "+displayDataTypes(dataTypes));
        boolean passed = testInsertCompressionCase("JDPSBC83", dataTypes, rowsCount, sb);
 
        assertCondition(passed, sb); 
@@ -3135,54 +3125,6 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
     
     
     
-
-  public static void oldMain(String[] args) {
-      int[][] workingDataTypes = {
-	  { TYPE_VARCHARFBD32700, TYPE_BLOB },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARCHAR256,  TYPE_BLOB, },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARCHARFBD256,TYPE_BLOB, },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARBINARY256, TYPE_BLOB, },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARCHAR257,  TYPE_BLOB, },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARCHARFBD257, TYPE_BLOB, },
-	  { TYPE_INTEGER, TYPE_VARCHAR1000, TYPE_VARBINARY257,     TYPE_BLOB, },
-	  { TYPE_VARCHAR32700,        TYPE_BLOB, },
-	  { TYPE_VARCHARFBD32700,        TYPE_BLOB, },
-	  { TYPE_VARBINARY32700,        TYPE_BLOB, },
-    { TYPE_SMALLINT, TYPE_DBCLOB, TYPE_VARCHARFBD32700 },
-
-
-      };
-
-      for (int i = 0; i < workingDataTypes.length; i++) {
-	  System.out.println("Size="+rowSize(workingDataTypes[i])+" rowTooBig="+rowTooBig(workingDataTypes[i])+" "+displayDataTypes(workingDataTypes[i]));
-	  if (rowTooBig(workingDataTypes[i])) {
-	      System.out.print("... ERROR -- row should not be too big "); 
-	  } 
-      } 
-
-
-
-      int[][] failingDataTypes = {
-	  { TYPE_INTEGER, TYPE_DBCLOB, TYPE_VARCHARFBD32700 },
-	  { TYPE_INTKEY, TYPE_VARCHAR32700, TYPE_VARCHAR60 }, 
-	  { TYPE_NCHAR, TYPE_VARCHAR32700}, 
-	  { TYPE_VARCHAR32700, TYPE_NVARCHAR30}, 
-      };
-
-      for  (int i = 0; i < failingDataTypes.length; i++) {
-	  System.out.println("Size="+rowSize(failingDataTypes[i])+
-	      " rowTooBig="+rowTooBig(failingDataTypes[i])+
-	      " "+displayDataTypes(failingDataTypes[i])); 
-
-	  if (!rowTooBig(failingDataTypes[i])) {
-	      System.out.print("... ERROR -- row should too big "); 
-	  } 
-
-      } 
-
-
-
-  } 
 
 }
 

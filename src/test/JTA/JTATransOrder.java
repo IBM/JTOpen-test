@@ -139,7 +139,7 @@ Performs cleanup needed after running variations.
         } else
 			failed("Expected error code " + javax.transaction.xa.XAException.XAER_PROTO + " got " + errorCode);
 		} catch (NoSuchFieldException ex2)  {
-		    System.out.println("exception of class "+ex.getClass().getName()+" did not have errorCode"); 
+		    output_.println("exception of class "+ex.getClass().getName()+" did not have errorCode"); 
 		    ex.printStackTrace(); 
 		}
             }

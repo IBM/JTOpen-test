@@ -101,7 +101,7 @@ public class JDBUPSArray extends JDTestcase {
       s.close();
       connection_.commit();
     } catch (Exception e) {
-      System.out.println("Caught exception: ");
+      output_.println("Caught exception: ");
       e.printStackTrace();
 
     }
@@ -119,7 +119,7 @@ public class JDBUPSArray extends JDTestcase {
       connection_ = null;
 
     } catch (Exception e) {
-      System.out.println("Caught exception: ");
+      output_.println("Caught exception: ");
 
     }
   }
@@ -134,7 +134,7 @@ public class JDBUPSArray extends JDTestcase {
           connection_.close();
         }
       } catch (SQLException e) {
-        System.out.println("Critical Error - couldn't close connection");
+        output_.println("Critical Error - couldn't close connection");
       }
 
       connection_ = testDriver_.getConnection(baseURL_ + ";" + connectionParms, userId_, encryptedPassword_);
@@ -148,7 +148,7 @@ public class JDBUPSArray extends JDTestcase {
         String expectedException = "not found";
         String exInfo = e.toString();
         if (exInfo.indexOf(expectedException) < 0) {
-          System.out.println("Unexpected exception  -- expected " + expectedException);
+          output_.println("Unexpected exception  -- expected " + expectedException);
           e.printStackTrace();
         }
       }
@@ -160,14 +160,14 @@ public class JDBUPSArray extends JDTestcase {
       connection_.commit();
 
     } catch (Exception e) {
-      System.out.println("Caught exception: ");
+      output_.println("Caught exception: ");
       e.printStackTrace();
     } finally {
       try {
         if (s != null)
           s.close();
       } catch (SQLException e) {
-        System.out.println("Critical Error closing statement()");
+        output_.println("Critical Error closing statement()");
       }
     }
   }
@@ -182,7 +182,7 @@ public class JDBUPSArray extends JDTestcase {
           connection_.close();
         }
       } catch (SQLException e) {
-        System.out.println("Critical Error - couldn't close connection");
+        output_.println("Critical Error - couldn't close connection");
       }
 
       connection_ = testDriver_.getConnection(baseURL_ + ";" + connectionParms, userId_, encryptedPassword_);
@@ -210,14 +210,14 @@ public class JDBUPSArray extends JDTestcase {
       connection_.commit();
 
     } catch (Exception e) {
-      System.out.println("Caught exception: ");
+      output_.println("Caught exception: ");
       e.printStackTrace();
     } finally {
       try {
         if (s != null)
           s.close();
       } catch (SQLException e) {
-        System.out.println("Critical Error closing statement()");
+        output_.println("Critical Error closing statement()");
       }
     }
   }
@@ -236,7 +236,7 @@ public class JDBUPSArray extends JDTestcase {
           connection_.close();
         }
       } catch (SQLException e) {
-        System.out.println("Critical Error - couldn't close connection");
+        output_.println("Critical Error - couldn't close connection");
       }
 
       connection_ = testDriver_.getConnection(baseURL_ + ";" + connectionParms, userId_, encryptedPassword_);
@@ -264,14 +264,14 @@ public class JDBUPSArray extends JDTestcase {
       connection_.commit();
 
     } catch (Exception e) {
-      System.out.println("Caught exception: ");
+      output_.println("Caught exception: ");
       e.printStackTrace();
     } finally {
       try {
         if (s != null)
           s.close();
       } catch (SQLException e) {
-        System.out.println("Critical Error closing statement()");
+        output_.println("Critical Error closing statement()");
       }
     }
   }
@@ -2031,7 +2031,7 @@ public class JDBUPSArray extends JDTestcase {
       // handle the first row...
       rs.next();
       if ((rs.getInt(1) != 0) || (rs.getInt(2) != 0) || (rs.getInt(3) != 0)) {
-        System.out.println("Failed on first row.");
+        output_.println("Failed on first row.");
         success2 = false;
       }
 
@@ -2047,13 +2047,13 @@ public class JDBUPSArray extends JDTestcase {
             boolean thirdNull = rs.wasNull();
 
             if ((rs.getInt(1) != count) || (secondNull != true) || (thirdNull != true)) {
-              System.out.println("Failed on row " + count + " " + first + "," + second + "," + third);
+              output_.println("Failed on row " + count + " " + first + "," + second + "," + third);
               success2 = false;
               break;
             }
           } else {
             if ((rs.getInt(1) != count) || (rs.getInt(2) != count) || (rs.getInt(3) != count)) {
-              System.out.println("Failed on row " + count);
+              output_.println("Failed on row " + count);
               success2 = false;
               break;
             }

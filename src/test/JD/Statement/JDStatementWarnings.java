@@ -739,7 +739,7 @@ public class JDStatementWarnings extends JDTestcase {
             cmd.run ("QSYS/GRTOBJAUT OBJ(" + collection_ + "/THROWIT) OBJTYPE(*PGM) USER(*PUBLIC) AUT(*ALL)");
 
           } else {
-            System.out.println("Unable to drop procedure using " + dropSql);
+            output_.println("Unable to drop procedure using " + dropSql);
             e.printStackTrace();
           }
         }

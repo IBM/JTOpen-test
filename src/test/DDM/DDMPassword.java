@@ -88,7 +88,7 @@ public class DDMPassword extends Testcase
     catch (Exception e)
     {
       // Testcase setup did not complete successfully
-      System.out.println("Unable to complete setup; variations not run");
+      output_.println("Unable to complete setup; variations not run");
       return;
     }
 
@@ -143,7 +143,7 @@ public class DDMPassword extends Testcase
     }
     catch (Exception e)
     {
-      System.out.println("Unable to complete cleanup.");
+      output_.println("Unable to complete cleanup.");
     }
 
     // Disconnect from the AS/400 for record the record level access service

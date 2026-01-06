@@ -69,16 +69,6 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
     private long daemonMinSleepTime_;  // min time (msecs) for requester daemons to sleep each cycle
     private long poolHealthCheckCycle_;  // # of msecs between calls to checkPoolHealth()
 
-    static
-    {
-      try {
-        Class.forName("com.ibm.as400.access.AS400JDBCDriver");
-      }
-      catch(Exception e){
-        System.out.println("Unable to register JDBC driver.");
-        System.exit(0);
-      }
-    }
     private boolean keepDaemonsAlive_ = true;  // When this is false, the daemons shut down.
 
     private DataSource dataSource_;
@@ -105,7 +95,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
               runMode, fileOutputStream, password);
         pwrSys_ = pwrSys;
         timeToRunDaemons_ = TestDriverStatic.duration_*1000;  // convert seconds to milliseconds
-        if (DEBUG) System.out.println("duration == " + TestDriverStatic.duration_ + " seconds.");
+        if (DEBUG) output_.println("duration == " + TestDriverStatic.duration_ + " seconds.");
     }
 
 
@@ -113,7 +103,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
     {
         try
         {
-            if (DEBUG) System.out.println("TESTING_THREAD_SAFETY flag is " + (TESTING_THREAD_SAFETY ? "true" : "false"));
+            if (DEBUG) output_.println("TESTING_THREAD_SAFETY flag is " + (TESTING_THREAD_SAFETY ? "true" : "false"));
 
             if (TESTING_THREAD_SAFETY)
             {
@@ -145,7 +135,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
             daemonMaxSleepTime_ = Math.min(timeToRunDaemons_ / 3, 10*1000);  // at most 10 seconds (less if shorter run-time)
             daemonMinSleepTime_ = 20;  // milliseconds
 
-            if (DEBUG) System.out.println("setup: Constructing AS400JDBCManagedConnectionPoolDataSource (cpds0)");
+            if (DEBUG) output_.println("setup: Constructing AS400JDBCManagedConnectionPoolDataSource (cpds0)");
             AS400JDBCManagedConnectionPoolDataSource cpds0 = new AS400JDBCManagedConnectionPoolDataSource();
 
             // Set general datasource properties.  Note that both CPDS and MDS have these properties, and they might have different values.
@@ -182,16 +172,16 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
 
             ctx.rebind("mydatasource", cpds0);  // We can now do lookups on cpds, by the name "mydatasource".
 
-            if (DEBUG) System.out.println("setup: lookup(\"mydatasource\"" + ")");
+            if (DEBUG) output_.println("setup: lookup(\"mydatasource\"" + ")");
             AS400JDBCManagedConnectionPoolDataSource cpds1 = (AS400JDBCManagedConnectionPoolDataSource)ctx.lookup("mydatasource");
-            if (DEBUG) System.out.println("setup: cpds1.getUser() == |" + cpds1.getUser() + "|");
+            if (DEBUG) output_.println("setup: cpds1.getUser() == |" + cpds1.getUser() + "|");
 
 
    
   
                dataSource_ = (DataSource) cpds0; 
             //dataSource_.setLogWriter(output_);
-            if (DEBUG) System.out.println("setup: dataSource_.getUser() == |" + ((AS400JDBCManagedDataSource)dataSource_).getUser() + "|");
+            if (DEBUG) output_.println("setup: dataSource_.getUser() == |" + ((AS400JDBCManagedDataSource)dataSource_).getUser() + "|");
 
             mds_ = (AS400JDBCManagedDataSource)dataSource_;
 
@@ -199,9 +189,9 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         catch (Exception e)
         {
             e.printStackTrace();
-            System.out.println("Setup error.");
+            output_.println("Setup error.");
             if (mds_ == null) {
-              System.out.println("Unable to create a Context object. Please add 'fscontext.jar' and 'providerutil.jar' to your classpath.");
+              output_.println("Unable to create a Context object. Please add 'fscontext.jar' and 'providerutil.jar' to your classpath.");
             }
         }
     }
@@ -210,11 +200,11 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
     {
       if (conn instanceof com.ibm.as400.access.AS400JDBCConnectionHandle)
       {
-        System.out.print("("+ (specifiedDefaultId ? "+" : "-") + "P)");
+        output_.print("("+ (specifiedDefaultId ? "+" : "-") + "P)");
       }
       else
       {
-        System.out.print("("+ (specifiedDefaultId ? "+" : "-") + "NP)");
+        output_.print("("+ (specifiedDefaultId ? "+" : "-") + "NP)");
       }
     }
 
@@ -228,21 +218,21 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
       boolean ok = true;
       try
       {
-        System.out.println("Started test run at " + new Date());
+        output_.println("Started test run at " + new Date());
 
-        if (DEBUG) System.out.println("Checking health just after datasource creation (we expect that the pool does not exist yet) ...");
+        if (DEBUG) output_.println("Checking health just after datasource creation (we expect that the pool does not exist yet) ...");
         if (mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool exists prior to first getConnection().");
+          output_.println("\nERROR: Pool exists prior to first getConnection().");
         }
 
         // Verify some setters/getters for JDBC properties.
-        System.out.println("Verifying setters/getters ...");
+        output_.println("Verifying setters/getters ...");
 
         mds_.setAccess("read only");
         if (!mds_.getAccess().equals("read only")) {
           ok = false;
-          System.out.println("\nERROR: getAccess() returned unexpected value: |"+mds_.getAccess()+"|");
+          output_.println("\nERROR: getAccess() returned unexpected value: |"+mds_.getAccess()+"|");
         }
 
         boolean oldBool = mds_.isBigDecimal();
@@ -250,7 +240,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         mds_.setBigDecimal(newBool);
         if (mds_.isBigDecimal() != newBool) {
           ok = false;
-          System.out.println("\nERROR: isBigDecimal() returned unexpected value: |"+mds_.isBigDecimal()+"|");
+          output_.println("\nERROR: isBigDecimal() returned unexpected value: |"+mds_.isBigDecimal()+"|");
         }
         mds_.setBigDecimal(oldBool);
 
@@ -259,7 +249,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         mds_.setBlockCriteria(newInt);
         if (mds_.getBlockCriteria() != newInt) {
           ok = false;
-          System.out.println("\nERROR: getBlockCriteria() returned unexpected value: |"+mds_.getBlockCriteria()+"|");
+          output_.println("\nERROR: getBlockCriteria() returned unexpected value: |"+mds_.getBlockCriteria()+"|");
         }
         mds_.setBlockCriteria(oldInt);
 
@@ -270,7 +260,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         mds_.setKeepAlive(newBool);
         if (mds_.isKeepAlive() != newBool) {
           ok = false;
-          System.out.println("\nERROR: isKeepAlive() returned unexpected value: |"+mds_.isKeepAlive()+"|");
+          output_.println("\nERROR: isKeepAlive() returned unexpected value: |"+mds_.isKeepAlive()+"|");
         }
         mds_.setKeepAlive(oldBool);
 
@@ -279,20 +269,20 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         mds_.setReceiveBufferSize(newInt);
         if (mds_.getReceiveBufferSize() != newInt) {
           ok = false;
-          System.out.println("\nERROR: getReceiveBufferSize() returned unexpected value: |"+mds_.getReceiveBufferSize()+"|");
+          output_.println("\nERROR: getReceiveBufferSize() returned unexpected value: |"+mds_.getReceiveBufferSize()+"|");
         }
 	if (oldInt == 0) oldInt = 256; 
         mds_.setReceiveBufferSize(oldInt);
 
 
-        System.out.println("CONNECTION 1");
+        output_.println("CONNECTION 1");
         Connection c1 = dataSource_.getConnection();
         if (DEBUG) displayConnectionType(c1, true);
 
-        if (DEBUG) System.out.println("Checking health after first getConnection() ...");
+        if (DEBUG) output_.println("Checking health after first getConnection() ...");
         if (!mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool is not healthy after first getConnection().");
+          output_.println("\nERROR: Pool is not healthy after first getConnection().");
         }
 
         if (!TESTING_THREAD_SAFETY)
@@ -300,43 +290,43 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
           try
           {
             c1.setAutoCommit(false);
-            if (DEBUG) System.out.println("SELECT * FROM QIWS.QCUSTCDT");
+            if (DEBUG) output_.println("SELECT * FROM QIWS.QCUSTCDT");
             Statement s = c1.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
             while(rs.next()){
-              if (DEBUG) System.out.println(rs.getString(2));
+              if (DEBUG) output_.println(rs.getString(2));
             }
             rs.close();
             s.close();
           }
           catch (Exception e) {
             e.printStackTrace();
-            if (DEBUG) System.out.println("Checking health after fatal connection error ...");
+            if (DEBUG) output_.println("Checking health after fatal connection error ...");
             if (!mds_.checkPoolHealth(true)) {
               ok = false;
-              System.out.println("\nERROR: Pool is not healthy after fatal connection error.");
+              output_.println("\nERROR: Pool is not healthy after fatal connection error.");
             }
           }
         }
 
 
-        System.out.println("CONNECTION 2");
+        output_.println("CONNECTION 2");
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
         Connection c2 = ((AS400JDBCManagedConnectionPoolDataSource)dataSource_).getConnection(systemObject_.getUserId(), charPassword);
    PasswordVault.clearPassword(charPassword);
         if (DEBUG) displayConnectionType(c2, false);
-        System.out.println("CONNECTION 3");
+        output_.println("CONNECTION 3");
         Connection c3 = dataSource_.getConnection();
         if (DEBUG) displayConnectionType(c3, true);
         c1.close();
 
-        if (DEBUG) System.out.println("Checking health after first close() ...");
+        if (DEBUG) output_.println("Checking health after first close() ...");
         if (!mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool is not healthy after first close().");
+          output_.println("\nERROR: Pool is not healthy after first close().");
         }
 
-        System.out.println("CONNECTION 4");
+        output_.println("CONNECTION 4");
         Connection c4 = dataSource_.getConnection();
         if (DEBUG) displayConnectionType(c4, true);
 
@@ -345,14 +335,14 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         c3.close();
         c4.close();
 
-        if (DEBUG) System.out.println("Checking health after last close() ...");
+        if (DEBUG) output_.println("Checking health after last close() ...");
         if (!mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool is not healthy after last close().");
+          output_.println("\nERROR: Pool is not healthy after last close().");
         }
 
         // Start the test daemons.
-        System.out.println("Starting test daemons");
+        output_.println("Starting test daemons");
         startThreads();
 
         // Run the test daemons for a while; check pool health periodically.
@@ -361,7 +351,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         long endTime = startTime + timeToRunDaemons_;
         while (System.currentTimeMillis() < endTime)
         {
-          System.out.print("h");
+          output_.print("h");
           // Let the daemons run for a while, then check pool health.
           try {
             Thread.sleep(poolHealthCheckCycle_);
@@ -369,32 +359,32 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
           catch (InterruptedException ie) {}
           if (!mds_.checkPoolHealth(true)) {
             ok = false;
-            System.out.println("\nERROR: Pool is not healthy after test daemons started.");
+            output_.println("\nERROR: Pool is not healthy after test daemons started.");
           }
         }
 
         // Stop the test daemons.
-        System.out.println("\nStopping test daemons");
+        output_.println("\nStopping test daemons");
         stopThreads();
 
-        if (DEBUG) System.out.println("Checking health after connectionGetter daemons have run ...");
+        if (DEBUG) output_.println("Checking health after connectionGetter daemons have run ...");
         if (!mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool is not healthy after test daemons stopped.");
+          output_.println("\nERROR: Pool is not healthy after test daemons stopped.");
         }
 
 
         if (!TESTING_THREAD_SAFETY)
         {
-          System.out.println("CONNECTION 5");
+          output_.println("CONNECTION 5");
           Connection c = dataSource_.getConnection();
           if (DEBUG) displayConnectionType(c, true);
           c.setAutoCommit(false);
-          if (DEBUG) System.out.println("SELECT * FROM QIWS.QCUSTCDT");
+          if (DEBUG) output_.println("SELECT * FROM QIWS.QCUSTCDT");
           Statement s = c.createStatement();
           ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
           while(rs.next()){
-            if (DEBUG) System.out.println(rs.getString(2));
+            if (DEBUG) output_.println(rs.getString(2));
           }
           rs.close();
           s.close();
@@ -403,18 +393,18 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
 
 
 
-        System.out.println("\nClosing the pool...");
+        output_.println("\nClosing the pool...");
         mds_.closePool();
 
-        if (DEBUG) System.out.println("Checking health after pool closed ...");
+        if (DEBUG) output_.println("Checking health after pool closed ...");
         Trace.setTraceJDBCOn(true);  // make sure the final stats get printed out
         Trace.setTraceOn(true);
         if (!mds_.checkPoolHealth(true)) {
           ok = false;
-          System.out.println("\nERROR: Pool is not healthy after pool closed.");
+          output_.println("\nERROR: Pool is not healthy after pool closed.");
         }
 
-        System.out.println();
+        output_.println();
         assertCondition(ok);
       }
       catch (Exception e)
@@ -422,7 +412,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         failed(e, "Unexpected Exception");
       }
       finally {
-        System.out.println("Ended variation at " + new Date());
+        output_.println("Ended variation at " + new Date());
       }
     }
 
@@ -506,7 +496,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
       public void run()
       {
         threadName_ = Thread.currentThread().getName();
-        if (DEBUG) System.out.println("ConnectionGetter("+threadName_+") Starting up");
+        if (DEBUG) output_.println("ConnectionGetter("+threadName_+") Starting up");
 
         try
         {
@@ -521,7 +511,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
               synchronized (daemonSleepLock_) {
                 try {
                   daemonSleepLock_.wait(sleepTime);
-                  System.out.print(".");
+                  output_.print(".");
                 }
                 catch (InterruptedException ie) {}
               }
@@ -533,19 +523,19 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
               { // Request another connection.
                 if (useDefaultUid_)
                 {
-                  if (DEBUG) System.out.println("ConnectionGetter("+threadName_+") - get()");
+                  if (DEBUG) output_.println("ConnectionGetter("+threadName_+") - get()");
                   conn = dataSource_.getConnection();
                 }
                 else
                 {
-                  if (DEBUG) System.out.println("ConnectionGetter("+threadName_+") - get("+uid_+",***)");
+                  if (DEBUG) output_.println("ConnectionGetter("+threadName_+") - get("+uid_+",***)");
                   char[] charPassword = PasswordVault.decryptPassword(encryptedPwd_);
                   conn = ((AS400JDBCManagedDataSource)dataSource_).getConnection(uid_, charPassword);
                   PasswordVault.clearPassword(charPassword);
                 }
 
                 if (conn == null) {
-                  System.out.println("ConnectionGetter("+threadName_+") ERROR: getConnection() returned null");
+                  output_.println("ConnectionGetter("+threadName_+") ERROR: getConnection() returned null");
                 }
                 else
                 {
@@ -586,7 +576,7 @@ public class AS400JDBCManagedConnectionPool2Testcase extends Testcase
         }  // outer try
         finally
         {
-          if (DEBUG) System.out.println("ConnectionGetter("+threadName_+") Stopping");
+          if (DEBUG) output_.println("ConnectionGetter("+threadName_+") Stopping");
           // Return all the connections that I still have in my list.
           for (int i=0; i<connections_.size(); i++) {
             Connection conn = (Connection)connections_.remove(0);

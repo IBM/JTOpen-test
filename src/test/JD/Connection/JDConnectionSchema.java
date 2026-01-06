@@ -88,7 +88,7 @@ Constructor.
     protected void setupSchema(String collection) throws SQLException {
  
 	Statement s = conn_.createStatement();
-	JDSetupCollection.create(conn_, collection, false);
+	JDSetupCollection.create(conn_, collection, false, output_);
 
 
 	try {
@@ -100,7 +100,7 @@ Constructor.
 	    s.executeUpdate("CREATE TABLE "+collection+".INFO (INFO VARCHAR(80))");
 	    s.executeUpdate("INSERT INTO "+collection+".INFO VALUES('"+collection+"')"); 
 	} catch (Exception e) {
-	    System.out.println("WARNING: setupSchema errors");
+	    output_.println("WARNING: setupSchema errors");
 	    e.printStackTrace(); 
 	}
     }

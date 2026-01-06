@@ -1400,8 +1400,8 @@ public class DTUnsignedBin8Testcase extends Testcase
 				///long dataValue = lvalue.longValue();
 				if (!lvalue.equals(expectedValue[i++]))
 				{
-                     System.out.println("Expected: " + expectedValue[i-1].toString());
-                     System.out.println("Received: " + lvalue.toString());
+                     output_.println("Expected: " + expectedValue[i-1].toString());
+                     output_.println("Received: " + lvalue.toString());
 				    valid = false;
 				}
 			    }
@@ -1521,8 +1521,8 @@ public class DTUnsignedBin8Testcase extends Testcase
 		    if (!lvalue.equals(expectedValue[i]))
 		    {
 			valid = false;
-              System.out.println("Expected: " + expectedValue[i].toString());
-              System.out.println("Received: " + lvalue.toString());
+              output_.println("Expected: " + expectedValue[i].toString());
+              output_.println("Received: " + lvalue.toString());
 		    }
 		}
 		else
@@ -1803,8 +1803,8 @@ public class DTUnsignedBin8Testcase extends Testcase
 		    if (!lvalue.equals(expectedValue[i]))
 		    {
 			valid = false;
-              System.out.println("Expected: " + expectedValue[i].toString());
-              System.out.println("Received: " + lvalue.toString());
+              output_.println("Expected: " + expectedValue[i].toString());
+              output_.println("Received: " + lvalue.toString());
 		    }
 		}
 		else

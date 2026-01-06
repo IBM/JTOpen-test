@@ -291,7 +291,7 @@ Performs setup needed before running variations.
     protected String getCatalogFromURL(String url) { 
 
 
-      // System.out.println("BaseURL is "+baseURL_); 
+      // output_.println("BaseURL is "+baseURL_); 
       // must be running JCC, set to a valid value.
       int lastColon;
       if (JDTestDriver.isLUW()) {
@@ -478,8 +478,8 @@ getVersionColumns() - Verify all columns.
                 short decimalDigits   = rs.getShort ("DECIMAL_DIGITS");
                 short pseudoColumn    = rs.getShort ("PSEUDO_COLUMN");
 
-                // System.out.println (scope + ":" + columnName + ":" + dataType + ":" + typeName + ":");
-                // System.out.println (columnSize + ":" + bufferLength + ":" + decimalDigits + ":" + pseudoColumn + ":");
+                // output_.println (scope + ":" + columnName + ":" + dataType + ":" + typeName + ":");
+                // output_.println (columnSize + ":" + bufferLength + ":" + decimalDigits + ":" + pseudoColumn + ":");
                 if (! (scope == 0)) {
                   success=false; 
                   message.append("\nscope="+scope+" sb 0"); 
@@ -1168,7 +1168,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 		Statement stmt = connection_.createStatement();
 
 		for (int i = 0; i < 1000; i++) {
-		    // System.out.println("Calling getVersionColumns");
+		    // output_.println("Calling getVersionColumns");
 		    ResultSet rs = dmd_.getVersionColumns (connectionCatalog_,
 							   JDDMDTest.COLLECTION2, "VC1");
 
