@@ -2298,6 +2298,7 @@ public abstract class Testcase {
     //
     Arrays.sort(methods, new MethodComparator());
 
+    System.out.println("=== STARTING TESTS ==="); 
     for (int index = 0; index < methods.length; ++index) {
       String methodName = methods[index].getName();
 
