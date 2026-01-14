@@ -2798,12 +2798,14 @@ public void setExtraJavaArgs(String extraJavaArgs) {
 
         Object checkIfAs400=getAS400(loader, AS400,USERID,new String(clearPassword));
 
+        Class as400Class=loader.loadClass("com.ibm.as400.access.AS400");
         Class<?>[] argTypes = new Class<?>[2]; 
         Object[] args = new Object[2]; 
-        argTypes[0]=Class.forName("com.ibm.as400.access.AS400");
+        argTypes[0]=as400Class;
         argTypes[1]="".getClass(); 
         args[0] = checkIfAs400; 
         args[1] = "/home/" + USERID;
+        JDReflectionUtil.setClassLoader(loader); 
         Object homeDir = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFile",argTypes,args); 
 
         if (JDReflectionUtil.callMethod_B(homeDir, "exists")) {
