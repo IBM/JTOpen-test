@@ -172,17 +172,17 @@ public class JDReflectionUtil {
     
    public static Object callMethod_O(Object o, String methodName, String p1, char[] p2, char[] p3) throws Exception {
      Class<?>[] argTypes = new Class<?>[3];
-     argTypes[0] = Class.forName("java.lang.String");
-     argTypes[1] = Class.forName("[C");
-     argTypes[2] = Class.forName("[C");
+     argTypes[0] = classLoader_.loadClass("java.lang.String");
+     argTypes[1] = classLoader_.loadClass("[C");
+     argTypes[2] = classLoader_.loadClass("[C");
      return callMethod_O(o, methodName, argTypes, p1, p2, p3);
    }
 
    public static Object callMethod_O(Object o, String methodName, String p1, String p2, char[] p3) throws Exception {
      Class<?>[] argTypes = new Class<?>[3];
-     argTypes[0] = Class.forName("java.lang.String");
-     argTypes[1] = Class.forName("java.lang.String");
-     argTypes[2] = Class.forName("[C");
+     argTypes[0] = classLoader_.loadClass("java.lang.String");
+     argTypes[1] = classLoader_.loadClass("java.lang.String");
+     argTypes[2] = classLoader_.loadClass("[C");
      return callMethod_O(o, methodName, argTypes, p1, p2, p3);
    }
 
@@ -348,7 +348,7 @@ public class JDReflectionUtil {
 	Class<?> thisClass = o.getClass();
 	// System.out.println("Class of object is "+thisClass);
 	Class<?>[] argTypes = new Class<?>[1];
-	argTypes[0] = Class.forName("java.lang.Class");
+	argTypes[0] = classLoader_.loadClass("java.lang.Class");
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[1];
@@ -380,7 +380,7 @@ public class JDReflectionUtil {
         Class<?> thisClass = o.getClass();
         // System.out.println("Class of object is "+thisClass);
         Class<?>[] argTypes = new Class<?>[1];
-        argTypes[0] = Class.forName("java.lang.String");
+        argTypes[0] = classLoader_.loadClass("java.lang.String");
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
         Object[] args = new Object[1];
@@ -405,7 +405,7 @@ public class JDReflectionUtil {
        Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[2];
-       argTypes[0] = Class.forName("java.lang.String");
+       argTypes[0] = classLoader_.loadClass("java.lang.String");
        argTypes[1] = argTypes[0];
        method = thisClass.getMethod(methodName, argTypes);
        method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -432,7 +432,7 @@ public class JDReflectionUtil {
        Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[2];
-       argTypes[0] = Class.forName("java.lang.String");
+       argTypes[0] = classLoader_.loadClass("java.lang.String");
        argTypes[1] = Object[].class; //parm type is Object[]
 
        method = thisClass.getMethod(methodName, argTypes);
@@ -459,7 +459,7 @@ public class JDReflectionUtil {
        Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[3];
-       argTypes[0] = Class.forName("java.lang.String");
+       argTypes[0] = classLoader_.loadClass("java.lang.String");
        argTypes[1] = argTypes[0];
        argTypes[2] = argTypes[0];
        method = thisClass.getMethod(methodName, argTypes);
@@ -487,7 +487,7 @@ public class JDReflectionUtil {
        Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[4];
-       argTypes[0] = Class.forName("java.lang.String");
+       argTypes[0] = classLoader_.loadClass("java.lang.String");
        argTypes[1] = argTypes[0];
        argTypes[2] = argTypes[0];
        argTypes[3] = argTypes[0];
@@ -521,11 +521,11 @@ public class JDReflectionUtil {
        Class<?> thisClass = o.getClass();
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[10];
-       argTypes[0] = Class.forName("java.lang.String");
-       argTypes[1] = Class.forName("[C");
+       argTypes[0] = classLoader_.loadClass("java.lang.String");
+       argTypes[1] = classLoader_.loadClass("[C");
        argTypes[2] = argTypes[1];
        argTypes[3] = argTypes[0];
-       argTypes[4] = Class.forName("java.net.InetAddress");
+       argTypes[4] = classLoader_.loadClass("java.net.InetAddress");
        argTypes[5] = Integer.TYPE;
        argTypes[6] = argTypes[4]; 
        argTypes[7] = Integer.TYPE;
@@ -576,7 +576,7 @@ public class JDReflectionUtil {
          Class<?> thisClass = o.getClass();
          // System.out.println("Class of object is "+thisClass);
          Class<?>[] argTypes = new Class<?>[2];
-         argTypes[0] = Class.forName("java.lang.String");
+         argTypes[0] = classLoader_.loadClass("java.lang.String");
          method = null;
          Object[] args = new Object[2];
          args[0] = s;
@@ -1385,14 +1385,14 @@ public class JDReflectionUtil {
     *
     * Examples
     *
-    *  boolean value = callMethod_B(ds, "isWrapperFor", Class.forName("java.lang.String");
+    *  boolean value = callMethod_B(ds, "isWrapperFor", classLoader_.loadClass("java.lang.String");
     */
     public static boolean callMethod_B(Object o, String methodName, Class<?> x ) throws Exception {
 	java.lang.reflect.Method method;
 
 	Class<?> thisClass = o.getClass();
 	Class<?>[] argTypes = new Class<?>[1];
-	argTypes[0] = Class.forName("java.lang.Class");
+	argTypes[0] = classLoader_.loadClass("java.lang.Class");
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
 	Object[] args = new Object[1];
@@ -1886,10 +1886,10 @@ public class JDReflectionUtil {
     Class<?> thisClass = o.getClass();
     Class<?>[] argTypes = new Class<?>[8];
     argTypes[0] = String.class;
-    argTypes[1] = Class.forName("[C");;
+    argTypes[1] = classLoader_.loadClass("[C");;
     argTypes[2] = argTypes[1];
     argTypes[3] = String.class; 
-    argTypes[4] = Class.forName("java.net.InetAddress");
+    argTypes[4] = classLoader_.loadClass("java.net.InetAddress");
     argTypes[5] = Integer.TYPE; 
     argTypes[6] = argTypes[4]; 
     argTypes[7] = Integer.TYPE; 
@@ -1922,6 +1922,7 @@ public class JDReflectionUtil {
   /* Return the list of parameter classes to check for the specifed parameter */
   /* Use a cached list if possible */
   static Hashtable<Class<?>,Class<?>[]> classToParameterClassesHashtable = new Hashtable<Class<?>,Class<?>[]>();
+  private static ClassLoader classLoader_ = ClassLoader.getSystemClassLoader(); 
 
   public static Class<?>[] getParameterClasses(Object parm) {
     Hashtable<Class<?>,Class<?>> existingInterfaceHashtable = new Hashtable<Class<?>,Class<?>> (); 
@@ -3106,7 +3107,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 	Class<?> thisClass = o.getClass();
 	Class<?>[] argTypes = new Class<?>[3];
 	argTypes[0] = java.lang.Integer.TYPE;
-	argTypes[1] = Class.forName("java.io.InputStream");
+	argTypes[1] = classLoader_.loadClass("java.io.InputStream");
 	argTypes[2] = java.lang.Long.TYPE;
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3138,7 +3139,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         Class<?> thisClass = o.getClass();
         Class<?>[] argTypes = new Class<?>[3];
         argTypes[0] = String.class;
-        argTypes[1] = Class.forName("java.io.InputStream");
+        argTypes[1] = classLoader_.loadClass("java.io.InputStream");
         argTypes[2] = java.lang.Long.TYPE;
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3169,7 +3170,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 	Class<?> thisClass = o.getClass();
 	Class<?>[] argTypes = new Class<?>[3];
 	argTypes[0] = java.lang.Integer.TYPE;
-	argTypes[1] = Class.forName("java.io.Reader");
+	argTypes[1] = classLoader_.loadClass("java.io.Reader");
 	argTypes[2] = java.lang.Long.TYPE;
 	method = thisClass.getMethod(methodName, argTypes);
     method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3200,7 +3201,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         Class<?> thisClass = o.getClass();
         Class<?>[] argTypes = new Class<?>[3];
         argTypes[0] = String.class;
-        argTypes[1] = Class.forName("java.io.Reader");
+        argTypes[1] = classLoader_.loadClass("java.io.Reader");
         argTypes[2] = java.lang.Long.TYPE;
         method = thisClass.getMethod(methodName, argTypes);
         method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3219,7 +3220,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
      public static void callStaticMethod_V(String classname, String methodName, Class<?>[] argTypes, Object[] args)
          throws Exception {
-       Class<?> thisClass = Class.forName(classname);
+       Class<?> thisClass = classLoader_.loadClass(classname);
        java.lang.reflect.Method method;
        method = thisClass.getDeclaredMethod(methodName, argTypes);
        method.setAccessible(true);
@@ -3247,9 +3248,9 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
  			throws Exception {
 
         Object returnObject = null;
-	Class<?> thisClass =  Class.forName(classname);
+	Class<?> thisClass =  classLoader_.loadClass(classname);
     Class<?>[] argTypes = new Class<?>[2];
-    argTypes[0] = Class.forName("java.lang.String"); 
+    argTypes[0] = classLoader_.loadClass("java.lang.String"); 
     argTypes[1] = Integer.class; 
     java.lang.reflect.Method method;
 
@@ -3276,12 +3277,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 		
 
         Object returnObject = null;
-	Class<?> thisClass =  Class.forName(classname);
+	Class<?> thisClass =  classLoader_.loadClass(classname);
     Class<?>[] argTypes = new Class<?>[5];
     argTypes[0] = Integer.TYPE; 
     argTypes[1] = Integer.TYPE; 
     argTypes[2] = Integer.TYPE; 
-    argTypes[3] = Class.forName("java.lang.String"); 
+    argTypes[3] = classLoader_.loadClass("java.lang.String"); 
     argTypes[4] = Integer.TYPE; 
     java.lang.reflect.Method method;
 
@@ -3307,7 +3308,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName) throws Exception {
 
         Object returnObject = null;
-	Class<?> thisClass =  Class.forName(classname);
+	Class<?> thisClass =  classLoader_.loadClass(classname);
 
         java.lang.reflect.Method method;
 
@@ -3328,12 +3329,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, String parm1) throws Exception {
 
        Object returnObject = null;
- Class<?> thisClass =  Class.forName(classname);
+ Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
        Class<?>[] argTypes = new Class<?>[1];
-       argTypes[0] = Class.forName("java.lang.String"); 
+       argTypes[0] = classLoader_.loadClass("java.lang.String"); 
 
        method = thisClass.getMethod(methodName, argTypes);
        method.setAccessible(true); //allow toolbox proxy methods to be invoked
@@ -3353,7 +3354,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, Object parm1) throws Exception {
 
        Object returnObject = null;
- Class<?> thisClass =  Class.forName(classname);
+ Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method = null ;
 
@@ -3396,7 +3397,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1) throws Exception {
 
        Object returnObject = null;
-       Class<?> thisClass =  Class.forName(classname);
+       Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
@@ -3418,13 +3419,13 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, boolean parm1, String parm2) throws Exception {
 
        Object returnObject = null;
-       Class<?> thisClass =  Class.forName(classname);
+       Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
        Class<?>[] argTypes = new Class<?>[2];
        argTypes[0] = Boolean.TYPE; 
-       argTypes[1] = Class.forName("java.lang.String"); 
+       argTypes[1] = classLoader_.loadClass("java.lang.String"); 
 
        method = thisClass.getMethod(methodName, argTypes);
        method.setAccessible(true); 
@@ -3444,7 +3445,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
           public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3) throws Exception {
 
        Object returnObject = null;
-       Class<?> thisClass =  Class.forName(classname);
+       Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
@@ -3471,7 +3472,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3, int parm4, int parm5, int parm6) throws Exception {
 
        Object returnObject = null;
-       Class<?> thisClass =  Class.forName(classname);
+       Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
@@ -3503,7 +3504,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object callStaticMethod_O(String classname, String methodName, int parm1, int parm2, int parm3, int parm4, int parm5, int parm6, int parm7) throws Exception {
 
        Object returnObject = null;
-       Class<?> thisClass =  Class.forName(classname);
+       Class<?> thisClass =  classLoader_.loadClass(classname);
 
        java.lang.reflect.Method method;
 
@@ -3548,7 +3549,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static int callStaticMethod_I(String classname, String methodName) throws Exception {
 
         Object returnObject = null;
-	Class<?> thisClass =  Class.forName(classname);
+	Class<?> thisClass =  classLoader_.loadClass(classname);
 
         java.lang.reflect.Method method;
 
@@ -3581,12 +3582,12 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       public static boolean callStaticMethod_B(String classname, String methodName, String arg) throws Exception {
 
          Object returnObject = null;
-         Class<?> thisClass =  Class.forName(classname);
+         Class<?> thisClass =  classLoader_.loadClass(classname);
 
          java.lang.reflect.Method method;
 
          Class<?>[] argTypes = new Class<?>[1];
-         argTypes[0] = Class.forName("java.lang.String"); 
+         argTypes[0] = classLoader_.loadClass("java.lang.String"); 
          method = thisClass.getMethod(methodName, argTypes);
          method.setAccessible(true); //allow toolbox proxy methods to be invoked
          Object[] args = new Object[1];
@@ -3619,7 +3620,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
     public static Object createObject(String classname) throws Exception {
 
-	Class<?> objectClass1 = Class.forName(classname);
+	Class<?> objectClass1 = classLoader_.loadClass(classname);
 	Class<?>[] noArgTypes = new Class<?>[0];
 	Object[] noArgs    = new Object[0];
 	Object newObject =null;
@@ -3645,9 +3646,9 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
      public static Object createObject(String classname, byte[] arg) throws Exception {
 
-        Class<?> objectClass11 = Class.forName(classname);
+        Class<?> objectClass11 = classLoader_.loadClass(classname);
         Class<?>[] oneArgTypes = new Class<?>[1];
-        oneArgTypes[0] = Class.forName("[B");
+        oneArgTypes[0] = classLoader_.loadClass("[B");
         Object[] oneArgs    = new Object[1];
         oneArgs[0] = arg;
         Object newObject =null;
@@ -3667,7 +3668,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          long arg) throws Exception {
 
 
-       Class<?> objectClass11 = Class.forName(classname);
+       Class<?> objectClass11 = classLoader_.loadClass(classname);
        Class<?>[] oneArgTypes = new Class<?>[1];
        oneArgTypes[0] =  Long.TYPE;
        Object[] oneArgs    = new Object[1];
@@ -3693,7 +3694,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          String arg) throws Exception {
 
 
-       Class<?> objectClass11 = Class.forName(classname);
+       Class<?> objectClass11 = classLoader_.loadClass(classname);
        Class<?>[] oneArgTypes = new Class<?>[1];
        oneArgTypes[0] = arg.getClass();
        Object[] oneArgs    = new Object[1];
@@ -3717,7 +3718,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
      
      public static Object createObject(String classname, Object arg1) throws Exception  {
-       Class<?> objectClass11 = Class.forName(classname);
+       Class<?> objectClass11 = classLoader_.loadClass(classname);
        Class<?>[] twoArgTypes = new Class<?>[1];
        twoArgTypes[0] = arg1.getClass();
        Object[] oneArg    = new Object[1];
@@ -3739,7 +3740,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
      
  	public static Object createObject(String classname, int arg1, Object arg2) throws Exception  {
-        Class<?> objectClass11 = Class.forName(classname);
+        Class<?> objectClass11 = classLoader_.loadClass(classname);
         Class<?>[] twoArgTypes = new Class<?>[2];
         twoArgTypes[0] = Integer.TYPE;
         twoArgTypes[1] = arg2.getClass();
@@ -3768,7 +3769,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
          long arg1, int arg2 ) throws Exception {
 
 
-       Class<?> objectClass11 = Class.forName(classname);
+       Class<?> objectClass11 = classLoader_.loadClass(classname);
        Class<?>[] twoArgsTypes = new Class<?>[2];
        twoArgsTypes[0] =  Long.TYPE;
        twoArgsTypes[1] =  Integer.TYPE;
@@ -3801,9 +3802,9 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
       public static Object createObject(String classname, String parameterClass, Object arg) throws Exception {
 
-         Class<?> objectClass1 = Class.forName(classname);
+         Class<?> objectClass1 = classLoader_.loadClass(classname);
          Class<?>[] oneArgTypes = new Class<?>[1];
-         oneArgTypes[0] = Class.forName(parameterClass);
+         oneArgTypes[0] = classLoader_.loadClass(parameterClass);
          Object[] oneArgs    = new Object[1];
          oneArgs[0] = arg;
          Object newObject =null;
@@ -3822,10 +3823,10 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
   	public static Object  createObject(String classname, String p1, String p2, char[] p3,
 			char[] p4) throws Exception {
   		Class<?>[] argTypes = new Class<?>[4]; 
-  		argTypes[0]= Class.forName("java.lang.String");	
-  		argTypes[1]= Class.forName("java.lang.String");	
-  		argTypes[2]= Class.forName("[C");	
-  		argTypes[3]= Class.forName("[C");	
+  		argTypes[0]= classLoader_.loadClass("java.lang.String");	
+  		argTypes[1]= classLoader_.loadClass("java.lang.String");	
+  		argTypes[2]= classLoader_.loadClass("[C");	
+  		argTypes[3]= classLoader_.loadClass("[C");	
   		Object[] args = new Object[4]; 
   		args[0]=p1;
   		args[1]=p2;
@@ -3844,7 +3845,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
       public static Object createObject(String classname, Class<?>[] argTypes, Object[] args)  throws Exception {
 
-        Class<?> objectClass1 = Class.forName(classname);
+        Class<?> objectClass1 = classLoader_.loadClass(classname);
          Object newObject =null;
          try {
              Constructor<?> constructor = objectClass1.getDeclaredConstructor(argTypes);
@@ -3885,7 +3886,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
      public static Object getStaticField_O(String className, String fieldName) throws Exception {
       Object returnObject;
-      Class<?> thisClass = Class.forName(className);
+      Class<?> thisClass = classLoader_.loadClass(className);
       java.lang.reflect.Field field=thisClass.getField(fieldName);
       returnObject = field.get(null);
       return returnObject;
@@ -3893,7 +3894,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      
      public static int getStaticField_I(String className, String fieldName) throws Exception {
        Object returnObject;
-       Class<?> thisClass = Class.forName(className);
+       Class<?> thisClass = classLoader_.loadClass(className);
        java.lang.reflect.Field field=thisClass.getField(fieldName);
        returnObject = field.get(null);
        return ((Integer)returnObject).intValue();
@@ -3911,11 +3912,16 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
         String classname) throws Exception {
       Class<?> c = null; 
       try { 
-       c = Class.forName(classname);
+       c = classLoader_.loadClass(classname);
       } catch (ClassNotFoundException ex) { 
         return false; 
       }
       return c.isInstance(ts1); 
+    }
+
+    public static void setClassLoader(ClassLoader loader) {
+      classLoader_ = loader; 
+      
     }
 
 
