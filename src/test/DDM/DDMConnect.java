@@ -20,7 +20,10 @@ import java.util.Vector;
 
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.security.auth.ProfileTokenCredential;
 
+import test.PasswordVault;
+import test.SecAuthTest;
 import test.Testcase;
 
 
@@ -125,7 +128,38 @@ public class DDMConnect extends Testcase {
     }
   }
 
+  /**
+   * Connect with profile token
+   */
 
+  public void Var004() {
+    boolean passed = true;
+    StringBuffer sb = new StringBuffer();
+    try {
+      String systemName = systemObject_.getSystemName(); 
+      // Create a single-use ProfileTokenCredential with a 10 min timeout.
+      ProfileTokenCredential pt1 = new ProfileTokenCredential();
+      pt1.setSystem(systemObject_);
+      pt1.setTimeoutInterval(600);
+      pt1.setTokenType(ProfileTokenCredential.TYPE_SINGLE_USE);
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      pt1.setTokenExtended(userId_,charPassword);
+      
+
+      AS400 as400 = new AS400(systemName,pt1); 
+      as400.connectService(AS400.RECORDACCESS);
+      as400.disconnectService(AS400.RECORDACCESS);
+      as400.close(); 
+      PasswordVault.clearPassword(charPassword);
+      
+      assertCondition(passed, sb);
+
+    } catch (Exception e) {
+      failed(e, sb);
+    }
+  }
+  
+  
 
 
 }
