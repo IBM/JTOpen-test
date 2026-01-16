@@ -173,8 +173,8 @@ public class JDReflectionUtil {
    public static Object callMethod_O(Object o, String methodName, String p1, char[] p2, char[] p3) throws Exception {
      Class<?>[] argTypes = new Class<?>[3];
      argTypes[0] = classLoader_.loadClass("java.lang.String");
-     argTypes[1] = classLoader_.loadClass("[C");
-     argTypes[2] = classLoader_.loadClass("[C");
+     argTypes[1] = Class.forName("[C");
+     argTypes[2] = Class.forName("[C");
      return callMethod_O(o, methodName, argTypes, p1, p2, p3);
    }
 
@@ -182,7 +182,7 @@ public class JDReflectionUtil {
      Class<?>[] argTypes = new Class<?>[3];
      argTypes[0] = classLoader_.loadClass("java.lang.String");
      argTypes[1] = classLoader_.loadClass("java.lang.String");
-     argTypes[2] = classLoader_.loadClass("[C");
+     argTypes[2] = Class.forName("[C");
      return callMethod_O(o, methodName, argTypes, p1, p2, p3);
    }
 
@@ -522,7 +522,7 @@ public class JDReflectionUtil {
        // System.out.println("Class of object is "+thisClass);
        Class<?>[] argTypes = new Class<?>[10];
        argTypes[0] = classLoader_.loadClass("java.lang.String");
-       argTypes[1] = classLoader_.loadClass("[C");
+       argTypes[1] = Class.forName("[C");
        argTypes[2] = argTypes[1];
        argTypes[3] = argTypes[0];
        argTypes[4] = classLoader_.loadClass("java.net.InetAddress");
@@ -3825,8 +3825,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
   		Class<?>[] argTypes = new Class<?>[4]; 
   		argTypes[0]= classLoader_.loadClass("java.lang.String");	
   		argTypes[1]= classLoader_.loadClass("java.lang.String");	
-  		argTypes[2]= classLoader_.loadClass("[C");	
-  		argTypes[3]= classLoader_.loadClass("[C");	
+  		argTypes[2]= Class.forName("[C");	
+  		argTypes[3]= Class.forName("[C");	
   		Object[] args = new Object[4]; 
   		args[0]=p1;
   		args[1]=p2;
