@@ -360,47 +360,47 @@ public class AS400FTPBeans
              AS400FTP ftp = new AS400FTP(systemObject_);
              ftp.addVetoableChangeListener(this);
 
-             AS400 system2 = new AS400();
-             AS400 system3 = new AS400();
+             try (AS400 system2 = new AS400();
+                AS400 system3 = new AS400()) {
+              ftp.setSystem(system2);
 
-             ftp.setSystem(system2);
-
-             if (vetoChangeEvent != null)
-             {
-                if (  (vetoChangeEvent.getPropertyName().equals("system"))
-                    &&(vetoChangeEvent.getOldValue() == systemObject_)
-                    &&(vetoChangeEvent.getNewValue() == system2))
-                {
-                   veto = true;
-                   try
-                   {
-                      ftp.setSystem(system3);
-                      failed("veto = true, no exception");
-                   }
-                   catch (Exception e)
-                   {
-                      if (exceptionIs(e, "PropertyVetoException"))
-                      {
-                         if (ftp.getSystem() == system2)
-                            succeeded();
-                         else
-                            failed("bad value after change vetoed");
-                      }
-                      else
-                      {
-                          failed(e, "veto event bad");
-                      }
-                   }
-                }
-                else
-                {
-                   failed("veto data bad 2");
-                }
-             }
-             else
-             {
-                failed("no veto change event ");
-             }
+               if (vetoChangeEvent != null)
+               {
+                  if (  (vetoChangeEvent.getPropertyName().equals("system"))
+                      &&(vetoChangeEvent.getOldValue() == systemObject_)
+                      &&(vetoChangeEvent.getNewValue() == system2))
+                  {
+                     veto = true;
+                     try
+                     {
+                        ftp.setSystem(system3);
+                        failed("veto = true, no exception");
+                     }
+                     catch (Exception e)
+                     {
+                        if (exceptionIs(e, "PropertyVetoException"))
+                        {
+                           if (ftp.getSystem() == system2)
+                              succeeded();
+                           else
+                              failed("bad value after change vetoed");
+                        }
+                        else
+                        {
+                            failed(e, "veto event bad");
+                        }
+                     }
+                  }
+                  else
+                  {
+                     failed("veto data bad 2");
+                  }
+               }
+               else
+               {
+                  failed("no veto change event ");
+               }
+            }
           }
           catch(Exception e)
           {

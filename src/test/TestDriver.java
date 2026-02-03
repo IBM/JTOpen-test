@@ -27,6 +27,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -1002,6 +1003,9 @@ public abstract class TestDriver implements TestDriverI, Runnable,
       if (debug_) out_.println("Setup complete");
     } catch (Throwable e) {
       out_.println("Test driver setup error:");
+      if (e instanceof SQLException) {
+        out_.println("SQLCODE = "+ ((SQLException) e).getErrorCode());
+      }
       e.printStackTrace(out_);
     }
 

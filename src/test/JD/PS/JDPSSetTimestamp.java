@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetTimestamp.java
 //
 // Classes:      JDPSSetTimestamp
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -52,6 +41,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Hashtable; import java.util.Vector;
 import java.util.TimeZone;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSSetTimestamp. This tests the following method of the JDBC
@@ -130,14 +121,25 @@ public class JDPSSetTimestamp extends JDTestcase {
    * closed.
    **/
   public void Var001() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
       ps.close();
       ps.setTimestamp(1, new Timestamp(234));
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -145,9 +147,11 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setTimestamp(100, new Timestamp(234234));
       ps.executeUpdate();
@@ -155,6 +159,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -162,9 +175,11 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should throw exception when index is 0.
    **/
   public void Var003() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setTimestamp(0, new Timestamp(24534543));
       ps.executeUpdate();
@@ -172,6 +187,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -179,9 +203,11 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should throw exception when index is -1.
    **/
   public void Var004() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setTimestamp(0, new Timestamp(7899789));
       ps.executeUpdate();
@@ -189,6 +215,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -196,17 +231,19 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should set to SQL NULL when the value is null.
    **/
   public void Var005() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
       ps.setTimestamp(1, null);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       boolean wn = rs.wasNull();
@@ -215,6 +252,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       assertCondition((check == null) && (wn == true));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -222,11 +268,13 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should work with a valid parameter index greater than 1.
    **/
   public void Var006() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (C_KEY, C_TIMESTAMP) VALUES (?, ?)");
+          + pstestSet.getName() + " (C_KEY, C_TIMESTAMP) VALUES (?, ?)");
       ps.setString(1, "Hola");
       Timestamp t = new Timestamp(9789874);
       ps.setTimestamp(2, t);
@@ -234,7 +282,7 @@ public class JDPSSetTimestamp extends JDTestcase {
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -242,6 +290,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       assertCondition(check.toString().equals(t.toString()));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -249,16 +306,30 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Should throw exception when the calendar is null.
    **/
   public void Var007() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(797899789), null);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -285,17 +356,27 @@ public class JDPSSetTimestamp extends JDTestcase {
   }
 
   public void testSetFailure(String columnName, Timestamp inTimestamp) {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+          + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       ps.setTimestamp(1, inTimestamp);
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
-
   }
 
   /**
@@ -309,15 +390,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a INTEGER parameter.
    **/
   public void Var010() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(214748364));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -325,15 +417,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a REAL parameter.
    **/
   public void Var011() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(21768644));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -341,15 +444,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a FLOAT parameter.
    **/
   public void Var012() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(26786744));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -357,9 +471,12 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a DOUBLE parameter.
    **/
   public void Var013() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     try {
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(22567544));
       ps.executeUpdate();
       ps.close();
@@ -367,21 +484,43 @@ public class JDPSSetTimestamp extends JDTestcase {
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a DECIMAL parameter.
    **/
   public void Var014() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(2253444));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -389,15 +528,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a NUMERIC parameter.
    **/
   public void Var015() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(290904));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -405,18 +555,20 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a CHAR(50) parameter.
    **/
   public void Var016() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
       Timestamp t = new Timestamp(2289781);
       ps.setTimestamp(1, t);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_CHAR_50 FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -424,6 +576,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       assertCondition(check.toString().equals(t.toString()));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -431,18 +592,20 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a VARCHAR(50) parameter.
    **/
   public void Var017() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
       Timestamp t = new Timestamp(224565414);
       ps.setTimestamp(1, t);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -450,6 +613,15 @@ public class JDPSSetTimestamp extends JDTestcase {
       assertCondition(check.toString().equals(t.toString()));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -457,10 +629,13 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a CLOB parameter.
    **/
   public void Var018() {
-    if (checkLobSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(22213444));
         ps.executeUpdate();
         ps.close();
@@ -469,16 +644,30 @@ public class JDPSSetTimestamp extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a DBCLOB parameter.
    **/
   public void Var019() {
-    if (checkLobSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(2298724));
         ps.executeUpdate();
         ps.close();
@@ -487,23 +676,45 @@ public class JDPSSetTimestamp extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a BINARY parameter.
    **/
   public void Var020() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(22097044));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -511,17 +722,28 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a VARBINARY parameter.
    **/
   public void Var021() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+          + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(2245614));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -529,15 +751,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a BLOB parameter.
    **/
   public void Var022() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(123444));
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -549,16 +782,18 @@ public class JDPSSetTimestamp extends JDTestcase {
    * which is what I think I would want.
    **/
   public void Var023() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
       Timestamp t = new Timestamp(8640000000L);
       ps.setTimestamp(1, t);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_DATE FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_DATE FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -567,6 +802,15 @@ public class JDPSSetTimestamp extends JDTestcase {
           .equals(t.toString().substring(0, 10)));
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -574,18 +818,21 @@ public class JDPSSetTimestamp extends JDTestcase {
    * setTimestamp() - Set a TIME parameter.
    **/
   public void Var024() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    try {
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
       Timestamp t = new Timestamp(1198733);
       ps.setTimestamp(1, t);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_TIME FROM " + pstestSet.getName());
       rs.next();
       Time check = rs.getTime(1);
       rs.close();
@@ -593,24 +840,38 @@ public class JDPSSetTimestamp extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a TIMESTAMP parameter.
    **/
   public void Var025() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    try {
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
       Timestamp t = new Timestamp(103464332);
       ps.setTimestamp(1, t);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -619,25 +880,39 @@ public class JDPSSetTimestamp extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a TIMESTAMP parameter, with a calendar specified.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         Timestamp t = new Timestamp(103454332);
         ps.setTimestamp(1, t, Calendar.getInstance());
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
         rs.next();
         Timestamp check = rs.getTimestamp(1);
         rs.close();
@@ -647,12 +922,26 @@ public class JDPSSetTimestamp extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a DATALINK parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
       notApplicable("Native driver pre-JDBC 3.0");
       return;
@@ -660,7 +949,7 @@ public class JDPSSetTimestamp extends JDTestcase {
     if (checkDatalinkSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(265454));
         ps.executeUpdate();
         ps.close();
@@ -669,16 +958,30 @@ public class JDPSSetTimestamp extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a DISTINCT parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkLobSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(2246454));
         ps.executeUpdate();
         ps.close();
@@ -687,22 +990,47 @@ public class JDPSSetTimestamp extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setTimestamp() - Set a BIGINT parameter.
    **/
   public void Var029() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkBigintSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -712,8 +1040,11 @@ public class JDPSSetTimestamp extends JDTestcase {
    * cache.
    **/
   public void Var030() {
+    JDSerializeFile pstestSet = null;
     try {
-      String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    try {
+      String insert = "INSERT INTO " + pstestSet.getName()
           + " (C_TIMESTAMP) VALUES (?)";
 
       if (isToolboxDriver())
@@ -723,7 +1054,7 @@ public class JDPSSetTimestamp extends JDTestcase {
         JDSetupPackage.prime(systemObject_, encryptedPassword_, PACKAGE,
             JDPSTest.COLLECTION, insert, "", getDriver());
 
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       Connection c2 = testDriver_.getConnection(baseURL_
           + ";extended dynamic=true;package=" + PACKAGE + ";package library="
@@ -736,7 +1067,7 @@ public class JDPSSetTimestamp extends JDTestcase {
       c2.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
       rs.next();
       Timestamp check = rs.getTimestamp(1);
       rs.close();
@@ -745,6 +1076,17 @@ public class JDPSSetTimestamp extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -752,15 +1094,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    **/
   public void Var031() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
+        pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
+        String tablename16=pstestSetdfp.getName();
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SETDFP16 + " (C_BIGINT) VALUES (?)");
+            + tablename16 + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -770,15 +1123,26 @@ public class JDPSSetTimestamp extends JDTestcase {
    **/
   public void Var032() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
+        pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
+        String tablename34=pstestSetdfp.getName();
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SETDFP34 + " (C_BIGINT) VALUES (?)");
+            + tablename34 + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -788,9 +1152,12 @@ public class JDPSSetTimestamp extends JDTestcase {
    **/
   public void Var033() {
     if (checkXmlSupport()) {
+      JDSerializeFile pstestSetxml = null;
       try {
+        pstestSetxml = JDPSTest.getSerializeFile(connection_, JDPSTest.SETXML);
+        String tablename = pstestSetxml.getName(); 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETXML + " VALUES (?)");
+            "INSERT INTO " + tablename + " VALUES (?)");
         try {
           ps.setTimestamp(1, new Timestamp(214748364));
           ps.executeUpdate();
@@ -801,6 +1168,14 @@ public class JDPSSetTimestamp extends JDTestcase {
         }
       } catch (Exception e) {
         failed(e, "unexpected exception");
+      } finally {
+        if (pstestSetxml != null) {
+          try {
+            pstestSetxml.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
 

@@ -2978,7 +2978,7 @@ public abstract class Testcase {
     CommandCall commandCall = new CommandCall(system);
 
     /* Make sure that the data area exists */
-    IFSFile dataAreaFile = new IFSFile(system, "/QSYS.LIB/JDTESTINFO.LIB/"
+    IFSFile dataAreaFile = new IFSFile(system, "/QSYS.LIB/"+JTOpenTestEnvironment.testInfoSchema+".LIB/"
         + lockDtaaraName_ + ".DTAARA");
     boolean dataAreaFileExists = false;
     boolean retry = true;
@@ -3006,7 +3006,7 @@ public abstract class Testcase {
 
     if (!dataAreaFileExists) {
       /* need to create collection */
-      String command = "QSYS/CRTDTAARA JDTESTINFO/" + lockDtaaraName_
+      String command = "QSYS/CRTDTAARA "+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
           + "  TYPE(*CHAR) LEN(400)  ";
       boolean success = commandCall.run(command);
       if (!success) {
@@ -3020,7 +3020,7 @@ public abstract class Testcase {
         }
       } else {
     	  /* Need to grant authority */ 
-    	  command = "QSYS/GRTOBJAUT OBJ(JDTESTINFO/" + lockDtaaraName_
+    	  command = "QSYS/GRTOBJAUT OBJ("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
     	  		+  ") OBJTYPE(*DTAARA) USER(*PUBLIC) AUT(*ALL)"; 
     	  success = commandCall.run(command);
     	  AS400Message[] messageList = commandCall.getMessageList();
@@ -3039,7 +3039,7 @@ public abstract class Testcase {
     String command = ""; 
     while (!success && System.currentTimeMillis() < lockEndTime) { 
        /* Lock the user space */
-       command = " QSYS/ALCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
+       command = " QSYS/ALCOBJ OBJ(("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
           + " *DTAARA *EXCLRD)) WAIT(1)";
     
        success = commandCall.run(command);
@@ -3049,18 +3049,18 @@ public abstract class Testcase {
     	   
     	   if (messageList.length > 0) {
     		   if (messageList[0].getID().equals("CPF0991")) {  /* authority error */ 
-    			 throw new Exception("Unable to access JDTESTINFO/"+lockDtaaraName_+". Please check permissions");    
+    			 throw new Exception("Unable to access "+JTOpenTestEnvironment.testInfoSchema+"/"+lockDtaaraName_+". Please check permissions");    
     		   }
     	   }
            // Find the job holding the lock and delete it if the job 
            // is more than an hour old. 
-           ObjectDescription od = new ObjectDescription(system,"/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA");  
+           ObjectDescription od = new ObjectDescription(system,"/QSYS.LIB/"+JTOpenTestEnvironment.testInfoSchema+".LIB/"+lockDtaaraName_+".DTAARA");  
            ObjectLockListEntry[] objectLockList = od.getObjectLockList(); 
            for (int i = 0; i < objectLockList.length; i++) {
              ObjectLockListEntry entry = objectLockList[i]; 
              if (entry.getLockStatus() == ObjectLockListEntry.LOCK_STATUS_LOCK_HELD) { 
                 String jobname=entry.getJobNumber()+"/"+entry.getJobUserName()+"/"+entry.getJobName();
-                System.out.println("/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA locked by "+jobname); 
+                System.out.println("/QSYS.LIB/"+JTOpenTestEnvironment.testInfoSchema+".LIB/"+lockDtaaraName_+".DTAARA locked by "+jobname); 
                 Job job = new Job(system, entry.getJobName(), entry.getJobUserName(), entry.getJobNumber());
                 JobLog joblog = job.getJobLog(); 
                 QueuedMessage[] messages = joblog.getMessages(-1, 999999);
@@ -3093,13 +3093,13 @@ public abstract class Testcase {
     }
     if (!success) {
 
-      // QSYSObjectPathName path = new QSYSObjectPathName("JDTESTINFO",	lockDtaaraName_, "DTAARA");
+      // QSYSObjectPathName path = new QSYSObjectPathName(""+JTOpenTestEnvironment.testInfoSchema+"",	lockDtaaraName_, "DTAARA");
       // CharacterDataArea dataArea = new CharacterDataArea(system, path.getPath());
       // String data = dataArea.read().trim();
-      CharacterDataArea dataArea = new CharacterDataArea(systemObject_, "/QSYS.LIB/JDTESTINFO.LIB/"+lockDtaaraName_+".DTAARA");
+      CharacterDataArea dataArea = new CharacterDataArea(systemObject_, "/QSYS.LIB/"+JTOpenTestEnvironment.testInfoSchema+".LIB/"+lockDtaaraName_+".DTAARA");
       // Read from the data area.
       String data = JDReflectionUtil.callMethod_S(dataArea, "read").trim();
-      System.out.println(" DATA AREA JDTESTINFO/" + lockDtaaraName
+      System.out.println(" DATA AREA "+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName
 			 + " contains " + data);
 
       AS400Message[] messageList = commandCall.getMessageList();
@@ -3124,7 +3124,7 @@ public abstract class Testcase {
       }
       try {
 
-        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
             + " (1 50)) VALUE('" + command + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3133,7 +3133,7 @@ public abstract class Testcase {
       }
       try {
 
-        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
             + " (51 100)) VALUE('" + testLib_ + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3148,7 +3148,7 @@ public abstract class Testcase {
         // ignore
       }
       try {
-        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
             + " (101 150)) VALUE('" + command + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3159,7 +3159,7 @@ public abstract class Testcase {
       try {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
-        command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+        command = "QSYS/CHGDTAARA DTAARA("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
             + " (151 200)) VALUE('AT_" + currentTimestamp + "')";
         // System.out.println("Attempting "+command);
         commandCall.run(command);
@@ -3186,13 +3186,13 @@ public abstract class Testcase {
     String command;
 
     try {
-      command = "QSYS/CHGDTAARA DTAARA(JDTESTINFO/" + lockDtaaraName_
+      command = "QSYS/CHGDTAARA DTAARA("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
           + " (1 200)) VALUE('UNUSED')";
       commandCall.run(command);
     } catch (Exception e) {
       // ignore
     }
-    command = "QSYS/DLCOBJ OBJ((JDTESTINFO/" + lockDtaaraName_
+    command = "QSYS/DLCOBJ OBJ(("+JTOpenTestEnvironment.testInfoSchema+"/" + lockDtaaraName_
         + " *DTAARA *EXCL)) ";
     boolean success = commandCall.run(command);
     if (!success) {

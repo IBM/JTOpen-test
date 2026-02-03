@@ -665,7 +665,7 @@ public class AS400JDBCMDSTestcase extends Testcase
             ds.setServerName(systemObject_.getSystemName());
 
             Connection c= ds.getConnection();
-
+            c.close(); 
             assertCondition(true, "Connection created "+c); 
         }
         catch (Exception e)
@@ -701,7 +701,8 @@ public class AS400JDBCMDSTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
 
             Connection c2 = ds.getConnection();
-
+            c.close(); 
+            c2.close(); 
             assertCondition(true, "connections created "+c+" "+c2); 
         }
         catch (Exception e)
@@ -1683,7 +1684,9 @@ public class AS400JDBCMDSTestcase extends Testcase
         try
         {
             AS400JDBCManagedDataSource ds = new AS400JDBCManagedDataSource();
-            assertCondition(ds.getLogWriter() == null);
+            PrintWriter logWriter = ds.getLogWriter();
+            if (logWriter != null) logWriter.close(); 
+            assertCondition( logWriter == null);
         }
         catch (Exception e)
         {
@@ -2970,12 +2973,19 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
+            boolean passed = true;
+            String message = "";
             if (rs != null)
-                succeeded();
-            else
+                passed = true;
+            else {
+                passed = false; 
+                 message = "No RS from query"; 
+            }
                 failed("Unexpected results.");
-
+            rs.close(); 
+            s.close(); 
             c.close();
+            assertCondition(passed, message); 
         }
         catch (Exception e)
         {
@@ -3045,6 +3055,7 @@ public class AS400JDBCMDSTestcase extends Testcase
                 insert.setDouble(3, Double.valueOf("100.01").doubleValue());
                 insert.executeUpdate();
             }
+            insert.close(); 
             succeeded();
         }
         catch (Exception e)

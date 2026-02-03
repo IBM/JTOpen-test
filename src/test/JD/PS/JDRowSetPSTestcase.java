@@ -40,10 +40,10 @@ import javax.naming.Context;              // JNDI
 import javax.naming.InitialContext;       // JNDI
 import javax.naming.NamingException;      // JNDI
 
-//import com.ibm.db2.jdbc.app.UDBDataSource;  //A1
-//import com.ibm.db2.jdbc.app.DB2JdbcRowSet;
 import javax.sql.DataSource;
 import javax.sql.RowSet;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 
 /**
@@ -92,6 +92,7 @@ Performs setup needed before running variations.
         throws Exception
     {
 	super.setup();
+	connection_ = testDriver_.getConnection (baseURL_,systemObject_.getUserId(), encryptedPassword_);
 	DataSource ds; //@A1  switched to generic object types instead of driver specific ones.
 	  if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
 	  {
@@ -160,15 +161,18 @@ Performs cleanup needed after running variations.
         throws Exception
     {
        super.cleanup();
+       connection_.close(); 
     }
 
     /**
     *  clearParameters() - Verify that executing after a clear throws an exception.
     **/
     public void Var001()
-    {                 
+    {
+    JDSerializeFile pstestSet = null;                 
         try 
         {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	   if (getDriver () == JDTestDriver.DRIVER_NATIVE)
 	   {
 	       notApplicable();
@@ -181,10 +185,10 @@ Performs cleanup needed after running variations.
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
            rowset.setPassword(charPassword);
    PasswordVault.clearPassword(charPassword);
-           rowset.setCommand("DELETE FROM " + JDPSTest.PSTEST_SET);
+           rowset.setCommand("DELETE FROM " + pstestSet.getName());
            rowset.execute();
 
-           rowset.setCommand ("INSERT INTO " + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
+           rowset.setCommand ("INSERT INTO " + pstestSet.getName() + " (C_KEY) VALUES (?)");
            rowset.execute();
            
            rowset.setString (1, "Hola");
@@ -198,8 +202,17 @@ Performs cleanup needed after running variations.
         catch (Exception e) 
         {
            assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
   
   
     /**
@@ -207,7 +220,10 @@ Performs cleanup needed after running variations.
     **/
     public void Var002()
     {
-	String userId = null; 
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+String userId = null; 
         try 
         {
             RowSet rowset; 
@@ -221,10 +237,10 @@ Performs cleanup needed after running variations.
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
            rowset2.setPassword(charPassword);
    PasswordVault.clearPassword(charPassword);
-           rowset.setCommand("DELETE FROM " + JDPSTest.PSTEST_SET);
+           rowset.setCommand("DELETE FROM " + pstestSet.getName());
            rowset.execute();
 
-           rowset.setCommand("INSERT INTO " + JDPSTest.PSTEST_SET + " (C_KEY) VALUES ('Adios')");
+           rowset.setCommand("INSERT INTO " + pstestSet.getName() + " (C_KEY) VALUES ('Adios')");
            rowset.execute();
 
 
@@ -240,15 +256,15 @@ Performs cleanup needed after running variations.
    password = new String(charPassword); 
 		rowset.setPassword(password);
    PasswordVault.clearPassword(charPassword);
-		stmt_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
-		stmt_.executeUpdate("INSERT INTO " + JDPSTest.PSTEST_SET + " (C_KEY) VALUES ('Adios')");
-		stmt_.executeUpdate("INSERT INTO " + JDPSTest.PSTEST_SET + " (C_KEY) VALUES ('Adios')");
-		rowset.setCommand("SELECT C_KEY FROM " + JDPSTest.PSTEST_SET + " WHERE C_KEY='Adios'");
+		stmt_.executeUpdate("DELETE FROM " + pstestSet.getName());
+		stmt_.executeUpdate("INSERT INTO " + pstestSet.getName() + " (C_KEY) VALUES ('Adios')");
+		stmt_.executeUpdate("INSERT INTO " + pstestSet.getName() + " (C_KEY) VALUES ('Adios')");
+		rowset.setCommand("SELECT C_KEY FROM " + pstestSet.getName() + " WHERE C_KEY='Adios'");
             }
            rowset.clearParameters ();
            rowset.execute();
   
-           rowset.setCommand("SELECT C_KEY FROM " + JDPSTest.PSTEST_SET + " WHERE C_KEY='Adios'");
+           rowset.setCommand("SELECT C_KEY FROM " + pstestSet.getName() + " WHERE C_KEY='Adios'");
            rowset.execute();
 
            int count = 0;
@@ -262,5 +278,16 @@ Performs cleanup needed after running variations.
         {
            failed (e, "Unexpected Exception UserId="+userId);
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 }

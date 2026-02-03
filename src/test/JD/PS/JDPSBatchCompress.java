@@ -94,7 +94,8 @@ extends JDTestcase {
       boolean calculateBytesWritten = false; 
       long bytesWritten = 0;
       boolean showRow = false;
-      boolean issue53914exists = false; 
+      boolean issue53914exists = false;
+      private String suffix_; 
 
 /**
 Constructor.
@@ -136,9 +137,13 @@ Performs setup needed before running variations.
 
 @exception Exception If an exception occurs.
 **/
-    protected void setup ()
+    protected void setup() throws Exception {
+      setup(""); 
+    }
+    protected void setup (String suffix )
     throws Exception
     {
+      suffix_ = suffix; 
       if (areBooleansSupported()) {
          TYPE_COUNT = TYPE_BOOLEAN + 1; 
       };
@@ -1317,7 +1322,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
   public void testInsertCompression(String tablename, int[] dataTypes, int rows, int verifyCompression) {
     StringBuffer sb = new StringBuffer();
     String traceFile = null;
-
+    tablename=tablename+suffix_; 
     try {
       if ((verifyCompression != VERIFY_NONE) && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 
@@ -1392,7 +1397,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
       StringBuffer sb = new StringBuffer();
       String traceFile = null; 
       try {
-
+        tablename=tablename+suffix_;
 	  createTable(tablename, dataTypes, sb);
         resetGeneratedValues(sb); 
         String[][] expectedResults = batchInsert(tablename, dataTypes, rows, sb);
@@ -1468,7 +1473,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
       StringBuffer sb = new StringBuffer();
       String traceFile = null;
     try {
-        
+      tablename=tablename+suffix_;
         createTable(tablename, dataTypes, sb);
         useNulls = false; 
         resetGeneratedValues(sb); 
@@ -1552,7 +1557,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
       StringBuffer sb = new StringBuffer();
       String traceFile = null;
     try {
-  
+      tablename=tablename+suffix_;
         createTable(tablename, dataTypes, sb);
         resetGeneratedValues(sb); 
         String[][] expectedResults = batchInsert(tablename, dataTypes, rows, sb);
@@ -1736,7 +1741,7 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
 
   
   public void testInsertCompressionTimePerformance(String testInfo, String tablename, int[] dataTypes, int rows, double expectedRatio, int runMinutes) {
-
+    tablename=tablename+suffix_;
    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
 
        StringBuffer sb = new StringBuffer();
@@ -1827,7 +1832,8 @@ public void testInsertCompression(String tablename, int[] dataTypes, int rows) {
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
 	// Make sure everything is release, so the the
         // garbage collector does not generate
-        // unnecessary traffice
+        // unnecessary traffic
+      tablename=tablename+suffix_;
   System.gc(); 
   StringBuffer sb = new StringBuffer();
   useNulls = false; 
@@ -1900,6 +1906,7 @@ if (useCompressConnection) {
   
     public boolean testInsertCompressionCase(String tablename, int[] dataTypes, int rows, StringBuffer sb) {
     try {
+      tablename=tablename+suffix_;
 	    System.gc(); 
       sb.append("Testing "+tablename+" ");
       sb.append(displayDataTypes(dataTypes)); 
@@ -1964,6 +1971,7 @@ if (useCompressConnection) {
 
     public boolean testUpdateCompressionCase(String tablename, int[] dataTypes, int rows, StringBuffer sb) {
     try {
+      tablename=tablename+suffix_;
       sb.append("Testing ");
       int rowSize = rowSize(dataTypes); 
       if (rowTooBig(dataTypes)) {
@@ -1997,6 +2005,7 @@ if (useCompressConnection) {
 
     public boolean testDeleteCompressionCase(String tablename, int[] dataTypes, int rows, StringBuffer sb) {
     try {
+      tablename=tablename+suffix_;
       sb.append("Testing "); 
       sb.append(displayDataTypes(dataTypes));
 
@@ -2033,7 +2042,7 @@ if (useCompressConnection) {
 
     public boolean testMergeCompressionCase(String tablename, int[] dataTypes, int rows, StringBuffer sb) {
     try {
-	 
+      tablename=tablename+suffix_;	 
       sb.append("Testing "); 
       sb.append(displayDataTypes(dataTypes)); 
       int rowSize = rowSize(dataTypes); 
@@ -2248,7 +2257,7 @@ boolean checkRows(String tablename, String[][] expectedResults, int[] dataTypes,
   public void Var010() {
     int[] dataTypes = { TYPE_INTEGER, TYPE_INTEGER, TYPE_INTEGER,
         TYPE_VARCHAR30, };
-    testInsertCompression("JDPSBC001", dataTypes, 256, VERIFY_COMPRESSION);
+    testInsertCompression("JDPSBC010", dataTypes, 256, VERIFY_COMPRESSION);
   }
 
   

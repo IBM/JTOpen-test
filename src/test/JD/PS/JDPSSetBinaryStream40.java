@@ -51,6 +51,8 @@ import test.JVMInfo;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
 import test.JD.JDWeirdInputStream;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSSetBinaryStream40. This tests the following method of the JDBC
@@ -87,7 +89,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    *              If an exception occurs.
    **/
   protected void setup() throws Exception {
-
+    suffix_ = "40";
     javaHome = System.getProperty("java.home");
     String url = baseURL_ + ";data truncation=true" + ";errors=full";
     testUrl = url;
@@ -115,10 +117,13 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * closed.
    **/
   public void Var001() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         ps.close();
         InputStream is = new ByteArrayInputStream(
             new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 });
@@ -127,6 +132,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -134,10 +150,13 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * specified.
    **/
   public void Var002() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         InputStream is = new ByteArrayInputStream(
             new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 });
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 100, is);
@@ -146,16 +165,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Should throw exception when index is 0.
    **/
   public void Var003() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         InputStream is = new ByteArrayInputStream(
             new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 });
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 0, is);
@@ -164,16 +197,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Should throw exception when index is -1.
    **/
   public void Var004() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         InputStream is = new ByteArrayInputStream(
             new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 });
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", -1, is);
@@ -182,18 +229,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Should set to SQL NULL when the value is null.
    **/
   public void Var005() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         argTypes[1] = Class.forName("java.io.InputStream");
@@ -205,7 +266,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         boolean wn = rs.wasNull();
@@ -215,6 +276,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -222,12 +294,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * 1.
    **/
   public void Var006() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
         ps.setString(1, "Muchas");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 98, (byte) -2 };
         InputStream is = new ByteArrayInputStream(b);
@@ -237,7 +312,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
 
@@ -247,6 +322,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -281,13 +367,16 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * data is truncated.
    **/
   public void Var009() {
-    int length = 0;
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+int length = 0;
     if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 98, (byte) -2,
             (byte) 0, (byte) -111, (byte) 50, (byte) 2, (byte) 0, (byte) -111,
             (byte) 50, (byte) 2, (byte) 0, (byte) -111, (byte) 50, (byte) 2,
@@ -312,13 +401,27 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void testSetFailed(String columnName, byte[] inArray) {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+            + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
         InputStream is = new ByteArrayInputStream(inArray);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
         ps.executeUpdate();
@@ -327,7 +430,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -342,10 +455,13 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * setBinaryStream() - Set a INTEGER parameter.
    **/
   public void Var011() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2 };
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -355,16 +471,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a REAL parameter.
    **/
   public void Var012() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2 };
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -374,16 +504,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a FLOAT parameter.
    **/
   public void Var013() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 45 };
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -393,16 +537,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DOUBLE parameter.
    **/
   public void Var014() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 45,
             (byte) 12 };
         InputStream is = new ByteArrayInputStream(b);
@@ -413,16 +571,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DECIMAL parameter.
    **/
   public void Var015() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+            + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 45,
             (byte) 12, (byte) -33 };
         InputStream is = new ByteArrayInputStream(b);
@@ -433,16 +605,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a NUMERIC parameter.
    **/
   public void Var016() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+            + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 45,
             (byte) 12, (byte) -33, (byte) 0 };
         InputStream is = new ByteArrayInputStream(b);
@@ -453,18 +639,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a CHAR(1) parameter.
    **/
   public void Var017() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
         byte[] b = new byte[] { (byte) 98 };
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -473,18 +673,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a CHAR(50) parameter.
    **/
   public void Var018() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -12, (byte) 45,
             (byte) 12, (byte) -33 };
         InputStream is = new ByteArrayInputStream(b);
@@ -494,18 +708,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a VARCHAR(50) parameter.
    **/
   public void Var019() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 108, (byte) -12, (byte) 12,
             (byte) -33 };
         InputStream is = new ByteArrayInputStream(b);
@@ -515,17 +743,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a CLOB parameter.
    **/
   public void Var020() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 12, (byte) -33 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -536,17 +778,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DBCLOB parameter.
    **/
   public void Var021() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 66, (byte) 12,
               (byte) -33 };
           InputStream is = new ByteArrayInputStream(b);
@@ -558,18 +814,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a BINARY parameter.
    **/
   public void Var022() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 1, (byte) 0,
             (byte) 12, (byte) -33, (byte) 57, (byte) 9 };
         InputStream is = new ByteArrayInputStream(b);
@@ -578,7 +848,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -590,18 +860,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a VARBINARY parameter.
    **/
   public void Var023() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 1, (byte) 0,
             (byte) -33, (byte) 57, (byte) 9 };
         InputStream is = new ByteArrayInputStream(b);
@@ -610,7 +894,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -619,6 +903,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -626,12 +921,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * the full stream.
    **/
   public void Var024() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -12, (byte) 45,
             (byte) -33 };
         InputStream is = new ByteArrayInputStream(b);
@@ -650,6 +948,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -679,12 +988,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * setBinaryStream() - Set a VARBINARY parameter to the empty string.
    **/
   public void Var028() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[0];
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -692,7 +1004,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -701,18 +1013,32 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a VARBINARY parameter to a bad input stream.
    **/
   public void Var029() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
 
         class BadInputStream extends InputStream {
           public BadInputStream() {
@@ -739,19 +1065,33 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a BLOB parameter.
    **/
   public void Var030() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) -33, (byte) 0 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -759,7 +1099,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
           rs.next();
           InputStream is2 = rs.getBinaryStream(1);
           byte[] check = new byte[b.length];
@@ -772,16 +1112,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           failed(e, "Unexpected Exception");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DATE parameter.
    **/
   public void Var031() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) -33,
             (byte) 0 };
         InputStream is = new ByteArrayInputStream(b);
@@ -792,16 +1146,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a TIME parameter.
    **/
   public void Var032() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) -33,
             (byte) 0, (byte) 5 };
         InputStream is = new ByteArrayInputStream(b);
@@ -811,16 +1179,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a TIMESTAMP parameter.
    **/
   public void Var033() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) 11,
             (byte) -33, (byte) 0, (byte) 5 };
         InputStream is = new ByteArrayInputStream(b);
@@ -831,17 +1213,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DATALINK parameter.
    **/
   public void Var034() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkDatalinkSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+              + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) 11,
               (byte) -33, (byte) 0, (byte) 5, (byte) 100 };
           InputStream is = new ByteArrayInputStream(b);
@@ -853,17 +1249,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DISTINCT parameter.
    **/
   public void Var035() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+              + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) 1, (byte) 11, (byte) -33,
               (byte) 0, (byte) 5, (byte) 100 };
           InputStream is = new ByteArrayInputStream(b);
@@ -875,17 +1285,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a BIGINT parameter.
    **/
   public void Var036() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkBigintSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -896,15 +1320,29 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a VARBINARY parameter with package caching.
    **/
   public void Var037() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+        String insert = "INSERT INTO " + pstestSet.getName()
             + " (C_VARBINARY_20) VALUES (?)";
 
         if (isToolboxDriver())
@@ -914,7 +1352,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           JDSetupPackage.prime(systemObject_, encryptedPassword_, PACKAGE,
               JDPSTest.COLLECTION, insert, "", getDriver());
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         Connection c2 = testDriver_.getConnection(baseURL_
             + ";extended dynamic=true;package=" + PACKAGE + ";package library="
@@ -929,7 +1367,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -938,6 +1376,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -946,14 +1395,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * flag is turned off.
    **/
   public void Var038() {
-    int length = 0;
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+int length = 0;
     if (checkJdbc40())
       if (checkNative()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connectionNoDT_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+              + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
           byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 98, (byte) -2,
               (byte) 0, (byte) -111, (byte) 50, (byte) 2, (byte) 0, (byte) -111,
               (byte) 50, (byte) 2, (byte) 0, (byte) -111, (byte) 50, (byte) 2,
@@ -977,6 +1429,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           failed(e, "Unexpected Exception");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1091,12 +1554,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    **/
   public void Var051() // @E1: added this Var
   {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 1 };
         InputStream is = new ByteArrayInputStream(b);
         JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -1104,7 +1570,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -1118,6 +1584,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1125,13 +1602,16 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    **/
   public void Var052() // @E1: added this Var
   {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) -33, (byte) 0 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -1139,7 +1619,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
           rs.next();
           InputStream is2 = rs.getBinaryStream(1);
           byte[] check = new byte[b.length];
@@ -1152,6 +1632,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           failed(e, "Unexpected Exception");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1386,7 +1877,10 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * greater than 1.
    **/
   public void Var079() {
-    // Per Toolbox implementation...
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+// Per Toolbox implementation...
     // The spec says to throw an exception when the
     // actual length does not match the specified length.
     // I think this is strange since this means the length
@@ -1401,10 +1895,10 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
     if (checkJdbc40())
       try {
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
         ps.setString(1, "Muchas");
 
         byte[] b = new byte[] { (byte) 32, (byte) 33, (byte) 34, (byte) 35,
@@ -1417,7 +1911,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
 
@@ -1427,6 +1921,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception " + added);
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1446,14 +1951,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
     // }
     String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes ";
 
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
         StringBuffer sb = new StringBuffer();
         sb.append(added + "\n");
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
         ps.setString(1, "Muchas");
 
         byte[] b = new byte[] { (byte) 32, (byte) 33, (byte) 34, (byte) 35,
@@ -1466,7 +1974,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
 
@@ -1476,17 +1984,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception " + added);
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DECFLOAT16 parameter.
    **/
   public void Var081() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + " VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP16 + " VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -1497,17 +2019,31 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBinaryStream() - Set a DECFLOAT34 parameter.
    **/
   public void Var082() {
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + " VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP34 + " VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2 };
           InputStream is = new ByteArrayInputStream(b);
           JDReflectionUtil.callMethod_V(ps, "setBinaryStream", 1, is);
@@ -1518,6 +2054,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         }
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1525,15 +2072,18 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
    * truncation.
    **/
   public void Var083() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 
       String added = " -- setting blob parameter that is too large -- added 5/8/07 by native driver for SE28810 ";
       int length = 0;
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
         ParameterMetaData pmd = ps.getParameterMetaData();
         int precision = pmd.getPrecision(1);
         output_.println("Precision is " + precision);
@@ -1557,6 +2107,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
                 + " sb 200 " + added);
       } catch (Throwable e) {
         failed(e, "Unexpected Exception" + added);
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -1727,14 +2288,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   public void Var087() {
     String added = " -- setting blob parameter that is too large for query parameter  -- added 5/8/07 by native driver for SE28810 ";
     int length = 0;
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
-        statement_.executeUpdate("INSERT INTO " + JDPSTest.PSTEST_SET
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+        statement_.executeUpdate("INSERT INTO " + pstestSet.getName()
             + "(C_BLOB) VALUES(BLOB(X'0001'))");
         // C_BLOB is 200 bytes
         PreparedStatement ps = connection_.prepareStatement(
-            "SELECT * FROM " + JDPSTest.PSTEST_SET + " WHERE C_BLOB = ?");
+            "SELECT * FROM " + pstestSet.getName() + " WHERE C_BLOB = ?");
         byte[] b = new byte[9000];
         InputStream is = new ByteArrayInputStream(b);
         length = b.length;
@@ -1783,6 +2347,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Throwable e) {
         failed(e, "Unexpected Exception" + added);
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public boolean unsupportedJavaHome() {
@@ -1800,12 +2375,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /**
    * setBinaryStream() - Set an XML parameter.
    **/
-  public void setXML(String tablename, String byteEncoding, String data,
+  public void setXML(int table, String byteEncoding, String data,
       String expected) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40())
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tablename = pstestSetxml.getName(); 
 
           // Check the byte encoding and JVM.
           // Some JVM do not support various byte encodings.
@@ -1850,6 +2428,14 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
                   + JDTestUtilities.getMixedString(expected) + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
   }
@@ -1857,12 +2443,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /**
    * setBinaryStream() - Set an XML parameter using invalid data.
    **/
-  public void setInvalidXML(String tablename, String byteEncoding, String data,
+  public void setInvalidXML(int table, String byteEncoding, String data,
       String expectedException) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40())
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tablename = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tablename);
 
           PreparedStatement ps = connection_
@@ -1889,6 +2478,14 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
             failed(e,
                 "Unexpected Exception.  Expected " + expectedException + added);
           }
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
   }
@@ -1896,30 +2493,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /* Insert various types against a UTF-8 table */
 
   public void Var088() {
-    setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1", "<Test>VAR088</Test>",
+    setXML(JDPSTest.SETXML, "ISO8859_1", "<Test>VAR088</Test>",
         "<Test>VAR088</Test>");
   }
 
   public void Var089() {
-    setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1",
+    setXML(JDPSTest.SETXML, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR089\u00fb</Test>",
         "<Test>VAR089\u00fb</Test>");
   }
 
   public void Var090() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-8",
+    setXML(JDPSTest.SETXML, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR090\u00fb</Test>",
         "<Test>VAR090\u00fb</Test>");
   }
 
   public void Var091() {
-    setXML(JDPSTest.PSTEST_SETXML, "IBM-037",
+    setXML(JDPSTest.SETXML, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR091\u00fb</Test>",
         "<Test>VAR091\u00fb</Test>");
   }
 
   public void Var092() {
-    setXML(JDPSTest.PSTEST_SETXML, "IBM-937",
+    setXML(JDPSTest.SETXML, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR092\u672b</Test>",
         "<Test>VAR092\u672b</Test>");
   }
@@ -1933,7 +2530,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
 
     else
 
-      setXML(JDPSTest.PSTEST_SETXML, "IBM-290",
+      setXML(JDPSTest.SETXML, "IBM-290",
           "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR093\uff7a</Test>",
           "<Test>VAR093\uff7a</Test>");
   }
@@ -1945,20 +2542,20 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       notApplicable("non-supported for " + javaHome); // windows does not like
                                                       // UCS-2
     } else {
-      setXML(JDPSTest.PSTEST_SETXML, "UCS-2",
+      setXML(JDPSTest.SETXML, "UCS-2",
           "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR094\u00fb\uff7a</Test>",
           "<Test>VAR094\u00fb\uff7a</Test>");
     }
   }
 
   public void Var095() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-16BE",
+    setXML(JDPSTest.SETXML, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR095\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>VAR095\u00fb\uff7a\ud800\udf30</Test>");
   }
 
   public void Var096() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-16LE",
+    setXML(JDPSTest.SETXML, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR096\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>VAR096\u00fb\uff7a\ud800\udf30</Test>");
   }
@@ -1967,34 +2564,34 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
 
   public void Var097() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1", "<Test>VAR097</Test>",
+    setXML(JDPSTest.SETXML13488, "ISO8859_1", "<Test>VAR097</Test>",
         "<Test>VAR097</Test>");
   }
 
   public void Var098() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1",
+    setXML(JDPSTest.SETXML13488, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR098\u00fb</Test>",
         "<Test>VAR098\u00fb</Test>");
   }
 
   public void Var099() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-8",
+    setXML(JDPSTest.SETXML13488, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR099\u00fb</Test>",
         "<Test>VAR099\u00fb</Test>");
   }
 
   public void Var100() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-037",
+    setXML(JDPSTest.SETXML13488, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR100\u00fb</Test>",
         "<Test>VAR100\u00fb</Test>");
   }
 
   public void Var101() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-937",
+    setXML(JDPSTest.SETXML13488, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR101\u672b</Test>",
         "<Test>VAR101\u672b</Test>");
   }
@@ -2006,7 +2603,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-290",
+    setXML(JDPSTest.SETXML13488, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR102\uff7a</Test>",
         "<Test>VAR102\uff7a</Test>");
   }
@@ -2017,57 +2614,83 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
                                                       // CCSID 290
       return;
     }
-    setXML(JDPSTest.PSTEST_SETXML13488, "UCS-2",
+    setXML(JDPSTest.SETXML13488, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR103\u00fb\uff7a</Test>",
         "<Test>VAR103\u00fb\uff7a</Test>");
   }
 
   public void Var104() {
 
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-16BE",
+    setXML(JDPSTest.SETXML13488, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR104\u00fb\uff7a</Test>",
         "<Test>VAR104\u00fb\uff7a</Test>");
   }
 
   public void Var105() {
-
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-16LE",
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+setXML(JDPSTest.SETXML13488, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR105\u00fb\uff7a</Test>",
         "<Test>VAR105\u00fb\uff7a</Test>");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /* Insert various types against a UTF-16 table */
 
   public void Var106() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1", "<Test>VAR106</Test>",
+    setXML(JDPSTest.SETXML1200, "ISO8859_1", "<Test>VAR106</Test>",
         "<Test>VAR106</Test>");
   }
 
   public void Var107() {
-
-    setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1",
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+setXML(JDPSTest.SETXML1200, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR089\u00fb</Test>",
         "<Test>VAR089\u00fb</Test>");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void Var108() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-8",
+    setXML(JDPSTest.SETXML1200, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR090\u00fb</Test>",
         "<Test>VAR090\u00fb</Test>");
   }
 
   public void Var109() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-037",
+    setXML(JDPSTest.SETXML1200, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR091\u00fb</Test>",
         "<Test>VAR091\u00fb</Test>");
   }
 
   public void Var110() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-937",
+    setXML(JDPSTest.SETXML1200, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR092\u672b</Test>",
         "<Test>VAR092\u672b</Test>");
   }
@@ -2079,7 +2702,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-290",
+    setXML(JDPSTest.SETXML1200, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR093\uff7a</Test>",
         "<Test>VAR093\uff7a</Test>");
   }
@@ -2091,21 +2714,21 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "UCS-2",
+    setXML(JDPSTest.SETXML1200, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR094\u00fb\uff7a</Test>",
         "<Test>VAR094\u00fb\uff7a</Test>");
   }
 
   public void Var113() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-16BE",
+    setXML(JDPSTest.SETXML1200, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR095\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>VAR095\u00fb\uff7a\ud800\udf30</Test>");
   }
 
   public void Var114() {
 
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-16LE",
+    setXML(JDPSTest.SETXML1200, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR096\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>VAR096\u00fb\uff7a\ud800\udf30</Test>");
   }
@@ -2113,30 +2736,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /* Insert various types against a EBCDIC-37 table */
 
   public void Var115() {
-    setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1", "<Test>VAR115</Test>",
+    setXML(JDPSTest.SETXML37, "ISO8859_1", "<Test>VAR115</Test>",
         "<Test>VAR115</Test>");
   }
 
   public void Var116() {
-    setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1",
+    setXML(JDPSTest.SETXML37, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR089\u00fb</Test>",
         "<Test>VAR089\u00fb</Test>");
   }
 
   public void Var117() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-8",
+    setXML(JDPSTest.SETXML37, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR090\u00fb</Test>",
         "<Test>VAR090\u00fb</Test>");
   }
 
   public void Var118() {
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-037",
+    setXML(JDPSTest.SETXML37, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR091\u00fb</Test>",
         "<Test>VAR091\u00fb</Test>");
   }
 
   public void Var119() {
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-937",
+    setXML(JDPSTest.SETXML37, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR092</Test>",
         "<Test>VAR092</Test>");
   }
@@ -2152,7 +2775,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
      * if ( isToolboxDriver() ) { notApplicable("non-supported"); //windows does
      * not like } else
      */
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-290",
+    setXML(JDPSTest.SETXML37, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR093</Test>",
         "<Test>VAR093</Test>");
   }
@@ -2164,19 +2787,19 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML37, "UCS-2",
+    setXML(JDPSTest.SETXML37, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR094\u00fb</Test>",
         "<Test>VAR094\u00fb</Test>");
   }
 
   public void Var122() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-16BE",
+    setXML(JDPSTest.SETXML37, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR095\u00fb</Test>",
         "<Test>VAR095\u00fb</Test>");
   }
 
   public void Var123() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-16LE",
+    setXML(JDPSTest.SETXML37, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR096\u00fb</Test>",
         "<Test>VAR096\u00fb</Test>");
   }
@@ -2184,30 +2807,30 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /* Insert various types against a EBCDIC-937 table */
 
   public void Var124() {
-    setXML(JDPSTest.PSTEST_SETXML937, "ISO8859_1", "<Test>VAR088</Test>",
+    setXML(JDPSTest.SETXML937, "ISO8859_1", "<Test>VAR088</Test>",
         "<Test>VAR088</Test>");
   }
 
   public void Var125() {
-    setXML(JDPSTest.PSTEST_SETXML937, "ISO8859_1",
+    setXML(JDPSTest.SETXML937, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR089</Test>",
         "<Test>VAR089</Test>");
   }
 
   public void Var126() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-8",
+    setXML(JDPSTest.SETXML937, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR090\u672b</Test>",
         "<Test>VAR090\u672b</Test>");
   }
 
   public void Var127() {
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-037",
+    setXML(JDPSTest.SETXML937, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR091</Test>",
         "<Test>VAR091</Test>");
   }
 
   public void Var128() {
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-937",
+    setXML(JDPSTest.SETXML937, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR092\u672b</Test>",
         "<Test>VAR092\u672b</Test>");
   }
@@ -2217,7 +2840,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
      * if ( isToolboxDriver() ) { notApplicable("non-supported"); //windows does
      * not like } else
      */
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-290",
+    setXML(JDPSTest.SETXML937, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR093</Test>",
         "<Test>VAR093</Test>");
   }
@@ -2229,19 +2852,19 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML937, "UCS-2",
+    setXML(JDPSTest.SETXML937, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR094\u672b</Test>",
         "<Test>VAR094\u672b</Test>");
   }
 
   public void Var131() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-16BE",
+    setXML(JDPSTest.SETXML937, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR095\u672b</Test>",
         "<Test>VAR095\u672b</Test>");
   }
 
   public void Var132() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-16LE",
+    setXML(JDPSTest.SETXML937, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR096\u672b</Test>",
         "<Test>VAR096\u672b</Test>");
   }
@@ -2249,32 +2872,60 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
   /* Insert various types against a EBCDIC 290 table */
 
   public void Var133() {
-    setXML(JDPSTest.PSTEST_SETXML290, "ISO8859_1", "<Test>VAR133</Test>",
+    setXML(JDPSTest.SETXML290, "ISO8859_1", "<Test>VAR133</Test>",
         "<Test>VAR133</Test>");
   }
 
   public void Var134() {
-    setXML(JDPSTest.PSTEST_SETXML290, "ISO8859_1",
+    setXML(JDPSTest.SETXML290, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR089</Test>",
         "<Test>VAR089</Test>");
   }
 
   public void Var135() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-8",
+    setXML(JDPSTest.SETXML290, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR090\uff7a</Test>",
         "<Test>VAR090\uff7a</Test>");
   }
 
   public void Var136() {
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-037",
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+setXML(JDPSTest.SETXML290, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>VAR091</Test>",
         "<Test>VAR091</Test>");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void Var137() {
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-937",
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+setXML(JDPSTest.SETXML290, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>VAR092</Test>",
         "<Test>VAR092</Test>");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void Var138() {
@@ -2288,7 +2939,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-290",
+    setXML(JDPSTest.SETXML290, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>VAR093\uff7a</Test>",
         "<Test>VAR093\uff7a</Test>");
   }
@@ -2300,19 +2951,19 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       return;
     }
 
-    setXML(JDPSTest.PSTEST_SETXML290, "UCS-2",
+    setXML(JDPSTest.SETXML290, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR094\uff7a</Test>",
         "<Test>VAR094\uff7a</Test>");
   }
 
   public void Var140() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-16BE",
+    setXML(JDPSTest.SETXML290, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>VAR095\uff7a</Test>",
         "<Test>VAR095\uff7a</Test>");
   }
 
   public void Var141() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-16LE",
+    setXML(JDPSTest.SETXML290, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>VAR096\uff7a</Test>",
         "<Test>VAR096\uff7a</Test>");
   }
@@ -2333,12 +2984,15 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       };
     }
 
-    if (checkJdbc40())
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40())
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 1, (byte) 0,
             (byte) -33, (byte) 57, (byte) 9 };
 
@@ -2348,7 +3002,7 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         byte[] check = rs.getBytes(1);
         rs.close();
@@ -2357,6 +3011,17 @@ public class JDPSSetBinaryStream40 extends JDPSSetBinaryStream {
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**

@@ -17,6 +17,7 @@ package test.JD.PS;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -24,6 +25,7 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDPSTest;
+import test.JD.JDSerializeFile;
 import test.JDTestcase;
 
 
@@ -111,18 +113,20 @@ clearParameters() - Verify that setting a value holds through
 repeated executes.
 **/
   public void Var001()
-  {                 
+  {
+      JDSerializeFile pstestSet = null;
       try {
-          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+          pstestSet = JDPSTest.getPstestSet(connection_);
+          statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
+          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES (?)");
           ps.setString (1, "Hola");
           ps.executeUpdate ();
           ps.executeUpdate ();
           ps.close ();
-          ResultSet rs = statement_.executeQuery ("SELECT C_KEY FROM " 
-                                                  + JDPSTest.PSTEST_SET
+          ResultSet rs = statement_.executeQuery ("SELECT C_KEY FROM "
+                                                  + pstestSet.getName()
                                                   + " WHERE C_KEY='Hola'");
           int count = 0;
           while (rs.next ())
@@ -132,6 +136,14 @@ repeated executes.
       }
       catch (Exception e) {
           failed (e, "Unexpected Exception");
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 
@@ -142,12 +154,14 @@ clearParameters() - Verify that executing after a clear
 throws an exception.
 **/
   public void Var002()
-  {                 
+  {
+      JDSerializeFile pstestSet = null;
       try {
-          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+          pstestSet = JDPSTest.getPstestSet(connection_);
+          statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
+          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES (?)");
           ps.setString (1, "Hola");
           ps.executeUpdate ();
           ps.clearParameters ();
@@ -157,6 +171,14 @@ throws an exception.
       }
       catch (Exception e) {
           assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 
@@ -167,18 +189,20 @@ clearParameters() - Verify that this has no effect on a statement
 with no parameters.
 **/
   public void Var003()
-  {                 
+  {
+      JDSerializeFile pstestSet = null;
       try {
-          statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+          pstestSet = JDPSTest.getPstestSet(connection_);
+          statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES ('Adios')");
+          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES ('Adios')");
           ps.clearParameters ();
           ps.executeUpdate ();
           ps.close ();
 
-          ResultSet rs = statement_.executeQuery ("SELECT C_KEY FROM " 
-                                                  + JDPSTest.PSTEST_SET
+          ResultSet rs = statement_.executeQuery ("SELECT C_KEY FROM "
+                                                  + pstestSet.getName()
                                                   + " WHERE C_KEY='Adios'");
           int count = 0;
           while (rs.next ())
@@ -188,6 +212,14 @@ with no parameters.
       }
       catch (Exception e) {
           failed (e, "Unexpected Exception");
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 
@@ -198,10 +230,12 @@ clearParameters() - Should throw an exception when the statement
 is closed.
 **/
   public void Var004()
-  {                 
+  {
+      JDSerializeFile pstestSet = null;
       try {
-          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
+          pstestSet = JDPSTest.getPstestSet(connection_);
+          PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES (?)");
           ps.setString (1, "Hola");
           ps.close ();
           ps.clearParameters ();
@@ -209,6 +243,14 @@ is closed.
       }
       catch (Exception e) {
           assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 
@@ -222,28 +264,38 @@ to fail.  Reported for toolbox via CPS 8KLGCZ Aug 2011
 
   public void Var005()
   {
-      String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ"; 
+      JDSerializeFile pstestSet = null;
+      String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ";
       try {
-	  String value = "JDPSClearP"; 
-	  PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
+   pstestSet = JDPSTest.getPstestSet(connection_);
+   String value = "JDPSClearP";
+   PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES (?)");
           ps.setString (1, value);
-	  ps.addBatch();
+   ps.addBatch();
           ps.clearParameters ();
-	  ps.executeBatch();
-	  ps.close();
-	  ps = connection_.prepareStatement("DELETE FROM "+JDPSTest.PSTEST_SET+" WHERE C_KEY=?");
+   ps.executeBatch();
+   ps.close();
+   ps = connection_.prepareStatement("DELETE FROM "+pstestSet.getName()+" WHERE C_KEY=?");
           ps.setString (1, value);
-	  ps.addBatch();
+   ps.addBatch();
           ps.clearParameters ();
-	  ps.executeBatch();
-	  ps.close();
+   ps.executeBatch();
+   ps.close();
 
-	  assertCondition(true); 
+   assertCondition(true);
 
       }
       catch (Exception e) {
           failed (e, "Unexpected Exception"+added);
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 
@@ -257,31 +309,41 @@ rows
 
   public void Var006()
   {
-      String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ"; 
+      JDSerializeFile pstestSet = null;
+      String added = " -- added Aug 2011 for toolbox CPS 8KLGCZ";
       try {
-	  String value = "JDPSClearP"; 
-	  PreparedStatement ps = connection_.prepareStatement ("INSERT INTO " 
-            + JDPSTest.PSTEST_SET + " (C_KEY) VALUES (?)");
-	  for (int i = 0; i < 40000; i++) { 
-	      ps.setString (1, value);
-	      ps.addBatch();
-	  }
+   pstestSet = JDPSTest.getPstestSet(connection_);
+   String value = "JDPSClearP";
+   PreparedStatement ps = connection_.prepareStatement ("INSERT INTO "
+            + pstestSet.getName() + " (C_KEY) VALUES (?)");
+   for (int i = 0; i < 40000; i++) {
+       ps.setString (1, value);
+       ps.addBatch();
+   }
           ps.clearParameters ();
-	  ps.executeBatch();
-	  ps.close();
-	  ps = connection_.prepareStatement("DELETE FROM "+JDPSTest.PSTEST_SET+" WHERE C_KEY=?");
+   ps.executeBatch();
+   ps.close();
+   ps = connection_.prepareStatement("DELETE FROM "+pstestSet.getName()+" WHERE C_KEY=?");
 
           ps.setString (1, value);
-	  ps.addBatch();
+   ps.addBatch();
           ps.clearParameters ();
-	  ps.executeBatch();
-	  ps.close();
+   ps.executeBatch();
+   ps.close();
 
-	  assertCondition(true); 
+   assertCondition(true);
 
       }
       catch (Exception e) {
           failed (e, "Unexpected Exception"+added);
+      } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
 

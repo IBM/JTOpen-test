@@ -26,6 +26,7 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
+import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -265,6 +266,11 @@ refreshRow() - Should work on a "simple" result set.
 		// add 1 for ALIAS
 		expectedCount++;
 	    }
+
+            if(getRelease() > JDTestDriver.RELEASE_V7R6M0)
+            {
+                expectedCount++; 
+            }
 
 	    assertCondition ((success == true) && (count == expectedCount), "Changed 08/03/05 by native driver, success="+success+" count = "+count+" sb "+expectedCount );
 

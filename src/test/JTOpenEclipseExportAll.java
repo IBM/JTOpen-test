@@ -71,9 +71,9 @@ public class JTOpenEclipseExportAll extends JTOpenEclipseExport {
       System.out.println("building file list"); 
       Vector<String> fileList = buildAllFileList(testDirectoryFile, "test"); 
       System.out.println("building local checksum table for "+fileList.size()+" files "); 
-      buildChecksumFile(connection, testDirectory, fileList, "JDTESTINFO.HASHLOCAL"); 
+      buildChecksumFile(connection, testDirectory, fileList, ""+JTOpenTestEnvironment.testInfoSchema+".HASHLOCAL"); 
       System.out.println("running changed query"); 
-      Vector<String> updateFileList = buildChangedFileList(connection, "JDTESTINFO.HASHLOCAL");
+      Vector<String> updateFileList = buildChangedFileList(connection, ""+JTOpenTestEnvironment.testInfoSchema+".HASHLOCAL");
       System.out.println("transferring "+updateFileList.size()+" files"); 
       transferFiles(as400, testDirectory, updateFileList); 
       System.out.println("Files transferred"); 

@@ -16,6 +16,7 @@ package test.JD.RS;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
+import test.JDTestDriver;
 import test.JDTestcase;
 
 import java.io.FileOutputStream;
@@ -917,6 +918,10 @@ when positioned after the last row.
 		if(true) {       // @C3A  V5R3 and should have Aliases
                     rs.next();                                         // @C3A
 		}
+	            if (getRelease() > JDTestDriver.RELEASE_V7R6M0) {
+	             rs.next();
+	            }
+
                 boolean success = rs.isAfterLast ();
                 rs.close ();
                 assertCondition (success == true, message);
@@ -2278,6 +2283,10 @@ when positioned after the last row.
 		if(true) {       // @C3A  V5R3 and should have Aliases
                     rs.next();                                         // @C3A
 		}
+	            if (getRelease() > JDTestDriver.RELEASE_V7R6M0) {
+	              rs.next(); 
+	            }
+
                 boolean success = rs.isAfterLast ();
                 rs.close ();
                 assertCondition (success == true, message);

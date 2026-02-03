@@ -14,6 +14,9 @@ package test.servlet;
 
 import java.io.*;
 import java.util.*;
+
+import test.JTOpenTestEnvironment;
+
 import java.sql.*;
 
 public class QueryByTestcase extends BaseHandler {
@@ -96,11 +99,11 @@ public class QueryByTestcase extends BaseHandler {
               if (endInitial == null || initialsMatch(initials, endInitial)) {
                 String query;
                 if (testcase.indexOf("*") > 0) {
-                  query = "select FINISHTIME,SYSTEM,TESTCASE,SUCCEEDED,FAILED,NOTAPPL,NOTATT,TIME FROM JDTESTINFO.LT"
+                  query = "select FINISHTIME,SYSTEM,TESTCASE,SUCCEEDED,FAILED,NOTAPPL,NOTATT,TIME FROM "+JTOpenTestEnvironment.testInfoSchema+".LT"
                       + initials + " WHERE TESTCASE like '" + testcase.replace('*', '%') + "' order by TESTCASE";
 
                 } else {
-                  query = "select FINISHTIME,SYSTEM,TESTCASE,SUCCEEDED,FAILED,NOTAPPL,NOTATT,TIME FROM JDTESTINFO.LT"
+                  query = "select FINISHTIME,SYSTEM,TESTCASE,SUCCEEDED,FAILED,NOTAPPL,NOTATT,TIME FROM "+JTOpenTestEnvironment.testInfoSchema+".LT"
                       + initials + " WHERE TESTCASE= '" + testcase + "'";
                 }
                 try {

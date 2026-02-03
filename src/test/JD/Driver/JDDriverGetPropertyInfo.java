@@ -117,21 +117,38 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
 
   /**
    * getPropertyInfo() - Verify that the number of properties returned is
-   * correct.
+   * correct. Check userid password are correct. Also check the specified 
+   * property
    **/
   public void Var001() {
+    testProperty(null,null); 
+  }
+  
+  public void testProperty(String prop, String value) {
+    testProperty(prop,value,value); 
+  }
+  public void testProperty(String prop, String value, String inExpectedValue) {
     StringBuffer sb = new StringBuffer(); 
 
     try {
 
-      DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(baseURL_,
+      String url = baseURL_;
+      if (prop != null) { 
+        url = url +";"+prop+"="+value; 
+      }
+      Properties properties = new Properties(properties_); 
+      if (prop != null) { 
+        properties.setProperty(prop, inExpectedValue);
+      } 
+      DriverPropertyInfo[] propertyInfo = driver_.getPropertyInfo(url,
           properties_);
 
       boolean passed = true; 
-      sb.append("\nbaseURL_="+baseURL_); 
+      sb.append("\nurl="+url); 
       sb.append("\nDriver is "+driver_+" class="+driver_.getClass()) ;
+      sb.append("\ndriver_.getPropertyInfo called"); 
       sb.append("\nProperty Count = " + propertyInfo.length);
-
+      
       for (int i = 0; i < propertyInfo.length; i++) {
         if (propertyInfo[i] == null) {
           passed = false;
@@ -141,7 +158,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
             + propertyInfo[i].value + ">");
           
           // Check the expected values 
-          String expectedValue =  properties_.getProperty(propertyInfo[i].name); 
+          String expectedValue =  properties.getProperty(propertyInfo[i].name); 
           if (propertyInfo[i].name.equals("password") && (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
             expectedValue = "";          /* Toolbox does not return password */ 
           }
@@ -159,13 +176,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
             if (leakedPassword_.equals(propertyInfo[i].value)) {
               passed = false; 
               sb.append("\n *** found leakedPassword_="+leakedPassword_+" for property "+propertyInfo[i].name); 
-              
             }
           }
-          
-          
-          
-          
           if (propertyInfo[i].description == null) {
             /* If not set, do not do check.  May not be set for native Driver */ 
           } else {
@@ -185,7 +197,6 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
             + " AND SHOULD BE equal to NUMBER_OF_PROPERTIES = "
             + NUMBER_OF_PROPERTIES);
       }
-      
       assertCondition(passed,sb);
     } catch (Exception e) {
       failed(e, sb);
@@ -570,5 +581,57 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
 
     return getMethodName.toString();
   }
+
+  
+  public void Var010() { testProperty("access","read only"); }
+  public void Var011() { testProperty("batch style","2.1"); }
+  public void Var012() { testProperty("block size","512"); }
+  public void Var013() { testProperty("blocking enabled","true"); }
+  public void Var014() { testProperty("cursor hold","false"); }
+  public void Var015() { testProperty("data truncation","true"); }
+  public void Var016() { testProperty("date format","jis"); }
+  public void Var017() { testProperty("date separator","."); }
+  public void Var018() { testProperty("decimal separator",","); }
+  public void Var019() { testProperty("do escape processing","false"); }
+  public void Var020() { testProperty("errors","full"); }
+  public void Var021() { testProperty("extended metadata","true"); }
+  public void Var022() { testProperty("libraries","QGPL,QJVA"); }
+  public void Var023() { testProperty("lob threshold","500000"); }
+  public void Var024() { testProperty("naming","system"); }
+  public void Var025() { notApplicable("password test");  }
+  public void Var026() { testProperty("prefetch","false"); }
+  public void Var027() { testProperty("reuse objects","false"); }
+  public void Var028() { testProperty("time format","jis"); }
+  public void Var029() { testProperty("time separator","."); }
+  public void Var030() { testProperty("trace","true"); }
+  public void Var031() { testProperty("server trace","true"); }
+  public void Var032() { testProperty("transaction isolation","read committed"); }
+  public void Var033() { testProperty("translate binary","true"); }
+  public void Var034() { testProperty("use block insert","true"); }
+  public void Var035() { testProperty("user",userId_); }
+  public void Var036() { testProperty("behavior override","1"); }
+  public void Var037() { testProperty("auto commit","false"); }
+  public void Var038() { testProperty("maximum precision","63"); }
+  public void Var039() { testProperty("maximum scale","63"); }
+  public void Var040() { testProperty("minimum divide scale","9"); }
+  public void Var041() { testProperty("translate hex","binary"); }
+  public void Var042() { testProperty("cursor sensitivity","sensitive"); }
+  public void Var043() { if (checkNative()) testProperty("direct map","false"); }
+  public void Var044() { testProperty("query optimize goal","1"); }
+  public void Var045() { testProperty("decfloat rounding mode","round ceiling"); }
+  public void Var046() { if (checkNative()) testProperty("qaqqinilib","QGPL"); }
+  public void Var047() { if (checkNative()) testProperty("ignore warnings","0100C"); }
+  public void Var048() { testProperty("commit hold","false"); }
+  public void Var049() { if (checkNative()) testProperty("servermode subsystem","QUSRWRK"); }
+  public void Var050() { if (checkNative()) testProperty("concurrent access resolution","3"); }
+  public void Var051() { if (checkNative()) testProperty("maximum blocked input rows","16000"); }
+  public void Var052() { testProperty("lob block size","4194304"); }
+  public void Var053() { if (checkNative())  testProperty("query replace truncated parameter","XXXXX"); }
+  public void Var054() { testProperty("additionalAuthenticationFactor","123456"); }
+  public void Var055() { testProperty("authenticationVerificationId","VerificationId"); }
+  public void Var056() { testProperty("authenticationLocalIP","1.2.3.4"); }
+  public void Var057() { testProperty("authenticationLocalPort","30"); }
+  public void Var058() { testProperty("authenticationRemoteIP","2.3.4.5"); }
+  public void Var059() { testProperty("authenticationRemotePort","50"); }
 
 }

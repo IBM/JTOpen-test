@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetBestRowIdentifier.java
  //
  // Classes:      JDDMDGetBestRowIdentifier
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -1523,30 +1512,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 	    {"isNullable","7","0"},
 	};
 
-	String [][] fixup614NS = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"isNullable","5","1"},
-	};
-
-
-	String[][] fixup714TS = {
-      {"getColumnDisplaySize","3","11"},
-      {"getPrecision","3","10"},
-      {"getColumnType","3","4"},
-      {"getColumnTypeName","3","INTEGER"},
-      {"isNullable","5","1"},
-	};
-
-	String[][] fixup715TS = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"isNullable","5","1"}, /* Updated 4/30/2014 from lp01ut18 */ 
-	};
+	
 
 	String[][] fixup726TS = {
 	    {"getColumnDisplaySize","3","11"},
@@ -1557,14 +1523,6 @@ Created 1/31/2011 for CPS 8DHTTE.
 
 	};
 
-	String[][] fixup714NS = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    /* Updated 10/14/2013 7146N run on lp01it18 */ 
-	    {"isNullable","5","1"}
-	};
 
 
 	String[][] fixup726NS = {
@@ -1580,84 +1538,6 @@ Created 1/31/2011 for CPS 8DHTTE.
 
 	String [][] fixup = {};
 
-
-	String[][] fixupExtended = {
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-	} ;
-
-	String[][] fixupExtended614N = {
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnDisplaySize","3","11"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    {"isNullable","5","1"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-
-	};
-
-	String[][] fixupExtended616N = {
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},   /* Updated 6/7/2012 */
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    {"isNullable","5","1"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-	};
-
-	String[][] fixupExtended714T = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"getColumnDisplaySize","4","261"},
-	    {"getPrecision","4","261"},
-	    {"isNullable","5","1"},
-	    {"isNullable","7","1"},
-	};
-
-
-	String[][] fixupExtended715T = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"getColumnDisplaySize","4","261"},
-	    {"getPrecision","4","261"},
-	    {"isNullable","5","1"},  /* 4/30/2014 lp01ut18 */ 
-	    {"isNullable","7","1"},
-	};
-
-	String[][] fixupExtended726T = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"getColumnDisplaySize","4","261"},
-	    {"getPrecision","4","261"},
-	    {"isNullable","7","1"},
-	    {"isNullable","5","1"},
-	};
 
 
 	String[][] fixupExtended736T = {
@@ -1678,40 +1558,6 @@ Created 1/31/2011 for CPS 8DHTTE.
 	};
 
 
-	String[][] fixupExtended714N = {
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    /* Updated 10/14/2013 from run on lp01ut18 */ 
-	    {"isNullable","5","1"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-	};
-
-	String[][] fixupExtended726N = {
-	    {"getColumnDisplaySize","3","11"},
-	    {"getPrecision","3","10"},
-	    {"getColumnType","3","4"},
-	    {"getColumnTypeName","3","INTEGER"},
-	    {"isNullable","5","1"},
-	    {"isNullable","6","0"},  /* Changed 9/19/2013 for z1014p14 */ 
-	    {"isSearchable","1","false"},
-	    {"isSearchable","2","false"},
-	    {"isSearchable","3","false"},
-	    {"isSearchable","4","false"},
-	    {"isSearchable","5","false"},
-	    {"isSearchable","6","false"},
-	    {"isSearchable","7","false"},
-	    {"isSearchable","8","false"},
-
-	};
 
 	String[][] fixupExtended736N = {
 	    {"getColumnDisplaySize","3","11"},
@@ -1719,7 +1565,7 @@ Created 1/31/2011 for CPS 8DHTTE.
 	    {"getColumnType","3","4"},
 	    {"getColumnTypeName","3","INTEGER"},
 	    {"isNullable","5","1"},
-	    {"isNullable","6","0"},  /* Changed 9/19/2013 for z1014p14 */ 
+	    {"isNullable","6","0"}, 
 	    {"isSearchable","1","false"},
 	    {"isSearchable","2","false"},
 	    {"isSearchable","3","false"},
@@ -1756,107 +1602,20 @@ Created 1/31/2011 for CPS 8DHTTE.
 	}; 
 
 	Object[][] fixupArrayExtended = {
-	    {"544T", fixup545TX},
-	    {"545T", fixup545TX},
-	    {"546T", fixup545TX},
-	    {"614T", fixup545TX},
-	    {"615T", fixup545TX},
-	    {"616T", fixup545TX},
-	    {"617T", fixup545TX},
-	    {"618T", fixup545TX},
-	    {"714T", fixupExtended714T},
-	    {"715T", fixupExtended715T},
-	    {"716T", fixupExtended715T, "09/06/2012 Guess based on 715T"},
-	    {"717T", fixupExtended715T, "09/06/2012 Guess based on 715T"},
-	    {"718T", fixupExtended715T, "09/06/2012 Guess based on 715T"},
-	    {"719T", fixupExtended715T, "09/06/2012 Guess based on 715T"},
-	    {"726T", fixupExtended726T, "09/06/2012 Guess based on 715T"},
-	    {"727T", fixupExtended726T, "09/06/2012 Guess based on 715T"},
-	    {"728T", fixupExtended726T, "09/06/2012 Guess based on 715T"},
-	    {"729T", fixupExtended726T, "09/06/2012 Guess based on 715T"},
-
-	    {"736T", fixupExtended736T, "Updated 5/29/2019"}, 
-	    {"737T", fixupExtended736T, "Updated 5/29/2019"}, 
-	    {"738T", fixupExtended736T, "Updated 5/29/2019"}, 
-	    {"739T", fixupExtended736T, "Updated 5/29/2019"}, 
-
-
-	    {"546N", fixupExtended},
-	    {"614N", fixupExtended614N},
-	    {"615N", fixupExtended614N},
-	    {"616N", fixupExtended616N},
-	    {"714N", fixupExtended714N},
-	    {"715N", fixupExtended714N, "08/09/2012 -- guess from 717N"},
-	    {"716N", fixupExtended714N, "08/09/2012 -- guess from 717N"},
-	    {"717N", fixupExtended714N, "08/09/2012 -- primed"},
-	    {"718N", fixupExtended714N, "08/09/2012 -- primed"},
-	    {"719N", fixupExtended714N, "08/09/2012 -- primed"},
-	    {"726N", fixupExtended726N},
-	    {"727N", fixupExtended726N},
-	    {"728N", fixupExtended726N},
-	    {"729N", fixupExtended726N},
-
-	    {"736N", fixupExtended736N},
-	    {"737N", fixupExtended736N},
-	    {"738N", fixupExtended736N},
-	    {"739N", fixupExtended736N},
-
-
-
-
-	    {"546L", fixup546L},
-	    {"716L", fixup726L}, 
+	    {"749T", fixupExtended736T, "Updated 5/29/2019"}, 
+	    {"749N", fixupExtended736N},
 
 	};
 
 
 
 	Object[][] fixupArray = {
-	    {"544TX", fixup545TX},
-	    {"545TX", fixup545TX},
-	    {"546TX", fixup545TX},
-	    {"614TX", fixup545TX},
-	    {"615TX", fixup545TX},
-	    {"616TX", fixup545TX},
-	    {"617TX", fixup545TX},
-	    {"618TX", fixup545TX},
-	    {"619TX", fixup545TX},
+	    {"748TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
+	    {"749TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
 
-	    {"714TX", fixup545TX},
-	    {"715TX", fixup545TX},
-	    {"716TX", fixup545TX},
-	    {"717TX", fixup545TX},
-	    {"714TS", fixup714TS},
-	    {"715TS", fixup715TS},
-	    {"716TS", fixup715TS, "09/06/2012 -- primed"},
-	    {"717TS", fixup715TS, "09/06/2012 -- guess from 716TS"},
-	    {"718TS", fixup715TS, "09/06/2012 -- guess from 716TS"},
-	    {"719TS", fixup715TS, "09/06/2012 -- guess from 716TS"},
+	    {"748TX", fixup545TX},
 
-	    {"726TS", fixup726TS, "10/01/2013 -- primed"},
-	    {"727TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
-	    {"728TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
-	    {"729TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
-
-	    {"724TX", fixup545TX},
-	    {"725TX", fixup545TX},
-	    {"726TX", fixup545TX},
-	    {"727TX", fixup545TX},
-	    {"728TX", fixup545TX},
-	    {"729TX", fixup545TX},
-
-	    {"614NS", fixup614NS},
-	    {"615NS", fixup614NS},
-	    {"616NS", fixup614NS},
-	    {"714NS", fixup714NS},
-	    {"715NS", fixup714NS, "08/09/2012 -- guess from 717NS"},
-	    {"716NS", fixup714NS, "08/09/2012 -- guess from 717NS"},
-	    {"717NS", fixup714NS, "08/09/2012 -- Primed"},
-	    {"718NS", fixup714NS, "08/09/2012 -- Primed"},
-	    {"719NS", fixup714NS, "08/09/2012 -- Primed"},
-	    {"726NS", fixup726NS, "09/16/2013 -- Primed"},
-	    {"727NS", fixup726NS, "09/16/2013 -- Primed"},
-	    {"72iNS", fixup726NS, "09/16/2013 -- Primed"},
+	    {"748NS", fixup726NS, "09/16/2013 -- Primed"},
 
 
 	    {"546LS", fixup546L},

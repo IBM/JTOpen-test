@@ -15,8 +15,8 @@ package test;
 
 import java.io.PrintWriter; 
 import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400JDBCDriver;
 
+import test.JD.JDSerializeFile;
 import test.JD.JDSetupCollection;
 import test.JD.JDTestUtilities;
 
@@ -277,6 +277,7 @@ public class JDSetupProcedure {
             e2.printStackTrace();
           }
         }
+        stmt.close(); 
       } catch (Exception e0) {
         e0.printStackTrace();
       }
@@ -318,8 +319,9 @@ public class JDSetupProcedure {
             }
             pstmt.executeUpdate();
           }
-
+          pstmt.close(); 
         }
+        stmt.close(); 
       } catch (Exception e1) {
         e1.printStackTrace();
       }
@@ -458,6 +460,9 @@ public class JDSetupProcedure {
    **/
   public static void create(AS400 system, Connection connection, String stp, 
       JDSupportedFeatures supportedFeatures, PrintWriter output) throws Exception {
+    
+       
+    
     boolean ZOS;
     boolean isLUW;
     ZOS = JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_ZOS;
@@ -469,6 +474,13 @@ public class JDSetupProcedure {
       collectionCreated_ = true;
     }
 
+    //
+    // Serialize all the create procedures based on the library
+    JDSerializeFile pstestSet = null;
+    try {
+       pstestSet = new JDSerializeFile(connection, COLLECTION); 
+  
+  
     String dataCollection = "QIWS";
     String sql = null;
 
@@ -1747,6 +1759,11 @@ public class JDSetupProcedure {
     }
 
     s.close();
+    } finally {
+      if (pstestSet != null) {
+        pstestSet.close(); 
+      }
+    }
   }
 
   public static void dropCollections(Connection c, PrintWriter output) {
@@ -2096,7 +2113,6 @@ public class JDSetupProcedure {
         connection = DriverManager.getConnection("jdbc:db2:" + systemName,
             userid, password);
       } else {
-        DriverManager.registerDriver(new AS400JDBCDriver());
         connection = DriverManager.getConnection("jdbc:as400:" + systemName,
             userid, password);
       }
@@ -2120,6 +2136,12 @@ public class JDSetupProcedure {
       connection.close();
     } catch (SQLException e) {
       e.printStackTrace(output);
+    } finally { 
+      if (connection != null) {
+        try { 
+            connection.close(); 
+        } catch (SQLException e) {} 
+      }
     }
   }
 

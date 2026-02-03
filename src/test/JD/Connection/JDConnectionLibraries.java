@@ -70,6 +70,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 	public static  String COLLECTION2    = "JDTESTCON2";
 
 	String iniLibrary = null; 
+        String iniLibrary2 = null; 
 	int jdk_;
 	/** 
 	Constructor.
@@ -116,6 +117,7 @@ extends JDTestcase implements TimeoutThreadCallback {
 		    piece = piece.substring(length-5);
 		}
 		iniLibrary = "JDQAQ"+piece; 
+		iniLibrary2 = "JDQA2"+piece; 
 	}
 
 
@@ -1961,156 +1963,134 @@ libraries - Specify library list with *LIBL before 2 other libraries.
 //Test to see if qaqqinlib connection property works
 //If we set the QUERY_TIME_LIMIT to 1 in a qaqqini file, then trying to execute a long query should throw an exception.
 //Note:  you need SECOFR authority to issue a change query library command
-       public void Var052()
-       {
-           if ( (isToolboxDriver()) ||
-                ( getDriver() == JDTestDriver.DRIVER_NATIVE ))
-           {
-               boolean setupFailed = false;
-               int setup = 0;
-               try
-               {
-                 if (getDriver() == JDTestDriver.DRIVER_NATIVE ){
-                   Connection c = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
-                   Statement s2 = c.createStatement();
-		   String command = null;
+        public void Var052() {
+          StringBuffer sb = new StringBuffer(); 
+          if ((isToolboxDriver()) || (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+            boolean setupFailed = false;
+            int setup = 0;
+            try {
+              if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+                Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                Statement s2 = c.createStatement();
+                String command = null;
 
-		   try {
-		       command = "CALL QSYS.QCMDEXC("+
-					"'CRTLIB "+iniLibrary+"                                     ',"+
-					"0000000040.00000 )";
-		       s2.executeUpdate(command);
-		   } catch (Exception e) {
-		       output_.println("Exception creating library using "+command);
-		       e.printStackTrace(output_); 
-		   }
-		   try {
-		       command = "CALL QSYS.QCMDEXC('CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("+iniLibrary+") DATA(*YES)    ',0000000080.00000 )"; 
-		       s2.executeUpdate(command);
-		   } catch (Exception e) {
-		       output_.println("Exception creating ini using "+command);
-		       e.printStackTrace(output_); 
+                try {
+                  command = "CALL QSYS2.QCMDEXC(" + "'CRTLIB " + iniLibrary + " ' )";
+                  s2.executeUpdate(command);
+                } catch (Exception e) {
+                  output_.println("Exception creating library using " + command);
+                  e.printStackTrace(output_);
+                }
+                try {
+                  command = "CALL QSYS2.QCMDEXC('CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("
+                      + iniLibrary + ") DATA(*YES)  ' )";
+                  s2.executeUpdate(command);
+                } catch (Exception e) {
+                  output_.println("Exception creating ini using " + command);
+                  e.printStackTrace(output_);
+                }
+                c.commit();
+                c.close();
+              } else {
+                char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+                AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
+                PasswordVault.clearPassword(charPassword);
+                CommandCall cc = new CommandCall(s);
+                cc.run("QSYS/CRTLIB " + iniLibrary);
+                cc.run("QSYS/CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB(" + iniLibrary + ") DATA(*YES)");
+              }
+              Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+              Statement s2 = c.createStatement();
+              setup = s2.executeUpdate("DELETE FROM " + iniLibrary + ".QAQQINI WHERE QQPARM='QUERY_TIME_LIMIT'");
+              String sql = "INSERT INTO " + iniLibrary + ".QAQQINI VALUES('QUERY_TIME_LIMIT', '1', default)";
+              sb.append("Updating QAQQINI using sql:"+sql+"\n"); 
+              setup += s2
+                  .executeUpdate(sql);
+              if (setup != 2)
+                setupFailed = true;
+              s2.close();
+              c.close();
+            } catch (Exception e) {
+              e.printStackTrace();
+              setupFailed = true;
+            }
+            Connection conn = null;
+            TimeoutThread timeoutThread = null;
+            try {
+              if (setupFailed == true)
+                failed("Variation setup failed.");
+              else {
+                conn = testDriver_.getConnection(baseURL_ + ";qaqqinilib=" + iniLibrary, pwrSysUserID_,
+                    pwrSysEncryptedPassword_);
+                Statement s1 = conn.createStatement();
 
-		   }
-		   c.commit();
-		   c.close(); 
-                 } else {
-		   char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
-                   AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
-		   PasswordVault.clearPassword(charPassword);
-                   CommandCall cc = new CommandCall(s);
-                   cc.run("QSYS/CRTLIB "+iniLibrary);
-                   cc.run("QSYS/CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("+iniLibrary+") DATA(*YES)");
-                 }
-                   //AS400Message[] messageList = cc.getMessageList();
-                   //for (int i = 0; i < messageList.length; ++i)
-                   //{
-                       // Show each message.
-                   //    output_.println(messageList[i].getText());
-                       // Load additional message information.
-                   //    messageList[i].load();
-                       //Show help text.
-                   //    output_.println(messageList[i].getHelp());
-                   //}
-                   Connection c = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
-                   Statement s2 = c.createStatement();
-                   setup = s2.executeUpdate("DELETE FROM "+iniLibrary+".QAQQINI WHERE QQPARM='QUERY_TIME_LIMIT'");
-                   setup += s2.executeUpdate("INSERT INTO "+iniLibrary+".QAQQINI VALUES('QUERY_TIME_LIMIT', '1', default)");
-                   if(setup != 2)
-                       setupFailed = true;
-                   s2.close();
-                   c.close();
-               }
-               catch(Exception e){
-                   e.printStackTrace();
-                   setupFailed = true;
-               }
-      Connection conn = null;
-      TimeoutThread timeoutThread = null; 
-      try {
-        if (setupFailed == true)
-          failed("Variation setup failed.");
-        else {
-          conn = testDriver_.getConnection(
-              baseURL_ + ";qaqqinilib=" + iniLibrary, pwrSysUserID_, pwrSysEncryptedPassword_);
-          Statement s1 = conn.createStatement();
+                // Make sure the job doesn't use the system reply list. Otherwise an
+                // entry for
+                // CPA4269 with I will cause this test to fail.
+                s1.executeUpdate("CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*RQD)                ',0000000030.00000 )");
 
-          // Make sure the job doesn't use the system reply list. Otherwise an
-          // entry for
-          // CPA4269 with I will cause this test to fail.
-          s1.executeUpdate(
-              "CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*RQD)                ',0000000030.00000 )");
+                ResultSet rs;
+                Object[] args = new Object[1];
+                args[0] = s1;
+                timeoutThread = new TimeoutThread(this, 10, args);
+                timeoutThread.start();
+                String query = "SELECT sum(a.column_size), sum(length(b.table_name)) FROM SYSIBM.SQLCOLUMNS a, SYSIBM.SQLTABLES b, SYSIBM.SQLTABLES c  "
+                    + "where a.table_name = b.table_name and a.table_name = c.table_name and a.column_size > 1";
+                sb.append("Running query: "+query+"\n"); 
+                rs = s1.executeQuery(query);
 
-          ResultSet rs;
-          Object [] args = new Object[1]; 
-          args[0] = s1; 
-          timeoutThread = new TimeoutThread(this, 10, args);
-          timeoutThread.start(); 
-          rs = s1.executeQuery(
-              "SELECT sum(a.column_size), sum(length(b.table_name)) FROM SYSIBM.SQLCOLUMNS a, SYSIBM.SQLTABLES b where a.table_name = b.table_name and a.column_size > 1");
+                s1.executeUpdate("CALL QSYS.QCMDEXC(' DSPJOBLOG OUTPUT(*PRINT)             ',0000000030.00000 )");
+                timeoutThread.abort();
+                timeoutThread.join();
+                failed(
+                    "Didn't throw SQLException after setting qaqqinilib property for query time limit=1:  Got result set"
+                        + rs);
+              }
+            } catch (Exception e) {
+              if (timeoutThread != null) {
+                timeoutThread.abort();
+                try {
+                  timeoutThread.join();
+                } catch (InterruptedException e1) {
+                  e1.printStackTrace(output_);
+                }
+              }
+              if ((timeoutThread != null) && (timeoutThread.getCallbackFired())) {
+                failed("QAQQINI Timeout did not work and manual timeout was triggered "+sb.toString());
+              } else {
+                assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+              }
 
-          s1.executeUpdate(
-              "CALL QSYS.QCMDEXC(' DSPJOBLOG OUTPUT(*PRINT)             ',0000000030.00000 )");
-          timeoutThread.abort(); 
-          timeoutThread.join(); 
-          failed(
-              "Didn't throw SQLException after setting qaqqinilib property for query time limit=1:  Got result set"
-                  + rs);
-        }
-      } catch (Exception e) {
-        if (timeoutThread != null) { 
-          timeoutThread.abort(); 
-          try {
-            timeoutThread.join();
-          } catch (InterruptedException e1) {
-            e1.printStackTrace(output_);
-          } 
-        }
-        if ((timeoutThread != null) && (timeoutThread.getCallbackFired()))  {
-           failed("QAQQINI Timeout did not work and manual timeout was triggered"); 
-        } else { 
-           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-        }
-        
-      } finally {
-        try {
-          if (conn != null) {
-            conn.close();
+            } finally {
+              try {
+                if (conn != null) {
+                  conn.close();
+                }
+                if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+                  Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                  Statement s2 = c.createStatement();
+                  s2.executeUpdate("CALL QSYS.QCMDEXC("
+                      + "'CHGJOB INQMSGRPY(*SYSRPYL)                                   '," + "0000000040.00000 )");
+
+                  s2.executeUpdate("CALL QSYS.QCMDEXC(" + "'DLTLIB " + iniLibrary
+                      + "                                     '," + "0000000040.00000 )");
+                  c.close();
+                } else {
+
+                  char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+                  AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
+                  PasswordVault.clearPassword(charPassword);
+
+                  CommandCall cc = new CommandCall(s);
+                  deleteLibrary(cc, iniLibrary);
+                }
+              } catch (Exception e) {
+                output_.println("Warning: Exception during testcase cleanup");
+                e.printStackTrace(output_);
+              }
+            }
           }
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              ) {
-            Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_,
-                pwrSysEncryptedPassword_);
-            Statement s2 = c.createStatement();
-                       s2.executeUpdate("CALL QSYS.QCMDEXC("+
-                           "'CHGJOB INQMSGRPY(*SYSRPYL)                                   ',"+
-                       "0000000040.00000 )");
-
-                       s2.executeUpdate("CALL QSYS.QCMDEXC("+
-                           "'DLTLIB "+iniLibrary+"                                     ',"+
-                       "0000000040.00000 )");
-		       c.close(); 
-                     } else {
-
-		       char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
-			 AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
-		       PasswordVault.clearPassword(charPassword);
-
-                       CommandCall cc = new CommandCall(s);
-		       deleteLibrary(cc, iniLibrary);
-                     }
-                   }
-                   catch(Exception e)
-                   {
-		       output_.println("Warning: Exception during testcase cleanup");
-		       e.printStackTrace(output_); 
-                   }
-               }
-	   }
-       }
-
-
-
+        }
 
 
 
@@ -2271,6 +2251,121 @@ libraries - Specify library list with *LIBL before 2 other libraries.
                failed(e, "Unexpected exception");
            }
        }
+
+
+       
+       
+       
+     //@C1A
+     //Test to see if qaqqinlib connection property works in conjunction with SQL_XML_DATA_CCSID
+             public void Var059() {
+               StringBuffer sb = new StringBuffer(); 
+               if ((isToolboxDriver()) || (getDriver() == JDTestDriver.DRIVER_NATIVE)) {
+                 boolean setupFailed = false;
+                 int setup = 0;
+                 try {
+                   if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+                     Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                     Statement s2 = c.createStatement();
+                     String command = null;
+
+                     try {
+                       command = "CALL QSYS2.QCMDEXC(" + "'CRTLIB " + iniLibrary2 + " ' )";
+                       s2.executeUpdate(command);
+                     } catch (Exception e) {
+                       output_.println("Exception creating library using " + command);
+                       e.printStackTrace(output_);
+                     }
+                     try {
+                       command = "CALL QSYS2.QCMDEXC('CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB("
+                           + iniLibrary2 + ") DATA(*YES)  ' )";
+                       s2.executeUpdate(command);
+                     } catch (Exception e) {
+                       output_.println("Exception creating ini using " + command);
+                       e.printStackTrace(output_);
+                     }
+                     c.commit();
+                     c.close();
+                   } else {
+                     char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+                     AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
+                     PasswordVault.clearPassword(charPassword);
+                     CommandCall cc = new CommandCall(s);
+                     cc.run("QSYS/CRTLIB " + iniLibrary2);
+                     cc.run("QSYS/CRTDUPOBJ OBJ(QAQQINI) FROMLIB(QSYS) OBJTYPE(*FILE) TOLIB(" + iniLibrary2 + ") DATA(*YES)");
+                   }
+                   Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                   Statement s2 = c.createStatement();
+                   setup = s2.executeUpdate("DELETE FROM " + iniLibrary2 + ".QAQQINI WHERE QQPARM='SQL_XML_DATA_CCSID'");
+                   String sql = "INSERT INTO " + iniLibrary2 + ".QAQQINI VALUES('SQL_XML_DATA_CCSID', '37', default)";
+                   sb.append("Updating QAQQINI using sql:"+sql+"\n"); 
+                   setup += s2
+                       .executeUpdate(sql);
+                   if (setup != 2)
+                     setupFailed = true;
+                   s2.close();
+                   c.close();
+                 } catch (Exception e) {
+                   e.printStackTrace();
+                   setupFailed = true;
+                 }
+                 Connection conn = null;
+                 try {
+                   if (setupFailed == true)
+                     failed("Variation setup failed.");
+                   else {
+                     conn = testDriver_.getConnection(baseURL_ + ";qaqqinilib=" + iniLibrary2, pwrSysUserID_,
+                         pwrSysEncryptedPassword_);
+                     Statement s1 = conn.createStatement();
+                     String sql = "CREATE TABLE "+iniLibrary2+".XML1 (C1 XML)"; 
+                     
+                     s1.executeUpdate(sql); 
+                     
+                     sql="select CCSID from qsys2.syscolumns where table_name='XML1' and column_name='C1' and table_schema='"+iniLibrary2+"'";
+                     String ccsid = "NOT SET"; 
+                     ResultSet rs = s1.executeQuery(sql); 
+                     if (rs.next()) { 
+                       ccsid = rs.getString(1); 
+                     }
+                     rs.close(); 
+                     s1.close(); 
+                     assertCondition("37".equals(ccsid), "Expected ccsid of 37 but got "+ccsid); 
+
+                   }
+                 } catch (Exception e) {
+                   failed(e);
+                   
+                 } finally {
+                   try {
+                     if (conn != null) {
+                       conn.close();
+                     }
+                     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+                       Connection c = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
+                       Statement s2 = c.createStatement();
+                       s2.executeUpdate("CALL QSYS.QCMDEXC("
+                           + "'CHGJOB INQMSGRPY(*SYSRPYL)                                   '," + "0000000040.00000 )");
+
+                       s2.executeUpdate("CALL QSYS.QCMDEXC(" + "'DLTLIB " + iniLibrary2
+                           + "                                     '," + "0000000040.00000 )");
+                       c.close();
+                     } else {
+
+                       char[] charPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
+                       AS400 s = new AS400(systemObject_.getSystemName(), pwrSysUserID_, charPassword);
+                       PasswordVault.clearPassword(charPassword);
+
+                       CommandCall cc = new CommandCall(s);
+                       deleteLibrary(cc, iniLibrary2);
+                     }
+                   } catch (Exception e) {
+                     output_.println("Warning: Exception during testcase cleanup");
+                     e.printStackTrace(output_);
+                   }
+                 }
+               }
+             }
+
 
 
 

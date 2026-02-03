@@ -16,6 +16,8 @@ package test;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 
+import test.JD.JDSerializeFile;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -1700,7 +1702,7 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
     initTable(s, tableName, tableDefinition, null);
   }
 
-  protected static void initTable(Statement s, String tableName, String tableDefinition,
+  protected static void initTable(Statement stmt, String tableName, String tableDefinition,
       StringBuffer sb) throws SQLException {
     tableDefinition = tableDefinition.trim();
     String oldDefinition = (String) tableDefinitions.get(tableName);
@@ -1712,36 +1714,50 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
             + tableDefinition + "\nCHANGED FROM\n" + oldDefinition);
       }
     }
+    // Serialize access to the table
+    JDSerializeFile setupLock = null;
+    try {
+      setupLock = new JDSerializeFile(stmt, tableName); 
+
     String sql;
     try {
       sql = "DELETE FROM " + tableName;
       if (sb != null)
         sb.append(sql + "\n");
-      s.execute(sql);
+      stmt.execute(sql);
     } catch (SQLException e) {
       if (sb != null)
         sb.append("Exception caught " + e + " deleting rows from table\n");
-      if (e.getErrorCode() == -204) {
+      int errorCode = e.getErrorCode();
+      if (errorCode == -7008) {
+        /* something wrong with commitment control. Drop the table and recreate it*/
+        sql="DROP TABLE "+tableName; 
+        stmt.execute(sql); 
+        errorCode = -204;
+      }
+      if (errorCode == -204) {
         // If the file was not found create it.
 
         sql = "CREATE TABLE " + tableName + tableDefinition;
         if (sb != null)
           sb.append("Running "+sql + "\n");
         try {
-          s.executeUpdate(sql);
+          stmt.executeUpdate(sql);
 
 	  sql = "GRANT ALL ON "+tableName+" TO PUBLIC";
 	  if (sb != null)
 	      sb.append("Running "+sql + "\n");
-	  s.executeUpdate(sql);
+	  stmt.executeUpdate(sql);
 
         } catch (SQLException e2) {
           int code = e2.getErrorCode();
           if (code == -901) {
             System.out
                 .println("SQL0901 found -- trying to recover using RCLDBXREF");
-            s.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
-            s.executeUpdate(sql);
+            stmt.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
+            stmt.executeUpdate(sql);
+          } else if (code == -601 ) { 
+            System.out.println("SQL0601 found  -- table exists, ignoring error "); 
           } else {
             throw e2;
           }
@@ -1752,6 +1768,16 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
         throw e;
       }
     }
+    } finally {
+      if (setupLock != null) {
+        try {
+          setupLock.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
   }
 
   protected void cleanupTable(Statement s, String tableName) {

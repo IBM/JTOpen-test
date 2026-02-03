@@ -43,6 +43,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSSetRowId. This tests the following method of the JDBC
@@ -124,10 +126,13 @@ public class JDPSSetRowId extends JDTestcase {
    * setRowId() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         ps.close();
         byte[] b = new byte[] { (byte) 22, (byte) 98, (byte) -2 };
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -136,16 +141,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
         byte[] b = new byte[] { (byte) 22, (byte) 4, (byte) 4, (byte) 98,
             (byte) -2 };
@@ -156,16 +175,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Should throw exception when index is 0.
    **/
   public void Var003() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
         byte[] b = new byte[] { (byte) 4, (byte) 98, (byte) -2 };
         JDReflectionUtil.callMethod_V(ps, "setRowId", 0, createRowId(b));
@@ -175,16 +208,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Should throw exception when index is -1.
    **/
   public void Var004() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
         byte[] b = new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) 22,
             (byte) -2 };
@@ -195,18 +242,32 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Should set to SQL NULL when the value is null.
    **/
   public void Var005() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
         try {
@@ -223,7 +284,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
 
@@ -235,18 +296,32 @@ public class JDPSSetRowId extends JDTestcase {
         failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Should work with a valid parameter index greater than 1.
    **/
   public void Var006() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
         ps.setString(1, "Muchas");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) -2 };
         JDReflectionUtil.callMethod_V(ps, "setRowId", 2, createRowId(b));
@@ -254,7 +329,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
         byte[] check = (byte[]) JDReflectionUtil.callMethod_O(rowId,
@@ -268,6 +343,17 @@ public class JDPSSetRowId extends JDTestcase {
           assertCondition(e.getMessage().indexOf("Data type mismatch") != -1);
         else
           failed(e, "Unexpected Exception" + added);
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -297,13 +383,16 @@ public class JDPSSetRowId extends JDTestcase {
    * truncated.
    **/
   public void Var008() {
-    int length = 0;
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+int length = 0;
     if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 9, (byte) -2,
             (byte) 0, (byte) -111, (byte) 50, (byte) 2, (byte) 0, (byte) -111,
             (byte) 50, (byte) 2, (byte) 0, (byte) -111, (byte) 50, (byte) 2,
@@ -331,13 +420,27 @@ public class JDPSSetRowId extends JDTestcase {
           failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void testSetFailed(String columnName, byte[] inArray) {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+            + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(inArray));
         ps.close();
         failed("Didn't throw SQLException" + added);
@@ -345,7 +448,17 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -362,10 +475,13 @@ public class JDPSSetRowId extends JDTestcase {
    * setRowId() - Set a INTEGER parameter.
    **/
   public void Var010() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 123 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -375,16 +491,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a REAL parameter.
    **/
   public void Var011() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
         byte[] b = new byte[] { (byte) 98, (byte) -2 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -394,16 +524,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a FLOAT parameter.
    **/
   public void Var012() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) 7, (byte) -2,
             (byte) 45 };
 
@@ -414,16 +558,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DOUBLE parameter.
    **/
   public void Var013() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) 45, (byte) 12 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -433,16 +591,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DECIMAL parameter.
    **/
   public void Var014() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+            + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) -2, (byte) 98, (byte) -2,
             (byte) 45, (byte) 12, (byte) -33 };
 
@@ -453,16 +625,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a NUMERIC parameter.
    **/
   public void Var015() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+            + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -2, (byte) 45,
             (byte) 12, (byte) -33 };
 
@@ -473,18 +659,32 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a CHAR(1) parameter.
    **/
   public void Var016() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
         byte[] b = new byte[] { (byte) 98 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -493,18 +693,32 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a CHAR(50) parameter.
    **/
   public void Var017() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -12, (byte) 45,
             (byte) 12, (byte) -33, (byte) 0 };
 
@@ -514,18 +728,32 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a VARCHAR(50) parameter.
    **/
   public void Var018() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) -12, (byte) 12, (byte) -33 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -534,16 +762,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a CLOB parameter.
    **/
   public void Var019() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         byte[] b = new byte[] { (byte) 108, (byte) 0, (byte) -12, (byte) 12,
             (byte) -33 };
 
@@ -554,16 +796,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DBCLOB parameter.
    **/
   public void Var020() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) 66, (byte) 12, (byte) -33 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -573,18 +829,32 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a BINARY parameter.
    **/
   public void Var021() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) -12, (byte) 1,
             (byte) 0, (byte) 12, (byte) -33, (byte) 57, (byte) 9 };
 
@@ -593,7 +863,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
         byte[] check = (byte[]) JDReflectionUtil.callMethod_O(rowId,
@@ -612,18 +882,32 @@ public class JDPSSetRowId extends JDTestcase {
           failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a VARBINARY parameter.
    **/
   public void Var022() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 0, (byte) -33,
             (byte) 57, (byte) 9 };
 
@@ -632,7 +916,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
         byte[] check = (byte[]) JDReflectionUtil.callMethod_O(rowId,
@@ -647,18 +931,32 @@ public class JDPSSetRowId extends JDTestcase {
           failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a VARBINARY parameter to an empty array.
    **/
   public void Var023() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[0];
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -666,7 +964,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
         byte[] check = (byte[]) JDReflectionUtil.callMethod_O(rowId,
@@ -681,18 +979,32 @@ public class JDPSSetRowId extends JDTestcase {
           failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a BLOB parameter.
    **/
   public void Var024() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
         byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 45, (byte) -33,
             (byte) 0 };
 
@@ -701,7 +1013,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
         rs.next();
         InputStream is2 = rs.getBinaryStream(1);
         byte[] check = new byte[b.length];
@@ -718,16 +1030,30 @@ public class JDPSSetRowId extends JDTestcase {
           failed(e, "Unexpected Exception" + added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DATE parameter.
    **/
   public void Var025() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 1, (byte) -33, (byte) 0 };
 
         JDReflectionUtil.callMethod_V(ps, "setRowId", 1, createRowId(b));
@@ -737,16 +1063,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a TIME parameter.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) -33,
             (byte) 0, (byte) 45, (byte) 5 };
 
@@ -757,16 +1097,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a TIMESTAMP parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 11, (byte) -33,
             (byte) 0, (byte) 5 };
 
@@ -777,16 +1131,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DATALINK parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 1, (byte) 45, (byte) 1,
             (byte) 11, (byte) -33, (byte) 0, (byte) 5, (byte) 100 };
 
@@ -797,16 +1165,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a DISTINCT parameter.
    **/
   public void Var029() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 1, (byte) -33, (byte) 0,
             (byte) 5, (byte) 100 };
 
@@ -817,16 +1199,30 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a BIGINT parameter.
    **/
   public void Var030() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
         byte[] b = new byte[] { (byte) -7, (byte) -98, (byte) 2, (byte) 0,
             (byte) -7, (byte) -98, (byte) 2, (byte) 10 };
 
@@ -837,15 +1233,29 @@ public class JDPSSetRowId extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException", added);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setRowId() - Set a VARBINARY parameter with package caching.
    **/
   public void Var031() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
-        String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+        String insert = "INSERT INTO " + pstestSet.getName()
             + " (C_VARBINARY_20) VALUES (?)";
 
         if (isToolboxDriver())
@@ -855,7 +1265,7 @@ public class JDPSSetRowId extends JDTestcase {
           JDSetupPackage.prime(systemObject_, encryptedPassword_, PACKAGE,
               JDPSTest.COLLECTION, insert, "", getDriver());
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         Connection c2 = testDriver_.getConnection(baseURL_
             + ";extended dynamic=true;package=" + PACKAGE + ";package library="
@@ -869,7 +1279,7 @@ public class JDPSSetRowId extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Object rowId = JDReflectionUtil.callMethod_O(rs, "getRowId", 1);
         byte[] check = (byte[]) JDReflectionUtil.callMethod_O(rowId,
@@ -883,6 +1293,17 @@ public class JDPSSetRowId extends JDTestcase {
           assertCondition(e.getMessage().indexOf("Data type mismatch") != -1);
         else
           failed(e, "Unexpected Exception" + added);
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -955,9 +1376,12 @@ public class JDPSSetRowId extends JDTestcase {
   public void Var033() {
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, JDPSTest.SETXML);
+          String tablename = pstestSetxml.getName(); 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETXML + " VALUES (?)");
+              "INSERT INTO " + tablename + " VALUES (?)");
           try {
             byte[] b = new byte[] { (byte) -12, (byte) 1, (byte) 45, (byte) 1,
                 (byte) 11, (byte) -33, (byte) 0, (byte) 5, (byte) 100 };
@@ -971,6 +1395,14 @@ public class JDPSSetRowId extends JDTestcase {
           }
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

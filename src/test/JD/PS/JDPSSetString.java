@@ -54,6 +54,7 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
+import test.JD.JDSerializeFile;
 
 
 /**
@@ -158,9 +159,11 @@ statement is closed.
 **/
     public void Var001()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER) VALUES (?)");
             ps.close ();
             ps.setString (1, "Test");
@@ -168,8 +171,17 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -179,9 +191,11 @@ specified.
 **/
     public void Var002()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setString (100, "Test");
             ps.close ();
@@ -189,8 +203,17 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -199,9 +222,11 @@ setString() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setString (0, "Test");
             ps.close ();
@@ -209,8 +234,17 @@ setString() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -219,9 +253,11 @@ setString() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setString (0, "Test");
             ps.close ();
@@ -229,8 +265,17 @@ setString() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -239,17 +284,19 @@ setString() - Should set to SQL NULL when the value is null.
 **/
     public void Var005()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setString (1, null);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             boolean wn = rs.wasNull ();
@@ -259,8 +306,17 @@ setString() - Should set to SQL NULL when the value is null.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -270,18 +326,20 @@ greater than 1.
 **/
     public void Var006()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
             ps.setString (1, "Muchas");
             ps.setString (2, "Gracias");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -290,8 +348,17 @@ greater than 1.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -322,11 +389,13 @@ posted when data is truncated.
 **/
     public void Var008()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setString (1, "This string is a little bit longer than fifty characters.");
 	    ps.executeUpdate();
@@ -351,8 +420,17 @@ posted when data is truncated.
 	    } else {
 		failed (e, "Unexpected Exception");
 	    }
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -363,9 +441,11 @@ setString() - Set a SMALLINT parameter.
 **/
     public void Var009()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_SMALLINT) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -374,8 +454,17 @@ setString() - Set a SMALLINT parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -384,9 +473,11 @@ setString() - Set a INTEGER parameter.
 **/
     public void Var010()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -395,8 +486,17 @@ setString() - Set a INTEGER parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -405,9 +505,11 @@ setString() - Set a REAL parameter.
 **/
     public void Var011()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_REAL) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -416,8 +518,17 @@ setString() - Set a REAL parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -426,9 +537,11 @@ setString() - Set a FLOAT parameter.
 **/
     public void Var012()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_FLOAT) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -437,8 +550,17 @@ setString() - Set a FLOAT parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -447,9 +569,11 @@ setString() - Set a DOUBLE parameter.
 **/
     public void Var013()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DOUBLE) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -458,8 +582,17 @@ setString() - Set a DOUBLE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -468,9 +601,11 @@ setString() - Set a DECIMAL parameter.
 **/
     public void Var014()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DECIMAL_105) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -479,8 +614,17 @@ setString() - Set a DECIMAL parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -489,9 +633,11 @@ setString() - Set a NUMERIC parameter.
 **/
     public void Var015()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_50) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -500,8 +646,17 @@ setString() - Set a NUMERIC parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -511,17 +666,19 @@ longer.
 **/
     public void Var016()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_1) VALUES (?)");
             ps.setString (1, "L");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -530,8 +687,17 @@ longer.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -541,17 +707,19 @@ setString() - Set a CHAR(50) parameter.
 **/
     public void Var017()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_50) VALUES (?)");
             ps.setString (1, "PROFS");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -560,8 +728,17 @@ setString() - Set a CHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -570,17 +747,19 @@ setString() - Set a VARCHAR(50) parameter.
 **/
     public void Var018()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setString (1, "Borland JBuilder");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -589,8 +768,17 @@ setString() - Set a VARCHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -599,18 +787,21 @@ setString() - Set a CLOB parameter.
 **/
     public void Var019()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_CLOB) VALUES (?)");
                 ps.setString (1, "Test");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -621,7 +812,18 @@ setString() - Set a CLOB parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -631,18 +833,21 @@ setString() - Set a DBCLOB parameter.
 **/
     public void Var020()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DBCLOB) VALUES (?)");
                 ps.setString (1, "Test double byte");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -652,59 +857,71 @@ setString() - Set a DBCLOB parameter.
                 failed (e, "Unexpected Exception");
             }
         }
-    }
-
-
-
-/**
-setString() - Set a BINARY parameter, with translation turned on.
-
-SQL400 - Close to the right value returned but difference in trailing
-         spaces needs to get dealt with.
-**/
-    public void Var021()
-    {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
-	{
-	    notApplicable("Not applicable for JCC");
-	    return;
-	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
         try {
-            reconnect ("translate binary=true");
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
-
-            PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
-                                                                + " (C_BINARY_20) VALUES (?)");
-            ps.setString (1, "Symantec Cafe");
-            ps.executeUpdate ();
-            ps.close ();
-
-            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
-            rs.next ();
-            String check = rs.getString (1);
-            rs.close ();
-
-            if (isToolboxDriver())
-            {
-                if(check.equals("Symantec Cafe       "))
-                    succeeded();
-                else
-                    failed("Strings did not match. \"Symantec Cafe       \" != " + check);
-            }
-            else
-                // Spaces get translated different, so we kluge this
-                // comparison.
-                assertCondition (check.substring (0, 13).equals ("Symantec Cafe")
-                        && (check.length() == 20));
-
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+      }
     }
+  }
 
 
+
+  /**
+   * setString() - Set a BINARY parameter, with translation turned on.
+   * 
+   * SQL400 - Close to the right value returned but difference in trailing spaces
+   * needs to get dealt with.
+   **/
+  public void Var021() {
+    if (getDriver() == JDTestDriver.DRIVER_JCC) {
+      notApplicable("Not applicable for JCC");
+      return;
+    }
+    JDSerializeFile pstestSet = null;
+    try {
+        reconnect("translate binary=true");
+        pstestSet = JDPSTest.getPstestSet(connection_);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
+        PreparedStatement ps = connection_
+            .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
+        ps.setString(1, "Symantec Cafe");
+        ps.executeUpdate();
+        ps.close();
+
+        ResultSet rs = statement_.executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
+        rs.next();
+        String check = rs.getString(1);
+        rs.close();
+
+        if (isToolboxDriver()) {
+          if (check.equals("Symantec Cafe       "))
+            succeeded();
+          else
+            failed("Strings did not match. \"Symantec Cafe       \" != " + check);
+        } else
+          // Spaces get translated different, so we kluge this
+          // comparison.
+          assertCondition(check.substring(0, 13).equals("Symantec Cafe") && (check.length() == 20));
+
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
 
 /**
@@ -712,23 +929,25 @@ setString() - Set a VARBINARY parameter, with translation turned on.
 **/
     public void Var022()
     {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
-	{
-	    notApplicable("Not applicable for JCC");
-	    return;
-	}
-        try {
-            reconnect ("translate binary=true");
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      if (getDriver () == JDTestDriver.DRIVER_JCC)
+      {
+          notApplicable("Not applicable for JCC");
+          return;
+      }
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect ("translate binary=true");
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARBINARY_20) VALUES (?)");
             ps.setString (1, "Visual J++");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -737,11 +956,18 @@ setString() - Set a VARBINARY parameter, with translation turned on.
                 succeeded();
             else
                 failed("Strings did not match. \"Visual J++\" != " + check);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+      }
     }
+  }
 
 
 
@@ -751,17 +977,19 @@ setString() - Set a BINARY parameter, with translation turned off.
 **/
     public void Var023()
     {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
-	{
-	    notApplicable("Not applicable for JCC");
-	    return;
-	}
-        try {
-            reconnect ("translate binary=false");
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      if (getDriver () == JDTestDriver.DRIVER_JCC)
+      {
+          notApplicable("Not applicable for JCC");
+          return;
+      }
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect ("translate binary=false");
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BINARY_20) VALUES (?)");
 
             String expected = null;
@@ -775,7 +1003,7 @@ setString() - Set a BINARY parameter, with translation turned off.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -787,11 +1015,18 @@ setString() - Set a BINARY parameter, with translation turned off.
             else
                assertCondition ((check.startsWith ("Symantec Cafe"))
                        && (check.length() == 20));
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+      }
     }
+  }
 
 
 
@@ -801,12 +1036,15 @@ setString() - Set a VARBINARY parameter, with translation turned off.
 **/
     public void Var024()
     {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
-	{
-	    notApplicable("Not applicable for JCC");
-	    return;
-	}
-        try {
+      if (getDriver () == JDTestDriver.DRIVER_JCC)
+      {
+          notApplicable("Not applicable for JCC");
+          return;
+      }
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect ("translate binary=false");
+      pstestSet = JDPSTest.getPstestSet(connection_);
             String expected = null;
 
             if (isToolboxDriver())
@@ -814,27 +1052,33 @@ setString() - Set a VARBINARY parameter, with translation turned off.
             else
                expected = "Visual J++";
 
-            reconnect ("translate binary=false");
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARBINARY_20) VALUES (?)");
             ps.setString (1, expected);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
 
             assertCondition (check.equals (expected));
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+      }
     }
+  }
 
 
 
@@ -844,9 +1088,12 @@ setString() - Set a BLOB parameter.
 **/
     public void Var025()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BLOB) VALUES (?)");
             ps.setString (1, "Test");
             ps.execute();
@@ -856,6 +1103,17 @@ setString() - Set a BLOB parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -866,9 +1124,12 @@ setString() - Set a DATE parameter to a value that is not a valid date.  This sh
 **/
     public void Var026()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DATE) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -878,6 +1139,17 @@ setString() - Set a DATE parameter to a value that is not a valid date.  This sh
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -887,9 +1159,11 @@ setString() - Set a TIME parameter to a value that is not a valid date.  This sh
 **/
     public void Var027()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIME) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -898,8 +1172,17 @@ setString() - Set a TIME parameter to a value that is not a valid date.  This sh
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -908,9 +1191,11 @@ setString() - Set a TIMESTAMP parameter to a value that is not valid.  This shou
 **/
     public void Var028()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIMESTAMP) VALUES (?)");
             ps.setString (1, "Test");
 	    ps.executeUpdate();
@@ -919,8 +1204,17 @@ setString() - Set a TIMESTAMP parameter to a value that is not valid.  This shou
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 /**
@@ -929,7 +1223,10 @@ setString() - Set a DATALINK parameter.
     // @C0C
     public void Var029()
     {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (getDriver () == JDTestDriver.DRIVER_JCC)
 	{
 	    notApplicable("Not applicable for JCC");
 	    return;
@@ -937,16 +1234,16 @@ setString() - Set a DATALINK parameter.
 
         if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATALINK) VALUES (DLVALUE( CAST(? AS VARCHAR(50))))");
                 ps.setString (1, "http://www.pepsi.com/index.html");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
 		if (check == null) check = "null";
@@ -958,7 +1255,18 @@ setString() - Set a DATALINK parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -968,18 +1276,21 @@ setString() - Set a DISTINCT parameter.
     // @C0C
     public void Var030()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DISTINCT) VALUES (?)");
                 ps.setString (1, "12345678");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -990,7 +1301,18 @@ setString() - Set a DISTINCT parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -999,10 +1321,13 @@ setString() - Set a BIGINT parameter.
 **/
     public void Var031()
     {
-        if (checkBigintSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkBigintSupport()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BIGINT) VALUES (?)");
                 ps.setString (1, "Test");
 		ps.executeUpdate();
@@ -1013,7 +1338,18 @@ setString() - Set a BIGINT parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -1080,23 +1416,23 @@ setString() - Set a VARCHAR(50) parameter.
 **/
     public void Var033()
     {
-	if (getDriver () == JDTestDriver.DRIVER_JCC)
-	{
-	    notApplicable("Not applicable for JCC");
-	    return;
-	}
-        try {
-            if (isToolboxDriver()){
-                reconnect ("extended dynamic=true;package=PSTEST"
-                        + ";package library=" + JDPSTest.COLLECTION
-                        + ";package cache=false");
-            }else{
-            reconnect ("extended dynamic=true;package=PSTEST"
-                       + ";package library=" + JDPSTest.COLLECTION
-                       + ";package cache=true");
-            }
+      if (getDriver () == JDTestDriver.DRIVER_JCC)
+      {
+          notApplicable("Not applicable for JCC");
+          return;
+      }
+    JDSerializeFile pstestSet = null;
+    try {
+      if (isToolboxDriver()) {
+        reconnect("extended dynamic=true;package=PSTEST" + ";package library=" + JDPSTest.COLLECTION
+            + ";package cache=false");
+      } else {
+        reconnect(
+            "extended dynamic=true;package=PSTEST" + ";package library=" + JDPSTest.COLLECTION + ";package cache=true");
+      }
+      pstestSet = JDPSTest.getPstestSet(connection_);
 
-            String sql = "INSERT INTO " + JDPSTest.PSTEST_SET
+            String sql = "INSERT INTO " + pstestSet.getName()
                          + " (C_VARCHAR_50) VALUES (?)";
 
 
@@ -1108,23 +1444,30 @@ setString() - Set a VARCHAR(50) parameter.
                                       "PSTEST", JDPSTest.COLLECTION, sql, "", getDriver());
 
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (sql);
             ps.setString (1, "Borland JBuilder");
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
 
             assertCondition (check.equals ("Borland JBuilder"));
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-        catch (Exception e) {
-            failed (e, "Unexpected Exception");
-        }
+      }
+    }
     }
 
 /** D1A
@@ -1132,18 +1475,21 @@ setString() - Set a DATE parameter to a value that is a valid date.  This should
 **/
     public void Var034()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATE) VALUES (?)");
                 ps.setString (1, "1999-12-31");
                 ps.executeUpdate();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -1155,6 +1501,17 @@ setString() - Set a DATE parameter to a value that is a valid date.  This should
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1163,18 +1520,21 @@ setString() - Set a TIME parameter to a value that is valid.  This should work.
 **/
     public void Var035()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_TIME) VALUES (?)");
                 ps.setString (1, "14:04:55");
                 ps.executeUpdate();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -1187,6 +1547,17 @@ setString() - Set a TIME parameter to a value that is valid.  This should work.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 /** D1A
@@ -1194,18 +1565,21 @@ setString() - Set a TIMESTAMP parameter to a value that is valid.  This should w
 **/
     public void Var036()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_TIMESTAMP) VALUES (?)");
                 ps.setString (1, "1998-04-08-03.15.30.123456");
                 ps.executeUpdate();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -1217,6 +1591,17 @@ setString() - Set a TIMESTAMP parameter to a value that is valid.  This should w
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 /** D1A
@@ -1225,6 +1610,9 @@ truncation turned on because we use different internal paths.
 **/
     public void Var037()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkNative()) {
             try {
                 String url = baseURL_
@@ -1234,16 +1622,16 @@ truncation turned on because we use different internal paths.
                 Connection connection = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
                 Statement statement = connection_.createStatement ();
 
-                statement.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection.prepareStatement (
-                                                                   "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                   "INSERT INTO " + pstestSet.getName()
                                                                    + " (C_VARCHAR_50) VALUES (?)");
                 ps.setString (1, null);
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 boolean wn = rs.wasNull ();
@@ -1258,6 +1646,17 @@ truncation turned on because we use different internal paths.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 /**
@@ -1842,71 +2241,77 @@ Also needs to work for V5R2
     };
 
 
-/**
-setString() - Set a DECFLOAT 16 parameter to valid values.  This should work.
-**/
-    public void Var043()
-    {
-        String setValue = null;
-        String added = " -- DECFLOAT(16) test added by native driver 11/18/2006";
-        if (checkDecFloatSupport()) {
-            try {
-                boolean success = true;
-                StringBuffer sb = new StringBuffer();
-                PreparedStatement ps = connection_.prepareStatement (
-                        "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
-                        + " VALUES (?)");
-               if (isToolboxDriver()) {
-                    dfp16values = dfp16valuesTB;
+    /**
+     * setString() - Set a DECFLOAT 16 parameter to valid values. This should work.
+     **/
+    public void Var043() {
+      String setValue = null;
+      String added = " -- DECFLOAT(16) test added by native driver 11/18/2006";
+      if (checkDecFloatSupport()) {
+        JDSerializeFile pstestSetdpf = null;
+        try {
+          pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP16);
+          String table = pstestSetdpf.getName();
+          boolean success = true;
+          StringBuffer sb = new StringBuffer();
+          PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + table + " VALUES (?)");
+          if (isToolboxDriver()) {
+            dfp16values = dfp16valuesTB;
+          }
+          for (int i = 0; i < dfp16values.length; i++) {
+            if (dfp16values[i][0] == "valid") {
+              statement_.executeUpdate("DELETE FROM " + table);
+              setValue = dfp16values[i][1];
+              ps.setString(1, setValue);
+              ps.executeUpdate();
+
+              ResultSet rs = statement_.executeQuery("SELECT * FROM " + table);
+              rs.next();
+              String check = rs.getString(1);
+
+              if (check == null) {
+                if (dfp16values[i][2] != null) {
+                  success = false;
+                  sb.append("\n Expected " + dfp16values[i][2] + " from " + dfp16values[i][1] + " but got " + check);
                 }
-                for (int i = 0; i < dfp16values.length; i++) {
-                    if (dfp16values[i][0] == "valid") {
-                        statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP16);
-                        setValue =  dfp16values[i][1];
-                        ps.setString (1, setValue);
-                        ps.executeUpdate();
+              } else {
+                if (!check.equals(dfp16values[i][2])) {
+                  success = false;
+                  sb.append("\n Expected " + dfp16values[i][2] + " from " + dfp16values[i][1] + " but got " + check);
+                }
+              }
+              rs.close();
 
-                        ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP16);
-                        rs.next ();
-                        String check = rs.getString (1);
+            } /* if valid */
+          } /* end for */
 
-                        if (check == null) {
-                            if (dfp16values[i][2] != null) {
-                                success = false;
-                                sb.append("\n Expected "+dfp16values[i][2]+" from "+dfp16values[i][1]+
-                                        " but got "+check);
-                            }
-                        } else {
-                            if (!check.equals(dfp16values[i][2])) {
-                                success = false;
-                                sb.append("\n Expected "+dfp16values[i][2]+" from "+dfp16values[i][1]+
-                                        " but got "+check);
-                            }
-                        }
-                        rs.close ();
+          ps.close();
 
-                    } /* if valid */
-                } /* end for */
+          assertCondition(success, added + " table=" + table + sb.toString());
 
-                ps.close ();
+        } catch (Exception e) {
+          if (getDriver() == JDTestDriver.DRIVER_JCC) {
+            output_.println("Info: jcc doesn't allow NaN value for DECFLOAT");
+            String exMessage = e.toString();
+            String expectedMessage = "Invalid data conversion:  Parameter instance NaN";
+            assertCondition(exMessage.indexOf(expectedMessage) > 0,
+                "Expected message '" + expectedMessage + "' not found in " + exMessage);
 
-                assertCondition (success, added + " table="+ JDPSTest.PSTEST_SETDFP16 + sb.toString());
-
+          } else {
+            failed(e, "Unexpected Exception: probably setting " + setValue + " " + added);
+          }
+        } finally {
+          if (pstestSetdpf != null) {
+            try {
+              pstestSetdpf.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
             }
-            catch (Exception e) {
-		if (getDriver() == JDTestDriver.DRIVER_JCC) {
-		    output_.println("Info: jcc doesn't allow NaN value for DECFLOAT");
-		    String exMessage = e.toString();
-		    String expectedMessage = "Invalid data conversion:  Parameter instance NaN";
-		    assertCondition(exMessage.indexOf(expectedMessage) > 0,
-				    "Expected message '"+expectedMessage+"' not found in "+
-				    exMessage);
+          }
 
-		} else {
-		    failed (e, "Unexpected Exception: probably setting "+setValue+" "+added);
-		}
-            }
         }
+
+      }
     }
 
 /**
@@ -1919,16 +2324,19 @@ setString() - Set a DECFLOAT 16 parameter to random values.  This should work.
 	String setValue = null;
 	String added = " -- DECFLOAT(16) test added by native driver 11/18/2006";
 	if (checkDecFloatSupport()) {
-            try {
+	        JDSerializeFile pstestSetdpf = null;
+	        try {
+	          pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP16);
+	          String table = pstestSetdpf.getName();
 		long endTime = System.currentTimeMillis() + runMillis;
 		int errorCount = 0 ;
 		StringBuffer sb = new StringBuffer();
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
+                                                                    "INSERT INTO " + table
                                                                     + " VALUES (?)");
 		Random random = new Random(System.currentTimeMillis());
 		while((System.currentTimeMillis() < endTime) && (errorCount < 10)) {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP16);
+		    statement_.executeUpdate ("DELETE FROM " + table);
 
 		    int nineDigits = 100000000 + random.nextInt(900000000);
 		    int sevenDigits = random.nextInt(10000000);
@@ -1948,7 +2356,7 @@ setString() - Set a DECFLOAT 16 parameter to random values.  This should work.
 		    ps.setString (1, setValue);
 		    ps.executeUpdate();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP16);
+		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + table);
 		    rs.next ();
 		    String check = rs.getString (1);
 		    if (check == null) {
@@ -1969,11 +2377,20 @@ setString() - Set a DECFLOAT 16 parameter to random values.  This should work.
 
 		ps.close ();
 		output_.println("      Insert DFP16:  "+count+" Samples tried in "+runMillis+" milliseconds");
-                assertCondition (errorCount == 0, added + " table="+ JDPSTest.PSTEST_SETDFP16 + sb.toString());
+                assertCondition (errorCount == 0, added + " table="+ table + sb.toString());
 
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception: probably setting '"+setValue+"' "+added);
+            } finally {
+              if (pstestSetdpf != null) {
+                try {
+                  pstestSetdpf.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
         }
     }
@@ -1990,15 +2407,18 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
 	
 
 	if (checkDecFloatSupport()) {
-            try {
+          JDSerializeFile pstestSetdpf = null;
+          try {
+            pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP16);
+            String table = pstestSetdpf.getName();
 		boolean success = true;
 		StringBuffer sb = new StringBuffer();
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
+                                                                    "INSERT INTO " + table
                                                                     + " VALUES (?)");
 		for (int i = 0; i < dfp16values.length; i++) {
 		    if (dfp16values[i][0] == "truncation") {
-			statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP16);
+			statement_.executeUpdate ("DELETE FROM " + table);
 			setValue =  dfp16values[i][1];
 			boolean valueSet = false;
 			try {
@@ -2016,7 +2436,7 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
 			if (valueSet) {
 			    ps.executeUpdate();
 
-			    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP16);
+			    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + table);
 			    rs.next ();
 			    String check = rs.getString (1);
 			    if (check == null) {
@@ -2039,11 +2459,20 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
 
 		ps.close ();
 
-                assertCondition (success, added + " table="+ JDPSTest.PSTEST_SETDFP16 + sb.toString());
+                assertCondition (success, added + " table="+ table + sb.toString());
 
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception: probably setting "+setValue+" "+added);
+            } finally {
+              if (pstestSetdpf != null) {
+                try {
+                  pstestSetdpf.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
         }
     }
@@ -2165,20 +2594,23 @@ setString() - Set a DECFLOAT 34 parameter to valid values.  This should work.
 
 
 	if (checkDecFloatSupport()) {
-            try {
+          JDSerializeFile pstestSetdpf = null;
+          try {
+            pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP34);
+            String table = pstestSetdpf.getName();
 		boolean success = true;
 		StringBuffer sb = new StringBuffer();
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                                                                    "INSERT INTO " + table
                                                                     + " VALUES (?)");
 		for (int i = 0; i < dfp34values.length; i++) {
 		    if (dfp34values[i][0] == "valid") {
-			statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP34);
+			statement_.executeUpdate ("DELETE FROM " + table);
 			setValue =  dfp34values[i][1];
 			ps.setString (1, setValue);
 			ps.executeUpdate();
 
-			ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP34);
+			ResultSet rs = statement_.executeQuery ("SELECT * FROM " + table);
 			rs.next ();
 			String check = rs.getString (1);
 			if (check == null) {
@@ -2201,7 +2633,7 @@ setString() - Set a DECFLOAT 34 parameter to valid values.  This should work.
 
 		ps.close ();
 
-                assertCondition (success, added + " table="+ JDPSTest.PSTEST_SETDFP34 + sb.toString());
+                assertCondition (success, added + " table="+ table + sb.toString());
 
             }
             catch (Exception e) {
@@ -2217,6 +2649,15 @@ setString() - Set a DECFLOAT 34 parameter to valid values.  This should work.
 
 		    failed (e, "Unexpected Exception: probably setting "+setValue+" "+added);
 		}
+            } finally {
+              if (pstestSetdpf != null) {
+                try {
+                  pstestSetdpf.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
         }
     }
@@ -2232,16 +2673,19 @@ setString() - Set a DECFLOAT 34 parameter to random values.  This should work.
 	String added = " -- DECFLOAT(34) test added by native driver 11/18/2006";
 
 	if (checkDecFloatSupport()) {
-            try {
+          JDSerializeFile pstestSetdpf = null;
+          try {
+            pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP34);
+            String table = pstestSetdpf.getName();
 		long endTime = System.currentTimeMillis() + runMillis;
 		int errorCount = 0 ;
 		StringBuffer sb = new StringBuffer();
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                                                                    "INSERT INTO " + table
                                                                     + " VALUES (?)");
 		Random random = new Random(System.currentTimeMillis());
 		while((System.currentTimeMillis() < endTime) && (errorCount < 10)) {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP34);
+		    statement_.executeUpdate ("DELETE FROM " + table);
 
 		    int nineDigits = 100000000 + random.nextInt(900000000);
 		    int sevenDigits = random.nextInt(10000000);
@@ -2261,7 +2705,7 @@ setString() - Set a DECFLOAT 34 parameter to random values.  This should work.
 		    ps.setString (1, setValue);
 		    ps.executeUpdate();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP34);
+		    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + table);
 		    rs.next ();
 		    String check = rs.getString (1);
 		    if (check == null) {
@@ -2282,11 +2726,20 @@ setString() - Set a DECFLOAT 34 parameter to random values.  This should work.
 
 		ps.close ();
 		output_.println("      Insert DFP34:  "+count+" Samples tried in "+runMillis+" milliseconds");
-                assertCondition (errorCount == 0, added + " table="+ JDPSTest.PSTEST_SETDFP34 + sb.toString());
+                assertCondition (errorCount == 0, added + " table="+ table + sb.toString());
 
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception: probably setting '"+setValue+"' "+added);
+            } finally {
+              if (pstestSetdpf != null) {
+                try {
+                  pstestSetdpf.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
         }
     }
@@ -2303,15 +2756,18 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 	String setValue = null;
 	String added = " -- DECFLOAT(34) test added by native driver 11/18/2006";
 	if (checkDecFloatSupport()) {
-            try {
+          JDSerializeFile pstestSetdpf = null;
+          try {
+            pstestSetdpf = JDPSTest.getSerializeFile(connection_, JDPSTest.SETDFP34);
+            String table = pstestSetdpf.getName();
 		boolean success = true;
 		StringBuffer sb = new StringBuffer();
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                                                                    "INSERT INTO " + table
                                                                     + " VALUES (?)");
 		for (int i = 0; i < dfp34values.length; i++) {
 		    if (dfp34values[i][0] == "truncation") {
-			statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SETDFP34);
+			statement_.executeUpdate ("DELETE FROM " + table);
 			setValue =  dfp34values[i][1];
 			boolean valueSet = false;
 			try {
@@ -2329,7 +2785,7 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 			if (valueSet) {
 			    ps.executeUpdate();
 
-			    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP34);
+			    ResultSet rs = statement_.executeQuery ("SELECT * FROM " + table);
 			    rs.next ();
 			    String check = rs.getString (1);
 			    if (check == null) {
@@ -2352,18 +2808,27 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 
 		ps.close ();
 
-                assertCondition (success, added + " table="+ JDPSTest.PSTEST_SETDFP34 + sb.toString());
+                assertCondition (success, added + " table="+ table + sb.toString());
 
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception: probably setting "+setValue+" "+added);
+            } finally {
+              if (pstestSetdpf != null) {
+                try {
+                  pstestSetdpf.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
         }
     }
 
 
 
-    public void dfpRoundTest(String roundingMode, String table, String value, String expected) {
+    public void dfpRoundTest(String roundingMode, int tableNumber, String value, String expected) {
 	if (getDriver () == JDTestDriver.DRIVER_JCC)
 	{
 	    notApplicable("decfloat rounding mode test not applicable for JCC");
@@ -2371,7 +2836,10 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 	}
 
       if (checkDecFloatSupport()) {
+        JDSerializeFile pstestSetdpf = null;
         try {
+          pstestSetdpf = JDPSTest.getSerializeFile(connection_, tableNumber);
+          String table = pstestSetdpf.getName(); 
             if (isToolboxDriver())
                 roundingMode = roundingMode.substring(6);
 
@@ -2401,6 +2869,15 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected +" from "+value+" for mode "+roundingMode);
         } catch (Exception e) {
           failed(e, "Unexpected Exception for value "+ value);
+        } finally {
+          if (pstestSetdpf != null) {
+            try {
+              pstestSetdpf.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
@@ -2410,30 +2887,30 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
      * setString -- using different rounding modes
      */
     String RHE="round half even";
-    public void Var050 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP16,  "1.2345678901234545",  "1.234567890123454"); }
-    public void Var051 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP16,  "1.2345678901234555",  "1.234567890123456"); }
-    public void Var052 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234545", "-1.234567890123454"); }
-    public void Var053 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555", "-1.234567890123456"); }
+    public void Var050 () { dfpRoundTest(RHE, JDPSTest.SETDFP16,  "1.2345678901234545",  "1.234567890123454"); }
+    public void Var051 () { dfpRoundTest(RHE, JDPSTest.SETDFP16,  "1.2345678901234555",  "1.234567890123456"); }
+    public void Var052 () { dfpRoundTest(RHE, JDPSTest.SETDFP16, "-1.2345678901234545", "-1.234567890123454"); }
+    public void Var053 () { dfpRoundTest(RHE, JDPSTest.SETDFP16, "-1.2345678901234555", "-1.234567890123456"); }
 
     /**
      *  setString -- set a DFP16 with rounding mode "round half up"
      */
     String RHU = "round half up";
-    public void Var054 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555", "1.234567890123456"); }
-    public void Var055 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "1.2345678901234545", "1.234567890123455"); }
-    public void Var056 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "1.2345678901234565", "1.234567890123457"); }
-    public void Var057 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555", "-1.234567890123456"); }
-    public void Var058 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234545", "-1.234567890123455"); }
-    public void Var059 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234565", "-1.234567890123457"); }
+    public void Var054 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "1.2345678901234555", "1.234567890123456"); }
+    public void Var055 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "1.2345678901234545", "1.234567890123455"); }
+    public void Var056 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "1.2345678901234565", "1.234567890123457"); }
+    public void Var057 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "-1.2345678901234555", "-1.234567890123456"); }
+    public void Var058 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "-1.2345678901234545", "-1.234567890123455"); }
+    public void Var059 () { dfpRoundTest(RHU, JDPSTest.SETDFP16, "-1.2345678901234565", "-1.234567890123457"); }
 
     /**
      *  setString -- set a DFP16 with rounding mode "round down"
      */
     String RD = "round down";
-    public void Var060 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555",       "1.234567890123455"); }
-    public void Var061 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP16, "1.2345678901234559999999", "1.234567890123455"); }
-    public void Var062 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
-    public void Var063 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
+    public void Var060 () { dfpRoundTest(RD, JDPSTest.SETDFP16, "1.2345678901234555",       "1.234567890123455"); }
+    public void Var061 () { dfpRoundTest(RD, JDPSTest.SETDFP16, "1.2345678901234559999999", "1.234567890123455"); }
+    public void Var062 () { dfpRoundTest(RD, JDPSTest.SETDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
+    public void Var063 () { dfpRoundTest(RD, JDPSTest.SETDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
 
 
 
@@ -2441,32 +2918,32 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
      *  setString -- set a DFP16 with rounding mode "round ceiling"
      */
     String RC = "round ceiling";
-    public void Var064 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555",       "1.234567890123456"); }
-    public void Var065 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP16, "1.2345678901234559999999", "1.234567890123456"); }
-    public void Var066 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
-    public void Var067 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
+    public void Var064 () { dfpRoundTest(RC, JDPSTest.SETDFP16, "1.2345678901234555",       "1.234567890123456"); }
+    public void Var065 () { dfpRoundTest(RC, JDPSTest.SETDFP16, "1.2345678901234559999999", "1.234567890123456"); }
+    public void Var066 () { dfpRoundTest(RC, JDPSTest.SETDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
+    public void Var067 () { dfpRoundTest(RC, JDPSTest.SETDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
 
 
     /**
      *  setString -- set a DFP16  with rounding mode "round floor"
      */
         String RF = "round floor";
-    public void Var068 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555",       "1.234567890123455"); }
-    public void Var069 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP16, "1.2345678901234559999999", "1.234567890123455"); }
-    public void Var070 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
-    public void Var071 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
+    public void Var068 () { dfpRoundTest(RF, JDPSTest.SETDFP16, "1.2345678901234555",       "1.234567890123455"); }
+    public void Var069 () { dfpRoundTest(RF, JDPSTest.SETDFP16, "1.2345678901234559999999", "1.234567890123455"); }
+    public void Var070 () { dfpRoundTest(RF, JDPSTest.SETDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
+    public void Var071 () { dfpRoundTest(RF, JDPSTest.SETDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
 
 
     /**
      *  setString -- set a DFP16 with rounding mode "round half down"
      */
     String RHD = "round half down";
-    public void Var072 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555", "1.234567890123455"); }
-    public void Var073 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "1.2345678901234545", "1.234567890123454"); }
-    public void Var074 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "1.2345678901234565", "1.234567890123456"); }
-    public void Var075 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555", "-1.234567890123455"); }
-    public void Var076 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234545", "-1.234567890123454"); }
-    public void Var077 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234565", "-1.234567890123456"); }
+    public void Var072 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "1.2345678901234555", "1.234567890123455"); }
+    public void Var073 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "1.2345678901234545", "1.234567890123454"); }
+    public void Var074 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "1.2345678901234565", "1.234567890123456"); }
+    public void Var075 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234555", "-1.234567890123455"); }
+    public void Var076 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234545", "-1.234567890123454"); }
+    public void Var077 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234565", "-1.234567890123456"); }
 
 
 
@@ -2474,77 +2951,125 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
      *  setString -- set a DFP16 with rounding mode "round up"
      */
     String RU = "round up";
-    public void Var078 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP16, "1.2345678901234555",       "1.234567890123456"); }
-    public void Var079 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP16, "1.2345678901234559999999", "1.234567890123456"); }
-    public void Var080 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
-    public void Var081 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
+    public void Var078 () { dfpRoundTest(RU, JDPSTest.SETDFP16, "1.2345678901234555",       "1.234567890123456"); }
+    public void Var079 () { dfpRoundTest(RU, JDPSTest.SETDFP16, "1.2345678901234559999999", "1.234567890123456"); }
+    public void Var080 () { dfpRoundTest(RU, JDPSTest.SETDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
+    public void Var081 () { dfpRoundTest(RU, JDPSTest.SETDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
 
 
     /*
      * setString -- using different rounding modes
      */
-    public void Var082 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234545","1.181818181818181818234567890123454"); }
-    public void Var083 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP34,  "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
-    public void Var084 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234545","-1.181818181818181818234567890123454"); }
-    public void Var085 () { dfpRoundTest(RHE, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
+    public void Var082 () { dfpRoundTest(RHE, JDPSTest.SETDFP34,"1.1818181818181818182345678901234545","1.181818181818181818234567890123454"); }
+    public void Var083 () { dfpRoundTest(RHE, JDPSTest.SETDFP34,  "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
+    public void Var084 () { dfpRoundTest(RHE, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234545","-1.181818181818181818234567890123454"); }
+    public void Var085 () { dfpRoundTest(RHE, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
 
     /**
      *  setString -- set a DFP34 with rounding mode "round half up"
      */
-    public void Var086 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
-    public void Var087 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234545","1.181818181818181818234567890123455"); }
-    public void Var088 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234565","1.181818181818181818234567890123457"); }
-    public void Var089 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
-    public void Var090 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234545","-1.181818181818181818234567890123455"); }
-    public void Var091 () { dfpRoundTest(RHU, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234565","-1.181818181818181818234567890123457"); }
+    public void Var086 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
+    public void Var087 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "1.1818181818181818182345678901234545","1.181818181818181818234567890123455"); }
+    public void Var088 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "1.1818181818181818182345678901234565","1.181818181818181818234567890123457"); }
+    public void Var089 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
+    public void Var090 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234545","-1.181818181818181818234567890123455"); }
+    public void Var091 () { dfpRoundTest(RHU, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234565","-1.181818181818181818234567890123457"); }
 
     /**
      *  setString -- set a DFP34 with rounding mode "round down"
      */
-    public void Var092 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
-    public void Var093 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234559999999","1.181818181818181818234567890123455"); }
-    public void Var094 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
-    public void Var095 () { dfpRoundTest(RD, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123455"); }
+    public void Var092 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
+    public void Var093 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "1.1818181818181818182345678901234559999999","1.181818181818181818234567890123455"); }
+    public void Var094 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
+    public void Var095 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123455"); }
 
 
 
     /**
      *  setString -- set a DFP34 with rounding mode "round ceiling"
      */
-    public void Var096 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
-    public void Var097 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234559999999","1.181818181818181818234567890123456"); }
-    public void Var098 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
-    public void Var099 () { dfpRoundTest(RC, JDPSTest.PSTEST_SETDFP34, "-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123455"); }
+    public void Var096 () { dfpRoundTest(RC, JDPSTest.SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
+    public void Var097 () { dfpRoundTest(RC, JDPSTest.SETDFP34, "1.1818181818181818182345678901234559999999","1.181818181818181818234567890123456"); }
+    public void Var098 () { dfpRoundTest(RC, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
+    public void Var099 () { dfpRoundTest(RC, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123455"); }
 
 
     /**
      *  setString -- set a DFP34  with rounding mode "round floor"
      */
-    public void Var100 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
-    public void Var101 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234559999999","1.181818181818181818234567890123455"); }
-    public void Var102 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
-    public void Var103 () { dfpRoundTest(RF, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123456"); }
+    public void Var100 () { dfpRoundTest(RF, JDPSTest.SETDFP34, "1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
+    public void Var101 () { dfpRoundTest(RF, JDPSTest.SETDFP34,"1.1818181818181818182345678901234559999999","1.181818181818181818234567890123455"); }
+    public void Var102 () { dfpRoundTest(RF, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
+    public void Var103 () { dfpRoundTest(RF, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123456"); }
 
 
     /**
      *  setString -- set a DFP34 with rounding mode "round half down"
      */
-    public void Var104 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
-    public void Var105 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234545","1.181818181818181818234567890123454"); }
-    public void Var106 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234565","1.181818181818181818234567890123456"); }
-    public void Var107 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
-    public void Var108 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234545","-1.181818181818181818234567890123454"); }
-    public void Var109 () { dfpRoundTest(RHD, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234565","-1.181818181818181818234567890123456"); }
+    public void Var104 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"1.1818181818181818182345678901234555","1.181818181818181818234567890123455"); }
+    public void Var105 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"1.1818181818181818182345678901234545","1.181818181818181818234567890123454"); }
+    public void Var106 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"1.1818181818181818182345678901234565","1.181818181818181818234567890123456"); }
+    public void Var107 () {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+    public void Var108 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234545","-1.181818181818181818234567890123454"); }
+    public void Var109 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234565","-1.181818181818181818234567890123456"); }
 
 
 
    /**
      *  setString -- set a DFP34 with rounding mode "round up"
      */
-    public void Var110 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234555","1.181818181818181818234567890123456"); }
-    public void Var111 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP34,"1.1818181818181818182345678901234559999999","1.181818181818181818234567890123456"); }
-    public void Var112 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
-    public void Var113 () { dfpRoundTest(RU, JDPSTest.PSTEST_SETDFP34,"-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123456"); }
+    public void Var110 () {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+dfpRoundTest(RU, JDPSTest.SETDFP34,"1.1818181818181818182345678901234555","1.181818181818181818234567890123456");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+    public void Var111 () { dfpRoundTest(RU, JDPSTest.SETDFP34,"1.1818181818181818182345678901234559999999","1.181818181818181818234567890123456"); }
+    public void Var112 () { dfpRoundTest(RU, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234555","-1.181818181818181818234567890123456"); }
+    public void Var113 () {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+dfpRoundTest(RU, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123456");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
 
     public void testCCSID(int ccsid, String[][] inputAndExpected) {
@@ -2752,9 +3277,12 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     **/
         public void Var116()
         {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATE) VALUES (?)");
 
                 if (isToolboxDriver())
@@ -2769,6 +3297,17 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
         }
 
 
@@ -2778,9 +3317,12 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     **/
         public void Var117()
         {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_TIME) VALUES (?)");
                 ps.setString (1, "14:61var0:55"); //61 is bad
 		ps.executeUpdate();
@@ -2791,6 +3333,17 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
         }
 
     /**
@@ -2798,6 +3351,9 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     **/
         public void Var118()
         {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 
           Statement s = null ; 
             PreparedStatement ps = null; 
@@ -2805,22 +3361,22 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
             try {
               
               s = connection_.createStatement(); 
-              s.executeUpdate("delete from "+JDPSTest.PSTEST_SET) ;
+              s.executeUpdate("delete from "+pstestSet.getName()) ;
               
                ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_TIMESTAMP) VALUES (?)");
                 ps.setString (1,"2009-01-32-00.00.00.000000");//day 32 is bad
 		ps.executeUpdate();
 
                 ps.close ();
                 
-                ResultSet rs = s.executeQuery ("SELECT C_TIMESTAMP FROM "+JDPSTest.PSTEST_SET);
+                ResultSet rs = s.executeQuery ("SELECT C_TIMESTAMP FROM "+pstestSet.getName());
                 String timestampString = "NOT SET"; 
                 while (rs.next()) { 
                   timestampString = rs.getString(1); 
                 }
-                s.executeUpdate("delete from "+JDPSTest.PSTEST_SET) ;
+                s.executeUpdate("delete from "+pstestSet.getName()) ;
                 
                 // Note:  toolbox now allows a bad timestamp to be passed.  
                 // We let the database take the appropriate action. 
@@ -2836,6 +3392,17 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
                 try { if (s != null) s.close(); } catch (Exception e) {}  
                 try {if (ps != null) ps.close(); } catch (Exception e) {} 
             }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
         }
 
 	public void Var119() { notApplicable(); }
@@ -2848,24 +3415,27 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
 /**
 setString() - Set an XML  parameter.
 **/
-	public void setXML(String tablename, String data, String expected) {
+	public void setXML(int table, String data, String expected) {
 	    String added = " -- added by native driver 08/21/2009";
 
-	    if (getDriver() == JDTestDriver.DRIVER_JCC) {
-
-
-		if ((tablename.indexOf("13488") > 0) ||
-		    (tablename.indexOf("1200") > 0) ||
-		    (tablename.indexOf("37") > 0) ||
-		    (tablename.indexOf("290") > 0) ) {
-		    notApplicable("XML CCSID Not applicable for JCC");
-		    return;
-		}
-
-	    }
 
 		if (checkXmlSupport ()) {
-		    try {
+	                 JDSerializeFile pstestSetxml = null;
+	                 try {
+	                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+	                   String tablename = pstestSetxml.getName(); 
+	                   if (getDriver() == JDTestDriver.DRIVER_JCC) {
+
+
+	                     if ((tablename.indexOf("13488") > 0) ||
+	                         (tablename.indexOf("1200") > 0) ||
+	                         (tablename.indexOf("37") > 0) ||
+	                         (tablename.indexOf("290") > 0) ) {
+	                         notApplicable("XML CCSID Not applicable for JCC");
+	                         return;
+	                     }
+
+	                 }
 			statement_.executeUpdate ("DELETE FROM " + tablename);
 
 			PreparedStatement ps = connection_.prepareStatement (
@@ -2890,6 +3460,15 @@ setString() - Set an XML  parameter.
 		    }
 		    catch (Exception e) {
 			failed (e, "Unexpected Exception"+added);
+                    } finally {
+                      if (pstestSetxml != null) {
+                        try {
+                          pstestSetxml.close();
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        }
+                      }
+
 		    }
 		}
 
@@ -2898,11 +3477,14 @@ setString() - Set an XML  parameter.
 /**
 setString() - Set an XML  parameter using invalid data.
 **/
-	public void setInvalidXML(String tablename, String data, String expectedException) {
+	public void setInvalidXML(int table, String data, String expectedException) {
 	    String added = " -- added by native driver 08/21/2009";
 	    if (checkJdbc40()) {
 		if (checkXmlSupport ()) {
-		    try {
+	                 JDSerializeFile pstestSetxml = null;
+	                 try {
+	                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+	                   String tablename = pstestSetxml.getName(); 
 			statement_.executeUpdate ("DELETE FROM " + tablename);
 
 			PreparedStatement ps = connection_.prepareStatement (
@@ -2930,54 +3512,63 @@ setString() - Set an XML  parameter using invalid data.
 			} else {
 			    failed (e, "Unexpected Exception.  Expected "+expectedException+added);
 			}
+                    } finally {
+                      if (pstestSetxml != null) {
+                        try {
+                          pstestSetxml.close();
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        }
+                      }
+
 		    }
 		}
 	    }
 	}
-	public void Var124() { setXML(JDPSTest.PSTEST_SETXML,  "<Test>Var124\u00a2</Test>",  "<Test>Var124\u00a2</Test>"); }
-	public void Var125() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var125\u00a2</Test>",  "<Test>Var125\u00a2</Test>"); }
+	public void Var124() { setXML(JDPSTest.SETXML,  "<Test>Var124\u00a2</Test>",  "<Test>Var124\u00a2</Test>"); }
+	public void Var125() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var125\u00a2</Test>",  "<Test>Var125\u00a2</Test>"); }
 
-	public void Var126() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var126\u0130\u3041\ud800\udf30</Test>",  "<Test>Var126\u0130\u3041\ud800\udf30</Test>"); }
+	public void Var126() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var126\u0130\u3041\ud800\udf30</Test>",  "<Test>Var126\u0130\u3041\ud800\udf30</Test>"); }
 
-	public void Var127() { setXML(JDPSTest.PSTEST_SETXML13488, "<Test>Var127</Test>",  "<Test>Var127</Test>"); }
-	public void Var128() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var128\u00a2</Test>",  "<Test>Var128\u00a2</Test>"); }
-	public void Var129() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var129\u0130\u3041</Test>",  "<Test>Var129\u0130\u3041</Test>"); }
+	public void Var127() { setXML(JDPSTest.SETXML13488, "<Test>Var127</Test>",  "<Test>Var127</Test>"); }
+	public void Var128() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var128\u00a2</Test>",  "<Test>Var128\u00a2</Test>"); }
+	public void Var129() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var129\u0130\u3041</Test>",  "<Test>Var129\u0130\u3041</Test>"); }
 
-	public void Var130() { setXML(JDPSTest.PSTEST_SETXML1200, "<Test>Var130</Test>",  "<Test>Var130</Test>"); }
-	public void Var131() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var131\u00a2</Test>",  "<Test>Var131\u00a2</Test>"); }
-	public void Var132() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var132\u0130\u3041\ud800\udf30</Test>",  "<Test>Var132\u0130\u3041\ud800\udf30</Test>"); }
+	public void Var130() { setXML(JDPSTest.SETXML1200, "<Test>Var130</Test>",  "<Test>Var130</Test>"); }
+	public void Var131() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var131\u00a2</Test>",  "<Test>Var131\u00a2</Test>"); }
+	public void Var132() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var132\u0130\u3041\ud800\udf30</Test>",  "<Test>Var132\u0130\u3041\ud800\udf30</Test>"); }
 
-	public void Var133() { setXML(JDPSTest.PSTEST_SETXML37, "<Test>Var133\u00a2</Test>",  "<Test>Var133\u00a2</Test>"); }
-	public void Var134() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var134\u00a2</Test>",  "<Test>Var134\u00a2</Test>"); }
-	public void Var135() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var135\u00a2</Test>",  "<Test>Var135\u00a2</Test>"); }
+	public void Var133() { setXML(JDPSTest.SETXML37, "<Test>Var133\u00a2</Test>",  "<Test>Var133\u00a2</Test>"); }
+	public void Var134() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var134\u00a2</Test>",  "<Test>Var134\u00a2</Test>"); }
+	public void Var135() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var135\u00a2</Test>",  "<Test>Var135\u00a2</Test>"); }
 
-	public void Var136() { setXML(JDPSTest.PSTEST_SETXML937, "<Test>Var136\u672b</Test>",  "<Test>Var136\u672b</Test>"); }
-	public void Var137() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var137\u672b</Test>",  "<Test>Var137\u672b</Test>"); }
-	public void Var138() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var138\u672b</Test>",  "<Test>Var138\u672b</Test>"); }
+	public void Var136() { setXML(JDPSTest.SETXML937, "<Test>Var136\u672b</Test>",  "<Test>Var136\u672b</Test>"); }
+	public void Var137() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var137\u672b</Test>",  "<Test>Var137\u672b</Test>"); }
+	public void Var138() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var138\u672b</Test>",  "<Test>Var138\u672b</Test>"); }
 
-	public void Var139() { setXML(JDPSTest.PSTEST_SETXML290, "<Test>Var139</Test>",  "<Test>Var139</Test>"); }
-	public void Var140() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var140\uff7a</Test>",  "<Test>Var140\uff7a</Test>"); }
-	public void Var141() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var141\uff98</Test>",  "<Test>Var141\uff98</Test>"); }
+	public void Var139() { setXML(JDPSTest.SETXML290, "<Test>Var139</Test>",  "<Test>Var139</Test>"); }
+	public void Var140() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var140\uff7a</Test>",  "<Test>Var140\uff7a</Test>"); }
+	public void Var141() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var141\uff98</Test>",  "<Test>Var141\uff98</Test>"); }
 
 
 
 	   /* Encoding is stripped for character data since we know is is UTF-16 */
-	public void Var142() { setXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>Var142</Test>",  "<Test>Var142</Test>"); }
-	public void Var143() { setInvalidXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var143</Tes>",  "XML parsing failed"); }
+	public void Var142() { setXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>Var142</Test>",  "<Test>Var142</Test>"); }
+	public void Var143() { setInvalidXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var143</Tes>",  "XML parsing failed"); }
 
-	public void Var144() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>Var144</Test>",  "<Test>Var144</Test>" ); }
-	public void Var145() { setInvalidXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>Var145</Test>",  "XML parsing failed"); }
+	public void Var144() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>Var144</Test>",  "<Test>Var144</Test>" ); }
+	public void Var145() { setInvalidXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>Var145</Test>",  "XML parsing failed"); }
 
-	public void Var146() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>Var146</Test>",  "<Test>Var146</Test>"); }
-	public void Var147() { setInvalidXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>Var147</Test>",  "XML parsing failed"); }
+	public void Var146() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>Var146</Test>",  "<Test>Var146</Test>"); }
+	public void Var147() { setInvalidXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>Var147</Test>",  "XML parsing failed"); }
 
-	public void Var148() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>Var148\u00a2</Test>",  "<Test>Var148\u00a2</Test>"); }
-	public void Var149() { setInvalidXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>Var149</Test>",  "XML parsing failed"); }
+	public void Var148() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>Var148\u00a2</Test>",  "<Test>Var148\u00a2</Test>"); }
+	public void Var149() { setInvalidXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>Var149</Test>",  "XML parsing failed"); }
 
 
 
 	/* Set XML with a processing instruction (which should be left) */
-	public void Var150() { setXML(JDPSTest.PSTEST_SETXML,  "<?attribute list?><Test>Var150</Test>",  "<?attribute list?><Test>Var150</Test>"); }
+	public void Var150() { setXML(JDPSTest.SETXML,  "<?attribute list?><Test>Var150</Test>",  "<?attribute list?><Test>Var150</Test>"); }
 
 
 
@@ -3706,6 +4297,9 @@ Unicode => EBCDIC Conversion.
   }
 
   public void Var184() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 
       StringBuffer sb = new StringBuffer(" -- added 9/12/2017 to test type where database does the translation -- See CPS AQZDPW\n");
 
@@ -3771,6 +4365,17 @@ Unicode => EBCDIC Conversion.
       
 
 
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
 
@@ -3779,23 +4384,25 @@ Unicode => EBCDIC Conversion.
    * setInt() - Set an parameter for a column of a specified type.
    **/
   public void testSetString(String columnName, String[][] testValues) {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       StringBuffer sb = new StringBuffer();
       boolean passed = true;
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+          + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
 
       for (int i = 0; i < testValues.length; i++) {
         String value = testValues[i][0];
         String expectedValue = testValues[i][1];
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         ps.setString(1, value);
         ps.executeUpdate();
 
         ResultSet rs = statement_.executeQuery(
-            "SELECT " + columnName + " FROM " + JDPSTest.PSTEST_SET);
+            "SELECT " + columnName + " FROM " + pstestSet.getName());
         rs.next();
         String check = "" + rs.getString(1);
         rs.close();
@@ -3811,6 +4418,14 @@ Unicode => EBCDIC Conversion.
       
     } catch (Exception e) {
       failed(e, "Unexpected Exception ");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 

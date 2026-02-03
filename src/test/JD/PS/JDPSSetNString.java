@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetNString.java
 //
 // Classes:      JDPSSetNString
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -49,6 +38,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
+import test.JD.JDSerializeFile;
 
 
 
@@ -155,10 +145,13 @@ statement is closed.
 **/
     public void Var001()
     {
-	if (checkJdbc40()) { 
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) { 
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER) VALUES (?)");
 		ps.close ();
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
@@ -168,8 +161,18 @@ statement is closed.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Should throw exception when an invalid index is
@@ -177,10 +180,13 @@ specified.
 **/
     public void Var002()
     {
-	if (checkJdbc40()) { 
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) { 
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 100, "Test");
 		ps.close ();
@@ -190,7 +196,18 @@ specified.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -199,10 +216,13 @@ setNString() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 0, "Test");
 		ps.close ();
@@ -212,7 +232,18 @@ setNString() - Should throw exception when index is 0.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -220,10 +251,13 @@ setNString() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", -1, "Test");
 		ps.close ();
@@ -233,7 +267,18 @@ setNString() - Should throw exception when index is -1.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -241,18 +286,21 @@ setNString() - Should set to SQL NULL when the value is null.
 **/
     public void Var005()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) { 
 	    try {
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_VARCHAR_50) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, null);
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
 		rs.next ();
                 String check =  rs.getString(1);
 		boolean wn = rs.wasNull ();
@@ -264,6 +312,17 @@ setNString() - Should set to SQL NULL when the value is null.
 		failed (e, "Unexpected Exception");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -273,19 +332,22 @@ greater than 1.
 **/
     public void Var006()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Muchas");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 2, "Gracias");
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
 		rs.next ();
 		String check = rs.getString (1);
 		rs.close ();
@@ -296,8 +358,18 @@ greater than 1.
 		failed (e, "Unexpected Exception");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Should throw exception when the parameter is
@@ -326,12 +398,15 @@ posted when data is truncated.
 **/
     public void Var008()
     {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setNString", 1,
             "This string is a little bit longer than fifty characters.");
 
@@ -347,9 +422,19 @@ posted when data is truncated.
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
-    }	
-
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
 
 
@@ -358,10 +443,13 @@ setNString() - Set a SMALLINT parameter.
 **/
     public void Var009()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_SMALLINT) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test"); 
 		ps.close ();
@@ -371,18 +459,31 @@ setNString() - Set a SMALLINT parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Set a INTEGER parameter.
 **/
     public void Var010() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
         ps.close();
         failed("Didn't throw SQLException");
@@ -390,7 +491,17 @@ setNString() - Set a INTEGER parameter.
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
 /**
@@ -398,10 +509,13 @@ setNString() - Set a INTEGER parameter.
  */
     public void Var011()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_REAL) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
                
@@ -412,18 +526,31 @@ setNString() - Set a INTEGER parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Set a FLOAT parameter.
 **/
     public void Var012()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_FLOAT) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
                 
@@ -434,7 +561,18 @@ setNString() - Set a FLOAT parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -442,10 +580,13 @@ setNString() - Set a DOUBLE parameter.
 **/
     public void Var013()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_DOUBLE) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -455,7 +596,18 @@ setNString() - Set a DOUBLE parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -463,10 +615,13 @@ setNString() - Set a DECIMAL parameter.
 **/
     public void Var014()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_DECIMAL_105) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -476,18 +631,31 @@ setNString() - Set a DECIMAL parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Set a NUMERIC parameter.
 **/
     public void Var015()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_NUMERIC_50) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -497,7 +665,18 @@ setNString() - Set a NUMERIC parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -506,18 +685,21 @@ longer.
 **/
     public void Var016()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) {
 	    try {
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_CHAR_1) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "L");
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
 		rs.next ();
 		String check = rs.getString (1);
 		rs.close ();
@@ -529,6 +711,17 @@ longer.
 	    }
 	}
 
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -537,18 +730,21 @@ setNString() - Set a CHAR(50) parameter.
 **/
     public void Var017()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_CHAR_50) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "PROFS");
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
 		rs.next ();
 		String check = rs.getString (1);
 		rs.close ();
@@ -559,7 +755,18 @@ setNString() - Set a CHAR(50) parameter.
 		failed (e, "Unexpected Exception");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -567,18 +774,21 @@ setNString() - Set a VARCHAR(50) parameter.
 **/
     public void Var018()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_VARCHAR_50) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Borland JBuilder");
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
 		rs.next ();
 		String check = rs.getString (1);
 		rs.close ();
@@ -589,28 +799,41 @@ setNString() - Set a VARCHAR(50) parameter.
 		failed (e, "Unexpected Exception");
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 /**
 setNString() - Set a CLOB parameter.
 **/
     public void Var019()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    if (checkLobSupport ()) {
 		try {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection_.prepareStatement (
-									 "INSERT INTO " + JDPSTest.PSTEST_SET
+									 "INSERT INTO " + pstestSet.getName()
 									 + " (C_CLOB) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 
 		    ps.executeUpdate ();
 		    ps.close ();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    rs.close ();
@@ -622,8 +845,18 @@ setNString() - Set a CLOB parameter.
 		}
 	    }
 	}
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -631,19 +864,22 @@ setNString() - Set a DBCLOB parameter.
 **/
     public void Var020()
     {
-	if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
 	    if (checkJdbc40()) {
 		try {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection_.prepareStatement (
-									 "INSERT INTO " + JDPSTest.PSTEST_SET
+									 "INSERT INTO " + pstestSet.getName()
 									 + " (C_DBCLOB) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test double byte");
 		    ps.executeUpdate ();
 		    ps.close ();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    rs.close ();
@@ -654,7 +890,18 @@ setNString() - Set a DBCLOB parameter.
 		}
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -663,134 +910,153 @@ setNString() - Set a BINARY parameter, with translation turned on.
 SQL400 - Close to the right value returned but difference in trailing
          spaces needs to get dealt with.
 **/
-    public void Var021()
-    {
-	if (checkJdbc40()) {
-	    try {
-		reconnect ("translate binary=true");
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+public void Var021() {
+  if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect("translate binary=true");
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
-		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
-								     + " (C_BINARY_20) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Symantec Cafe");
-		ps.executeUpdate ();
-		ps.close ();
+      PreparedStatement ps = connection_
+          .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
+      JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Symantec Cafe");
+      ps.executeUpdate();
+      ps.close();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
-		rs.next ();
-		String check = rs.getString (1);
-		rs.close ();
+      ResultSet rs = statement_.executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
+      rs.next();
+      String check = rs.getString(1);
+      rs.close();
 
-		if (isToolboxDriver())
-		{
-		    if(check.equals("Symantec Cafe       "))
-			succeeded();
-		    else
-			failed("Strings did not match. \"Symantec Cafe       \" != " + check);
-		}
-		else
-		// Spaces get translated different, so we kluge this
-		// comparison.
-		    assertCondition (check.substring (0, 13).equals ("Symantec Cafe")
-				     && (check.length() == 20));
+      if (isToolboxDriver()) {
+        if (check.equals("Symantec Cafe       "))
+          succeeded();
+        else
+          failed("Strings did not match. \"Symantec Cafe       \" != " + check);
+      } else
+        // Spaces get translated different, so we kluge this
+        // comparison.
+        assertCondition(check.substring(0, 13).equals("Symantec Cafe") && (check.length() == 20));
 
-	    }
-	    catch (Exception e) {
-		failed (e, "Unexpected Exception");
-	    }
-	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
-
+  }
+}
 
 
 /**
 setNString() - Set a VARBINARY parameter, with translation turned on.
 **/
-    public void Var022()
-    {
-	if (checkJdbc40()) {
-	    try {
-		reconnect ("translate binary=true");
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+public void Var022() {
 
-		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
-								     + " (C_VARBINARY_20) VALUES (?)");
-		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Visual J++");
-		ps.executeUpdate ();
-		ps.close ();
+  if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect("translate binary=true");
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
-		rs.next ();
-		String check = rs.getString (1);
-		rs.close ();
+      PreparedStatement ps = connection_
+          .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
+      JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Visual J++");
+      ps.executeUpdate();
+      ps.close();
 
-		if(check.equals("Visual J++"))
-		    succeeded();
-		else
-		    failed("Strings did not match. \"Visual J++\" != " + check);
-	    }
-	    catch (Exception e) {
-		failed (e, "Unexpected Exception");
-	    }
-	}
+      ResultSet rs = statement_.executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
+      rs.next();
+      String check = rs.getString(1);
+      rs.close();
 
+      if (check.equals("Visual J++"))
+        succeeded();
+      else
+        failed("Strings did not match. \"Visual J++\" != " + check);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+
+      try {
+        if (pstestSet != null)
+          pstestSet.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
+  }
+}
+  
 
 
 /**
-setNString() - Set a BINARY parameter, with translation turned off.
-**/
-    public void Var023()
-    {
-	if (checkJdbc40()) {
-	    try {
-		reconnect ("translate binary=false");
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+ * setNString() - Set a BINARY parameter, with translation turned off.
+ **/
+public void Var023() {
+  if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      reconnect("translate binary=false");
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
-		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
-								     + " (C_BINARY_20) VALUES (?)");
+      PreparedStatement ps = connection_
+          .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
 
-		String expected = null;
+      String expected = null;
 
-		if (isToolboxDriver())
-		    expected = "4869204D6F6D";   // Hi Mom in hex
-		else
-		    expected = "Symantec Cafe";
+      if (isToolboxDriver())
+        expected = "4869204D6F6D"; // Hi Mom in hex
+      else
+        expected = "Symantec Cafe";
 
-		JDReflectionUtil.callMethod_V(ps, "setNString", 1, expected);
-		ps.executeUpdate ();
-		ps.close ();
+      JDReflectionUtil.callMethod_V(ps, "setNString", 1, expected);
+      ps.executeUpdate();
+      ps.close();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
-		rs.next ();
-		String check = rs.getString (1);
-		rs.close ();
+      ResultSet rs = statement_.executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
+      rs.next();
+      String check = rs.getString(1);
+      rs.close();
 
-	    // Spaces get translated different, so we kluge this
-	    // comparison.
-		if (isToolboxDriver())
-		    assertCondition (check.startsWith(expected));
-		else
-		    assertCondition ((check.startsWith ("Symantec Cafe"))
-				     && (check.length() == 20));
-	    }
-	    catch (Exception e) {
-		failed (e, "Unexpected Exception");
-	    }
-	}
-
+      // Spaces get translated different, so we kluge this
+      // comparison.
+      if (isToolboxDriver())
+        assertCondition(check.startsWith(expected));
+      else
+        assertCondition((check.startsWith("Symantec Cafe")) && (check.length() == 20));
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
-
+  }
+}
 
 /**
 setNString() - Set a VARBINARY parameter, with translation turned off.
 **/
     public void Var024()
     {
-	if (checkJdbc40()) {
+    
+  
+      
+if (checkJdbc40()) {
+  JDSerializeFile pstestSet = null;
 	    try {
 		String expected = null;
 
@@ -800,16 +1066,17 @@ setNString() - Set a VARBINARY parameter, with translation turned off.
 		    expected = "Visual J++";
 
 		reconnect ("translate binary=false");
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		pstestSet = JDPSTest.getPstestSet(connection_);
+		statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_VARBINARY_20) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, expected);
 		ps.executeUpdate ();
 		ps.close ();
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+		ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
 		rs.next ();
 		String check = rs.getString (1);
 		rs.close ();
@@ -818,10 +1085,18 @@ setNString() - Set a VARBINARY parameter, with translation turned off.
 	    }
 	    catch (Exception e) {
 		failed (e, "Unexpected Exception");
-	    }
+	    } finally {
+	      if (pstestSet != null) {
+	        try {
+	          pstestSet.close();
+	        } catch (SQLException e) {
+	          e.printStackTrace();
+	        }
+	      }
+	 	    }
 	}
-
-    }
+    
+  }
 
 
 /**
@@ -829,10 +1104,13 @@ setNString() - Set a BLOB parameter.
 **/
     public void Var025()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_BLOB) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.execute();
@@ -843,19 +1121,30 @@ setNString() - Set a BLOB parameter.
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
-
-
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 /**
 setNString() - Set a DATE parameter to a value that is not a valid date.  This should throw an exception. D1C
 **/
     public void Var026()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_DATE) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -865,7 +1154,18 @@ setNString() - Set a DATE parameter to a value that is not a valid date.  This s
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -873,11 +1173,14 @@ setNString() - Set a TIME parameter to a value that is not a valid date.  This s
 **/
     public void Var027()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_TIME) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -887,7 +1190,18 @@ setNString() - Set a TIME parameter to a value that is not a valid date.  This s
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -896,10 +1210,13 @@ setNString() - Set a TIMESTAMP parameter to a value that is not valid.  This sho
 **/
     public void Var028()
     {
-	if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
 	    try {
 		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
+								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_TIMESTAMP) VALUES (?)");
 		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
 		ps.close ();
@@ -909,7 +1226,18 @@ setNString() - Set a TIMESTAMP parameter to a value that is not valid.  This sho
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 /**
@@ -918,18 +1246,21 @@ setNString() - Set a DATALINK parameter.
     // @C0C
     public void Var029()
     {
-        if (checkJdbc40 ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40 ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATALINK) VALUES (DLVALUE( CAST(? AS VARCHAR(50))))");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "http://www.pepsi.com/index.html");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -940,7 +1271,18 @@ setNString() - Set a DATALINK parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -950,18 +1292,21 @@ setNString() - Set a DISTINCT parameter.
     // @C0C
     public void Var030()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkJdbc40 ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DISTINCT) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "12345678");
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -972,6 +1317,17 @@ setNString() - Set a DISTINCT parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -981,10 +1337,13 @@ setNString() - Set a BIGINT parameter.
 **/
     public void Var031()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkJdbc40()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BIGINT) VALUES (?)");
                 JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Test");
                 ps.close ();
@@ -994,6 +1353,17 @@ setNString() - Set a BIGINT parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1053,54 +1423,55 @@ with different CCSIDs.
     }
 
 
-/**
-setNString() - Set a VARCHAR(50) parameter.
-**/
-    public void Var033()
-    {
-	if (checkJdbc40()) {
-	    try {
-		reconnect ("extended dynamic=true;package=PSTEST"
-			   + ";package library=" + JDPSTest.COLLECTION
-			   + ";package cache=true");
+    /**
+     * setNString() - Set a VARCHAR(50) parameter.
+     **/
+    public void Var033() {
 
-		String sql = "INSERT INTO " + JDPSTest.PSTEST_SET
-		  + " (C_VARCHAR_50) VALUES (?)";
+      if (checkJdbc40()) {
+        JDSerializeFile pstestSet = null;
+        try {
+        
+          reconnect("extended dynamic=true;package=PSTEST" + ";package library=" + JDPSTest.COLLECTION
+              + ";package cache=true");
+          pstestSet = JDPSTest.getPstestSet(connection_);
+          
+          String sql = "INSERT INTO " + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)";
 
+          if (isToolboxDriver())
+            JDSetupPackage.prime(systemObject_, "PSTEST", JDPSTest.COLLECTION, sql);
+          else
+            JDSetupPackage.prime(systemObject_, encryptedPassword_, "PSTEST", JDPSTest.COLLECTION, sql, "",
+                getDriver());
 
-		if (isToolboxDriver())
-		    JDSetupPackage.prime (systemObject_,
-					  "PSTEST", JDPSTest.COLLECTION, sql);
-		else
-		    JDSetupPackage.prime (systemObject_,encryptedPassword_, 
-					  "PSTEST", JDPSTest.COLLECTION, sql, "", getDriver());
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
+          PreparedStatement ps = connection_.prepareStatement(sql);
+          JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Borland JBuilder");
+          ps.executeUpdate();
+          ps.close();
 
-		statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+          ResultSet rs = statement_.executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
+          rs.next();
+          String check = rs.getString(1);
+          rs.close();
 
-		PreparedStatement ps = connection_.prepareStatement (sql);
-		JDReflectionUtil.callMethod_V(ps, "setNString", 1, "Borland JBuilder");
-		ps.executeUpdate ();
-		ps.close ();
+          assertCondition(check.equals("Borland JBuilder"));
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        } finally {
+          /* Turn off package cache */
 
-		ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
-		rs.next ();
-		String check = rs.getString (1);
-		rs.close ();
+          try {
+            if (pstestSet != null)
+              pstestSet.close();
+            reconnect("");
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
 
-		assertCondition (check.equals ("Borland JBuilder"));
-	    }
-	    catch (Exception e) {
-		failed (e, "Unexpected Exception");
-	    } finally {
-		/* Turn off package cache */
-		try { 
-		    reconnect("");
-		} catch (Exception e) {
-		    e.printStackTrace(); 
-		} 
-	    }
-	}
+        }
+      }
     }
 
 /** D1A
@@ -1108,19 +1479,22 @@ setNString() - Set a DATE parameter to a value that is a valid date.  This shoul
 **/
     public void Var034()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) {
 	    if (checkNative()) {
 		try {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection_.prepareStatement (
-									 "INSERT INTO " + JDPSTest.PSTEST_SET
+									 "INSERT INTO " + pstestSet.getName()
 									 + " (C_DATE) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, "1999-12-31");
 		    ps.executeUpdate();
 		    ps.close ();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    rs.close ();
@@ -1134,6 +1508,17 @@ setNString() - Set a DATE parameter to a value that is a valid date.  This shoul
 	    }
 	}
 
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 /** D1A
@@ -1141,19 +1526,22 @@ setNString() - Set a TIME parameter to a value that is valid.  This should work.
 **/
     public void Var035()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) {
 	    if (checkNative()) {
 		try {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection_.prepareStatement (
-									 "INSERT INTO " + JDPSTest.PSTEST_SET
+									 "INSERT INTO " + pstestSet.getName()
 									 + " (C_TIME) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, "14:04:55");
 		    ps.executeUpdate();
 		    ps.close ();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    rs.close ();
@@ -1167,6 +1555,17 @@ setNString() - Set a TIME parameter to a value that is valid.  This should work.
 		}
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 /** D1A
@@ -1174,19 +1573,22 @@ setNString() - Set a TIMESTAMP parameter to a value that is valid.  This should 
 **/
     public void Var036()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) {
 	    if (checkNative()) {
 		try {
-		    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection_.prepareStatement (
-									 "INSERT INTO " + JDPSTest.PSTEST_SET
+									 "INSERT INTO " + pstestSet.getName()
 									 + " (C_TIMESTAMP) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, "1998-04-08-03.15.30.123456");
 		    ps.executeUpdate();
 		    ps.close ();
 
-		    ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    rs.close ();
@@ -1199,6 +1601,17 @@ setNString() - Set a TIMESTAMP parameter to a value that is valid.  This should 
 		}
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 /** D1A
 setNString() - Should set to SQL NULL when the value is null.  This test uses a Statement without
@@ -1206,6 +1619,9 @@ truncation turned on because we use different internal paths.
 **/
     public void Var037()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc40()) {
 	    if (checkNative()) {
 		try {
@@ -1216,16 +1632,16 @@ truncation turned on because we use different internal paths.
 		    Connection connection = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
 		    Statement statement = connection_.createStatement ();
 
-		    statement.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+		    statement.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 		    PreparedStatement ps = connection.prepareStatement (
-									"INSERT INTO " + JDPSTest.PSTEST_SET
+									"INSERT INTO " + pstestSet.getName()
 									+ " (C_VARCHAR_50) VALUES (?)");
 		    JDReflectionUtil.callMethod_V(ps, "setNString", 1, null);
 		    ps.executeUpdate ();
 		    ps.close ();
 
-		    ResultSet rs = statement.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+		    ResultSet rs = statement.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
 		    rs.next ();
 		    String check = rs.getString (1);
 		    boolean wn = rs.wasNull ();
@@ -1241,6 +1657,17 @@ truncation turned on because we use different internal paths.
 		}
 	    }
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 /**
 setNString() - make sure pad is correct for graphic fields
@@ -1579,15 +2006,18 @@ Also needs to work for V5R2
 /**
 setClob() - Set an XML  parameter.
 **/
-	public void setXML(String tablename, String data, String expected ) {
-	    setXML(tablename, data, expected, null); 
+	public void setXML(int table, String data, String expected ) {
+	    setXML(table, data, expected, null); 
 	}
 
-	public void setXML(String tablename, String data, String expected, String added ) {
+	public void setXML(int table, String data, String expected, String added ) {
 	    if (added == null) added = " -- added by native driver 08/21/2009";
 	    if (checkJdbc40()) {
 		if (checkXmlSupport ()) {
-		    try {
+	                 JDSerializeFile pstestSetxml = null;
+	                 try {
+	                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+	                   String tablename = pstestSetxml.getName(); 
 			statement_.executeUpdate ("DELETE FROM " + tablename);
 
 			PreparedStatement ps = connection_.prepareStatement (
@@ -1614,6 +2044,15 @@ setClob() - Set an XML  parameter.
 		    }
 		    catch (Exception e) {
 			failed (e, "Unexpected Exception"+added);
+                    } finally {
+                      if (pstestSetxml != null) {
+                        try {
+                          pstestSetxml.close();
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        }
+                      }
+
 		    }
 		}
 	    }
@@ -1623,11 +2062,14 @@ setClob() - Set an XML  parameter.
 /**
 setClob() - Set an XML  parameter using invalid data.
 **/
-	public void setInvalidXML(String tablename, String data, String expectedException) {
+	public void setInvalidXML(int table, String data, String expectedException) {
           String added = " -- added by native driver 08/21/2009";
 	    if (checkJdbc40()) {
 		if (checkXmlSupport ()) {
-		    try {
+	                 JDSerializeFile pstestSetxml = null;
+	                 try {
+	                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+	                   String tablename = pstestSetxml.getName(); 
 			statement_.executeUpdate ("DELETE FROM " + tablename);
 
 			PreparedStatement ps = connection_.prepareStatement (
@@ -1656,66 +2098,90 @@ setClob() - Set an XML  parameter using invalid data.
 			} else { 
 			    failed (e, "Unexpected Exception.  Expected "+expectedException+added);
 			}
+                    } finally {
+                      if (pstestSetxml != null) {
+                        try {
+                          pstestSetxml.close();
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        }
+                      }
+
 		    }
 		}
 	    }
 	}
-	public void Var044() { setXML(JDPSTest.PSTEST_SETXML,  "<Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
-	public void Var045() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
-	public void Var046() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
+	public void Var044() { setXML(JDPSTest.SETXML,  "<Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
+	public void Var045() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
+	public void Var046() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
 
-	public void Var047() { setXML(JDPSTest.PSTEST_SETXML13488, "<Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
-	public void Var048() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
-	public void Var049() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
+	public void Var047() { setXML(JDPSTest.SETXML13488, "<Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
+	public void Var048() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
+	public void Var049() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
 
-	public void Var050() { setXML(JDPSTest.PSTEST_SETXML1200, "<Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
-	public void Var051() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
-	public void Var052() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
+	public void Var050() { setXML(JDPSTest.SETXML1200, "<Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
+	public void Var051() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
+	public void Var052() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
 
-	public void Var053() { setXML(JDPSTest.PSTEST_SETXML37, "<Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
-	public void Var054() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
-	public void Var055() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
+	public void Var053() { setXML(JDPSTest.SETXML37, "<Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
+	public void Var054() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
+	public void Var055() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
 
-	public void Var056() { setXML(JDPSTest.PSTEST_SETXML937, "<Test>VAR056\u672b</Test>",  "<Test>VAR056\u672b</Test>"); }
-	public void Var057() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR057\u672b</Test>",  "<Test>VAR057\u672b</Test>"); }
-	public void Var058() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR058\u672b</Test>",  "<Test>VAR058\u672b</Test>"); }
+	public void Var056() { setXML(JDPSTest.SETXML937, "<Test>VAR056\u672b</Test>",  "<Test>VAR056\u672b</Test>"); }
+	public void Var057() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR057\u672b</Test>",  "<Test>VAR057\u672b</Test>"); }
+	public void Var058() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR058\u672b</Test>",  "<Test>VAR058\u672b</Test>"); }
 
-	public void Var059() { setXML(JDPSTest.PSTEST_SETXML290, "<Test>VAR059</Test>",  "<Test>VAR059</Test>"); }
-	public void Var060() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR060\uff7a</Test>",  "<Test>VAR060\uff7a</Test>"); }
-	public void Var061() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
+	public void Var059() { setXML(JDPSTest.SETXML290, "<Test>VAR059</Test>",  "<Test>VAR059</Test>"); }
+	public void Var060() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR060\uff7a</Test>",  "<Test>VAR060\uff7a</Test>"); }
+	public void Var061() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
 
 
 
 	   /* Encoding is stripped for character data since we know is is UTF-16 */ 
-	public void Var062() { setXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); }
-	public void Var063() { setInvalidXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
+	public void Var062() { setXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); }
+	public void Var063() { setInvalidXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
 
-	public void Var064() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); }
-	public void Var065() { setInvalidXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
+	public void Var064() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); }
+	public void Var065() { setInvalidXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
 
-	public void Var066() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>"); }
-	public void Var067() { setInvalidXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
+	public void Var066() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>"); }
+	public void Var067() { setInvalidXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
 
-	public void Var068() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "<Test>VAR068\u00a2</Test>"); }
-	public void Var069() { setInvalidXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
+	public void Var068() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "<Test>VAR068\u00a2</Test>"); }
+	public void Var069() { setInvalidXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
 
 
 
 	/* Run with package cache.  As of 10/3/2011, if the cache is used then the locator in the cached */
 	/* statement is -1.  This then causes the write of the XML data to fail */
 
-	public void Var070() {
-	    String added = "Added 10/03/2011 -- Run with package cache.  If the cache is used then the locator in the cached statement is -1.  This then causes the write of the XML data to fail "; 
-	    try { 
-		reconnect ("extended dynamic=true;package=PSTEST"
-			   + ";package library=" + JDPSTest.COLLECTION
-			   + ";package cache=true");
-		setXML(JDPSTest.PSTEST_SETXML,  "<Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>", added );
-		reconnect ("");
-	    }  catch (Exception e) {
-		failed (e, "Unexpected Exception -- "+added);
-	    }
-	}
+        public void Var070() {
+          JDSerializeFile pstestSet = null;
+          try {
+
+            String added = "Added 10/03/2011 -- Run with package cache.  If the cache is used then the locator in the cached statement is -1.  This then causes the write of the XML data to fail ";
+            try {
+              reconnect("extended dynamic=true;package=PSTEST" + ";package library=" + JDPSTest.COLLECTION
+                  + ";package cache=true");
+              pstestSet = JDPSTest.getPstestSet(connection_);
+              setXML(JDPSTest.SETXML, "<Test>VAR044\u00a2</Test>", "<Test>VAR044\u00a2</Test>", added);
+
+            } catch (Exception e) {
+              failed(e, "Unexpected Exception -- " + added);
+            }
+          } catch (Exception e) {
+            failed(e, "Unexpected Exception");
+          } finally {
+            if (pstestSet != null) {
+              try {
+                pstestSet.close();
+                reconnect("");
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            }
+          }
+        }
 
 	
 	
@@ -1724,23 +2190,25 @@ setClob() - Set an XML  parameter using invalid data.
    * setInt() - Set an parameter for a column of a specified type.
    **/
   public void testSetNString(String columnName, String[][] testValues) {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       StringBuffer sb = new StringBuffer();
       boolean passed = true;
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+          + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
 
       for (int i = 0; i < testValues.length; i++) {
         String value = testValues[i][0];
         String expectedValue = testValues[i][1];
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         JDReflectionUtil.callMethod_V(ps, "setNString", 1, value);
         ps.executeUpdate();
 
         ResultSet rs = statement_.executeQuery(
-            "SELECT " + columnName + " FROM " + JDPSTest.PSTEST_SET);
+            "SELECT " + columnName + " FROM " + pstestSet.getName());
         rs.next();
         String check = "" + rs.getString(1);
         rs.close();
@@ -1756,6 +2224,14 @@ setClob() - Set an XML  parameter using invalid data.
       
     } catch (Exception e) {
       failed(e, "Unexpected Exception ");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 

@@ -459,7 +459,7 @@ extends JDTestcase
     {
 
 	if (getDriver() == JDTestDriver.DRIVER_NATIVE ) {
-	    // assertCondition(true,"Var008 is toolbox only test for QRYTIMLMT");
+	    assertCondition(true,"Var008 is toolbox only test for QRYTIMLMT");
 	    return; 
 	} 
 	StringBuffer sb = new StringBuffer(); 

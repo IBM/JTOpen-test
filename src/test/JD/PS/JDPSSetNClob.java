@@ -34,6 +34,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; 
 import java.util.Vector;
+import test.JD.JDSerializeFile;
 
 /**
  * Testcase JDPSSetNClob. This tests the following method of the JDBC
@@ -111,10 +112,13 @@ public class JDPSSetNClob extends JDTestcase {
    * setNClob() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
         ps.close();
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");// ,
                                                                              // "Los
@@ -126,16 +130,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
@@ -149,16 +167,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Should throw exception when index is 0.
    **/
   public void Var003() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
@@ -172,16 +204,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Should throw exception when index is -1.
    **/
   public void Var004() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
@@ -195,18 +241,32 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Should throw exception when the value is null.
    **/
   public void Var005() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
 
         Class<?>[] argClasses = new Class[2];
         argClasses[0] = Integer.TYPE;
@@ -226,7 +286,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         boolean wn = rs.wasNull();
@@ -237,18 +297,32 @@ public class JDPSSetNClob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Should work with a valid parameter index greater than 1.
    **/
   public void Var006() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
         ps.setString(1, "Muchas");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
@@ -259,7 +333,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         rs.close();
@@ -267,6 +341,17 @@ public class JDPSSetNClob extends JDTestcase {
         assertCondition(compare(check, "Hollywood"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -303,12 +388,15 @@ public class JDPSSetNClob extends JDTestcase {
    * truncated.
    **/
   public void Var008() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L,
@@ -326,16 +414,30 @@ public class JDPSSetNClob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a SMALLINT parameter.
    **/
   public void Var009() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_SMALLINT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_SMALLINT) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Anahiem");
@@ -348,16 +450,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a INTEGER parameter.
    **/
   public void Var010() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Pasadena");
@@ -370,16 +486,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a REAL parameter.
    **/
   public void Var011() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "West Hollywood");
@@ -392,16 +522,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a FLOAT parameter.
    **/
   public void Var012() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Sierra Madre");
@@ -414,16 +558,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a DOUBLE parameter.
    **/
   public void Var013() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Malibu");
@@ -436,16 +594,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a DECIMAL parameter.
    **/
   public void Var014() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+            + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Long Beach");
@@ -458,16 +630,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a NUMERIC parameter.
    **/
   public void Var015() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+            + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Compton");
@@ -480,18 +666,32 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a CHAR(1) parameter, where the string is longer.
    **/
   public void Var016() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "S");
@@ -501,7 +701,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_CHAR_1 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         rs.close();
@@ -511,18 +711,32 @@ public class JDPSSetNClob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a CHAR(50) parameter.
    **/
   public void Var017() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Orange");
@@ -532,7 +746,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_CHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         rs.close();
@@ -543,18 +757,32 @@ public class JDPSSetNClob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a VARCHAR(50) parameter.
    **/
   public void Var018() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "La Brea");
@@ -564,7 +792,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         rs.close();
@@ -574,19 +802,33 @@ public class JDPSSetNClob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a CLOB parameter, when the data is passed directly.
    **/
   public void Var019() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Disneyland");
@@ -596,7 +838,7 @@ public class JDPSSetNClob extends JDTestcase {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_CLOB FROM " + pstestSet.getName());
           rs.next();
           Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
           rs.close();
@@ -608,21 +850,35 @@ public class JDPSSetNClob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a CLOB parameter, when the data is passed in a locator.
    **/
   public void Var020() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           String url = baseURL_ + ";lob threshold=1";
           Connection c = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
           PreparedStatement ps = c.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Disneyland Hotel");
@@ -633,7 +889,7 @@ public class JDPSSetNClob extends JDTestcase {
           c.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_CLOB FROM " + pstestSet.getName());
           rs.next();
           Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
           rs.close();
@@ -646,32 +902,57 @@ public class JDPSSetNClob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a DBCLOB parameter, when the data is passed directly.
    **/
   public void Var021() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         succeeded();
         /*
          * Need to investigate this variation ... try { statement_.executeUpdate
-         * ("DELETE FROM " + JDPSTest.PSTEST_SET);
+         * ("DELETE FROM " + pstestSet.getName());
          * 
          * PreparedStatement ps = connection_.prepareStatement ( "INSERT INTO "
-         * + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+         * + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
          * JDReflectionUtil.callMethod_V(ps,"setNClob",1,
          * JDReflectionUtil.callMethod_OS(connection_, "createNClob",
          * "Rodeo Drive")); ps.executeUpdate (); ps.close ();
          * 
          * ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " +
-         * JDPSTest.PSTEST_SET); rs.next (); Clob check =
+         * pstestSet.getName()); rs.next (); Clob check =
          * JDReflectionUtil.callMethod_O(rs,"getNClob", 1); rs.close ();
          * 
          * assertCondition (compare (check, "Rodeo Drive")); } catch (Exception
          * e) { failed (e, "Unexpected Exception"); }
          */
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -680,29 +961,43 @@ public class JDPSSetNClob extends JDTestcase {
    * setNClob() - Set a DBCLOB parameter, when the data is passed as a locator.
    **/
   public void Var022() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         succeeded();
         /*
          * Need to investigate this variation ... try { statement_.executeUpdate
-         * ("DELETE FROM " + JDPSTest.PSTEST_SET);
+         * ("DELETE FROM " + pstestSet.getName());
          * 
          * String url = baseURL_ + ";user=" + systemObject_.getUserId() +
          * ";password=" + password_ + ";lob threshold=1"; Connection c =
          * testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_); PreparedStatement ps =
-         * c.prepareStatement ( "INSERT INTO " + JDPSTest.PSTEST_SET +
+         * c.prepareStatement ( "INSERT INTO " + pstestSet.getName() +
          * " (C_DBCLOB) VALUES (?)");
          * JDReflectionUtil.callMethod_V(ps,"setNClob",1,
          * JDReflectionUtil.callMethod_OS(connection_, "createNClob",
          * "Disneyland Motel")); ps.executeUpdate (); ps.close (); c.close ();
          * 
          * ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " +
-         * JDPSTest.PSTEST_SET); rs.next (); Clob check =
+         * pstestSet.getName()); rs.next (); Clob check =
          * JDReflectionUtil.callMethod_O(rs,"getNClob", 1); rs.close ();
          * 
          * assertCondition (compare (check, "Disneyland Hotel")); } catch
          * (Exception e) { failed (e, "Unexpected Exception"); }
          */
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -711,10 +1006,13 @@ public class JDPSSetNClob extends JDTestcase {
    * setNClob() - Set a BINARY parameter.
    **/
   public void Var023() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "X");
@@ -727,17 +1025,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a VARBINARY parameter.
    **/
   public void Var024() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Puerto");
@@ -751,16 +1062,30 @@ public class JDPSSetNClob extends JDTestcase {
       }
     }
 
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a BLOB parameter.
    **/
   public void Var025() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "California");
@@ -773,16 +1098,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a DATE parameter.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "West Coast");
@@ -795,16 +1134,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a TIME parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Pacific Ocean");
@@ -817,16 +1170,30 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a TIMESTAMP parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
 
         Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
         JDReflectionUtil.callMethod_V(o, "setString", 1L, "Airport");
@@ -839,12 +1206,26 @@ public class JDPSSetNClob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a DATALINK parameter.
    **/
   public void Var029() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
       notApplicable("Native driver pre-JDBC 3.0");
       return;
@@ -853,7 +1234,7 @@ public class JDPSSetNClob extends JDTestcase {
       if (checkDatalinkSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+              + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Dodger Stadium");
@@ -864,6 +1245,17 @@ public class JDPSSetNClob extends JDTestcase {
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -881,11 +1273,14 @@ public class JDPSSetNClob extends JDTestcase {
    * this annoys. :)
    **/
   public void Var030() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+              + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "12345678");
@@ -905,17 +1300,31 @@ public class JDPSSetNClob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setNClob() - Set a BIGINT parameter.
    **/
   public void Var031() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       if (checkBigintSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Orange County");
@@ -929,6 +1338,17 @@ public class JDPSSetNClob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -938,9 +1358,12 @@ public class JDPSSetNClob extends JDTestcase {
    * neutral today.
    **/
   public void Var032() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
-        String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+        String insert = "INSERT INTO " + pstestSet.getName()
             + " (C_VARCHAR_50) VALUES (?)";
 
         if (isToolboxDriver())
@@ -950,7 +1373,7 @@ public class JDPSSetNClob extends JDTestcase {
           JDSetupPackage.prime(systemObject_, encryptedPassword_,  PACKAGE,
               JDPSTest.COLLECTION, insert, "", getDriver());
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(insert);
 
@@ -962,7 +1385,7 @@ public class JDPSSetNClob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Clob check = (Clob) JDReflectionUtil.callMethod_O(rs, "getNClob", 1);
         rs.close();
@@ -970,6 +1393,17 @@ public class JDPSSetNClob extends JDTestcase {
         assertCondition(compare(check, "Rose Bowl"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -1031,7 +1465,7 @@ public class JDPSSetNClob extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + "  VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP16 + "  VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Orange County");
@@ -1055,7 +1489,7 @@ public class JDPSSetNClob extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + "  VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP34 + "  VALUES (?)");
 
           Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
           JDReflectionUtil.callMethod_V(o, "setString", 1L, "Orange County");
@@ -1107,11 +1541,14 @@ public class JDPSSetNClob extends JDTestcase {
   /**
    * setClob() - Set an XML parameter.
    **/
-  public void setXML(String tablename, String data, String expected) {
+  public void setXML(int table, String data, String expected) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tablename = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tablename);
 
           PreparedStatement ps = connection_
@@ -1135,6 +1572,14 @@ public class JDPSSetNClob extends JDTestcase {
                   + JDTestUtilities.getMixedString(expected) + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
@@ -1144,12 +1589,15 @@ public class JDPSSetNClob extends JDTestcase {
   /**
    * setClob() - Set an XML parameter using invalid data.
    **/
-  public void setInvalidXML(String tablename, String data,
+  public void setInvalidXML(int table, String data,
       String expectedException) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tablename = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tablename);
 
           PreparedStatement ps = connection_
@@ -1179,170 +1627,194 @@ public class JDPSSetNClob extends JDTestcase {
             failed(e,
                 "Unexpected Exception.  Expected " + expectedException + added);
           }
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
   }
 
   public void Var044() {
-    setXML(JDPSTest.PSTEST_SETXML, "<Test>VAR044\u00a2</Test>",
+    setXML(JDPSTest.SETXML, "<Test>VAR044\u00a2</Test>",
         "<Test>VAR044\u00a2</Test>");
   }
 
   public void Var045() {
-    setXML(JDPSTest.PSTEST_SETXML,
+    setXML(JDPSTest.SETXML,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR045\u00a2</Test>",
         "<Test>VAR045\u00a2</Test>");
   }
 
   public void Var046() {
-    setXML(JDPSTest.PSTEST_SETXML,
+    setXML(JDPSTest.SETXML,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",
         "<Test>VAR046\u0130\u3041\ud800\udf30</Test>");
   }
 
   public void Var047() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "<Test>VAR047</Test>",
+    setXML(JDPSTest.SETXML13488, "<Test>VAR047</Test>",
         "<Test>VAR047</Test>");
   }
 
   public void Var048() {
-    setXML(JDPSTest.PSTEST_SETXML13488,
+    setXML(JDPSTest.SETXML13488,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR048\u00a2</Test>",
         "<Test>VAR048\u00a2</Test>");
   }
 
   public void Var049() {
-    setXML(JDPSTest.PSTEST_SETXML13488,
+    setXML(JDPSTest.SETXML13488,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR049\u0130\u3041</Test>",
         "<Test>VAR049\u0130\u3041</Test>");
   }
 
   public void Var050() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "<Test>VAR050</Test>",
+    setXML(JDPSTest.SETXML1200, "<Test>VAR050</Test>",
         "<Test>VAR050</Test>");
   }
 
   public void Var051() {
-    setXML(JDPSTest.PSTEST_SETXML1200,
+    setXML(JDPSTest.SETXML1200,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR051\u00a2</Test>",
         "<Test>VAR051\u00a2</Test>");
   }
 
   public void Var052() {
-    setXML(JDPSTest.PSTEST_SETXML1200,
+    setXML(JDPSTest.SETXML1200,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",
         "<Test>VAR052\u0130\u3041\ud800\udf30</Test>");
   }
 
   public void Var053() {
-    setXML(JDPSTest.PSTEST_SETXML37, "<Test>VAR053\u00a2</Test>",
+    setXML(JDPSTest.SETXML37, "<Test>VAR053\u00a2</Test>",
         "<Test>VAR053\u00a2</Test>");
   }
 
   public void Var054() {
-    setXML(JDPSTest.PSTEST_SETXML37,
+    setXML(JDPSTest.SETXML37,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR054\u00a2</Test>",
         "<Test>VAR054\u00a2</Test>");
   }
 
   public void Var055() {
-    setXML(JDPSTest.PSTEST_SETXML37,
+    setXML(JDPSTest.SETXML37,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR055\u00a2</Test>",
         "<Test>VAR055\u00a2</Test>");
   }
 
   public void Var056() {
-    setXML(JDPSTest.PSTEST_SETXML937, "<Test>VAR056\u672b</Test>",
+    setXML(JDPSTest.SETXML937, "<Test>VAR056\u672b</Test>",
         "<Test>VAR056\u672b</Test>");
   }
 
   public void Var057() {
-    setXML(JDPSTest.PSTEST_SETXML937,
+    setXML(JDPSTest.SETXML937,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR057\u672b</Test>",
         "<Test>VAR057\u672b</Test>");
   }
 
   public void Var058() {
-    setXML(JDPSTest.PSTEST_SETXML937,
+    setXML(JDPSTest.SETXML937,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR058\u672b</Test>",
         "<Test>VAR058\u672b</Test>");
   }
 
   public void Var059() {
-    setXML(JDPSTest.PSTEST_SETXML290, "<Test>VAR059</Test>",
+    setXML(JDPSTest.SETXML290, "<Test>VAR059</Test>",
         "<Test>VAR059</Test>");
   }
 
   public void Var060() {
-    setXML(JDPSTest.PSTEST_SETXML290,
+    setXML(JDPSTest.SETXML290,
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR060\uff7a</Test>",
         "<Test>VAR060\uff7a</Test>");
   }
 
   public void Var061() {
-    setXML(JDPSTest.PSTEST_SETXML290,
+    setXML(JDPSTest.SETXML290,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR061\uff98</Test>",
         "<Test>VAR061\uff98</Test>");
   }
 
   /* Encoding is stripped for character data since we know is is UTF-16 */
   public void Var062() {
-    setXML(JDPSTest.PSTEST_SETXML,
+    setXML(JDPSTest.SETXML,
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",
         "<Test>VAR062</Test>");
   }
 
   public void Var063() {
-    setInvalidXML(JDPSTest.PSTEST_SETXML,
+    setInvalidXML(JDPSTest.SETXML,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR063</Tes>",
         "XML parsing failed");
   }
 
   public void Var064() {
-    setXML(JDPSTest.PSTEST_SETXML13488,
+    setXML(JDPSTest.SETXML13488,
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",
         "<Test>VAR064</Test>");
   }
 
   public void Var065() {
-    setInvalidXML(JDPSTest.PSTEST_SETXML13488,
+    setInvalidXML(JDPSTest.SETXML13488,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR065</Test>",
         "XML parsing failed");
   }
 
   public void Var066() {
-    setXML(JDPSTest.PSTEST_SETXML1200,
+    setXML(JDPSTest.SETXML1200,
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",
         "<Test>VAR066</Test>");
   }
 
   public void Var067() {
-    setInvalidXML(JDPSTest.PSTEST_SETXML1200,
+    setInvalidXML(JDPSTest.SETXML1200,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR067</Test>",
         "XML parsing failed");
   }
 
   public void Var068() {
-    setXML(JDPSTest.PSTEST_SETXML37,
+    setXML(JDPSTest.SETXML37,
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",
         "<Test>VAR068\u00a2</Test>");
   }
 
   public void Var069() {
-    setInvalidXML(JDPSTest.PSTEST_SETXML37,
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    setInvalidXML(JDPSTest.SETXML37,
         "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>VAR069</Test>",
         "XML parsing failed");
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void setInvalid(String column, String inputValue,
       String exceptionInfo) {
     StringBuffer sb = new StringBuffer();
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + column + ") VALUES (?)");
+          + pstestSet.getName() + " (" + column + ") VALUES (?)");
 
       Object o = JDReflectionUtil.callMethod_O(connection_, "createNClob");
       JDReflectionUtil.callMethod_V(o, "setString", 1L, inputValue);
@@ -1354,6 +1826,14 @@ public class JDPSSetNClob extends JDTestcase {
           + inputValue + ")");
     } catch (Exception e) {
       assertExceptionContains(e, exceptionInfo, sb);
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 

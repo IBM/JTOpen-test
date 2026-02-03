@@ -30,6 +30,7 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import test.JTOpenTestEnvironment;
 import test.Testcase;
 
 public class AuthExit {
@@ -73,7 +74,7 @@ public class AuthExit {
       rs.close();
       /* Remove earlier version of exit program */
       
-      if ((exitProgramLibrary != null && !exitProgramLibrary.equals("JDTESTINFO"))
+      if ((exitProgramLibrary != null && !exitProgramLibrary.equals(""+JTOpenTestEnvironment.testInfoSchema+""))
           || (exitProgram != null && !exitProgram.equals("AUTHEXIT"))) {
         stmt.close();
         throw new SQLException(
@@ -193,21 +194,21 @@ public class AuthExit {
         ps.execute();
         ps.close();
 
-        sql = "CALL QSYS2.QCMDEXC('CRTCMOD MODULE(JDTESTINFO/AUTHEXIT) "
+        sql = "CALL QSYS2.QCMDEXC('CRTCMOD MODULE("+JTOpenTestEnvironment.testInfoSchema+"/AUTHEXIT) "
             + "SRCSTMF(''/tmp/authexit.c'') DBGVIEW(*ALL) SYSIFCOPT(*IFSIO)') ";
         stmt.execute(sql);
 
-        sql = "CALL QSYS2.QCMDEXC('CRTPGM PGM(JDTESTINFO/AUTHEXIT) MODULE(JDTESTINFO/AUTHEXIT)')";
+        sql = "CALL QSYS2.QCMDEXC('CRTPGM PGM("+JTOpenTestEnvironment.testInfoSchema+"/AUTHEXIT) MODULE("+JTOpenTestEnvironment.testInfoSchema+"/AUTHEXIT)')";
         stmt.execute(sql);
 
         sql = "CALL QSYS2.QCMDEXC('ADDEXITPGM EXITPNT(QIBM_QSY_AUTH) FORMAT(AUTH0100) PGMNBR(1) "
-            + "PGM(JDTESTINFO/AUTHEXIT) THDSAFE(*YES)')";
+            + "PGM("+JTOpenTestEnvironment.testInfoSchema+"/AUTHEXIT) THDSAFE(*YES)')";
         stmt.execute(sql);
         
         /* Need to make sure exit program is accessible  */ 
-        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/jdtestinfo.lib'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
+        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/"+JTOpenTestEnvironment.testInfoSchema+".lib'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
         stmt.execute(sql);
-        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/jdtestinfo.lib/authexit.pgm'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
+        sql = "CALL QSYS2.QCMDEXC('CHGAUT OBJ(''/qsys.lib/"+JTOpenTestEnvironment.testInfoSchema+".lib/authexit.pgm'') USER(*PUBLIC) DTAAUT(*RX) OBJAUT(*NONE) ')"; 
         stmt.execute(sql); 
         
       } /* exit program library is null */

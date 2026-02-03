@@ -20,6 +20,7 @@ import com.ibm.as400.access.Job;
 import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectLockListEntry;
 
+import test.JDDataAreaLock;
 import test.JDSupportedFeatures;
 import test.TestDriver;
 
@@ -172,199 +173,207 @@ other test userids can use it.
     }
 
 
-      static public void create(Connection conn, String collection, boolean dropCollection, PrintWriter output) throws SQLException {
+    static public void create(Connection conn, String collection, boolean dropCollection, PrintWriter output)
+        throws SQLException {
+      JDDataAreaLock dataAreaLock = null;
 
-
-
-       if  ( (collection.indexOf("\"") > 0) || (collection.indexOf("'") > 0) ) {
-	   SQLException sqlex =  new SQLException("WARNING:  Cannot quotes in collection '"+collection+"'");
-	   sqlex.printStackTrace(output);
-	   return; 
-       }
- 
+      if ((collection.indexOf("\"") > 0) || (collection.indexOf("'") > 0)) {
+        SQLException sqlex = new SQLException("WARNING:  Cannot quotes in collection '" + collection + "'");
+        sqlex.printStackTrace(output);
+        return;
+      }
 
       // need authority for CHGJRN
       AS400 pwrSys = TestDriver.getPwrSys();
-      
-      Statement s = conn.createStatement(); 
 
-      if (!dropCollection) dropCollection = shouldCollectionBeDropped( conn, collection, output); 
+      Statement s = conn.createStatement();
+
+      dataAreaLock = new JDDataAreaLock(s, collection);
 
       //
-      // drop the collection if the dropCollection flag is specified.
-      // Note: This cannot always be true because JDSetupCollection.create
-      // is called from JDSetupProcedure
+      // Make sure only one job tries to create a collection at a time
       //
+      try {
+        System.out.println("JDSetupCollection locking data area");
+        dataAreaLock.lock("JDSetupCollection", 3600);
+      } catch (Exception e) {
+        System.out.println("Warning:  unable to lock data area");
+        e.printStackTrace(System.out);
+        dataAreaLock = null;
+      }
+      try {
 
-      if (dropCollection) {
-        dropCollection(s, collection, output); 
-      } 
+        if (!dropCollection)
+          dropCollection = shouldCollectionBeDropped(conn, collection, output);
 
+        //
+        // drop the collection if the dropCollection flag is specified.
+        // Note: This cannot always be true because JDSetupCollection.create
+        // is called from JDSetupProcedure
+        //
 
-      // 
-      // Create the collection.
-      // 
+        if (dropCollection) {
+          dropCollection(s, collection, output);
+        }
 
-      boolean created = false;
-      boolean retry = true;
-      while (retry) {
-	  retry = false; 
-	  try {
-	      s.executeUpdate ("CREATE COLLECTION " + collection);
-	      created = true;
-	  }
-	  catch (SQLException e) {
-	      int code = e.getErrorCode();
-	      if (code == -901) {
-		  output
-		    .println("SQL0901 found -- trying to recover using RCLDBXREF");
-		  s.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
-		  retry = true; 
-	      } else {
+        //
+        // Create the collection.
+        //
 
-		  if (e.toString().indexOf("-104") >= 0) {
-		      try {
-			  s.executeUpdate ("CREATE SCHEMA " + collection);
-			  created = true;
+        boolean created = false;
+        boolean retry = true;
+        while (retry) {
+          retry = false;
+          try {
+            s.executeUpdate("CREATE COLLECTION " + collection);
+            created = true;
+          } catch (SQLException e) {
+            int code = e.getErrorCode();
+            if (code == -901) {
+              output.println("SQL0901 found -- trying to recover using RCLDBXREF");
+              s.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
+              retry = true;
+            } else {
 
-		      } catch (Exception e2) {
-			  if (e.toString().indexOf("-601") < 0) {
-			      output.println("Error.  Unexpected exception creating collection "+collection);
-			      e.printStackTrace(output); 
-			  } 
-		     // The collection already exists.
-			  created = false;
+              if (e.toString().indexOf("-104") >= 0) {
+                try {
+                  s.executeUpdate("CREATE SCHEMA " + collection);
+                  created = true;
 
-		      } 
-		  } else { 
-		      if ((e.toString().indexOf("already exists") < 0) &&
-			  (e.toString().indexOf("-601") < 0)){
-			  output.println("Error.  Unexpected exception creating collection "+collection);
-			  e.printStackTrace(output); 
-		      } 
-	    // The collection already exists.
-		      created = false;
-		  }
-	      }
-	  }
-      } /* while retry */ 
+                } catch (Exception e2) {
+                  if (e.toString().indexOf("-601") < 0) {
+                    output.println("Error.  Unexpected exception creating collection " + collection);
+                    e.printStackTrace(output);
+                  }
+                  // The collection already exists.
+                  created = false;
+
+                }
+              } else {
+                if ((e.toString().indexOf("already exists") < 0) && (e.toString().indexOf("-601") < 0)) {
+                  output.println("Error.  Unexpected exception creating collection " + collection);
+                  e.printStackTrace(output);
+                }
+                // The collection already exists.
+                created = false;
+              }
+            }
+          }
+        } /* while retry */
 
         // We need to grant object authority to the
         // collection and the collection's journal so that
         // other users may create tables in it.
         if (created) {
 
-	    String sql = "CALL QSYS2.QCMDEXC('CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)  JRNRCV(*GEN) THRESHOLD(100000)')";
+          String sql = "CALL QSYS2.QCMDEXC('CHGJRN JRN(" + collection
+              + "/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)  JRNRCV(*GEN) THRESHOLD(100000)')";
 
-	    try {
-		s.executeUpdate(sql); 
-	    } catch (Exception e) {
-		output.println("Warning: exception on "+sql);
-		e.printStackTrace(output); 
-	    } 
-
-
-	    try { 
-		CommandCall cmd = new CommandCall (pwrSys);
-		cmd.run ("QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
-			 + "USER(*PUBLIC) AUT(*ALL)");
-		cmd.run ("QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
-			 + "USER(*PUBLIC) AUT(*ALL)");
-		cmd.run("QSYS/CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)");  
-	    } catch (Throwable t) {
-		System.err.println("Warning:  Exception occurred");
-		t.printStackTrace();
-		System.err.println("Warning:  retrying with connection");
-		// If the server isn't up then an exception may occur.
-		// If so, run the commands using the connection
-		Statement stmt = conn.createStatement ();
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
-			 + "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)");
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
-				+ "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)"); 
-
-		stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/CHGJRN JRN("+collection+"/QSQJRN) MNGRCV(*SYSTEM)      "
-			        + "DLTRCV(*YES)                                              ',0000000070.00000)");               
-		stmt.close(); 
-		System.err.println("Warning:  retry successful");
-	    } 
-        }
-
-	// Make sure that the atom table exists
-	int retryCount = 5;
-    while (retryCount > 0) {
-      try {
-        s.executeUpdate("drop table " + collection + ".atom");
-        retryCount = 0;
-      } catch (java.sql.SQLException jex) {
-        String jexMessage = jex.toString();
-        if ((jexMessage.indexOf("not found") >= 0) || (jexMessage.indexOf("-204") >= 0) ) {
-          // OK. We don't care if it was not found.
-          retryCount = 0;
-        } else {
-          if (jexMessage.indexOf("in use") >= 0) {
-            try {
-              output
-                  .println("Warning:  object in use -- trying to end jobs");
-              ObjectDescription objectDescription = new ObjectDescription(
-                  pwrSys, collection, "ATOM", "FILE");
-              ObjectLockListEntry[] objectLockList = objectDescription
-                  .getObjectLockList();
-              for (int i = 0; i < objectLockList.length; i++) {
-                ObjectLockListEntry lock = objectLockList[i];
-                String jobname = lock.getJobName();
-                String jobnumber = lock.getJobNumber();
-                String jobusername = lock.getJobUserName();
-                output.println("Warning: ending job " + jobnumber + "/"
-                    + jobusername + "/" + jobname + " holding lock");
-                // Now end the job immediately to release the lock
-                Job job = new Job(pwrSys, jobname, jobusername, jobnumber);
-                job.end(0);
-
-              }
-              // Sleeping 10 seconds for the job to catch up.
-              Thread.sleep(10);
-            } catch (Exception endException) {
-              output.println("Exception trying to end jobs holding locks");
-              endException.printStackTrace(output);
-
-            }
-          } else if (jexMessage.indexOf("Not authorized") >= 0) {
-            CommandCall cmd = new CommandCall(pwrSys);
-            output.println(
-                "Warning... Attempted to authorize *PUBLIC to table atom");
-            try {
-              cmd.run("QSYS/GRTOBJAUT OBJ(" + collection
-                  + "/ATOM) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*ALL)");
-            } catch (Exception e) {
-              output
-                  .println("Warning... could not grant permissions table atom");
-              e.printStackTrace(output);
-
-            }
-            retryCount--;
-          } else {
-            output.println("Warning... could not drop table atom");
-            jex.printStackTrace(output);
+          try {
+            s.executeUpdate(sql);
+          } catch (Exception e) {
+            output.println("Warning: exception on " + sql);
+            e.printStackTrace(output);
           }
-          retryCount--;
+
+          try {
+            CommandCall cmd = new CommandCall(pwrSys);
+            cmd.run("QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) " + "USER(*PUBLIC) AUT(*ALL)");
+            cmd.run("QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) " + "USER(*PUBLIC) AUT(*ALL)");
+            cmd.run("QSYS/CHGJRN JRN(" + collection + "/QSQJRN) MNGRCV(*SYSTEM) DLTRCV(*YES)");
+          } catch (Throwable t) {
+            System.err.println("Warning:  Exception occurred");
+            t.printStackTrace();
+            System.err.println("Warning:  retrying with connection");
+            // If the server isn't up then an exception may occur.
+            // If so, run the commands using the connection
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(QSYS/" + collection + ") OBJTYPE(*LIB) "
+                + "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)");
+            stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/GRTOBJAUT OBJ(" + collection + "/QSQJRN) OBJTYPE(*JRN) "
+                + "USER(*PUBLIC) AUT(*ALL)                                   ',0000000070.00000)");
+
+            stmt.executeUpdate("CALL QSYS.QCMDEXC('QSYS/CHGJRN JRN(" + collection + "/QSQJRN) MNGRCV(*SYSTEM)      "
+                + "DLTRCV(*YES)                                              ',0000000070.00000)");
+            stmt.close();
+            System.err.println("Warning:  retry successful");
+          }
         }
+
+        // Make sure that the atom table exists
+        int retryCount = 5;
+        while (retryCount > 0) {
+          try {
+            s.executeUpdate("drop table " + collection + ".atom");
+            retryCount = 0;
+          } catch (java.sql.SQLException jex) {
+            String jexMessage = jex.toString();
+            if ((jexMessage.indexOf("not found") >= 0) || (jexMessage.indexOf("-204") >= 0)) {
+              // OK. We don't care if it was not found.
+              retryCount = 0;
+            } else {
+              if (jexMessage.indexOf("in use") >= 0) {
+                try {
+                  output.println("Warning:  object in use -- trying to end jobs");
+                  ObjectDescription objectDescription = new ObjectDescription(pwrSys, collection, "ATOM", "FILE");
+                  ObjectLockListEntry[] objectLockList = objectDescription.getObjectLockList();
+                  for (int i = 0; i < objectLockList.length; i++) {
+                    ObjectLockListEntry lock = objectLockList[i];
+                    String jobname = lock.getJobName();
+                    String jobnumber = lock.getJobNumber();
+                    String jobusername = lock.getJobUserName();
+                    output.println(
+                        "Warning: ending job " + jobnumber + "/" + jobusername + "/" + jobname + " holding lock");
+                    // Now end the job immediately to release the lock
+                    Job job = new Job(pwrSys, jobname, jobusername, jobnumber);
+                    job.end(0);
+
+                  }
+                  // Sleeping 10 seconds for the job to catch up.
+                  Thread.sleep(10);
+                } catch (Exception endException) {
+                  output.println("Exception trying to end jobs holding locks");
+                  endException.printStackTrace(output);
+
+                }
+              } else if (jexMessage.indexOf("Not authorized") >= 0) {
+                CommandCall cmd = new CommandCall(pwrSys);
+                output.println("Warning... Attempted to authorize *PUBLIC to table atom");
+                try {
+                  cmd.run("QSYS/GRTOBJAUT OBJ(" + collection + "/ATOM) OBJTYPE(*FILE) USER(*PUBLIC) AUT(*ALL)");
+                } catch (Exception e) {
+                  output.println("Warning... could not grant permissions table atom");
+                  e.printStackTrace(output);
+
+                }
+                retryCount--;
+              } else {
+                output.println("Warning... could not drop table atom");
+                jex.printStackTrace(output);
+              }
+              retryCount--;
+            }
+          }
+        } /* while retryCount > 0 */
+        try {
+          s.executeUpdate("create table " + collection + ".atom(nothing int)");
+          s.executeUpdate("grant all on table " + collection + ".atom to public with grant option");
+          // insert into atom values(null);
+          s.executeUpdate("insert into " + collection + ".atom values(null)");
+        } catch (Exception e) {
+          output.println("Warning.  unable to create atom");
+          e.printStackTrace(output);
+
+        }
+      } finally {
+        if (dataAreaLock != null) {
+          System.out.println("JDSetupCollection unlocking data area");
+          dataAreaLock.unlock("JDSetupCollection", null);
+        }
+        s.close();
       }
-    } /* while retryCount > 0 */
-    try {
-    	s.executeUpdate("create table "+collection+".atom(nothing int)");
-	s.executeUpdate("grant all on table "+collection+".atom to public with grant option");
-       //insert into atom values(null);
-	s.executeUpdate("insert into "+collection+".atom values(null)");
-    } catch (Exception e) {
-	output.println("Warning.  unable to create atom");
-	e.printStackTrace(output);
 
-    } 
-
-        s.close ();
-
-  }
+    }
 
   /**
    * Creates a collection and sets the authority such that other test userids
