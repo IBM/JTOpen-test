@@ -22,6 +22,7 @@ import com.ibm.as400.access.*;
 import test.JDGroupTestInfo;
 import test.JDScheduler;
 import test.JDTestcase;
+import test.JTOpenTestEnvironment;
 
 /**
  * Provides support for managing the JDScheduler
@@ -263,7 +264,7 @@ public class SchedulerManager extends BaseHandler {
 
         displayInitialsStatus(sb, stmt, defaultId, keyPrefix.toString());
 
-        sb.append("<h2>Running items (JDTESTINFO.SCRUN" + defaultId
+        sb.append("<h2>Running items ("+JTOpenTestEnvironment.testInfoSchema+".SCRUN" + defaultId
             + ")</h2>\n<hr>\n");
         sb.append("<table border=\"1\">\n");
         sb.append("<th>PRIORITY</th>\n");
@@ -280,8 +281,8 @@ public class SchedulerManager extends BaseHandler {
                 + " A.ACTION,A.STARTED_TS, "
                 + "TIMESTAMPDIFF(2, CAST((CURRENT TIMESTAMP - A.STARTED_TS) AS CHAR(22))) AS RUN_SECONDS, "
                 + " CAST( B.RECENT_AVERAGE_SECONDS AS INTEGER) AS AVG_RUN_SECONDS, A.OUTPUTFILE  "
-                + " from JDTESTINFO.SCRUN" + defaultId
-                + " A LEFT OUTER JOIN JDTESTINFO.SCSTA1 B "
+                + " from "+JTOpenTestEnvironment.testInfoSchema+".SCRUN" + defaultId
+                + " A LEFT OUTER JOIN "+JTOpenTestEnvironment.testInfoSchema+".SCSTA1 B "
                 + " ON  A.INITIALS=B.INITIALS and A.ACTION=B.ACTION");
 
         while (rs.next()) {
@@ -297,7 +298,7 @@ public class SchedulerManager extends BaseHandler {
         rs.close();
         sb.append("</table>");
 
-        sb.append("<h2>Scheduled items (JDTESTINFO.SCHED" + defaultId
+        sb.append("<h2>Scheduled items ("+JTOpenTestEnvironment.testInfoSchema+".SCHED" + defaultId
             + ")</h2>\n<hr>\n");
         sb.append("<table border=\"1\">\n");
         sb.append("<th>PRIORITY</th>\n");
@@ -306,8 +307,8 @@ public class SchedulerManager extends BaseHandler {
         sb.append("<th>ACTION</th>\n");
         sb.append("<th>AVG_RUN_SECONDS</th>\n");
 
-        rs = stmt.executeQuery("select A.*, CAST( B.RECENT_AVERAGE_SECONDS AS INTEGER) AS AVG_RUN_SECONDS from JDTESTINFO.SCHED" + defaultId
-            + " A LEFT OUTER JOIN JDTESTINFO.SCSTA1 B "
+        rs = stmt.executeQuery("select A.*, CAST( B.RECENT_AVERAGE_SECONDS AS INTEGER) AS AVG_RUN_SECONDS from "+JTOpenTestEnvironment.testInfoSchema+".SCHED" + defaultId
+            + " A LEFT OUTER JOIN "+JTOpenTestEnvironment.testInfoSchema+".SCSTA1 B "
             + "  ON A.INITIALS = B.INITIALS and A.ACTION=B.ACTION "
             + "  ORDER BY PRIORITY,ADDED_TS");
         while (rs.next()) {
@@ -374,18 +375,18 @@ public class SchedulerManager extends BaseHandler {
 
     // Get List all testcases
     Vector<String> currentlyStalledInitials = runQuery(stmt,
-        "SELECT DISTINCT INITIALS from JDTESTINFO.SCRUN" + defaultId
+        "SELECT DISTINCT INITIALS from "+JTOpenTestEnvironment.testInfoSchema+".SCRUN" + defaultId
             + " WHERE STARTED_TS < CURRENT TIMESTAMP - 1 HOUR");
 
     Vector<String> currentlyRunningInitials = runQuery(stmt,
-        "SELECT DISTINCT INITIALS from JDTESTINFO.SCRUN" + defaultId);
+        "SELECT DISTINCT INITIALS from "+JTOpenTestEnvironment.testInfoSchema+".SCRUN" + defaultId);
     Vector<String> currentlyScheduledInitials = runQuery(stmt,
-        "SELECT DISTINCT INITIALS from JDTESTINFO.SCHED" + defaultId);
+        "SELECT DISTINCT INITIALS from "+JTOpenTestEnvironment.testInfoSchema+".SCHED" + defaultId);
     Vector<String> allRecentInitials = runQuery(stmt,
-        "SELECT DISTINCT INITIALS from JDTESTINFO.SCSTA" + defaultId
+        "SELECT DISTINCT INITIALS from "+JTOpenTestEnvironment.testInfoSchema+".SCSTA" + defaultId
             + " WHERE LAST_TS > ( CURRENT TIMEstamp - 7 days ) ");
     Vector<String> allRunInitials = runQuery(stmt,
-        "SELECT DISTINCT INITIALS from JDTESTINFO.SCSTA" + defaultId);
+        "SELECT DISTINCT INITIALS from "+JTOpenTestEnvironment.testInfoSchema+".SCSTA" + defaultId);
 
     // Sort all the vectors
     Collections.sort(currentlyRunningInitials);
@@ -529,7 +530,7 @@ public class SchedulerManager extends BaseHandler {
 
     try {
       checkConnection(sb);
-      String scheduleTable = "JDTESTINFO.SCHED" + defaultId;
+      String scheduleTable = JTOpenTestEnvironment.testInfoSchema+".SCHED" + defaultId;
       PreparedStatement ps = prepareStatement(
           "INSERT INTO " + scheduleTable + " VALUES(?,CURRENT TIMESTAMP,?,?)",sb);
       int intPriority = 1;

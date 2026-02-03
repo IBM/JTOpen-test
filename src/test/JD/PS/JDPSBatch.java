@@ -11,19 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSBatch.java
 //
 // Classes:      JDPSBatch
-//
-////////////////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -45,6 +37,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDLobTest;
 import test.JDPSTest;
+import test.JD.JDSerializeFile;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
@@ -167,18 +160,25 @@ Performs setup needed before running variations.
 
 @exception Exception If an exception occurs.
 **/
-    protected void setup ()
+     protected void setup() throws Exception {
+      setup(""); 
+    }
+    protected void setup (String suffix)
     throws Exception
     {
         String url = baseURL_; 
         connection_ = testDriver_.getConnection (url, userId_, encryptedPassword_);
         connection_.setAutoCommit(true); // for xa
 
+        JDSerializeFile setupLock = null;
+        try {
+          setupLock = new JDSerializeFile(connection_, "JDPSSETUP"); 
+ 
         connection2_ = testDriver_.getConnection(url + ";lob threshold=1", userId_, encryptedPassword_);     //@K2A
 
         Statement s = connection_.createStatement ();
 
-        table_      = JDPSTest.COLLECTION + ".JDPSB";
+        table_      = JDPSTest.COLLECTION + ".JDPSB"+suffix;
         insert0_    = "INSERT INTO " + table_ + "(NAME) VALUES ('NORMAN')";
         insert1_    = "INSERT INTO " + table_ + "(NAME) VALUES (?)";
         insert2_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, ?)";
@@ -190,17 +190,17 @@ Performs setup needed before running variations.
 	insert8_    = "INSERT INTO " + table_ + " ? ROWS (NAME, ID) VALUES ('Mountain Dew', ?)";  //@D1A
 
 
-	table2_     = JDPSTest.COLLECTION + ".JDSB2";
+	table2_     = JDPSTest.COLLECTION + ".JDSB2"+suffix;
 
-	table4_  = JDPSTest.COLLECTION + ".GRAPHIC";	// @L2
+	table4_  = JDPSTest.COLLECTION + ".GRAPHIC"+suffix;	// @L2
 	insertT41_ = "INSERT INTO "+table4_+" (COL1) VALUES(?) ";	// @L2
 	insertT42_ = "INSERT INTO "+table4_+" (COL2) VALUES(?) ";	// @L2
 
-	TABLE1_  = JDPSTest.COLLECTION + ".BLOBLOC";      //@K2A
-	TABLE2_  = JDPSTest.COLLECTION + ".CLOBLOC";      //@K2A
-	TABLE3_  = JDPSTest.COLLECTION + ".CLOBLOC2";     //@K2A
-	table4_  = JDPSTest.COLLECTION + ".GRAPHIC";	// @L2
-	tableBoolean_ = JDPSTest.COLLECTION + ".JDPSBBOOL";
+	TABLE1_  = JDPSTest.COLLECTION + ".BLOBLOC"+suffix;      //@K2A
+	TABLE2_  = JDPSTest.COLLECTION + ".CLOBLOC"+suffix;      //@K2A
+	TABLE3_  = JDPSTest.COLLECTION + ".CLOBLOC2"+suffix;     //@K2A
+	table4_  = JDPSTest.COLLECTION + ".GRAPHIC"+suffix;	// @L2
+	tableBoolean_ = JDPSTest.COLLECTION + ".JDPSBBOOL"+suffix;
 	insertBoolean_ = "INSERT INTO "+tableBoolean_+"(COL1,COL2) VALUES(?,?)"; 
 
 	try{
@@ -302,7 +302,13 @@ Performs setup needed before running variations.
         Random random = new Random(); 
         longRunTest = random.nextInt(4); 
 
-
+        } finally {
+          
+          if (setupLock != null) {
+            setupLock.close(); 
+          }
+     
+        }
     }
 
 
@@ -2219,21 +2225,22 @@ Adds a statement using a blob to a batch
     public void Var049()
     {
 
-
-	StringBuffer messageBuffer = new StringBuffer(); 
+ test.JD.JDSerializeFile pstestSet = null;
+ StringBuffer messageBuffer = new StringBuffer();
         if (checkJdbc20 ())
         {
-	    /* WILSONJO @L3 make sure the table is empty before the test is ran */
-	    try{
-		    Statement s = connection_.createStatement();
-		    s.executeUpdate("DELETE from "+JDPSTest.PSTEST_SET);
-		    s.close();
-	    }catch(Exception ex){}
-	
+     /* WILSONJO @L3 make sure the table is empty before the test is ran */
+     try{
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      Statement s = connection_.createStatement();
+      s.executeUpdate("DELETE from "+pstestSet.getName());
+      s.close();
+     }catch(Exception ex){}
+ 
             try
             {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_BLOB) VALUES (?)");
                 byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45,
                     (byte) -33, (byte) 5};
@@ -2244,7 +2251,7 @@ Adds a statement using a blob to a batch
 
                 ps.setBlob (1, new JDLobTest.JDTestBlob (b));
                 ps.addBatch ();
-                ps.setBlob (1, new JDLobTest.JDTestBlob (b1)); 
+                ps.setBlob (1, new JDLobTest.JDTestBlob (b1));
                 ps.addBatch ();
                 ps.setBlob (1, new JDLobTest.JDTestBlob (b2));
                 ps.addBatch ();
@@ -2252,38 +2259,38 @@ Adds a statement using a blob to a batch
                 ps.close ();
 
                 Statement s = connection_.createStatement();
-                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + pstestSet.getName());
                 boolean success = true;
                 int count = 0;
                 
                 byte[] inspect = new byte[b.length];
 
-		byte[] r1 = new byte[b.length];
-		byte[] r2 = new byte[b.length];
-		byte[] r3 = new byte[b.length];
+  byte[] r1 = new byte[b.length];
+  byte[] r2 = new byte[b.length];
+  byte[] r3 = new byte[b.length];
 
-		byte[] recvd = new byte[b.length];
+  byte[] recvd = new byte[b.length];
 
                 while(rs.next())
                 {
 
                     java.sql.Blob check = rs.getBlob(1);
 
-		    if(count == 0){
+      if(count == 0){
                         inspect = b;
-			r1 = check.getBytes (1, (int) check.length ());
-			recvd = r1;
-		    }
-		    else if(count == 1){
+   r1 = check.getBytes (1, (int) check.length ());
+   recvd = r1;
+      }
+      else if(count == 1){
                         inspect = b1;
-			r2 = check.getBytes (1, (int) check.length ());
-			recvd = r2;
-		    }
-		    else{
+   r2 = check.getBytes (1, (int) check.length ());
+   recvd = r2;
+      }
+      else{
                         inspect = b2;
-			r3 = check.getBytes (1, (int) check.length ());
-			recvd = r3;
-		    }
+   r3 = check.getBytes (1, (int) check.length ());
+   recvd = r3;
+      }
                     
                     if(!areEqual (inspect, recvd))
                         success = false;
@@ -2293,25 +2300,33 @@ Adds a statement using a blob to a batch
                 rs.close();
                 s.close();
 
-		messageBuffer.append("\nRow1: ");
-		for(int i=0; i< r1.length; i++)
-		    messageBuffer.append(r1[i]+" ");
+  messageBuffer.append("\nRow1: ");
+  for(int i=0; i< r1.length; i++)
+      messageBuffer.append(r1[i]+" ");
 
-		messageBuffer.append("\nRow2: ");
-		for(int i=0; i< r2.length; i++)
-		    messageBuffer.append(r2[i]+" ");
+  messageBuffer.append("\nRow2: ");
+  for(int i=0; i< r2.length; i++)
+      messageBuffer.append(r2[i]+" ");
 
-		messageBuffer.append("\nRow3: ");
-		for(int i=0; i< r3.length; i++)
-		    messageBuffer.append(r3[i]+" ");
+  messageBuffer.append("\nRow3: ");
+  for(int i=0; i< r3.length; i++)
+      messageBuffer.append(r3[i]+" ");
 
-		messageBuffer.append("\n");
+  messageBuffer.append("\n");
 
-		assertCondition(updateCounts.length == 3 && success,"len = "+updateCounts.length+
-				" SB 3 success = "+success+" SB true "+messageBuffer.toString() ); // @L2
+  assertCondition(updateCounts.length == 3 && success,"len = "+updateCounts.length+
+    " SB 3 success = "+success+" SB true "+messageBuffer.toString() ); // @L2
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception:  Added by Toolbox 5/5/03 "+messageBuffer.toString());
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -2349,7 +2364,7 @@ Adds a statement using a blob locator to a batch
                 ps.close ();
 
                 Statement s = connection_.createStatement();
-                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + TABLE1_);//JDPSTest.PSTEST_SET);		// @L2
+                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + TABLE1_);//pstestSet.getName());		// @L2
                 boolean success = true;
                 int count = 0;
                 
@@ -2652,102 +2667,104 @@ Adds a statement using a blob of varying lengths to a batch
 **/
     public void Var056()
     {
-	StringBuffer messageBuffer = new StringBuffer(); 
+ JDSerializeFile pstestSet = null;
+ StringBuffer messageBuffer = new StringBuffer();
         if (checkJdbc20 ())
         {
             try
             {
 
-		try{
-		    Statement s = connection_.createStatement();
-		    s.executeUpdate("DELETE from "+JDPSTest.PSTEST_SET);
-		    s.close();
-		}catch(Exception ex){
-		}
+  try{
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      Statement s = connection_.createStatement();
+      s.executeUpdate("DELETE from "+pstestSet.getName());
+      s.close();
+  }catch(Exception ex){
+  }
 
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_BLOB) VALUES (?)");
-		byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45, (byte) -33, (byte) 5};
+  byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45, (byte) -33, (byte) 5};
 //                byte[] b1 = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45,
 //                    (byte) -33, (byte) 3};
-		byte[] b1 = new byte[200];
-		for(int i=0; i<b1.length; i++)
-		    b1[i] = (byte)i;
+  byte[] b1 = new byte[200];
+  for(int i=0; i<b1.length; i++)
+      b1[i] = (byte)i;
                 byte[] b2 = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45, (byte) -33, (byte) 1};
 
-		messageBuffer.append("Initialization done!\n");
+  messageBuffer.append("Initialization done!\n");
                 ps.setBlob (1, new JDLobTest.JDTestBlob (b));
-		messageBuffer.append("b set\n");
+  messageBuffer.append("b set\n");
                 ps.addBatch ();
-		messageBuffer.append("b added to batch\n");
-                ps.setBlob (1, new JDLobTest.JDTestBlob (b1)); 
-		messageBuffer.append("b1 set\n");
+  messageBuffer.append("b added to batch\n");
+                ps.setBlob (1, new JDLobTest.JDTestBlob (b1));
+  messageBuffer.append("b1 set\n");
                 ps.addBatch ();
-		messageBuffer.append("b1 added to batch\n");
+  messageBuffer.append("b1 added to batch\n");
                 ps.setBlob (1, new JDLobTest.JDTestBlob (b2));
-		messageBuffer.append("b2 set\n");
+  messageBuffer.append("b2 set\n");
                 ps.addBatch ();
-		messageBuffer.append("b2 added to batch\n");
+  messageBuffer.append("b2 added to batch\n");
                 int updateCounts[]  = ps.executeBatch ();
-		messageBuffer.append("executed batch\n");
+  messageBuffer.append("executed batch\n");
                 ps.close ();
 
                 Statement s = connection_.createStatement();
-                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET+ " ORDER BY HASH(C_BLOB)");
+                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + pstestSet.getName()+ " ORDER BY HASH(C_BLOB)");
                 boolean success = true;
                 int count = 0;
                 
                 byte[] inspect = null;
 
-		byte[] r1 = new byte[b.length];
-		byte[] r2 = new byte[b1.length];
-		byte[] r3 = new byte[b2.length];
+  byte[] r1 = new byte[b.length];
+  byte[] r2 = new byte[b1.length];
+  byte[] r3 = new byte[b2.length];
 
-		byte[] recvd = null;
+  byte[] recvd = null;
 
                 while(rs.next())
                 {
 
                     java.sql.Blob check = rs.getBlob(1);
 
-		    if(count == 0){
+      if(count == 0){
                         inspect = b2;
-			r1 = check.getBytes (1, (int) check.length ());
-			recvd = r1;
-		    }
-		    else if(count == 1){
+   r1 = check.getBytes (1, (int) check.length ());
+   recvd = r1;
+      }
+      else if(count == 1){
                         inspect = b;
-			r2 = check.getBytes (1, (int) check.length ());
-			recvd = r2;
-		    }
-		    else{
+   r2 = check.getBytes (1, (int) check.length ());
+   recvd = r2;
+      }
+      else{
                         inspect = b1;
-			r3 = check.getBytes (1, (int) check.length ());
-			recvd = r3;
-		    }
+   r3 = check.getBytes (1, (int) check.length ());
+   recvd = r3;
+      }
                     
-		    if(!areEqual (inspect, recvd)) {
-			messageBuffer.append("\nFor Row "+(count+1));
-			messageBuffer.append("\nGot: ");
-			for(int i=0; i< recvd.length; i++)
-			    messageBuffer.append(recvd[i]+" ");
-			messageBuffer.append("\nSB:  ");
-			for(int i=0; i< inspect.length; i++)
-			    messageBuffer.append(inspect[i]+" ");
-			messageBuffer.append("\n"); 
+      if(!areEqual (inspect, recvd)) {
+   messageBuffer.append("\nFor Row "+(count+1));
+   messageBuffer.append("\nGot: ");
+   for(int i=0; i< recvd.length; i++)
+       messageBuffer.append(recvd[i]+" ");
+   messageBuffer.append("\nSB:  ");
+   for(int i=0; i< inspect.length; i++)
+       messageBuffer.append(inspect[i]+" ");
+   messageBuffer.append("\n");
                         success = false;
-		    }
+      }
 
                     count++;
                 }
                 rs.close();
                 s.close();
 
-		messageBuffer.append("\nRow1: ");
-		for(int i=0; i< r1.length; i++)
-		    messageBuffer.append(r1[i]+" ");
+  messageBuffer.append("\nRow1: ");
+  for(int i=0; i< r1.length; i++)
+      messageBuffer.append(r1[i]+" ");
 
 		messageBuffer.append("\nRow2: ");
 		for(int i=0; i< r2.length; i++)
@@ -2760,12 +2777,20 @@ Adds a statement using a blob of varying lengths to a batch
 		messageBuffer.append("\n");
 
 		assertCondition(updateCounts.length == 3 && success,"len = "+updateCounts.length+
-				" SB 3 success = "+success+" SB true "+messageBuffer.toString()); 
-            }
-            catch (Exception e) {
-                failed (e, "Unexpected Exception: "+messageBuffer.toString()+"  Added by Native 9/9/03 ");
-            }
-        }
+				" SB 3 success = "+success+" SB true "+messageBuffer.toString());
+		          }
+		          catch (Exception e) {
+		              failed (e, "Unexpected Exception: "+messageBuffer.toString()+"  Added by Native 9/9/03 ");
+		          } finally {
+		              if (pstestSet != null) {
+		                  try {
+		                      pstestSet.close();
+		                  } catch (SQLException e) {
+		                      e.printStackTrace();
+		                  }
+		              }
+		          }
+		      }
 
     }
 

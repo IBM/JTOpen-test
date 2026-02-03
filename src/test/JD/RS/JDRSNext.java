@@ -26,6 +26,7 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
+import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -265,28 +266,30 @@ next() - Should work on a "simple" result set.
 **/
     public void Var006 ()
     {
+      StringBuffer sb = new StringBuffer(); 
         try {
             ResultSet rs = dmd_.getTableTypes ();
             boolean success = true;
             int count = 0;
             while (rs.next ()) {
                 ++count;
-                if (rs.getString ("TABLE_TYPE") == null)
+                String tableType = rs.getString ("TABLE_TYPE");
+                sb.append(" #"+count+"="+tableType); 
+                if (tableType == null)
                     success = false;
             }
             rs.close ();
 	    /* Changed the comparision -- @D2C */ 
-	    int expectedCount = 3;
-	    if (true) {
-		// add 1 for MQT
-		expectedCount++; 
-	    }
-	    if (true) {
-		// add 1 for ALIAS
-		expectedCount++; 
-	    }
-
-	    assertCondition ((success == true) && (count == expectedCount), "Changed 08/03/05 by native driver, success="+success+" count = "+count+" sb "+expectedCount );
+            int expectedCount = 3;
+            // add 1 for MQT
+            expectedCount++;
+            // add 1 for ALIAS
+            expectedCount++;
+            if (getRelease() > JDTestDriver.RELEASE_V7R6M0) {
+              expectedCount++; 
+            }
+         
+	    assertCondition ((success == true) && (count == expectedCount), "Changed 08/03/05 by native driver, success="+success+" count = "+count+" sb "+expectedCount+" types are "+sb.toString() );
 
         }
         catch (Exception e) {

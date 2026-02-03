@@ -23,6 +23,7 @@ package test;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.util.Vector;
@@ -31,6 +32,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDSerializeFile;
 import test.JD.JDSetupCollection;
 import test.JD.PS.JDPSBatch;
 import test.JD.PS.JDPSBatchCompress;
@@ -99,17 +101,33 @@ public class JDPSTest extends JDTestDriver {
   // Constants.
   public static String COLLECTION = "JDTESTPS";
 
-  public static String PSTEST_SET = COLLECTION + ".PSTEST_SET";
-  public static String PSTEST_SETDFP16 = COLLECTION + ".PSTSDFP16";
-  public static String PSTEST_SETDFP34 = COLLECTION + ".PSTSDFP34";
-  public static String PSTEST_SETXML = COLLECTION + ".PSTSXML";
-  public static String PSTEST_SETXML13488 = COLLECTION + ".PSTSX13488";
-  public static String PSTEST_SETXML1200 = COLLECTION + ".PSTSX1200";
-  public static String PSTEST_SETXML37 = COLLECTION + ".PSTSX37";
-  public static String PSTEST_SETXML937 = COLLECTION + ".PSTSX937";
-  public static String PSTEST_SETXML290 = COLLECTION + ".PSTSXML290";
+  private static String PSTEST_SET = COLLECTION + ".PSTEST_SET";
+  private static String PSTEST_SETDFP16 = COLLECTION + ".PSTSDFP16";
+  private static String PSTEST_SETDFP34 = COLLECTION + ".PSTSDFP34";
+  private static String PSTEST_SETXML = COLLECTION + ".PSTSXML";
+  private static String PSTEST_SETXML13488 = COLLECTION + ".PSTSX13488";
+  private static String PSTEST_SETXML1200 = COLLECTION + ".PSTSX1200";
+  private static String PSTEST_SETXML37 = COLLECTION + ".PSTSX37";
+  private static String PSTEST_SETXML937 = COLLECTION + ".PSTSX937";
+  private static String PSTEST_SETXML290 = COLLECTION + ".PSTSXML290";
   public static String PSTEST_SETDB2DEF = COLLECTION + ".PS_SETDB2";
+  public static String PSTEST_CONCUR_BASE = "PS_CONCUR"; 
+  public static String PSTEST_CONCUR = COLLECTION + "."+PSTEST_CONCUR_BASE;
+  
 
+  
+  public static final int SET = 0;
+  public static final int SETDFP16 = 1;
+  public static final int SETDFP34 = 2;
+  public static final int SETXML = 3;
+  public static final int SETXML13488 = 4;
+  public static final int SETXML1200 = 5;
+  public static final int SETXML37 = 6;
+  public static final int SETXML937 = 7;
+  public static final int SETXML290 = 8;
+  public static final int SETDB2DEF = 9;
+  public static final int CONCUR = 10;
+  
   
   // Private data.
   private Connection connection_;
@@ -124,7 +142,9 @@ public class JDPSTest extends JDTestDriver {
 
   private Connection[] handleConnections;
 
-  private Vector<PreparedStatement> handles = null; 
+  private Vector<PreparedStatement> handles = null;
+
+  private Timestamp startTimestamp; 
 
 
 
@@ -280,9 +300,11 @@ Performs setup needed before running testcases.
       PSTEST_SETXML937 = COLLECTION + ".PSTSX937";
       PSTEST_SETXML290 = COLLECTION + ".PSTSXML290";
       PSTEST_SETDB2DEF = COLLECTION + ".PS_SETDB2";
+      PSTEST_CONCUR  =   COLLECTION + ".PS_CONCUR"; 
 
     }
     JDSetupCollection.create(systemObject_,  connection_, COLLECTION, out_);
+    
 
     statement_ = connection_.createStatement();
 
@@ -290,7 +312,7 @@ Performs setup needed before running testcases.
     // Do not drop tables. 
     // dropTable(statement_, PSTEST_SET);
     // dropTable(statement_, PSTEST_SETDB2DEF);
-    // dropDistinctType(statement_,  COLLECTION + ".AGE");
+    // dropDistinctType(statement_,  COLLECTION + ".PS_AGE");
 
 
 
@@ -306,14 +328,48 @@ Performs setup needed before running testcases.
 	  is400 =false; 
       } 
 
+      /* Make sure PSTEST_CONCUR is handled transactionally */ 
+      boolean autocommit = connection_.getAutoCommit(); 
+      if (autocommit) {
+        connection_.setAutoCommit(false);
+      }
+      /* Wait for a long time if there is much contention */ 
+      statement_.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(3600)')"); 
+      
+      String sql = "SELECT * FROM QSYS2.SYSTABLES where TABLE_NAME='"+PSTEST_CONCUR_BASE+"' and TABLE_SCHEMA='"+COLLECTION+"' " ;
+      ResultSet rs = statement_.executeQuery(sql); 
+      if (!rs.next()) { 
+        rs.close(); 
+        
+        sql =  "CREATE OR REPLACE TABLE "+PSTEST_CONCUR+" (JOBNAME VARCHAR(80), STARTTIME TIMESTAMP) ON REPLACE PRESERVE ROWS"; 
+        System.out.println("Running "+sql); 
+        statement_.executeUpdate(sql); 
+        connection_.commit(); 
+      } else {
+        rs.close(); 
+        sql = "VALUES JOB_NAME"; 
+        rs = statement_.executeQuery(sql); 
+        rs.next(); 
+        System.out.println("job name is "+rs.getString(1)); 
+        rs.close(); 
+      }
+      startTimestamp = new Timestamp(System.currentTimeMillis()); 
+      PreparedStatement ps = connection_.prepareStatement("INSERT INTO "+PSTEST_CONCUR+" VALUES(JOB_NAME,?)");
+      ps.setTimestamp(1,startTimestamp); 
+      ps.executeUpdate(); 
+      ps.close(); 
+      connection_.commit(); 
+      if (autocommit) {
+        connection_.setAutoCommit(true);
+      }
+      statement_.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(30)')"); 
 
-      // Added With comparisions 12/28/2006 so would work on LUW also
+      // Added With comparisons 12/28/2006 so would work on LUW also
       try { 
 	  safeExecuteUpdate(statement_, "CREATE DISTINCT TYPE " + COLLECTION
-			    + ".AGE AS INTEGER WITH COMPARISONS ");
-
+			    + ".PS_AGE AS INTEGER WITH COMPARISONS ");
       } catch (Exception e) {
-	  System.out.println("Warning:  Unable to create distinct type age"); 
+	  System.out.println("Warning:  Unable to create distinct type PS_AGE"); 
       } 
 
     // Setup PSTEST_SET table.
@@ -348,10 +404,10 @@ Performs setup needed before running testcases.
       }
       if (is400) { 
         buffer.append(",C_DATALINK     DATALINK      ");
-        buffer.append(",C_DISTINCT " + COLLECTION + ".AGE ");
+        buffer.append(",C_DISTINCT " + COLLECTION + ".PS_AGE ");
       } else {
         buffer.append(",C_DATALINK     VARCHAR(80)     ");
-        buffer.append(",C_DISTINCT " + COLLECTION + ".AGE ");
+        buffer.append(",C_DISTINCT " + COLLECTION + ".PS_AGE ");
        
       }
     }
@@ -443,7 +499,62 @@ Performs setup needed before running testcases.
   }
 
 
+  public static JDSerializeFile getPstestSet(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SET); 
+    return file; 
+  }
 
+  public static JDSerializeFile getPstestSetxml(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetxml13488(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML13488); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetxml1200(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML1200); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetxml37(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML37); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetxml937(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML937); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetxml290(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETXML290); 
+    return file; 
+  }
+
+  public static JDSerializeFile getPstestSetdfp16(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETDFP16); 
+    return file; 
+  }
+  public static JDSerializeFile getPstestSetdfp34(Connection c) throws Exception {
+    JDSerializeFile file = new JDSerializeFile(c, PSTEST_SETDFP34); 
+    return file; 
+  }
+
+  public static JDSerializeFile getSerializeFile(Connection c, int file) throws Exception { 
+    switch (file) {
+      case SET: return getPstestSet(c); 
+      case SETXML: return getPstestSetxml(c); 
+      case SETXML13488 : return getPstestSetxml13488(c); 
+      case SETXML1200 : return getPstestSetxml1200(c); 
+      case SETXML37 : return getPstestSetxml37(c); 
+      case SETXML937 : return getPstestSetxml937(c); 
+      case SETXML290 : return getPstestSetxml290(c); 
+      case SETDFP16  : return getPstestSetdfp16(c);
+      case SETDFP34  : return getPstestSetdfp34(c);
+      default:
+        throw new Exception("File "+file+" not supported"); 
+    }
+  }
+
+  
 /**
  * Performs setup needed after running testcases.
  * 
@@ -453,35 +564,56 @@ Performs setup needed before running testcases.
    public void cleanup ()
    throws Exception
    {
-       boolean dropUDTfailed = false; 
-      cleanupTable(statement_,  PSTEST_SET);
+     boolean dropUDTfailed = false;
+     boolean autocommit = connection_.getAutoCommit(); 
+     if (autocommit) {
+       connection_.setAutoCommit(false);
+     }
+     
+     PreparedStatement ps = connection_.prepareStatement("DELETE FROM " + PSTEST_CONCUR + " WHERE STARTTIME=?");
+     ps.setTimestamp(1, startTimestamp);
+     ps.executeUpdate();
 
-      if (areLobsSupported ()) {
-	  try { 
-	      statement_.executeUpdate ("DROP DISTINCT TYPE "
-					+ COLLECTION + ".AGE");
-	  } catch (Exception e) {
-	      System.out.println("Error on DROP DISTINCT TYPE " + COLLECTION + ".AGE"); 
-	      e.printStackTrace();
-	     
-	  } 
-      }
+     statement_.executeUpdate("DELETE FROM " + PSTEST_CONCUR + " WHERE STARTTIME < CURRENT TIMESTAMP - 2 HOURS");
 
+     ResultSet rs = statement_.executeQuery("SELECT COUNT(*) FROM " + PSTEST_CONCUR);
+     int count;
+     rs.next();
+     count = rs.getInt(1);
+     rs.close();
+     if (count == 0) {
 
-	      cleanupTable(statement_,  PSTEST_SETDFP16);
-	      cleanupTable(statement_,  PSTEST_SETDFP34);
+       cleanupTable(statement_, PSTEST_SET);
 
-	  cleanupTable(statement_,  PSTEST_SETXML);
+       if (areLobsSupported()) {
+         try {
+           statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".PS_AGE");
+         } catch (Exception e) {
+           System.out.println("Error on DROP DISTINCT TYPE " + COLLECTION + ".PS_AGE");
+           dropUDTfailed=true; 
+           e.printStackTrace();
 
-      try { 
-	  connection_.commit(); // for xa
-      } catch (Exception e) { 
-      // Ignore any error 
-      }
+         }
+       }
+       cleanupTable(statement_, PSTEST_SETDFP16);
+       cleanupTable(statement_, PSTEST_SETDFP34);
 
+       cleanupTable(statement_, PSTEST_SETXML);
 
+     } else {
+       System.out.println("JDPSTest.cleanup not cleanning because "+count+" jobs are running"); 
+     }
 
-
+     try {
+       connection_.commit(); // for xa
+       if (autocommit) {
+         connection_.setAutoCommit(true);
+       }
+     } catch (Exception e) {
+       System.out.println("Warning on commit"); 
+       e.printStackTrace(System.out); 
+     }
+     
 
       statement_.close ();
       try { 
@@ -495,7 +627,6 @@ Performs setup needed before running testcases.
       } 
       connection_.close ();
 
-            
       
    }
 
@@ -503,19 +634,26 @@ Performs setup needed before running testcases.
 /**
 Cleanup - - this does not run automatically - - it is called by JDCleanup.
 **/
-   public static void dropCollections(Connection c)
-   {
-       try {
-	   // Make sure the system reply list is set so that reply
-           // message will be sent. 
-	   Statement stmt = c.createStatement();
-	   stmt.executeUpdate("CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)       ', 0000000030.00000)"); 
-       } catch (Exception e) {
-	   e.printStackTrace(); 
-       } 
-       dropCollection(c, COLLECTION);
-   }
+public static void dropCollections(Connection c) {
+  try {
+    Statement stmt = c.createStatement();
+    ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + PSTEST_CONCUR);
+    int count;
+    rs.next();
+    count = rs.getInt(1);
+    rs.close();
+    if (count == 0) {
+      // Make sure the system reply list is set so that reply
+      // message will be sent.
+      stmt.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)       ')");
+      dropCollection(c, COLLECTION);
+    }
+  } catch (Exception e) {
+    System.out.println("Error dropping "+COLLECTION); 
+    e.printStackTrace();
+  }
 
+}
 
 
 /**

@@ -26,6 +26,7 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
+import test.JDTestDriver;
 import test.JDTestcase;
 
 
@@ -283,14 +284,14 @@ previous() - Should work on a "simple" result set.
 
 	    /* Changed the comparision -- @D3C */ 
 	    int expectedCount = 3;
-	    if (true) {
 		// add 1 for MQT
 		expectedCount++; 
-	    }
-	    if (true) {
 		// add 1 for ALIAS
 		expectedCount++; 
-	    }
+            if (getRelease() > JDTestDriver.RELEASE_V7R6M0) {
+              expectedCount++; 
+            }
+
 
 	    assertCondition ((success == true) && (count == expectedCount), "Changed 08/03/05 by native driver, success="+success+" count = "+count+" sb "+expectedCount );
 

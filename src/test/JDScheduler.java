@@ -37,14 +37,14 @@ public class JDScheduler {
   public final static int MAX_OUTPUTFILE_LENGTH = 60;
   public final static String SCHEDULE_DEFINITION = "(PRIORITY INTEGER, ADDED_TS TIMESTAMP, INITIALS VARCHAR(10), ACTION VARCHAR("
       + MAX_ACTION_LENGTH + "))";
-  // Fix: ALTER TABLE JDTESTINFO.SCHED1 ALTER COLUMN ACTION SET DATA TYPE
+  // Fix: ALTER TABLE "+JTOpenTestEnvironment.testInfoSchema+".SCHED1 ALTER COLUMN ACTION SET DATA TYPE
   // VARCHAR(60)
   public final static String SCHEDULE_ORDERING = " ORDER BY PRIORITY,ADDED_TS";
   public final static int RUN_COLUMN_COUNT = 5;
   public final static String RUN_DEFINITION = "(PRIORITY INTEGER, " + "ADDED_TS TIMESTAMP, " + "INITIALS VARCHAR(10),"
       + " ACTION VARCHAR(" + MAX_ACTION_LENGTH + "), " + "STARTED_TS TIMESTAMP, " + "OUTPUTFILE VARCHAR("
       + MAX_OUTPUTFILE_LENGTH + "))";
-  // Fix: ALTER TABLE JDTESTINFO.SCRUN1 ALTER COLUMN ACTION SET DATA TYPE
+  // Fix: ALTER TABLE "+JTOpenTestEnvironment.testInfoSchema+".SCRUN1 ALTER COLUMN ACTION SET DATA TYPE
   // VARCHAR(60)
   public static final int PRIORITY_RERUNFAILED_TC = 10;
   public static final int PRIORITY_DIFFERENCE_RERUNFAILED = 10;
@@ -53,10 +53,10 @@ public class JDScheduler {
   public final static int STAT_COLUMN_COUNT = 6;
   public final static String STAT_DEFINITION = "(INITIALS VARCHAR(10), ACTION VARCHAR(" + MAX_ACTION_LENGTH
       + "), COUNT INT, AVERAGE_SECONDS DOUBLE, RECENT_AVERAGE_SECONDS DOUBLE, LAST_SECONDS DOUBLE, LAST_TS TIMESTAMP)";
-  // Fix: ALTER TABLE JDTESTINFO.SCSTA1 ALTER COLUMN ACTION SET DATA TYPE
+  // Fix: ALTER TABLE "+JTOpenTestEnvironment.testInfoSchema+".SCSTA1 ALTER COLUMN ACTION SET DATA TYPE
   // VARCHAR(60)
 
-  public static String COLLECTION = "JDTESTINFO";
+  public static String COLLECTION = JTOpenTestEnvironment.testInfoSchema;
 
   public static Hashtable<Thread, Connection> threadConnectionHashtable = new Hashtable<Thread, Connection>();
   // Default is to connect to local host.
@@ -330,7 +330,7 @@ public class JDScheduler {
       rs = s.executeQuery("select  A.PRIORITY,A.ADDED_TS,A.INITIALS,A.ACTION,A.STARTED_TS, "
           + " TIMESTAMPDIFF(2,CAST((CURRENT TIMESTAMP - A.STARTED_TS) AS CHAR(22)))  AS RUN_SECONDS, "
           + " CAST( B.RECENT_AVERAGE_SECONDS AS INTEGER) AS AVG_RUN_SECONDS " + " from " + runTable
-          + " A LEFT OUTER JOIN JDTESTINFO.SCSTA1 B ON  A.INITIALS=B.INITIALS and A.ACTION=B.ACTION ");
+          + " A LEFT OUTER JOIN "+JTOpenTestEnvironment.testInfoSchema+".SCSTA1 B ON  A.INITIALS=B.INITIALS and A.ACTION=B.ACTION ");
       out.println(
           "PRI,                  ADDED_TS,  INIT, ACTION,                 STARTED_TS, RUN_SECONDS, AVG_RUN_SECONDS");
       while (rs.next()) {

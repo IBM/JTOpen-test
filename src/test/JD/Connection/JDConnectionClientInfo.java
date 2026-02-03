@@ -553,7 +553,7 @@ Performs cleanup needed after running variations.
                 String expected = ""; 
                 if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
                   if        (getRelease() == JDTestDriver.RELEASE_V7R6M0_PLUS) {
-                    expected = "IBM Developer Kit for Java JDBC Driver:JDBC:070X0";
+                    expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07070";
                   } else if        (getRelease() == JDTestDriver.RELEASE_V7R6M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07060";
 		    } else if        (getRelease() == JDTestDriver.RELEASE_V7R5M0) {

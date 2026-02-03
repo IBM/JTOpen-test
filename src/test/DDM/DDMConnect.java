@@ -23,7 +23,6 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 
 import test.PasswordVault;
-import test.SecAuthTest;
 import test.Testcase;
 
 

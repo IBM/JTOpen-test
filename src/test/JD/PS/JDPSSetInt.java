@@ -48,6 +48,8 @@ import java.sql.ResultSet;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSetInt. This tests the following method of the JDBC
@@ -130,14 +132,25 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.close();
       ps.setInt(1, (short) 533);
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -145,9 +158,11 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setInt(100, (short) 334);
       ps.executeUpdate();
@@ -155,6 +170,15 @@ public class JDPSSetInt extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -162,9 +186,11 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Should throw exception when index is 0.
    **/
   public void Var003() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setInt(0, (short) -385);
       ps.executeUpdate();
@@ -172,6 +198,15 @@ public class JDPSSetInt extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -179,9 +214,11 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Should throw exception when index is -1.
    **/
   public void Var004() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_
-          .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+          .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setInt(-1, (short) 943);
       ps.executeUpdate();
@@ -189,6 +226,15 @@ public class JDPSSetInt extends JDTestcase {
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -196,18 +242,20 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Should work with a valid parameter index greater than 1.
    **/
   public void Var005() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (C_KEY, C_INTEGER) VALUES (?, ?)");
+          + pstestSet.getName() + " (C_KEY, C_INTEGER) VALUES (?, ?)");
       ps.setString(1, "Test");
       ps.setInt(2, 4342);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_INTEGER FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -215,6 +263,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 4342);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -243,17 +300,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a SMALLINT parameter.
    **/
   public void Var007() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_SMALLINT) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_SMALLINT) VALUES (?)");
       ps.setInt(1, -22342);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_SMALLINT FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_SMALLINT FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -261,6 +320,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -22342);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -268,11 +336,13 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a SMALLINT parameter, when the integer is too large.
    **/
   public void Var008() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_SMALLINT) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_SMALLINT) VALUES (?)");
       ps.setInt(1, -22122342);
       ps.executeUpdate();
       failed("Didn't throw SQLException");
@@ -283,6 +353,15 @@ public class JDPSSetInt extends JDTestcase {
       } else {
         failed(e, "got " + e + " expected data type mismatch for jtopenlite");
       }
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -290,17 +369,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an INTEGER parameter.
    **/
   public void Var009() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setInt(1, -10613);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_INTEGER FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -308,6 +389,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -10613);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -315,17 +405,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an REAL parameter.
    **/
   public void Var010() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
       ps.setInt(1, 1792);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_REAL FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_REAL FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -333,6 +425,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 1792);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -340,17 +441,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an FLOAT parameter.
    **/
   public void Var011() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
       ps.setInt(1, -1);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_FLOAT FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_FLOAT FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -358,6 +461,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -1);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -365,17 +477,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an DOUBLE parameter.
    **/
   public void Var012() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
       ps.setInt(1, 12228);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_DOUBLE FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_DOUBLE FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -383,6 +497,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 12228);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -390,17 +513,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an DECIMAL parameter.
    **/
   public void Var013() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
       ps.setInt(1, -10012);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_DECIMAL_105 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_DECIMAL_105 FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -408,6 +533,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -10012);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -415,11 +549,13 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an DECIMAL parameter, when the value is too big.
    **/
   public void Var014() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DECIMAL_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DECIMAL_50) VALUES (?)");
       ps.setInt(1, -100122134);
       ps.execute();
       failed("Didn't throw SQLException");
@@ -431,6 +567,15 @@ public class JDPSSetInt extends JDTestcase {
       } else {
         assertExceptionIsInstanceOf(e, "java.sql.DataTruncation");
       }
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -438,17 +583,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an NUMERIC parameter.
    **/
   public void Var015() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
       ps.setInt(1, 12777);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_NUMERIC_50 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_NUMERIC_50 FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -456,6 +603,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 12777);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -463,11 +619,13 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an NUMERIC parameter, when the value is too big
    **/
   public void Var016() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
       ps.setInt(1, 2147483647);
       ps.execute();
       failed("Didn't throw SQLException");
@@ -482,6 +640,15 @@ public class JDPSSetInt extends JDTestcase {
         assertCondition((dt.getIndex() == 1) && (dt.getParameter() == true)
             && (dt.getRead() == false) && (dt.getTransferSize() == 5));
       }
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -489,17 +656,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an CHAR(50) parameter.
    **/
   public void Var017() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
       ps.setInt(1, 1847);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_CHAR_50 FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -507,6 +676,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 1847);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -514,17 +692,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an CHAR(1) parameter.
    **/
   public void Var018() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
       ps.setInt(1, 2);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_CHAR_1 FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -532,6 +712,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 2);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -539,16 +728,27 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an CHAR(1) parameter, when the value is too big.
    **/
   public void Var019() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
       ps.setInt(1, -223);
       ps.execute();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.DataTruncation");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -556,17 +756,19 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set an VARCHAR parameter.
    **/
   public void Var020() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
       ps.setInt(1, -7367);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -574,6 +776,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -7367);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -581,10 +792,13 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a CLOB parameter.
    **/
   public void Var021() {
-    if (checkLobSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         ps.setInt(1, -223);
         ps.executeUpdate();
         ps.close();
@@ -593,16 +807,30 @@ public class JDPSSetInt extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a DBCLOB parameter.
    **/
   public void Var022() {
-    if (checkLobSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
         ps.setInt(1, -52);
         ps.executeUpdate();
         ps.close();
@@ -611,15 +839,29 @@ public class JDPSSetInt extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a BINARY parameter.
    **/
   public void Var023() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     try {
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
       ps.setInt(1, 554);
       ps.executeUpdate();
       ps.close();
@@ -627,21 +869,43 @@ public class JDPSSetInt extends JDTestcase {
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a VARBINARY parameter.
    **/
   public void Var024() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+          + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
       ps.setInt(1, 1934);
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -649,9 +913,12 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a BLOB parameter.
    **/
   public void Var025() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     try {
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
       ps.setInt(1, 5544);
       ps.executeUpdate();
       ps.close();
@@ -659,21 +926,43 @@ public class JDPSSetInt extends JDTestcase {
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a DATE parameter.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
       ps.setInt(1, 0);
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -681,15 +970,26 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a TIME parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
     try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
       ps.setInt(1, 354);
       ps.executeUpdate();
       ps.close();
       failed("Didn't throw SQLException");
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -697,9 +997,12 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a TIMESTAMP parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     try {
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
       ps.setInt(1, -34543);
       ps.executeUpdate();
       ps.close();
@@ -707,22 +1010,47 @@ public class JDPSSetInt extends JDTestcase {
     } catch (Exception e) {
       assertExceptionIsInstanceOf(e, "java.sql.SQLException");
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a DATALINK parameter.
    **/
   public void Var029() {
-    if (checkDatalinkSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkDatalinkSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
         ps.setInt(1, 755);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -732,18 +1060,21 @@ public class JDPSSetInt extends JDTestcase {
    **/
   // @C0C
   public void Var030() {
-    if (checkLobSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
         ps.setInt(1, -7);
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_DISTINCT FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_DISTINCT FROM " + pstestSet.getName());
         rs.next();
         int check = rs.getInt(1);
         rs.close();
@@ -753,24 +1084,38 @@ public class JDPSSetInt extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set a BIGINT parameter.
    **/
   public void Var031() {
-    if (checkBigintSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkBigintSupport()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
         ps.setInt(1, 104613);
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BIGINT FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BIGINT FROM " + pstestSet.getName());
         rs.next();
         int check = rs.getInt(1);
         rs.close();
@@ -778,6 +1123,17 @@ public class JDPSSetInt extends JDTestcase {
         assertCondition(check == 104613);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -790,8 +1146,10 @@ public class JDPSSetInt extends JDTestcase {
    * neutral today.
    **/
   public void Var032() {
+    JDSerializeFile pstestSet = null;
     try {
-      String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      String insert = "INSERT INTO " + pstestSet.getName()
           + " (C_INTEGER) VALUES (?)";
 
       if (isToolboxDriver())
@@ -801,7 +1159,7 @@ public class JDPSSetInt extends JDTestcase {
         JDSetupPackage.prime(systemObject_, encryptedPassword_,  PACKAGE,
             JDPSTest.COLLECTION, insert, "", getDriver());
 
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       Connection c2 = testDriver_.getConnection(baseURL_
           + ";extended dynamic=true;package=" + PACKAGE + ";package library="
@@ -813,7 +1171,7 @@ public class JDPSSetInt extends JDTestcase {
       c2.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_INTEGER FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -821,6 +1179,15 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == -1213);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -847,11 +1214,14 @@ public class JDPSSetInt extends JDTestcase {
    * via setInt
    **/
   public void Var034() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    try {
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setString(1, "12345678901234567890");
       ps.execute();
       failed("Didn't throw SQLException");
@@ -872,23 +1242,37 @@ public class JDPSSetInt extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.DataTruncation");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * // @D1a setInt() - Should work with a valid parameter index greater than 1.
    **/
   public void Var035() {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+    try {
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setString(1, "4342.2");
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT C_INTEGER FROM " + pstestSet.getName());
       rs.next();
       int check = rs.getInt(1);
       rs.close();
@@ -896,6 +1280,17 @@ public class JDPSSetInt extends JDTestcase {
       assertCondition(check == 4342);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -905,12 +1300,15 @@ public class JDPSSetInt extends JDTestcase {
    * them is set since we are setting a numeric value.
    **/
   public void Var036() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     PreparedStatement ps = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       ps = connectionNoTruncation_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setString(1, "12345678901234567890");
       ps.execute();
       failed("Didn't throw SQLException");
@@ -937,6 +1335,17 @@ public class JDPSSetInt extends JDTestcase {
         ps.close();
       } catch (Exception e) {
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -945,12 +1354,15 @@ public class JDPSSetInt extends JDTestcase {
    * exceptions. You can suppress truncation exceptions for string data.
    **/
   public void Var037() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     PreparedStatement ps = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       ps = connectionNoTruncation_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
       ps.setInt(1, -223);
       succeeded();
     } catch (Exception e) {
@@ -962,6 +1374,17 @@ public class JDPSSetInt extends JDTestcase {
         ps.close();
       } catch (Exception e) {
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -970,12 +1393,15 @@ public class JDPSSetInt extends JDTestcase {
    * since we are setting a numeric value.
    **/
   public void Var038() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     PreparedStatement ps = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       ps = connectionNoTruncation_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DECIMAL_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_DECIMAL_50) VALUES (?)");
       ps.setInt(1, -100122134);
       ps.execute();
       failed("Didn't throw SQLException");
@@ -995,6 +1421,17 @@ public class JDPSSetInt extends JDTestcase {
         ps.close();
       } catch (Exception e) {
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1003,13 +1440,16 @@ public class JDPSSetInt extends JDTestcase {
    * since we are setting a numeric value.
    **/
   public void Var039() {
-    PreparedStatement ps = null;
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+PreparedStatement ps = null;
 
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       ps = connectionNoTruncation_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
       ps.setInt(1, 2147483647);
       ps.execute();
       failed("Didn't throw SQLException");
@@ -1031,6 +1471,17 @@ public class JDPSSetInt extends JDTestcase {
         ps.close();
       } catch (Exception e) {
       }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -1039,13 +1490,16 @@ public class JDPSSetInt extends JDTestcase {
    * them is set since we are working with a numeric value.
    **/
   public void Var040() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     PreparedStatement ps = null;
     // Setup -- put a row in the DB
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       ps = connection_.prepareStatement(
-          "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+          "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setString(1, "123");
       ps.executeUpdate();
       ps.close();
@@ -1056,7 +1510,7 @@ public class JDPSSetInt extends JDTestcase {
 
     try {
       ps = connectionNoTruncation_.prepareStatement("SELECT C_INTEGER FROM "
-          + JDPSTest.PSTEST_SET + " WHERE C_INTEGER = ? or C_INTEGER = 123"); // added
+          + pstestSet.getName() + " WHERE C_INTEGER = ? or C_INTEGER = 123"); // added
                                                                               // "=123"
                                                                               // so
                                                                               // we
@@ -1117,6 +1571,17 @@ public class JDPSSetInt extends JDTestcase {
 
     
     
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
  /*
    * Query from a SMALLINT parm where the INT is too big
@@ -1175,17 +1640,20 @@ public class JDPSSetInt extends JDTestcase {
    **/
   public void Var042() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SETDFP16);
+        pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
+        String tablename16 = pstestSetdfp.getName();
+        statement_.executeUpdate("DELETE FROM " + tablename16);
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + "  VALUES (?)");
+            "INSERT INTO " + tablename16 + "  VALUES (?)");
         ps.setInt(1, -10012);
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT * FROM " + JDPSTest.PSTEST_SETDFP16);
+            .executeQuery("SELECT * FROM " + tablename16);
         rs.next();
         int check = rs.getInt(1);
         rs.close();
@@ -1193,6 +1661,14 @@ public class JDPSSetInt extends JDTestcase {
         assertCondition(check == -10012);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -1202,17 +1678,20 @@ public class JDPSSetInt extends JDTestcase {
    **/
   public void Var043() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SETDFP34);
+        pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
+        String tablename34 = pstestSetdfp.getName();
+        statement_.executeUpdate("DELETE FROM " + tablename34);
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + "  VALUES (?)");
+            "INSERT INTO " + tablename34 + "  VALUES (?)");
         ps.setInt(1, -10012);
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT * FROM " + JDPSTest.PSTEST_SETDFP34);
+            .executeQuery("SELECT * FROM " + tablename34);
         rs.next();
         int check = rs.getInt(1);
         rs.close();
@@ -1220,6 +1699,14 @@ public class JDPSSetInt extends JDTestcase {
         assertCondition(check == -10012);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
 
@@ -1229,10 +1716,13 @@ public class JDPSSetInt extends JDTestcase {
    * setInt() - Set a SQLXML parameter.
    **/
   public void Var044() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSetxml(connection_);
     if (checkXmlSupport()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETXML + " VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " VALUES (?)");
         try {
           ps.setInt(1, 755);
 
@@ -1246,23 +1736,36 @@ public class JDPSSetInt extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setInt() - Set an parameter for a column of a specified type.
    **/
   public void testSetInt(String columnName, int value, String outputValue) {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+          + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       ps.setInt(1, value);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_.executeQuery(
-          "SELECT " + columnName + " FROM " + JDPSTest.PSTEST_SET);
+          "SELECT " + columnName + " FROM " + pstestSet.getName());
       rs.next();
       String check = "" + rs.getString(1);
       rs.close();
@@ -1271,6 +1774,14 @@ public class JDPSSetInt extends JDTestcase {
           " got " + check + " sb " + outputValue+" from "+value);
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 

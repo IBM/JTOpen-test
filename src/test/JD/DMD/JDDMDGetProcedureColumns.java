@@ -11,23 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetProcedureColumns.java
  //
  // Classes:      JDDMDGetProcedureColumns
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // LUW differences
- // ---------------
- // 1.  Empty string for column pattern returns answers Var023
- //
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -3289,6 +3277,10 @@ Created 1/31/2011 for CPS 8DHTTE.
 	  checkRSMD(false);
   }
   public void Var053() {
+    /* If this returns the wrong information, make sure the correct information is generated using  */
+    /* COMMENT ON TABLE SYSIBM.SQLPROCEDURECOLS IS 'RESET';  */
+    /* CALL QSYS/QSQSYSIBM */ 
+    
 	  checkRSMD(true);
   }
 

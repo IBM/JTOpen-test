@@ -30,9 +30,12 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
+
+import test.JD.JDSerializeFile;
 
 
 
@@ -147,9 +150,11 @@ statement is closed.
 **/
     public void Var001()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_105) VALUES (?)");
             ps.close ();
             ps.setBigDecimal (1, new BigDecimal (0.43453));
@@ -157,6 +162,14 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -168,9 +181,11 @@ specified.
 **/
     public void Var002()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             ps.setBigDecimal (100, new BigDecimal (4.43233));
             ps.close ();
@@ -178,7 +193,15 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-        }
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+       }
     }
 
 
@@ -188,9 +211,11 @@ setBigDecimal() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             ps.setBigDecimal (0, new BigDecimal (-22.4538));
             ps.close ();
@@ -198,6 +223,14 @@ setBigDecimal() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -208,9 +241,11 @@ setBigDecimal() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             ps.setBigDecimal (-1, new BigDecimal (22.594));
             ps.close ();
@@ -218,6 +253,14 @@ setBigDecimal() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -229,18 +272,20 @@ greater than 1.
 **/
     public void Var005()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_KEY, C_NUMERIC_105) VALUES (?, ?)");
             ps.setString (1, "Test");
             ps.setBigDecimal (2, new BigDecimal ("-423.43"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 2);
             rs.close ();
@@ -249,6 +294,14 @@ greater than 1.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -259,17 +312,19 @@ setBigDecimal() - Should set to SQL NULL when null is passed.
 **/
     public void Var006()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_105) VALUES (?)");
             ps.setBigDecimal (1, null);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             boolean wn = rs.wasNull ();
@@ -279,6 +334,14 @@ setBigDecimal() - Should set to SQL NULL when null is passed.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -310,17 +373,19 @@ setBigDecimal() - Set a SMALLINT parameter.
 **/
     public void Var008()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_SMALLINT) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (264.0));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -329,6 +394,14 @@ setBigDecimal() - Set a SMALLINT parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -340,17 +413,19 @@ by silently truncating the data.
 **/
     public void Var009()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_SMALLINT) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (12.2222));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -359,6 +434,14 @@ by silently truncating the data.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -370,29 +453,39 @@ will result in a DataTruncation exception.
 **/
     public void Var010()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_SMALLINT) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (12020282.0));
-            ps.execute(); 
+            ps.execute();
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
             if (getDriver() == JDTestDriver.DRIVER_JCC) {
-              String exmessage = e.toString(); 
+              String exmessage = e.toString();
               if (exmessage.indexOf("Invalid data conversion") >= 0) {
-                succeeded(); 
+                succeeded();
               } else {
-                e.printStackTrace(); 
-                failed("Unexpected exception "+exmessage); 
+                e.printStackTrace();
+                failed("Unexpected exception "+exmessage);
               }
             } else {
 
-		  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V6R1");
+    assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V6R1");
 
+            }
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -404,17 +497,19 @@ setBigDecimal() - Set an INTEGER parameter.
 **/
     public void Var011()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (6793.0));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -423,6 +518,14 @@ setBigDecimal() - Set an INTEGER parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -434,17 +537,19 @@ by silently truncating the data.
 **/
     public void Var012()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (6.83));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -453,6 +558,14 @@ by silently truncating the data.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -464,29 +577,39 @@ will result in a DataTruncation exception.
 **/
     public void Var013()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (1484573742020282.0));
-            ps.execute(); 
+            ps.execute();
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            String exmessage = e.toString(); 
+            String exmessage = e.toString();
             if (exmessage.indexOf("Invalid data conversion") >= 0) {
-              succeeded(); 
+              succeeded();
             } else {
-              e.printStackTrace(); 
-              failed("Unexpected exception "+exmessage); 
+              e.printStackTrace();
+              failed("Unexpected exception "+exmessage);
             }
           } else {
-		  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V7R1");
+    assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V7R1");
 
           }
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -497,17 +620,19 @@ setBigDecimal() - Set a REAL parameter.
 **/
     public void Var014()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_REAL) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("-92.2497"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_REAL FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_REAL FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 4);
             rs.close ();
@@ -516,6 +641,14 @@ setBigDecimal() - Set a REAL parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -526,17 +659,19 @@ setBigDecimal() - Set a FLOAT parameter.
 **/
     public void Var015()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_FLOAT) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (0.123));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_FLOAT FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_FLOAT FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 3);
             rs.close ();
@@ -545,6 +680,14 @@ setBigDecimal() - Set a FLOAT parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -555,17 +698,19 @@ setBigDecimal() - Set an DOUBLE parameter.
 **/
     public void Var016()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DOUBLE) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (0.222903441));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_DOUBLE FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_DOUBLE FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 9);
             rs.close ();
@@ -574,6 +719,14 @@ setBigDecimal() - Set an DOUBLE parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -584,17 +737,19 @@ setBigDecimal() - Set an DECIMAL parameter.
 **/
     public void Var017()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DECIMAL_105) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("4001.23421"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_105 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_105 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 5);
             rs.close ();
@@ -603,6 +758,14 @@ setBigDecimal() - Set an DECIMAL parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -613,11 +776,13 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big.
 **/
     public void Var018()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DECIMAL_50) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (324512.21));
             ps.execute();
@@ -625,32 +790,40 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big.
         }
         catch (Exception e) {
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            String expected = "Exception occurred during BigDecimal conversion"; 
-            String exmessage = e.toString(); 
+            String expected = "Exception occurred during BigDecimal conversion";
+            String exmessage = e.toString();
             if (exmessage.indexOf(expected ) >= 0) {
-              succeeded(); 
+              succeeded();
             } else {
-              // e.printStackTrace(); 
-              failed("Unexpected exception '"+exmessage+"' expected '"+expected+"'"); 
+              // e.printStackTrace();
+              failed("Unexpected exception '"+exmessage+"' expected '"+expected+"'");
             }
           } else {
-	      if (e instanceof DataTruncation) { 
-		  DataTruncation dt = (DataTruncation)e;
-		  assertCondition ((dt.getIndex() == 1)
-				   && (dt.getParameter() == true)
-				   && (dt.getRead() == false)
-				   && (dt.getTransferSize() == 5));
-	      } else {
-		  // Data type mismatch is now the expected exception for overflow
-		  if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-		  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in latest toolbox");
+       if (e instanceof DataTruncation) {
+    DataTruncation dt = (DataTruncation)e;
+    assertCondition ((dt.getIndex() == 1)
+       && (dt.getParameter() == true)
+       && (dt.getRead() == false)
+       && (dt.getTransferSize() == 5));
+       } else {
+    // Data type mismatch is now the expected exception for overflow
+    if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+    assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in latest toolbox");
 
-		  } else { 
-		      
-			failed("Unexpected exception '"+e+"' expected data truncation");
-		  }
-	      }
+    } else {
+        
+   failed("Unexpected exception '"+e+"' expected data truncation");
+    }
+       }
           }
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -662,17 +835,19 @@ fraction truncates.  This should work.
 **/
     public void Var019()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DECIMAL_50) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("40013.23421"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_50 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -681,6 +856,14 @@ fraction truncates.  This should work.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -691,17 +874,19 @@ setBigDecimal() - Set an NUMERIC parameter.
 **/
     public void Var020()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_105) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("7742"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_105 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 4);
             rs.close ();
@@ -710,6 +895,14 @@ setBigDecimal() - Set an NUMERIC parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -726,11 +919,13 @@ do that. :)
 **/
     public void Var021()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_105) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (2173345334.42));
             ps.execute();
@@ -795,6 +990,14 @@ do that. :)
 	      }
 
           }
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -806,17 +1009,19 @@ fraction truncates.  This should work.
 **/
     public void Var022()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_50) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("-40013.23421"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_NUMERIC_50 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -825,6 +1030,14 @@ fraction truncates.  This should work.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -835,17 +1048,19 @@ setBigDecimal() - Set an CHAR(50) parameter.
 **/
     public void Var023()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_50) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (-1842.7993322));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 7);
             rs.close ();
@@ -854,6 +1069,14 @@ setBigDecimal() - Set an CHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -864,17 +1087,19 @@ setBigDecimal() - Set an CHAR(1) parameter.
 **/
     public void Var024()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_1) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("8"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 0);
             rs.close ();
@@ -883,6 +1108,14 @@ setBigDecimal() - Set an CHAR(1) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -893,29 +1126,39 @@ setBigDecimal() - Set an CHAR(1) parameter, when the value is too big.
 **/
     public void Var025()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_1) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (533.25));
-            ps.execute(); 
+            ps.execute();
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            String exmessage = e.toString(); 
-            /* SQL0302 = Conversion error on host variable or parameter */ 
+            String exmessage = e.toString();
+            /* SQL0302 = Conversion error on host variable or parameter */
             if (exmessage.indexOf("-302") >= 0) {
-              succeeded(); 
+              succeeded();
             } else {
-              e.printStackTrace(); 
-              failed("Unexpected exception "+exmessage); 
+              e.printStackTrace();
+              failed("Unexpected exception "+exmessage);
             }
-          } else { 
+          } else {
             assertExceptionIsInstanceOf (e, "java.sql.DataTruncation");
           }
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -926,17 +1169,19 @@ setBigDecimal() - Set an VARCHAR parameter.
 **/
     public void Var026()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("0.8766753"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 7);
             rs.close ();
@@ -945,6 +1190,14 @@ setBigDecimal() - Set an VARCHAR parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+          if (pstestSet != null) {
+              try {
+                  pstestSet.close();
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+          }
         }
     }
 
@@ -956,9 +1209,11 @@ setBigDecimal() - Set a CLOB parameter.
     public void Var027()
     {
         if (checkLobSupport ()) {
-            try {
+          JDSerializeFile pstestSet = null;
+          try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_CLOB) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (542.36));
                 ps.execute(); 
@@ -967,6 +1222,14 @@ setBigDecimal() - Set a CLOB parameter.
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+            } finally {
+              if (pstestSet != null) {
+                try {
+                  pstestSet.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -980,9 +1243,11 @@ setBigDecimal() - Set a DBCLOB parameter.
     public void Var028()
     {
         if (checkLobSupport ()) {
-            try {
+          JDSerializeFile pstestSet = null;
+          try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DBCLOB) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (5.4324));
                 ps.execute(); 
@@ -991,7 +1256,15 @@ setBigDecimal() - Set a DBCLOB parameter.
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-            }
+            } finally {
+              if (pstestSet != null) {
+                try {
+                  pstestSet.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+           }
         }
     }
 
@@ -1002,9 +1275,11 @@ setBigDecimal() - Set a BINARY parameter.
 **/
     public void Var029()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BINARY_20) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (45.445));
             ps.executeUpdate ();
@@ -1013,6 +1288,14 @@ setBigDecimal() - Set a BINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1024,9 +1307,11 @@ setBigDecimal() - Set a VARBINARY parameter.
 **/
     public void Var030()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARBINARY_20) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (0.94431));
             ps.executeUpdate ();
@@ -1035,6 +1320,14 @@ setBigDecimal() - Set a VARBINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1046,9 +1339,11 @@ setBigDecimal() - Set a BLOB parameter.
 **/
     public void Var031()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BLOB) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (-54.433));
             ps.executeUpdate(); 
@@ -1057,6 +1352,14 @@ setBigDecimal() - Set a BLOB parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1068,9 +1371,11 @@ setBigDecimal() - Set a DATE parameter.
 **/
     public void Var032()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DATE) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (-6.54));
             ps.executeUpdate(); 
@@ -1079,6 +1384,14 @@ setBigDecimal() - Set a DATE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1089,9 +1402,11 @@ setBigDecimal() - Set a TIME parameter.
 **/
     public void Var033()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIME) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (-0.31));
             ps.executeUpdate(); 
@@ -1100,6 +1415,14 @@ setBigDecimal() - Set a TIME parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1110,9 +1433,11 @@ setBigDecimal() - Set a TIMESTAMP parameter.
 **/
     public void Var034()
     {
-        try {
+      JDSerializeFile pstestSet = null;
+      try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIMESTAMP) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal (-544.0));
             ps.executeUpdate(); 
@@ -1121,6 +1446,14 @@ setBigDecimal() - Set a TIMESTAMP parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
     }
 
@@ -1139,9 +1472,11 @@ setBigDecimal() - Set a DATALINK parameter.
             return;
         }
         if (checkLobSupport ()) {
-            try {
+          JDSerializeFile pstestSet = null;
+          try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATALINK) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (5.543));
                 ps.executeUpdate(); 
@@ -1150,6 +1485,14 @@ setBigDecimal() - Set a DATALINK parameter.
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+            } finally {
+              if (pstestSet != null) {
+                try {
+                  pstestSet.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -1162,18 +1505,20 @@ into it with silent truncation with the setBigDecimal method.
 **/
     public void Var036()
     {
+        JDSerializeFile pstestSet = null;
         if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DISTINCT) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (-9.813));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1182,6 +1527,14 @@ into it with silent truncation with the setBigDecimal method.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1193,18 +1546,20 @@ setBigDecimal() - Set a BIGINT parameter.
 **/
     public void Var037()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBigintSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BIGINT) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (-67393.0));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1213,6 +1568,14 @@ setBigDecimal() - Set a BIGINT parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1225,18 +1588,20 @@ by silently truncating the data.
 **/
     public void Var038()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBigintSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BIGINT) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (-6.834));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1245,6 +1610,14 @@ by silently truncating the data.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1257,31 +1630,41 @@ will result in a DataTruncation exception.
 **/
     public void Var039()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBigintSupport()) {
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BIGINT) VALUES (?)");
             ps.setBigDecimal (1, new BigDecimal ("9999999999999999999494"));
-            ps.executeUpdate(); 
+            ps.executeUpdate();
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            String exmessage = e.toString(); 
+            String exmessage = e.toString();
             if (exmessage.indexOf("Invalid data conversion") >= 0) {
-              succeeded(); 
+              succeeded();
             } else {
-              e.printStackTrace(); 
-              failed("Unexpected exception "+exmessage); 
+              e.printStackTrace();
+              failed("Unexpected exception "+exmessage);
             }
-          } else { 
-		  assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V7R1");
+          } else {
+    assertSqlException(e, -99999, "07006", "Data type mismatch", "Mismatch instead of truncation in V7R1");
 
           }
           
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         }
     }
@@ -1294,22 +1677,24 @@ package cache.
 **/
     public void Var040()
     {
+        JDSerializeFile pstestSet = null;
         if (getDriver() == JDTestDriver.DRIVER_JCC) {
-          notApplicable("Toolbox testcase"); 
-          return; 
+          notApplicable("Toolbox testcase");
+          return;
         }
         try {
-            String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            String insert = "INSERT INTO " + pstestSet.getName()
                             + " (C_DOUBLE) VALUES (?)";
 
             if (isToolboxDriver())
-                JDSetupPackage.prime (systemObject_, PACKAGE, 
+                JDSetupPackage.prime (systemObject_, PACKAGE,
                                       JDPSTest.COLLECTION, insert);
             else
-                JDSetupPackage.prime (systemObject_, encryptedPassword_, PACKAGE, 
+                JDSetupPackage.prime (systemObject_, encryptedPassword_, PACKAGE,
                                       JDPSTest.COLLECTION, insert, "", getDriver());
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             Connection c2 = testDriver_.getConnection (baseURL_
                                                        + ";extended dynamic=true;package=" + PACKAGE
@@ -1321,15 +1706,23 @@ package cache.
             ps.close ();
             c2.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_DOUBLE FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_DOUBLE FROM " + pstestSet.getName());
             rs.next ();
             BigDecimal check = rs.getBigDecimal (1, 5);
-            rs.close ();            
+            rs.close ();
 
             assertCondition (compare (check, 2.13598));
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -1342,19 +1735,21 @@ setBigDecimal() - Set a SMALLINT parameter, when there is a decimal part but dat
 **/
     public void Var041()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_SMALLINT) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (12.2222));
                 ps.executeUpdate ();
                 ps.close ();
 
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1363,6 +1758,14 @@ setBigDecimal() - Set a SMALLINT parameter, when there is a decimal part but dat
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1378,19 +1781,21 @@ setBigDecimal() - Set an INTEGER parameter, when there is a decimal part,
 **/
     public void Var042()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_INTEGER) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (6.83));
                 ps.executeUpdate ();
                 ps.close ();
 
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_INTEGER FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1399,6 +1804,14 @@ setBigDecimal() - Set an INTEGER parameter, when there is a decimal part,
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1414,19 +1827,21 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big,
 **/
     public void Var043()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_DECIMAL_50) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (12.21));
                 ps.executeUpdate ();
                 ps.close ();
 
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_50 FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DECIMAL_50 FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1435,6 +1850,14 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big,
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1450,12 +1873,14 @@ setBigDecimal() - Set an NUMERIC parameter, when the value is too big, but the d
 **/
     public void Var044()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_NUMERIC_105) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (217334.42));
                 failed ("Didn't throw SQLException");
@@ -1467,17 +1892,25 @@ setBigDecimal() - Set an NUMERIC parameter, when the value is too big, but the d
                         && (dt.getParameter() == true)            // I just thought I would be a good
                         && (dt.getRead() == false)                // citizen. :)
                         && (dt.getTransferSize() == 10));
-		else {
-		    if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 49160) {
-			notApplicable("Native driver fix in PTF V7R1 SI49160" );
-			return; 
-		    }
+  else {
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 49160) {
+   notApplicable("Native driver fix in PTF V7R1 SI49160" );
+   return;
+      }
                     assertCondition ((dt.getIndex() == 1)
                         && (dt.getParameter() == true)
                         && (dt.getRead() == false)
                         && (dt.getDataSize() == 11)
                         && (dt.getTransferSize() == 10), "Updated 1/18/2013 for V7R1 fix");
-		}
+  }
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1492,19 +1925,21 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
 **/
     public void Var045()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_CHAR_1) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (533.25));
                 ps.executeUpdate ();
                 ps.close ();
 
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1, 0);
                 rs.close ();
@@ -1513,6 +1948,14 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1787,13 +2230,16 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
 
 
 
-    public boolean testDfp(StringBuffer sb, String table, String input, String expected, String exceptionInfo) {
+    public boolean testDfp(StringBuffer sb,int tableId, String input, String expected, String exceptionInfo) {
       boolean passed = true; 
+      JDSerializeFile pstestSetdfp = null;
       try {
-        statement_.executeUpdate ("DELETE FROM " + table);
+        pstestSetdfp = JDPSTest.getSerializeFile(connection_, tableId);
+        String tablename = pstestSetdfp.getName();
+        statement_.executeUpdate ("DELETE FROM " + tablename);
         
         PreparedStatement ps = connection_.prepareStatement (
-            "INSERT INTO " + table    + " (C1) VALUES (?)");
+            "INSERT INTO " + tablename    + " (C1) VALUES (?)");
         ps.setBigDecimal (1, new BigDecimal (input ));
         ps.executeUpdate ();
         SQLWarning warning = ps.getWarnings();
@@ -1802,7 +2248,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
         }
         ps.close ();
         
-        ResultSet rs = statement_.executeQuery ("SELECT C1 FROM " + table);
+        ResultSet rs = statement_.executeQuery ("SELECT C1 FROM " + tablename);
         rs.next ();
         String check = rs.getString(1); 
         rs.close ();
@@ -1836,11 +2282,19 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
             sb.append("FAILED:  Unexpected Exception "+exToString+" expected "+exceptionInfo+"\n");
           }
         }
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
       return passed; 
     }
     
-    public void testDfp(String table, String input, String expected, String exceptionInfo) {
+    public void testDfp(int table, String input, String expected, String exceptionInfo) {
       StringBuffer sb = new StringBuffer(); 
       if (checkDecFloatSupport()) {
         boolean passed = testDfp(sb, table, input,expected, exceptionInfo);
@@ -1848,11 +2302,10 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
       }
     }
 
-    public void testDfp(String table, String[][] testValues) {
+    public void testDfp(int table, String[][] testValues) {
       if (checkDecFloatSupport()) {
         StringBuffer sb = new StringBuffer(); 
         boolean passed = true; 
-        
         for (int i = 0; i < testValues.length; i++) { 
           String input = testValues[i][0]; 
           String expected = testValues[i][1]; 
@@ -1862,6 +2315,8 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
           
         }
         assertCondition(passed,sb); 
+        
+        
       }
     }
 
@@ -1871,7 +2326,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
     **/
    public void Var051()
    {
-     testDfp (JDPSTest.PSTEST_SETDFP16, "40013.23421123456",  "40013.23421123456", null); 
+     testDfp (JDPSTest.SETDFP16, "40013.23421123456",  "40013.23421123456", null); 
    }
 
     
@@ -1881,7 +2336,7 @@ setBigDecimal() - Set a CHAR(1) parameter, when the value is too big, but the da
      **/
     public void Var052()
     {
-      testDfp (JDPSTest.PSTEST_SETDFP16, "40013.23421123456789",  "40013.23421123457", null); 
+      testDfp (JDPSTest.SETDFP16, "40013.23421123456789",  "40013.23421123457", null); 
     }
 
 /**
@@ -1890,7 +2345,7 @@ setBigDecimal() - Set an DFP16 parameter -- maximum value .
     public void Var053()
     {
 	String expected="9.999999999999999E+384";
-	testDfp(JDPSTest.PSTEST_SETDFP16, "9.999999999999999E384", expected, null); 
+	testDfp(JDPSTest.SETDFP16, "9.999999999999999E384", expected, null); 
     }
     
     
@@ -1902,7 +2357,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
 	String expected="1.0E-383";
 
 
-        testDfp(JDPSTest.PSTEST_SETDFP16, "1.0E-383",  expected, null ); 
+        testDfp(JDPSTest.SETDFP16, "1.0E-383",  expected, null ); 
     }
     
     /**
@@ -1911,12 +2366,12 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
         public void Var055()
         {
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            testDfp(JDPSTest.PSTEST_SETDFP16, 
+            testDfp(JDPSTest.SETDFP16, 
                 "9.999999999999999E385", 
                 "Exception", 
             "Infinity or -Infinity received for DECFLOAT(16)");
           } else { 
-            testDfp(JDPSTest.PSTEST_SETDFP16, "9.999999999999999E385", "Exception", "Data type mismatch");
+            testDfp(JDPSTest.SETDFP16, "9.999999999999999E385", "Exception", "Data type mismatch");
           }
         }
         
@@ -1926,7 +2381,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
     **/
         public void Var056()
         {
-            testDfp(JDPSTest.PSTEST_SETDFP16, "1.0E-399",  "Exception", "Data type mismatch" ); 
+            testDfp(JDPSTest.SETDFP16, "1.0E-399",  "Exception", "Data type mismatch" ); 
         }
         
     /**
@@ -1967,7 +2422,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
               {"123456789012345.6",            "123456789012345.6",      null, "Without E"},              
               {"1234567890123456.0000000",     "1234567890123456",       null, "Without E"},              
           };
-	      testDfp(JDPSTest.PSTEST_SETDFP16, testValues);
+	      testDfp(JDPSTest.SETDFP16, testValues);
         }
 
     
@@ -1977,7 +2432,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
     **/
    public void Var058()
    { 
-     testDfp (JDPSTest.PSTEST_SETDFP34, "40013.18181818181818181823421123456",  "40013.18181818181818181823421123456", null); 
+     testDfp (JDPSTest.SETDFP34, "40013.18181818181818181823421123456",  "40013.18181818181818181823421123456", null); 
    }
 
     
@@ -1987,7 +2442,7 @@ setBigDecimal() - Set an DFP16 parameter -- minimum positive value .
      **/
     public void Var059()
     {
-      testDfp (JDPSTest.PSTEST_SETDFP34, "40013.18181818181818181823421123456789",  "40013.18181818181818181823421123457", null); 
+      testDfp (JDPSTest.SETDFP34, "40013.18181818181818181823421123456789",  "40013.18181818181818181823421123457", null); 
     }
 
 /**
@@ -1997,7 +2452,7 @@ setBigDecimal() - Set an DFP34 parameter -- maximum value .
     {
 	      String expected = "9.999999999999999000000000000000000E+6144";
 
-	      testDfp(JDPSTest.PSTEST_SETDFP34, "9.999999999999999E6144", expected, null);
+	      testDfp(JDPSTest.SETDFP34, "9.999999999999999E6144", expected, null);
     }
     
     
@@ -2008,7 +2463,7 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
     {
 	      String expected = "1.0E-6143";
 
-	      testDfp(JDPSTest.PSTEST_SETDFP34, "1.0E-6143",  expected, null );
+	      testDfp(JDPSTest.SETDFP34, "1.0E-6143",  expected, null );
     }
     
     /**
@@ -2016,7 +2471,7 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
     **/
         public void Var062()
         {
-          testDfp(JDPSTest.PSTEST_SETDFP34, "9.999999999999999E6145", "Exception", "Data type mismatch"); 
+          testDfp(JDPSTest.SETDFP34, "9.999999999999999E6145", "Exception", "Data type mismatch"); 
         }
         
         
@@ -2025,7 +2480,7 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
     **/
         public void Var063()
         {
-            testDfp(JDPSTest.PSTEST_SETDFP34, "1.0E-6177",  "Exception", "Data type mismatch" ); 
+            testDfp(JDPSTest.SETDFP34, "1.0E-6177",  "Exception", "Data type mismatch" ); 
         }
         
     /**
@@ -2091,7 +2546,7 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
 	      } 
 
 
-	      testDfp(JDPSTest.PSTEST_SETDFP34, testValues);
+	      testDfp(JDPSTest.SETDFP34, testValues);
         }
 
 
@@ -2170,33 +2625,36 @@ setBigDecimal() - Set an DFP34 parameter -- minimum positive value .
 
 
 
-/**
-setBigDecimal() - Set an SQLXML parameter.
-**/
-	public void Var066()
-	{
-	    if (checkXmlSupport()) {
-		try { 
-		    PreparedStatement ps =
-		      connection_.prepareStatement (
-						    "INSERT INTO " +
-						    JDPSTest.PSTEST_SETXML
-						    + " VALUES (?)");
-		    try {
-			ps.setBigDecimal (1, new BigDecimal (-6.54));
-			ps.executeUpdate(); 
-			ps.close ();
-			failed ("Didn't throw SQLException");
-		    }
-		    catch (Exception e) {
-			assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-		    }
-		} catch (Exception e) {
-		    failed(e, "Unexpected exception"); 
-		} 
-	    }
-	}
-
+        /**
+         * setBigDecimal() - Set an SQLXML parameter.
+         **/
+        public void Var066() {
+          if (checkXmlSupport()) {
+            JDSerializeFile pstestSet = null;
+            try {
+              pstestSet = JDPSTest.getPstestSetxml(connection_);
+              PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + pstestSet.getName() + " VALUES (?)");
+              try {
+                ps.setBigDecimal(1, new BigDecimal(-6.54));
+                ps.executeUpdate();
+                ps.close();
+                failed("Didn't throw SQLException");
+              } catch (Exception e) {
+                assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+              }
+            } catch (Exception e) {
+              failed(e, "Unexpected exception");
+            } finally {
+              if (pstestSet != null) {
+                try {
+                  pstestSet.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+            }
+          }
+        }
 
 /**
 setBigDecimal() - Set a boolean parameter.
@@ -2204,17 +2662,19 @@ setBigDecimal() - Set a boolean parameter.
     public void Var067()
     {
         if (checkBooleanSupport()) {
+          JDSerializeFile pstestSet = null;
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BOOLEAN) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (1.0));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1);
                 rs.close ();
@@ -2223,6 +2683,14 @@ setBigDecimal() - Set a boolean parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -2233,18 +2701,20 @@ setBigDecimal() - Set a boolean parameter.
 **/
     public void Var068()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBooleanSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BOOLEAN) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal (0.0));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1);
                 rs.close ();
@@ -2253,6 +2723,14 @@ setBigDecimal() - Set a boolean parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -2264,18 +2742,20 @@ setBigDecimal() - Set a boolean parameter.
 **/
     public void Var069()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBooleanSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BOOLEAN) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal(2378.9));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1);
                 rs.close ();
@@ -2284,6 +2764,14 @@ setBigDecimal() - Set a boolean parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -2294,18 +2782,20 @@ setBigDecimal() - Set a boolean parameter.
 **/
     public void Var070()
     {
+        JDSerializeFile pstestSet = null;
         if (checkBooleanSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_BOOLEAN) VALUES (?)");
                 ps.setBigDecimal (1, new BigDecimal(-2378.9));
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BOOLEAN FROM " + pstestSet.getName());
                 rs.next ();
                 BigDecimal check = rs.getBigDecimal (1);
                 rs.close ();
@@ -2314,6 +2804,14 @@ setBigDecimal() - Set a boolean parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }

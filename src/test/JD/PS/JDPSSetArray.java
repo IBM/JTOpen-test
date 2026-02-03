@@ -17,6 +17,7 @@ package test.JD.PS;
 import com.ibm.as400.access.AS400;
 
 import test.JDPSTest;
+import test.JD.JDSerializeFile;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
@@ -146,15 +147,25 @@ public class JDPSSetArray extends JDTestcase {
    * setArray() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         ps.close();
         ps.setArray(1, new TestArray());
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -163,15 +174,25 @@ public class JDPSSetArray extends JDTestcase {
    * setArray() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         ps.setArray(100, new TestArray());
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -180,15 +201,25 @@ public class JDPSSetArray extends JDTestcase {
    * setArray() - Should throw exception when index is 0.
    **/
   public void Var003() {
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         ps.setArray(0, new TestArray());
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -197,15 +228,25 @@ public class JDPSSetArray extends JDTestcase {
    * setArray() - Should throw exception when index is -1.
    **/
   public void Var004() {
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         ps.setArray(0, new TestArray());
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -214,11 +255,12 @@ public class JDPSSetArray extends JDTestcase {
    * setArray() - Should throw exception when the value is null.
    **/
   public void Var005() {
-
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         ps.setArray(1, null);
         ps.close();
 
@@ -231,6 +273,14 @@ public class JDPSSetArray extends JDTestcase {
         }
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -240,15 +290,25 @@ public class JDPSSetArray extends JDTestcase {
    * than 1.
    **/
   public void Var006() {
+    JDSerializeFile pstestSet = null;
     if (checkJdbc20()) {
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
         ps.setArray(2, new TestArray());
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -273,14 +333,24 @@ public class JDPSSetArray extends JDTestcase {
 
   public void testSetFailed(String columnName, Array inArray) {
     if (checkJdbc20()) {
+      JDSerializeFile pstestSet = null;
       try {
+        pstestSet = JDPSTest.getPstestSet(connection_);
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+            + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
         ps.setArray(1, inArray);
         ps.executeUpdate();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
 
@@ -444,13 +514,24 @@ public class JDPSSetArray extends JDTestcase {
    **/
   public void Var028() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
+        pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + " VALUES (?)");
+            "INSERT INTO " + pstestSetdfp.getName() + " VALUES (?)");
         ps.setArray(1, new TestArray());
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
       }
     }
   }
@@ -460,13 +541,23 @@ public class JDPSSetArray extends JDTestcase {
    **/
   public void Var029() {
     if (checkDecFloatSupport()) {
+      JDSerializeFile pstestSetdfp = null;
       try {
+        pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + " VALUES (?)");
+            "INSERT INTO " + pstestSetdfp.getName() + " VALUES (?)");
         ps.setArray(1, new TestArray());
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSetdfp != null) {
+          try {
+            pstestSetdfp.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -477,9 +568,11 @@ public class JDPSSetArray extends JDTestcase {
   public void Var030() {
     String added = " -- added by native driver 08/21/2009";
     if (checkXmlSupport()) {
+      JDSerializeFile pstestSetxml = null;
       try {
+        pstestSetxml = JDPSTest.getPstestSetxml(connection_);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETXML + " VALUES (?)");
+            "INSERT INTO " + pstestSetxml.getName() + " VALUES (?)");
 
         try {
           ps.setArray(1, new TestArray());
@@ -489,6 +582,15 @@ public class JDPSSetArray extends JDTestcase {
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception" + added);
+      } finally {
+        if (pstestSetxml != null) {
+          try {
+            pstestSetxml.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
       }
     }
   }

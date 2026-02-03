@@ -11,23 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetAsciiStream.java
 //
 // Classes:      JDPSSetAsciiStream
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -39,6 +27,7 @@ import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
 import test.JD.JDWeirdInputStream;
@@ -144,17 +133,27 @@ Performs cleanup needed after running variations.
     }
 
     public void setInvalid(String column, String inputValue)  {
+      JDSerializeFile pstestSet = null;
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        pstestSet = JDPSTest.getPstestSet(connection_);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " ("+column+") VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " ("+column+") VALUES (?)");
         InputStream is = new ByteArrayInputStream(inputValue.getBytes("ISO8859_1"));
         ps.setAsciiStream(1, is, is.available());
         ps.close();
         failed("Didn't throw SQLException for column("+column+") inputValue("+inputValue+")");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      } finally {
+        if (pstestSet != null) {
+          try {
+            pstestSet.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
 
@@ -165,9 +164,11 @@ statement is closed.
 **/
     public void Var001()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.close ();
             InputStream is = new ByteArrayInputStream ("Canada".getBytes ("ISO8859_1"));
@@ -176,6 +177,14 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -187,9 +196,11 @@ specified.
 **/
     public void Var002()
     {
+      JDSerializeFile pstestSet = null; 
         try {
+          pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("United States".getBytes ("ISO8859_1"));
             ps.setAsciiStream (100, is, is.available ());
@@ -198,6 +209,14 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+          if (pstestSet != null) {
+            try {
+              pstestSet.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            } 
+          }
         }
     }
 
@@ -208,9 +227,11 @@ setAsciiStream() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("Mexico".getBytes ("ISO8859_1"));
             ps.setAsciiStream (0, is, is.available ());
@@ -219,6 +240,14 @@ setAsciiStream() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -229,9 +258,11 @@ setAsciiStream() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("Virgin Islands".getBytes ("ISO8859_1"));
             ps.setAsciiStream (0, is, is.available ());
@@ -240,6 +271,14 @@ setAsciiStream() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -250,17 +289,19 @@ setAsciiStream() - Should set to SQL NULL when the value is null.
 **/
     public void Var005()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setAsciiStream (1, null, 0);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             boolean wn = rs.wasNull ();
@@ -270,6 +311,14 @@ setAsciiStream() - Should set to SQL NULL when the value is null.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -281,11 +330,13 @@ greater than 1.
 **/
     public void Var006()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
             ps.setString (1, "Muchas");
             InputStream is = new ByteArrayInputStream ("El Salvador".getBytes ("ISO8859_1"));
@@ -293,7 +344,7 @@ greater than 1.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
 
@@ -303,6 +354,14 @@ greater than 1.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -313,9 +372,11 @@ setAsciiStream() - Should throw exception when the length is not valid.
 **/
     public void Var007()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Banana Republic".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, -1);
@@ -323,6 +384,14 @@ setAsciiStream() - Should throw exception when the length is not valid.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -355,12 +424,14 @@ posted when data is truncated.
 **/
     public void Var009()
     {
+        JDSerializeFile pstestSet = null;
         int length = 0;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             String s = "Panama is yet another country that is in Central America";
             InputStream is = new ByteArrayInputStream (s.getBytes ("ISO8859_1"));
@@ -378,6 +449,14 @@ posted when data is truncated.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -454,9 +533,11 @@ setAsciiStream() - Set a NUMERIC parameter.
 **/
     public void Var016()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Brazil".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
@@ -465,6 +546,14 @@ setAsciiStream() - Set a NUMERIC parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -475,18 +564,20 @@ setAsciiStream() - Set a CHAR(1) parameter.
 **/
     public void Var017()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_1) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("U".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -495,6 +586,14 @@ setAsciiStream() - Set a CHAR(1) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -506,18 +605,20 @@ setAsciiStream() - Set a CHAR(50) parameter.
 **/
     public void Var018()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_CHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Uruguay".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -526,6 +627,14 @@ setAsciiStream() - Set a CHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -537,26 +646,36 @@ the full stream.
 **/
     public void Var019()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Tobago".getBytes ("ISO8859_1"));
             InputStream is2 = new ByteArrayInputStream ("Tob".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is2.available ());
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		succeeded();						// @E3
-	    else							// @E3
-		failed ("Didn't throw SQLException");
+     if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
+  succeeded();						// @E3
+     else							// @E3
+  failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		failed(e, "Unexpected Exception.");			// @E3
-	    else							// @E3
+     if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
+  failed(e, "Unexpected Exception.");			// @E3
+     else							// @E3
 
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+  assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -568,11 +687,13 @@ the full stream.
 **/
     public void Var020()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Long Island".getBytes ("ISO8859_1"));
             InputStream is2 = new ByteArrayInputStream ("Long Island and more".getBytes ("ISO8859_1"));
@@ -581,6 +702,14 @@ the full stream.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -591,26 +720,36 @@ setAsciiStream() - Set a VARCHAR(50) parameter, with the length set to 1 charact
 **/
     public void Var021()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Yucatan Penisula".getBytes ("ISO8859_1"));
             InputStream is2 = new ByteArrayInputStream ("Y".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is2.available ());
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		succeeded();						// @E3
-	    else							// @E3
-		failed ("Didn't throw SQLException");
+     if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
+  succeeded();						// @E3
+     else							// @E3
+  failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		failed(e, "Unexpected Exception.");			// @E3
-	    else							// @E3
+     if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
+  failed(e, "Unexpected Exception.");			// @E3
+     else							// @E3
 
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+  assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -621,25 +760,35 @@ setAsciiStream() - Set a VARCHAR(50) parameter, with the length set to 0.
 **/
     public void Var022()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Baja California".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, 0);
-	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		succeeded();						// @E3
-	    else							// @E3
-		failed ("Didn't throw SQLException");
+     if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
+  succeeded();						// @E3
+     else							// @E3
+  failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
     	    if( getDriver() == JDTestDriver.DRIVER_NATIVE  )		// @E3
-		failed(e, "Unexpected Exception.");			// @E3
-	    else							// @E3
+  failed(e, "Unexpected Exception.");			// @E3
+     else							// @E3
 
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+  assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -650,18 +799,20 @@ setAsciiStream() - Set a VARCHAR(50) parameter to the empty string.
 **/
     public void Var023()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -670,6 +821,14 @@ setAsciiStream() - Set a VARCHAR(50) parameter to the empty string.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -680,11 +839,13 @@ setAsciiStream() - Set a VARCHAR(50) parameter to a bad input stream.
 **/
     public void Var024()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARCHAR_50) VALUES (?)");
 
             class BadInputStream extends InputStream {
@@ -709,6 +870,14 @@ setAsciiStream() - Set a VARCHAR(50) parameter to a bad input stream.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -720,19 +889,21 @@ setAsciiStream() - Set a CLOB parameter.
 **/
     public void Var025()
     {
+        JDSerializeFile pstestSet = null;
         if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_CLOB) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Argentina".getBytes ("ISO8859_1"));
                 ps.setAsciiStream (1, is, 9);
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -741,6 +912,14 @@ setAsciiStream() - Set a CLOB parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -757,17 +936,17 @@ setAsciiStream() - Set a DBCLOB parameter.
             succeeded ();
             /* Need to investigate this variation ...
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DBCLOB) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Peru".getBytes ("ISO8859_1"));
                 ps.setAsciiStream (1, is, is.available ());
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -788,11 +967,13 @@ setAsciiStream() - Set a BINARY parameter.
 **/
     public void Var027()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_BINARY_20) VALUES (?)");
 
             String expected = null;
@@ -807,7 +988,7 @@ setAsciiStream() - Set a BINARY parameter.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -818,6 +999,14 @@ setAsciiStream() - Set a BINARY parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -829,7 +1018,9 @@ setAsciiStream() - Set a VARBINARY parameter.
 **/
     public void Var028()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             String expected = null;
 
             if (isToolboxDriver())
@@ -837,17 +1028,17 @@ setAsciiStream() - Set a VARBINARY parameter.
             else
                expected = "Puerto Rico";
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_VARBINARY_20) VALUES (?)");
             InputStream is = new ByteArrayInputStream (expected.getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -856,6 +1047,14 @@ setAsciiStream() - Set a VARBINARY parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -867,25 +1066,35 @@ setAsciiStream() - Set a BLOB parameter.
 **/
     public void Var029()
     {
+        JDSerializeFile pstestSet = null;
         try
         {
-            PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
             InputStream is = new ByteArrayInputStream("FFFF1234".getBytes ("ISO8859_1"));
             ps.setAsciiStream(1, is, is.available());
             ps.close();
-	    if(getDriver() == JDTestDriver.DRIVER_NATIVE){		// @E2
-		failed("Didn't throw SQLException");			// @E2
-	    }								// @E2
-	    else							// @E2
-		succeeded();
+     if(getDriver() == JDTestDriver.DRIVER_NATIVE){		// @E2
+  failed("Didn't throw SQLException");			// @E2
+     }								// @E2
+     else							// @E2
+  succeeded();
         }
         catch(Exception e)
         {
-	    if(getDriver() == JDTestDriver.DRIVER_NATIVE){			// @E2
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @E2
-	    }									// @E2
-	    else								// @E2
-		failed(e, "Unexpected Exception - Toolbox added support for HEX String representation of binary types (01/24/2003).");
+     if(getDriver() == JDTestDriver.DRIVER_NATIVE){			// @E2
+  assertExceptionIsInstanceOf (e, "java.sql.SQLException");	// @E2
+     }									// @E2
+     else								// @E2
+  failed(e, "Unexpected Exception - Toolbox added support for HEX String representation of binary types (01/24/2003).");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -897,9 +1106,11 @@ setAsciiStream() - Set a DATE parameter.
 **/
     public void Var030()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DATE) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Virgin Islands".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
@@ -908,6 +1119,14 @@ setAsciiStream() - Set a DATE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -918,9 +1137,11 @@ setAsciiStream() - Set a TIME parameter.
 **/
     public void Var031()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIME) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Bermuda".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
@@ -929,6 +1150,14 @@ setAsciiStream() - Set a TIME parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -939,9 +1168,11 @@ setAsciiStream() - Set a TIMESTAMP parameter.
 **/
     public void Var032()
     {
+        JDSerializeFile pstestSet = null;
         try {
+            pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                                                                "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_TIMESTAMP) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Bahamas".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
@@ -950,6 +1181,14 @@ setAsciiStream() - Set a TIMESTAMP parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -959,12 +1198,14 @@ setAsciiStream() - Set a DATALINK parameter.
 **/
     public void Var033()
     {
+        JDSerializeFile pstestSet = null;
         if (checkDatalinkSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DATALINK) VALUES (DLVALUE( CAST(? AS VARCHAR(40))))");
                 String url = "http://java.sun.com/jdbc.html";
                 InputStream is = new ByteArrayInputStream (url.getBytes ("ISO8859_1"));
@@ -972,7 +1213,7 @@ setAsciiStream() - Set a DATALINK parameter.
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -981,6 +1222,14 @@ setAsciiStream() - Set a DATALINK parameter.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -992,10 +1241,12 @@ setAsciiStream() - Set a DISTINCT parameter.
 **/
     public void Var034()
     {
+        JDSerializeFile pstestSet = null;
         if (checkLobSupport ()) {
             try {
+                pstestSet = JDPSTest.getPstestSet(connection_);
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_DISTINCT) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Strait of Magellan".getBytes ("ISO8859_1"));
                 ps.setAsciiStream (1, is, is.available ());
@@ -1004,6 +1255,14 @@ setAsciiStream() - Set a DISTINCT parameter.
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1014,20 +1273,30 @@ setAsciiStream() - Set a BIGINT parameter.
 **/
     public void Var035()
     {
-	if (checkBigintSupport()) {
-	    try {
-		PreparedStatement ps = connection_.prepareStatement (
-								     "INSERT INTO " + JDPSTest.PSTEST_SET
-								     + " (C_BIGINT) VALUES (?)");
-		InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
-		ps.setAsciiStream (1, is, is.available ());
-		ps.close ();
-		    failed ("Didn't throw SQLException");
-	    }
-	    catch (Exception e) {
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
-	}
+ JDSerializeFile pstestSet = null;
+ if (checkBigintSupport()) {
+     try {
+  pstestSet = JDPSTest.getPstestSet(connection_);
+  PreparedStatement ps = connection_.prepareStatement (
+    				     "INSERT INTO " + pstestSet.getName()
+    				     + " (C_BIGINT) VALUES (?)");
+  InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
+  ps.setAsciiStream (1, is, is.available ());
+  ps.close ();
+      failed ("Didn't throw SQLException");
+     }
+     catch (Exception e) {
+  assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+     } finally {
+  if (pstestSet != null) {
+      try {
+   pstestSet.close();
+      } catch (SQLException e) {
+   e.printStackTrace();
+      }
+  }
+     }
+ }
     }
 
 
@@ -1038,8 +1307,10 @@ setAsciiStream() - Set a VARCHAR(50) parameter with package caching.
 **/
     public void Var036()
     {
+        JDSerializeFile pstestSet = null;
         try {
-            String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+            pstestSet = JDPSTest.getPstestSet(connection_);
+            String insert = "INSERT INTO " + pstestSet.getName()
                             + " (C_VARCHAR_50) VALUES (?)";
 
             if (isToolboxDriver())
@@ -1049,20 +1320,20 @@ setAsciiStream() - Set a VARCHAR(50) parameter with package caching.
                 JDSetupPackage.prime (systemObject_, encryptedPassword_, PACKAGE,
                                       JDPSTest.COLLECTION, insert, "" , getDriver());
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             Connection c2 = testDriver_.getConnection (baseURL_
                                                        + ";extended dynamic=true;package=" + PACKAGE
                                                        + ";package library=" + JDPSTest.COLLECTION
                                                        + ";package cache=true", userId_, encryptedPassword_);
-            // Updated 10/11/2006 to use c2 instead of connection_ as documented 
+            // Updated 10/11/2006 to use c2 instead of connection_ as documented
             PreparedStatement ps = c2.prepareStatement (insert);
             InputStream is = new ByteArrayInputStream ("Antarctica".getBytes ("ISO8859_1"));
             ps.setAsciiStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -1071,6 +1342,14 @@ setAsciiStream() - Set a VARCHAR(50) parameter with package caching.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+            if (pstestSet != null) {
+                try {
+                    pstestSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -1083,13 +1362,15 @@ turned off.
 **/
     public void Var037()
     {
+        JDSerializeFile pstestSet = null;
         if (checkNative()) {
             // int length = 0;
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connectionNoDT_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_VARCHAR_50) VALUES (?)");
                 String s = "Panama is yet another country that is in Central America";
                 InputStream is = new ByteArrayInputStream (s.getBytes ("ISO8859_1"));
@@ -1103,6 +1384,14 @@ turned off.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -1279,7 +1568,8 @@ turned off.
     **/
         public void Var040()
         {
-            // Per Toolbox implementation... 
+            JDSerializeFile pstestSet = null;
+            // Per Toolbox implementation...
             // The spec says to throw an exception when the
             // actual length does not match the specified length.
             // I think this is strange since this means the length
@@ -1289,12 +1579,13 @@ turned off.
                 notApplicable("Toolbox possible todo later");
                 return;
             }
-            String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes "; 
+            String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes ";
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                pstestSet = JDPSTest.getPstestSet(connection_);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                    "INSERT INTO " + pstestSet.getName()
                                                                     + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
                 ps.setString (1, "Muchas");
                 InputStream is = new JDWeirdInputStream("0102030");
@@ -1302,7 +1593,7 @@ turned off.
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
 
@@ -1314,6 +1605,14 @@ turned off.
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception "+added);
+            } finally {
+                if (pstestSet != null) {
+                    try {
+                        pstestSet.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -1324,7 +1623,8 @@ turned off.
         **/
             public void Var041()
             {
-                // Per Toolbox implementation... 
+                JDSerializeFile pstestSet = null;
+                // Per Toolbox implementation...
                 // The spec says to throw an exception when the
                 // actual length does not match the specified length.
                 // I think this is strange since this means the length
@@ -1334,12 +1634,13 @@ turned off.
                     notApplicable("Toolbox possible todo later");
                     return;
                 }
-                String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes "; 
+                String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes ";
                 try {
-                    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                    pstestSet = JDPSTest.getPstestSet(connection_);
+                    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                     PreparedStatement ps = connection_.prepareStatement (
-                                                                        "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                        "INSERT INTO " + pstestSet.getName()
                                                                         + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
                     ps.setString (1, "Muchas");
                     InputStream is = new JDWeirdInputStream("0102030");
@@ -1347,7 +1648,7 @@ turned off.
                     ps.executeUpdate ();
                     ps.close ();
 
-                    ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+                    ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
                     rs.next ();
                     String check = rs.getString (1);
 
@@ -1359,6 +1660,14 @@ turned off.
                 }
                 catch (Exception e) {
                     failed (e, "Unexpected Exception "+added);
+                } finally {
+                    if (pstestSet != null) {
+                        try {
+                            pstestSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
@@ -1378,9 +1687,11 @@ turned off.
                     return;
                 }
               if (checkDecFloatSupport()) {
+                JDSerializeFile pstestSetdfp = null;
                 try {
+                  pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
                   PreparedStatement ps = connection_.prepareStatement (
-                      "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
+                      "INSERT INTO " + pstestSetdfp.getName()
                       + " VALUES (?)");
                   InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
                   ps.setAsciiStream (1, is, is.available ());
@@ -1389,6 +1700,14 @@ turned off.
                 }
                 catch (Exception e) {
                   assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                } finally {
+                  if (pstestSetdfp != null) {
+                    try {
+                      pstestSetdfp.close();
+                    } catch (SQLException e) {
+                      e.printStackTrace();
+                    }
+                  }
                 }
               }
             }
@@ -1399,9 +1718,11 @@ turned off.
            public void Var043()
            {
              if (checkDecFloatSupport()) {
+               JDSerializeFile pstestSetdfp = null;
                try {
+                 pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
                  PreparedStatement ps = connection_.prepareStatement (
-                     "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                     "INSERT INTO " + pstestSetdfp.getName()
                      + " VALUES (?)");
                  InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("ISO8859_1"));
                  ps.setAsciiStream (1, is, is.available ());
@@ -1410,6 +1731,14 @@ turned off.
                }
                catch (Exception e) {
                  assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+               } finally {
+                 if (pstestSetdfp != null) {
+                   try {
+                     pstestSetdfp.close();
+                   } catch (SQLException e) {
+                     e.printStackTrace();
+                   }
+                 }
                }
              }
            }
@@ -1419,51 +1748,58 @@ turned off.
 /**
 setAsciiStream() - Set an XML  parameter.
 **/
-	   public void setXML(String tablename, String byteEncoding, String data, String expected) {
-	       String added = " -- added by native driver 08/21/2009"; 
+public void setXML(int table, String byteEncoding, String data, String expected) {
+  String added = " -- added by native driver 08/21/2009";
 
-	       
-	       if (checkXmlSupport ()) {
-		   try {
-		       statement_.executeUpdate ("DELETE FROM " + tablename);
+  if (checkXmlSupport()) {
+    JDSerializeFile pstestSetxml = null;
+    try {
+      pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+      String tablename = pstestSetxml.getName();
+      statement_.executeUpdate("DELETE FROM " + tablename);
 
-		       PreparedStatement ps = connection_.prepareStatement (
-									    "INSERT INTO " + tablename
-									    + "  VALUES (?)");
-		       byte[] bytes = data.getBytes (byteEncoding); 
-		       InputStream is = new ByteArrayInputStream (bytes);
-		       ps.setAsciiStream (1, is, bytes.length);
-		       ps.executeUpdate ();
-		       ps.close ();
+      PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + tablename + "  VALUES (?)");
+      byte[] bytes = data.getBytes(byteEncoding);
+      InputStream is = new ByteArrayInputStream(bytes);
+      ps.setAsciiStream(1, is, bytes.length);
+      ps.executeUpdate();
+      ps.close();
 
-		       ResultSet rs = statement_.executeQuery ("SELECT * FROM " + tablename);
-		       rs.next ();
-		       String check = rs.getString (1);
-		       rs.close ();
+      ResultSet rs = statement_.executeQuery("SELECT * FROM " + tablename);
+      rs.next();
+      String check = rs.getString(1);
+      rs.close();
 
-		       assertCondition (check.equals (expected),
-					"check = "+
-					JDTestUtilities.getMixedString(check)+
-					" And SB "+
-					JDTestUtilities.getMixedString(expected)+
-					added );
-		   }
-		   catch (Exception e) {
-		       failed (e, "Unexpected Exception"+added);
-		   }
-	       }
-	   }
+      assertCondition(check.equals(expected), "check = " + JDTestUtilities.getMixedString(check) + " And SB "
+          + JDTestUtilities.getMixedString(expected) + added);
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception" + added);
+    } finally {
+      if (pstestSetxml != null) {
+        try {
+          pstestSetxml.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+
+    }
+  }
+}
 
 
 
 /**
 setAsciiStream() - Set an XML  parameter using invalid data.
 **/
-	   public void setInvalidXML(String tablename, String byteEncoding, String data, String expectedException) {
+	   public void setInvalidXML(int table, String byteEncoding, String data, String expectedException) {
 	       String added = " -- added by native driver 08/21/2009"; 
 
 	       if (checkXmlSupport ()) {
-		   try {
+	         JDSerializeFile pstestSetxml = null;
+	         try {
+	           pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+	           String tablename = pstestSetxml.getName(); 
 		       statement_.executeUpdate ("DELETE FROM " + tablename);
 
 		       PreparedStatement ps = connection_.prepareStatement (
@@ -1491,6 +1827,15 @@ setAsciiStream() - Set an XML  parameter using invalid data.
 		       } else { 
 			   failed (e, "Unexpected Exception.  Expected "+expectedException+added);
 		       }
+		    } finally {
+		      if (pstestSetxml != null) {
+		        try {
+		          pstestSetxml.close();
+		        } catch (SQLException e) {
+		          e.printStackTrace();
+		        }
+		      }
+
 		   }
 	       }
 	   }
@@ -1501,121 +1846,122 @@ setAsciiStream() - Set an XML  parameter using invalid data.
                notApplicable("utf-8 as ascii");
                return;
            }
-	       setXML(JDPSTest.PSTEST_SETXML, "UTF-8", "<Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
-	   public void Var045() { setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
+	       setXML(JDPSTest.SETXML, "UTF-8", "<Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
+	   public void Var045() { setXML(JDPSTest.SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
 	   public void Var046() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
+           setXML(JDPSTest.SETXML, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
 
-	   public void Var047() { setXML(JDPSTest.PSTEST_SETXML13488, "UTF-8", "<Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
-	   public void Var048() { setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
+	   public void Var047() { setXML(JDPSTest.SETXML13488, "UTF-8", "<Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
+	   public void Var048() { setXML(JDPSTest.SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
 	   public void Var049() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML13488, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
+           setXML(JDPSTest.SETXML13488, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
 
-	   public void Var050() { setXML(JDPSTest.PSTEST_SETXML1200, "UTF-8", "<Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
-	   public void Var051() { setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
+	   public void Var050() { setXML(JDPSTest.SETXML1200, "UTF-8", "<Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
+	   public void Var051() { setXML(JDPSTest.SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
 	   public void Var052() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML1200, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
+           setXML(JDPSTest.SETXML1200, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
 
 	   public void Var053() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML37, "UTF-8", "<Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
-	   public void Var054() { setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
+           setXML(JDPSTest.SETXML37, "UTF-8", "<Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
+	   public void Var054() { setXML(JDPSTest.SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
 	   public void Var055() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML37, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
+           setXML(JDPSTest.SETXML37, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
 
 	   public void Var056() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML937, "UTF-8", "<Test>VAR056\u00a2</Test>",  "<Test>VAR056\u00a2</Test>"); }
-	   public void Var057() { setXML(JDPSTest.PSTEST_SETXML937, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR057\u00a2</Test>",  "<Test>VAR057\u00a2</Test>"); }
+           setXML(JDPSTest.SETXML937, "UTF-8", "<Test>VAR056\u00a2</Test>",  "<Test>VAR056\u00a2</Test>"); }
+	   public void Var057() { setXML(JDPSTest.SETXML937, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR057\u00a2</Test>",  "<Test>VAR057\u00a2</Test>"); }
 	   public void Var058() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML937, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR058\u00a2</Test>",  "<Test>VAR058\u00a2</Test>"); }
+           setXML(JDPSTest.SETXML937, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR058\u00a2</Test>",  "<Test>VAR058\u00a2</Test>"); }
 
 	   public void Var059() { 
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML290, "UTF-8", "<Test>VAR059\u00a2</Test>",  "<Test>VAR059\u00a2</Test>"); }
-	   public void Var060() { setXML(JDPSTest.PSTEST_SETXML290, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR060\u00a2</Test>",  "<Test>VAR060\u00a2</Test>"); }
+           setXML(JDPSTest.SETXML290, "UTF-8", "<Test>VAR059\u00a2</Test>",  "<Test>VAR059\u00a2</Test>"); }
+	   public void Var060() { setXML(JDPSTest.SETXML290, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>VAR060\u00a2</Test>",  "<Test>VAR060\u00a2</Test>"); }
 	   public void Var061() {
            if( isToolboxDriver()){
                notApplicable("utf-8 as ascii");
                return;
            }
-           setXML(JDPSTest.PSTEST_SETXML290, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
+           setXML(JDPSTest.SETXML290, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
 
 
 
 
 	   public void Var062() { 
            if( isToolboxDriver()){
-               setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); 
+               setXML(JDPSTest.SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); 
                return;
            }
-           setInvalidXML(JDPSTest.PSTEST_SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR062</Test>",  "XML parsing failed"); 
+           setInvalidXML(JDPSTest.SETXML, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR062</Test>",  "XML parsing failed"); 
        }
-	   public void Var063() { setInvalidXML(JDPSTest.PSTEST_SETXML, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
+	   public void Var063() { setInvalidXML(JDPSTest.SETXML, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
 
 	   public void Var064() {
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); 
+	           setXML(JDPSTest.SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); 
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR064</Test>",  "data not properly formed" ); }
-	   public void Var065() { setInvalidXML(JDPSTest.PSTEST_SETXML13488, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML13488, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR064</Test>",  "data not properly formed" ); }
+	   public void Var065() { setInvalidXML(JDPSTest.SETXML13488, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
 
 	   public void Var066() { 
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>");
+	           setXML(JDPSTest.SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>");
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR066</Test>",  "XML parsing failed"); }
-	   public void Var067() { setInvalidXML(JDPSTest.PSTEST_SETXML1200, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML1200, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"UTF-16\"?><Test>VAR066</Test>",  "XML parsing failed"); }
+	   public void Var067() { setInvalidXML(JDPSTest.SETXML1200, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
 
 	   public void Var068() { 
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"IBM037\"?><Test>VAR068</Test>",  "<Test>VAR068</Test>");
+	           setXML(JDPSTest.SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"IBM037\"?><Test>VAR068</Test>",  "<Test>VAR068</Test>");
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"IBM037\"?><Test>VAR068\u0130\u3041\ud800\udf30</Test>",  "XML parsing failed"); }
-	   public void Var069() { setInvalidXML(JDPSTest.PSTEST_SETXML37, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML37, "ISO8859_1", "<?xml version=\"1.0\" encoding=\"IBM037\"?><Test>VAR068\u0130\u3041\ud800\udf30</Test>",  "XML parsing failed"); }
+	   public void Var069() { setInvalidXML(JDPSTest.SETXML37, "UTF-8", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
 
 
 
   public void setValidTest(String column, String inputValue,
       String outputValue) {
+    JDSerializeFile pstestSet = null;
     try {
-
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + column + ") VALUES (?)");
+          + pstestSet.getName() + " (" + column + ") VALUES (?)");
       InputStream is = new ByteArrayInputStream(
           inputValue.getBytes("ISO8859_1"));
       ps.setAsciiStream(1, is, is.available());
@@ -1623,7 +1969,7 @@ setAsciiStream() - Set an XML  parameter using invalid data.
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT " + column + " FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT " + column + " FROM " + pstestSet.getName());
       rs.next();
       String check = rs.getString(1);
       rs.close();
@@ -1634,6 +1980,14 @@ setAsciiStream() - Set an XML  parameter using invalid data.
     } catch (Exception e) {
       failed(e, "Unexpected Exception ");
 
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
 
   }

@@ -72,15 +72,8 @@ Performs setup needed before running variations.
     throws Exception
     {
 
-	baseURL_ += ";use block insert=true";	// @A2
-	super.setup();
-/*						   @A2
-
-        // reset connection and set "use block insert" property 
-        String url = baseURL_;
-        connection_ = testDriver_.getConnection (url+";use block insert=true", userId_, encryptedPassword_);
-        //connection_.setAutoCommit(true); // for xa
-*/						// @A2
+	baseURL_ += ";use block insert=true";	
+	super.setup("N");
     }
 
 

@@ -11,20 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSExecute.java
 //
 // Classes:      JDPSExecute
-//
-////////////////////////////////////////////////////////////////////////
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -46,6 +37,7 @@ import test.JDReflectionUtil;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -109,9 +101,13 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
+     
         connection_ = testDriver_.getConnection (baseURL_ + ";errors=full;date format=iso", 
                                                  userId_, encryptedPassword_);
-
+        JDSerializeFile setupLock = null;
+        try {
+          setupLock = new JDSerializeFile(connection_, "JDPSSETUP"); 
+     
 
         connectionNoPrefetch_ = testDriver_.getConnection (baseURL_ + ";errors=full;date format=iso;prefetch=false", 
                                                  userId_, encryptedPassword_);
@@ -178,6 +174,13 @@ Performs setup needed before running variations.
         s.close ();
 
         connection_.commit(); // for xa
+      } finally {
+     
+        if (setupLock != null) {
+          setupLock.close(); 
+        }
+   
+      }
     }
 
 

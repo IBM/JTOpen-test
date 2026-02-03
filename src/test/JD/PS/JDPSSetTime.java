@@ -31,6 +31,8 @@ import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 
 
@@ -129,9 +131,11 @@ statement is closed.
 **/
     public void Var001()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)");
             ps.close ();
             ps.setTime (1, new Time (System.currentTimeMillis()));
@@ -139,8 +143,17 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -150,9 +163,11 @@ specified.
 **/
     public void Var002()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setTime (100, new Time(System.currentTimeMillis()));
             ps.close ();
@@ -160,8 +175,17 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -170,9 +194,11 @@ setTime() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setTime (0, new Time(System.currentTimeMillis()));
             ps.close ();
@@ -180,8 +206,17 @@ setTime() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -190,9 +225,11 @@ setTime() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             ps.setTime (0, new Time(System.currentTimeMillis()));
             ps.close ();
@@ -200,8 +237,17 @@ setTime() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -210,17 +256,19 @@ setTime() - Should set to SQL NULL when the value is null.
 **/
     public void Var005()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)");
             ps.setTime (1, null);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             boolean wn = rs.wasNull ();
@@ -230,8 +278,17 @@ setTime() - Should set to SQL NULL when the value is null.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -241,11 +298,14 @@ greater than 1.
 **/
     public void Var006()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_KEY, C_TIME) VALUES (?, ?)");
             ps.setString (1, "Hola");
             Time t = new Time(System.currentTimeMillis());
@@ -253,7 +313,7 @@ greater than 1.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             rs.close ();
@@ -263,6 +323,17 @@ greater than 1.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -272,10 +343,13 @@ setTime() - Should throw exception when the calendar is null.
 **/
     public void Var007()
     {
-        if (checkJdbc20 ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20 ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_TIME) VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()), null);
                 ps.close ();
@@ -285,7 +359,18 @@ setTime() - Should throw exception when the calendar is null.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -313,9 +398,11 @@ not an input parameter.
 
 
     public void testSetFailure(String columnName, Time time) {
+    JDSerializeFile pstestSet = null;
 	try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 	    PreparedStatement ps = connection_.prepareStatement (
-								 "INSERT INTO " + JDPSTest.PSTEST_SET
+								 "INSERT INTO " + pstestSet.getName()
 								 + " ("+columnName+") VALUES (?)");
 	    ps.setTime (1, time);
 	    ps.execute(); 
@@ -324,9 +411,17 @@ not an input parameter.
 	}
 	catch (Exception e) {
 	    assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	}
-
+	
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 /**
 setTime() - Set a SMALLINT parameter.
 **/
@@ -342,9 +437,11 @@ setTime() - Set a INTEGER parameter.
 **/
     public void Var010()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -353,8 +450,17 @@ setTime() - Set a INTEGER parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -363,9 +469,11 @@ setTime() - Set a REAL parameter.
 **/
     public void Var011()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_REAL) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -374,8 +482,17 @@ setTime() - Set a REAL parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -384,9 +501,11 @@ setTime() - Set a FLOAT parameter.
 **/
     public void Var012()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_FLOAT) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -395,8 +514,17 @@ setTime() - Set a FLOAT parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -405,9 +533,11 @@ setTime() - Set a DOUBLE parameter.
 **/
     public void Var013()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DOUBLE) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -416,8 +546,17 @@ setTime() - Set a DOUBLE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -426,9 +565,12 @@ setTime() - Set a DECIMAL parameter.
 **/
     public void Var014()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DECIMAL_105) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -438,6 +580,17 @@ setTime() - Set a DECIMAL parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -447,9 +600,11 @@ setTime() - Set a NUMERIC parameter.
 **/
     public void Var015()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_NUMERIC_50) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -458,8 +613,17 @@ setTime() - Set a NUMERIC parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -468,18 +632,20 @@ setTime() - Set a CHAR(50) parameter.
 **/
     public void Var016()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_CHAR_50) VALUES (?)");
             Time t = new Time(System.currentTimeMillis());
             ps.setTime (1, t);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             rs.close ();
@@ -488,8 +654,17 @@ setTime() - Set a CHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -498,18 +673,20 @@ setTime() - Set a VARCHAR(50) parameter.
 **/
     public void Var017()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             Time t = new Time(System.currentTimeMillis());
             ps.setTime (1, t);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             rs.close ();
@@ -518,8 +695,17 @@ setTime() - Set a VARCHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -528,10 +714,13 @@ setTime() - Set a CLOB parameter.
 **/
     public void Var018()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_CLOB) VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()));
 		ps.execute(); 
@@ -542,7 +731,18 @@ setTime() - Set a CLOB parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -552,10 +752,13 @@ setTime() - Set a DBCLOB parameter.
 **/
     public void Var019()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DBCLOB) VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()));
 		ps.execute(); 
@@ -566,7 +769,18 @@ setTime() - Set a DBCLOB parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -575,11 +789,13 @@ setTime() - Set a BINARY parameter.
 **/
     public void Var020()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BINARY_20) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute();
@@ -588,8 +804,17 @@ setTime() - Set a BINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -599,11 +824,13 @@ setTime() - Set a VARBINARY parameter.
 **/
     public void Var021()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARBINARY_20) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute();
@@ -612,8 +839,17 @@ setTime() - Set a VARBINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -623,9 +859,12 @@ setTime() - Set a BLOB parameter.
 **/
     public void Var022()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BLOB) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.execute(); 
@@ -635,6 +874,17 @@ setTime() - Set a BLOB parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -645,17 +895,19 @@ setTime() - Set a DATE parameter.
 **/
     public void Var023()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DATE) VALUES (?)");
             ps.setTime (1, Time.valueOf("22:33:54"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_DATE FROM " + pstestSet.getName());
             rs.next ();
             java.sql.Date check = rs.getDate (1);
             rs.close ();
@@ -664,8 +916,17 @@ setTime() - Set a DATE parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -674,18 +935,20 @@ setTime() - Set a TIME parameter.
 **/
     public void Var024()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)");
             Time t = new Time(System.currentTimeMillis());
             ps.setTime (1, t);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             rs.close ();
@@ -694,8 +957,17 @@ setTime() - Set a TIME parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -704,19 +976,22 @@ setTime() - Set a TIME parameter, with a calendar specified.
 **/
     public void Var025()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkJdbc20 ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
     
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_TIME) VALUES (?)");
                 Time t = new Time(System.currentTimeMillis());
                 ps.setTime (1, t, Calendar.getInstance ());
                 ps.executeUpdate ();
                 ps.close ();
     
-                ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
                 rs.next ();
                 Time check = rs.getTime (1);
                 rs.close ();
@@ -727,6 +1002,17 @@ setTime() - Set a TIME parameter, with a calendar specified.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -736,17 +1022,20 @@ setTime() - Set a TIMESTAMP parameter.
 **/
     public void Var026()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIMESTAMP) VALUES (?)");
             ps.setTime (1, Time.valueOf("05:33:44"));
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_TIMESTAMP FROM " + pstestSet.getName());
             rs.next ();
             java.sql.Timestamp check = rs.getTimestamp (1);
             rs.close ();
@@ -756,6 +1045,17 @@ setTime() - Set a TIMESTAMP parameter.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -764,6 +1064,9 @@ setTime() - Set a DATALINK parameter.
 **/
     public void Var027()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
             notApplicable ("Native driver pre-JDBC 3.0");
             return;
@@ -771,7 +1074,7 @@ setTime() - Set a DATALINK parameter.
         if (checkDatalinkSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DATALINK) VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()));
 		ps.executeUpdate(); 
@@ -782,6 +1085,17 @@ setTime() - Set a DATALINK parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -791,10 +1105,13 @@ setTime() - Set a DISTINCT parameter.
 **/
     public void Var028()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DISTINCT) VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()));
 		ps.executeUpdate();
@@ -805,6 +1122,17 @@ setTime() - Set a DISTINCT parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -814,10 +1142,13 @@ setTime() - Set a BIGINT parameter.
 **/
     public void Var029()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkBigintSupport()) {
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BIGINT) VALUES (?)");
             ps.setTime (1, new Time(System.currentTimeMillis()));
 	    ps.executeUpdate();
@@ -828,6 +1159,17 @@ setTime() - Set a BIGINT parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -838,10 +1180,13 @@ package cache.
 **/
     public void Var030()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
-            String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+            String insert = "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)";
             
             if (isToolboxDriver())
@@ -852,7 +1197,7 @@ package cache.
                       JDPSTest.COLLECTION, insert, "", getDriver());
    
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
             Connection c2 = testDriver_.getConnection (baseURL_
                 + ";extended dynamic=true;package=" + PACKAGE
                 + ";package library=" + JDPSTest.COLLECTION
@@ -864,7 +1209,7 @@ package cache.
             ps.close ();
             c2.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_TIME FROM " + pstestSet.getName());
             rs.next ();
             Time check = rs.getTime (1);
             rs.close ();            
@@ -874,6 +1219,17 @@ package cache.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -883,9 +1239,12 @@ package cache.
         public void Var031()
         {
             if (checkDecFloatSupport()) {
-            try {
+              JDSerializeFile pstestSetdfp = null;
+              try {
+                pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
+                String tablename16=pstestSetdfp.getName();
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
+                    "INSERT INTO " + tablename16
                     + " VALUES (?)");
                 ps.setTime (1, new Time(System.currentTimeMillis()));
 		ps.executeUpdate();
@@ -894,6 +1253,14 @@ package cache.
             }
             catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+            } finally {
+              if (pstestSetdfp != null) {
+                try {
+                  pstestSetdfp.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
             }
         }
@@ -904,9 +1271,12 @@ package cache.
             public void Var032()
             {
                 if (checkDecFloatSupport()) {
-                try {
+                  JDSerializeFile pstestSetdfp = null;
+                  try {
+                    pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
+                    String tablename34=pstestSetdfp.getName();
                     PreparedStatement ps = connection_.prepareStatement (
-                        "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                        "INSERT INTO " + tablename34
                         + " VALUES (?)");
                     ps.setTime (1, new Time(System.currentTimeMillis()));
 		    ps.executeUpdate();
@@ -915,6 +1285,14 @@ package cache.
                 }
                 catch (Exception e) {
                     assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+                } finally {
+                  if (pstestSetdfp != null) {
+                    try {
+                      pstestSetdfp.close();
+                    } catch (SQLException e) {
+                      e.printStackTrace();
+                    }
+                  }
                 }
                 }
             }
@@ -925,10 +1303,13 @@ package cache.
             public void Var033()
             {
                 if (checkXmlSupport()) {
-		    try {
+                  JDSerializeFile pstestSetxml = null;
+                  try {
+                    pstestSetxml = JDPSTest.getSerializeFile(connection_, JDPSTest.SETXML);
+                    String tablename = pstestSetxml.getName(); 
 			PreparedStatement ps = connection_.prepareStatement (
 									     "INSERT INTO " +
-									     JDPSTest.PSTEST_SETXML
+									     tablename
 									     + " VALUES (?)");
 			try { 
 			    ps.setTime (1, new Time(System.currentTimeMillis()));
@@ -944,6 +1325,14 @@ package cache.
 			}
 		    } catch (Exception e) {
 			failed(e, "Unexpected Exception");
+                    } finally {
+                      if (pstestSetxml != null) {
+                        try {
+                          pstestSetxml.close();
+                        } catch (SQLException e) {
+                          e.printStackTrace();
+                        }
+                      }
 		    }
                 }
             }

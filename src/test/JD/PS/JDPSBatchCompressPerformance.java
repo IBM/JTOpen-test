@@ -82,7 +82,7 @@ Performs setup needed before running variations.
       throws Exception
     {
 
-    super.setup();
+    super.setup("P");
 
     /* If running on IBM i, change the job priority */
 

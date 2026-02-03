@@ -45,6 +45,8 @@ import test.JDPSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 
 
@@ -133,9 +135,11 @@ statement is closed.
 **/
     public void Var001()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_SMALLINT) VALUES (?)");
             ps.close ();
             ps.setByte (1, (byte) 5);
@@ -143,8 +147,17 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -154,9 +167,11 @@ specified.
 **/
     public void Var002()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
             ps.setByte (100, (byte) 3);
             ps.executeUpdate(); ps.close ();
@@ -164,8 +179,17 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -174,9 +198,11 @@ setByte() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
             ps.setByte (0, (byte) -5);
             ps.executeUpdate(); ps.close ();
@@ -184,8 +210,17 @@ setByte() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -194,9 +229,11 @@ setByte() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
             ps.setByte (-1, (byte) 4);
             ps.executeUpdate(); ps.close ();
@@ -204,8 +241,17 @@ setByte() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -215,18 +261,20 @@ greater than 1.
 **/
     public void Var005()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_KEY, C_SMALLINT) VALUES (?, ?)");
             ps.setString (1, "Test");
             ps.setByte (2, (byte) 42);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_SMALLINT FROM " + pstestSet.getName());
             rs.next ();
             short check = rs.getByte (1);
             rs.close ();
@@ -235,8 +283,17 @@ greater than 1.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -273,17 +330,19 @@ not an input parameter.
 
   public void testSetSuccessful(String columnName, int inputByte,
       String outputString) {
+    JDSerializeFile pstestSet = null;
     try {
-      statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-          + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+          + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       ps.setByte(1, (byte) inputByte);
       ps.executeUpdate();
       ps.close();
 
       ResultSet rs = statement_
-          .executeQuery("SELECT "+columnName+" FROM " + JDPSTest.PSTEST_SET);
+          .executeQuery("SELECT "+columnName+" FROM " + pstestSet.getName());
       rs.next();
       String check = rs.getString(1);
       rs.close();
@@ -292,6 +351,15 @@ not an input parameter.
           "Got '" + check + "' sb '" + outputString+"'");
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
+    
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
   }
 
@@ -366,16 +434,18 @@ setByte() - Set an CHAR(1) parameter.
 **/
     public void Var015()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_CHAR_1) VALUES (?)");
             ps.setByte (1, (byte) 87);
             ps.executeUpdate(); 
             
-            ResultSet rs = statement_.executeQuery("SELECT C_CHAR_1 FROM "+JDPSTest.PSTEST_SET); 
+            ResultSet rs = statement_.executeQuery("SELECT C_CHAR_1 FROM "+pstestSet.getName()); 
             rs.next(); 
             String value = rs.getString(1); 
             failed ("Didn't throw SQLException but set byte for CHAR parameter got back "+value);
@@ -387,8 +457,17 @@ setByte() - Set an CHAR(1) parameter.
              assertExceptionIsInstanceOf (e, "java.sql.DataTruncation");
           }
             
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -404,16 +483,19 @@ setByte() - Set an VARCHAR parameter.
 setByte() - Set a CLOB parameter.
 **/
     public void Var017()     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_CLOB) VALUES (?)");
                 ps.setByte (1, (byte) -2);
                 ps.execute(); 
                 ps.close ();
                 
-                ResultSet rs = statement_.executeQuery("SELECT C_CLOB FROM "+JDPSTest.PSTEST_SET); 
+                ResultSet rs = statement_.executeQuery("SELECT C_CLOB FROM "+pstestSet.getName()); 
                 rs.next(); 
                 String value = rs.getString(1); 
 
@@ -423,7 +505,18 @@ setByte() - Set a CLOB parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -433,15 +526,18 @@ setByte() - Set a DBCLOB parameter.
 **/
     public void Var018()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DBCLOB) VALUES (?)");
                 ps.setByte (1, (byte) -5);
                 ps.execute(); 
                 ps.close ();
-                ResultSet rs = statement_.executeQuery("SELECT C_DBCLOB FROM "+JDPSTest.PSTEST_SET); 
+                ResultSet rs = statement_.executeQuery("SELECT C_DBCLOB FROM "+pstestSet.getName()); 
                 rs.next(); 
                 String value = rs.getString(1); 
 
@@ -451,7 +547,18 @@ setByte() - Set a DBCLOB parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -460,9 +567,11 @@ setByte() - Set a BINARY parameter.
 **/
     public void Var019()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BINARY_20) VALUES (?)");
             ps.setByte (1, (byte) 4);
             ps.executeUpdate ();
@@ -471,8 +580,17 @@ setByte() - Set a BINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
+    }
+  }
 
 
 
@@ -482,9 +600,11 @@ setByte() - Set a VARBINARY parameter.
 **/
     public void Var020()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARBINARY_20) VALUES (?)");
             ps.setByte (1, (byte) 19);
             ps.executeUpdate ();
@@ -493,8 +613,17 @@ setByte() - Set a VARBINARY parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -504,15 +633,17 @@ setByte() - Set a BLOB parameter.
 **/
     public void Var021()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BLOB) VALUES (?)");
             ps.setByte (1, (byte) 4);
             ps.execute(); 
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery("SELECT C_BLOB FROM "+JDPSTest.PSTEST_SET); 
+            ResultSet rs = statement_.executeQuery("SELECT C_BLOB FROM "+pstestSet.getName()); 
             rs.next(); 
             String value = rs.getString(1); 
 
@@ -520,8 +651,17 @@ setByte() - Set a BLOB parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -531,9 +671,11 @@ setByte() - Set a DATE parameter.
 **/
     public void Var022()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DATE) VALUES (?)");
             ps.setByte (1, (byte) 0);
             ps.execute(); 
@@ -542,8 +684,17 @@ setByte() - Set a DATE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -552,9 +703,12 @@ setByte() - Set a TIME parameter.
 **/
     public void Var023()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)");
             ps.setByte (1, (byte) 3);
             ps.execute(); 
@@ -564,6 +718,17 @@ setByte() - Set a TIME parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -573,9 +738,12 @@ setByte() - Set a TIMESTAMP parameter.
 **/
     public void Var024()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIMESTAMP) VALUES (?)");
             ps.setByte (1, (byte) 33);
             ps.execute(); 
@@ -585,6 +753,17 @@ setByte() - Set a TIMESTAMP parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -593,22 +772,25 @@ setByte() - Set a DATALINK parameter.
 **/
     public void Var025()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if ((getDriver () == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
             notApplicable ("Native driver pre-JDBC 3.0");
             return;
         }
         if (checkDatalinkSupport ()) {
             try {
-              statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+              statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
               PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DATALINK) VALUES (?)");
                 ps.setByte (1, (byte) 75);
                 ps.execute(); 
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + pstestSet.getName());
                 rs.next ();
                 String value = rs.getString (1);
                 rs.close ();
@@ -619,6 +801,17 @@ setByte() - Set a DATALINK parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -629,18 +822,21 @@ setByte() - Set a DISTINCT parameter.
     // @C0C
     public void Var026()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
     
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DISTINCT) VALUES (?)");
                 ps.setByte (1, (byte) -7);
                 ps.executeUpdate ();
                 ps.close ();
     
-                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DISTINCT FROM " + pstestSet.getName());
                 rs.next ();
                 short check = rs.getByte (1);
                 rs.close ();
@@ -651,6 +847,17 @@ setByte() - Set a DISTINCT parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -660,18 +867,21 @@ setByte() - Set a DISTINCT parameter.
     **/
         public void Var027()
         {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             if (checkBigintSupport()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_BIGINT) VALUES (?)");
                 ps.setByte (1, (byte) 98);
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_BIGINT FROM " + pstestSet.getName());
                 rs.next ();
                 long check = rs.getLong (1);
                 rs.close ();
@@ -682,6 +892,17 @@ setByte() - Set a DISTINCT parameter.
                 failed (e, "Unexpected Exception");
             }
             }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
         }
         /**
         setByte() - Set a DECFLOAT16 parameter.
@@ -690,16 +911,19 @@ setByte() - Set a DISTINCT parameter.
         {
         
           if (checkDecFloatSupport()) {
+            JDSerializeFile pstestSetdfp = null;
             try {
-              statement_.executeUpdate("DELETE FROM "+ JDPSTest.PSTEST_SETDFP16);
+              pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
+              String tablename16=pstestSetdfp.getName();
+              statement_.executeUpdate("DELETE FROM "+ tablename16);
               PreparedStatement ps = connection_.prepareStatement (
-                  "INSERT INTO " + JDPSTest.PSTEST_SETDFP16               
+                  "INSERT INTO " + tablename16               
                   + "  VALUES (?)");
               ps.setByte (1, (byte) 33);
               ps.execute(); 
               ps.close ();
               
-              ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP16);
+              ResultSet rs = statement_.executeQuery ("SELECT * FROM " + tablename16);
               rs.next ();
               String  value = rs.getString (1);
               rs.close ();
@@ -708,6 +932,14 @@ setByte() - Set a DISTINCT parameter.
             }
             catch (Exception e) {
               failed (e, "Unexpected Exception -- JCC running to Z/OS returns 33");
+            } finally {
+              if (pstestSetdfp != null) {
+                try {
+                  pstestSetdfp.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
           }
         }
@@ -718,16 +950,19 @@ setByte() - Set a DISTINCT parameter.
         public void Var029()
         {
           if (checkDecFloatSupport()) { 
+            JDSerializeFile pstestSetdfp = null;
             try {
-              statement_.executeUpdate("DELETE FROM "+ JDPSTest.PSTEST_SETDFP34);
+              pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
+              String tablename34=pstestSetdfp.getName();
+              statement_.executeUpdate("DELETE FROM "+ tablename34);
               PreparedStatement ps = connection_.prepareStatement (
-                  "INSERT INTO " + JDPSTest.PSTEST_SETDFP34               
+                  "INSERT INTO " + tablename34               
                   + "  VALUES (?)");
               ps.setByte (1, (byte) 33);
               ps.execute(); 
               ps.close ();
 
-              ResultSet rs = statement_.executeQuery ("SELECT * FROM " + JDPSTest.PSTEST_SETDFP34);
+              ResultSet rs = statement_.executeQuery ("SELECT * FROM " + tablename34);
               rs.next ();
               String  value = rs.getString (1);
               rs.close ();
@@ -735,6 +970,14 @@ setByte() - Set a DISTINCT parameter.
             }
             catch (Exception e) {
               failed (e, "Unexpected Exception -- JCC running to Z/OS:  should return 33");
+            } finally {
+              if (pstestSetdfp != null) {
+                try {
+                  pstestSetdfp.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
           }
         }
@@ -745,9 +988,11 @@ setByte() - Set a DISTINCT parameter.
    **/
   public void Var030() {
     if (checkXmlSupport()) {
+      JDSerializeFile pstestSetxml = null;
       try {
+        pstestSetxml = JDPSTest.getSerializeFile(connection_, JDPSTest.SETXML);
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SETXML + " VALUES (?)");
+            "INSERT INTO " + pstestSetxml.getName() + " VALUES (?)");
         try {
           ps.setByte(1, (byte) 33);
           ps.execute();
@@ -758,6 +1003,14 @@ setByte() - Set a DISTINCT parameter.
         }
       } catch (Exception e) {
         failed(e, "Unexpected exception");
+      } finally {
+        if (pstestSetxml != null) {
+          try {
+            pstestSetxml.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }

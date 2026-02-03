@@ -474,7 +474,7 @@ public class JDSchedulerRunnable implements Runnable {
 
           // Look for highest priority task that superceeds current task
           // and is not running in another thread.
-          // select * from JDTestINFO.SCHED4 WHERE INITIALS NOT LIKE '61%A' AND
+          // select * from "+JTOpenTestEnvironment.testInfoSchema+".SCHED4 WHERE INITIALS NOT LIKE '61%A' AND
           // INITIALS NOT LIKE '61%T' AND PRIORITY <= 5
           {
             Set<String> keyset = null;
@@ -548,7 +548,7 @@ public class JDSchedulerRunnable implements Runnable {
               if (initials == null) {
 
                 // Build query that looks like this.
-                // select * from JDTestINFO.SCHED4 WHERE INITIALS NOT LIKE
+                // select * from "+JTOpenTestEnvironment.testInfoSchema+".SCHED4 WHERE INITIALS NOT LIKE
                 // '61%A'
                 // AND INITIALS NOT LIKE '61%T'
 

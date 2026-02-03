@@ -190,7 +190,7 @@ Performs setup needed before running variations.
         buffer.append(",C_CLOB         CLOB(1)     default '"+C_CLOB_DEFAULT+"'") ;
         buffer.append(",C_DBCLOB       DBCLOB(200) CCSID 13488 default '"+C_DBCLOB_DEFAULT+"'");
         buffer.append(",C_DATALINK     DATALINK    default "+C_DATALINK_DEFAULT+"  ");
-        buffer.append(",C_DISTINCT " + JDPSTest.COLLECTION + ".AGE  default "+C_DISTINCT_DEFAULT+" ");        
+        buffer.append(",C_DISTINCT " + JDPSTest.COLLECTION + ".PS_AGE  default "+C_DISTINCT_DEFAULT+" ");        
       
         buffer.append(",C_BIGINT       BIGINT default "+C_BIGINT_DEFAULT); 
 

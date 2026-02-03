@@ -11,25 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetTableTypes.java
  //
  // Classes:      JDDMDGetTableTypes
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -239,6 +225,13 @@ SQL400 - The order of the values between the 2 drivers is different here.
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"INOPERATIVE VIEW") && success ;
                }
 
+                 if(getRelease() > JDTestDriver.RELEASE_V7R6M0)
+                 {
+                     rs.next ();
+                     success = checkExpected(rs.getString ("TABLE_TYPE"),"EXTERNAL TABLE") && success ;
+                 }
+
+               
                if(true)
                {
                    rs.next ();
@@ -576,6 +569,12 @@ SQL400 - The order of the values between the 2 drivers is different here.
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"HIERARCHY TABLE") && success ;
                    rs.next ();
                    success = checkExpected(rs.getString ("TABLE_TYPE"),"INOPERATIVE VIEW") && success ;
+               }
+
+               if(getRelease() > JDTestDriver.RELEASE_V7R6M0)
+               {
+                   rs.next ();
+                   success = checkExpected(rs.getString ("TABLE_TYPE"),"EXTERNAL TABLE") && success ;
                }
 
                if(true)

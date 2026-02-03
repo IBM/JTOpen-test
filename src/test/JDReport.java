@@ -63,7 +63,7 @@ public class JDReport {
   public static boolean debug = false;
   public static boolean reset = false;
   public static boolean noExit = false;
-  public static String SCHEMA = "JDTESTINFO";
+  public static String SCHEMA = ""+JTOpenTestEnvironment.testInfoSchema+"";
 
   static {
     String debugProperty = System.getProperty("debug");
@@ -250,7 +250,7 @@ public class JDReport {
         int htmlIndex   = filename.indexOf(".html"); 
         if (latestIndex >= 0 && htmlIndex > 0) { 
           String initials = filename.substring(6,htmlIndex); 
-          String sql = "select count(*) from JDTESTINFO.SCHED1 WHERE INITIALS = ?";
+          String sql = "select count(*) from "+JTOpenTestEnvironment.testInfoSchema+".SCHED1 WHERE INITIALS = ?";
           PreparedStatement ps = c.prepareStatement(sql); 
           ps.setString(1, initials); 
           ResultSet rs = ps.executeQuery(); 
@@ -782,7 +782,7 @@ public class JDReport {
     StringBuffer sb = new StringBuffer();
     
     if (nativeConnection != null) { 
-      sb.append("<h2>JDTESTINFO.SYSNOTES</h2>\n");
+      sb.append("<h2>"+JTOpenTestEnvironment.testInfoSchema+".SYSNOTES</h2>\n");
       appendSysNotes(sb, nativeConnection); 
       sb.append("<a href=\"cgi-pase/AddSysNote.acgi\">Add System Note</a>\n"); 
     }
@@ -1038,7 +1038,7 @@ public class JDReport {
       while (retry) {
         try {
           retry = false;
-          sql = "SELECT * FROM JDTESTINFO.SYSNOTES where TS > CURRENT TIMESTAMP - 7 days ORDER BY TS ";
+          sql = "SELECT * FROM "+JTOpenTestEnvironment.testInfoSchema+".SYSNOTES where TS > CURRENT TIMESTAMP - 7 days ORDER BY TS ";
           ResultSet rs = s.executeQuery(sql);
           sb.append("<table border>\n");
           sb.append("<tr><th>TS<th>NOTE</tr>\n");
@@ -1050,7 +1050,7 @@ public class JDReport {
         } catch (SQLException e) {
           String message = e.toString();
           if (message.indexOf("not found") >= 0) {
-            sql = "CREATE TABLE JDTESTINFO.SYSNOTES(TS TIMESTAMP, NOTE VARCHAR(80))";
+            sql = "CREATE TABLE "+JTOpenTestEnvironment.testInfoSchema+".SYSNOTES(TS TIMESTAMP, NOTE VARCHAR(80))";
             s.executeUpdate(sql);
             retry = true;
           } else {
@@ -2196,7 +2196,7 @@ public class JDReport {
       if ("OS/400".equals(osName))   {
           /* check to see if anything is running */ 
          try { 
-          PreparedStatement ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, ACTION,STARTED_TS FROM JDTESTINFO.SCRUN1 WHERE INITIALS=?");
+          PreparedStatement ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, ACTION,STARTED_TS FROM "+JTOpenTestEnvironment.testInfoSchema+".SCRUN1 WHERE INITIALS=?");
           ps.setString(1, initials);
           rs = ps.executeQuery(); 
           while (rs.next()) {
@@ -2209,7 +2209,7 @@ public class JDReport {
           rs.close(); 
           ps.close(); 
           
-          ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, INITIALS, COUNT(*),MAX(ADDED_TS) FROM JDTESTINFO.SCHED1 WHERE INITIALS= ? GROUP BY INITIALS" );
+          ps = connection.prepareStatement("SELECT CURRENT TIMESTAMP, INITIALS, COUNT(*),MAX(ADDED_TS) FROM "+JTOpenTestEnvironment.testInfoSchema+".SCHED1 WHERE INITIALS= ? GROUP BY INITIALS" );
           ps.setString(1, initials);
           rs = ps.executeQuery(); 
           if (rs.next()) {
@@ -2218,7 +2218,7 @@ public class JDReport {
 
             rs.close(); 
             ps.close(); 
-            ps = connection.prepareStatement("SELECT ACTION, PRIORITY, ADDED_TS FROM JDTESTINFO.SCHED1 WHERE INITIALS= ? ORDER BY PRIORITY,ADDED_TS" );
+            ps = connection.prepareStatement("SELECT ACTION, PRIORITY, ADDED_TS FROM "+JTOpenTestEnvironment.testInfoSchema+".SCHED1 WHERE INITIALS= ? ORDER BY PRIORITY,ADDED_TS" );
             ps.setString(1, initials);
             rs = ps.executeQuery(); 
             if (rs.next()) {
@@ -2268,7 +2268,7 @@ public class JDReport {
 
           boolean runDspptf = true;
           boolean fileExists = false;
-          sql = "select LAST_ALTERED_TIMESTAMP from qsys2.systables where TABLE_NAME='DSPPTF' and TABLE_SCHEMA='JDTESTINFO'";
+          sql = "select LAST_ALTERED_TIMESTAMP from qsys2.systables where TABLE_NAME='DSPPTF' and TABLE_SCHEMA='"+JTOpenTestEnvironment.testInfoSchema+"'";
           rs = s.executeQuery(sql);
 
           Timestamp ts = null;
@@ -2282,12 +2282,12 @@ public class JDReport {
           }
           boolean doInsert = true; 
           if (runDspptf) {
-            System.out.println("Running DSPPTF to create JDTESTINFO/DSPPTF");
+            System.out.println("Running DSPPTF to create "+JTOpenTestEnvironment.testInfoSchema+"/DSPPTF");
             if (fileExists)
-              exUp(s, "call qsys2.qcmdexc('DLTF JDTESTINFO/DSPPTF')");
+              exUp(s, "call qsys2.qcmdexc('DLTF "+JTOpenTestEnvironment.testInfoSchema+"/DSPPTF')");
             try {
               exUp(s,
-                  "call qsys2.qcmdexc('DSPPTF LICPGM(5770SS1) OUTPUT(*OUTFILE) OUTFILE(JDTESTINFO/DSPPTF)')");
+                  "call qsys2.qcmdexc('DSPPTF LICPGM(5770SS1) OUTPUT(*OUTFILE) OUTFILE("+JTOpenTestEnvironment.testInfoSchema+"/DSPPTF)')");
             } catch (Exception e) {
               String message = e.getMessage();
               if (message.indexOf("No PTF activity exists") < 0) {
@@ -2299,12 +2299,12 @@ public class JDReport {
             }
           } else {
             System.out.println(
-                "Not running DSPPTF to create JDTESTINFO/DSPPTF since ts="
+                "Not running DSPPTF to create "+JTOpenTestEnvironment.testInfoSchema+"/DSPPTF since ts="
                     + ts);
           }
           if (doInsert) 
             exUp(s,
-              "insert into qtemp.ptfinfo   select 'TBX', a.SCPTFID,'20' || substring(a.scstdate,7,2) || '-' || substring(a.scstdate,1,2) || '-' || substring(a.scstdate,4,2),a.scsttime from JDTESTINFO.dspptf a, JDTESTINFO.dspptf b where (b.SCPTFID='SI69695' or b.SCPTFID='SI61258' or b.SCPTFID='SI61255' or b.SCPTFID='SI79326' ) and a.SCPTFID=b.SCSPTF");
+              "insert into qtemp.ptfinfo   select 'TBX', a.SCPTFID,'20' || substring(a.scstdate,7,2) || '-' || substring(a.scstdate,1,2) || '-' || substring(a.scstdate,4,2),a.scsttime from "+JTOpenTestEnvironment.testInfoSchema+".dspptf a, "+JTOpenTestEnvironment.testInfoSchema+".dspptf b where (b.SCPTFID='SI69695' or b.SCPTFID='SI61258' or b.SCPTFID='SI61255' or b.SCPTFID='SI79326' ) and a.SCPTFID=b.SCSPTF");
 
         }
         if (isNativeJDBC(initials)) {
@@ -3462,7 +3462,7 @@ public class JDReport {
 
   }
 
-  /* Update all the JDTESTINFO.RO files from the     ct/runitXXXX.out files
+  /* Update all the "+JTOpenTestEnvironment.testInfoSchema+".RO files from the     ct/runitXXXX.out files
    * 
    */
 

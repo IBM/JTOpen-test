@@ -32,6 +32,8 @@ import test.JDSetupProcedure;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSSetBlob. This tests the following method of the JDBC
@@ -112,10 +114,13 @@ public class JDPSSetBlob extends JDTestcase {
    * setBlob() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         ps.close();
         byte[] b = new byte[] { (byte) 22, (byte) 98, (byte) -2 };
         ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -124,16 +129,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         byte[] b = new byte[] { (byte) 22, (byte) -1, (byte) 4, (byte) 98,
             (byte) -2 };
         ps.setBlob(100, new JDLobTest.JDTestBlob(b));
@@ -144,16 +163,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Should throw exception when index is 0.
    **/
   public void Var003() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         byte[] b = new byte[] { (byte) 4, (byte) 98, (byte) 4, (byte) -2 };
         ps.setBlob(0, new JDLobTest.JDTestBlob(b));
         ps.executeUpdate();
@@ -163,16 +196,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Should throw exception when index is -1.
    **/
   public void Var004() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_INTEGER, C_SMALLINT) VALUES (?, ?)");
         byte[] b = new byte[] { (byte) 4, (byte) 22, (byte) 4, (byte) 22,
             (byte) -2 };
         ps.setBlob(0, new JDLobTest.JDTestBlob(b));
@@ -183,24 +230,38 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Should set to SQL NULL when the value is null.
    **/
   public void Var005() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         ps.setBlob(1, (java.sql.Blob) null);
         ps.executeUpdate();
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
         boolean wn = rs.wasNull();
@@ -211,18 +272,32 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Should work with a valid parameter index greater than 1.
    **/
   public void Var006() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_VARBINARY_20) VALUES (?, ?)");
         ps.setString(1, "Muchas");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 98, (byte) -2 };
         ps.setBlob(2, new JDLobTest.JDTestBlob(b));
@@ -230,7 +305,7 @@ public class JDPSSetBlob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
 
@@ -239,6 +314,17 @@ public class JDPSSetBlob extends JDTestcase {
         assertCondition(areEqual(b, check.getBytes(1, (int) check.length()))); // @B1C
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -269,13 +355,16 @@ public class JDPSSetBlob extends JDTestcase {
    * truncated.
    **/
   public void Var008() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       int length = 0;
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 9, (byte) -2,
             (byte) 0, (byte) -111, (byte) 50, (byte) 2, (byte) 0, (byte) -111,
             (byte) 50, (byte) 2, (byte) 0, (byte) -111, (byte) 50, (byte) 2,
@@ -301,14 +390,27 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void testSetFailed(String columnName, byte[] inArray) {
-
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+            + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
 
         ps.setBlob(1, new JDLobTest.JDTestBlob(inArray));
         ps.executeUpdate();
@@ -318,7 +420,17 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -333,10 +445,13 @@ public class JDPSSetBlob extends JDTestcase {
    * setBlob() - Set a INTEGER parameter.
    **/
   public void Var010() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -111, (byte) -2,
             (byte) 123 };
 
@@ -348,16 +463,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a REAL parameter.
    **/
   public void Var011() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
         byte[] b = new byte[] { (byte) 98 };
 
         ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -368,16 +497,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a FLOAT parameter.
    **/
   public void Var012() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) -2, (byte) 98, (byte) 7,
             (byte) -2, (byte) 45 };
 
@@ -389,16 +532,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DOUBLE parameter.
    **/
   public void Var013() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) 45, (byte) -2,
             (byte) 12 };
 
@@ -410,16 +567,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DECIMAL parameter.
    **/
   public void Var014() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+            + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
         byte[] b = new byte[] { (byte) -2, (byte) 98, (byte) -2, (byte) 45,
             (byte) 12, (byte) -33 };
 
@@ -431,16 +602,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a NUMERIC parameter.
    **/
   public void Var015() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+            + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) 7, (byte) -2,
             (byte) 45, (byte) 12, (byte) -33 };
 
@@ -452,18 +637,32 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a CHAR(1) parameter.
    **/
   public void Var016() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
         byte[] b = new byte[] { (byte) 33 };
 
         ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -472,18 +671,32 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a CHAR(50) parameter.
    **/
   public void Var017() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 7, (byte) 12, (byte) -12, (byte) 45,
             (byte) 12, (byte) -33, (byte) 0 };
 
@@ -493,18 +706,32 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a VARCHAR(50) parameter.
    **/
   public void Var018() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
         byte[] b = new byte[] { (byte) 127, (byte) -12, (byte) 12, (byte) -33 };
 
         ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -513,17 +740,31 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a CLOB parameter.
    **/
   public void Var019() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 108, (byte) 0, (byte) -12, (byte) 12,
               (byte) -33 };
 
@@ -536,17 +777,31 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DBCLOB parameter.
    **/
   public void Var020() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 0, (byte) -66, (byte) -12,
               (byte) -33 };
 
@@ -559,18 +814,32 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a BINARY parameter.
    **/
   public void Var021() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 0, (byte) 12,
             (byte) -33, (byte) 57, (byte) 9 };
 
@@ -579,7 +848,7 @@ public class JDPSSetBlob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
         rs.close();
@@ -593,18 +862,32 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a VARBINARY parameter.
    **/
   public void Var022() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[] { (byte) 0, (byte) -12, (byte) 0, (byte) -33,
             (byte) 9 };
 
@@ -613,7 +896,7 @@ public class JDPSSetBlob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
         rs.close();
@@ -623,18 +906,32 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a VARBINARY parameter to an empty array.
    **/
   public void Var023() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
         byte[] b = new byte[0];
 
         ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -642,7 +939,7 @@ public class JDPSSetBlob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
         rs.close();
@@ -652,19 +949,33 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a BLOB parameter, when the data is passed directly.
    **/
   public void Var024() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45,
               (byte) -33, (byte) 0 };
 
@@ -673,7 +984,7 @@ public class JDPSSetBlob extends JDTestcase {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
           rs.next();
           Blob check = rs.getBlob(1);
           rs.close();
@@ -681,6 +992,17 @@ public class JDPSSetBlob extends JDTestcase {
           assertCondition(areEqual(b, check.getBytes(1, (int) check.length()))); // @B1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        }
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -690,15 +1012,18 @@ public class JDPSSetBlob extends JDTestcase {
    * setBlob() - Set a BLOB parameter, when the data is passed in a locator.
    **/
   public void Var025() {
-    if (checkJdbc20()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           String url = baseURL_ +  ";lob threshold=1";
           Connection c = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
           PreparedStatement ps = c.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
           byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45,
               (byte) -33, (byte) 0 };
 
@@ -708,7 +1033,7 @@ public class JDPSSetBlob extends JDTestcase {
           c.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
           rs.next();
           Blob check = rs.getBlob(1);
           rs.close();
@@ -719,16 +1044,30 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DATE parameter.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 57, (byte) 1, (byte) -33,
             (byte) 0 };
 
@@ -740,16 +1079,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a TIME parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
         byte[] b = new byte[] { (byte) -12, (byte) 45, (byte) 1, (byte) -33,
             (byte) 0, (byte) 45, (byte) 5 };
 
@@ -761,16 +1114,30 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a TIMESTAMP parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         byte[] b = new byte[] { (byte) 45, (byte) 11, (byte) -33, (byte) 0,
             (byte) 5 };
 
@@ -782,17 +1149,31 @@ public class JDPSSetBlob extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DATALINK parameter.
    **/
   public void Var029() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       if (checkDatalinkSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+              + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) -12, (byte) 1, (byte) 45,
               (byte) 1, (byte) 11, (byte) -33, (byte) 0, (byte) 5, (byte) 100 };
 
@@ -805,17 +1186,31 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a DISTINCT parameter.
    **/
   public void Var030() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+              + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
           byte[] b = new byte[] { (byte) -12, (byte) -12, (byte) 1, (byte) -33,
               (byte) 0, (byte) 5, (byte) 100 };
 
@@ -828,17 +1223,31 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a BIGINT parameter.
    **/
   public void Var031() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       if (checkBigintSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -111, (byte) -2,
               (byte) 123 };
 
@@ -851,6 +1260,17 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -860,9 +1280,12 @@ public class JDPSSetBlob extends JDTestcase {
    * neutral today.
    **/
   public void Var032() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc20()) {
       try {
-        String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+        String insert = "INSERT INTO " + pstestSet.getName()
             + " (C_VARBINARY_20) VALUES (?)";
 
         if (isToolboxDriver())
@@ -872,7 +1295,7 @@ public class JDPSSetBlob extends JDTestcase {
           JDSetupPackage.prime(systemObject_, encryptedPassword_, PACKAGE,
               JDPSTest.COLLECTION, insert, "", getDriver());
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         Connection c2 = testDriver_.getConnection(baseURL_
             + ";extended dynamic=true;package=" + PACKAGE + ";package library="
@@ -886,7 +1309,7 @@ public class JDPSSetBlob extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
         rs.next();
         Blob check = rs.getBlob(1);
         rs.close();
@@ -897,6 +1320,17 @@ public class JDPSSetBlob extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -904,14 +1338,17 @@ public class JDPSSetBlob extends JDTestcase {
    * is truncated but the data truncation flag is turned off.
    **/
   public void Var033() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkNative()) {
       if (checkJdbc20()) {
         int length = 0;
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connectionNoDT_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+              + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
           byte[] b = new byte[] { (byte) -22, (byte) 4, (byte) 9, (byte) -2,
               (byte) 0, (byte) -111, (byte) 50, (byte) 2, (byte) 0, (byte) -111,
               (byte) 50, (byte) 2, (byte) 0, (byte) -111, (byte) 50, (byte) 2,
@@ -935,22 +1372,36 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setBlob() - Set a BLOB parameter, when truncation occurs.
    **/
   public void Var034() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
 
     String added = "Testcase to test truncation when setting a blob parameter -- Native bug returns internal server error -- added 05/08/2006 by native driver fix in native PTF level 27438 (V5R3) ";
 
     if (checkJdbc20()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
           byte[] b = new byte[300];
 
           ps.setBlob(1, new JDLobTest.JDTestBlob(b));
@@ -958,7 +1409,7 @@ public class JDPSSetBlob extends JDTestcase {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
           rs.next();
           Blob check = rs.getBlob(1);
           rs.close();
@@ -977,6 +1428,17 @@ public class JDPSSetBlob extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -987,7 +1449,7 @@ public class JDPSSetBlob extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + " VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP16 + " VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -111, (byte) -2,
               (byte) 123 };
 
@@ -1010,7 +1472,7 @@ public class JDPSSetBlob extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + " VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP34 + " VALUES (?)");
           byte[] b = new byte[] { (byte) 7, (byte) 98, (byte) -111, (byte) -2,
               (byte) 123 };
 
@@ -1028,7 +1490,7 @@ public class JDPSSetBlob extends JDTestcase {
   /**
    * setBlob() - Set an XML parameter.
    **/
-  public void setXML(String tablename, String byteEncoding, String data,
+  public void setXML(int table, String byteEncoding, String data,
       String expected) {
     String added = " -- added by native driver 08/21/2009";
 
@@ -1063,7 +1525,10 @@ public class JDPSSetBlob extends JDTestcase {
     }
 
     if (checkXmlSupport()) {
+      JDSerializeFile pstestSetxml = null;
       try {
+        pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+        String tablename = pstestSetxml.getName(); 
         statement_.executeUpdate("DELETE FROM " + tablename);
 
         PreparedStatement ps = connection_
@@ -1085,6 +1550,15 @@ public class JDPSSetBlob extends JDTestcase {
         output_.println("Encoding is " + byteEncoding + " jvm is " + jvm
             + " jvmVendor is " + jvmVendor);
         failed(e, "Unexpected Exception" + added);
+      } finally {
+        if (pstestSetxml != null) {
+          try {
+            pstestSetxml.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
       }
     }
   }
@@ -1092,11 +1566,14 @@ public class JDPSSetBlob extends JDTestcase {
   /**
    * setBlob() - Set an XML parameter using invalid data.
    **/
-  public void setInvalidXML(String tablename, String byteEncoding, String data,
+  public void setInvalidXML(int table, String byteEncoding, String data,
       String expectedException) {
     String added = " -- added by native driver 08/21/2009";
     if (checkXmlSupport()) {
+      JDSerializeFile pstestSetxml = null;
       try {
+        pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+        String tablename = pstestSetxml.getName(); 
         statement_.executeUpdate("DELETE FROM " + tablename);
 
         PreparedStatement ps = connection_
@@ -1122,6 +1599,15 @@ public class JDPSSetBlob extends JDTestcase {
           failed(e,
               "Unexpected Exception.  Expected " + expectedException + added);
         }
+      } finally {
+        if (pstestSetxml != null) {
+          try {
+            pstestSetxml.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
       }
     }
   }
@@ -1132,54 +1618,54 @@ public class JDPSSetBlob extends JDTestcase {
   }
 
   public void Var038() {
-    setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1", "<Test>Var038</Test>",
+    setXML(JDPSTest.SETXML, "ISO8859_1", "<Test>Var038</Test>",
         "<Test>Var038</Test>");
   }
 
   public void Var039() {
-    setXML(JDPSTest.PSTEST_SETXML, "ISO8859_1",
+    setXML(JDPSTest.SETXML, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var039\u00fb</Test>",
         "<Test>Var039\u00fb</Test>");
   }
 
   public void Var040() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-8",
+    setXML(JDPSTest.SETXML, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var040\u00fb</Test>",
         "<Test>Var040\u00fb</Test>");
   }
 
   public void Var041() {
-    setXML(JDPSTest.PSTEST_SETXML, "IBM-037",
+    setXML(JDPSTest.SETXML, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var041\u00fb</Test>",
         "<Test>Var041\u00fb</Test>");
   }
 
   public void Var042() {
-    setXML(JDPSTest.PSTEST_SETXML, "IBM-937",
+    setXML(JDPSTest.SETXML, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var042\u672b</Test>",
         "<Test>Var042\u672b</Test>");
   }
 
   public void Var043() {
-    setXML(JDPSTest.PSTEST_SETXML, "IBM-290",
+    setXML(JDPSTest.SETXML, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var043\uff7a</Test>",
         "<Test>Var043\uff7a</Test>");
   }
 
   public void Var044() {
-    setXML(JDPSTest.PSTEST_SETXML, "UCS-2",
+    setXML(JDPSTest.SETXML, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var044\u00fb\uff7a</Test>",
         "<Test>Var044\u00fb\uff7a</Test>");
   }
 
   public void Var045() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-16BE",
+    setXML(JDPSTest.SETXML, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var045\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>Var045\u00fb\uff7a\ud800\udf30</Test>");
   }
 
   public void Var046() {
-    setXML(JDPSTest.PSTEST_SETXML, "UTF-16LE",
+    setXML(JDPSTest.SETXML, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var046\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>Var046\u00fb\uff7a\ud800\udf30</Test>");
   }
@@ -1187,54 +1673,54 @@ public class JDPSSetBlob extends JDTestcase {
   /* Insert various types against a 13488 table */
 
   public void Var047() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1", "<Test>Var047</Test>",
+    setXML(JDPSTest.SETXML13488, "ISO8859_1", "<Test>Var047</Test>",
         "<Test>Var047</Test>");
   }
 
   public void Var048() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "ISO8859_1",
+    setXML(JDPSTest.SETXML13488, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var048\u00fb</Test>",
         "<Test>Var048\u00fb</Test>");
   }
 
   public void Var049() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-8",
+    setXML(JDPSTest.SETXML13488, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var049\u00fb</Test>",
         "<Test>Var049\u00fb</Test>");
   }
 
   public void Var050() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-037",
+    setXML(JDPSTest.SETXML13488, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var050\u00fb</Test>",
         "<Test>Var050\u00fb</Test>");
   }
 
   public void Var051() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-937",
+    setXML(JDPSTest.SETXML13488, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var051\u672b</Test>",
         "<Test>Var051\u672b</Test>");
   }
 
   public void Var052() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "IBM-290",
+    setXML(JDPSTest.SETXML13488, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var052\uff7a</Test>",
         "<Test>Var052\uff7a</Test>");
   }
 
   public void Var053() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "UCS-2",
+    setXML(JDPSTest.SETXML13488, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var053\u00fb\uff7a</Test>",
         "<Test>Var053\u00fb\uff7a</Test>");
   }
 
   public void Var054() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-16BE",
+    setXML(JDPSTest.SETXML13488, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var054\u00fb\uff7a</Test>",
         "<Test>Var054\u00fb\uff7a</Test>");
   }
 
   public void Var055() {
-    setXML(JDPSTest.PSTEST_SETXML13488, "UTF-16LE",
+    setXML(JDPSTest.SETXML13488, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var055\u00fb\uff7a</Test>",
         "<Test>Var055\u00fb\uff7a</Test>");
   }
@@ -1242,54 +1728,54 @@ public class JDPSSetBlob extends JDTestcase {
   /* Insert various types against a UTF-16 table */
 
   public void Var056() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1", "<Test>Var056</Test>",
+    setXML(JDPSTest.SETXML1200, "ISO8859_1", "<Test>Var056</Test>",
         "<Test>Var056</Test>");
   }
 
   public void Var057() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "ISO8859_1",
+    setXML(JDPSTest.SETXML1200, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var039\u00fb</Test>",
         "<Test>Var039\u00fb</Test>");
   }
 
   public void Var058() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-8",
+    setXML(JDPSTest.SETXML1200, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var040\u00fb</Test>",
         "<Test>Var040\u00fb</Test>");
   }
 
   public void Var059() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-037",
+    setXML(JDPSTest.SETXML1200, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var041\u00fb</Test>",
         "<Test>Var041\u00fb</Test>");
   }
 
   public void Var060() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-937",
+    setXML(JDPSTest.SETXML1200, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var042\u672b</Test>",
         "<Test>Var042\u672b</Test>");
   }
 
   public void Var061() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "IBM-290",
+    setXML(JDPSTest.SETXML1200, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var043\uff7a</Test>",
         "<Test>Var043\uff7a</Test>");
   }
 
   public void Var062() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "UCS-2",
+    setXML(JDPSTest.SETXML1200, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var044\u00fb\uff7a</Test>",
         "<Test>Var044\u00fb\uff7a</Test>");
   }
 
   public void Var063() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-16BE",
+    setXML(JDPSTest.SETXML1200, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var045\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>Var045\u00fb\uff7a\ud800\udf30</Test>");
   }
 
   public void Var064() {
-    setXML(JDPSTest.PSTEST_SETXML1200, "UTF-16LE",
+    setXML(JDPSTest.SETXML1200, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var046\u00fb\uff7a\ud800\udf30</Test>",
         "<Test>Var046\u00fb\uff7a\ud800\udf30</Test>");
   }
@@ -1297,54 +1783,54 @@ public class JDPSSetBlob extends JDTestcase {
   /* Insert various types against a EBCDIC-37 table */
 
   public void Var065() {
-    setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1", "<Test>Var065</Test>",
+    setXML(JDPSTest.SETXML37, "ISO8859_1", "<Test>Var065</Test>",
         "<Test>Var065</Test>");
   }
 
   public void Var066() {
-    setXML(JDPSTest.PSTEST_SETXML37, "ISO8859_1",
+    setXML(JDPSTest.SETXML37, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var039\u00fb</Test>",
         "<Test>Var039\u00fb</Test>");
   }
 
   public void Var067() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-8",
+    setXML(JDPSTest.SETXML37, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var040\u00fb</Test>",
         "<Test>Var040\u00fb</Test>");
   }
 
   public void Var068() {
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-037",
+    setXML(JDPSTest.SETXML37, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var041\u00fb</Test>",
         "<Test>Var041\u00fb</Test>");
   }
 
   public void Var069() {
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-937",
+    setXML(JDPSTest.SETXML37, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var042</Test>",
         "<Test>Var042</Test>");
   }
 
   public void Var070() {
-    setXML(JDPSTest.PSTEST_SETXML37, "IBM-290",
+    setXML(JDPSTest.SETXML37, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var043</Test>",
         "<Test>Var043</Test>");
   }
 
   public void Var071() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UCS-2",
+    setXML(JDPSTest.SETXML37, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var044\u00fb</Test>",
         "<Test>Var044\u00fb</Test>");
   }
 
   public void Var072() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-16BE",
+    setXML(JDPSTest.SETXML37, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var045\u00fb</Test>",
         "<Test>Var045\u00fb</Test>");
   }
 
   public void Var073() {
-    setXML(JDPSTest.PSTEST_SETXML37, "UTF-16LE",
+    setXML(JDPSTest.SETXML37, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var046\u00fb</Test>",
         "<Test>Var046\u00fb</Test>");
   }
@@ -1352,54 +1838,54 @@ public class JDPSSetBlob extends JDTestcase {
   /* Insert various types against a EBCDIC-937 table */
 
   public void Var074() {
-    setXML(JDPSTest.PSTEST_SETXML937, "ISO8859_1", "<Test>Var038</Test>",
+    setXML(JDPSTest.SETXML937, "ISO8859_1", "<Test>Var038</Test>",
         "<Test>Var038</Test>");
   }
 
   public void Var075() {
-    setXML(JDPSTest.PSTEST_SETXML937, "ISO8859_1",
+    setXML(JDPSTest.SETXML937, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var039</Test>",
         "<Test>Var039</Test>");
   }
 
   public void Var076() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-8",
+    setXML(JDPSTest.SETXML937, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var040\u672b</Test>",
         "<Test>Var040\u672b</Test>");
   }
 
   public void Var077() {
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-037",
+    setXML(JDPSTest.SETXML937, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var041</Test>",
         "<Test>Var041</Test>");
   }
 
   public void Var078() {
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-937",
+    setXML(JDPSTest.SETXML937, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var042\u672b</Test>",
         "<Test>Var042\u672b</Test>");
   }
 
   public void Var079() {
-    setXML(JDPSTest.PSTEST_SETXML937, "IBM-290",
+    setXML(JDPSTest.SETXML937, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var043</Test>",
         "<Test>Var043</Test>");
   }
 
   public void Var080() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UCS-2",
+    setXML(JDPSTest.SETXML937, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var044\u672b</Test>",
         "<Test>Var044\u672b</Test>");
   }
 
   public void Var081() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-16BE",
+    setXML(JDPSTest.SETXML937, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var045\u672b</Test>",
         "<Test>Var045\u672b</Test>");
   }
 
   public void Var082() {
-    setXML(JDPSTest.PSTEST_SETXML937, "UTF-16LE",
+    setXML(JDPSTest.SETXML937, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var046\u672b</Test>",
         "<Test>Var046\u672b</Test>");
   }
@@ -1407,54 +1893,54 @@ public class JDPSSetBlob extends JDTestcase {
   /* Insert various types against a EBCDIC 290 table */
 
   public void Var083() {
-    setXML(JDPSTest.PSTEST_SETXML290, "ISO8859_1", "<Test>Var083</Test>",
+    setXML(JDPSTest.SETXML290, "ISO8859_1", "<Test>Var083</Test>",
         "<Test>Var083</Test>");
   }
 
   public void Var084() {
-    setXML(JDPSTest.PSTEST_SETXML290, "ISO8859_1",
+    setXML(JDPSTest.SETXML290, "ISO8859_1",
         "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><Test>Var039</Test>",
         "<Test>Var039</Test>");
   }
 
   public void Var085() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-8",
+    setXML(JDPSTest.SETXML290, "UTF-8",
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <Test>Var040\uff7a</Test>",
         "<Test>Var040\uff7a</Test>");
   }
 
   public void Var086() {
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-037",
+    setXML(JDPSTest.SETXML290, "IBM-037",
         "<?xml version=\"1.0\" encoding=\"IBM-037\"?>  <Test>Var041</Test>",
         "<Test>Var041</Test>");
   }
 
   public void Var087() {
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-937",
+    setXML(JDPSTest.SETXML290, "IBM-937",
         "<?xml version=\"1.0\" encoding=\"IBM-937\"?>  <Test>Var042</Test>",
         "<Test>Var042</Test>");
   }
 
   public void Var088() {
-    setXML(JDPSTest.PSTEST_SETXML290, "IBM-290",
+    setXML(JDPSTest.SETXML290, "IBM-290",
         "<?xml version=\"1.0\" encoding=\"IBM-290\"?>  <Test>Var043\uff7a</Test>",
         "<Test>Var043\uff7a</Test>");
   }
 
   public void Var089() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UCS-2",
+    setXML(JDPSTest.SETXML290, "UCS-2",
         "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>Var044\uff7a</Test>",
         "<Test>Var044\uff7a</Test>");
   }
 
   public void Var090() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-16BE",
+    setXML(JDPSTest.SETXML290, "UTF-16BE",
         "<?xml version=\"1.0\" encoding=\"UTF-16BE\"?>  <Test>Var045\uff7a</Test>",
         "<Test>Var045\uff7a</Test>");
   }
 
   public void Var091() {
-    setXML(JDPSTest.PSTEST_SETXML290, "UTF-16LE",
+    setXML(JDPSTest.SETXML290, "UTF-16LE",
         "<?xml version=\"1.0\" encoding=\"UTF-16LE\"?>  <Test>Var046\uff7a</Test>",
         "<Test>Var046\uff7a</Test>");
   }

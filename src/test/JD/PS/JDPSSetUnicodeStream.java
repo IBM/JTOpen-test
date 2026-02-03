@@ -34,6 +34,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 
 
@@ -132,9 +134,11 @@ statement is closed.
 **/
     public void Var001()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             ps.close ();
             InputStream is = new ByteArrayInputStream ("Canada".getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -143,8 +147,17 @@ statement is closed.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -154,9 +167,11 @@ specified.
 **/
     public void Var002()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("United States".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (100, is, is.available ());
@@ -165,8 +180,17 @@ specified.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -175,9 +199,11 @@ setUnicodeStream() - Should throw exception when index is 0.
 **/
     public void Var003()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("Mexico".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (0, is, is.available ());
@@ -186,8 +212,17 @@ setUnicodeStream() - Should throw exception when index is 0.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -196,9 +231,11 @@ setUnicodeStream() - Should throw exception when index is -1.
 **/
     public void Var004()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
             InputStream is = new ByteArrayInputStream ("Virgin Islands".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (0, is, is.available ());
@@ -207,8 +244,17 @@ setUnicodeStream() - Should throw exception when index is -1.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -217,17 +263,19 @@ setUnicodeStream() - Should set to SQL NULL when the value is null.
 **/
     public void Var005()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             ps.setUnicodeStream (1, null, 0);
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             boolean wn = rs.wasNull ();
@@ -237,8 +285,17 @@ setUnicodeStream() - Should set to SQL NULL when the value is null.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -248,11 +305,14 @@ greater than 1.
 **/
     public void Var006()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
             ps.setString (1, "Muchas");
             InputStream is = new ByteArrayInputStream ("El Salvador".getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -260,7 +320,7 @@ greater than 1.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
 
@@ -271,6 +331,17 @@ greater than 1.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -280,9 +351,11 @@ setUnicodeStream() - Should throw exception when the length is not valid.
 **/
     public void Var007()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Banana Republic".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, -1);
@@ -290,8 +363,17 @@ setUnicodeStream() - Should throw exception when the length is not valid.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -326,12 +408,15 @@ posted when data is truncated.
 **/
     public void Var009()
     {
-        int length = 0;
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+int length = 0;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             String s = "Panama is yet another country that is in Central America";
             InputStream is = new ByteArrayInputStream (s.getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -350,7 +435,18 @@ posted when data is truncated.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -361,9 +457,11 @@ setUnicodeStream() - Set a SMALLINT parameter.
 **/
     public void Var010()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_SMALLINT) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Costa Rica".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -372,8 +470,17 @@ setUnicodeStream() - Set a SMALLINT parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -382,9 +489,11 @@ setUnicodeStream() - Set a INTEGER parameter.
 **/
     public void Var011()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Cuba".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -393,8 +502,17 @@ setUnicodeStream() - Set a INTEGER parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -403,9 +521,11 @@ setUnicodeStream() - Set a REAL parameter.
 **/
     public void Var012()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_REAL) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Jamaica".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -414,8 +534,17 @@ setUnicodeStream() - Set a REAL parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -424,9 +553,11 @@ setUnicodeStream() - Set a FLOAT parameter.
 **/
     public void Var013()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_FLOAT) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Haiti".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -435,8 +566,17 @@ setUnicodeStream() - Set a FLOAT parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -445,9 +585,11 @@ setUnicodeStream() - Set a DOUBLE parameter.
 **/
     public void Var014()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DOUBLE) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Trinidad".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -456,8 +598,17 @@ setUnicodeStream() - Set a DOUBLE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -466,9 +617,11 @@ setUnicodeStream() - Set a DECIMAL parameter.
 **/
     public void Var015()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DECIMAL_105) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Ecuador".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -477,8 +630,17 @@ setUnicodeStream() - Set a DECIMAL parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -487,9 +649,11 @@ setUnicodeStream() - Set a NUMERIC parameter.
 **/
     public void Var016()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_NUMERIC_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Brazil".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -498,8 +662,17 @@ setUnicodeStream() - Set a NUMERIC parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -508,18 +681,20 @@ setUnicodeStream() - Set a CHAR(1) parameter.
 **/
     public void Var017()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_CHAR_1) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("U".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_1 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -528,8 +703,17 @@ setUnicodeStream() - Set a CHAR(1) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -539,18 +723,20 @@ setUnicodeStream() - Set a CHAR(50) parameter.
 **/
     public void Var018()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_CHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Uruguay".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_CHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -559,8 +745,17 @@ setUnicodeStream() - Set a CHAR(50) parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -570,18 +765,20 @@ to the full stream, an even number (to deal with Unicode issues).
 **/
     public void Var019()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Paraguay".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -590,8 +787,17 @@ to the full stream, an even number (to deal with Unicode issues).
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -603,11 +809,13 @@ to the full stream, an odd number (to deal with Unicode issues).
 **/
     public void Var020()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Paraguay".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available () - 1);
@@ -623,8 +831,17 @@ to the full stream, an odd number (to deal with Unicode issues).
 		succeeded();						// @E1
 	    else							// @E1
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -636,11 +853,13 @@ the full stream.
 **/
     public void Var021()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Tobago".getBytes ("UnicodeBigUnmarked")); // @B0C
             InputStream is2 = new ByteArrayInputStream ("Tob".getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -657,8 +876,17 @@ the full stream.
 		succeeded();						// @E1
 	    else							// @E1
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -668,11 +896,13 @@ the full stream.
 **/
     public void Var022()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Long Island".getBytes ("UnicodeBigUnmarked")); // @B0C
             InputStream is2 = new ByteArrayInputStream ("Long Island and more".getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -681,8 +911,17 @@ the full stream.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -693,11 +932,13 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 1 chara
 **/
     public void Var023()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Yucatan Penisula".getBytes ("UnicodeBigUnmarked")); // @B0C
             InputStream is2 = new ByteArrayInputStream ("Y".getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -716,8 +957,17 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 1 chara
 	    else							// @E1
 
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -728,11 +978,13 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 0.
 **/
     public void Var024()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Baja California".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, 0);
@@ -750,8 +1002,17 @@ setUnicodeStream() - Set a VARCHAR(50) parameter, with the length set to 0.
 	    else							// @E1
 
 		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -760,18 +1021,20 @@ setUnicodeStream() - Set a VARCHAR(50) parameter to the empty string.
 **/
     public void Var025()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -780,8 +1043,17 @@ setUnicodeStream() - Set a VARCHAR(50) parameter to the empty string.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -790,11 +1062,13 @@ setUnicodeStream() - Set a VARCHAR(50) parameter to a bad input stream.
 **/
     public void Var026()
     {
+    JDSerializeFile pstestSet = null;
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+      pstestSet = JDPSTest.getPstestSet(connection_);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)");
 
             class BadInputStream extends InputStream
@@ -820,8 +1094,17 @@ setUnicodeStream() - Set a VARCHAR(50) parameter to a bad input stream.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -830,19 +1113,22 @@ setUnicodeStream() - Set a CLOB parameter.
 **/
     public void Var027()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_CLOB) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Argentina".getBytes ("UnicodeBigUnmarked")); // @B0C
                 ps.setUnicodeStream (1, is, is.available ());
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_CLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -853,7 +1139,18 @@ setUnicodeStream() - Set a CLOB parameter.
                 failed (e, "Unexpected Exception");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -863,21 +1160,24 @@ setUnicodeStream() - Set a DBCLOB parameter.
 **/
     public void Var028()
     {
-        if (checkLobSupport ()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkLobSupport ()) {
             succeeded ();
             /* Need to investigate this variation ...
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DBCLOB) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Peru".getBytes ("UnicodeBigUnmarked")); // @B0C
                 ps.setUnicodeStream (1, is, is.available ());
                 ps.executeUpdate ();
                 ps.close ();
 
-                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + JDPSTest.PSTEST_SET);
+                ResultSet rs = statement_.executeQuery ("SELECT C_DBCLOB FROM " + pstestSet.getName());
                 rs.next ();
                 String check = rs.getString (1);
                 rs.close ();
@@ -889,7 +1189,18 @@ setUnicodeStream() - Set a DBCLOB parameter.
             }
             */
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
     }
+  }
 
 
 
@@ -898,7 +1209,9 @@ setUnicodeStream() - Set a BINARY parameter.
 **/
     public void Var029()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             String expected = null;
 
             if (isToolboxDriver())
@@ -906,10 +1219,10 @@ setUnicodeStream() - Set a BINARY parameter.
             else
                expected = "Colombia Heights";
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BINARY_20) VALUES (?)");
 
             InputStream is = new ByteArrayInputStream (expected.getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -917,7 +1230,7 @@ setUnicodeStream() - Set a BINARY parameter.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -928,8 +1241,17 @@ setUnicodeStream() - Set a BINARY parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -939,7 +1261,9 @@ setUnicodeStream() - Set a VARBINARY parameter.
 **/
     public void Var030()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             String expected = null;
 
              if (isToolboxDriver())
@@ -947,10 +1271,10 @@ setUnicodeStream() - Set a VARBINARY parameter.
              else
                 expected = "Puerto";
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_VARBINARY_20) VALUES (?)");
 
             InputStream is = new ByteArrayInputStream (expected.getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -958,7 +1282,7 @@ setUnicodeStream() - Set a VARBINARY parameter.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARBINARY_20 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -967,8 +1291,17 @@ setUnicodeStream() - Set a VARBINARY parameter.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -978,9 +1311,11 @@ setUnicodeStream() - Set a BLOB parameter.
 **/
     public void Var031()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BLOB) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Guam".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -989,8 +1324,17 @@ setUnicodeStream() - Set a BLOB parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -1000,9 +1344,11 @@ setUnicodeStream() - Set a DATE parameter.
 **/
     public void Var032()
     {
+    JDSerializeFile pstestSet = null;
         try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_DATE) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Virgin Islands".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -1011,8 +1357,17 @@ setUnicodeStream() - Set a DATE parameter.
         }
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
+        
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
+      }
     }
+  }
 
 
 
@@ -1021,9 +1376,12 @@ setUnicodeStream() - Set a TIME parameter.
 **/
     public void Var033()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIME) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Bermuda".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -1033,6 +1391,17 @@ setUnicodeStream() - Set a TIME parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1042,9 +1411,12 @@ setUnicodeStream() - Set a TIMESTAMP parameter.
 **/
     public void Var034()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_TIMESTAMP) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Bahamas".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -1054,6 +1426,17 @@ setUnicodeStream() - Set a TIMESTAMP parameter.
         catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1062,12 +1445,15 @@ setUnicodeStream() - Set a DATALINK parameter.
 **/
     public void Var035()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkDatalinkSupport ()) {
             try {
-                statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+                statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DATALINK) VALUES (DLVALUE( CAST(? AS VARCHAR(120))))");
                 String url = "http://www.falkandislands.com/map.html";
                 InputStream is = new ByteArrayInputStream (url.getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -1075,7 +1461,7 @@ setUnicodeStream() - Set a DATALINK parameter.
                 ps.executeUpdate();
                 ps.close ();
 
-               ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + JDPSTest.PSTEST_SET);
+               ResultSet rs = statement_.executeQuery ("SELECT C_DATALINK FROM " + pstestSet.getName());
                rs.next ();
                String check = rs.getString (1);
                rs.close ();
@@ -1086,6 +1472,17 @@ setUnicodeStream() - Set a DATALINK parameter.
                failed (e, "Unexpected Exception");
            }
        }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
    }
 
 
@@ -1096,10 +1493,13 @@ setUnicodeStream() - Set a DISTINCT parameter.
 **/
     public void Var036()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkLobSupport ()) {
             try {
                 PreparedStatement ps = connection_.prepareStatement (
-                    "INSERT INTO " + JDPSTest.PSTEST_SET
+                    "INSERT INTO " + pstestSet.getName()
                     + " (C_DISTINCT) VALUES (?)");
                 InputStream is = new ByteArrayInputStream ("Strait of Magellan".getBytes ("UnicodeBigUnmarked")); // @B0C
                 ps.setUnicodeStream (1, is, is.available ());
@@ -1110,6 +1510,17 @@ setUnicodeStream() - Set a DISTINCT parameter.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1119,10 +1530,13 @@ setUnicodeStream() - Set a BIGINT parameter.
 **/
     public void Var037()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         if (checkBigintSupport()) {
         try {
             PreparedStatement ps = connection_.prepareStatement (
-                "INSERT INTO " + JDPSTest.PSTEST_SET
+                "INSERT INTO " + pstestSet.getName()
                 + " (C_BIGINT) VALUES (?)");
             InputStream is = new ByteArrayInputStream ("Spain".getBytes ("UnicodeBigUnmarked")); // @B0C
             ps.setUnicodeStream (1, is, is.available ());
@@ -1133,6 +1547,17 @@ setUnicodeStream() - Set a BIGINT parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1142,8 +1567,11 @@ setUnicodeStream() - Set a VARCHAR(50) parameter with package caching.
 **/
     public void Var038()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         try {
-            String insert = "INSERT INTO " + JDPSTest.PSTEST_SET
+            String insert = "INSERT INTO " + pstestSet.getName()
                 + " (C_VARCHAR_50) VALUES (?)";
 
             if (isToolboxDriver())
@@ -1153,7 +1581,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter with package caching.
                JDSetupPackage.prime (systemObject_, encryptedPassword_, PACKAGE,
                    JDPSTest.COLLECTION, insert, "", getDriver());
 
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             Connection c2 = testDriver_.getConnection (baseURL_
                 + ";extended dynamic=true;package=" + PACKAGE
@@ -1166,7 +1594,7 @@ setUnicodeStream() - Set a VARCHAR(50) parameter with package caching.
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
             rs.close ();
@@ -1176,6 +1604,17 @@ setUnicodeStream() - Set a VARCHAR(50) parameter with package caching.
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1184,6 +1623,9 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
 **/
     public void Var039()
     {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
         // Per Toolbox implementation... 
         // The spec says to throw an exception when the
         // actual length does not match the specified length.
@@ -1194,10 +1636,10 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
       String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes "; 
  
 	try {
-	    statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+	    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
 	     PreparedStatement ps = connection_.prepareStatement (
-								 "INSERT INTO " + JDPSTest.PSTEST_SET
+								 "INSERT INTO " + pstestSet.getName()
 								 + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
 	    ps.setString (1, "Muchas");
 
@@ -1206,7 +1648,7 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
 	    ps.executeUpdate ();
 	    ps.close ();
 
-	    ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+	    ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
 	    rs.next ();
 	    String check = rs.getString (1);
 
@@ -1218,6 +1660,17 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
 	catch (Exception e) {
 	    failed (e, "Unexpected Exception");
 	}
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
     }
 
 
@@ -1228,6 +1681,9 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
     **/
         public void Var040()
         {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
             // Per Toolbox implementation... 
             // The spec says to throw an exception when the
             // actual length does not match the specified length.
@@ -1238,10 +1694,10 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
           String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes "; 
      
         try {
-            statement_.executeUpdate ("DELETE FROM " + JDPSTest.PSTEST_SET);
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
             PreparedStatement ps = connection_.prepareStatement (
-                                                                 "INSERT INTO " + JDPSTest.PSTEST_SET
+                                                                 "INSERT INTO " + pstestSet.getName()
                                                                  + " (C_KEY, C_VARCHAR_50) VALUES (?, ?)");
             ps.setString (1, "Muchas");
 
@@ -1250,7 +1706,7 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
             ps.executeUpdate ();
             ps.close ();
 
-            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            ResultSet rs = statement_.executeQuery ("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
             rs.next ();
             String check = rs.getString (1);
 
@@ -1262,6 +1718,17 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
         catch (Exception e) {
             failed (e, "Unexpected Exception");
         }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
         }
 
 
@@ -1274,7 +1741,7 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
                 if (checkDecFloatSupport()) {
                 try {
                     PreparedStatement ps = connection_.prepareStatement (
-                        "INSERT INTO " + JDPSTest.PSTEST_SETDFP16
+                        "INSERT INTO " + JDPSTest.SETDFP16
                         + "  VALUES (?)");
                     InputStream is = new ByteArrayInputStream ("Spain".getBytes ("UnicodeBigUnmarked")); // @B0C
                     ps.setUnicodeStream (1, is, is.available ());
@@ -1292,10 +1759,13 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
             **/
                 public void Var042()
                 {
-                    if (checkDecFloatSupport()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkDecFloatSupport()) {
                     try {
                         PreparedStatement ps = connection_.prepareStatement (
-                            "INSERT INTO " + JDPSTest.PSTEST_SETDFP34
+                            "INSERT INTO " + JDPSTest.SETDFP34
                             + "  VALUES (?)");
                         InputStream is = new ByteArrayInputStream ("S pain".getBytes ("UnicodeBigUnmarked")); // @B0C
                         ps.setUnicodeStream (1, is, is.available ());
@@ -1306,7 +1776,18 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
                         assertExceptionIsInstanceOf (e, "java.sql.SQLException");
                     }
                     }
-                }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 
 
 
@@ -1316,12 +1797,15 @@ setUnicodeStream() - Should work with a funky input stream that will return 0 by
 /**
 setXML() - Set an XML  parameter.
 **/
-	   public void setXML(String tablename, String data, String expected) {
+	   public void setXML(int table, String data, String expected) {
 	     boolean passed = true; 
 	       sb.setLength(0); 
 	       sb.append(" -- added by native driver 08/21/2009\n");
 	       if (checkXmlSupport ()) {
-		   try {
+                 JDSerializeFile pstestSetxml = null;
+                 try {
+                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+                   String tablename = pstestSetxml.getName(); 
 		       String sql = "DELETE FROM " + tablename;
 		       sb.append("SQL="+sql+"\n"); 
 		       statement_.executeUpdate (sql);
@@ -1356,6 +1840,15 @@ setXML() - Set an XML  parameter.
 		   }
 		   catch (Exception e) {
 		       failed (e, "Unexpected Exception"+sb.toString());
+                   } finally {
+                     if (pstestSetxml != null) {
+                       try {
+                         pstestSetxml.close();
+                       } catch (SQLException e) {
+                         e.printStackTrace();
+                       }
+                     }
+
 		   }
 	       }
 	   }
@@ -1365,10 +1858,13 @@ setXML() - Set an XML  parameter.
 /**
 setCharacterStream() - Set an XML  parameter using invalid data.
 **/
-	   public void setInvalidXML(String tablename, String data, String expectedException) {
+	   public void setInvalidXML(int table, String data, String expectedException) {
 	    String added = " -- added by native driver 08/21/2009";
 	       if (checkXmlSupport ()) {
-		   try {
+                 JDSerializeFile pstestSetxml = null;
+                 try {
+                   pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+                   String tablename = pstestSetxml.getName(); 
 		       statement_.executeUpdate ("DELETE FROM " + tablename);
 
 		       PreparedStatement ps = connection_.prepareStatement (
@@ -1399,79 +1895,89 @@ setCharacterStream() - Set an XML  parameter using invalid data.
 		       } else { 
 			   failed (e, "Unexpected Exception.  Expected "+expectedException+added);
 		       }
+                   } finally {
+                     if (pstestSetxml != null) {
+                       try {
+                         pstestSetxml.close();
+                       } catch (SQLException e) {
+                         e.printStackTrace();
+                       }
+                     }
+
 		   }
 	       }
 	   }
 
 	   /* Note.  For native this goes through binary stream and to
               work, the binary stream must begin with <? xml */ 
-	   public void Var044() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\"?> <Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
-	   public void Var045() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
-	   public void Var046() { setXML(JDPSTest.PSTEST_SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
+	   public void Var044() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\"?> <Test>VAR044\u00a2</Test>",  "<Test>VAR044\u00a2</Test>"); }
+	   public void Var045() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR045\u00a2</Test>",  "<Test>VAR045\u00a2</Test>"); }
+	   public void Var046() { setXML(JDPSTest.SETXML,  "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR046\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR046\u0130\u3041\ud800\udf30</Test>"); }
 
-	   public void Var047() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\"?> <Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
-	   public void Var048() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
-	   public void Var049() { setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
+	   public void Var047() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\"?> <Test>VAR047</Test>",  "<Test>VAR047</Test>"); }
+	   public void Var048() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR048\u00a2</Test>",  "<Test>VAR048\u00a2</Test>"); }
+	   public void Var049() { setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR049\u0130\u3041</Test>",  "<Test>VAR049\u0130\u3041</Test>"); }
 
-	   public void Var050() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\"?> <Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
-	   public void Var051() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
-	   public void Var052() { setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
+	   public void Var050() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\"?> <Test>VAR050</Test>",  "<Test>VAR050</Test>"); }
+	   public void Var051() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR051\u00a2</Test>",  "<Test>VAR051\u00a2</Test>"); }
+	   public void Var052() { setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR052\u0130\u3041\ud800\udf30</Test>",  "<Test>VAR052\u0130\u3041\ud800\udf30</Test>"); }
 
-	   public void Var053() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\"?> <Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
-	   public void Var054() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
-	   public void Var055() { setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
+	   public void Var053() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\"?> <Test>VAR053\u00a2</Test>",  "<Test>VAR053\u00a2</Test>"); }
+	   public void Var054() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR054\u00a2</Test>",  "<Test>VAR054\u00a2</Test>"); }
+	   public void Var055() { setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR055\u00a2</Test>",  "<Test>VAR055\u00a2</Test>"); }
 
-	   public void Var056() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\"?> <Test>VAR056\u672b</Test>",  "<Test>VAR056\u672b</Test>"); }
-	   public void Var057() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR057\u672b</Test>",  "<Test>VAR057\u672b</Test>"); }
-	   public void Var058() { setXML(JDPSTest.PSTEST_SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR058\u672b</Test>",  "<Test>VAR058\u672b</Test>"); }
+	   public void Var056() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\"?> <Test>VAR056\u672b</Test>",  "<Test>VAR056\u672b</Test>"); }
+	   public void Var057() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR057\u672b</Test>",  "<Test>VAR057\u672b</Test>"); }
+	   public void Var058() { setXML(JDPSTest.SETXML937, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR058\u672b</Test>",  "<Test>VAR058\u672b</Test>"); }
 
-	   public void Var059() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\"?> <Test>VAR059</Test>",  "<Test>VAR059</Test>"); }
-	   public void Var060() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR060\uff7a</Test>",  "<Test>VAR060\uff7a</Test>"); }
-	   public void Var061() { setXML(JDPSTest.PSTEST_SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
+	   public void Var059() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\"?> <Test>VAR059</Test>",  "<Test>VAR059</Test>"); }
+	   public void Var060() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UCS-2\"?><Test>VAR060\uff7a</Test>",  "<Test>VAR060\uff7a</Test>"); }
+	   public void Var061() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR061\uff98</Test>",  "<Test>VAR061\uff98</Test>"); }
 
 
 
 
 	   public void Var062() {  
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); 
+	           setXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "<Test>VAR062</Test>"); 
 	           return;
 	       }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "XML parsing failed"); }
-	   public void Var063() { setInvalidXML(JDPSTest.PSTEST_SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR062</Test>",  "XML parsing failed"); }
+	   public void Var063() { setInvalidXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>VAR063</Tes>",  "XML parsing failed"); }
 
 	   public void Var064() { 
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); 
+	           setXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "<Test>VAR064</Test>" ); 
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "XML parsing failed" ); }
-	   public void Var065() { setInvalidXML(JDPSTest.PSTEST_SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR064</Test>",  "XML parsing failed" ); }
+	   public void Var065() { setInvalidXML(JDPSTest.SETXML13488, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR065</Test>",  "XML parsing failed"); }
 
 	   public void Var066() {
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>"); 
+	           setXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "<Test>VAR066</Test>"); 
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "XML parsing failed"); }
-	   public void Var067() { setInvalidXML(JDPSTest.PSTEST_SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
+	       setInvalidXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>VAR066</Test>",  "XML parsing failed"); }
+	   public void Var067() { setInvalidXML(JDPSTest.SETXML1200, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tes>VAR067</Test>",  "XML parsing failed"); }
 
 	   public void Var068() { 
 	       if( isToolboxDriver()){
-	           setXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "<Test>VAR068\u00a2</Test>");
+	           setXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "<Test>VAR068\u00a2</Test>");
                return;
            }
-	       setInvalidXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "XML parsing failed"); }
-	   public void Var069() { setInvalidXML(JDPSTest.PSTEST_SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
-
+	       setInvalidXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"IBM-037\"?><Test>VAR068\u00a2</Test>",  "XML parsing failed"); }
+	   public void Var069() { setInvalidXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>VAR069</Test>",  "XML parsing failed"); }
 
 	    public void setInvalid(String column, String inputValue, String exceptionInfo)  {
 	      StringBuffer sb = new StringBuffer(); 
+	      JDSerializeFile pstestSet = null;
 	      try {
-	        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+	        pstestSet = JDPSTest.getPstestSet(connection_);
+	        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
 	        PreparedStatement ps = connection_.prepareStatement(
-	            "INSERT INTO " + JDPSTest.PSTEST_SET + " ("+column+") VALUES (?)");
+	            "INSERT INTO " + pstestSet.getName() + " ("+column+") VALUES (?)");
 
 
             InputStream is = new ByteArrayInputStream (inputValue.getBytes ("UnicodeBigUnmarked")); // @B0C
@@ -1481,6 +1987,14 @@ setCharacterStream() - Set an XML  parameter using invalid data.
 	        failed("Didn't throw SQLException for column("+column+") inputValue("+inputValue+")");
 	      } catch (Exception e) {
 	        assertExceptionContains(e, exceptionInfo, sb);
+	         } finally {
+	           if (pstestSet != null) {
+	             try {
+	               pstestSet.close();
+	             } catch (SQLException e) {
+	               e.printStackTrace();
+	             }
+	           }
 	      }
 	    }
 

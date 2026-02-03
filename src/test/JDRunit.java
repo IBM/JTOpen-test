@@ -223,23 +223,67 @@ public class JDRunit {
   //
   static Object getTestDateLock = new Object();
   static long nextTime = 0;
+  private static JDDataAreaLock dataAreaLock_;
+  private static Connection connection_;
 
-  public static Date getTestDate() {
+  private static Date getTestDate() {
+    Statement s = null;
+    long thisTime = 0;
     synchronized (getTestDateLock) {
-      long thisTime = System.currentTimeMillis();
-      while (thisTime < nextTime) {
-        long sleepTime = 1 + nextTime - thisTime;
-        if (sleepTime < 10)
-          sleepTime = 10;
-        try {
-          Thread.sleep(sleepTime);
-        } catch (Exception e) {
+      try {
+        if (on400) {
+          try {
+            String jobname = JDJobName.getJobName();
+            connection_ = DriverManager.getConnection("jdbc:db2:localhost");
+            JTOpenTestEnvironment.checkSystem(connection_);
+            s = connection_.createStatement();
+            dataAreaLock_ = new JDDataAreaLock(s, "JDRUNITLCK");
+            Thread currentThread = Thread.currentThread();
+            currentThread.getName();
+            dataAreaLock_.lock("        JDRunit picking date job=" + jobname + " thread=" + currentThread, 3600);
+
+            Thread.sleep(1000);
+
+          } catch (Exception e) {
+            e.printStackTrace();
+            if (connection_ != null) {
+              try {
+                connection_.close();
+              } catch (SQLException e1) {
+                e1.printStackTrace();
+              }
+              connection_ = null;
+            }
+          }
         }
         thisTime = System.currentTimeMillis();
+        while (thisTime < nextTime) {
+          long sleepTime = 1 + nextTime - thisTime;
+          if (sleepTime < 10)
+            sleepTime = 10;
+          try {
+            Thread.sleep(sleepTime);
+          } catch (Exception e) {
+          }
+          thisTime = System.currentTimeMillis();
+        }
+        nextTime = thisTime + 1000;
+      } finally {
+        if (s != null) {
+          try {
+            Timestamp ts = new Timestamp(thisTime);
+            dataAreaLock_.unlock("    JDRunit end picking date", ts);
+            s.close();
+            connection_.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
       }
-      nextTime = thisTime + 1000;
-      return new Date(thisTime);
     }
+    return new Date(thisTime);
+
   }
 
   public static String twoDigitNumber(int i) {
@@ -785,8 +829,9 @@ public class JDRunit {
       hostname = hostname + "." + getDomain(hostname);
     }
     String URLBASE = "http://" + hostname + ":6050/";
-    if (htmlFile.indexOf("ct/") == 0)
-      htmlFile = htmlFile.substring(3);
+    int ctIndex = htmlFile.indexOf("ct/");
+    if ( ctIndex > 0 )
+      htmlFile = htmlFile.substring(ctIndex+3);
 
     body.append("\n\nSee details at " + URLBASE + htmlFile + "\n");
 
@@ -3176,8 +3221,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
               String URLBASE = "http://" + hostname + ":6050/";
               String htmlFile = JDReport.getReportName(initials);
 
-              if (htmlFile.indexOf("ct/") == 0)
-                htmlFile = htmlFile.substring(3);
+              int ctIndex = htmlFile.indexOf("ct/");
+              if ( ctIndex > 0 )
+                htmlFile = htmlFile.substring(ctIndex+3);
               body.append("\n\nSee details at " + URLBASE + htmlFile + "\n");
               body.append("Test output " + URLBASE + "/out/" + initials + "/runit." + dateStringNoSpace + "\n");
 

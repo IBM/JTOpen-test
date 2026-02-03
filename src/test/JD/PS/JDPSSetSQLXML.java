@@ -41,6 +41,8 @@ import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import test.JD.JDSerializeFile;
+import java.sql.SQLException;
 
 /**
  * Testcase JDPSSetSQLXML. This tests the following method of the JDBC
@@ -156,15 +158,29 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Should throw exception when the prepared statement is closed.
    **/
   public void Var001() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         ps.close();
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -173,10 +189,13 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Should throw exception when an invalid index is specified.
    **/
   public void Var002() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 100, sqlxml_);
         ps.executeUpdate();
@@ -186,16 +205,30 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Should throw exception when index is 0.
    **/
   public void Var003() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 0, sqlxml_);
         ps.executeUpdate();
@@ -205,16 +238,30 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Should throw exception when index is -1.
    **/
   public void Var004() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + JDPSTest.PSTEST_SET
+            .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", -1, sqlxml_);
         ps.executeUpdate();
@@ -224,18 +271,32 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Should work when value is null.
    **/
   public void Var005() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
 
         Class<?>[] argTypes = new Class[2];
         argTypes[0] = Integer.TYPE;
@@ -254,7 +315,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_VARCHAR_50 FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_VARCHAR_50 FROM " + pstestSet.getName());
         rs.next();
         Object check = JDReflectionUtil.callMethod_O(rs, "getSQLXML", 1);
         boolean wn = rs.wasNull();
@@ -265,18 +326,32 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Should work with a valid parameter index greater than 1.
    **/
   public void Var006() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_KEY, C_CLOB) VALUES (?, ?)");
+            + pstestSet.getName() + " (C_KEY, C_CLOB) VALUES (?, ?)");
 
         String expected = "<?xml version=\"1.0\" ?> <name>Var006</name>";
         if (nodecl) {
@@ -293,7 +368,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_CLOB FROM " + pstestSet.getName());
         rs.next();
         String check = rs.getString(1);
         rs.close();
@@ -302,6 +377,17 @@ public class JDPSSetSQLXML extends JDTestcase {
             "\ngot     :\n" + check + "\nexpected:\n" + expected);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -334,7 +420,10 @@ public class JDPSSetSQLXML extends JDTestcase {
    * truncated.
    **/
   public void Var008() {
-    if (isToolboxDriver()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (isToolboxDriver()) {
       notApplicable("Toolbox does not currently check this");
       return;
     }
@@ -342,10 +431,10 @@ public class JDPSSetSQLXML extends JDTestcase {
     String xmlHeader = "";
     if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
 
         StringBuffer sb = new StringBuffer();
         xmlHeader = "<?xml version=\"1.0\" ?>";
@@ -381,13 +470,27 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   public void testSetFailed(String columnName, Object sqlxml) {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (" + columnName + ") VALUES (?)");
+            + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml);
         ps.executeUpdate();
         ps.close();
@@ -396,7 +499,17 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
-
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -410,16 +523,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a INTEGER parameter.
    **/
   public void Var010() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_INTEGER) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -428,16 +555,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a REAL parameter.
    **/
   public void Var011() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_REAL) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -446,16 +587,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a FLOAT parameter.
    **/
   public void Var012() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_FLOAT) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -464,16 +619,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a DOUBLE parameter.
    **/
   public void Var013() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DOUBLE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -482,16 +651,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a DECIMAL parameter.
    **/
   public void Var014() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_DECIMAL_105) VALUES (?)");
+            + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -500,10 +683,13 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a NUMERIC parameter.
    **/
   public void Var015() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_NUMERIC_50) VALUES (?)");
+            + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
@@ -512,23 +698,48 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a CHAR(1) parameter, where the string is longer.
    **/
   public void Var016() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_1) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_1) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -537,21 +748,35 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a CHAR(50) parameter.
    **/
   public void Var017() {
-    if (isToolboxDriver()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (isToolboxDriver()) {
       notApplicable("Toolbox does not currently check this");
       return;
     }
     if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CHAR_50) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_CHAR_50) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         failed("Didn't throw SQLException for setting CHAR(50)");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -560,16 +785,19 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a VARCHAR(50) parameter.
    **/
   public void Var018() {
-    if (isToolboxDriver()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (isToolboxDriver()) {
       notApplicable("Toolbox does not currently check this");
       return;
     }
     if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARCHAR_50) VALUES (?)");
+            + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
 
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
@@ -578,19 +806,33 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a CLOB parameter, when the data is passed directly.
    **/
   public void Var019() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
           String expected = "<?xml version=\"1.0\" ?> <name>Var019</name>";
           if (nodecl) {
             expected = " <name>Var019</name>";
@@ -604,7 +846,7 @@ public class JDPSSetSQLXML extends JDTestcase {
           ps.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_CLOB FROM " + pstestSet.getName());
           rs.next();
           String check = rs.getString(1);
           rs.close();
@@ -615,21 +857,35 @@ public class JDPSSetSQLXML extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a CLOB parameter, when the data is passed in a locator.
    **/
   public void Var020() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
-          statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
           String url = baseURL_ +  ";lob threshold=1";
           Connection c = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
           PreparedStatement ps = c.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_CLOB) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
 
           String expected = "<?xml version=\"1.0\" ?> <name>Var020</name>";
           if (nodecl) {
@@ -647,7 +903,7 @@ public class JDPSSetSQLXML extends JDTestcase {
           c.close();
 
           ResultSet rs = statement_
-              .executeQuery("SELECT C_CLOB FROM " + JDPSTest.PSTEST_SET);
+              .executeQuery("SELECT C_CLOB FROM " + pstestSet.getName());
           rs.next();
           String check = rs.getString(1);
 
@@ -660,18 +916,32 @@ public class JDPSSetSQLXML extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a DBCLOB parameter, when the data is passed directly.
    **/
   public void Var021() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
 
         String expected = "<?XML VERSION=\"1.0\" ?> <NAME>VAR021</NAME>";
         if (nodecl) {
@@ -686,7 +956,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_.executeQuery(
-            "SELECT C_DBCLOB, length(C_DBCLOB) FROM " + JDPSTest.PSTEST_SET);
+            "SELECT C_DBCLOB, length(C_DBCLOB) FROM " + pstestSet.getName());
         rs.next();
         int length = rs.getInt(2);
         String check = rs.getString(1);
@@ -700,20 +970,34 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a DBCLOB parameter, when the data is passed as a locator.
    **/
   public void Var022() {
-    if (checkJdbc40()) {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
+if (checkJdbc40()) {
       try {
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         String url = baseURL_ +  ";lob threshold=1";
         Connection c = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
         PreparedStatement ps = c.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DBCLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
 
         String expected = "<?XML VERSION=\"1.0\" ?> <NAME>VAR022</NAME>";
         if (nodecl) {
@@ -730,7 +1014,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         c.close();
 
         ResultSet rs = statement_.executeQuery(
-            "SELECT C_DBCLOB, length(C_DBCLOB) FROM " + JDPSTest.PSTEST_SET);
+            "SELECT C_DBCLOB, length(C_DBCLOB) FROM " + pstestSet.getName());
         rs.next();
         int length = rs.getInt(2);
         Object check = rs.getString(1);
@@ -742,19 +1026,33 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed(e, "Unexpected Exception");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a BINARY parameter.
    **/
   public void Var023() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BINARY_20) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
 
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
@@ -762,6 +1060,17 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -770,13 +1079,16 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a VARBINARY parameter.
    **/
   public void Var024() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
 
-        statement_.executeUpdate("DELETE FROM " + JDPSTest.PSTEST_SET);
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-            + JDPSTest.PSTEST_SET + " (C_VARBINARY_20) VALUES (?)");
+            + pstestSet.getName() + " (C_VARBINARY_20) VALUES (?)");
 
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
@@ -787,12 +1099,26 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a BLOB parameter.
    **/
   public void Var025() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (isToolboxDriver()) {
       notApplicable("Toolbox does not currently check this");
       return;
@@ -801,7 +1127,7 @@ public class JDPSSetSQLXML extends JDTestcase {
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BLOB) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
 
         String expected = "<?xml version=\"1.0\" ?> <name>Var025</name>";
         if (true) {
@@ -819,7 +1145,7 @@ public class JDPSSetSQLXML extends JDTestcase {
         ps.close();
 
         ResultSet rs = statement_
-            .executeQuery("SELECT C_BLOB FROM " + JDPSTest.PSTEST_SET);
+            .executeQuery("SELECT C_BLOB FROM " + pstestSet.getName());
         rs.next();
         Object check = JDReflectionUtil.callMethod_O(rs, "getSQLXML", 1);
         byte[] bytes = rs.getBytes(1);
@@ -835,22 +1161,47 @@ public class JDPSSetSQLXML extends JDTestcase {
         failed(e, "Unexpected Exception " + messageBuffer);
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a DATE parameter.
    **/
   public void Var026() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_DATE) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -859,16 +1210,30 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a TIME parameter.
    **/
   public void Var027() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIME) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -877,10 +1242,13 @@ public class JDPSSetSQLXML extends JDTestcase {
    * setSQLXML() - Set a TIMESTAMP parameter.
    **/
   public void Var028() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
         PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_TIMESTAMP) VALUES (?)");
+            "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
         ps.executeUpdate();
         ps.close();
@@ -889,12 +1257,26 @@ public class JDPSSetSQLXML extends JDTestcase {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a DATALINK parameter.
    **/
   public void Var029() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
       notApplicable("Native driver pre-JDBC 3.0");
       return;
@@ -903,13 +1285,24 @@ public class JDPSSetSQLXML extends JDTestcase {
       if (checkDatalinkSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DATALINK) VALUES (?)");
+              + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -927,11 +1320,14 @@ public class JDPSSetSQLXML extends JDTestcase {
    * this annoys. :)
    **/
   public void Var030() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
-              + JDPSTest.PSTEST_SET + " (C_DISTINCT) VALUES (?)");
+              + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
@@ -941,23 +1337,48 @@ public class JDPSSetSQLXML extends JDTestcase {
         }
       }
     }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
    * setSQLXML() - Set a BIGINT parameter.
    **/
   public void Var031() {
+    JDSerializeFile pstestSet = null;
+    try {
+      pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       if (checkBigintSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SET + " (C_BIGINT) VALUES (?)");
+              "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
+      }
+    }
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+    } finally {
+      if (pstestSet != null) {
+        try {
+          pstestSet.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
       }
     }
@@ -979,7 +1400,7 @@ public class JDPSSetSQLXML extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP16 + "  VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP16 + "  VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
@@ -1000,7 +1421,7 @@ public class JDPSSetSQLXML extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.PSTEST_SETDFP34 + "  VALUES (?)");
+              "INSERT INTO " + JDPSTest.SETDFP34 + "  VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
@@ -1016,11 +1437,14 @@ public class JDPSSetSQLXML extends JDTestcase {
   /**
    * Test variations used by the xml tests
    */
-  public void testSetSQLXMLString(String tableName, String var) {
+  public void testSetSQLXMLString(int table, String var) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1048,17 +1472,29 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
 
   }
 
-  public void testSetSQLXMLBinaryStream(String tableName, String var) {
+  public void testSetSQLXMLBinaryStream(int table, String var) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1088,17 +1524,29 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
 
   }
 
-  public void testSetSQLXMLCharacterStream(String tableName, String var) {
+  public void testSetSQLXMLCharacterStream(int table, String var) {
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1128,19 +1576,31 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
 
   }
 
-  public void testSetSQLXMLStAXSource(String tableName, String var) {
+  public void testSetSQLXMLStAXSource(int table, String var) {
 
     String added = " -- added by native driver 08/21/2009";
 
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1183,13 +1643,22 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
 
   }
 
-  public void testSetSQLXMLSAXSource(String tableName, String var) {
+  public void testSetSQLXMLSAXSource(int table, String var) {
 
     if (isToolboxDriver()) {
       notApplicable("Toolbox does not currently check sax result");
@@ -1203,7 +1672,10 @@ public class JDPSSetSQLXML extends JDTestcase {
     String added = " -- Testing SQLXMLSAXSource -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1245,18 +1717,30 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
 
   }
 
-  public void testSetSQLXMLStreamSource(String tableName, String var) {
+  public void testSetSQLXMLStreamSource(int table, String var) {
 
     String added = " -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1298,20 +1782,31 @@ public class JDPSSetSQLXML extends JDTestcase {
           if (isToolboxDriver()) {
             output_.println(
                 "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
+          }
+          } finally {
+            if (pstestSetxml != null) {
+              try {
+                pstestSetxml.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
 
           }
-        }
       }
     }
 
   }
 
-  public void testSetSQLXMLDOMSource(String tableName, String var) {
+  public void testSetSQLXMLDOMSource(int table, String var) {
     String added = " -- added by native driver 08/21/2009";
 
     if (checkJdbc40()) {
       if (checkXmlSupport()) {
+        JDSerializeFile pstestSetxml = null;
         try {
+          pstestSetxml = JDPSTest.getSerializeFile(connection_, table);
+          String tableName = pstestSetxml.getName(); 
           statement_.executeUpdate("DELETE FROM " + tableName);
 
           String url = baseURL_ ;
@@ -1354,6 +1849,15 @@ public class JDPSSetSQLXML extends JDTestcase {
           assertCondition(answer, messageBuffer.toString() + added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (pstestSetxml != null) {
+            try {
+              pstestSetxml.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
@@ -1365,21 +1869,21 @@ public class JDPSSetSQLXML extends JDTestcase {
    * string
    **/
   public void Var036() {
-    testSetSQLXMLString(JDPSTest.PSTEST_SETXML, "VAR036");
+    testSetSQLXMLString(JDPSTest.SETXML, "VAR036");
   }
 
   /**
    * setSQLXML() - Set an XML parameter using a SQLXML set by setBinaryStream
    **/
   public void Var037() {
-    testSetSQLXMLBinaryStream(JDPSTest.PSTEST_SETXML, "VAR037");
+    testSetSQLXMLBinaryStream(JDPSTest.SETXML, "VAR037");
   }
 
   /**
    * setSQLXML() - Set an XML parameter using a SQLXML set by setCharacterStream
    **/
   public void Var038() {
-    testSetSQLXMLCharacterStream(JDPSTest.PSTEST_SETXML, "VAR038");
+    testSetSQLXMLCharacterStream(JDPSTest.SETXML, "VAR038");
   }
 
   /**
@@ -1388,7 +1892,7 @@ public class JDPSSetSQLXML extends JDTestcase {
    **/
 
   public void Var039() {
-    testSetSQLXMLStAXSource(JDPSTest.PSTEST_SETXML, "VAR039");
+    testSetSQLXMLStAXSource(JDPSTest.SETXML, "VAR039");
   }
 
   /**
@@ -1397,7 +1901,7 @@ public class JDPSSetSQLXML extends JDTestcase {
    **/
 
   public void Var040() {
-    testSetSQLXMLSAXSource(JDPSTest.PSTEST_SETXML, "VAR040");
+    testSetSQLXMLSAXSource(JDPSTest.SETXML, "VAR040");
   }
 
   /**
@@ -1411,7 +1915,7 @@ public class JDPSSetSQLXML extends JDTestcase {
           "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
       return;
     }
-    testSetSQLXMLStreamSource(JDPSTest.PSTEST_SETXML, "VAR041");
+    testSetSQLXMLStreamSource(JDPSTest.SETXML, "VAR041");
   }
 
   /**
@@ -1420,28 +1924,28 @@ public class JDPSSetSQLXML extends JDTestcase {
    **/
 
   public void Var042() {
-    testSetSQLXMLDOMSource(JDPSTest.PSTEST_SETXML, "VAR042");
+    testSetSQLXMLDOMSource(JDPSTest.SETXML, "VAR042");
   }
 
   /* Repeat XML tests for CCSID 13488 */
   public void Var043() {
-    testSetSQLXMLString(JDPSTest.PSTEST_SETXML13488, "VAR043");
+    testSetSQLXMLString(JDPSTest.SETXML13488, "VAR043");
   }
 
   public void Var044() {
-    testSetSQLXMLBinaryStream(JDPSTest.PSTEST_SETXML13488, "VAR044");
+    testSetSQLXMLBinaryStream(JDPSTest.SETXML13488, "VAR044");
   }
 
   public void Var045() {
-    testSetSQLXMLCharacterStream(JDPSTest.PSTEST_SETXML13488, "VAR045");
+    testSetSQLXMLCharacterStream(JDPSTest.SETXML13488, "VAR045");
   }
 
   public void Var046() {
-    testSetSQLXMLStAXSource(JDPSTest.PSTEST_SETXML13488, "VAR046");
+    testSetSQLXMLStAXSource(JDPSTest.SETXML13488, "VAR046");
   }
 
   public void Var047() {
-    testSetSQLXMLSAXSource(JDPSTest.PSTEST_SETXML13488, "VAR047");
+    testSetSQLXMLSAXSource(JDPSTest.SETXML13488, "VAR047");
   }
 
   public void Var048() {
@@ -1450,32 +1954,32 @@ public class JDPSSetSQLXML extends JDTestcase {
           "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
       return;
     }
-    testSetSQLXMLStreamSource(JDPSTest.PSTEST_SETXML13488, "VAR048");
+    testSetSQLXMLStreamSource(JDPSTest.SETXML13488, "VAR048");
   }
 
   public void Var049() {
-    testSetSQLXMLDOMSource(JDPSTest.PSTEST_SETXML13488, "VAR049");
+    testSetSQLXMLDOMSource(JDPSTest.SETXML13488, "VAR049");
   }
 
   /* Repeat XML tests for CCSID 1200 */
   public void Var050() {
-    testSetSQLXMLString(JDPSTest.PSTEST_SETXML1200, "VAR050");
+    testSetSQLXMLString(JDPSTest.SETXML1200, "VAR050");
   }
 
   public void Var051() {
-    testSetSQLXMLBinaryStream(JDPSTest.PSTEST_SETXML1200, "VAR051");
+    testSetSQLXMLBinaryStream(JDPSTest.SETXML1200, "VAR051");
   }
 
   public void Var052() {
-    testSetSQLXMLCharacterStream(JDPSTest.PSTEST_SETXML1200, "VAR052");
+    testSetSQLXMLCharacterStream(JDPSTest.SETXML1200, "VAR052");
   }
 
   public void Var053() {
-    testSetSQLXMLStAXSource(JDPSTest.PSTEST_SETXML1200, "VAR053");
+    testSetSQLXMLStAXSource(JDPSTest.SETXML1200, "VAR053");
   }
 
   public void Var054() {
-    testSetSQLXMLSAXSource(JDPSTest.PSTEST_SETXML1200, "VAR054");
+    testSetSQLXMLSAXSource(JDPSTest.SETXML1200, "VAR054");
   }
 
   public void Var055() {
@@ -1484,32 +1988,32 @@ public class JDPSSetSQLXML extends JDTestcase {
           "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
       return;
     }
-    testSetSQLXMLStreamSource(JDPSTest.PSTEST_SETXML1200, "VAR055");
+    testSetSQLXMLStreamSource(JDPSTest.SETXML1200, "VAR055");
   }
 
   public void Var056() {
-    testSetSQLXMLDOMSource(JDPSTest.PSTEST_SETXML1200, "VAR056");
+    testSetSQLXMLDOMSource(JDPSTest.SETXML1200, "VAR056");
   }
 
   /* Repeat XML tests for CCSID 37 */
   public void Var057() {
-    testSetSQLXMLString(JDPSTest.PSTEST_SETXML37, "VAR057");
+    testSetSQLXMLString(JDPSTest.SETXML37, "VAR057");
   }
 
   public void Var058() {
-    testSetSQLXMLBinaryStream(JDPSTest.PSTEST_SETXML37, "VAR058");
+    testSetSQLXMLBinaryStream(JDPSTest.SETXML37, "VAR058");
   }
 
   public void Var059() {
-    testSetSQLXMLCharacterStream(JDPSTest.PSTEST_SETXML37, "VAR059");
+    testSetSQLXMLCharacterStream(JDPSTest.SETXML37, "VAR059");
   }
 
   public void Var060() {
-    testSetSQLXMLStAXSource(JDPSTest.PSTEST_SETXML37, "VAR060");
+    testSetSQLXMLStAXSource(JDPSTest.SETXML37, "VAR060");
   }
 
   public void Var061() {
-    testSetSQLXMLSAXSource(JDPSTest.PSTEST_SETXML37, "VAR061");
+    testSetSQLXMLSAXSource(JDPSTest.SETXML37, "VAR061");
   }
 
   public void Var062() {
@@ -1518,11 +2022,11 @@ public class JDPSSetSQLXML extends JDTestcase {
           "NOTE:  Toolbox TC only works on windows non-ibm java for now.  J9 (on i and win) seems to include length of xml decl in xml length, but not in xml offset for xml streamSource.");
       return;
     }
-    testSetSQLXMLStreamSource(JDPSTest.PSTEST_SETXML37, "VAR062");
+    testSetSQLXMLStreamSource(JDPSTest.SETXML37, "VAR062");
   }
 
   public void Var063() {
-    testSetSQLXMLDOMSource(JDPSTest.PSTEST_SETXML37, "VAR063");
+    testSetSQLXMLDOMSource(JDPSTest.SETXML37, "VAR063");
   }
 
   /**
