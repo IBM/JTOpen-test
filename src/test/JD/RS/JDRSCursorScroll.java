@@ -62,7 +62,7 @@ extends JDTestcase {
     boolean cursorFromCall = false;
     boolean cursorSensitive = false; 
 
-
+    String suffix=""; 
 /**
 Constructor.
 **/
@@ -1550,7 +1550,7 @@ getRow()
   void setupTable49 () throws Exception {
       if (!table49ready) {
 	  Connection c = null; 
-	  table49 = JDRSTest.COLLECTION+".JDRSCRS49"; 
+	  table49 = JDRSTest.COLLECTION+".JDRSCRS49"+suffix; 
 	  initTable(statement_, table49, "( ROWNUMBER INT, INFO VARCHAR(91))");
 	  PreparedStatement ps; 
 	  if ( getDriver() == JDTestDriver.DRIVER_NATIVE) {

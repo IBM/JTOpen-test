@@ -28,6 +28,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -625,7 +626,11 @@ refreshRow() - Should clear any pending updates.
    public void Var020()
    {
       if (checkJdbc20 ()) {
-         try {
+        JDSerializeFile serializeFile = null;
+        try {
+         serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
+
+
             statement3_.executeUpdate ("UPDATE " + JDRSTest.RSTEST_POS
                                        + " SET VALUE='lightning fast.' WHERE ID=61");
             ResultSet rs = statement3_.executeQuery ("SELECT * FROM "
@@ -633,12 +638,21 @@ refreshRow() - Should clear any pending updates.
             rs.absolute (61);
             rs.updateString ("VALUE", "quite slow.");
             rs.refreshRow ();
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */ 
             String s = rs.getString ("VALUE");
             rs.close ();
             assertCondition (s.equals ("lightning fast."));
          } catch (Exception e) {
             failed (e, "Unexpected Exception");
+         } finally {
+           if (serializeFile != null) {
+             try {
+               serializeFile.close();
+             } catch (SQLException e) {
+               e.printStackTrace();
+             }
+           }
+
          }
       }
    }
@@ -652,7 +666,11 @@ afterwards.
    public void Var021()
    {
       if (checkJdbc20 ()) {
-         try {
+        JDSerializeFile serializeFile = null;
+        try {
+         serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
+
+
             statement3_.executeUpdate ("UPDATE " + JDRSTest.RSTEST_POS
                                        + " SET VALUE='Y2K compliant' WHERE ID=59");
             ResultSet rs = statement3_.executeQuery ("SELECT * FROM "
@@ -661,12 +679,21 @@ afterwards.
             rs.updateString ("VALUE", "the year 2002.");
             rs.refreshRow ();
             rs.updateString ("VALUE", "again in 2005.");
-            rs.updateRow ();
+            rs.updateRow ();  /* serialized */ 
             String s = rs.getString ("VALUE");
             rs.close ();
             assertCondition (s.equals ("again in 2005."));
          } catch (Exception e) {
             failed (e, "Unexpected Exception");
+         } finally {
+           if (serializeFile != null) {
+             try {
+               serializeFile.close();
+             } catch (SQLException e) {
+               e.printStackTrace();
+             }
+           }
+
          }
       }
    }

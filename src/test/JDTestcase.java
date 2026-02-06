@@ -3114,6 +3114,12 @@ public class JDTestcase extends Testcase {
     JDTestDriver.initTable(s, tableName, tableDefinition, sb);
   }
 
+  
+  public static void initTable(Statement s, String tableName, String tableDefinition, StringBuffer sb, boolean serializeAccess)
+      throws SQLException {
+    JDTestDriver.initTable(s, tableName, tableDefinition, sb, serializeAccess );
+  }
+
   public static void initTrigger(Statement s, String triggerName, String triggerDefinition) throws SQLException {
     StringBuffer sb = new StringBuffer();
     try {

@@ -210,7 +210,7 @@ extends JDTestcase
             {
                 JDRSTest.position (rs_, null);
                 rs_.updateCharacterStream ("C_VARCHAR_50", new StringReader ("Portland"), 8);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -2191,7 +2191,7 @@ extends JDTestcase
              + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
          rs.next(); 
          rs.updateCharacterStream(1, new StringReader ("Hannover"), 8 );
-	 rs.updateRow(); 
+	 rs.updateRow();  /* exception */
          failed ("Didn't throw SQLException ");
        }
        catch (Exception e) {
@@ -2223,7 +2223,7 @@ extends JDTestcase
             + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
         rs.next(); 
         rs.updateCharacterStream(1, new StringReader ("Hannover"), 8 ); 
-	rs.updateRow();
+	rs.updateRow(); /* exception */
         failed ("Didn't throw SQLException ");
       }
       catch (Exception e) {

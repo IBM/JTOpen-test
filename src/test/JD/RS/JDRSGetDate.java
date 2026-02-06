@@ -121,7 +121,7 @@ Performs setup needed before running variations.
 		   ResultSet.CONCUR_UPDATABLE);
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GDATE')");
 	    rsQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (rsQuery_);
@@ -186,7 +186,7 @@ Reconnects with different properties, if needed.
 							      ResultSet.CONCUR_UPDATABLE);
 		}
                 statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                                          + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                          + " (C_KEY) VALUES ('DUMMYROW_GDATE')");
                 rs_ = statement_.executeQuery ("SELECT * FROM "
                                                + JDRSTest.RSTEST_GET + " FOR UPDATE");
             }
@@ -524,7 +524,7 @@ getDate() - Should throw an exception on a deleted row.
       }
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMYROW_GDATE");
             rs_.deleteRow ();
             Date v = rs_.getDate ("C_DATE");
             failed ("Didn't throw SQLException"+v);

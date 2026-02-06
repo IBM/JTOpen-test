@@ -32,6 +32,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDParallelCounter;
 import test.JD.JDSerializeFile;
 import test.JD.JDSetupCollection;
 import test.JD.PS.JDPSBatch;
@@ -111,8 +112,7 @@ public class JDPSTest extends JDTestDriver {
   private static String PSTEST_SETXML937 = COLLECTION + ".PSTSX937";
   private static String PSTEST_SETXML290 = COLLECTION + ".PSTSXML290";
   public static String PSTEST_SETDB2DEF = COLLECTION + ".PS_SETDB2";
-  public static String PSTEST_CONCUR_BASE = "PS_CONCUR"; 
-  public static String PSTEST_CONCUR = COLLECTION + "."+PSTEST_CONCUR_BASE;
+  public static String PSTEST_CONCUR = COLLECTION + ".PS_CONCUR"; 
   
 
   
@@ -144,7 +144,9 @@ public class JDPSTest extends JDTestDriver {
 
   private Vector<PreparedStatement> handles = null;
 
-  private Timestamp startTimestamp; 
+  private Timestamp startTimestamp;
+
+  private JDParallelCounter parallelCounter_; 
 
 
 
@@ -328,41 +330,8 @@ Performs setup needed before running testcases.
 	  is400 =false; 
       } 
 
-      /* Make sure PSTEST_CONCUR is handled transactionally */ 
-      boolean autocommit = connection_.getAutoCommit(); 
-      if (autocommit) {
-        connection_.setAutoCommit(false);
-      }
-      /* Wait for a long time if there is much contention */ 
-      statement_.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(3600)')"); 
       
-      String sql = "SELECT * FROM QSYS2.SYSTABLES where TABLE_NAME='"+PSTEST_CONCUR_BASE+"' and TABLE_SCHEMA='"+COLLECTION+"' " ;
-      ResultSet rs = statement_.executeQuery(sql); 
-      if (!rs.next()) { 
-        rs.close(); 
-        
-        sql =  "CREATE OR REPLACE TABLE "+PSTEST_CONCUR+" (JOBNAME VARCHAR(80), STARTTIME TIMESTAMP) ON REPLACE PRESERVE ROWS"; 
-        System.out.println("Running "+sql); 
-        statement_.executeUpdate(sql); 
-        connection_.commit(); 
-      } else {
-        rs.close(); 
-        sql = "VALUES JOB_NAME"; 
-        rs = statement_.executeQuery(sql); 
-        rs.next(); 
-        System.out.println("job name is "+rs.getString(1)); 
-        rs.close(); 
-      }
-      startTimestamp = new Timestamp(System.currentTimeMillis()); 
-      PreparedStatement ps = connection_.prepareStatement("INSERT INTO "+PSTEST_CONCUR+" VALUES(JOB_NAME,?)");
-      ps.setTimestamp(1,startTimestamp); 
-      ps.executeUpdate(); 
-      ps.close(); 
-      connection_.commit(); 
-      if (autocommit) {
-        connection_.setAutoCommit(true);
-      }
-      statement_.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(30)')"); 
+      parallelCounter_ = new JDParallelCounter(connection_, PSTEST_CONCUR); 
 
       // Added With comparisons 12/28/2006 so would work on LUW also
       try { 
@@ -570,18 +539,7 @@ Performs setup needed before running testcases.
        connection_.setAutoCommit(false);
      }
      
-     PreparedStatement ps = connection_.prepareStatement("DELETE FROM " + PSTEST_CONCUR + " WHERE STARTTIME=?");
-     ps.setTimestamp(1, startTimestamp);
-     ps.executeUpdate();
-
-     statement_.executeUpdate("DELETE FROM " + PSTEST_CONCUR + " WHERE STARTTIME < CURRENT TIMESTAMP - 2 HOURS");
-
-     ResultSet rs = statement_.executeQuery("SELECT COUNT(*) FROM " + PSTEST_CONCUR);
-     int count;
-     rs.next();
-     count = rs.getInt(1);
-     rs.close();
-     if (count == 0) {
+     if (parallelCounter_.doCleanup()) {
 
        cleanupTable(statement_, PSTEST_SET);
 
@@ -601,19 +559,10 @@ Performs setup needed before running testcases.
        cleanupTable(statement_, PSTEST_SETXML);
 
      } else {
-       System.out.println("JDPSTest.cleanup not cleanning because "+count+" jobs are running"); 
+       System.out.println("JDPSTest.cleanup not cleaning because  jobs are running"); 
      }
 
-     try {
-       connection_.commit(); // for xa
-       if (autocommit) {
-         connection_.setAutoCommit(true);
-       }
-     } catch (Exception e) {
-       System.out.println("Warning on commit"); 
-       e.printStackTrace(System.out); 
-     }
-     
+     parallelCounter_.close(); 
 
       statement_.close ();
       try { 

@@ -31,6 +31,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -160,6 +161,7 @@ extends JDTestcase
                 Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
                 JDReflectionUtil.callMethod_V(nClob, "setString", 1L, "Juneau"); 
                 JDReflectionUtil.callMethod_V(rs, "updateNClob", "C_VARCHAR_50", nClob);// "Juneau"));
+                s.close();
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -191,6 +193,8 @@ extends JDTestcase
                 JDReflectionUtil.callMethod_V(nClob, "setString", 1L, "Tacoma"); 
                 
                 JDReflectionUtil.callMethod_V(rs, "updateNClob", "C_VARCHAR_50", nClob);//"Tacoma"));
+                rs.close(); 
+                s.close(); 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -2259,8 +2263,9 @@ extends JDTestcase
         if(checkDecFloatSupport())
         {
             String value = "4533.43"; 
-            try
-            {
+            JDSerializeFile serializeFile = null;
+                try {
+                 serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
@@ -2269,13 +2274,15 @@ extends JDTestcase
               Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
               JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
               JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */ 
 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16);
               rs2.next(); 
               String v = rs2.getString (1);
               rs2.close ();
+              rs.close(); 
+              s.close(); 
               assertCondition (v.equals(value), "Got "+v+" sb "+value); 
             }
             catch(Exception e)
@@ -2287,6 +2294,14 @@ extends JDTestcase
                     return;
                 }
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -2294,78 +2309,84 @@ extends JDTestcase
 
 
     /**
-    updateNClob() - Update a DFP16, when the value is too big.
-    **/
-    public void Var071 ()
-    {
+     * updateNClob() - Update a DFP16, when the value is too big.
+     **/
+    public void Var071() {
       if (checkJdbc40())
-      if(checkDecFloatSupport())
-      {
-          String value = "123456E700"; 
-          try
-          {
-            Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
-            rs.next(); 
+        if (checkDecFloatSupport()) {
+          String value = "123456E700";
+          JDSerializeFile serializeFile = null;
+          try {
+            serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
+            Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ");
+            rs.next();
             Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
             JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
             JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-            rs.updateRow ();
+            rs.updateRow(); /* serialized */
 
-            ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16);
-            rs2.next(); 
-            String v = rs2.getString (1);
-            rs2.close ();
-            failed("Expected exception but got "+v+" for "+value); 
-          }
-          catch(Exception e)
-          {
-             // e.printStackTrace(); 
+            ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+            rs2.next();
+            String v = rs2.getString(1);
+            rs2.close();
+            rs.close(); 
+            s.close(); 
+            failed("Expected exception but got " + v + " for " + value);
+          } catch (Exception e) {
+            // e.printStackTrace();
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
-      }
+        }
     }
-
 
     /**
-    updateNClob() - Update a DFP16, when the string is not a number.
-    **/
-    public void Var072 ()
-    {
+     * updateNClob() - Update a DFP16, when the string is not a number.
+     **/
+    public void Var072() {
       if (checkJdbc40())
-      if(checkDecFloatSupport())
-      {
-          String value = "Terre Haute"; 
-          try
-          {
-            Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
-            rs.next(); 
+        if (checkDecFloatSupport()) {
+          String value = "Terre Haute";
+          JDSerializeFile serializeFile = null;
+          try {
+            serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
+            Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ");
+            rs.next();
             Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
             JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
             JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-            rs.updateRow ();
+            rs.updateRow(); /* serialized */
 
-            ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16);
-            rs2.next(); 
-            String v = rs2.getString (1);
-            rs2.close ();
-            failed("Expected exception but got "+v+" for "+value); 
-          }
-          catch(Exception e)
-          {
-             // e.printStackTrace(); 
+            ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+            rs2.next();
+            String v = rs2.getString(1);
+            rs2.close();
+            rs.close(); 
+            s.close(); 
+            failed("Expected exception but got " + v + " for " + value);
+          } catch (Exception e) {
+            // e.printStackTrace();
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
-      }
+        }
     }
-
 
     /**
     updateNClob() - Update a DFP34.
@@ -2376,8 +2397,9 @@ extends JDTestcase
         if(checkDecFloatSupport())
         {
             String value = "4533.43"; 
-            try
-            {
+            JDSerializeFile serializeFile = null;
+            try {
+             serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
@@ -2386,13 +2408,15 @@ extends JDTestcase
               Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
               JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
               JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */
 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP34);
               rs2.next(); 
               String v = rs2.getString (1);
               rs2.close ();
+              rs.close(); 
+              s.close(); 
               assertCondition (v.equals(value), "Got "+v+" sb "+value); 
             }
             catch(Exception e)
@@ -2404,6 +2428,14 @@ extends JDTestcase
                     return;
                 }
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -2420,8 +2452,9 @@ extends JDTestcase
       {
           String value = "12345E7000 " ;
                         
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
@@ -2430,19 +2463,29 @@ extends JDTestcase
             Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
             JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
             JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */ 
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34);
             rs2.next(); 
             String v = rs2.getString (1);
             rs2.close ();
+            rs.close(); 
+            s.close(); 
             failed("Expected exception but got "+v+" for "+value); 
           }
           catch(Exception e)
           {
              // e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }
@@ -2457,8 +2500,9 @@ extends JDTestcase
       if(checkDecFloatSupport())
       {
           String value = "Terre Haute"; 
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
@@ -2467,19 +2511,29 @@ extends JDTestcase
             Object nClob = JDReflectionUtil.callMethod_O(connection_, "createNClob");
             JDReflectionUtil.callMethod_V(nClob, "setString", 1L, value);
             JDReflectionUtil.callMethod_V(rs, "updateNClob", 1, nClob);
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */ 
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34);
             rs2.next(); 
             String v = rs2.getString (1);
             rs2.close ();
+            rs.close(); 
+            s.close(); 
             failed("Expected exception but got "+v+" for "+value); 
           }
           catch(Exception e)
           {
               //e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }

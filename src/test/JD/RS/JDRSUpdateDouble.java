@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -190,7 +192,7 @@ to a row.
             try {
                 JDRSTest.position (rs_, null);
                 rs_.updateDouble ("C_DOUBLE", 6);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             } catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -1295,13 +1297,15 @@ causes a data truncation error.
 
     public void dfpTest(String table, double value, String expected) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateDouble(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1315,13 +1319,23 @@ causes a data truncation error.
               "from value "+value+ " for table "+table);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
 
     public void dfpRoundTest(String roundingMode, String table, double value, String expected) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           
           String roundingModeProp = roundingMode;
           if(isToolboxDriver())
@@ -1336,11 +1350,10 @@ causes a data truncation error.
           
           Statement s = connection.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s
-          .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateDouble(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1355,6 +1368,14 @@ causes a data truncation error.
               "\nfor table "+table+" roundingMode = '"+roundingMode+"'");
         } catch (Exception e) {
           failed(e, "Unexpected Exception for table "+table+" roundingMode = '"+roundingMode+"'");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

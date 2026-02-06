@@ -79,6 +79,7 @@ extends JDXMLClob
     protected void setup ()
     throws Exception
     {
+      suffix="L"; 
         lobThreshold = ";lob threshold=1";
         isLocator = true; 
 	super.setup(); 

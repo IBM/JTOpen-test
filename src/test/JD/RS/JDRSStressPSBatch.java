@@ -55,6 +55,7 @@ Constructor.
             password);
 	usePreparedStatement=true;
 	useBatching = true; 
+	       fileSuffix="D";
     }
 
 }

@@ -28,6 +28,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDParallelCounter;
 import test.JD.JDSetupCollection;
 import test.JD.RS.JDRSAbsolute;
 import test.JD.RS.JDRSAfterLast;
@@ -373,6 +374,7 @@ public class JDRSTest extends JDTestDriver {
   // Private data.
   private Connection connection_;
   private Statement statement_;
+  private JDParallelCounter parallelCounter_;
 
   /**
    * Run the test as an application. This should be called from the test
@@ -481,9 +483,149 @@ public class JDRSTest extends JDTestDriver {
       buffer.append(")");
 
       sql = buffer.toString();
-      JDTestcase.initTable(statement_, RSTEST_GET, sql, errorBuffer);
       boolean tableCreated = true;
+      
+      
+      // Generate sample lobs.
+      Random random = new Random(1);
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        BLOB_FULL = new byte[3743];
+      } else {
+        BLOB_FULL = new byte[15743];
+      }
+      random.setSeed(1);
+      random.nextBytes(BLOB_FULL);
 
+      // Generate sample lobs.
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        BLOB_FULLX = new byte[3743];
+      } else {
+        BLOB_FULLX = new byte[15743];
+      }
+      // Create random XML characters in ASCII
+      int blobFullLength = BLOB_FULLX.length;
+      BLOB_FULLX[0] = (byte) '<';
+      BLOB_FULLX[1] = (byte) 'd';
+      BLOB_FULLX[2] = (byte) '>';
+      for (int i = 3; i < blobFullLength - 4; i++) {
+        BLOB_FULLX[i] = (byte) (' ' + random.nextInt(0x5f));
+      }
+
+      BLOB_FULLX[blobFullLength - 4] = (byte) '<';
+      BLOB_FULLX[blobFullLength - 3] = (byte) '/';
+      BLOB_FULLX[blobFullLength - 2] = (byte) 'd';
+      BLOB_FULLX[blobFullLength - 1] = (byte) '>';
+
+      /* Alway generate the lobs */ 
+      buffer = new StringBuffer();
+      for (int i = 0; i < 2348; ++i)
+        buffer.append("All work and no play, etc.   ");
+      CLOB_FULL = buffer.toString();
+      CLOB_FULLX = "<d>" + buffer.toString() + "</d>";
+
+      // The native driver is aware of the lengths of the
+      // lobs and therefore this value has to get truncated
+      // the the length of the column that it is going to be
+      // put into. The LOB default column length is 2556.
+      // I do not know why.
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE
+          || getDriver() == JDTestDriver.DRIVER_JCC)
+        CLOB_FULL = CLOB_FULL.substring(0, 2556);
+
+      buffer = new StringBuffer();
+      for (int i = 0; i < 3348; ++i)
+        buffer.append("Clobs are the best of all lobs!");
+      DBCLOB_FULL = buffer.toString();
+
+      // The native driver is aware of the lengths of the
+      // lobs and therefore this value has to get truncated
+      // the the length of the column that it is going to be
+      // put into. The LOB default column length is 2556.
+      // I do not know why.
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE
+          || getDriver() == JDTestDriver.DRIVER_JCC)
+        DBCLOB_FULL = DBCLOB_FULL.substring(0, 2556);
+
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        BLOB_MEDIUM = new byte[2500];
+      } else {
+        BLOB_MEDIUM = new byte[6500];
+      }
+      random.setSeed(2);
+      random.nextBytes(BLOB_MEDIUM);
+
+      buffer = new StringBuffer();
+      for (int i = 0; i < 24; ++i)
+        buffer.append("JDBC is really fast.");
+      CLOB_MEDIUM = buffer.toString();
+
+      buffer = new StringBuffer();
+      for (int i = 0; i < 24; ++i)
+        buffer.append("DBCLOBs are best");
+      DBCLOB_MEDIUM = buffer.toString();
+   
+      
+
+      buffer = new StringBuffer();
+      buffer.append("<d>");
+      for (int i = 0; i < 2348; ++i)
+        buffer.append("All work and no play, etc.   ");
+      buffer.append("</d>");
+      CLOB_FULLX = buffer.toString();
+
+      // The native driver is aware of the lengths of the
+      // lobs and therefore this value has to get truncated
+      // the the length of the column that it is going to be
+      // put into. The LOB default column length is 2556.
+      // I do not know why.
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE
+          || getDriver() == JDTestDriver.DRIVER_JCC)
+        CLOB_FULLX = CLOB_FULLX.substring(0, 2556);
+
+      buffer = new StringBuffer();
+      buffer.append("<d>");
+      for (int i = 0; i < 3348; ++i)
+        buffer.append("Clobs are the best of all lobs!");
+      buffer.append("</d>");
+      DBCLOB_FULLX = buffer.toString();
+
+      // The native driver is aware of the lengths of the
+      // lobs and therefore this value has to get truncated
+      // the the length of the column that it is going to be
+      // put into. The LOB default column length is 2556.
+      // I do not know why.
+      if (getDriver() == JDTestDriver.DRIVER_NATIVE
+          || getDriver() == JDTestDriver.DRIVER_JCC)
+        DBCLOB_FULLX = DBCLOB_FULLX.substring(0, 2556);
+
+      if (getDriver() == JDTestDriver.DRIVER_JCC) {
+        BLOB_MEDIUMX = new byte[2500];
+      } else {
+        BLOB_MEDIUMX = new byte[6500];
+      }
+
+      int blobMediumLength = BLOB_MEDIUMX.length;
+      BLOB_MEDIUMX[0] = (byte) '<';
+      BLOB_MEDIUMX[1] = (byte) 'd';
+      BLOB_MEDIUMX[2] = (byte) '>';
+      for (int i = 3; i < blobMediumLength - 4; i++) {
+        BLOB_MEDIUMX[i] = (byte) (' ' + random.nextInt(0x5f));
+      }
+
+      BLOB_MEDIUMX[blobMediumLength - 4] = (byte) '<';
+      BLOB_MEDIUMX[blobMediumLength - 3] = (byte) '/';
+      BLOB_MEDIUMX[blobMediumLength - 2] = (byte) 'd';
+      BLOB_MEDIUMX[blobMediumLength - 1] = (byte) '>';
+
+      buffer = new StringBuffer();
+      buffer.append("<d>");
+      for (int i = 0; i < 24; ++i)
+        buffer.append("JDBC is really fast.");
+      buffer.append("</d>");
+      CLOB_MEDIUMX = buffer.toString();
+
+
+      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GET, sql, errorBuffer);
       if (tableCreated) {
         // Key == NUMBER_0.
         sql = "INSERT INTO " + RSTEST_GET
@@ -695,60 +837,7 @@ public class JDRSTest extends JDTestDriver {
 
           PreparedStatement ps4 = connection_.prepareStatement(sql);
 
-          // Generate sample lobs.
-          Random random = new Random();
-          if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            BLOB_FULL = new byte[3743];
-          } else {
-            BLOB_FULL = new byte[15743];
-          }
-          random.nextBytes(BLOB_FULL);
 
-          buffer = new StringBuffer();
-          for (int i = 0; i < 2348; ++i)
-            buffer.append("All work and no play, etc.   ");
-          CLOB_FULL = buffer.toString();
-          CLOB_FULLX = "<d>" + buffer.toString() + "</d>";
-
-          // The native driver is aware of the lengths of the
-          // lobs and therefore this value has to get truncated
-          // the the length of the column that it is going to be
-          // put into. The LOB default column length is 2556.
-          // I do not know why.
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              || getDriver() == JDTestDriver.DRIVER_JCC)
-            CLOB_FULL = CLOB_FULL.substring(0, 2556);
-
-          buffer = new StringBuffer();
-          for (int i = 0; i < 3348; ++i)
-            buffer.append("Clobs are the best of all lobs!");
-          DBCLOB_FULL = buffer.toString();
-
-          // The native driver is aware of the lengths of the
-          // lobs and therefore this value has to get truncated
-          // the the length of the column that it is going to be
-          // put into. The LOB default column length is 2556.
-          // I do not know why.
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              || getDriver() == JDTestDriver.DRIVER_JCC)
-            DBCLOB_FULL = DBCLOB_FULL.substring(0, 2556);
-
-          if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            BLOB_MEDIUM = new byte[2500];
-          } else {
-            BLOB_MEDIUM = new byte[6500];
-          }
-          random.nextBytes(BLOB_MEDIUM);
-
-          buffer = new StringBuffer();
-          for (int i = 0; i < 24; ++i)
-            buffer.append("JDBC is really fast.");
-          CLOB_MEDIUM = buffer.toString();
-
-          buffer = new StringBuffer();
-          for (int i = 0; i < 24; ++i)
-            buffer.append("DBCLOBs are best");
-          DBCLOB_MEDIUM = buffer.toString();
 
           try {
             // Key == LOB_FULL.
@@ -879,10 +968,8 @@ public class JDRSTest extends JDTestDriver {
       }
       buffer.append(", C_VARBINARY_40    VARCHAR(40) FOR BIT DATA ");
       buffer.append(")");
-      JDTestcase.initTable(statement_, RSTEST_GETX, buffer.toString(),
+      boolean tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETX, buffer.toString(),
           errorBuffer);
-      boolean tableCreated = true;
-
       if (tableCreated) {
         // Key == NUMBER_0.
         statement_.executeUpdate("INSERT INTO " + RSTEST_GETX
@@ -1076,85 +1163,6 @@ public class JDRSTest extends JDTestDriver {
               + RSTEST_GETX + " (C_KEY, C_BLOB, C_CLOB, C_NCLOB, C_DBCLOB, "
               + " C_DISTINCT) " + " VALUES (?, ?, ?, ?,?, " + "?)");
 
-          // Generate sample lobs.
-          Random random = new Random();
-          if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            BLOB_FULLX = new byte[3743];
-          } else {
-            BLOB_FULLX = new byte[15743];
-          }
-          // Create random XML characters in ASCII
-          int blobFullLength = BLOB_FULLX.length;
-          BLOB_FULLX[0] = (byte) '<';
-          BLOB_FULLX[1] = (byte) 'd';
-          BLOB_FULLX[2] = (byte) '>';
-          for (int i = 3; i < blobFullLength - 4; i++) {
-            BLOB_FULLX[i] = (byte) (' ' + random.nextInt(0x5f));
-          }
-
-          BLOB_FULLX[blobFullLength - 4] = (byte) '<';
-          BLOB_FULLX[blobFullLength - 3] = (byte) '/';
-          BLOB_FULLX[blobFullLength - 2] = (byte) 'd';
-          BLOB_FULLX[blobFullLength - 1] = (byte) '>';
-
-          buffer = new StringBuffer();
-          buffer.append("<d>");
-          for (int i = 0; i < 2348; ++i)
-            buffer.append("All work and no play, etc.   ");
-          buffer.append("</d>");
-          CLOB_FULLX = buffer.toString();
-
-          // The native driver is aware of the lengths of the
-          // lobs and therefore this value has to get truncated
-          // the the length of the column that it is going to be
-          // put into. The LOB default column length is 2556.
-          // I do not know why.
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              || getDriver() == JDTestDriver.DRIVER_JCC)
-            CLOB_FULLX = CLOB_FULLX.substring(0, 2556);
-
-          buffer = new StringBuffer();
-          buffer.append("<d>");
-          for (int i = 0; i < 3348; ++i)
-            buffer.append("Clobs are the best of all lobs!");
-          buffer.append("</d>");
-          DBCLOB_FULLX = buffer.toString();
-
-          // The native driver is aware of the lengths of the
-          // lobs and therefore this value has to get truncated
-          // the the length of the column that it is going to be
-          // put into. The LOB default column length is 2556.
-          // I do not know why.
-          if (getDriver() == JDTestDriver.DRIVER_NATIVE
-              || getDriver() == JDTestDriver.DRIVER_JCC)
-            DBCLOB_FULLX = DBCLOB_FULLX.substring(0, 2556);
-
-          if (getDriver() == JDTestDriver.DRIVER_JCC) {
-            BLOB_MEDIUMX = new byte[2500];
-          } else {
-            BLOB_MEDIUMX = new byte[6500];
-          }
-
-          int blobMediumLength = BLOB_MEDIUMX.length;
-          BLOB_MEDIUMX[0] = (byte) '<';
-          BLOB_MEDIUMX[1] = (byte) 'd';
-          BLOB_MEDIUMX[2] = (byte) '>';
-          for (int i = 3; i < blobMediumLength - 4; i++) {
-            BLOB_MEDIUMX[i] = (byte) (' ' + random.nextInt(0x5f));
-          }
-
-          BLOB_MEDIUMX[blobMediumLength - 4] = (byte) '<';
-          BLOB_MEDIUMX[blobMediumLength - 3] = (byte) '/';
-          BLOB_MEDIUMX[blobMediumLength - 2] = (byte) 'd';
-          BLOB_MEDIUMX[blobMediumLength - 1] = (byte) '>';
-
-          buffer = new StringBuffer();
-          buffer.append("<d>");
-          for (int i = 0; i < 24; ++i)
-            buffer.append("JDBC is really fast.");
-          buffer.append("</d>");
-          CLOB_MEDIUMX = buffer.toString();
-
           try {
             // Key == LOB_FULL.
             ps4.setString(1, "LOB_FULL");
@@ -1231,6 +1239,11 @@ public class JDRSTest extends JDTestDriver {
 
     super.setup(); // @D2A
 
+    connection_ = getConnection(getBaseURL(), systemObject_.getUserId(),
+        encryptedPassword_, "INFO_JDRSTEST_SETUP2");
+
+    parallelCounter_ = new JDParallelCounter(connection_, "JDRSCONCUR"); 
+    
     try {
       setup2();
     } catch (Exception e) {
@@ -1272,8 +1285,6 @@ public class JDRSTest extends JDTestDriver {
     try {
       boolean tableCreated;
       // Initialization.
-      connection_ = getConnection(getBaseURL(), systemObject_.getUserId(),
-          encryptedPassword_, "INFO_JDRSTEST_SETUP2");
 
       if (testLib_ != null) { // @E2A
         COLLECTION = testLib_;
@@ -1342,9 +1353,8 @@ public class JDRSTest extends JDTestDriver {
           buffer.append(",C_DATALINK     VARCHAR(150)   )");
         }
         sql = buffer.toString();
-        JDTestcase.initTable(statement_, RSTEST_GETDL, sql, errorBuffer);
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETDL, sql, errorBuffer);
 
-        tableCreated = true;
         if (tableCreated) {
           PreparedStatement ps4;
           if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
@@ -1401,8 +1411,7 @@ public class JDRSTest extends JDTestDriver {
         }
         buffer.append(")");
         sql = buffer.toString();
-        JDTestcase.initTable(statement_, RSTEST_GRAPHIC, sql, errorBuffer);
-        tableCreated = true;
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GRAPHIC, sql, errorBuffer);
         char[] mychar = { '\u5e03', '\u5f17', '\u672b', '\u5378' }; // @G2
         String unicode = new String(mychar); // @G2
 
@@ -1434,9 +1443,8 @@ public class JDRSTest extends JDTestDriver {
           buffer.append(",C_PADDED         VARCHAR(20) FOR BIT DATA");
         }
         buffer.append(")");
-        JDTestcase.initTable(statement_, RSTEST_BINARY, buffer.toString(),
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BINARY, buffer.toString(),
             errorBuffer);
-        tableCreated = true;
         if (tableCreated) {
           // Key == BINARY_NOTRANS.
           PreparedStatement ps5 = connection_.prepareStatement("INSERT INTO "
@@ -1497,9 +1505,8 @@ public class JDRSTest extends JDTestDriver {
       } // tableCreated RSTEST_BINARY
 
       // Setup RSTEST_POS table.
-      JDTestcase.initTable(statement_, RSTEST_POS,
+      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_POS,
           " (ID INT, VALUE VARCHAR(20))", errorBuffer);
-      tableCreated = true;
       if (tableCreated) {
         for (int i = 1; i <= 99; ++i) {
           statement_.executeUpdate("INSERT INTO " + RSTEST_POS
@@ -1562,9 +1569,9 @@ public class JDRSTest extends JDTestDriver {
         
       buffer.append(")");
 
-      JDTestcase.initTable(statement_, RSTEST_UPDATE, buffer.toString(),
+      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATE, buffer.toString(),
           errorBuffer);
-      tableCreated = true;
+     
 
       // Make use the table is usable with a transactional connection
       Connection c = getConnection(getBaseURL(), systemObject_.getUserId(),
@@ -1613,9 +1620,9 @@ public class JDRSTest extends JDTestDriver {
       buffer.append(",C_VARCHAR_50      VARCHAR(50)   ");
       buffer.append(",C_NVARCHAR_50     NVARCHAR(50)  ) ");
 
-      JDTestcase.initTable(statement_, RSTEST_SCROLL, buffer.toString(),
+      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SCROLL, buffer.toString(),
           errorBuffer);
-      tableCreated = true;
+      
 
       if (tableCreated) {
         for (int i = 0; i < 97; i++) {
@@ -1634,9 +1641,8 @@ public class JDRSTest extends JDTestDriver {
       buffer.setLength(0);
       buffer.append(" ( C_INTEGER         INTEGER  ) ");
 
-      JDTestcase.initTable(statement_, RSTEST_SENSITIVE, buffer.toString(),
+      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SENSITIVE, buffer.toString(),
           errorBuffer);
-      tableCreated = true;
 
       if (tableCreated) {
         for (int i = 0; i < 97; i++) {
@@ -1703,9 +1709,8 @@ public class JDRSTest extends JDTestDriver {
           buffer.append(", C_XML              XML              ");
         }
         buffer.append(")");
-        JDTestcase.initTable(statement_, RSTEST_GETXML, buffer.toString(),
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETXML, buffer.toString(),
             errorBuffer);
-        tableCreated = true;
         if (tableCreated) {
           // Key == BINARY_NOTRANS.
           try {
@@ -1776,9 +1781,8 @@ public class JDRSTest extends JDTestDriver {
         buffer.append(", C_BLOB1208           BLOB(1M)              ");
         buffer.append(", C_BLOB1200           BLOB(1M)              ");
         buffer.append(")");
-        JDTestcase.initTable(statement_, RSTEST_UPDATEXML, buffer.toString(),
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATEXML, buffer.toString(),
             errorBuffer);
-        tableCreated = true;
         if (tableCreated) {
           // Key == BINARY_NOTRANS.
           try {
@@ -1831,9 +1835,8 @@ public class JDRSTest extends JDTestDriver {
         buffer.append(" (C_KEY           VARCHAR(20)   ");
         buffer.append(",C_BOOLEAN        BOOLEAN        ");
         buffer.append(")");
-        JDTestcase.initTable(statement_, RSTEST_BOOLEAN, buffer.toString(),
+        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BOOLEAN, buffer.toString(),
             errorBuffer);
-        tableCreated = true;
         if (tableCreated) {
           // Key == BINARY_NOTRANS.
           PreparedStatement ps5 = connection_.prepareStatement("INSERT INTO "
@@ -1895,11 +1898,12 @@ public class JDRSTest extends JDTestDriver {
     StringBuffer errorBuffer = new StringBuffer();
 
     try {
-      JDTestcase.initTable(statementParm, tableName,
+      boolean tableCreated = JDTestDriver.createTableIfNeeded(statementParm, tableName,
           " (" + columnDefinition + ")", errorBuffer);
-
-      statementParm
+      if (tableCreated) { 
+        statementParm
           .executeUpdate("INSERT INTO " + tableName + " VALUES(" + value + ")");
+      } 
     } catch (Exception e) {
       System.out.println("Unable to insert '" + value + "' into " + tableName);
       System.out.flush();
@@ -1924,9 +1928,8 @@ public class JDRSTest extends JDTestDriver {
     boolean tableCreated;
     StringBuffer errorBuffer = new StringBuffer();
     try {
-      JDTestcase.initTable(statementParm, tableName,
+      tableCreated = JDTestDriver.createTableIfNeeded(statementParm, tableName,
           " (" + columnDefinition + ")", errorBuffer);
-      tableCreated = true;
 
       if (tableCreated) {
         for (int i = 0; i < values.length; i++) {
@@ -2063,43 +2066,63 @@ public class JDRSTest extends JDTestDriver {
    *              If an exception occurs.
    **/
   public void cleanup() throws Exception {
-    /* Only cleanup if there are no failures */ 
-    if (totalFail_ == 0) {
-      boolean dropUDTfailed = false;
-      if (areLobsSupported()) {
-        cleanupTable(statement_, RSTEST_GETDL);
+    /* Only cleanup if there are no failures */
+    /* And no other concurrent tests are running */
+    boolean doCleanup = true; 
+    if (!parallelCounter_.doCleanup()) {
+      out_.println("JDRTest.cleanup not cleaning other parallel tests running ="+parallelCounter_.toString()); 
+      doCleanup = false; 
+    }
+    if (doCleanup) {
+      if (totalFail_ > 0) {
+        out_.println("JDRTest.cleanup not cleaning because failures > 0"); 
+        doCleanup = false; 
       }
-      cleanupTable(statement_, RSTEST_GET);
-
-      cleanupTable(statement_, RSTEST_GETX);
-
-      cleanupTable(statement_, RSTEST_POS);
-      if (true) {
-        cleanupTable(statement_, RSTEST_BINARY);
-        cleanupTable(statement_, RSTEST_GRAPHIC);
+      if (doCleanup) { 
+        /* Do not cleanup if files created within last day */ 
+        if (newerFile(statement_, RSTEST_GET)) { 
+          out_.println("JDRTest.cleanup not cleaning because "+RSTEST_GET +" is newer file"); 
+          doCleanup = false;
+        }
       }
-      cleanupTable(statement_, RSTEST_UPDATE);
-      cleanupTable(statement_, RSTEST_SCROLL);
-      cleanupTable(statement_, RSTEST_SENSITIVE); // @G1A
+      if (doCleanup) {
+        boolean dropUDTfailed = false;
+        if (areLobsSupported()) {
+          cleanupTable(statement_, RSTEST_GETDL);
+        }
+        cleanupTable(statement_, RSTEST_GET);
 
-      if (areLobsSupported()) {
+        cleanupTable(statement_, RSTEST_GETX);
 
-        statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".SSN");
-      }
+        cleanupTable(statement_, RSTEST_POS);
+        if (true) {
+          cleanupTable(statement_, RSTEST_BINARY);
+          cleanupTable(statement_, RSTEST_GRAPHIC);
+        }
+        cleanupTable(statement_, RSTEST_UPDATE);
+        cleanupTable(statement_, RSTEST_SCROLL);
+        cleanupTable(statement_, RSTEST_SENSITIVE); // @G1A
 
-      if (true) {
-        cleanupTable(statement_, RSTEST_GETXML);
-        cleanupTable(statement_, RSTEST_UPDATEXML);
+        if (areLobsSupported()) {
 
-      }
+          statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".SSN");
+        }
 
-      statement_.close();
+        if (true) {
+          cleanupTable(statement_, RSTEST_GETXML);
+          cleanupTable(statement_, RSTEST_UPDATEXML);
 
-      if (dropUDTfailed) {
-        System.out.println("Deleting collection since drop UDT failed");
-        dropCollections(connection_);
+        }
+
+        statement_.close();
+
+        if (dropUDTfailed) {
+          System.out.println("Deleting collection since drop UDT failed");
+          dropCollections(connection_);
+        }
       }
     }
+    parallelCounter_.close(); 
     connection_.close();
   }
 

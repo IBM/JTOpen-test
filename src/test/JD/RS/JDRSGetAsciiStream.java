@@ -20,6 +20,7 @@ import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.Testcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDTestUtilities;
 
 import java.io.FileOutputStream;
@@ -119,7 +120,7 @@ Performs setup needed before running variations.
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GAS')");
     
             // Force LOB locators.
             connection2_ = testDriver_.getConnection (url + ";lob threshold=0",systemObject_.getUserId(),encryptedPassword_,"JDRSGetAsciiStream3");
@@ -458,12 +459,14 @@ getAsciiStream() - Should work when an update has been done.
       sb.setLength(0); 
 
         if (checkJdbc20 ()) {
-        try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
             ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE");
             JDRSTest.position (rs, "UPDATE_SANDBOX");
             rs.updateString ("C_CHAR_50", "New Planet");
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
             boolean check;					// @K2
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
@@ -484,6 +487,14 @@ getAsciiStream() - Should work when an update has been done.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }       
         }
     }
@@ -539,7 +550,9 @@ row, when an insert has been done.
             notApplicable("JCC does not support moveToInserRow"); 
             return; 
           }
-        try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
             ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE");
             rs.moveToInsertRow ();
@@ -557,6 +570,14 @@ row, when an insert has been done.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
         }
     }
@@ -577,7 +598,7 @@ getAsciiStream() - Should throw an exception on a deleted row.
             try {
                 rs = statement_.executeQuery ("SELECT * FROM "
                     + JDRSTest.RSTEST_GET + " FOR UPDATE");
-                JDRSTest.position (rs, "DUMMY_ROW");
+                JDRSTest.position (rs, "DUMMYROW_GAS");
                 rs.deleteRow ();
                 InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
                 failed ("Didn't throw SQLException but got v"+v);
@@ -940,15 +961,18 @@ in the result set.
 
         if (checkLobSupport ()) {
             try {
+              boolean passed; 
                 ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
                     + JDRSTest.RSTEST_GET);
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_CLOB");
-		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
-		   true)		// @K2
-		    assertCondition( compareBeginsWithBytes( v, JDRSTest.CLOB_FULL.getBytes("8859_1"),sb),sb); // @K2
+		if(getDriver() == JDTestDriver.DRIVER_NATIVE )		// @K2
+		    passed = compareBeginsWithBytes( v, JDRSTest.CLOB_FULL.getBytes("8859_1"),sb); // @K2
 		else							// @K2
-		    assertCondition (compare (v, JDRSTest.CLOB_FULL, "8859_1",sb),""+sb);
+		    passed = compare (v, JDRSTest.CLOB_FULL, "8859_1",sb);
+		v.close(); 
+		rs.close(); 
+		assertCondition(passed, sb); 
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -1067,17 +1091,21 @@ in the result set.
     public void Var034 ()
     {
       sb.setLength(0); 
-      sb.append("getAsciiStream from BLOB"); 
+      sb.append("getAsciiStream from BLOB querying "+JDRSTest.RSTEST_GET+" for row LOB_FULL for column C_BLOB\n"); 
         if (checkLobSupport ()) {
             try {
                 ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
                     + JDRSTest.RSTEST_GET);
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_BLOB");
-                if(isToolboxDriver())                          //@K1A
-                    assertCondition(compare(v, JDRSTest.BLOB_FULL, true, sb),"PATH 1 "+sb);               //@K1A
-                else assertCondition( compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb),"PATH 3 "+sb);		// @K2
-
+                boolean passed; 
+                if(isToolboxDriver())                          
+                    passed = compare(v, JDRSTest.BLOB_FULL, true, sb);         
+                else 
+                  passed = compareBeginsWithBytes( v, JDRSTest.BLOB_FULL,sb);	
+                v.close(); 
+                rs.close(); 
+                assertCondition(passed, sb);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");

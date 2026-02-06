@@ -38,6 +38,7 @@ import test.JDLobTest;
 import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -315,7 +316,9 @@ closed.
                                                + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
                 rs.next ();
                 rs.close ();
+                
                 JDReflectionUtil.callMethod_V(rs,"updateObject","C_VARCHAR_50", "Maine", getSQLType(Types.VARCHAR));
+                s.close(); 
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -341,6 +344,8 @@ not updatable.
                                                + JDRSTest.RSTEST_UPDATE);
                 rs.next ();
                 JDReflectionUtil.callMethod_V(rs,"updateObject","C_VARCHAR_50", "New Hampshire", getSQLType(Types.VARCHAR));
+                rs.close(); 
+                s.close(); 
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {
@@ -2278,7 +2283,7 @@ updateObject() - Update an BIGINT, when the integer is too big.
 
 			    JDReflectionUtil.callMethod_V(rs,"updateObject","C_CHAR_50", Boolean.valueOf(true), getSQLType(Types.CHAR));
 			    JDReflectionUtil.callMethod_V(rs,"updateObject","C_VARCHAR_50", Boolean.valueOf(true), getSQLType(Types.VARCHAR));
-			    rs.updateRow();
+			    rs.updateRow(); /* unique table */ 
 			    conn.commit();
 			    String retVal = rs.getString("C_CHAR_50").trim();
 			    String retVal2 = rs.getString("C_VARCHAR_50");
@@ -2288,12 +2293,14 @@ updateObject() - Update an BIGINT, when the integer is too big.
 				failed("SetObject(bool) should be stored as \"" + falseString + "\" or \"" + trueString 
 				       + "\" char.  Values from select " + retVal + ", " + retVal2 );
 
+				rs.close(); 
 				stmt.close();
 				conn.close();
+				
 				return;
 			    }
 			}
-
+                        rs.close(); 
 
 			rs = stmt.executeQuery("SELECT C_CHAR_50, C_VARCHAR_50 FROM " 
 					       + JDRSTest.RSTEST_GET
@@ -2307,6 +2314,7 @@ updateObject() - Update an BIGINT, when the integer is too big.
 				failed("SetObject(bool) should be stored as \"" + trueString 
 				       + "\" char.  Values from select " + retVal + ", " + retVal2 );
 
+				rs.close(); 
 				stmt.close();
 				conn.close();
 				return;
@@ -2314,6 +2322,8 @@ updateObject() - Update an BIGINT, when the integer is too big.
 			}
 			conn.setAutoCommit(true);
 			stmt.executeUpdate("DELETE FROM " + JDRSTest.RSTEST_GET  + " WHERE C_KEY like 'PROP_CHAR_BOOL%' ");
+			rs.close(); 
+			conn.close(); 
 
 		    }
 
@@ -2337,7 +2347,9 @@ updateObject() - Update an BIGINT, when the integer is too big.
   public void dfpTest(String table, Object value, String expected, String expected2, String expected3 ) {
       if (checkJdbc42 ()) {
 	  if (checkDecFloatSupport()) {
-	      try {
+	        JDSerializeFile serializeFile = null;
+	        try {
+	         serializeFile = new JDSerializeFile(connection_, table);
 		  Statement s = connection_.createStatement(
 							    ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		  ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
@@ -2354,12 +2366,13 @@ updateObject() - Update an BIGINT, when the integer is too big.
 		  args[2] = getSQLType(Types.OTHER); 
 		  JDReflectionUtil.callMethod_V(rs,"updateObject",argClasses, args );
 
-		  rs.updateRow();
+		  rs.updateRow(); /* serialized */ 
 
 		  ResultSet rs2 = statement2f_.executeQuery("SELECT * FROM " + table);
 		  rs2.next();
 		  String v = rs2.getString(1);
 		  rs2.close();
+		  rs.close(); 
 		  s.close();
 		  try {
 		      connection_.commit(); 
@@ -2370,6 +2383,14 @@ updateObject() - Update an BIGINT, when the integer is too big.
                                   (v!=null && v.equals(expected3)), "Got " + v + " from "+ value +" sb " + expected+" or "+expected2+" or "+expected3);
 	      } catch (Exception e) {
 		  failed(e, "Unexpected Exception");
+	        } finally {
+	          if (serializeFile != null) {
+	            try {
+	              serializeFile.close();
+	            } catch (SQLException e) {
+	              e.printStackTrace();
+	            }
+	          }
 	      }
 	  }
       }
@@ -2819,7 +2840,9 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
      String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X";
      if (checkJdbc42()) { 
 	 if (checkDecFloatSupport()) {
-	     try {
+	        JDSerializeFile serializeFile = null;
+	        try {
+	         serializeFile = new JDSerializeFile(connection_, table);
 
 		 setupRsCommaSeparator(); 
 		 Statement s = connectionCommaSeparator_.createStatement(
@@ -2837,12 +2860,13 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
 		 args[2] = getSQLType(Types.OTHER); 
 		 JDReflectionUtil.callMethod_V(rs,"updateObject",argClasses, args );
 
-		 rs.updateRow();
+		 rs.updateRow(); /* seriralized */ 
 
 		 ResultSet rs2 = statementCommaSeparator2f_.executeQuery("SELECT * FROM " + table);
 		 rs2.next();
 		 String v = rs2.getString(1);
 		 rs2.close();
+		 rs.close(); 
 		 s.close();
 		 try {
 		     connection_.commit(); 
@@ -2853,6 +2877,14 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
                                  (v!=null && v.equals(expected3))  , "Got " + v + " from "+ value +" sb " + expected+" or "+expected2+" or "+expected3+added);
 	     } catch (Exception e) {
 		 failed(e, "Unexpected Exception"+added);
+	        } finally {
+	          if (serializeFile != null) {
+	            try {
+	              serializeFile.close();
+	            } catch (SQLException e) {
+	              e.printStackTrace();
+	            }
+	          }
 	     }
 	 }
      }
@@ -2933,10 +2965,12 @@ updateBooleanObject() - Update a BOOLEAN.
   public void updateBooleanObject(Object inObject, String outString, int SQLType) {
     setupRs();
     if (checkBooleanSupport()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
          JDReflectionUtil.callMethod_V(rs_,"updateObject","C_BOOLEAN", inObject, getSQLType(Types.BIGINT));
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */ 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         String v = rs2.getString("C_BOOLEAN");
@@ -2944,6 +2978,14 @@ updateBooleanObject() - Update a BOOLEAN.
         assertCondition(outString.equals(v), "got " + v + " sb " + outString);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }

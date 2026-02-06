@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -195,7 +197,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateInt ("C_INTEGER", 6);
-            rs_.updateRow(); 
+            rs_.updateRow();   /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -1089,19 +1091,22 @@ updateInt() - Update a BIGINT.
     
     public void dfpTest(String table, int value, String expected) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
           .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateInt(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connection_.commit(); 
@@ -1109,6 +1114,14 @@ updateInt() - Update a BIGINT.
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
@@ -1158,7 +1171,7 @@ updateInt() - Update a BIGINT.
           rs.next(); 
           rs.updateInt(1, 99);
           sb.append("Updating row\n"); 
-          rs.updateRow(); 
+          rs.updateRow();  /* unique file */ 
           rs.close(); 
           c.commit(); 
           
@@ -1207,7 +1220,7 @@ updateInt() - Update a BIGINT.
           rs.next(); 
           rs.updateInt(1, 99);
           sb.append("Updating row\n"); 
-          rs.updateRow(); 
+          rs.updateRow();  /* unique file */ 
           rs.close(); 
           connection_.commit(); 
           

@@ -141,14 +141,14 @@ closed.
     public void Var001()
     {
         if (checkJdbc20 ()) {
-        try {
-            Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
+        try (Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+            ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
             rs.next ();
             rs.close ();
             rs.updateBytes ("C_VARBINARY_20", new byte[] { (byte) 12, (byte) 34 });
+            
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -193,7 +193,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateBytes ("C_VARBINARY_20", new byte[] { (byte) 12, (byte) 34, (byte) 98 });
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -1096,7 +1096,7 @@ updateBytes() - Update a BIGINT.
               + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
           rs.next(); 
           rs.updateBytes (1, new byte[] { (byte) 50 });
-          rs.updateRow ();
+          rs.updateRow (); /* exception */ 
           failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -1119,7 +1119,9 @@ updateBytes() - Update a BIGINT.
              + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
          rs.next(); 
          rs.updateBytes (1, new byte[] { (byte) 50 });
-         rs.updateRow ();
+         rs.updateRow (); /* exception */ 
+         rs.close(); 
+         s.close(); 
          failed ("Didn't throw SQLException");
        }
        catch (Exception e) {

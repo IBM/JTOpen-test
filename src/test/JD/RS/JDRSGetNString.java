@@ -174,7 +174,7 @@ Reconnects with different properties, if needed.
                 statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                           ResultSet.CONCUR_UPDATABLE);
                 statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                                          + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                          + " (C_KEY) VALUES ('DUMMROW_GNSTRING')");
                 rs_ = statement_.executeQuery ("SELECT * FROM "
                                                + JDRSTest.RSTEST_GET + " FOR UPDATE");
             }
@@ -499,7 +499,7 @@ getNString() - Should throw an exception on a deleted row.
             return; 
           }
             try { 
-                JDRSTest.position (rs_, "DUMMY_ROW");
+                JDRSTest.position (rs_, "DUMMROW_GNSTRING");
                 rs_.deleteRow ();
                 String v = (String) JDReflectionUtil.callMethod_OS(rs_, "getNString", "C_VARCHAR_50");
                 failed ("Didn't throw SQLException but returned"+v);

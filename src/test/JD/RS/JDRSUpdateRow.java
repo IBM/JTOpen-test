@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -25,6 +26,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 /**
  * Testcase JDRSUpdateRow. This tests the following method of the JDBC ResultSet
@@ -183,7 +185,7 @@ public class JDRSUpdateRow extends JDTestcase {
         s = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE);
         rs.next();
-        rs.updateRow();
+        rs.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -209,7 +211,7 @@ public class JDRSUpdateRow extends JDTestcase {
     if (checkJdbc20()) {
       try {
         JDRSTest.position(rs_, null);
-        rs_.updateRow();
+        rs_.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -286,7 +288,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var004() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         int columnCount = rs_.getMetaData().getColumnCount();
         Object[] before = new Object[columnCount];
@@ -296,7 +300,7 @@ public class JDRSUpdateRow extends JDTestcase {
           beforeNulls[i] = rs_.wasNull();
         }
 
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -316,6 +320,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -326,7 +338,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var005() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         int columnCount = rs_.getMetaData().getColumnCount();
         Object[] before = new Object[columnCount];
@@ -337,7 +351,7 @@ public class JDRSUpdateRow extends JDTestcase {
         }
 
         rs_.updateString("C_VARCHAR_50", "Hi Mom!");
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -363,6 +377,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -373,7 +395,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var006() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         int columnCount = rs_.getMetaData().getColumnCount();
         Object[] before = new Object[columnCount];
@@ -386,7 +410,7 @@ public class JDRSUpdateRow extends JDTestcase {
         rs_.updateInt("C_INTEGER", 9876);
         rs_.updateNull("C_SMALLINT");
         rs_.updateFloat("C_FLOAT", -4.25f);
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -420,6 +444,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -430,16 +462,26 @@ public class JDRSUpdateRow extends JDTestcase {
    **/
   public void Var007() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         rs_.getMetaData().getColumnCount();
 
         rs_.updateString("C_VARCHAR_50", "Hola Mama!");
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         assertCondition(rs_.getString("C_VARCHAR_50").equals("Hola Mama!"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -450,18 +492,28 @@ public class JDRSUpdateRow extends JDTestcase {
    **/
   public void Var008() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         rs_.getMetaData().getColumnCount();
 
         rs_.updateString("C_VARCHAR_50", "Hola Mama!");
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         rs_.beforeFirst();
         JDRSTest.position(rs_, key_);
         assertCondition(rs_.getString("C_VARCHAR_50").equals("Hola Mama!"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -478,7 +530,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var009() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs1 = s.executeQuery(select_ + " AS TESTCORR FOR UPDATE");
 
@@ -492,7 +546,7 @@ public class JDRSUpdateRow extends JDTestcase {
         }
 
         rs1.updateShort("C_SMALLINT", (short) -123);
-        rs1.updateRow();
+        rs1.updateRow();/* serialized */
         rs1.close();
         s.close();
 
@@ -520,6 +574,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -531,7 +593,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var010() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         int columnCount = rs2.getMetaData().getColumnCount();
@@ -545,11 +609,11 @@ public class JDRSUpdateRow extends JDTestcase {
 
         JDRSTest.position(rs_, key2_);
         rs_.updateString("C_VARCHAR_50", "Computer");
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         JDRSTest.position(rs_, key_);
         rs_.updateInt("C_INTEGER", 3343);
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -577,6 +641,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -598,7 +670,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var011() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         Statement statement = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         if (isToolboxDriver())
           statement.setCursorName("MiXeD CaSe");
@@ -616,7 +690,7 @@ public class JDRSUpdateRow extends JDTestcase {
 
         rs.updateNull("C_INTEGER");
         rs.updateShort("C_SMALLINT", (short) -44);
-        rs.updateRow();
+        rs.updateRow(); /* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -643,10 +717,19 @@ public class JDRSUpdateRow extends JDTestcase {
             success = compareColumns(i, before, after, beforeNulls, afterNulls, message) && success;
           }
         }
-
+        rs.close(); 
+        statement.close(); 
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -657,12 +740,14 @@ public class JDRSUpdateRow extends JDTestcase {
    **/
   public void Var012() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         rs_.updateInt("C_INTEGER", 98276);
         rs_.updateNull("C_SMALLINT");
         rs_.updateFloat("C_FLOAT", -4.225f);
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         boolean success = true;
@@ -674,6 +759,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -684,12 +777,14 @@ public class JDRSUpdateRow extends JDTestcase {
    **/
   public void Var013() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         rs_.updateInt("C_INTEGER", 98276);
         rs_.updateNull("C_SMALLINT");
         rs_.updateFloat("C_FLOAT", -4.225f);
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         rs_.beforeFirst();
         boolean success = true;
@@ -700,6 +795,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -715,6 +818,7 @@ public class JDRSUpdateRow extends JDTestcase {
         rs.next();
         rs.close();
         rs.cancelRowUpdates();
+        s.close(); 
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -733,6 +837,8 @@ public class JDRSUpdateRow extends JDTestcase {
         ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE);
         rs.next();
         rs.cancelRowUpdates();
+        rs.close(); 
+        s.close(); 
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -804,7 +910,9 @@ public class JDRSUpdateRow extends JDTestcase {
   {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         int columnCount = rs_.getMetaData().getColumnCount();
         Object[] before = new Object[columnCount];
@@ -818,7 +926,7 @@ public class JDRSUpdateRow extends JDTestcase {
         rs_.updateNull("C_SMALLINT");
         rs_.updateFloat("C_FLOAT", -9.25f);
         rs_.cancelRowUpdates();
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -838,6 +946,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -848,7 +964,9 @@ public class JDRSUpdateRow extends JDTestcase {
   public void Var019() {
     StringBuffer message = new StringBuffer();
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         JDRSTest.position(rs_, key_);
         int columnCount = rs_.getMetaData().getColumnCount();
         Object[] before = new Object[columnCount];
@@ -865,7 +983,7 @@ public class JDRSUpdateRow extends JDTestcase {
         rs_.updateInt("C_INTEGER", 444);
         rs_.updateNull("C_SMALLINT");
         rs_.updateFloat("C_FLOAT", 34.53f);
-        rs_.updateRow();
+        rs_.updateRow();/* serialized */
 
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
@@ -899,6 +1017,14 @@ public class JDRSUpdateRow extends JDTestcase {
         assertCondition(success, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -915,7 +1041,7 @@ public class JDRSUpdateRow extends JDTestcase {
         rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
         rs.next();
         rs.close();
-        rs.updateRow();
+        rs.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -942,12 +1068,14 @@ public class JDRSUpdateRow extends JDTestcase {
       ResultSet rs3 = null;
       Statement s = null;
 
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         rs2 = s.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         rs2.updateShort("C_SMALLINT", (short) 654);
-        rs2.updateRow();
+        rs2.updateRow();/* serialized */
 
         rs3 = s.executeQuery(select_);
         JDRSTest.position(rs3, key_);
@@ -965,6 +1093,14 @@ public class JDRSUpdateRow extends JDTestcase {
         s = null;
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
 
       if (rs2 != null)
@@ -994,14 +1130,16 @@ public class JDRSUpdateRow extends JDTestcase {
       ResultSet rs3 = null;
       PreparedStatement ps = null;
 
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
         ps = connection_.prepareStatement("SELECT * FROM " + JDRSTest.RSTEST_UPDATE + " where C_SMALLINT = ?",
             ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ps.setShort(1, (short) 654);
         rs2 = ps.executeQuery();
         rs2.next();
         rs2.updateShort("C_SMALLINT", (short) 444);
-        rs2.updateRow();
+        rs2.updateRow(); /* serialized */
 
         rs3 = statement2_.executeQuery(select_ + " where C_SMALLINT = 444");
         if (rs3.next())
@@ -1017,6 +1155,14 @@ public class JDRSUpdateRow extends JDTestcase {
         ps = null;
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
 
       if (rs2 != null)
@@ -1054,9 +1200,10 @@ public class JDRSUpdateRow extends JDTestcase {
           rs.updateString(1, "369258147");
           after = rs.getString(1);
         }
-        rs.updateRow();
+        rs.updateRow(); /* unique table */
         rs.last();
         int numRows = rs.getRow();
+        rs.close();
         rs = s.executeQuery(
             "SELECT * FROM " + table1 + " WHERE SSN IS NOT NULL AND SSN NOT IN (SELECT SSN FROM " + table2 + ")");
         if (rs.next())
@@ -1087,20 +1234,22 @@ public class JDRSUpdateRow extends JDTestcase {
       Connection c = null;
       String city = "";
       try {
-        
+
         c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
-        
+
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN FROM " + table3);
 
         if (rs.next()) {
           rs.updateString(1, "Manhatten");
-          rs.updateRow();
+          rs.updateRow(); /* unique table */
           rs.close();
           ResultSet rs1 = s.executeQuery("SELECT * FROM " + table3);
           rs1.next();
           city = rs1.getString(1);
           rs1.close();
+        } else {
+          rs.close(); 
         }
 
         s.close();
@@ -1136,8 +1285,10 @@ public class JDRSUpdateRow extends JDTestcase {
 
         if (rs.next()) {
           rs.updateString(1, "Manhatten");
-          rs.updateRow();
+          rs.updateRow(); /* exception */
         }
+        rs.close(); 
+        s.close(); 
         failed("Didn't throw SQLException - New Testcase added by toolbox to test column alias support 9/17/03");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -1173,13 +1324,15 @@ public class JDRSUpdateRow extends JDTestcase {
         if (rs.next()) {
           rs.updateString(1, "Rochester");
           rs.updateString(2, "MN");
-          rs.updateRow();
+          rs.updateRow(); /* unique table */
           rs.close();
           ResultSet rs1 = s.executeQuery("SELECT * FROM " + table3);
           rs1.next();
           city = rs1.getString(1);
           state = rs1.getString(2);
           rs1.close();
+        } else {
+          rs.close(); 
         }
 
         s.close();

@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -25,6 +26,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -1045,7 +1047,9 @@ updateShort() - Update a BIGINT.
 
     public void dfpTest(String table, short value, String expected) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -1053,7 +1057,7 @@ updateShort() - Update a BIGINT.
           rs.next();
 	  String originalValue = rs.getString(1); 
           rs.updateShort(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           rs.close();
 
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
@@ -1064,7 +1068,7 @@ updateShort() - Update a BIGINT.
 	  rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
 	  rs.next();
 	  rs.updateString(1,originalValue); 
-	  rs.updateRow();
+	  rs.updateRow(); /* serialized */ 
 	  rs.close(); 
           s.close();
           try {
@@ -1073,6 +1077,14 @@ updateShort() - Update a BIGINT.
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

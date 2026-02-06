@@ -109,9 +109,9 @@ Performs setup needed before running variations.
 		   ResultSet.CONCUR_UPDATABLE);
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GDB')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW2')");
+                + " (C_KEY) VALUES ('DUMMYROW_GDB2')");
 	    rsQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (rsQuery_);
@@ -823,7 +823,7 @@ getBigDecimal() - Should throw an exception on a deleted row.
 
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMY_ROW");
+            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMYROW_GDB");
             rs_.deleteRow ();
             BigDecimal v = rs_.getBigDecimal ("C_DECIMAL_105");
             failed ("Didn't throw SQLException "+v);
@@ -848,7 +848,7 @@ getBigDecimal() with 2 parameters - Should throw an exception on a deleted row.
 
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMY_ROW2");
+            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMYROW_GDB2");
             rs_.deleteRow ();
             BigDecimal v = rs_.getBigDecimal ("C_DECIMAL_105", 4);
             failed ("Didn't throw SQLException "+v  );

@@ -20,6 +20,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 
@@ -114,7 +115,7 @@ public class JDRSGetClob extends JDTestcase {
       statement_ = connection_.createStatement(
           ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GCLOB')");
 
       statement1_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
@@ -414,13 +415,15 @@ public class JDRSGetClob extends JDTestcase {
    **/
   public void Var012() {
     if (checkLevel()) {
+      JDSerializeFile serializeFile = null;
       try {
+       serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         ResultSet rs = statement1_.executeQuery(
             "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
         JDRSTest.position(rs, "UPDATE_SANDBOX");
         String test = "The new and improved AS/400 Toolbox for Java.";
         rs.updateString("C_VARCHAR_50", test);
-        rs.updateRow();
+        rs.updateRow(); /* serialized */
         Object v = JDReflectionUtil.callMethod_OS(rs, methodName,
             "C_VARCHAR_50");
         boolean check = compare(v, test);
@@ -428,6 +431,14 @@ public class JDRSGetClob extends JDTestcase {
         assertCondition(check);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -500,7 +511,7 @@ public class JDRSGetClob extends JDTestcase {
       try {
         rs = statement1_.executeQuery(
             "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
-        JDRSTest.position(rs, "DUMMY_ROW");
+        JDRSTest.position(rs, "DUMMYROW_GCLOB");
         rs.deleteRow();
         Object v = JDReflectionUtil.callMethod_OS(rs, methodName,
             "C_VARCHAR_50");

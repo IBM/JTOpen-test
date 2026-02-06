@@ -188,7 +188,7 @@ Reconnects with different properties, if needed.
 							      ResultSet.CONCUR_UPDATABLE);
 		}
 		statementQuery_ = "INSERT INTO " + JDRSTest.RSTEST_GET
-                                          + " (C_KEY) VALUES ('DUMMY_ROW')";
+                                          + " (C_KEY) VALUES ('DUMMYROW_GETSTRING')";
                 statement_.executeUpdate (statementQuery_);
 		statementQuery_ = "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE";
                 rs_ = statement_.executeQuery (statementQuery_);
@@ -490,7 +490,7 @@ getString() - Should throw an exception on a deleted row.
             return;
           }
             try {
-                rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMY_ROW");
+                rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMYROW_GETSTRING");
                 rs_.deleteRow ();
                 String v = rs_.getString ("C_VARCHAR_50");
                 failed ("Didn't throw SQLException but returned"+v);

@@ -20,6 +20,7 @@ import java.sql.Clob;
 import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -32,6 +33,7 @@ import test.JDLobTest;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -211,7 +213,7 @@ extends JDTestcase
             {
                 JDRSTest.position (rs_, null);
                 rs_.updateClob ("C_VARCHAR_50", new JDLobTest.JDTestClob ("Portland"));
-                rs_.updateRow(); 
+                rs_.updateRow(); /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -2079,15 +2081,16 @@ extends JDTestcase
         if(checkDecFloatSupport())
         {
             String value = "4533.43"; 
-            try
-            {
+            JDSerializeFile serializeFile = null;
+            try {
+             serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
               rs.next(); 
               rs.updateClob (1, new JDLobTest.JDTestClob (value));
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */ 
 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16);
@@ -2105,6 +2108,14 @@ extends JDTestcase
                     return;
                 }
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -2120,15 +2131,16 @@ extends JDTestcase
       if(checkDecFloatSupport())
       {
           String value = "123456E700"; 
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
             rs.next(); 
             rs.updateClob (1, new JDLobTest.JDTestClob (value));
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP16);
@@ -2141,6 +2153,14 @@ extends JDTestcase
           {
              // e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }
@@ -2155,15 +2175,16 @@ extends JDTestcase
       if(checkDecFloatSupport())
       {
           String value = "Terre Haute"; 
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
             rs.next(); 
             rs.updateClob (1, new JDLobTest.JDTestClob (value));
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */ 
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP16);
@@ -2176,6 +2197,14 @@ extends JDTestcase
           {
              // e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }
@@ -2190,15 +2219,16 @@ extends JDTestcase
         if(checkDecFloatSupport())
         {
             String value = "4533.43"; 
-            try
-            {
+            JDSerializeFile serializeFile = null;
+            try {
+             serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
               rs.next(); 
               rs.updateClob (1, new JDLobTest.JDTestClob (value));
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */ 
 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP34);
@@ -2216,6 +2246,14 @@ extends JDTestcase
                     return;
                 }
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -2232,15 +2270,16 @@ extends JDTestcase
       {
           String value = "12345E7000 " ;
                         
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
             rs.next(); 
             rs.updateClob (1, new JDLobTest.JDTestClob (value));
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34);
@@ -2253,6 +2292,14 @@ extends JDTestcase
           {
              // e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }
@@ -2267,15 +2314,16 @@ extends JDTestcase
       if(checkDecFloatSupport())
       {
           String value = "Terre Haute"; 
-          try
-          {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
             Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
             rs.next(); 
             rs.updateClob (1, new JDLobTest.JDTestClob (value));
-            rs.updateRow ();
+            rs.updateRow (); /* serialized */ 
 
             ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_DFP34);
@@ -2288,6 +2336,14 @@ extends JDTestcase
           {
               //e.printStackTrace(); 
             assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+          } finally {
+            if (serializeFile != null) {
+              try {
+                serializeFile.close();
+              } catch (SQLException e) {
+                e.printStackTrace();
+              }
+            }
           }
       }
     }

@@ -98,7 +98,7 @@ Performs setup needed before running variations.
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GETREF')");
             rs_ = statement_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE");
         }
@@ -433,7 +433,7 @@ getRef() - Should throw an exception on a deleted row.
             return; 
           }
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMYROW_GETREF");
             rs_.deleteRow ();
             Ref v = rs_.getRef ("C_INTEGER");
             failed ("Didn't throw SQLException"+v);

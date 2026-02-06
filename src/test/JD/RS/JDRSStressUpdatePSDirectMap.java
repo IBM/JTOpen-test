@@ -58,6 +58,7 @@ Constructor.
 	// Only run tests for shorter time since direct map doesn't really
 	// take effect for updatable 
 	randomRunTime=5; 
+	       fileSuffix="K";
 
     }
 

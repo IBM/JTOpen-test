@@ -17,6 +17,7 @@ package test.JD.RS;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -26,6 +27,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -194,7 +196,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateBoolean ("C_SMALLINT", true);
-            rs_.updateRow(); 
+            rs_.updateRow(); /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -1323,14 +1325,18 @@ updateBoolean() - Update a BIGINT, with the value false.
         public void Var053 ()
         {
           if (checkDecFloatSupport ()) {
+            JDSerializeFile serializeFile = null;
             try {
+             serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
+
+
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
               rs.next(); 
               rs.updateBoolean (1, true);
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */ 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16);
               rs2.next(); 
@@ -1340,6 +1346,15 @@ updateBoolean() - Update a BIGINT, with the value false.
             }
             catch (Exception e) {
               failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+
             }
           }
         }
@@ -1352,14 +1367,16 @@ updateBoolean() - Update a BIGINT, with the value false.
         public void Var054 ()
         {
           if (checkDecFloatSupport ()) {
+            JDSerializeFile serializeFile = null;
             try {
+             serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
               rs.next(); 
               rs.updateBoolean (1, false);
-              rs.updateRow ();
+              rs.updateRow (); /* serialized */ 
               ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                   + JDRSTest.RSTEST_DFP16);
               rs2.next();
@@ -1369,6 +1386,14 @@ updateBoolean() - Update a BIGINT, with the value false.
             }
             catch (Exception e) {
               failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
           }
         }
@@ -1380,23 +1405,35 @@ updateBoolean() - Update a BIGINT, with the value false.
             public void Var055 ()
             {
               if (checkDecFloatSupport ()) {
+                JDSerializeFile serializeFile = null;
                 try {
-                  Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                 serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
+                 Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                       ResultSet.CONCUR_UPDATABLE);
                   ResultSet rs = s.executeQuery ("SELECT * FROM "
                       + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
                   rs.next(); 
                   rs.updateBoolean (1, true);
-                  rs.updateRow ();
+                  rs.updateRow (); /* serialized */ 
                   ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                       + JDRSTest.RSTEST_DFP34);
                   rs2.next(); 
                   BigDecimal v = rs2.getBigDecimal (1);
                   rs2.close ();
+                  rs.close(); 
+                  s.close(); 
                   assertCondition (v.intValue() == 1);
                 }
                 catch (Exception e) {
                   failed (e, "Unexpected Exception");
+                } finally {
+                  if (serializeFile != null) {
+                    try {
+                      serializeFile.close();
+                    } catch (SQLException e) {
+                      e.printStackTrace();
+                    }
+                  }
                 }
               }
             }
@@ -1409,23 +1446,35 @@ updateBoolean() - Update a BIGINT, with the value false.
             public void Var056 ()
             {
               if (checkDecFloatSupport ()) {
+                JDSerializeFile serializeFile = null;
                 try {
+                 serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP16);
                   Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                       ResultSet.CONCUR_UPDATABLE);
                   ResultSet rs = s.executeQuery ("SELECT * FROM "
                       + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
                   rs.next(); 
                   rs.updateBoolean (1, false);
-                  rs.updateRow ();
+                  rs.updateRow ();  /* serialized */ 
                   ResultSet rs2 = statement2_.executeQuery ("SELECT * FROM "
                       + JDRSTest.RSTEST_DFP34);
                   rs2.next(); 
                   BigDecimal v = rs2.getBigDecimal (1);
                   rs2.close ();
+                  rs.close(); 
+                  s.close(); 
                   assertCondition (v.intValue() == 0);
                 }
                 catch (Exception e) {
                   failed (e, "Unexpected Exception");
+                } finally {
+                  if (serializeFile != null) {
+                    try {
+                      serializeFile.close();
+                    } catch (SQLException e) {
+                      e.printStackTrace();
+                    }
+                  }
                 }
               }
             }

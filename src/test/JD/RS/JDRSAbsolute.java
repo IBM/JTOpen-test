@@ -18,11 +18,13 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -1149,7 +1151,9 @@ absolute() - Update the rows using absolute().
     public void Var040 ()
     {
         if (checkJdbc20 ()) {
+          JDSerializeFile serializeFile = null;
             try {
+              serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
                 // Update each value.
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " FOR UPDATE OF VALUE");
@@ -1180,7 +1184,15 @@ absolute() - Update the rows using absolute().
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
-            }
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
+           }
         }
     }
 

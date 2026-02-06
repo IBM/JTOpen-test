@@ -85,7 +85,7 @@ public class JDRSGetURL extends JDTestcase {
       statement_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GURL')");
       rs_ = statement_
           .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
     }

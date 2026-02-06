@@ -7,6 +7,7 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -18,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -187,7 +189,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateNull ("C_VARCHAR_50");
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -1028,19 +1030,22 @@ updateNull() - Update a BIGINT.
     
     public void dfpTest(String table) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
           .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateNull(1);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connection_.commit(); 
@@ -1048,6 +1053,14 @@ updateNull() - Update a BIGINT.
           assertCondition(v == null, "Got " + v + " sb null ");
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

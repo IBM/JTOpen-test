@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.sql.DataTruncation;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -29,6 +30,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDTestUtilities;
 
 /**
@@ -100,7 +102,7 @@ public class JDRSGetBytes extends JDTestcase {
         statement_ = connection_.createStatement();
       }
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GBYTES')");
       statementQuery_ = "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE";
       rs_ = statement_.executeQuery(statementQuery_);
     }
@@ -311,7 +313,9 @@ public class JDRSGetBytes extends JDTestcase {
    **/
   public void Var012() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         JDRSTest.position(rs_, "UPDATE_SANDBOX");
         byte[] test = new byte[] { (byte) 0x01, (byte) 0x12, (byte) 0x34,
             (byte) 0x45, (byte) 0x50, (byte) 0x56, (byte) 0x67, (byte) 0x78,
@@ -319,11 +323,19 @@ public class JDRSGetBytes extends JDTestcase {
             (byte) 0xDE, (byte) 0xEF, (byte) 0xFF, (byte) 0x00, (byte) 0xFF,
             (byte) 0x00, (byte) 0xFF };
         rs_.updateBytes("C_BINARY_20", test);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */ 
         byte[] v = rs_.getBytes("C_BINARY_20");
         assertCondition(areEqual(v, test));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -385,7 +397,7 @@ public class JDRSGetBytes extends JDTestcase {
         return;
       }
       try {
-        JDRSTest.position(rs_, "DUMMY_ROW");
+        JDRSTest.position(rs_, "DUMMYROW_GBYTES");
         rs_.deleteRow();
         byte[] v = rs_.getBytes("C_VARBINARY_20");
         failed("Didn't throw SQLException " + v);

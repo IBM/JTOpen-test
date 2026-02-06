@@ -221,7 +221,7 @@ extends JDTestcase
           {
             JDRSTest.position (rs_, null);
             rs_.updateAsciiStream ("C_VARCHAR_50", stringToAsciiStream ("Buenos Aires"), 12);
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException when cursor not pointing to a row");
           }
           catch(Exception e)
@@ -625,7 +625,7 @@ extends JDTestcase
                 JDRSTest.position (rs_, "DUMMY_ROW");
                 rs_.deleteRow ();
                 rs_.updateAsciiStream ("C_VARCHAR_50", stringToAsciiStream ("Venice"), 6);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -2310,7 +2310,7 @@ extends JDTestcase
              + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
          rs.next(); 
          rs.updateAsciiStream(1, stringToAsciiStream ("Hannover"), 8 );
-	 rs.updateRow(); 
+	 rs.updateRow();  /* exception */ 
          failed ("Didn't throw SQLException ");
        }
        catch (Exception e) {
@@ -2342,7 +2342,7 @@ extends JDTestcase
             + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
         rs.next(); 
         rs.updateAsciiStream(1, stringToAsciiStream ("Hannover"), 8 ); 
-	rs.updateRow(); 
+	rs.updateRow();  /* exception */ 
         failed ("Didn't throw SQLException for 'Hannover' ");
       }
       catch (Exception e) {

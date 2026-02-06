@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -25,7 +26,7 @@ import java.sql.DatabaseMetaData;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -641,7 +642,9 @@ afterLast() - Update the rows using afterLast().
     public void Var021 ()
     {
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
                 // Update each value.
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " FOR UPDATE OF VALUE");
@@ -666,6 +669,14 @@ afterLast() - Update the rows using afterLast().
                 assertCondition (s1.equals ("AFTERLAST"));
             } catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -2006,7 +2017,9 @@ afterLast() - Update the rows using afterLast().
     public void Var081 ()
     {
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
                 // Update each value.
                 ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " FOR UPDATE OF VALUE");
@@ -2031,6 +2044,14 @@ afterLast() - Update the rows using afterLast().
                 assertCondition (s1.equals ("AFTERLAST"));
             } catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }

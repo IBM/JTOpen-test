@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -25,7 +26,7 @@ import java.sql.DatabaseMetaData;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -639,7 +640,9 @@ first() - Update the rows using first().
     public void Var021 ()
     {
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+            serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
                 // Update each value.
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " FOR UPDATE OF VALUE");
@@ -663,6 +666,14 @@ first() - Update the rows using first().
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -1994,7 +2005,9 @@ first() - Update the rows using first().
     public void Var081 ()
     {
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+            serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_POS);
                 // Update each value.
                 ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_POS + " FOR UPDATE OF VALUE");
@@ -2018,6 +2031,14 @@ first() - Update the rows using first().
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }

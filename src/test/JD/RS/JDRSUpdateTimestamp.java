@@ -201,7 +201,7 @@ to a row.
             try {
                 JDRSTest.position (rs_, null);
                 rs_.updateTimestamp ("C_TIMESTAMP", new Timestamp (453443723));
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch (Exception e) {

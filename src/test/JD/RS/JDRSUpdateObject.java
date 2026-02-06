@@ -24,6 +24,7 @@ import com.ibm.as400.access.AS400;
 import test.JDLobTest;
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -2184,7 +2185,9 @@ updateObject() - Update an BIGINT, when the integer is too big.
         // AS400JDBCDataSource ds = null;
         
         if (isToolboxDriver()) {
-            try {  
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
                 for (int x = 0; x < 2; x++) {
 
                     //"boolean string" property setting "true" is default, and driver just used old boolean values in setOjbect
@@ -2238,7 +2241,7 @@ updateObject() - Update an BIGINT, when the integer is too big.
                        
                         rs.updateObject("C_CHAR_50", Boolean.valueOf(true));
                         rs.updateObject("C_VARCHAR_50", Boolean.valueOf(true));
-                        rs.updateRow();
+                        rs.updateRow(); /* serialized */ 
                         conn.commit();
                         String retVal = rs.getString("C_CHAR_50").trim();
                         String retVal2 = rs.getString("C_VARCHAR_50");
@@ -2281,6 +2284,14 @@ updateObject() - Update an BIGINT, when the integer is too big.
                 
             } catch (Exception e) {
                 failed(e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
             
         } else
@@ -2296,18 +2307,21 @@ updateObject() - Update an BIGINT, when the integer is too big.
   }
   public void dfpTest(String table, Object value, String expected, String expected2, String expected3) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateObject(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
 
           ResultSet rs2 = statement2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connection_.commit(); 
@@ -2318,6 +2332,14 @@ updateObject() - Update an BIGINT, when the integer is too big.
                           (v!=null && v.equals(expected3)) , "Got " + v + " from "+ value +" sb " + expected + " or "+expected2+" or "+expected3);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
@@ -2765,7 +2787,9 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
   public void dfpTestCommaSeparator(String table, Object value, String expected, String expected2, String expected3) {
     String added = " -- added 12/17/2009 to test native driver for CPS 7YSU2X";
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
 
         setupRsCommaSeparator(); 
           Statement s = connectionCommaSeparator_.createStatement(
@@ -2773,12 +2797,13 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
           ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateObject(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
 
           ResultSet rs2 = statementCommaSeparator2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connection_.commit(); 
@@ -2789,6 +2814,14 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
                           (v!=null && v.equals(expected3)), "Got " + v + " from "+ value +" sb " + expected +" or "+expected2+" or "+expected3+added);
         } catch (Exception e) {
           failed(e, "Unexpected Exception"+added);
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
@@ -2860,26 +2893,36 @@ updateObject() - Update a NUMERIC, with scale greater the value's scale.
     public void Var175 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(Double.NEGATIVE_INFINITY), "-Infinity");}
     public void Var176 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, Double.valueOf(-1234567890123456.0), "-1234567890123456");}
 
-/**
-updateBooleanObject() - Update a BOOLEAN.
-**/
-  public void updateBooleanObject(Object inObject, String outString) {
-    setupRs();
-    if (checkBooleanSupport()) {
-      try {
-        JDRSTest.position(rs_, key_);
-        rs_.updateObject("C_BOOLEAN", inObject);
-        rs_.updateRow();
-        ResultSet rs2 = statement2_.executeQuery(select_);
-        JDRSTest.position(rs2, key_);
-        String v = rs2.getString("C_BOOLEAN");
-        rs2.close();
-        assertCondition(outString.equals(v), "got " + v + " sb " + outString);
-      } catch (Exception e) {
-        failed(e, "Unexpected Exception");
+    /**
+     * updateBooleanObject() - Update a BOOLEAN.
+     **/
+    public void updateBooleanObject(Object inObject, String outString) {
+      setupRs();
+      if (checkBooleanSupport()) {
+        JDSerializeFile serializeFile = null;
+        try {
+          serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
+          JDRSTest.position(rs_, key_);
+          rs_.updateObject("C_BOOLEAN", inObject);
+          rs_.updateRow(); /* serialized */
+          ResultSet rs2 = statement2_.executeQuery(select_);
+          JDRSTest.position(rs2, key_);
+          String v = rs2.getString("C_BOOLEAN");
+          rs2.close();
+          assertCondition(outString.equals(v), "got " + v + " sb " + outString);
+        } catch (Exception e) {
+          failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+        }
       }
     }
-  }
 
       public void Var177() { updateBooleanObject(Boolean.valueOf(true),"1"); } 
       public void Var178() { updateBooleanObject(Boolean.valueOf(false),"0"); } 

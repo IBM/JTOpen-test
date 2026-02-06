@@ -20,6 +20,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDTestUtilities;
 
 import java.io.FileOutputStream;
@@ -116,7 +117,7 @@ public class JDRSGetSQLXML extends JDTestcase {
       }
 
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GETX
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GETSQLXML')");
 
       // Force LOB locators.
       connection2_ = testDriver_.getConnection (url + ";lob threshold=0",systemObject_.getUserId(), encryptedPassword_);
@@ -597,7 +598,9 @@ public class JDRSGetSQLXML extends JDTestcase {
   public void Var018() {
 
     if (checkJdbc40()) {
+      JDSerializeFile serializeFile = null;
       try {
+       serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         message = new StringBuffer();
         ResultSet rs = statement1_.executeQuery(
             "SELECT * FROM " + JDRSTest.RSTEST_GETXML + " FOR UPDATE");
@@ -605,7 +608,7 @@ public class JDRSGetSQLXML extends JDTestcase {
         rs.next();
         String test = JDRSTest.SAMPLE_XML2;
         rs.updateString("C_CLOB0037", test);
-        rs.updateRow();
+        rs.updateRow(); /* serialized */ 
         Object v = JDReflectionUtil.callMethod_OS(rs, "getSQLXML",
             "C_CLOB0037");
         boolean trim = false;
@@ -617,6 +620,14 @@ public class JDRSGetSQLXML extends JDTestcase {
         assertCondition(check, message.toString());
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }

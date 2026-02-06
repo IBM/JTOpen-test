@@ -16,6 +16,7 @@ package test.JD.RS;
 
 
 import java.io.FileOutputStream;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
@@ -49,6 +50,7 @@ public class JDRSGetStringBIDI extends JDTestcase {
   // Private data.
   private String properties_ = "NOTSET";
   // private static String table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
+  private Connection noBidiConnection_ = null; 
 
   /**
    * Constructor.
@@ -67,6 +69,7 @@ public class JDRSGetStringBIDI extends JDTestcase {
    *              If an exception occurs.
    **/
   protected void setup() throws Exception {
+    noBidiConnection_ = testDriver_.getConnection (baseURL_,systemObject_.getUserId(), encryptedPassword_);
     reconnect("");
     // table_ = JDRSTest.COLLECTION + ".JDRSGSBIDI";
   }
@@ -81,8 +84,13 @@ public class JDRSGetStringBIDI extends JDTestcase {
     connection_.commit(); // @E1A
     connection_.close();
     connection_ = null;
+    if (noBidiConnection_ != null) { 
+      noBidiConnection_.close(); 
+      noBidiConnection_ = null; 
+    }
   }
 
+  
   /**
    * Reconnects with different properties, if needed.
    * 
@@ -112,9 +120,17 @@ public class JDRSGetStringBIDI extends JDTestcase {
       
       String sql;
       String table = JDRSTest.COLLECTION + ".JDRSGSB" +var+"C"+ ccsid;
-      Statement stmt = connection_.createStatement();
-      initTable(stmt, table , "(KEY int, C1 " + dataType + ")", sb); 
+      if (noBidiConnection_ == null) { 
+        noBidiConnection_ = testDriver_.getConnection (baseURL_,systemObject_.getUserId(), encryptedPassword_);
+      }
+      Statement stmt2 = noBidiConnection_.createStatement(); 
+      initTable(stmt2, table , "(KEY int, C1 " + dataType + ")", sb); 
+      noBidiConnection_.commit(); 
+      stmt2.close(); 
       
+      
+      Statement stmt = connection_.createStatement();
+
       for (int i = 0; i < values.length; i++) {
         sql = "INSERT INTO " + table + " VALUES(" + i + "," + values[i][0]
             + ")";
@@ -157,7 +173,7 @@ public class JDRSGetStringBIDI extends JDTestcase {
         }
         i++;
       }
-
+      rs.close(); 
       stmt.close();
       assertCondition(passed,sb);
 

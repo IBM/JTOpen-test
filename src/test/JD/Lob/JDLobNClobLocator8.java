@@ -95,21 +95,11 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
 	lobThreshold = "1"; 
+	suffix="Z";
 
     }
 
-  void setupTableNames() {
-	    TABLE_  = JDLobTest.COLLECTION + ".CLOBLU8";
-	    TABLE2_ = JDLobTest.COLLECTION + ".CLOBLU82";
-	    TABLE3_ = JDLobTest.COLLECTION + ".CLOBLU83"; 
-	    TABLE4_ = JDLobTest.COLLECTION + ".CLOBLU84";
-	    TABLE5_ = JDLobTest.COLLECTION + ".CLOBLU85"; 
-	    TABLE6_ = JDLobTest.COLLECTION + ".CLOBLU86";
-	    TABLE120_= JDLobTest.COLLECTION + ".CLOBLU8120";
-	    TABLE121_= JDLobTest.COLLECTION + ".CLOBLU8121";
-	    TABLEHUGE_ = JDLobTest.COLLECTION + ".CLOBLU8H";
-  }
-
+ 
   void setupTestStringValues() {
 
       SMALL_ = "\u0391 really =\u03b2ig object\u02f3";
@@ -189,6 +179,7 @@ Performs setup needed before running variations.
     throws Exception
     {
 	try { 
+	  if (suffix.equals("")) suffix="Z";
 	super.setup();
 
 

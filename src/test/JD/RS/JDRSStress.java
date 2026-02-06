@@ -29,6 +29,7 @@ import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JobLogUtil;
+import test.JD.JDSerializeFile;
 
 
 
@@ -69,6 +70,7 @@ extends JDTestcase
     // 01/05/2016
     // Dropped to 10 seconds in order to get though group test run 
     protected int randomRunTime = 10;
+    String fileSuffix=""; 
 /**
 Constructor.
 **/
@@ -656,7 +658,7 @@ Performs cleanup needed after running variations.
     long originalTestId = testId;
     JDRSSQLTypeInfo thisTestInfo[] = new JDRSSQLTypeInfo[columns];
     String label = "";
-    String tablename = JDRSTest.COLLECTION + ".JDRS" + columns + "x" + testId;
+    String tablename = JDRSTest.COLLECTION + ".JDRS" + columns + "x" + testId+fileSuffix;
     String tableDefinition = "(";
     for (int i = 0; i < columns; i++) {
       int typeId = (int) (testId % typeInfo.length);
@@ -680,8 +682,11 @@ Performs cleanup needed after running variations.
     //
     // Create the table
     //
-    
-    initTable(statement, tablename, tableDefinition, sb); 
+    JDSerializeFile serializeFile = null; 
+    try { 
+       serializeFile = new JDSerializeFile(connection, tablename);
+       
+    initTable(statement, tablename, tableDefinition, sb , false ); 
     
     //
     // Insert values into the table
@@ -914,8 +919,10 @@ Performs cleanup needed after running variations.
 
     rs.close();
     if (usePreparedStatement) {
-      if (pStmt != null)
+      if (pStmt != null) {
         pStmt.close();
+        pStmt = null; 
+      }
     }
 
     try {
@@ -941,10 +948,20 @@ Performs cleanup needed after running variations.
     }
     lastSql[0] = "";
     statement.close(); 
+    if (pStmt != null) pStmt.close(); 
     if (failCount == 0) {
       return null;
     } else {
       return failMessage + "\n" + tableDefinition;
+    }
+    } finally {
+       if (serializeFile != null) { 
+         try { 
+         serializeFile.close(); 
+         } catch (Exception e) { 
+           e.printStackTrace(); 
+         }
+       }
     }
   }
 

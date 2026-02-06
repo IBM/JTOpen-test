@@ -195,7 +195,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateDate ("C_DATE", new Date (19495934));
-            rs_.updateRow(); 
+            rs_.updateRow(); /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {

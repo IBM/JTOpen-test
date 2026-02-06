@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.Blob;
@@ -26,6 +27,7 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -113,7 +115,7 @@ Performs setup needed before running variations.
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                       ResultSet.CONCUR_UPDATABLE);
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                                      + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                      + " (C_KEY) VALUES ('DUMMYROW_GBLOB')");
 
             // Force LOB locators.
             connection2_ = testDriver_.getConnection (url + ";lob threshold=0","JDRSGetBlob1");
@@ -435,7 +437,9 @@ getBlob() - Should work when an update has been done.
       StringBuffer sb = new StringBuffer(); 
 
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_GET + " FOR UPDATE");
                 JDRSTest.position (rs, "UPDATE_SANDBOX");
@@ -444,12 +448,22 @@ getBlob() - Should work when an update has been done.
                     (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
                     (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
                 rs.updateBytes ("C_BINARY_20", test);
-                rs.updateRow ();
+                rs.updateRow (); /* serialized */
                 Blob v = rs.getBlob ("C_BINARY_20");
-                assertCondition (compare (v, test,sb),sb);
+                boolean passed = compare (v, test,sb);
+                rs.close(); 
+                assertCondition (passed,sb);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -476,7 +490,9 @@ row, when an insert is pending.
                 byte[] test = new byte[] { (byte) 0xBC, (byte) 0xCD};
                 rs.updateBytes ("C_VARBINARY_20", test);
                 Blob v = rs.getBlob ("C_VARBINARY_20");
-                assertCondition (compare (v, test,sb),sb);        
+                boolean passed = compare (v, test,sb);
+                rs.close(); 
+                assertCondition (passed,sb);        
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -495,7 +511,9 @@ row, when an insert has been done.
       StringBuffer sb = new StringBuffer(); 
 
         if (checkJdbc20 ()) {
-            try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
               if (getDriver() == JDTestDriver.DRIVER_JCC) {
                 notApplicable("JCC does not support moveToInserRow"); 
                 return; 
@@ -508,10 +526,20 @@ row, when an insert has been done.
                 rs.updateBytes ("C_VARBINARY_20", test);
                 rs.insertRow ();
                 Blob v = rs.getBlob ("C_VARBINARY_20");
-                assertCondition (compare (v, test,sb),sb);        
+                boolean passed = compare (v, test,sb);
+                rs.close(); 
+                assertCondition (passed,sb);        
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
             }
         }
     }
@@ -531,9 +559,10 @@ getBlob() - Should throw an exception on a deleted row.
             try {
                 ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                                                         + JDRSTest.RSTEST_GET + " FOR UPDATE");
-                JDRSTest.position (rs, "DUMMY_ROW");
+                JDRSTest.position (rs, "DUMMYROW_GBLOB");
                 rs.deleteRow ();
                 Blob v = rs.getBlob ("C_VARBINARY_20");
+                rs.close(); 
                 failed ("Didn't throw SQLException" +v);
             }
             catch (Exception e) {
@@ -554,6 +583,7 @@ getBlob() - Should return null when the column is NULL.
                                                          + JDRSTest.RSTEST_GET);
                 JDRSTest.position (rs, "CHAR_NULL");
                 Blob v = rs.getBlob ("C_VARBINARY_20");
+                rs.close(); 
                 assertCondition (v == null);        
             }
             catch (Exception e) {
@@ -575,6 +605,7 @@ getBlob() - Get from a SMALLINT.
                                                          + JDRSTest.RSTEST_GET);
                 JDRSTest.position (rs, "NUMBER_NEG");
                 Blob v = rs.getBlob ("C_SMALLINT");
+                rs.close(); 
                 failed ("Didn't throw SQLException" +v);
             }
             catch (Exception e) {
@@ -596,6 +627,7 @@ getBlob() - Get from a INTEGER.
                                                          + JDRSTest.RSTEST_GET);
                 JDRSTest.position (rs, "NUMBER_POS");
                 Blob v = rs.getBlob ("C_INTEGER");
+                rs.close(); 
                 failed ("Didn't throw SQLException" +v);
             }
             catch (Exception e) {
@@ -612,9 +644,8 @@ getBlob() - Get from a REAL.
     public void Var019 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                         + JDRSTest.RSTEST_GET);
+            try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                                                     + JDRSTest.RSTEST_GET)) {
                 JDRSTest.position (rs, "NUMBER_NEG");
                 Blob v = rs.getBlob ("C_REAL");
                 failed ("Didn't throw SQLException" +v);

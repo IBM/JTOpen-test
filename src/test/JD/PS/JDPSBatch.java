@@ -69,7 +69,6 @@ extends JDTestcase {
    }
 
 
-    boolean runningJ9 = false;
 
     // Private data.
     private static String table_      = JDPSTest.COLLECTION + ".JDPSB";
@@ -84,12 +83,13 @@ extends JDTestcase {
     private static String insert7_    = "INSERT INTO " + table_ + " ? ROWS VALUES (?, ?)";  //@D1A
     private static String insert8_    = "INSERT INTO " + table_ + " ? ROWS (NAME, ID) VALUES ('Mountain Dew', ?)";  //@D1A
     public static final int     WIDTH_          = 30000;                    //@K2A
-    public static String TABLE1_  = JDPSTest.COLLECTION + ".BLOBLOC";      //@K2A
-    public static String TABLE2_  = JDPSTest.COLLECTION + ".CLOBLOC";      //@K2A
-    public static String TABLE3_  = JDPSTest.COLLECTION + ".CLOBLOC2";     //@K2A
+    public static String tableLob1_  = JDPSTest.COLLECTION + ".BLOBLOC";      //@K2A
+    public static String tableLob2_  = JDPSTest.COLLECTION + ".CLOBLOC";      //@K2A
+    public static String tableLob3_  = JDPSTest.COLLECTION + ".CLOBLOC2";     //@K2A
     public static  String LARGECLOB_           = null;                      //@K2A
 
     public static String table4_  = JDPSTest.COLLECTION + ".GRAPHIC";	// @L2
+    public static String table5_ = JDPSTest.COLLECTION + ".JDPSTEMP37";
     private static String insertT41_, insertT42_;		// @L2
 
     public static String tableBoolean_ = JDPSTest.COLLECTION + ".JDPSBBOOL"; 
@@ -154,164 +154,143 @@ Constructor.
     }
 
 
-
-/**
-Performs setup needed before running variations.
-
-@exception Exception If an exception occurs.
-**/
-     protected void setup() throws Exception {
-      setup(""); 
+    /**
+     * Performs setup needed before running variations.
+     * 
+     * @exception Exception If an exception occurs.
+     **/
+    protected void setup() throws Exception {
+      setup("");
     }
-    protected void setup (String suffix)
-    throws Exception
-    {
-        String url = baseURL_; 
-        connection_ = testDriver_.getConnection (url, userId_, encryptedPassword_);
-        connection_.setAutoCommit(true); // for xa
 
-        JDSerializeFile setupLock = null;
-        try {
-          setupLock = new JDSerializeFile(connection_, "JDPSSETUP"); 
- 
-        connection2_ = testDriver_.getConnection(url + ";lob threshold=1", userId_, encryptedPassword_);     //@K2A
+    protected void setup(String suffix) throws Exception {
+      String url = baseURL_;
+      connection_ = testDriver_.getConnection(url, userId_, encryptedPassword_);
+      connection_.setAutoCommit(true); // for xa
 
-        Statement s = connection_.createStatement ();
-
-        table_      = JDPSTest.COLLECTION + ".JDPSB"+suffix;
-        insert0_    = "INSERT INTO " + table_ + "(NAME) VALUES ('NORMAN')";
-        insert1_    = "INSERT INTO " + table_ + "(NAME) VALUES (?)";
-        insert2_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, ?)";
-	insert3_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES ('Vanilla Coke', ?)"; //@D1A
-	insert4_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES (NULL, ?)";  //@D1A
-	insert5_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, 5)";  //@D1A
-	insert6_    = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, NULL)";  //@D1A
-	insert7_    = "INSERT INTO " + table_ + " ? ROWS VALUES (?, ?)";  //@D1A
-	insert8_    = "INSERT INTO " + table_ + " ? ROWS (NAME, ID) VALUES ('Mountain Dew', ?)";  //@D1A
-
-
-	table2_     = JDPSTest.COLLECTION + ".JDSB2"+suffix;
-
-	table4_  = JDPSTest.COLLECTION + ".GRAPHIC"+suffix;	// @L2
-	insertT41_ = "INSERT INTO "+table4_+" (COL1) VALUES(?) ";	// @L2
-	insertT42_ = "INSERT INTO "+table4_+" (COL2) VALUES(?) ";	// @L2
-
-	TABLE1_  = JDPSTest.COLLECTION + ".BLOBLOC"+suffix;      //@K2A
-	TABLE2_  = JDPSTest.COLLECTION + ".CLOBLOC"+suffix;      //@K2A
-	TABLE3_  = JDPSTest.COLLECTION + ".CLOBLOC2"+suffix;     //@K2A
-	table4_  = JDPSTest.COLLECTION + ".GRAPHIC"+suffix;	// @L2
-	tableBoolean_ = JDPSTest.COLLECTION + ".JDPSBBOOL"+suffix;
-	insertBoolean_ = "INSERT INTO "+tableBoolean_+"(COL1,COL2) VALUES(?,?)"; 
-
-	try{
-	    s.executeUpdate(" DROP TABLE "+table_);
-	}catch(Exception e0){
-	}
-	try{
-        s.executeUpdate(" DROP TABLE "+table2_);
-    }catch(Exception e0){
-    }
-	try{
-	    s.executeUpdate(" DROP TABLE "+TABLE1_);
-	}catch(Exception e1){
-	}
-	try{
-	    s.executeUpdate(" DROP TABLE "+TABLE2_);
-	}catch(Exception e2){
-	}
-	try{
-	    s.executeUpdate(" DROP TABLE "+TABLE3_);
-	}catch(Exception e3){
-	    String message = e3.toString();
-	    if (message.indexOf("not found") < 0) {
-		output_.println("Warning TABLE3 not dropped");
-		e3.printStackTrace();
-	    }
-	}
-	try{
-	    s.executeUpdate(" DROP TABLE "+table4_);
-	}catch(Exception e4){
-	}
-
-        // We create a unique key so it is easy to force errors.
-        s.executeUpdate ("CREATE TABLE " + table_
-                         + " (NAME VARCHAR(25), ID INTEGER, UNIQUE(ID))");
-
-        s.executeUpdate ("INSERT INTO " + table_ + " (ID) VALUES ("
-                         + forceErrorId_ + ")");
-
-        try{
-            s.executeUpdate ("CREATE TABLE " + table2_
-                + " (NAME VARCHAR(10), ID INTEGER)");
-        }catch(Exception e){
-	    e.printStackTrace();
-	}
-        
-        s.executeUpdate ("CREATE TABLE " + TABLE1_ 
-                                          + "(C_BLOB BLOB(" + WIDTH_ + "))");       //@K2A
-
-        s.executeUpdate ("CREATE TABLE " + TABLE2_ 
-                                          + "(C_CLOB CLOB(" + WIDTH_ + "))");       //@K2A
-
-        s.executeUpdate ("CREATE TABLE " + TABLE3_ 
-                                          + "(C_CLOB CLOB(" + WIDTH_ + "))");       //@K2A
-
-	try {
-	    s.executeUpdate("DROP TABLE "+JDPSTest.COLLECTION + ".JDPSTEMP37"); // @L1
-	} catch (Exception e) {
-
-	} 
-	s.executeUpdate("CREATE TABLE "+JDPSTest.COLLECTION + ".JDPSTEMP37 (X INT)");  // @ L1
-
-
-	s.executeUpdate("CREATE TABLE "+table4_+" (COL1 GRAPHIC(200) ccsid 13488, COL2 VARGRAPHIC(200) ccsid 13488)");	// @L2
-	
-	
-    if (areBooleansSupported()) {
+      JDSerializeFile setupLock = null;
       try {
-        s.executeUpdate(" DROP TABLE " + tableBoolean_);
-      } catch (Exception e4) {
-      }
-      s.executeUpdate("CREATE TABLE " + tableBoolean_
-          + " (COL1 VARGRAPHIC(200) ccsid 13488, COL2 BOOLEAN)");
+        setupLock = new JDSerializeFile(connection_, "JDPSSETUP");
 
-    }
-	
-        connection_.commit(); // for xa
-        s.close ();
+        connection2_ = testDriver_.getConnection(url + ";lob threshold=1", userId_, encryptedPassword_); // @K2A
 
+        Statement s = connection_.createStatement();
 
-	if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	    String vmName = System.getProperty("java.vm.name");
-	    if (vmName ==  null) {
-		runningJ9 = false; 
-	    } else { 
-		if (vmName.indexOf("Classic VM") >= 0) {
-		    runningJ9 = false;
-		} else {
-		    runningJ9 = true;
-		}
-	    }
-	}
-        
-        
+        table_ = JDPSTest.COLLECTION + ".JDPSB" + suffix;
+        insert0_ = "INSERT INTO " + table_ + "(NAME) VALUES ('NORMAN')";
+        insert1_ = "INSERT INTO " + table_ + "(NAME) VALUES (?)";
+        insert2_ = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, ?)";
+        insert3_ = "INSERT INTO " + table_ + "(NAME, ID) VALUES ('Vanilla Coke', ?)"; // @D1A
+        insert4_ = "INSERT INTO " + table_ + "(NAME, ID) VALUES (NULL, ?)"; // @D1A
+        insert5_ = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, 5)"; // @D1A
+        insert6_ = "INSERT INTO " + table_ + "(NAME, ID) VALUES (?, NULL)"; // @D1A
+        insert7_ = "INSERT INTO " + table_ + " ? ROWS VALUES (?, ?)"; // @D1A
+        insert8_ = "INSERT INTO " + table_ + " ? ROWS (NAME, ID) VALUES ('Mountain Dew', ?)"; // @D1A
+
+        table2_ = JDPSTest.COLLECTION + ".JDSB2" + suffix;
+
+        table4_ = JDPSTest.COLLECTION + ".GRAPHIC" + suffix; // @L2
+        table5_ = JDPSTest.COLLECTION + ".JDPST37" + suffix;
+
+        insertT41_ = "INSERT INTO " + table4_ + " (COL1) VALUES(?) "; // @L2
+        insertT42_ = "INSERT INTO " + table4_ + " (COL2) VALUES(?) "; // @L2
+
+        tableLob1_ = JDPSTest.COLLECTION + ".BLOBLOC" + suffix; // @K2A
+        tableLob2_ = JDPSTest.COLLECTION + ".CLOBLOC" + suffix; // @K2A
+        tableLob3_ = JDPSTest.COLLECTION + ".CLOBLOC2" + suffix; // @K2A
+        table4_ = JDPSTest.COLLECTION + ".GRAPHIC" + suffix; // @L2
+
+        tableBoolean_ = JDPSTest.COLLECTION + ".JDPSBBOOL" + suffix;
+        insertBoolean_ = "INSERT INTO " + tableBoolean_ + "(COL1,COL2) VALUES(?,?)";
+
         //
-        // In V5R4, randomly pick one of the 2 of the 8 long running tests
-        //
+        // Note: no need to serialize files because suffix causes different files to be
+        // used
 
-        Random random = new Random(); 
-        longRunTest = random.nextInt(4); 
-
-        } finally {
-          
-          if (setupLock != null) {
-            setupLock.close(); 
-          }
-     
+        try {
+          s.executeUpdate(" DROP TABLE " + table_);
+        } catch (Exception e0) {
         }
+        // We create a unique key so it is easy to force errors.
+        s.executeUpdate("CREATE TABLE " + table_ + " (NAME VARCHAR(25), ID INTEGER, UNIQUE(ID))");
+
+        s.executeUpdate("INSERT INTO " + table_ + " (ID) VALUES (" + forceErrorId_ + ")");
+
+        try {
+          s.executeUpdate(" DROP TABLE " + table2_);
+        } catch (Exception e0) {
+        }
+
+        try {
+          s.executeUpdate("CREATE TABLE " + table2_ + " (NAME VARCHAR(10), ID INTEGER)");
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+        try {
+          s.executeUpdate(" DROP TABLE " + table4_);
+        } catch (Exception e4) {
+        }
+        s.executeUpdate(
+            "CREATE TABLE " + table4_ + " (COL1 GRAPHIC(200) ccsid 13488, COL2 VARGRAPHIC(200) ccsid 13488)"); // @L2
+
+        try {
+          s.executeUpdate(" DROP TABLE " + tableLob1_);
+        } catch (Exception e1) {
+        }
+        s.executeUpdate("CREATE TABLE " + tableLob1_ + "(C_BLOB BLOB(" + WIDTH_ + "))"); // @K2A
+
+        try {
+          s.executeUpdate(" DROP TABLE " + tableLob2_);
+        } catch (Exception e2) {
+        }
+        s.executeUpdate("CREATE TABLE " + tableLob2_ + "(C_CLOB CLOB(" + WIDTH_ + "))"); // @K2A
+
+        try {
+          s.executeUpdate(" DROP TABLE " + tableLob3_);
+        } catch (Exception e3) {
+          String message = e3.toString();
+          if (message.indexOf("not found") < 0) {
+            output_.println("Warning TABLE3 not dropped");
+            e3.printStackTrace();
+          }
+        }
+        s.executeUpdate("CREATE TABLE " + tableLob3_ + "(C_CLOB CLOB(" + WIDTH_ + "))"); // @K2A
+
+        try {
+          s.executeUpdate("DROP TABLE " + table5_); // @L1
+        } catch (Exception e) {
+
+        }
+        s.executeUpdate("CREATE TABLE " + table5_ + " (X INT)"); // @ L1
+
+        if (areBooleansSupported()) {
+          try {
+            s.executeUpdate(" DROP TABLE " + tableBoolean_);
+          } catch (Exception e4) {
+          }
+          s.executeUpdate("CREATE TABLE " + tableBoolean_ + " (COL1 VARGRAPHIC(200) ccsid 13488, COL2 BOOLEAN)");
+
+        }
+
+        connection_.commit(); // for xa
+        s.close();
+
+        //
+        // Randomly pick long running tests
+        //
+
+        Random random = new Random();
+        longRunTest = random.nextInt(4);
+
+      } finally {
+
+        if (setupLock != null) {
+          setupLock.close();
+        }
+
+      }
     }
-
-
 
 /**
 Performs cleanup needed after running variations.
@@ -324,11 +303,11 @@ Performs cleanup needed after running variations.
         Statement s = connection_.createStatement ();
         s.executeUpdate ("DROP TABLE " + table_);
         s.executeUpdate ("DROP TABLE " + table2_);
-        s.executeUpdate ("DROP TABLE " + TABLE1_);          //@K2A
-        s.executeUpdate ("DROP TABLE " + TABLE2_);          //@K2A
-        s.executeUpdate ("DROP TABLE " + TABLE3_);          //@K2A
-	s.executeUpdate("DROP TABLE "+JDPSTest.COLLECTION + ".JDPSTEMP37"); // @L1
+        s.executeUpdate ("DROP TABLE " + tableLob1_);          //@K2A
+        s.executeUpdate ("DROP TABLE " + tableLob2_);          //@K2A
+        s.executeUpdate ("DROP TABLE " + tableLob3_);          //@K2A
 	s.executeUpdate("DROP TABLE "+table4_);			// @L2
+        s.executeUpdate("DROP TABLE " +table5_); // @L1
 	if (areBooleansSupported()) {
 	  s.executeUpdate("DROP TABLE "+tableBoolean_);     
 	  
@@ -2105,22 +2084,22 @@ PreparedStatement and execute the PreparedStatement by itself
 		     conn = testDriver_.getConnection (url46, userId_, encryptedPassword_);
 		     conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 		     conn.setAutoCommit(true); // for xa
-
+		     
 		   //  stmt.executeUpdate("DROP TABLE "+JDPSTest.COLLECTION + ".JDPSTEMP37");
 		   //  stmt.executeUpdate("CREATE TABLE "+JDPSTest.COLLECTION + ".JDPSTEMP37 (X INT)");
-		     PreparedStatement ps = conn.prepareStatement ("INSERT INTO " +JDPSTest.COLLECTION+ ".JDPSTEMP37 (X) VALUES (?)");
+		     PreparedStatement ps = conn.prepareStatement ("INSERT INTO " +table5_+" (X) VALUES (?)");
 		     for (int i = 0; i<5; i++)
 		     {
 			 ps.setInt(1, (i%2));
 			 ps.addBatch ();
 		     }
 		     int updateCounts[]  = ps.executeBatch();
-		     PreparedStatement ps1 = conn.prepareStatement ("Select x from " +JDPSTest.COLLECTION+ ".JDPSTEMP37 where x = 1");
+		     PreparedStatement ps1 = conn.prepareStatement ("Select x from " +table5_+" where x = 1");
 		     ps1.execute();
-		     PreparedStatement ps2 = conn.prepareStatement ("Delete from " +JDPSTest.COLLECTION+ ".JDPSTEMP37 X where X = 0");
+		     PreparedStatement ps2 = conn.prepareStatement ("Delete from " +table5_+" X where X = 0");
 		     ps2.addBatch();
 		     int updateCounts2[] =  ps2.executeBatch();
-		     ps2 = conn.prepareStatement ("INSERT INTO " +JDPSTest.COLLECTION+ ".JDPSTEMP37 (X) VALUES (?)");
+		     ps2 = conn.prepareStatement ("INSERT INTO " +table5_+" (X) VALUES (?)");
 		     for (int i = 0; i<5; i++)
 		     {
 			 ps2.setInt(1, (i%2));
@@ -2344,7 +2323,7 @@ Adds a statement using a blob locator to a batch
             try
             {
                 PreparedStatement ps = connection2_.prepareStatement (
-                                                                        "INSERT INTO " + TABLE1_
+                                                                        "INSERT INTO " + tableLob1_
                                                                         + " (C_BLOB) VALUES (?)");
 
                 byte[] b = new byte[] { (byte) 1, (byte) -12, (byte) 57, (byte) 45,
@@ -2364,7 +2343,7 @@ Adds a statement using a blob locator to a batch
                 ps.close ();
 
                 Statement s = connection_.createStatement();
-                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + TABLE1_);//pstestSet.getName());		// @L2
+                ResultSet rs = s.executeQuery ("SELECT C_BLOB FROM " + tableLob1_);//pstestSet.getName());		// @L2
                 boolean success = true;
                 int count = 0;
                 
@@ -2410,7 +2389,7 @@ Adds a statement using a clob to a batch
             try
             {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                        "INSERT INTO " + TABLE2_
+                                                                        "INSERT INTO " + tableLob2_
                                                                         + " (C_CLOB) VALUES (?)");
                 for (int i = 0; i<5; i++)
                 {
@@ -2422,7 +2401,7 @@ Adds a statement using a clob to a batch
 
                 Statement s = connection_.createStatement();
 
-                ResultSet rs = s.executeQuery("SELECT C_CLOB FROM " + TABLE2_);
+                ResultSet rs = s.executeQuery("SELECT C_CLOB FROM " + tableLob2_);
                 boolean success = true;
                 int count = 0;
                 while(rs.next())
@@ -2462,7 +2441,7 @@ Adds a statement using a clob locator to a batch
             try
             {
                 PreparedStatement ps = connection_.prepareStatement (
-                                                                        "INSERT INTO " + TABLE3_
+                                                                        "INSERT INTO " + tableLob3_
                                                                         + " (C_CLOB) VALUES (?)");
                 for (int i = 0; i<5; i++)
                 {
@@ -2477,7 +2456,7 @@ Adds a statement using a clob locator to a batch
 
                 Statement s = connection_.createStatement();
 
-                ResultSet rs = s.executeQuery("Select * FROM " + TABLE3_);
+                ResultSet rs = s.executeQuery("Select * FROM " + tableLob3_);
                 boolean success = true;
                 int count = 0;
                 while(rs.next())

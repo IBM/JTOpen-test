@@ -53,6 +53,7 @@ Constructor.
             password);
 	connectionProperties = ";direct map=true;date format=iso;time format=jis";
 	directMap=true; 
+	fileSuffix="A";
     }
 
 }

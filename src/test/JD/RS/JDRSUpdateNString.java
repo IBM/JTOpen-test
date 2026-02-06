@@ -6,6 +6,7 @@ import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -19,6 +20,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -196,7 +198,7 @@ extends JDTestcase
             {
                 JDRSTest.position (rs_, null);
                 JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_VARCHAR_50", "Tables");
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -1952,7 +1954,7 @@ extends JDTestcase
 						       ResultSet.CONCUR_UPDATABLE);
 
 
-		    String tablename =JDRSTest.COLLECTION+".JDCCSID5035";
+		    String tablename =JDRSTest.COLLECTION+".JDCCSIDN5035";
 
 		    initTable(stmt, tablename,"(id vargraphic(30) CCSID 13488, name char(20) CCSID 5035)");
 		    stmt.executeUpdate("insert into "+tablename+" values('A01', '')"); 
@@ -1962,7 +1964,7 @@ extends JDTestcase
 		    ResultSet rs = stmt.executeQuery(sql);
 		    rs.first();
 		    JDReflectionUtil.callMethod_V(rs, "updateNString", "NAME",DAT0);
-		    rs.updateRow();
+		    rs.updateRow();  /* unique file */ 
 
 		    rs.close();
 		    // add the commit here so we can debug this.. 
@@ -2015,7 +2017,7 @@ extends JDTestcase
 						       ResultSet.CONCUR_UPDATABLE);
 
 
-		    String tablename =JDRSTest.COLLECTION+".JDCCSID50352";
+		    String tablename =JDRSTest.COLLECTION+".JDCCSIDN50352";
 
 		    initTable(stmt, tablename,"(id vargraphic(30) CCSID 13488, name char(20) CCSID 5035)");
 		    stmt.executeUpdate("insert into "+tablename+" values('A01', '')"); 
@@ -2055,19 +2057,22 @@ extends JDTestcase
     public void dfpTest(String table, String value, String expected) {
 	if (checkJdbc40()) { 
 	    if (checkDecFloatSupport()) {
-		try {
+	            JDSerializeFile serializeFile = null;
+	            try {
+	             serializeFile = new JDSerializeFile(connection_, table);
 		    Statement s = connection_.createStatement(
 							      ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		    ResultSet rs = s
 		      .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
 		    rs.next();
 		    JDReflectionUtil.callMethod_V(rs, "updateNString", 1, value);
-		    rs.updateRow();
+		    rs.updateRow(); /* serialized */ 
 
 		    ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
 		    rs2.next();
 		    String v = rs2.getString(1);
 		    rs2.close();
+		    rs.close(); 
 		    s.close();
 		    try {
 			connection_.commit(); 
@@ -2078,6 +2083,14 @@ extends JDTestcase
                         assertCondition(v.equals(expected), "Got " + v + " from "+ value +" sb " + expected);
 		} catch (Exception e) {
 		    failed(e, "Unexpected Exception");
+	            } finally {
+	              if (serializeFile != null) {
+	                try {
+	                  serializeFile.close();
+	                } catch (SQLException e) {
+	                  e.printStackTrace();
+	                }
+	              }
 		}
 	    }
 	}
@@ -2338,12 +2351,14 @@ extends JDTestcase
   public void testBoolean(String inString, String outString) {
     if (checkJdbc40()) {
       if (checkBooleanSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+          serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
           JDRSTest.position(rs_, key1_);
           JDRSTest.position(rs_, key_);
           JDReflectionUtil.callMethod_V(rs_, "updateNString", "C_BOOLEAN",
               inString);
-          rs_.updateRow();
+          rs_.updateRow(); /* serialized */ 
           ResultSet rs2 = statement2_.executeQuery(select_);
           JDRSTest.position(rs2, key_);
           String v = rs2.getString("C_BOOLEAN");
@@ -2351,6 +2366,14 @@ extends JDTestcase
           assertCondition(outString.equals(v), "Got " + v + " sb " + outString);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

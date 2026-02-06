@@ -1214,7 +1214,7 @@ acceptChanges()
 		JDReflectionUtil.callMethod_V(crs,"execute");
 		JDReflectionUtil.callMethod_B(crs,"next");
 		crs.updateString(1, "ZERO");
-		crs.updateRow();
+		crs.updateRow(); /* unique table */ 
 		boolean check1 = crs.rowUpdated();
 		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
 		JDReflectionUtil.callMethod_V(crs,"acceptChanges");
@@ -1248,7 +1248,7 @@ acceptChanges()
 		JDReflectionUtil.callMethod_B(crs,"next");
 		crs.updateString(1, "FIRST");
 		crs.cancelRowUpdates();
-		crs.updateRow();
+		crs.updateRow(); /* unique table */ 
 		boolean check1 = crs.rowUpdated();
 		JDReflectionUtil.callMethod_V(crs,"setTableName",TABLE_);
 		JDReflectionUtil.callMethod_V(crs,"acceptChanges");

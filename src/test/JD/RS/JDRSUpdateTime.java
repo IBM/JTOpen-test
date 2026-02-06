@@ -193,7 +193,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateTime ("C_TIME", Time.valueOf("08:07:23"));
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {

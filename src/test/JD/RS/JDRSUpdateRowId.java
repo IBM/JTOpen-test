@@ -1231,7 +1231,7 @@ updateRowId() - Update a BIGINT.
                 sql="updateRowId"; 
                 try { 
                    JDReflectionUtil.callMethod_V(rs, "updateRowId",1, rid);
-                   rs.updateRow ();
+                   rs.updateRow ();  /* exception */
                    passed=false; 
                    message="Did not throw Exception"; 
                 }  catch (Exception e) {

@@ -32,6 +32,7 @@ import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JVMInfo;
+import test.JD.JDSerializeFile;
 
 
 
@@ -1691,7 +1692,7 @@ This is ok.
         if (checkJdbc20 ()) {
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD055"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD055"; 
                     initTable(statement_, tableName," (c1 DECIMAL(12,10))");
                     statement_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -1701,7 +1702,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery(); 
                     rs.next(); 
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow();  /* unique table */ 
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -1749,7 +1750,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD056"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD056"; 
 		  initTable(statement_, tableName," (c1 DECIMAL(14,2))");
 		  statement_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -1762,7 +1763,7 @@ This is ok.
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow();
+		  rs.updateRow();  /* unique table */ 
 		  rs.close(); 
 
 		  rs = ps.executeQuery();
@@ -1802,7 +1803,7 @@ This is ok.
 
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD057"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD057"; 
                     initTable(statement_, tableName," (c1 NUMERIC(12,10))");
                     statement_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -1811,8 +1812,8 @@ This is ok.
                     ResultSet rs = ps.executeQuery();
                     rs.next();
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
-                    rs.close(); 
+                    rs.updateRow();  /* unique table */  
+                    rs.close();  
 
                     rs = ps.executeQuery();
                     rs.next();
@@ -1859,7 +1860,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD058"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD058"; 
 		  initTable(statement_, tableName, " (c1 NUMERIC(14,2))");
 		  statement_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -1870,7 +1871,7 @@ This is ok.
 		  BigDecimal bd; 
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow(); 
+		  rs.updateRow();   /* unique table */ 
 		  rs.close(); 
 
 
@@ -1894,7 +1895,11 @@ This is ok.
   public void dfpTest(String table, String value, String expected) {
       setupRs(); 
       if (checkDecFloatSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+         serializeFile = new JDSerializeFile(connection_, table);
+
+
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -1907,7 +1912,7 @@ This is ok.
             bd = null; 
           }
           rs.updateBigDecimal(1, bd);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1921,6 +1926,15 @@ This is ok.
           "Got " + v + " from "+ value +" sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }
@@ -2813,7 +2827,7 @@ This is ok.
         if (checkJdbc20 ()) {
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD143"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD143"; 
                     initTable(statementCommaSeparator_, tableName, " (c1 DECIMAL(12 , 10))");
                     statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -2823,7 +2837,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery(); 
                     rs.next(); 
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow();  /* unique file */
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -2871,7 +2885,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD144"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD144"; 
 		  initTable(statementCommaSeparator_,tableName," (c1 DECIMAL(14 , 2))");
 		  statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -2884,7 +2898,7 @@ This is ok.
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow();
+		  rs.updateRow(); /* unique file */
 		  rs.close(); 
 
 		  rs = ps.executeQuery();
@@ -2923,7 +2937,7 @@ This is ok.
 
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD145"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD145"; 
                     initTable(statementCommaSeparator_,tableName," (c1 NUMERIC(12 , 10))");
                     statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -2932,7 +2946,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery();
                     rs.next();
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow(); /* unique file */ 
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -2980,7 +2994,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD146"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD146"; 
 		  initTable(statementCommaSeparator_,tableName," (c1 NUMERIC(14 , 2))");
 		  statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -2991,7 +3005,7 @@ This is ok.
 		  BigDecimal bd; 
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow(); 
+		  rs.updateRow();  /* unique file */
 		  rs.close(); 
 
 
@@ -3017,7 +3031,11 @@ This is ok.
       if (checkDecFloatSupport()) {
 
 	  setupRsCommaSeparator();
-        try {
+	  JDSerializeFile serializeFile = null;
+	    try {
+	     serializeFile = new JDSerializeFile(connection_, table);
+
+
           Statement s = connectionCommaSeparator_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -3030,12 +3048,12 @@ This is ok.
             bd = null; 
           }
           rs.updateBigDecimal(1, bd);
-          rs.updateRow();
-          
+          rs.updateRow(); /* serialized */ 
           ResultSet rs2 = statementCommaSeparator2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connectionCommaSeparator_.commit(); 
@@ -3044,6 +3062,15 @@ This is ok.
           "Got " + v + " from "+ value +" sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception" + added);
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
+
         }
       }
     }

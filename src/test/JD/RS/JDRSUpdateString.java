@@ -20,6 +20,7 @@ import test.JDJobName;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Time;
@@ -1970,7 +1972,7 @@ extends JDTestcase
 		    ResultSet rs = stmt.executeQuery(sql);
 		    rs.first();
 		    rs.updateString("NAME",DAT0);
-		    rs.updateRow();
+		    rs.updateRow();  /* Update unique table */ 
 
 		    rs.close();
 		    // add the commit here so we can debug this.. 
@@ -2063,14 +2065,16 @@ extends JDTestcase
 
     public void dfpTest(String table, String value, String expected) {
 	if (checkDecFloatSupport()) {
+	    JDSerializeFile serializeFile = null;
 	    try {
+	     serializeFile = new JDSerializeFile(connection_, table);
 		Statement s = connection_.createStatement(
 							  ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
 		rs.next();
 		String originalValue = rs.getString(1); 
 		rs.updateString(1, value);
-		rs.updateRow();
+		rs.updateRow();  /* serialized */ 
 		rs.close(); 
 
 		ResultSet rs2 = s.executeQuery("SELECT * FROM " + table);
@@ -2082,7 +2086,7 @@ extends JDTestcase
 		ResultSet rs3 = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
 		rs3.next();
 		rs3.updateString(1, originalValue);
-		rs3.updateRow();
+		rs3.updateRow(); /* serialized */ 
 		rs3.close(); 
 
 		s.close();
@@ -2095,13 +2099,23 @@ extends JDTestcase
 				"Got " + v + " from "+ value +" sb " + expected);
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception for value "+value);
+	    } finally {
+	      if (serializeFile != null) {
+	        try {
+	          serializeFile.close();
+	        } catch (SQLException e) {
+	          e.printStackTrace();
+	        }
+	      }
 	    }
 	}
     }
 
     public void dfpRoundTest(String roundingMode, String table, String value, String expected) {
 	if (checkDecFloatSupport()) {
-	    try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, table);
 		String roundingModeProp = roundingMode;
 		if(isToolboxDriver())
 		    roundingModeProp = roundingModeProp.substring(6);  //without "rounding " string
@@ -2120,7 +2134,7 @@ extends JDTestcase
 		rs.next();
 		originalValue = rs.getString(1); 
 		rs.updateString(1, value);
-		rs.updateRow();
+		rs.updateRow(); /* serialized */
 	  // Close the cursor so the next job can get at it 
 		rs.close(); 
 
@@ -2133,7 +2147,7 @@ extends JDTestcase
 		ResultSet rs3 = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
 		rs3.next();
 		rs3.updateString(1, originalValue);
-		rs3.updateRow();
+		rs3.updateRow(); /* serialized */ 
 		rs3.close(); 
 
 		s.close();
@@ -2142,6 +2156,14 @@ extends JDTestcase
 		assertCondition(v.equals(expected), "Got " + v + " sb " + expected +" from "+value+" for mode "+roundingMode);
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception for value "+ value);
+            } finally {
+              if (serializeFile != null) {
+                try {
+                  serializeFile.close();
+                } catch (SQLException e) {
+                  e.printStackTrace();
+                }
+              }
 	    }
 	}
     }
@@ -2648,13 +2670,15 @@ extends JDTestcase
   public void updateBoolean(String inString, String outString) {
     if (checkJdbc20()) {
       if (checkBooleanSupport()) {
+        JDSerializeFile serializeFile = null;
         try {
+          serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
           // A previous commit could have lost lock on position. 
           // We need to make sure that server knows we want to re-obtain  the lock
           JDRSTest.position(rs_,key1_);
           JDRSTest.position(rs_, key_);
           rs_.updateString("C_BOOLEAN", inString);
-          rs_.updateRow();
+          rs_.updateRow(); /* serialized */ 
           ResultSet rs2 = statement2_.executeQuery(select_);
           JDRSTest.position(rs2, key_);
           String v = rs2.getString("C_BOOLEAN");
@@ -2662,6 +2686,14 @@ extends JDTestcase
           assertCondition(outString.equals(v), "Got "+v+" sb "+outString);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }

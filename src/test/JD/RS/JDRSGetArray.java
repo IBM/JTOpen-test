@@ -101,7 +101,7 @@ Performs setup needed before running variations.
 		ResultSet.CONCUR_UPDATABLE);
 	    } 
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GA')");
 	    resultSetQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (resultSetQuery_);
@@ -426,7 +426,7 @@ getArray() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_, statement_, resultSetQuery_, rs_, "DUMMY_ROW");
+            rs_ = JDRSTest.position (driver_, statement_, resultSetQuery_, rs_, "DUMMYROW_GA");
             rs_.deleteRow ();
             Array v = rs_.getArray ("C_INTEGER");
             failed ("Didn't throw SQLException" +v);

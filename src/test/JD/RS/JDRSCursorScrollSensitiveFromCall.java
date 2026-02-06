@@ -57,6 +57,7 @@ Constructor.
                password);
 	cursorFromCall = true;
 	cursorSensitive = true; 
+	suffix="S"; 
     }
 
 

@@ -1649,8 +1649,6 @@ the second time.
 
 /**
  * genGeneratedKeys() -- obtain multiple keys -- multiple rows
- * not supported in V5R2. 
- * This is supported in V5R5
  */
 
 
@@ -1666,18 +1664,20 @@ the second time.
             return;
         }
         Statement s = null;
+        Statement s2 = null;
         try {
 	    String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV37A";
 	    String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV37B";
             s = connection_.createStatement ();
-	    initTable(s, table1," (NAME VARCHAR(10))");
+            s2 = connection_.createStatement(); 
+	    initTable(s2, table1," (NAME VARCHAR(10))");
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
-      JDTestDriver.dropTable(s, table2); 
+	    JDTestDriver.dropTable(s2, table2); 
 
-	    initTable(s, table2, " (NAME VARCHAR(10), "+
+	    initTable(s2, table2, " (NAME VARCHAR(10), "+
                 "GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
 
             s.execute ("INSERT INTO " + table2
@@ -1716,12 +1716,14 @@ the second time.
 	    } 
             assertCondition(condition);
             s.close();
+            s2.close(); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
             try
             {
                 if (s != null) s.close();
+                if (s2 != null) s2.close();
             }
             catch (SQLException se)
             {
@@ -3303,19 +3305,20 @@ the second time.
             return;
         }
         Statement s = null;
+        Statement s2 = null; 
         try {
 	    String table1 =  JDStatementTest.COLLECTION + "/JDGENKEYSV37A";
 	    String table2 = JDStatementTest.COLLECTION + "/JDGENKEYSV37B";
             s = connectionSystemNaming_.createStatement ();
-
-	    initTable(s, table1," (NAME VARCHAR(10))");
+            s2 = connectionSystemNaming_.createStatement ();
+	    initTable(s2, table1," (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
-      JDTestDriver.dropTable(s, table2); 
+            JDTestDriver.dropTable(s2, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s2, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             s.execute ("INSERT INTO " + table2
                        + " (NAME) SELECT * from "+table1, Statement.RETURN_GENERATED_KEYS); 
@@ -3358,12 +3361,14 @@ the second time.
 	    } 
             assertCondition(condition,  "system naming test added 12/2/2003");
             s.close();
+            s2.close(); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception -- system naming testing added 12/2/2003");
             try
             {
                 if (s != null) s.close();
+                if (s2 != null) s2.close();
             }
             catch (SQLException se)
             {
@@ -3633,18 +3638,20 @@ the second time.
 	}
 
         Statement s = null;
+        Statement s2 = null; 
         try {
 	    String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV84A";
 	    String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV84B";
             s = connection_.createStatement ();
-	    initTable(s, table1," (NAME VARCHAR(10))");
+            s2 = connection_.createStatement ();
+	    initTable(s2, table1," (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
-      JDTestDriver.dropTable(s, table2); 
+      JDTestDriver.dropTable(s2, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s2, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             int columnIndexes[] = {2};
             s.execute ("INSERT INTO " + table2
@@ -3705,14 +3712,14 @@ the second time.
 	    String table1 =  JDStatementTest.COLLECTION + "/JDGENKEYSV85A";
 	    String table2 = JDStatementTest.COLLECTION + "/JDGENKEYSV85B";
             s = connectionSystemNaming_.createStatement ();
-	    initTable(s, table1," (NAME VARCHAR(10))");
+	    initTable(s, table1," (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
       JDTestDriver.dropTable(s, table2); 
 
-	    initTable(s, table2, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s, table2, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             String[] columnNames = new String[] {"GENID"};
             s.execute ("INSERT INTO " + table2
@@ -3775,14 +3782,14 @@ the second time.
 	    String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV86A";
 	    String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV86B";
             s = connection_.createStatement ();
-	    initTable(s, table1," (NAME VARCHAR(10))");
+	    initTable(s, table1," (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
       JDTestDriver.dropTable(s, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             int columnIndexes[] = {2};
 	    int rowCount = s.executeUpdate ("INSERT INTO " + table2
@@ -3843,14 +3850,14 @@ the second time.
 	    String table1 =  JDStatementTest.COLLECTION + "/JDGENKEYSV87A";
 	    String table2 = JDStatementTest.COLLECTION + "/JDGENKEYSV87B";
             s = connectionSystemNaming_.createStatement ();
-	    initTable(s, table1," (NAME VARCHAR(10))");
+	    initTable(s, table1," (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
       JDTestDriver.dropTable(s, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             String[] columnNames = new String[] {"GENID"};
 	    int rowCount = s.executeUpdate ("INSERT INTO " + table2
@@ -3912,14 +3919,14 @@ the second time.
 	    String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV88A";
 	    String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV88B";
             s = connection_.createStatement ();
-	    initTable(s, table1, " (NAME VARCHAR(10))");
+	    initTable(s, table1, " (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
       JDTestDriver.dropTable(s, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             int columnIndexes[] = {2};
             PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + table2
@@ -3983,14 +3990,14 @@ the second time.
 	    String table2 = JDStatementTest.COLLECTION + "/JDGENKEYSV89B";
             s = connectionSystemNaming_.createStatement ();
 
-	    initTable(s, table1, " (NAME VARCHAR(10))");
+	    initTable(s, table1, " (NAME VARCHAR(10))", null, false);
 	    s.executeUpdate("insert into "+table1+" values('Abraham')");
 	    s.executeUpdate("insert into "+table1+" values('John')");
 	    s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
       JDTestDriver.dropTable(s, table2); 
 
-	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+	    initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
             String[] columnNames = new String[] {"GENID"};
             PreparedStatement ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table2
@@ -4049,7 +4056,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             s.execute("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Kim')", Statement.RETURN_GENERATED_KEYS);
             ResultSet rs1 = s.getGeneratedKeys();
 	    if (rs1 == null) throw new SQLException("no keys returned"); 
@@ -4099,7 +4106,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             int rowCount = s.executeUpdate("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", Statement.RETURN_GENERATED_KEYS);
             ResultSet rs1 = s.getGeneratedKeys();
 	    if (rs1 == null) throw new SQLException("no keys returned"); 
@@ -4155,7 +4162,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             int[] columnIndexes = {3};
             s.execute("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnIndexes);
             ResultSet rs1 = s.getGeneratedKeys();
@@ -4211,7 +4218,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             String[] columnNames = new String[] {"GENID"};
             s.execute("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnNames);
             ResultSet rs1 = s.getGeneratedKeys();
@@ -4267,7 +4274,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             int[] columnIndexes = {3};
             int rowCount = s.executeUpdate("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnIndexes);
             ResultSet rs1 = s.getGeneratedKeys();
@@ -4324,7 +4331,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             String[] columnNames = new String[] {"GENID"};
             int rowCount = s.executeUpdate("INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnNames);
             ResultSet rs1 = s.getGeneratedKeys();
@@ -4376,7 +4383,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             PreparedStatement ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES('Snickers')", Statement.RETURN_GENERATED_KEYS);
             ps.execute();
             ResultSet rs1 = ps.getGeneratedKeys();
@@ -4432,7 +4439,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             int[] columnIndexes = {2,3};
             PreparedStatement ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES('Snickers')", columnIndexes);
             ps.execute();
@@ -4489,7 +4496,7 @@ the second time.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
             String[] columnNames = new String[] {"ID", "GENID"};
             PreparedStatement ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES('Snickers')", columnNames);
             ps.execute();
@@ -4533,7 +4540,7 @@ the second time.
             String table1 =  JDStatementTest.COLLECTION + "/"+tablename;
             s = connectionSystemNaming_.createStatement ();
 
-            initTable(s, table1, " (NAME "+datatype+", ID INTEGER GENERATED ALWAYS AS IDENTITY)");
+            initTable(s, table1, " (NAME "+datatype+", ID INTEGER GENERATED ALWAYS AS IDENTITY)", null, false);
             ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES(?)", Statement.RETURN_GENERATED_KEYS);
             try { 
                 ps.setString(1,insertValue); 
@@ -4592,7 +4599,7 @@ the second time.
         try {
             String table1 =  JDStatementTest.COLLECTION + "/"+tablename;
             s = connectionSystemNaming_.createStatement ();
-            initTable(s, table1, " (NAME "+datatype+", ID INTEGER GENERATED ALWAYS AS IDENTITY)");
+            initTable(s, table1, " (NAME "+datatype+", ID INTEGER GENERATED ALWAYS AS IDENTITY)", null, false);
             ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES(?)", Statement.RETURN_GENERATED_KEYS);
 
             try { 
@@ -4720,7 +4727,7 @@ the second time.
         try {
             String table1 =  JDStatementTest.COLLECTION + "/JDSGKYV109";
             s = connectionSystemNaming_.createStatement ();
-            initTable(s, table1, " (NAME VARCHAR(80), INSERT VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)");
+            initTable(s, table1, " (NAME VARCHAR(80), INSERT VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)", null, false);
             s.executeUpdate("insert into "+table1+" (NAME,INSERT) VALUES('one','ONE')");
             s.executeUpdate("insert into "+table1+" (NAME,INSERT) VALUES('two','TWO')");
             s.executeUpdate("insert into "+table1+" (NAME,INSERT) VALUES('three','THREE')");
@@ -4782,7 +4789,7 @@ the second time.
 	try {
             String table1 =  JDStatementTest.COLLECTION + "/JDSGKYV110";
             s = connectionSystemNaming_.createStatement ();
-            initTable(s, table1, " (NAME VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)");
+            initTable(s, table1, " (NAME VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)", null, false);
             ps = connectionSystemNaming_.prepareStatement("SELECT NAME,ID FROM FINAL TABLE ( INSERT INTO " + table1 + " (NAME) VALUES(?))");
 	    ps.setString(1,"HELLO"); 
 	    ResultSet rs = ps.executeQuery();
@@ -4834,7 +4841,7 @@ the second time.
 	try {
             String table1 =  JDStatementTest.COLLECTION + "/JDSGKYV111";
             s = connectionSystemNaming_.createStatement ();
-            initTable(s, table1, " (NAME VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)");
+            initTable(s, table1, " (NAME VARCHAR(80), ID INTEGER GENERATED ALWAYS AS IDENTITY)", null, false);
             ps = connectionSystemNaming_.prepareStatement("SELECT NAME,ID FROM FINAL TABLE (INSERT INTO " + table1 + " (NAME) VALUES(?))");
 	    ps.setString(1,"HELLO"); 
 	    ResultSet rs = ps.executeQuery();
@@ -5576,14 +5583,14 @@ auto-generated key will be returned.
 		String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV86A";
 		String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV86B";
 		s = connection_.createStatement ();
-		initTable(s, table1, " (NAME VARCHAR(10))");
+		initTable(s, table1, " (NAME VARCHAR(10))", null, false);
 		s.executeUpdate("insert into "+table1+" values('Abraham')");
 		s.executeUpdate("insert into "+table1+" values('John')");
 		s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
     JDTestDriver.dropTable(s, table2); 
 
-		initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+		initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
 		int columnIndexes[] = {2};
 		long rowCount = JDReflectionUtil.callMethod_L(s,"executeLargeUpdate","INSERT INTO " + table2
@@ -5645,14 +5652,14 @@ auto-generated key will be returned.
 		String table1 =  JDStatementTest.COLLECTION + "/JDGENKEYSV87A";
 		String table2 = JDStatementTest.COLLECTION + "/JDGENKEYSV87B";
 		s = connectionSystemNaming_.createStatement ();
-		initTable(s, table1, " (NAME VARCHAR(10))");
+		initTable(s, table1, " (NAME VARCHAR(10))", null, false);
 		s.executeUpdate("insert into "+table1+" values('Abraham')");
 		s.executeUpdate("insert into "+table1+" values('John')");
 		s.executeUpdate("insert into "+table1+" values('Zedekiah')");
 
     JDTestDriver.dropTable(s, table2); 
 
-		initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+		initTable(s, table2," (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))", null, false);
 
 		String[] columnNames = new String[] {"GENID"};
 		long rowCount = JDReflectionUtil.callMethod_L(s,"executeLargeUpdate","INSERT INTO " + table2
@@ -5710,7 +5717,7 @@ auto-generated key will be returned.
 		s = connectionSystemNaming_.createStatement ();
     JDTestDriver.dropTable(s, table1); 
 
-		initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+		initTable(s, table1, " (NAME VARCHAR(10), GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
 		long rowCount = JDReflectionUtil.callMethod_L(s,"executeLargeUpdate", "INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", Statement.RETURN_GENERATED_KEYS);
 		ResultSet rs1 = s.getGeneratedKeys();
 		if (rs1 == null) throw new SQLException("no keys returned"); 
@@ -5769,7 +5776,7 @@ auto-generated key will be returned.
 		s = connectionSystemNaming_.createStatement ();
     JDTestDriver.dropTable(s, table1); 
 
-		initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+		initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
 		int[] columnIndexes = {3};
 		long rowCount = JDReflectionUtil.callMethod_L(s,"executeLargeUpdate","INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnIndexes);
 		ResultSet rs1 = s.getGeneratedKeys();
@@ -5827,7 +5834,7 @@ auto-generated key will be returned.
 		s = connectionSystemNaming_.createStatement ();
     JDTestDriver.dropTable(s, table1); 
 
-		initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))");
+		initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3))", null, false);
 		String[] columnNames = new String[] {"GENID"};
 		long rowCount = JDReflectionUtil.callMethod_L(s,"executeLargeUpdate","INSERT INTO " + table1 + " (NAME) VALUES('Snickers'), ('Heath')", columnNames);
 		ResultSet rs1 = s.getGeneratedKeys();
@@ -5881,7 +5888,8 @@ auto-generated key will be returned.
             s = connectionSystemNaming_.createStatement ();
             JDTestDriver.dropTable(s, table1); 
 
-	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3), GENTS TIMESTAMP FOR EACH ROW ON UPDATE AS ROW CHANGE TIMESTAMP NOT NULL )");
+	    initTable(s, table1, " (NAME VARCHAR(10), ID ROWID GENERATED ALWAYS, GENID INT GENERATED ALWAYS AS IDENTITY(START WITH 10, increment BY 3), "
+	        + "GENTS TIMESTAMP FOR EACH ROW ON UPDATE AS ROW CHANGE TIMESTAMP NOT NULL )", null, false);
             PreparedStatement ps = connectionSystemNaming_.prepareStatement("INSERT INTO " + table1 + " (NAME) VALUES('Snickers')", Statement.RETURN_GENERATED_KEYS);
             ps.execute();
             ResultSet rs1 = ps.getGeneratedKeys();
@@ -5918,6 +5926,91 @@ auto-generated key will be returned.
             }
         }
     }
+
+    
+    /**
+     * genGeneratedKeys() -- obtain multiple keys -- 
+     * Use a statement and use it for all the actions, this
+     * exposes a bug in the Native JDBC driver. 
+     */
+
+
+        public void Var141()
+        {
+            if (getDriver() == JDTestDriver.DRIVER_JCC) {
+                notApplicable("JCC doesn't support insert / select");
+                return; 
+            }
+            if (false || getJdbcLevel() < 3)
+            {
+                notApplicable("v5r2/JDK 1.4 variation");
+                return;
+            }
+            Statement s = null;
+            try {
+                String table1 =  JDStatementTest.COLLECTION + ".JDGENKEYSV141A";
+                String table2 = JDStatementTest.COLLECTION + ".JDGENKEYSV141B";
+                s = connection_.createStatement ();
+                initTable(s, table1," (NAME VARCHAR(10))");
+                s.executeUpdate("insert into "+table1+" values('Abraham')");
+                s.executeUpdate("insert into "+table1+" values('John')");
+                s.executeUpdate("insert into "+table1+" values('Zedekiah')");
+
+                JDTestDriver.dropTable(s, table2); 
+
+                initTable(s, table2, " (NAME VARCHAR(10), "+
+                    "GENID INT GENERATED ALWAYS AS IDENTITY ( START WITH 10, increment BY 3 ))");
+
+                s.execute ("INSERT INTO " + table2
+                           + " (NAME) SELECT * from "+table1, Statement.RETURN_GENERATED_KEYS); 
+                ResultSet rs1 = s.getGeneratedKeys();
+                if (rs1 == null) throw new SQLException("no keys returned"); 
+                boolean check1 = rs1.next();
+                String key1 = rs1.getString(1);
+                boolean condition = true; 
+                // For V5R5, we should be able to get all the values because the
+                // implementation uses SELECT from INSERT 
+                boolean check2 = rs1.next();
+                String key2="NOTFOUND"; 
+                if (check2) { 
+                  key2 = rs1.getString(1);
+                }
+                boolean check3 = rs1.next();
+                String key3 = "NOTFOUND"; 
+                if (check3) { 
+                  key3 = rs1.getString(1);
+                }
+                condition = check1 && key1.equals("10") &&  
+                check2 && key2.equals("13") &&  
+                check3 && key3.equals("16") ;   
+                if (!condition) {
+                  output_.println("  check1 should be true but is "+check1);
+                  output_.println("  key1 should be 10 but is "+key1);
+                  output_.println("  check2 should be true but is "+check2);
+                  output_.println("  key2 should be 13 but is "+key2);
+                  output_.println("  check3 should be true but is "+check3);
+                  output_.println("  key3 should be 16 but is "+key3);
+                }
+                if (condition) {
+                    cleanupTable(s, table1);
+                    cleanupTable(s, table2);
+                } 
+                assertCondition(condition);
+                s.close();
+            }
+            catch (Exception e) {
+                failed (e, "Unexpected Exception");
+                try
+                {
+                    if (s != null) s.close();
+                }
+                catch (SQLException se)
+                {
+                    //ignore at this point
+                }
+            }
+        }
+
 
 
 }

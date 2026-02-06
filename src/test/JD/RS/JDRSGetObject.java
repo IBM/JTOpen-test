@@ -122,7 +122,7 @@ Performs setup needed before running variations.
 		statement_ = connection_.createStatement ();
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                                      + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                      + " (C_KEY) VALUES ('DUMMYROW_GETOBJECT')");
 	    statementQuery_ = "SELECT * FROM "
                                            + JDRSTest.RSTEST_GET + " FOR UPDATE";
             rs_ = statement_.executeQuery (statementQuery_);
@@ -534,7 +534,7 @@ getObject() - Should throw an exception on a deleted row.
             return;
           }
             try {
-                rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMY_ROW");
+                rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMYROW_GETOBJECT");
                 rs_.deleteRow ();
                 Object v = rs_.getObject ("C_VARCHAR_50");
                 failed ("Didn't throw SQLException"+v);

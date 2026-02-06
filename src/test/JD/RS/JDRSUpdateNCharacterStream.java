@@ -212,7 +212,7 @@ extends JDTestcase
             {
                 JDRSTest.position (rs_, null);
                 JDReflectionUtil.callMethod_V(rs_, "updateNCharacterStream", "C_VARCHAR_50", new StringReader ("Portland"), 8L);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
