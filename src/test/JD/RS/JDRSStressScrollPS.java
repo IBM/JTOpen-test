@@ -11,52 +11,43 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 package test.JD.RS;
 
 import com.ibm.as400.access.AS400;
 
 import java.io.FileOutputStream;
 
-import java.util.Hashtable; import java.util.Vector;
-
-
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
-Testcase JDRSStress.  This tests various combinations of datatypes in a
-table.  There is one generic testcase that is run.  Specific testcases
-are created for error condition that needed to be fixed.  Otherwise,
-the test will run for a specific amount of time to try to detect errors.
-**/
-public class JDRSStressScrollPS
-extends JDRSStress
-{
+ * Testcase JDRSStress. This tests various combinations of datatypes in a table.
+ * There is one generic testcase that is run. Specific testcases are created for
+ * error condition that needed to be fixed. Otherwise, the test will run for a
+ * specific amount of time to try to detect errors.
+ **/
+public class JDRSStressScrollPS extends JDRSStress {
   public static void main(String args[]) throws Exception {
-    String[] newArgs = new String[args.length+2];
-     newArgs[0] = "-tc";
-     newArgs[1] = "JDRSStressScrollPS";
-     for (int i = 0; i < args.length; i++) {
-       newArgs[2+i]=args[i];
-     }
-     test.JDRSStressTest.main(newArgs); 
-   }
-
-/**
-Constructor.
-**/
-    public JDRSStressScrollPS (AS400 systemObject,
-                                    Hashtable<String,Vector<String>> namesAndVars,
-                                    int runMode,
-                                    FileOutputStream fileOutputStream,
-                                    
-                                    String password)
-    {
-        super (systemObject, "JDRSStressScrollPS",
-            namesAndVars, runMode, fileOutputStream,
-            password);
-	usePreparedStatement=true;
-	useScrollableCursor=true; 
+    String[] newArgs = new String[args.length + 2];
+    newArgs[0] = "-tc";
+    newArgs[1] = "JDRSStressScrollPS";
+    for (int i = 0; i < args.length; i++) {
+      newArgs[2 + i] = args[i];
     }
+    test.JDRSStressTest.main(newArgs);
+  }
+
+  /**
+   * Constructor.
+   **/
+  public JDRSStressScrollPS(AS400 systemObject, Hashtable<String, Vector<String>> namesAndVars, int runMode,
+      FileOutputStream fileOutputStream,
+
+      String password) {
+    super(systemObject, "JDRSStressScrollPS", namesAndVars, runMode, fileOutputStream, password);
+    usePreparedStatement = true;
+    useScrollableCursor = true;
+    fileSuffix = "H";
+  }
 
 }
-

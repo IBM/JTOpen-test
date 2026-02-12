@@ -139,13 +139,13 @@ public class JDXMLXML extends JDTestcase {
   // Row 11 -- xml declaration with invalid encoding -- larger than 80
   // characters (Based on Row 5)
 
-  public static String TABLE37_ = JDXMLTest.COLLECTION + ".XMLCLB37";
+  public static String TABLE37_ = JDXMLTest.COLLECTION + ".XMLXML37";
 
-  public static String TABLE1208_ = JDXMLTest.COLLECTION + ".XMLCLB1208";
+  public static String TABLE1208_ = JDXMLTest.COLLECTION + ".XMLXML1208";
 
-  public static String TABLE1200_ = JDXMLTest.COLLECTION + ".XMLCLB1200";
+  public static String TABLE1200_ = JDXMLTest.COLLECTION + ".XMLXML1200";
 
-  public static String TABLE930_ = JDXMLTest.COLLECTION + ".XMLCLB930";
+  public static String TABLE930_ = JDXMLTest.COLLECTION + ".XMLXMLB930";
 
   public static String ROW1_S_ = "<TEST/>";//optimized
   public static String ROW1_S37_ = "<?xml version=\"1.0\" encoding=\"IBM-37\"?><TEST/>";
@@ -702,10 +702,10 @@ public class JDXMLXML extends JDTestcase {
   protected void setup() throws Exception {
       String updateValue = "";
 
-    TABLE37_ = JDXMLTest.COLLECTION + ".XMLCLB37";
-    TABLE1208_ = JDXMLTest.COLLECTION + ".XMLCLB1208";
-    TABLE1200_ = JDXMLTest.COLLECTION + ".XMLCLB1200";
-    TABLE930_ = JDXMLTest.COLLECTION + ".XMLCLB930";
+    TABLE37_ = JDXMLTest.COLLECTION + ".XMLXMLB37";
+    TABLE1208_ = JDXMLTest.COLLECTION + ".XMLXML1208";
+    TABLE1200_ = JDXMLTest.COLLECTION + ".XMLXML1200";
+    TABLE930_ = JDXMLTest.COLLECTION + ".XMLXML930";
     
     if (isJdbc40() && isXmlSupported()) {
       if (getDriver() == JDTestDriver.DRIVER_JCC) {

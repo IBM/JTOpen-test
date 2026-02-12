@@ -55,6 +55,7 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
 	useScrollableCursor=true; 
+	       fileSuffix="F";
     }
 
 }

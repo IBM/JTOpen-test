@@ -56,6 +56,7 @@ Constructor.
         usePreparedStatement=true;
         directMap=true;
 	noBlocking=true; 
+        fileSuffix="B";
     }
 
 }

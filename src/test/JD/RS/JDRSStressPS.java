@@ -55,6 +55,7 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
 	usePreparedStatement=true; 
+	       fileSuffix="C";
     }
 
 }

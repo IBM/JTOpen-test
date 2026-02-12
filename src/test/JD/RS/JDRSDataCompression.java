@@ -163,6 +163,8 @@ Performs cleanup needed after running variations.
         cleanupTable(s, TABLE_NAME);
 
         cleanupTable(s,  RLE_TABLE);
+        s.close(); 
+        c.close(); 
     }
 
 

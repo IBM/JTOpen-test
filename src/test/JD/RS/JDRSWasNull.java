@@ -104,7 +104,7 @@ Performs setup needed before running variations.
 							  ResultSet.CONCUR_UPDATABLE);
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_WASNULL')");
             rs_ = statement_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE");
         }
@@ -487,7 +487,7 @@ wasNull() - Should return false on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_WASNULL");
             rs_.deleteRow ();
             boolean v = rs_.wasNull ();
             assertCondition (v == false);

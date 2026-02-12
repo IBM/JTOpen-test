@@ -898,7 +898,7 @@ getLong() - Get from a BIGINT.
     **/
    public void Var041 ()
    {
-        testDfp(JDRSTest.RSTEST_DFP16, JDRSTest.VALUES_DFP16_LONG, statement0_, "getLong");
+        testDfp(JDRSTest.RSTEST_GETDFP16, JDRSTest.VALUES_DFP16_LONG, statement0_, "getLong");
    }
    
    
@@ -911,7 +911,7 @@ getLong() - Get from a BIGINT.
        notApplicable("Jcc doesn't throw exception for DFP34"); 
        return; 
      }
-        testDfp(JDRSTest.RSTEST_DFP34, JDRSTest.VALUES_DFP34_LONG, statement0_, "getLong");
+        testDfp(JDRSTest.RSTEST_GETDFP34, JDRSTest.VALUES_DFP34_LONG, statement0_, "getLong");
    }
     
 

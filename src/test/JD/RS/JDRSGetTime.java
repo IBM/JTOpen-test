@@ -18,6 +18,8 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
+
 import java.io.FileOutputStream;
 
 import java.sql.ResultSet;
@@ -95,7 +97,7 @@ public class JDRSGetTime extends JDTestcase {
         statement_ = connection_.createStatement();
       }
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GETTIME')");
       statementQuery_ = "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE";
       rs_ = statement_.executeQuery(statementQuery_);
     }
@@ -315,15 +317,25 @@ public class JDRSGetTime extends JDTestcase {
    **/
   public void Var013() {
     if (checkJdbc20()) {
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         rs_ = JDRSTest.position(driver_, statement_, statementQuery_, rs_,
             "UPDATE_SANDBOX");
         rs_.updateTime("C_TIME", Time.valueOf("04:04:13"));
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */ 
         Time v = rs_.getTime("C_TIME");
         assertCondition(v.toString().equals("04:04:13"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -382,7 +394,7 @@ public class JDRSGetTime extends JDTestcase {
       }
       try {
         rs_ = JDRSTest.position(driver_, statement_, statementQuery_, rs_,
-            "DUMMY_ROW");
+            "DUMMYROW_GETTIME");
         rs_.deleteRow();
         Time v = rs_.getTime("C_TIME");
         failed("Didn't throw SQLException" + v);
@@ -825,7 +837,7 @@ public class JDRSGetTime extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         Time v = rs.getTime(1);
         failed("Didn't throw SQLException " + v);
@@ -842,7 +854,7 @@ public class JDRSGetTime extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         Time v = rs.getTime(1);
         failed("Didn't throw SQLException " + v);

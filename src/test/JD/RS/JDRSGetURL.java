@@ -85,7 +85,7 @@ public class JDRSGetURL extends JDTestcase {
       statement_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GURL')");
       rs_ = statement_
           .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
     }
@@ -657,7 +657,7 @@ public class JDRSGetURL extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         URL v = rs.getURL(1);
         failed("Didn't throw SQLException " + v);
@@ -675,7 +675,7 @@ public class JDRSGetURL extends JDTestcase {
       try {
         Statement s = connection_.createStatement();
         ResultSet rs = s.executeQuery(
-            "SELECT * FROM " + JDRSTest.RSTEST_DFP34 + " where C1 is NOT NULL");
+            "SELECT * FROM " + JDRSTest.RSTEST_GETDFP34 + " where C1 is NOT NULL");
         rs.next();
         URL v = rs.getURL(1);
         failed("Didn't throw SQLException call getURL on a DFP34 " + v);

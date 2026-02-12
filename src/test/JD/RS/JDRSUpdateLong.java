@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -27,6 +28,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -61,6 +63,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -101,13 +104,16 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
     
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDLONG')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
@@ -129,6 +135,8 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
             connection_.close ();
         }
     }
@@ -194,7 +202,7 @@ to a row.
         try {
             JDRSTest.position (rs_, null);
             rs_.updateLong ("C_INTEGER", 6);
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -494,7 +502,7 @@ updateLong() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDLONG");
             rs_.deleteRow ();
             rs_.updateLong ("C_INTEGER", 2892);
             failed ("Didn't throw SQLException");
@@ -1119,6 +1127,7 @@ updateLong() - Update a BIGINT.
     
     public void dfpTest(String table, long value, String expected) {
       if (checkDecFloatSupport()) {
+        
         try {
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -1126,7 +1135,7 @@ updateLong() - Update a BIGINT.
           .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateLong(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1139,20 +1148,20 @@ updateLong() - Update a BIGINT.
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
-        }
+      
       }
     }
-
+    }
     
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var043 () { dfpTest(JDRSTest.RSTEST_DFP16, 123456789l, "123456789"); }
+    public void Var043 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, 123456789l, "123456789"); }
   
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var044 () { dfpTest(JDRSTest.RSTEST_DFP34, 123456789l, "123456789"); }
+    public void Var044 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, 123456789l, "123456789"); }
 
 
     /**

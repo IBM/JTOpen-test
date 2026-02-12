@@ -52,7 +52,8 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
         usePreparedStatement=true;
-	forUpdate=true; 
+	forUpdate=true;
+	       fileSuffix="J";
     }
 
 }

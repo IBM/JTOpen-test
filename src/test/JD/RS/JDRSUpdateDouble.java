@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DataTruncation;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -28,6 +29,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -62,6 +64,7 @@ extends JDTestcase {
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -99,13 +102,16 @@ Performs setup needed before running variations.
                          + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                       ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                        ResultSet.CONCUR_READ_ONLY);
 
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                                      + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                      + " (C_KEY) VALUES ('DUMMY_UPDDOUB')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                                       + " (C_KEY) VALUES ('" + key_ + "')");
 
@@ -127,6 +133,8 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
             connection_.close ();
         }
     }
@@ -190,7 +198,7 @@ to a row.
             try {
                 JDRSTest.position (rs_, null);
                 rs_.updateDouble ("C_DOUBLE", 6);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             } catch (Exception e) {
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -476,7 +484,7 @@ updateDouble() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
             try {
-                JDRSTest.position (rs_, "DUMMY_ROW");
+                JDRSTest.position (rs_, "DUMMY_UPDDOUB");
                 rs_.deleteRow ();
                 rs_.updateDouble ("C_DOUBLE", 2892);
                 failed ("Didn't throw SQLException");
@@ -1295,13 +1303,15 @@ causes a data truncation error.
 
     public void dfpTest(String table, double value, String expected) {
       if (checkDecFloatSupport()) {
+        
         try {
+        
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateDouble(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1315,13 +1325,16 @@ causes a data truncation error.
               "from value "+value+ " for table "+table);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        
         }
       }
     }
 
     public void dfpRoundTest(String roundingMode, String table, double value, String expected) {
       if (checkDecFloatSupport()) {
+        
         try {
+        
           
           String roundingModeProp = roundingMode;
           if(isToolboxDriver())
@@ -1336,11 +1349,10 @@ causes a data truncation error.
           
           Statement s = connection.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s
-          .executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
           rs.next();
           rs.updateDouble(1, value);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1355,6 +1367,7 @@ causes a data truncation error.
               "\nfor table "+table+" roundingMode = '"+roundingMode+"'");
         } catch (Exception e) {
           failed(e, "Unexpected Exception for table "+table+" roundingMode = '"+roundingMode+"'");
+       
         }
       }
     }
@@ -1363,132 +1376,132 @@ causes a data truncation error.
     /**
      * updateDouble -- set a DFP16 value (normal)
      */
-    public void Var051 () { dfpTest(JDRSTest.RSTEST_DFP16, 4533.43, "4533.43"); }
+    public void Var051 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, 4533.43, "4533.43"); }
   
     /**
      * updateDouble -- set a DFP16 value (Nan)
      */    
-    public void Var052 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.NaN, "NaN"); }
+    public void Var052 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, Double.NaN, "NaN"); }
 
     
     /**
      * updateDouble -- set a DFP16 value (NEGATIVE_INFINITY)
      */    
-    public void Var053 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.NEGATIVE_INFINITY, "-Infinity"); }
+    public void Var053 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, Double.NEGATIVE_INFINITY, "-Infinity"); }
 
     /**
      * updateDouble -- set a DFP16 value (POSITIVE_INFINITY)
      */    
-    public void Var054 () { dfpTest(JDRSTest.RSTEST_DFP16, Double.POSITIVE_INFINITY, "Infinity"); }
+    public void Var054 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, Double.POSITIVE_INFINITY, "Infinity"); }
 
     /**
      * updateDouble -- set a DFP16 value (MAX_VALUE)
      */    
     public void Var055 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, Double.MAX_VALUE, "1.797693134862316E+308");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, Double.MAX_VALUE, "1.797693134862316E+308");
     }
 
     /**
      * updateDouble -- set a DFP16 value (MIN_VALUE)
      */    
     public void Var056 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, Double.MIN_VALUE, "4.9E-324");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, Double.MIN_VALUE, "4.9E-324");
     }
 
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round half even"  
      */
-    public void Var057 () { dfpRoundTest("round half even", JDRSTest.RSTEST_DFP16, 
+    public void Var057 () { dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555,"1.234567890123456"); }
     
-    public void Var058 () { dfpRoundTest("round half even", JDRSTest.RSTEST_DFP16, 
+    public void Var058 () { dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123454"); }
 
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round half even"  
      */
-    public void Var059 () { dfpRoundTest("round half even", JDRSTest.RSTEST_DFP16, 
+    public void Var059 () { dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123456"); }
-    public void Var060 () { dfpRoundTest("round half even", JDRSTest.RSTEST_DFP16, 
+    public void Var060 () { dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123454"); }
 
 
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round half up"   
      */
-    public void Var061 () { dfpRoundTest("round half up", JDRSTest.RSTEST_DFP16, 
+    public void Var061 () { dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555, "1.234567890123456"); }
-    public void Var062 () { dfpRoundTest("round half up", JDRSTest.RSTEST_DFP16, 
+    public void Var062 () { dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123455"); }
 
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round half up"   
      */
-    public void Var063 () { dfpRoundTest("round half up", JDRSTest.RSTEST_DFP16, 
+    public void Var063 () { dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123456"); }
-    public void Var064 () { dfpRoundTest("round half up", JDRSTest.RSTEST_DFP16, 
+    public void Var064 () { dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123455"); }
 
 
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round down"   
      */
-    public void Var065 () { dfpRoundTest("round down", JDRSTest.RSTEST_DFP16, 
+    public void Var065 () { dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555, "1.234567890123455"); }
-    public void Var066 () { dfpRoundTest("round down", JDRSTest.RSTEST_DFP16, 
+    public void Var066 () { dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234561, "1.234567890123456"); }
 
     
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round down"   
      */
-    public void Var067 () { dfpRoundTest("round down", JDRSTest.RSTEST_DFP16, 
+    public void Var067 () { dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123455"); }
-    public void Var068 () { dfpRoundTest("round down", JDRSTest.RSTEST_DFP16, 
+    public void Var068 () { dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234561, "-1.234567890123456"); }
   
     
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round ceiling"   
      */
-    public void Var069 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP16, 
+    public void Var069 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555, "1.234567890123456"); }
-    public void Var070 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP16, 
+    public void Var070 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123455"); }
 
     
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round ceiling"   
      */
-    public void Var071 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP16, 
+    public void Var071 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123455"); }
-    public void Var072 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP16, 
+    public void Var072 () { dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123454"); }
 
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round floor"   
      */
-    public void Var073 () { dfpRoundTest("round floor", JDRSTest.RSTEST_DFP16, 
+    public void Var073 () { dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555, "1.234567890123455"); }
-    public void Var074 () { dfpRoundTest("round floor", JDRSTest.RSTEST_DFP16, 
+    public void Var074 () { dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123454"); }
     
 
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round floor"   
      */
-    public void Var075 () { dfpRoundTest("round floor", JDRSTest.RSTEST_DFP16, 
+    public void Var075 () { dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123456"); }
-    public void Var076 () { dfpRoundTest("round floor", JDRSTest.RSTEST_DFP16, 
+    public void Var076 () { dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123455"); }
     
 
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round half down"   
      */
-    public void Var077 () { dfpRoundTest("round half down", JDRSTest.RSTEST_DFP16, 
+    public void Var077 () { dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234565, "1.234567890123456"); }
-    public void Var078 () { dfpRoundTest("round half down", JDRSTest.RSTEST_DFP16, 
+    public void Var078 () { dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123454"); }
 
     
@@ -1496,56 +1509,56 @@ causes a data truncation error.
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round half down"   
      */
-    public void Var079 () { dfpRoundTest("round half down", JDRSTest.RSTEST_DFP16, 
+    public void Var079 () { dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234565, "-1.234567890123456"); }
-    public void Var080 () { dfpRoundTest("round half down", JDRSTest.RSTEST_DFP16, 
+    public void Var080 () { dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123454"); }
 
     
     /** 
      *  updateDouble -- set a DFP16 positive with rounding mode "round up"   
      */
-    public void Var081 () { dfpRoundTest("round up", JDRSTest.RSTEST_DFP16, 
+    public void Var081 () { dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234555, "1.234567890123456"); }
-    public void Var082 () { dfpRoundTest("round up", JDRSTest.RSTEST_DFP16, 
+    public void Var082 () { dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP16, 
         1.2345678901234545, "1.234567890123455"); }
 
     
     /** 
      *  updateDouble -- set a DFP16 negative with rounding mode "round up"   
      */
-    public void Var083 () { dfpRoundTest("round up", JDRSTest.RSTEST_DFP16, 
+    public void Var083 () { dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234555, "-1.234567890123456"); }
-    public void Var084 () { dfpRoundTest("round up", JDRSTest.RSTEST_DFP16, 
+    public void Var084 () { dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP16, 
         -1.2345678901234545, "-1.234567890123455"); }
 
     
     /**
      * updateDouble -- set a DFP34 value (normal)
      */
-    public void Var085 () { dfpTest(JDRSTest.RSTEST_DFP34, 4533.43, "4533.43"); }
+    public void Var085 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, 4533.43, "4533.43"); }
   
     /**
      * updateDouble -- set a DFP34 value (Nan)
      */    
-    public void Var086 () { dfpTest(JDRSTest.RSTEST_DFP34, Double.NaN, "NaN"); }
+    public void Var086 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, Double.NaN, "NaN"); }
 
     
     /**
      * updateDouble -- set a DFP34 value (NEGATIVE_INFINITY)
      */    
-    public void Var087 () { dfpTest(JDRSTest.RSTEST_DFP34, Double.NEGATIVE_INFINITY, "-Infinity"); }
+    public void Var087 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, Double.NEGATIVE_INFINITY, "-Infinity"); }
 
     /**
      * updateDouble -- set a DFP34 value (POSITIVE_INFINITY)
      */    
-    public void Var088 () { dfpTest(JDRSTest.RSTEST_DFP34, Double.POSITIVE_INFINITY, "Infinity"); }
+    public void Var088 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, Double.POSITIVE_INFINITY, "Infinity"); }
 
     /**
      * updateDouble -- set a DFP34 value (MAX_VALUE)
      */    
     public void Var089 () {
-  	    dfpTest(JDRSTest.RSTEST_DFP34, Double.MAX_VALUE, "1.7976931348623157E+308");
+  	    dfpTest(JDRSTest.RSTEST_UPDDFP34, Double.MAX_VALUE, "1.7976931348623157E+308");
 
     }
 
@@ -1553,7 +1566,7 @@ causes a data truncation error.
      * updateDouble -- set a DFP34 value (MIN_VALUE)
      */    
     public void Var090 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, Double.MIN_VALUE, "4.9E-324");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, Double.MIN_VALUE, "4.9E-324");
     }
 
     /** 
@@ -1562,62 +1575,62 @@ causes a data truncation error.
      *  that accuracy.                 
      */
     public void Var091 () {
-	    dfpRoundTest("round half even", JDRSTest.RSTEST_DFP34, 5.552576577473519E-221, "5.552576577473519E-221");
+	    dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP34, 5.552576577473519E-221, "5.552576577473519E-221");
     }
 
     public void Var092 () {
-	    dfpRoundTest("round half even", JDRSTest.RSTEST_DFP34,
+	    dfpRoundTest("round half even", JDRSTest.RSTEST_UPDDFP34,
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
     public void Var093 () {
-	    dfpRoundTest("round half up", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
     public void Var094 () {
-	    dfpRoundTest("round half up", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round half up", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
     public void Var095 () {
-	    dfpRoundTest("round down", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
     public void Var096 () {
-	    dfpRoundTest("round down", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round down", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
     public void Var097 () {
-	    dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
     public void Var098 () {
-	    dfpRoundTest("round ceiling", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round ceiling", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
     public void Var099 () {
-	    dfpRoundTest("round floor", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
     public void Var100 () {
-	    dfpRoundTest("round floor", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round floor", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
     public void Var101 () {
-	    dfpRoundTest("round half down", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
 
     public void Var102 () {
-	    dfpRoundTest("round half down", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round half down", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
 
     public void Var103 () {
-	    dfpRoundTest("round up", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP34, 
 			 5.552576577473519E-221, "5.552576577473519E-221");
     }
 
     public void Var104 () {
-	    dfpRoundTest("round up", JDRSTest.RSTEST_DFP34, 
+	    dfpRoundTest("round up", JDRSTest.RSTEST_UPDDFP34, 
 			 -3.105034981303255E+231, "-3.105034981303255E+231");
     }
 

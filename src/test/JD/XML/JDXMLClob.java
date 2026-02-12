@@ -108,6 +108,7 @@ extends JDTestcase
     private ResultSet           rs1200_;
     private ResultSet           rs930_;
     private ResultSet           rs2_;
+    String suffix="B"; 
 
     StringBuffer sb = new StringBuffer(); 
     private JDXMLErrorListener errorListener = new JDXMLErrorListener(); 
@@ -405,10 +406,10 @@ extends JDTestcase
     protected void setup ()
     throws Exception
     {
-	TABLE37_          = JDXMLTest.COLLECTION + ".XMLCLB37";
-	TABLE1208_        = JDXMLTest.COLLECTION + ".XMLCLB1208";
-	TABLE1200_        = JDXMLTest.COLLECTION + ".XMLCLB1200";
-	TABLE930_        = JDXMLTest.COLLECTION + ".XMLCLB930";
+	TABLE37_          = JDXMLTest.COLLECTION + ".XMLCL"+suffix+"37";
+	TABLE1208_        = JDXMLTest.COLLECTION + ".XMLCL"+suffix+"1208";
+	TABLE1200_        = JDXMLTest.COLLECTION + ".XMLCL"+suffix+"1200";
+	TABLE930_        = JDXMLTest.COLLECTION + ".XMLCL"+suffix+"930";
 
         if (isJdbc40 ()) {
         	if (getDriver() == JDTestDriver.DRIVER_JCC) {

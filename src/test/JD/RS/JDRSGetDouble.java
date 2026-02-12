@@ -1002,7 +1002,7 @@ is set to "false".
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC doesn't support getting double from DECFLOAT -- Invalid data conversion: Wrong result column type for requested conversion.");
       } else {
-        testDfp(JDRSTest.RSTEST_DFP16, JDRSTest.VALUES_DFP16_DOUBLE, statement0_, "getDouble");
+        testDfp(JDRSTest.RSTEST_GETDFP16, JDRSTest.VALUES_DFP16_DOUBLE, statement0_, "getDouble");
       }
     }
     
@@ -1015,7 +1015,7 @@ is set to "false".
       if (getDriver() == JDTestDriver.DRIVER_JCC) {
         notApplicable("JCC doesn't support getting double from DECFLOAT -- Invalid data conversion: Wrong result column type for requested conversion.");
       } else {
-        testDfp(JDRSTest.RSTEST_DFP34, JDRSTest.VALUES_DFP34_DOUBLE, statement0_, "getDouble");
+        testDfp(JDRSTest.RSTEST_GETDFP34, JDRSTest.VALUES_DFP34_DOUBLE, statement0_, "getDouble");
       }
     }
     
@@ -1032,7 +1032,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NAN);
+                + JDRSTest.RSTEST_GETDFP16NAN);
             rs.next(); 
             double v = rs.getDouble (1);
             String vString = ""+v; 
@@ -1057,7 +1057,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NNAN);
+                + JDRSTest.RSTEST_GETDFP16NNAN);
             rs.next(); 
             String v = ""+rs.getDouble (1);
             assertCondition(v.equals("NaN"), "Expected -NaN got "+v); 
@@ -1081,7 +1081,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16INF);
+                + JDRSTest.RSTEST_GETDFP16INF);
             rs.next(); 
             double v = rs.getDouble (1);
             assertCondition(v == Double.POSITIVE_INFINITY, "Expected Infinity got "+v);
@@ -1105,7 +1105,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NINF);
+                + JDRSTest.RSTEST_GETDFP16NINF);
             rs.next(); 
             double v = rs.getDouble (1);
             assertCondition(v == Double.NEGATIVE_INFINITY, "Expected -Infinity got "+v); 
@@ -1153,7 +1153,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34NNAN);
+                + JDRSTest.RSTEST_GETDFP34NNAN);
             rs.next(); 
             String v = ""+rs.getDouble (1);
             assertCondition(v.equals("NaN"), "Expected NaN got "+v); 
@@ -1177,7 +1177,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34INF);
+                + JDRSTest.RSTEST_GETDFP34INF);
             rs.next(); 
             double v = rs.getDouble (1);
             
@@ -1202,7 +1202,7 @@ is set to "false".
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34NINF);
+                + JDRSTest.RSTEST_GETDFP34NINF);
             rs.next(); 
             double v = rs.getDouble (1);
             assertCondition(v == Double.NEGATIVE_INFINITY, "Expected -Infinity got "+v); 

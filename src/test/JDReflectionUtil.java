@@ -1886,7 +1886,7 @@ public class JDReflectionUtil {
     Class<?> thisClass = o.getClass();
     Class<?>[] argTypes = new Class<?>[8];
     argTypes[0] = String.class;
-    argTypes[1] = classLoader_.loadClass("[C");;
+    argTypes[1] = Class.forName("[C");;
     argTypes[2] = argTypes[1];
     argTypes[3] = String.class; 
     argTypes[4] = classLoader_.loadClass("java.net.InetAddress");
@@ -3648,7 +3648,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
 
         Class<?> objectClass11 = classLoader_.loadClass(classname);
         Class<?>[] oneArgTypes = new Class<?>[1];
-        oneArgTypes[0] = classLoader_.loadClass("[B");
+        oneArgTypes[0] = Class.forName("[B");
         Object[] oneArgs    = new Object[1];
         oneArgs[0] = arg;
         Object newObject =null;
@@ -3667,8 +3667,8 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
      public static Object createObject(String classname,
          long arg) throws Exception {
 
-
-       Class<?> objectClass11 = classLoader_.loadClass(classname);
+       Class<?> objectClass11 ;
+       objectClass11 = classLoader_.loadClass(classname);
        Class<?>[] oneArgTypes = new Class<?>[1];
        oneArgTypes[0] =  Long.TYPE;
        Object[] oneArgs    = new Object[1];

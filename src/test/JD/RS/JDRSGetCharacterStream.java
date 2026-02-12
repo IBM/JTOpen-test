@@ -20,6 +20,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 
@@ -117,7 +118,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
       statement1_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GCS')");
 
       // Force LOB locators.
       connection2_ = testDriver_.getConnection(url + ";lob threshold=0",
@@ -376,13 +377,15 @@ public class JDRSGetCharacterStream extends JDTestcase {
    **/
   public void Var012() {
     if (checkLevel()) {
+      JDSerializeFile serializeFile = null;
       try {
+       serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         sb.setLength(0);
         ResultSet rs = statement1_.executeQuery(
             "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
         JDRSTest.position(rs, "UPDATE_SANDBOX");
         rs.updateString("C_CHAR_50", "New Planet");
-        rs.updateRow();
+        rs.updateRow(); /* serialized */
         Reader v = (Reader) JDReflectionUtil.callMethod_OS(rs, methodName,
             "C_CHAR_50");
         boolean check;
@@ -395,6 +398,14 @@ public class JDRSGetCharacterStream extends JDTestcase {
         assertCondition(check, sb);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
       }
     }
   }
@@ -467,7 +478,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
       try {
         rs = statement1_.executeQuery(
             "SELECT * FROM " + JDRSTest.RSTEST_GET + " FOR UPDATE");
-        JDRSTest.position(rs, "DUMMY_ROW");
+        JDRSTest.position(rs, "DUMMYROW_GCS");
         rs.deleteRow();
         Reader v = (Reader) JDReflectionUtil.callMethod_OS(rs, methodName,
             "C_VARCHAR_50");
@@ -1199,7 +1210,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
     if (checkDecFloatSupport() && checkLevel()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         Reader v = (Reader) JDReflectionUtil.callMethod_O(rs, methodName, 1);
         String expected = "1.1";
@@ -1219,7 +1230,7 @@ public class JDRSGetCharacterStream extends JDTestcase {
       sb.setLength(0);
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         Reader v = (Reader) JDReflectionUtil.callMethod_O(rs, methodName, 1);
         String expected = "1.1";

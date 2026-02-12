@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDXMLBlob.java
 //
 // Classes:      JDXMLBlob
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -134,6 +123,7 @@ extends JDTestcase
     private ResultSet           rs2_;
     StringBuffer sb = new StringBuffer(); 
     private JDXMLErrorListener errorListener = new JDXMLErrorListener(); 
+    String suffix = "B";
     //
     // We create tables with different encodings
     // For each table the following rows are set
@@ -149,7 +139,7 @@ extends JDTestcase
     // Row 10 -- xml declaration, but invalid XML
 
 
-    public static String TABLE37_          = JDXMLTest.COLLECTION + ".XMLBLB37";
+    public static String TABLE37_          = JDXMLTest.COLLECTION + ".XMLBL37";
     public static String TABLE1208_          = JDXMLTest.COLLECTION + ".XMLBLB1208";
     public static String TABLE1200_          = JDXMLTest.COLLECTION + ".XMLBLB1200";
     public static String TABLE1202_          = JDXMLTest.COLLECTION + ".XMLBLB1202";
@@ -353,11 +343,11 @@ extends JDTestcase
     protected void setup ()
     throws Exception
     {
-       TABLE37_          = JDXMLTest.COLLECTION + ".XMLBLB37";
-       TABLE1208_          = JDXMLTest.COLLECTION + ".XMLBLB1208";
-       TABLE1200_          = JDXMLTest.COLLECTION + ".XMLBLB1200";
-       TABLE1202_          = JDXMLTest.COLLECTION + ".XMLBLB1202";
-       TABLE819_          = JDXMLTest.COLLECTION + ".XMLBLB819";
+       TABLE37_          = JDXMLTest.COLLECTION + ".XMLBL"+suffix+"37";
+       TABLE1208_          = JDXMLTest.COLLECTION + ".XMLBL"+suffix+"1208";
+       TABLE1200_          = JDXMLTest.COLLECTION + ".XMLBL"+suffix+"1200";
+       TABLE1202_          = JDXMLTest.COLLECTION + ".XMLBL"+suffix+"1202";
+       TABLE819_          = JDXMLTest.COLLECTION + ".XMLBL"+suffix+"819";
 
         if (isJdbc40 ()) {
 

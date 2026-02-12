@@ -20,7 +20,6 @@ import com.ibm.as400.access.Job;
 import com.ibm.as400.access.ObjectDescription;
 import com.ibm.as400.access.ObjectLockListEntry;
 
-import test.JDDataAreaLock;
 import test.JDSupportedFeatures;
 import test.TestDriver;
 

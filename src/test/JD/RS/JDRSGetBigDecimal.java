@@ -109,9 +109,9 @@ Performs setup needed before running variations.
 		   ResultSet.CONCUR_UPDATABLE);
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GDB')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW2')");
+                + " (C_KEY) VALUES ('DUMMYROW_GDB2')");
 	    rsQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (rsQuery_);
@@ -146,8 +146,7 @@ closed.
     public void Var001()
     {
         if (checkJdbc20 ()) {
-        try {
-            Statement s = connection_.createStatement ();
+        try (Statement s = connection_.createStatement ()) {
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET);
             rs.next ();
@@ -170,8 +169,7 @@ set is closed.
     @SuppressWarnings("deprecation")
    public void Var002()
     {
-        try {
-            Statement s = connection_.createStatement ();
+        try (Statement s = connection_.createStatement ()) {
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET);
             rs.next ();
@@ -213,9 +211,8 @@ is not pointing to a row.
     @SuppressWarnings("deprecation")
     public void Var004()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", 3);
             failed ("Didn't throw SQLException " +v);
         }
@@ -253,9 +250,8 @@ column is an invalid index.
     @SuppressWarnings("deprecation")
     public void Var006()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             BigDecimal v = rs.getBigDecimal (100, 3);
             failed ("Didn't throw SQLException "+v);
@@ -294,9 +290,8 @@ is 0.
     @SuppressWarnings("deprecation")
     public void Var008()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             BigDecimal v = rs.getBigDecimal (0, 2);
             failed ("Didn't throw SQLException "+v);
@@ -335,9 +330,8 @@ is -1.
     @SuppressWarnings("deprecation")
     public void Var010()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             BigDecimal v = rs.getBigDecimal (-1, 1);
             failed ("Didn't throw SQLException "+v);
@@ -374,9 +368,8 @@ getBigDecimal() with 2 parameters - Should work when the column index is valid.
     @SuppressWarnings("deprecation")
     public void Var012()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal (8, 3);
             double expected = 8.889; 
@@ -471,9 +464,8 @@ name is an empty string.
     @SuppressWarnings("deprecation")
     public void Var016()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             rs.getBigDecimal ("", 3);
             failed ("Didn't throw SQLException");
@@ -512,9 +504,8 @@ name is invalid.
     @SuppressWarnings("deprecation")
     public void Var018()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             rs.getBigDecimal ("INVALID", 1);
             failed ("Didn't throw SQLException");
@@ -551,9 +542,8 @@ getBigDecimal() with 2 parameters - Should work when the column name is valid.
     @SuppressWarnings("deprecation")
     public void Var020()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", 2);
             assertCondition (v.doubleValue () == 10.10);
@@ -576,9 +566,8 @@ scale is -1.
          notApplicable("LUW does not throw exception when scale is -1");
          return; 
        }
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", -1);
             failed ("Didn't throw SQLException but got "+v);
@@ -596,9 +585,8 @@ getBigDecimal() with 2 parameters - Should work when the scale is 0.
     @SuppressWarnings("deprecation")
    public void Var022()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", 0);
             assertCondition ((v.doubleValue () == 10) && (v.scale () == 0));
@@ -616,9 +604,8 @@ getBigDecimal() with 2 parameters - Should work when the scale is 3.
     @SuppressWarnings("deprecation")
  public void Var023()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", 3);
             assertCondition ((v.doubleValue () == 10.101) && (v.scale () == 3));
@@ -823,7 +810,7 @@ getBigDecimal() - Should throw an exception on a deleted row.
 
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMY_ROW");
+            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMYROW_GDB");
             rs_.deleteRow ();
             BigDecimal v = rs_.getBigDecimal ("C_DECIMAL_105");
             failed ("Didn't throw SQLException "+v);
@@ -848,7 +835,7 @@ getBigDecimal() with 2 parameters - Should throw an exception on a deleted row.
 
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMY_ROW2");
+            rs_ = JDRSTest.position (driver_,statement_,rsQuery_, rs_, "DUMMYROW_GDB2");
             rs_.deleteRow ();
             BigDecimal v = rs_.getBigDecimal ("C_DECIMAL_105", 4);
             failed ("Didn't throw SQLException "+v  );
@@ -885,9 +872,8 @@ getBigDecimal() with 2 parameters - Should return null when the column is NULL.
     @SuppressWarnings("deprecation")
     public void Var035 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NULL");
             BigDecimal v = rs.getBigDecimal ("C_NUMERIC_105", 3);
             assertCondition (v == null, "Should be null but got "+v);
@@ -926,9 +912,8 @@ getBigDecimal() with 2 parameters - Get from a SMALLINT, scale = 0.
     @SuppressWarnings("deprecation")
     public void Var037 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_SMALLINT", 0);
 
@@ -950,9 +935,8 @@ getBigDecimal() with 2 parameters - Get from a SMALLINT, scale = 3.
     @SuppressWarnings("deprecation")
     public void Var038 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_SMALLINT", 3);
 
@@ -993,9 +977,8 @@ getBigDecimal() with 2 parameters - Get from a INTEGER, scale = 0.
     @SuppressWarnings("deprecation")
     public void Var040 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_INTEGER", 0);
             assertCondition ((v.doubleValue () == 98765) && (v.scale () == 0));
@@ -1013,9 +996,8 @@ getBigDecimal() with 2 parameters - Get from a INTEGER, scale = 3.
     @SuppressWarnings("deprecation")
     public void Var041 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_INTEGER", 3);
             assertCondition ((v.doubleValue () == 98765) && (v.scale () == 3));
@@ -1052,9 +1034,8 @@ getBigDecimal() with 2 parameters - Get from a REAL, scale = 0.
     @SuppressWarnings("deprecation")
     public void Var043 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_REAL", 0);
             assertCondition ((v.doubleValue () == -4) && (v.scale () == 0));
@@ -1072,9 +1053,8 @@ getBigDecimal() with 2 parameters - Get from a REAL, scale = 3.
     @SuppressWarnings("deprecation")
     public void Var044 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_REAL", 3);
             assertCondition ((v.doubleValue () == -4.4) && (v.scale () == 3));
@@ -1111,9 +1091,8 @@ getBigDecimal() with 2 parameters - Get from a FLOAT, scale = 0.
     @SuppressWarnings("deprecation")
    public void Var046 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_FLOAT", 0);
             double expected = 6; 
@@ -1137,9 +1116,8 @@ getBigDecimal() with 2 parameters - Get from a FLOAT, scale = 3.
     @SuppressWarnings("deprecation")
    public void Var047 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_FLOAT", 3);
             assertCondition ((v.doubleValue () == 5.55) && (v.scale () == 3));
@@ -1176,9 +1154,8 @@ getBigDecimal() with 2 parameters - Get from a DOUBLE, scale = 0.
     @SuppressWarnings("deprecation")
    public void Var049 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_DOUBLE", 0);
             double expected = -7; 
@@ -1202,9 +1179,8 @@ getBigDecimal() with 2 parameters - Get from a DOUBLE, scale = 3.
     @SuppressWarnings("deprecation")
     public void Var050 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             BigDecimal v = rs.getBigDecimal ("C_DOUBLE", 3);
             assertCondition ((v.doubleValue () == -6.666) && (v.scale () == 3));
@@ -1241,9 +1217,8 @@ getBigDecimal() with 2 parameters - Get from a DECIMAL(5,0), scale = 0.
     @SuppressWarnings("deprecation")
     public void Var052 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_DECIMAL_50", 0);
             assertCondition ((v.doubleValue () == 7) && (v.scale () == 0));
@@ -1261,9 +1236,8 @@ getBigDecimal() with 2 parameters - Get from a DECIMAL(5,0), scale = 3.
     @SuppressWarnings("deprecation")
     public void Var053 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             BigDecimal v = rs.getBigDecimal ("C_DECIMAL_50", 3);
             assertCondition ((v.doubleValue () == 7) && (v.scale () == 3));
@@ -2333,7 +2307,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 
 		    try {
 			ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-								 + JDRSTest.RSTEST_DFP16);
+								 + JDRSTest.RSTEST_GETDFP16);
 			int i = 0; 
 			while (rs.next()) { 
 			    BigDecimal v = rs.getBigDecimal (1);
@@ -2382,7 +2356,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 
 		    try {
 			ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-								 + JDRSTest.RSTEST_DFP34);
+								 + JDRSTest.RSTEST_GETDFP34);
 			int i = 0; 
 			while (rs.next()) { 
 			    BigDecimal v = rs.getBigDecimal (1);
@@ -2430,7 +2404,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP16NAN);
+						       + JDRSTest.RSTEST_GETDFP16NAN);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2451,7 +2425,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP16NNAN);
+						       + JDRSTest.RSTEST_GETDFP16NNAN);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2472,7 +2446,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP16INF);
+						       + JDRSTest.RSTEST_GETDFP16INF);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2493,7 +2467,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP16NINF);
+						       + JDRSTest.RSTEST_GETDFP16NINF);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2535,7 +2509,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP34NNAN);
+						       + JDRSTest.RSTEST_GETDFP34NNAN);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2556,7 +2530,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP34INF);
+						       + JDRSTest.RSTEST_GETDFP34INF);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);
@@ -2577,7 +2551,7 @@ getBigDecimal() - Get from a DOUBLE NaN
 		    try {
 			Statement s = connection_.createStatement ();
 			ResultSet rs = s.executeQuery ("SELECT * FROM "
-						       + JDRSTest.RSTEST_DFP34NINF);
+						       + JDRSTest.RSTEST_GETDFP34NINF);
 			rs.next(); 
 			BigDecimal v = rs.getBigDecimal (1);
 			failed ("Didn't throw SQLException "+v);

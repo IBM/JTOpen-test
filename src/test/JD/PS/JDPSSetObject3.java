@@ -139,6 +139,8 @@ statement is closed.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_NUMERIC_105) VALUES (?)");
@@ -170,6 +172,8 @@ specified.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -200,6 +204,8 @@ setObject() - Should throw exception when index is 0.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -230,6 +236,8 @@ setObject() - Should throw exception when index is -1.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -407,10 +415,13 @@ not anything close to being a JDBC-style type.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_SMALLINT) VALUES (?)");
          ps.setObject (1, new Hashtable (), Types.SMALLINT);
+         ps.close(); 
          failed ("Didn't throw SQLException");
       } catch (Exception e) {
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
@@ -2037,42 +2048,40 @@ if (checkLobSupport ()) {
 /**
 setObject() - Set a BINARY parameter.
 **/
-   public void Var053()
-   {
-    JDSerializeFile pstestSet = null;
-      try
-      {
-      pstestSet = JDPSTest.getPstestSet(connection_);
-         PreparedStatement ps = connection_.prepareStatement (
-                                                             "INSERT INTO " + pstestSet.getName()
-                                                             + " (C_BINARY_20) VALUES (?)");
-         byte[] b = { (byte) 32, (byte) 0, (byte) -1, (byte) -11};
-         ps.setObject (1, b, Types.BINARY);
-         ps.executeUpdate ();
-         ps.close ();
+public void Var053() {
+  JDSerializeFile pstestSet = null;
+  try {
+    pstestSet = JDPSTest.getPstestSet(connection_);
+    statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 
-         ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + pstestSet.getName());
-         rs.next ();
-         byte[] check = rs.getBytes (1);
-         rs.close ();
+    PreparedStatement ps = connection_
+        .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
+    byte[] b = { (byte) 32, (byte) 0, (byte) -1, (byte) -11 };
+    ps.setObject(1, b, Types.BINARY);
+    ps.executeUpdate();
+    ps.close();
 
-         byte[] b2 = new byte[20];
-         System.arraycopy (b, 0, b2, 0, b.length);
-         assertCondition (areEqual (check, b2));
-      } catch (Exception e) {
-         failed (e, "Unexpected Exception");
-      
-    } finally {
-      if (pstestSet != null) {
-        try {
-          pstestSet.close();
-        } catch (SQLException e) {
-          e.printStackTrace();
-        }
+    ResultSet rs = statement_.executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
+    rs.next();
+    byte[] check = rs.getBytes(1);
+    rs.close();
+
+    byte[] b2 = new byte[20];
+    System.arraycopy(b, 0, b2, 0, b.length);
+    assertCondition(areEqual(check, b2));
+  } catch (Exception e) {
+    failed(e, "Unexpected Exception");
+
+  } finally {
+    if (pstestSet != null) {
+      try {
+        pstestSet.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
       }
     }
   }
-
+}
 
 
 
@@ -2084,6 +2093,8 @@ setObject() - Set a BINARY parameter, when data gets truncated.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_BINARY_20) VALUES (?)");
@@ -2143,33 +2154,33 @@ setObject() - Set a BINARY parameter, when the object is the wrong type.
 
 
 
-/**
-setObject() - Set a BINARY parameter, when the type is invalid.
-**/
-   public void Var056()
-   {
+  /**
+   * setObject() - Set a BINARY parameter, when the type is invalid.
+   **/
+  public void Var056() {
     JDSerializeFile pstestSet = null;
-      try {
+    try {
       pstestSet = JDPSTest.getPstestSet(connection_);
-         PreparedStatement ps = connection_.prepareStatement (
-                                                             "INSERT INTO " + pstestSet.getName()
-                                                             + " (C_BINARY_20) VALUES (?)");
-         byte[] b = { (byte) 32, (byte) 0, (byte) -1, (byte) -11};
-         ps.setObject (1, b, Types.TIMESTAMP);
-         ps.executeUpdate ();
-         ps.close ();
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
 
-         ResultSet rs = statement_.executeQuery ("SELECT C_BINARY_20 FROM " + pstestSet.getName());
-         rs.next ();
-         byte[] check = rs.getBytes (1);
-         rs.close ();
+      PreparedStatement ps = connection_
+          .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_BINARY_20) VALUES (?)");
+      byte[] b = { (byte) 32, (byte) 0, (byte) -1, (byte) -11 };
+      ps.setObject(1, b, Types.TIMESTAMP);
+      ps.executeUpdate();
+      ps.close();
 
-         byte[] b2 = new byte[20];
-         System.arraycopy (b, 0, b2, 0, b.length);
-         assertCondition (areEqual (check, b2));
-      } catch (Exception e) {
-         failed (e, "Unexpected Exception");
-      
+      ResultSet rs = statement_.executeQuery("SELECT C_BINARY_20 FROM " + pstestSet.getName());
+      rs.next();
+      byte[] check = rs.getBytes(1);
+      rs.close();
+
+      byte[] b2 = new byte[20];
+      System.arraycopy(b, 0, b2, 0, b.length);
+      assertCondition(areEqual(check, b2));
+    } catch (Exception e) {
+      failed(e, "Unexpected Exception");
+
     } finally {
       if (pstestSet != null) {
         try {
@@ -2180,8 +2191,6 @@ setObject() - Set a BINARY parameter, when the type is invalid.
       }
     }
   }
-
-
 
 /**
 setObject() - Set a VARBINARY parameter.
@@ -2231,6 +2240,8 @@ setObject() - Set a VARBINARY parameter, when data gets truncated.
     JDSerializeFile pstestSet = null;
       try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
          PreparedStatement ps = connection_.prepareStatement (
                                                              "INSERT INTO " + pstestSet.getName()
                                                              + " (C_VARBINARY_20) VALUES (?)");
@@ -2332,6 +2343,8 @@ setObject() - Set a BLOB parameter.
 if (checkJdbc20 ()) {
          if (checkLobSupport ()) {
             try {
+              statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
                PreparedStatement ps = connection_.prepareStatement (
                                                                    "INSERT INTO " + pstestSet.getName()
                                                                    + " (C_BLOB) VALUES (?)");
@@ -2915,6 +2928,8 @@ setObject() - Set a DISTINCT parameter.
       pstestSet = JDPSTest.getPstestSet(connection_);
       if (checkLobSupport ()) {
          try {
+            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_DISTINCT) VALUES (?)");
@@ -4201,6 +4216,8 @@ setParameterTest () - Set the specified parameter using an object.
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
           + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       ps.setObject(1, o, sqltype);

@@ -150,6 +150,8 @@ statement is closed.
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) { 
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_NUMERIC_105) VALUES (?)");
@@ -188,6 +190,8 @@ specified.
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) { 
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -223,6 +227,8 @@ setObject() - Should throw exception when index is 0.
 if (checkJdbc42()) { 
 
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -258,6 +264,8 @@ setObject() - Should throw exception when index is -1.
 if (checkJdbc42()) { 
 
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -463,6 +471,8 @@ not anything close to being a JDBC-style type.
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) { 
+  statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
 	    try (PreparedStatement ps = connection_.prepareStatement (
       						     "INSERT INTO " + pstestSet.getName()
       						     + " (C_SMALLINT) VALUES (?)")) {
@@ -2239,6 +2249,7 @@ setObject() - Set a BINARY parameter.
 if (checkJdbc42()) { 
 	    try
 	    {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_BINARY_20) VALUES (?)");
@@ -2284,6 +2295,7 @@ setObject() - Set a BINARY parameter, when data gets truncated.
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_BINARY_20) VALUES (?)");
@@ -2359,6 +2371,7 @@ setObject() - Set a BINARY parameter, when the type is invalid.
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_BINARY_20) VALUES (?)");
@@ -2447,6 +2460,7 @@ setObject() - Set a VARBINARY parameter, when data gets truncated.
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_VARBINARY_20) VALUES (?)");
@@ -2557,6 +2571,7 @@ setObject() - Set a BLOB parameter.
       pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc42 ()) {
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_BLOB) VALUES (?)");
@@ -3153,6 +3168,7 @@ setObject() - Set a DISTINCT parameter.
       pstestSet = JDPSTest.getPstestSet(connection_);
 	if (checkJdbc42 ()) {
 	    try {
+	            statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
 		PreparedStatement ps = connection_.prepareStatement (
 								     "INSERT INTO " + pstestSet.getName()
 								     + " (C_DISTINCT) VALUES (?)");
@@ -4502,6 +4518,8 @@ setDateTimeParameterTest () - Set the specified parameter using an object.
        JDSerializeFile pstestSet = null;
        try {
          pstestSet = JDPSTest.getPstestSet(connection_);
+         statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
           + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       

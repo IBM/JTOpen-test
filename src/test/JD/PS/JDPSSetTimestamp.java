@@ -124,6 +124,8 @@ public class JDPSSetTimestamp extends JDTestcase {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
       ps.close();
@@ -150,6 +152,7 @@ public class JDPSSetTimestamp extends JDTestcase {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_
           .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -178,7 +181,8 @@ public class JDPSSetTimestamp extends JDTestcase {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
-      PreparedStatement ps = connection_
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+     PreparedStatement ps = connection_
           .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
       ps.setTimestamp(0, new Timestamp(24534543));
@@ -206,6 +210,7 @@ public class JDPSSetTimestamp extends JDTestcase {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_
           .prepareStatement("INSERT INTO " + pstestSet.getName()
               + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -311,6 +316,7 @@ public class JDPSSetTimestamp extends JDTestcase {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc20()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(797899789), null);
@@ -359,6 +365,7 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
           + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
       ps.setTimestamp(1, inTimestamp);
@@ -393,7 +400,8 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
-      PreparedStatement ps = connection_.prepareStatement(
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+     PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(214748364));
       ps.executeUpdate();
@@ -420,6 +428,7 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(21768644));
@@ -447,6 +456,7 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(26786744));
@@ -475,6 +485,7 @@ if (checkJdbc20()) {
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
     try {
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(22567544));
@@ -504,6 +515,7 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(2253444));
@@ -531,6 +543,7 @@ if (checkJdbc20()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(290904));
@@ -634,6 +647,7 @@ if (checkJdbc20()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkLobSupport()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(22213444));
@@ -666,7 +680,8 @@ if (checkLobSupport()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkLobSupport()) {
       try {
-        PreparedStatement ps = connection_.prepareStatement(
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+       PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_DBCLOB) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(2298724));
         ps.executeUpdate();
@@ -754,6 +769,7 @@ if (checkLobSupport()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
       ps.setTimestamp(1, new Timestamp(123444));
@@ -785,6 +801,8 @@ if (checkLobSupport()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
       PreparedStatement ps = connection_.prepareStatement(
           "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
       Timestamp t = new Timestamp(8640000000L);
@@ -942,22 +960,19 @@ if (checkLobSupport()) {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
-    if ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (getJdbcLevel() <= 2)) {
-      notApplicable("Native driver pre-JDBC 3.0");
-      return;
-    }
-    if (checkDatalinkSupport()) {
-      try {
-        PreparedStatement ps = connection_.prepareStatement(
-            "INSERT INTO " + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
-        ps.setTimestamp(1, new Timestamp(265454));
-        ps.executeUpdate();
-        ps.close();
-        failed("Didn't throw SQLException");
-      } catch (Exception e) {
-        assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      if (checkDatalinkSupport()) {
+        try {
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+          PreparedStatement ps = connection_
+              .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
+          ps.setTimestamp(1, new Timestamp(265454));
+          ps.executeUpdate();
+          ps.close();
+          failed("Didn't throw SQLException");
+        } catch (Exception e) {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
       }
-    }
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
@@ -980,6 +995,7 @@ if (checkLobSupport()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkLobSupport()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(2246454));
@@ -1012,6 +1028,7 @@ if (checkLobSupport()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkBigintSupport()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
@@ -1098,6 +1115,7 @@ if (checkLobSupport()) {
       try {
         pstestSetdfp = JDPSTest.getPstestSetdfp16(connection_);
         String tablename16=pstestSetdfp.getName();
+        statement_.executeUpdate("DELETE FROM " + pstestSetdfp.getName());
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + tablename16 + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
@@ -1127,7 +1145,8 @@ if (checkLobSupport()) {
       try {
         pstestSetdfp = JDPSTest.getPstestSetdfp34(connection_);
         String tablename34=pstestSetdfp.getName();
-        PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
+        statement_.executeUpdate("DELETE FROM " + pstestSetdfp.getName());
+       PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + tablename34 + " (C_BIGINT) VALUES (?)");
         ps.setTimestamp(1, new Timestamp(214748364));
         ps.executeUpdate();
@@ -1156,7 +1175,8 @@ if (checkLobSupport()) {
       try {
         pstestSetxml = JDPSTest.getSerializeFile(connection_, JDPSTest.SETXML);
         String tablename = pstestSetxml.getName(); 
-        PreparedStatement ps = connection_.prepareStatement(
+        statement_.executeUpdate("DELETE FROM " + pstestSetxml.getName());
+       PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + tablename + " VALUES (?)");
         try {
           ps.setTimestamp(1, new Timestamp(214748364));
@@ -1244,8 +1264,9 @@ if (checkLobSupport()) {
       StringBuffer sb = new StringBuffer();
       boolean passed = true;
       String sql = "";
+      JDSerializeFile serializeFile = null; 
       try {
-
+        serializeFile = new JDSerializeFile(connection_, tableName);
         Statement stmt = connection_.createStatement();
         try {
           sql = "DROP TABLE " + tableName;
@@ -1300,6 +1321,14 @@ if (checkLobSupport()) {
 
       } catch (Exception e) {
         failed(e, "unexpected exception " + sb.toString());
+      } finally {
+        if (serializeFile != null) { 
+          try {
+            serializeFile.close();
+          } catch (Exception e) { 
+            e.printStackTrace(System.out);
+          }
+        }
       }
     }
   }

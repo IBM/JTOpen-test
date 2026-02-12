@@ -33,6 +33,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDWeirdReader;
 
 
@@ -68,6 +69,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -108,13 +110,16 @@ extends JDTestcase
                          + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                       ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                        ResultSet.CONCUR_READ_ONLY);
 
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                                      + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                      + " (C_KEY) VALUES ('DUMMY_UPDCS')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                                       + " (C_KEY) VALUES ('" + key_ + "')");
 
@@ -137,7 +142,9 @@ extends JDTestcase
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
-            connection_.close ();
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+    connection_.close ();
         }
     }
 
@@ -210,7 +217,7 @@ extends JDTestcase
             {
                 JDRSTest.position (rs_, null);
                 rs_.updateCharacterStream ("C_VARCHAR_50", new StringReader ("Portland"), 8);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -603,7 +610,7 @@ extends JDTestcase
         {
             try
             {
-                JDRSTest.position (rs_, "DUMMY_ROW");
+                JDRSTest.position (rs_, "DUMMY_UPDCS");
                 rs_.deleteRow ();
                 rs_.updateCharacterStream ("C_VARCHAR_50", new StringReader ("Ames"), 4);
                 failed ("Didn't throw SQLException");
@@ -2188,10 +2195,10 @@ extends JDTestcase
          Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
              ResultSet.CONCUR_UPDATABLE);
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
+             + JDRSTest.RSTEST_UPDDFP16+" FOR UPDATE ");
          rs.next(); 
          rs.updateCharacterStream(1, new StringReader ("Hannover"), 8 );
-	 rs.updateRow(); 
+	 rs.updateRow();  /* exception */
          failed ("Didn't throw SQLException ");
        }
        catch (Exception e) {
@@ -2220,10 +2227,10 @@ extends JDTestcase
         Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
             ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery ("SELECT * FROM "
-            + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
+            + JDRSTest.RSTEST_UPDDFP34+" FOR UPDATE ");
         rs.next(); 
         rs.updateCharacterStream(1, new StringReader ("Hannover"), 8 ); 
-	rs.updateRow();
+	rs.updateRow(); /* exception */
         failed ("Didn't throw SQLException ");
       }
       catch (Exception e) {

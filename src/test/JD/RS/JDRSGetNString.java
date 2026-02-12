@@ -112,11 +112,6 @@ Performs setup needed before running variations.
 		    }
 		}
 	}
-      // Re-Create a couple tables that were created in the JDRSTest test driver.
-      // Several testcases use these tables (including this testcase).  They need to be
-      // recreated due to changes along the way.
-      JDRSTest.createAndPopulateTable(JDRSTest.RSTEST_DFP16, "C1 DECFLOAT(16)", JDRSTest.VALUES_DFP16, statement0_); 
-      JDRSTest.createAndPopulateTable(JDRSTest.RSTEST_DFP34, "C1 DECFLOAT(34)", JDRSTest.VALUES_DFP34, statement0_);
     }
 
 
@@ -174,7 +169,7 @@ Reconnects with different properties, if needed.
                 statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                           ResultSet.CONCUR_UPDATABLE);
                 statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                                          + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                          + " (C_KEY) VALUES ('DUMMROW_GNSTRING')");
                 rs_ = statement_.executeQuery ("SELECT * FROM "
                                                + JDRSTest.RSTEST_GET + " FOR UPDATE");
             }
@@ -499,7 +494,7 @@ getNString() - Should throw an exception on a deleted row.
             return; 
           }
             try { 
-                JDRSTest.position (rs_, "DUMMY_ROW");
+                JDRSTest.position (rs_, "DUMMROW_GNSTRING");
                 rs_.deleteRow ();
                 String v = (String) JDReflectionUtil.callMethod_OS(rs_, "getNString", "C_VARCHAR_50");
                 failed ("Didn't throw SQLException but returned"+v);
@@ -2243,7 +2238,7 @@ the result set.
 
                     try {
                         ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                                 + JDRSTest.RSTEST_DFP16);
+                                                                 + JDRSTest.RSTEST_GETDFP16);
                         int i = 0; 
                         while (rs.next()) { 
                             String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
@@ -2291,7 +2286,7 @@ the result set.
 
                     try {
                         ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                                                                 + JDRSTest.RSTEST_DFP34);
+                                                                 + JDRSTest.RSTEST_GETDFP34);
                         int i = 0; 
                         while (rs.next()) { 
                              
@@ -2339,10 +2334,12 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP16NAN);
+                                                       + JDRSTest.RSTEST_GETDFP16NAN);
                         rs.next(); 
                        
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
+                        rs.close(); 
+                        s.close(); 
                         assertCondition(v.equals("NaN"), "Expected NaN got "+v); 
                     }
                     catch (Exception e) {
@@ -2365,10 +2362,12 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP16NNAN);
+                                                       + JDRSTest.RSTEST_GETDFP16NNAN);
                         rs.next(); 
         
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
+                        rs.close(); 
+                        s.close(); 
                         assertCondition(v.equals("-NaN"), "Expected -NaN got "+v); 
                     }
                     catch (Exception e) {
@@ -2391,10 +2390,12 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP16INF);
+                                                       + JDRSTest.RSTEST_GETDFP16INF);
                         rs.next(); 
                       
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
+                        rs.close(); 
+                        s.close(); 
                         assertCondition(v.equals("Infinity"), "Expected Infinity got "+v);
                     }
                     catch (Exception e) {
@@ -2417,7 +2418,7 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP16NINF);
+                                                       + JDRSTest.RSTEST_GETDFP16NINF);
                         rs.next(); 
                        
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
@@ -2469,7 +2470,7 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP34NNAN);
+                                                       + JDRSTest.RSTEST_GETDFP34NNAN);
                         rs.next(); 
                        
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
@@ -2495,7 +2496,7 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP34INF);
+                                                       + JDRSTest.RSTEST_GETDFP34INF);
                         rs.next(); 
                       
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
@@ -2522,10 +2523,12 @@ the result set.
                     try {
                         Statement s = connection_.createStatement ();
                         ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                                       + JDRSTest.RSTEST_DFP34NINF);
+                                                       + JDRSTest.RSTEST_GETDFP34NINF);
                         rs.next(); 
 
                         String v = (String) JDReflectionUtil.callMethod_O(rs, "getNString", 1);
+                        rs.close(); 
+                        s.close(); 
                         assertCondition(v.equals("-Infinity"), "Expected -Infinity got "+v); 
                     }
                     catch (Exception e) {
@@ -2553,6 +2556,7 @@ the result set.
 				rs.next(); 
 				String s = (String) JDReflectionUtil.callMethod_OS(rs, "getNString", "C_XML");
 				String expected = JDRSTest.SAMPLE_XML1_OUTXML; 
+				rs.close(); 
 				assertCondition (s.equals (expected), "got \""+s+"\" sb \""+expected+"\"");
 			    } catch (Exception e) {
 				failed (e, "Unexpected Exception");
@@ -2606,6 +2610,7 @@ the result set.
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_BOOLEAN);
         JDRSTest.position0(rs, "BOOLEAN_FALSE");
 	String s = (String) JDReflectionUtil.callMethod_OS(rs, "getNString", "C_BOOLEAN");
+	rs.close(); 
         assertCondition(JDRSTest.BOOLEAN_FALSE_STRING.equals(s), JDRSTest.BOOLEAN_FALSE_STRING+" != " + s);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -2624,6 +2629,7 @@ the result set.
         JDRSTest.position0(rs, "BOOLEAN_TRUE");
 
 	String s = (String) JDReflectionUtil.callMethod_OS(rs, "getNString", "C_BOOLEAN");
+	rs.close(); 
         assertCondition(JDRSTest.BOOLEAN_TRUE_STRING.equals(s), JDRSTest.BOOLEAN_TRUE_STRING+" != " + s);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
@@ -2641,6 +2647,7 @@ the result set.
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_BOOLEAN);
         JDRSTest.position0(rs, "BOOLEAN_NULL");
 	String s = (String) JDReflectionUtil.callMethod_OS(rs, "getNString", "C_BOOLEAN");
+	rs.close(); 
         assertCondition(s == null);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");

@@ -163,6 +163,8 @@ public class JDPSSetSQLXML extends JDTestcase {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_CLOB) VALUES (?)");
         ps.close();
@@ -194,6 +196,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_
             .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
@@ -227,6 +231,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_
             .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
@@ -260,6 +266,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_
             .prepareStatement("INSERT INTO " + pstestSet.getName()
                 + " (C_INTEGER, C_SMALLINT) VALUES (?, ?, ?)");
@@ -489,6 +497,8 @@ if (isToolboxDriver()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName() + " (" + columnName + ") VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml);
@@ -528,6 +538,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_INTEGER) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -560,6 +572,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_REAL) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -592,6 +606,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_FLOAT) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -624,6 +640,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_DOUBLE) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -656,6 +674,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName() + " (C_DECIMAL_105) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -688,6 +708,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName() + " (C_NUMERIC_50) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1126,6 +1148,8 @@ if (checkJdbc40()) {
     messageBuffer.setLength(0);
     if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+        
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_BLOB) VALUES (?)");
 
@@ -1183,6 +1207,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_DATE) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1215,6 +1241,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_TIME) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1247,6 +1275,8 @@ if (checkJdbc40()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
     if (checkJdbc40()) {
       try {
+        statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement(
             "INSERT INTO " + pstestSet.getName() + " (C_TIMESTAMP) VALUES (?)");
         JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1284,6 +1314,8 @@ if (checkJdbc40()) {
     if (checkJdbc40()) {
       if (checkDatalinkSupport()) {
         try {
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
+
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + pstestSet.getName() + " (C_DATALINK) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1326,6 +1358,7 @@ if (checkJdbc40()) {
     if (checkJdbc40()) {
       if (checkLobSupport()) {
         try {
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
           PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
               + pstestSet.getName() + " (C_DISTINCT) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1360,6 +1393,7 @@ if (checkJdbc40()) {
     if (checkJdbc40()) {
       if (checkBigintSupport()) {
         try {
+          statement_.executeUpdate("DELETE FROM " + pstestSet.getName());
           PreparedStatement ps = connection_.prepareStatement(
               "INSERT INTO " + pstestSet.getName() + " (C_BIGINT) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1398,15 +1432,25 @@ if (checkJdbc40()) {
   public void Var034() {
     if (checkJdbc40()) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile pstestSetdfp16 = null;
         try {
-          PreparedStatement ps = connection_.prepareStatement(
-              "INSERT INTO " + JDPSTest.SETDFP16 + "  VALUES (?)");
+          pstestSetdfp16 = JDPSTest.getPstestSetdfp16(connection_);
+          statement_.executeUpdate("DELETE FROM " + pstestSetdfp16.getName());
+          PreparedStatement ps = connection_.prepareStatement("INSERT INTO " + pstestSetdfp16.getName() + "  VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
           ps.executeUpdate();
           ps.close();
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        } finally {
+          if (pstestSetdfp16 != null) {
+            try {
+              pstestSetdfp16.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
       }
     }
@@ -1419,7 +1463,10 @@ if (checkJdbc40()) {
   public void Var035() {
     if (checkJdbc40()) {
       if (checkDecFloatSupport()) {
+        JDSerializeFile pstestSetdfp34 = null;
         try {
+          pstestSetdfp34 = JDPSTest.getPstestSetdfp16(connection_);
+          statement_.executeUpdate("DELETE FROM " + pstestSetdfp34.getName());
           PreparedStatement ps = connection_.prepareStatement(
               "INSERT INTO " + JDPSTest.SETDFP34 + "  VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setSQLXML", 1, sqlxml_);
@@ -1428,7 +1475,16 @@ if (checkJdbc40()) {
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        } finally {
+          if (pstestSetdfp34 != null) {
+            try {
+              pstestSetdfp34.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
+        
       }
 
     }

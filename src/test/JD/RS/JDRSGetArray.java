@@ -101,7 +101,7 @@ Performs setup needed before running variations.
 		ResultSet.CONCUR_UPDATABLE);
 	    } 
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GA')");
 	    resultSetQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (resultSetQuery_);
@@ -135,8 +135,7 @@ closed.
     public void Var001()
     {
         if (checkJdbc20 ()) {
-        try {
-            Statement s = connection_.createStatement ();
+        try (Statement s = connection_.createStatement ()) {
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET);
             rs.next ();
@@ -426,7 +425,7 @@ getArray() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_, statement_, resultSetQuery_, rs_, "DUMMY_ROW");
+            rs_ = JDRSTest.position (driver_, statement_, resultSetQuery_, rs_, "DUMMYROW_GA");
             rs_.deleteRow ();
             Array v = rs_.getArray ("C_INTEGER");
             failed ("Didn't throw SQLException" +v);
@@ -793,11 +792,10 @@ getArray() - Get from a DATALINK.
     {
         if (checkJdbc20 ()) {
         if (checkDatalinkSupport ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+            try (Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                    + JDRSTest.RSTEST_GETDL);
+                + JDRSTest.RSTEST_GETDL)) {
                 JDRSTest.position (rs, "LOB_FULL");
                 Array v = rs.getArray ("C_DATALINK");
                 failed ("Didn't throw SQLException" +v);
@@ -858,10 +856,9 @@ getArray() - Get from a BIGINT.
     public void Var037 ()
     {
 	if (checkDecFloatSupport()) {
-	    try {
-		Statement s = connection_.createStatement ();
-		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP16);
+	    try (Statement s = connection_.createStatement ();
+          ResultSet rs = s.executeQuery ("SELECT * FROM "
+      			       + JDRSTest.RSTEST_GETDFP16)) {
 		rs.next(); 
 		Array v = rs.getArray (1);
 		failed ("Didn't throw SQLException "+v);
@@ -880,10 +877,9 @@ getArray() - Get from a BIGINT.
     public void Var038 ()
     {
 	if (checkDecFloatSupport()) {
-	    try {
-		Statement s = connection_.createStatement ();
-		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP34);
+	    try (Statement s = connection_.createStatement ();
+          ResultSet rs = s.executeQuery ("SELECT * FROM "
+      			       + JDRSTest.RSTEST_GETDFP34)) {
 		rs.next(); 
 		Array v = rs.getArray (1);
 		failed ("Didn't throw SQLException "+v);
@@ -902,9 +898,8 @@ getArray() - Get from a BOOLEAN.
 	public void Var039 ()
 	{
 	    if (checkBooleanSupport()) {
-		try {
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-							     + JDRSTest.RSTEST_BOOLEAN);
+		try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+    			     + JDRSTest.RSTEST_BOOLEAN)) {
 		    JDRSTest.position0 (rs, "BOOLEAN_TRUE");
 		    Array v = rs.getArray ("C_BOOLEAN");
 		    failed ("Didn't throw SQLException"+v);
@@ -922,9 +917,8 @@ getArray() - Get from a BOOLEAN.
 	public void Var040 ()
 	{
 	    if (checkBooleanSupport()) {
-		try {
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-							     + JDRSTest.RSTEST_BOOLEAN);
+		try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+    			     + JDRSTest.RSTEST_BOOLEAN)) {
 		    JDRSTest.position0 (rs, "BOOLEAN_FALSE");
 		    Array v = rs.getArray ("C_BOOLEAN");
 		    failed ("Didn't throw SQLException"+v);
@@ -941,9 +935,8 @@ getArray() - Get from a BOOLEAN.
 	public void Var041()
 	{
 	    if (checkBooleanSupport()) {
-		try {
-		    ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-							    + JDRSTest.RSTEST_BOOLEAN);
+		try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+    			    + JDRSTest.RSTEST_BOOLEAN)) {
 		    JDRSTest.position0 (rs, "BOOLEAN_NULL");
 		    Array v = rs.getArray ("C_BOOLEAN");
 		    failed ("Didn't throw SQLException"+v);

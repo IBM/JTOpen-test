@@ -69,6 +69,7 @@ Constructor.
 	updateMethod = "updateNClob"; 
 	setMethod    = "setNClob"; 
 	requireJdbc40 = true; 
+	suffix="X";
     }
 
 
@@ -97,6 +98,7 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
+        if (suffix.equals("")) suffix="X";
 	super.setup();
 	getMethod    = "getNClob"; 
 	updateMethod = "updateNClob"; 

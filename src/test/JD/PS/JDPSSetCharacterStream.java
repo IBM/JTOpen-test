@@ -124,18 +124,18 @@ public class JDPSSetCharacterStream extends JDTestcase {
     JDSerializeFile pstestSet = null;
     try {
       pstestSet = JDPSTest.getPstestSet(connection_);
-if (checkJdbc20()) {
-      try {
-        PreparedStatement ps = connection_
-            .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
-        ps.close();
-        Reader r = new StringReader("Rochester");
-        ps.setCharacterStream(1, r, 9);
-        failed("Didn't throw SQLException");
-      } catch (Exception e) {
-        assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+      if (checkJdbc20()) {
+        try {
+          PreparedStatement ps = connection_
+              .prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_VARCHAR_50) VALUES (?)");
+          ps.close();
+          Reader r = new StringReader("Rochester");
+          ps.setCharacterStream(1, r, 9);
+          failed("Didn't throw SQLException");
+        } catch (Exception e) {
+          assertExceptionIsInstanceOf(e, "java.sql.SQLException");
+        }
       }
-    }
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {

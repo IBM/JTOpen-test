@@ -54,6 +54,7 @@ Constructor.
 	connectionProperties = ";direct map=true;date format=iso;time format=jis";
         usePreparedStatement=true;
         directMap=true; 
+        fileSuffix="E";
     }
 
 }

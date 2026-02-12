@@ -134,6 +134,8 @@ extends JDTestcase
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_NUMERIC_105) VALUES (?)");
@@ -168,6 +170,8 @@ extends JDTestcase
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -201,6 +205,8 @@ extends JDTestcase
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -234,6 +240,8 @@ extends JDTestcase
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -399,6 +407,8 @@ if (isToolboxDriver()) {
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -455,6 +465,8 @@ if (isToolboxDriver()) {
         try
         {
       pstestSet = JDPSTest.getPstestSet(connection_);
+      statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
             PreparedStatement ps = connection_.prepareStatement (
                                                                 "INSERT INTO " + pstestSet.getName()
                                                                 + " (C_SMALLINT) VALUES (?)");

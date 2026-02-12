@@ -73,6 +73,7 @@ Constructor.
         super (systemObject, "JDLobClobLocator5035",
                namesAndVars, runMode, fileOutputStream,
                password);
+        suffix="F";
     }
 
 
@@ -87,23 +88,10 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
 	lobThreshold = "1"; 
-
+	  suffix="F";
     }
 
-  void setupTableNames() {
-        TABLE_  = JDLobTest.COLLECTION + ".CL5035";
-        TABLE2_ = JDLobTest.COLLECTION + ".CL50352";
-	TABLE3_ = JDLobTest.COLLECTION + ".CL50353"; 
-        TABLE4_ = JDLobTest.COLLECTION + ".CL50354";
-	TABLE5_ = JDLobTest.COLLECTION + ".CL50355"; 
-	TABLE6_ = JDLobTest.COLLECTION + ".CL50356";
-	TABLE120_= JDLobTest.COLLECTION + ".CL5035120";
-	TABLE121_= JDLobTest.COLLECTION + ".CL5035121";
-	TABLEHUGE_ = JDLobTest.COLLECTION + ".CL5035H";
-
-
-  }
-
+ 
   void setupTestStringValues() {
 
       // Note:  This must end with a charcter that does not exist elsewhere in the string 
@@ -193,6 +181,7 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
+      if (suffix.equals("")) suffix="F";
 	super.setup(); 
     }
 

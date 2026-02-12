@@ -32,6 +32,7 @@ import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JVMInfo;
+import test.JD.JDSerializeFile;
 
 
 
@@ -74,6 +75,7 @@ extends JDTestcase
     private Statement           statementCommaSeparator2_;
     private Statement           statementCommaSeparator2f_; 
     private ResultSet           rsCommaSeparator_ = null ;
+    private JDSerializeFile serializeUpdateFile_;
 
     private boolean tableUpdated = false; 
     int jdk_ = 0; 
@@ -117,7 +119,8 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
-
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
 
 
 
@@ -159,9 +162,9 @@ Performs setup needed before running variations.
 
 	    if (! tableUpdated) { 
 		statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-					  + " (C_KEY) VALUES ('DUMMY_ROW')");
+					  + " (C_KEY) VALUES ('DUMMY_UPDBD')");
 		statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-					  + " (C_KEY) VALUES ('DUMMY_ROW1')");
+					  + " (C_KEY) VALUES ('DUMMY_UPDBD1')");
 		statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
 					  + " (C_KEY) VALUES ('" + key_ + "')");
 		tableUpdated = true; 
@@ -208,9 +211,9 @@ Performs setup needed before running variations.
 
 	    if (!tableUpdated) { 
 		statementCommaSeparator_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-							+ " (C_KEY) VALUES ('DUMMY_ROW')");
+							+ " (C_KEY) VALUES ('DUMMY_UPDBD')");
 		statementCommaSeparator_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-							+ " (C_KEY) VALUES ('DUMMY_ROW1')");
+							+ " (C_KEY) VALUES ('DUMMY_UPDBD1')");
 		statementCommaSeparator_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
 							+ " (C_KEY) VALUES ('" + key_ + "')");
 		tableUpdated = true; 
@@ -243,6 +246,7 @@ Performs cleanup needed after running variations.
 		statement2f_.close ();
 	    }
             connection_.commit(); // @C1A
+            serializeUpdateFile_.close(); 
             connection_.close ();
             if (rsCommaSeparator_ != null) { 
               rsCommaSeparator_.close ();
@@ -683,7 +687,7 @@ updateBigDecimal() - Should throw an exception on a deleted row.
 	setupRs(); 
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDBD");
             rs_.deleteRow ();
             rs_.updateBigDecimal ("C_DECIMAL_105", new BigDecimal ("-544.3"));
             failed ("Didn't throw SQLException");
@@ -1691,7 +1695,7 @@ This is ok.
         if (checkJdbc20 ()) {
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD055"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD055"; 
                     initTable(statement_, tableName," (c1 DECIMAL(12,10))");
                     statement_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -1701,7 +1705,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery(); 
                     rs.next(); 
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow();  /* unique table */ 
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -1749,7 +1753,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD056"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD056"; 
 		  initTable(statement_, tableName," (c1 DECIMAL(14,2))");
 		  statement_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -1762,7 +1766,7 @@ This is ok.
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow();
+		  rs.updateRow();  /* unique table */ 
 		  rs.close(); 
 
 		  rs = ps.executeQuery();
@@ -1802,7 +1806,7 @@ This is ok.
 
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD057"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD057"; 
                     initTable(statement_, tableName," (c1 NUMERIC(12,10))");
                     statement_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -1811,8 +1815,8 @@ This is ok.
                     ResultSet rs = ps.executeQuery();
                     rs.next();
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
-                    rs.close(); 
+                    rs.updateRow();  /* unique table */  
+                    rs.close();  
 
                     rs = ps.executeQuery();
                     rs.next();
@@ -1859,7 +1863,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD058"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD058"; 
 		  initTable(statement_, tableName, " (c1 NUMERIC(14,2))");
 		  statement_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -1870,7 +1874,7 @@ This is ok.
 		  BigDecimal bd; 
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow(); 
+		  rs.updateRow();   /* unique table */ 
 		  rs.close(); 
 
 
@@ -1894,7 +1898,11 @@ This is ok.
   public void dfpTest(String table, String value, String expected) {
       setupRs(); 
       if (checkDecFloatSupport()) {
+        
         try {
+        
+
+
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -1907,7 +1915,7 @@ This is ok.
             bd = null; 
           }
           rs.updateBigDecimal(1, bd);
-          rs.updateRow();
+          rs.updateRow(); /* serialized */ 
           
           ResultSet rs2 = statement2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
@@ -1921,6 +1929,11 @@ This is ok.
           "Got " + v + " from "+ value +" sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
+        } finally {
+          
+            
+         
+
         }
       }
     }
@@ -1929,153 +1942,153 @@ This is ok.
     /**
      * updateBigDecimal -- set DFP16 to different values and retrieve
      */
-    public void Var059 () { dfpTest(JDRSTest.RSTEST_DFP16, "4533.43", "4533.43"); }
-    public void Var060 () { dfpTest(JDRSTest.RSTEST_DFP16, "1234567890123456", "1234567890123456");} 
-    public void Var061 () { dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
-    public void Var062 () { dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
+    public void Var059 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "4533.43", "4533.43"); }
+    public void Var060 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1234567890123456", "1234567890123456");} 
+    public void Var061 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456", "-1234567890123456");}
+    public void Var062 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456","1234567890123456");}
     public void Var063 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E28","1.234567890123456E+43");
     }
     public void Var064 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E+28","1.234567890123456E+43");
     }
     public void Var065 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012345.6E+29","1.234567890123456E+43");
     }
     public void Var066 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901234.56E+30","1.234567890123456E+43");
     }
     public void Var067 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123.456E+31","1.234567890123456E+43");
     }
     public void Var068 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012.3456E+32","1.234567890123456E+43");
     }
     public void Var069 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901.23456E+33","1.234567890123456E+43");
     }
     public void Var070 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890.123456E+34","1.234567890123456E+43");
     }
     public void Var071 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789.0123456E+35","1.234567890123456E+43");
     }
     public void Var072 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678.90123456E+36","1.234567890123456E+43");
     }
     public void Var073 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567.890123456E+37","1.234567890123456E+43");
     }
     public void Var074 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456.7890123456E+38","1.234567890123456E+43");
     }
     public void Var075 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345.67890123456E+39","1.234567890123456E+43");
     }
     public void Var076 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234.567890123456E+40","1.234567890123456E+43");
     }
     public void Var077 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123.4567890123456E+41","1.234567890123456E+43");
     }
     public void Var078 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12.34567890123456E+42","1.234567890123456E+43");
     }
     public void Var079 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1.234567890123456E+43","1.234567890123456E+43");
     }
     public void Var080 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+.1234567890123456E+44","1.234567890123456E+43");
     }
     public void Var081 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.1234567890123456E+44","1.234567890123456E+43");
     }
     public void Var082 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
     }
     public void Var083 () {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456E28","-1.234567890123456E+43");
     }
     
-    public void Var084 () { dfpTest(JDRSTest.RSTEST_DFP16, "1E0", "1");}
-    public void Var085 () { dfpTest(JDRSTest.RSTEST_DFP16, "1.1", "1.1");} 
-    public void Var086 () { dfpTest(JDRSTest.RSTEST_DFP16, "1.1E0", "1.1");}
-    public void Var087 () { dfpTest(JDRSTest.RSTEST_DFP16, null, null);}
+    public void Var084 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1E0", "1");}
+    public void Var085 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1.1", "1.1");} 
+    public void Var086 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1.1E0", "1.1");}
+    public void Var087 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, null, null);}
 
         /**
      * updateBigDecimal - set DFP34 to different values and retrieve
      */
-    public void Var088 () { dfpTest(JDRSTest.RSTEST_DFP34, "4533.43", "4533.43"); }
-    public void Var089 () { dfpTest(JDRSTest.RSTEST_DFP34, "1234567890123456", "1234567890123456");} 
-    public void Var090 () { dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456", "-1234567890123456");}
-    public void Var091 () { dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456","1234567890123456");}
+    public void Var088 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "4533.43", "4533.43"); }
+    public void Var089 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1234567890123456", "1234567890123456");} 
+    public void Var090 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456", "-1234567890123456");}
+    public void Var091 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456","1234567890123456");}
     public void Var092 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E28","1.234567890123456E+43");
     }
     public void Var093 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E+28","1.234567890123456E+43");
     }
     public void Var094 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012345.6E+29","1.234567890123456E+43");
     }
     public void Var095 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901234.56E+30","1.234567890123456E+43");
     }
     public void Var096 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123.456E+31","1.234567890123456E+43");
     }
     public void Var097 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012.3456E+32","1.234567890123456E+43");
     }
     public void Var098 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901.23456E+33","1.234567890123456E+43");
     }
     public void Var099 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890.123456E+34","1.234567890123456E+43");
     }
     public void Var100 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789.0123456E+35","1.234567890123456E+43");
     }
     public void Var101 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678.90123456E+36","1.234567890123456E+43");
     }
     public void Var102 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567.890123456E+37","1.234567890123456E+43");
     }
     public void Var103 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456.7890123456E+38","1.234567890123456E+43");
     }
     public void Var104 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345.67890123456E+39","1.234567890123456E+43");
     }
     public void Var105 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234.567890123456E+40","1.234567890123456E+43");
     }
     public void Var106 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123.4567890123456E+41","1.234567890123456E+43");
     }
     public void Var107 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12.34567890123456E+42","1.234567890123456E+43");
     }
     public void Var108 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1.234567890123456E+43","1.234567890123456E+43");
     }
     public void Var109 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+.1234567890123456E+44","1.234567890123456E+43");
     }
     public void Var110 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.1234567890123456E+44","1.234567890123456E+43");
     }
     public void Var111 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.01234567890123456E+45","1.234567890123456E+43");
     }
     public void Var112 () {
-	    dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456E28","-1.234567890123456E+43");
     }
-    public void Var113 () { dfpTest(JDRSTest.RSTEST_DFP34, "1E0", "1");}
-    public void Var114 () { dfpTest(JDRSTest.RSTEST_DFP34, "1.1", "1.1");} 
-    public void Var115 () { dfpTest(JDRSTest.RSTEST_DFP34, "1.1E0", "1.1");}
-    public void Var116 () { dfpTest(JDRSTest.RSTEST_DFP34, null, null);}
+    public void Var113 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1E0", "1");}
+    public void Var114 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1.1", "1.1");} 
+    public void Var115 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1.1E0", "1.1");}
+    public void Var116 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, null, null);}
 
 
 
@@ -2813,7 +2826,7 @@ This is ok.
         if (checkJdbc20 ()) {
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD143"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD143"; 
                     initTable(statementCommaSeparator_, tableName, " (c1 DECIMAL(12 , 10))");
                     statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -2823,7 +2836,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery(); 
                     rs.next(); 
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow();  /* unique file */
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -2871,7 +2884,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD144"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD144"; 
 		  initTable(statementCommaSeparator_,tableName," (c1 DECIMAL(14 , 2))");
 		  statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -2884,7 +2897,7 @@ This is ok.
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow();
+		  rs.updateRow(); /* unique file */
 		  rs.close(); 
 
 		  rs = ps.executeQuery();
@@ -2923,7 +2936,7 @@ This is ok.
 
             if (checkBigintSupport()) {
                 try {
-                    String tableName = JDRSTest.COLLECTION +".JDPSBD145"; 
+                    String tableName = JDRSTest.COLLECTION +".JDRSBD145"; 
                     initTable(statementCommaSeparator_,tableName," (c1 NUMERIC(12 , 10))");
                     statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(0.00000016)");
 
@@ -2932,7 +2945,7 @@ This is ok.
                     ResultSet rs = ps.executeQuery();
                     rs.next();
                     rs.updateBigDecimal (1, new BigDecimal ("0.00000017"));
-                    rs.updateRow(); 
+                    rs.updateRow(); /* unique file */ 
                     rs.close(); 
 
                     rs = ps.executeQuery();
@@ -2980,7 +2993,7 @@ This is ok.
 	  if (checkBigintSupport()) {
 	      try {
 
-		  String tableName = JDRSTest.COLLECTION +".JDPSBD146"; 
+		  String tableName = JDRSTest.COLLECTION +".JDRSBD146"; 
 		  initTable(statementCommaSeparator_,tableName," (c1 NUMERIC(14 , 2))");
 		  statementCommaSeparator_.executeUpdate("INSERT INTO "+tableName+" values(1600000000)");
 
@@ -2991,7 +3004,7 @@ This is ok.
 		  BigDecimal bd; 
 		      bd = new BigDecimal (new BigInteger("17"),-8 ); 
 		  rs.updateBigDecimal (1, bd);
-		  rs.updateRow(); 
+		  rs.updateRow();  /* unique file */
 		  rs.close(); 
 
 
@@ -3017,7 +3030,10 @@ This is ok.
       if (checkDecFloatSupport()) {
 
 	  setupRsCommaSeparator();
-        try {
+	  
+	    try {
+	     
+
           Statement s = connectionCommaSeparator_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -3030,12 +3046,12 @@ This is ok.
             bd = null; 
           }
           rs.updateBigDecimal(1, bd);
-          rs.updateRow();
-          
+          rs.updateRow(); /* serialized */ 
           ResultSet rs2 = statementCommaSeparator2f_.executeQuery("SELECT * FROM " + table);
           rs2.next();
           String v = rs2.getString(1);
           rs2.close();
+          rs.close(); 
           s.close();
           try {
            connectionCommaSeparator_.commit(); 
@@ -3052,153 +3068,153 @@ This is ok.
     /**
      * updateBigDecimal -- set DFP16 to different values and retrieve
      */
-    public void Var147 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "4533.43", "4533,43"); }
-    public void Var148 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "1234567890123456", "1234567890123456");} 
-    public void Var149 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
-    public void Var150 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
+    public void Var147 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "4533.43", "4533,43"); }
+    public void Var148 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "1234567890123456", "1234567890123456");} 
+    public void Var149 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456", "-1234567890123456");}
+    public void Var150 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456","1234567890123456");}
     public void Var151 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E28","1,234567890123456E+43");
     }
     public void Var152 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E+28","1,234567890123456E+43");
     }
     public void Var153 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+123456789012345.6E+29","1,234567890123456E+43");
     }
     public void Var154 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+12345678901234.56E+30","1,234567890123456E+43");
     }
     public void Var155 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567890123.456E+31","1,234567890123456E+43");
     }
     public void Var156 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+123456789012.3456E+32","1,234567890123456E+43");
     }
     public void Var157 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+12345678901.23456E+33","1,234567890123456E+43");
     }
     public void Var158 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567890.123456E+34","1,234567890123456E+43");
     }
     public void Var159 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+123456789.0123456E+35","1,234567890123456E+43");
     }
     public void Var160 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+12345678.90123456E+36","1,234567890123456E+43");
     }
     public void Var161 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234567.890123456E+37","1,234567890123456E+43");
     }
     public void Var162 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+123456.7890123456E+38","1,234567890123456E+43");
     }
     public void Var163 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+12345.67890123456E+39","1,234567890123456E+43");
     }
     public void Var164 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1234.567890123456E+40","1,234567890123456E+43");
     }
     public void Var165 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+123.4567890123456E+41","1,234567890123456E+43");
     }
     public void Var166 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+12.34567890123456E+42","1,234567890123456E+43");
     }
     public void Var167 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+1.234567890123456E+43","1,234567890123456E+43");
     }
     public void Var168 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+.1234567890123456E+44","1,234567890123456E+43");
     }
     public void Var169 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+0.1234567890123456E+44","1,234567890123456E+43");
     }
     public void Var170 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "+0.01234567890123456E+45","1,234567890123456E+43");
     }
     public void Var171 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456E28","-1,234567890123456E+43");
     }
     
-    public void Var172 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "1E0", "1");}
-    public void Var173 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "1.1", "1,1");} 
-    public void Var174 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, "1.1E0", "1,1");}
-    public void Var175 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP16, null, null);}
+    public void Var172 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "1E0", "1");}
+    public void Var173 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "1.1", "1,1");} 
+    public void Var174 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, "1.1E0", "1,1");}
+    public void Var175 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP16, null, null);}
 
         /**
      * updateBigDecimal - set DFP34 to different values and retrieve
      */
-    public void Var176 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "4533.43", "4533,43"); }
-    public void Var177 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1234567890123456", "1234567890123456");} 
-    public void Var178 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "-1234567890123456", "-1234567890123456");}
-    public void Var179 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456","1234567890123456");}
+    public void Var176 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "4533.43", "4533,43"); }
+    public void Var177 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "1234567890123456", "1234567890123456");} 
+    public void Var178 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456", "-1234567890123456");}
+    public void Var179 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456","1234567890123456");}
     public void Var180 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E28","1,234567890123456E+43");
     }
     public void Var181 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E+28","1,234567890123456E+43");
     }
     public void Var182 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+123456789012345.6E+29","1,234567890123456E+43");
     }
     public void Var183 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+12345678901234.56E+30","1,234567890123456E+43");
     }
     public void Var184 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567890123.456E+31","1,234567890123456E+43");
     }
     public void Var185 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+123456789012.3456E+32","1,234567890123456E+43");
     }
     public void Var186 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+12345678901.23456E+33","1,234567890123456E+43");
     }
     public void Var187 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567890.123456E+34","1,234567890123456E+43");
     }
     public void Var188 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+123456789.0123456E+35","1,234567890123456E+43");
     }
     public void Var189 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+12345678.90123456E+36","1,234567890123456E+43");
     }
     public void Var190 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234567.890123456E+37","1,234567890123456E+43");
     }
     public void Var191 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+123456.7890123456E+38","1,234567890123456E+43");
     }
     public void Var192 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+12345.67890123456E+39","1,234567890123456E+43");
     }
     public void Var193 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1234.567890123456E+40","1,234567890123456E+43");
     }
     public void Var194 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+123.4567890123456E+41","1,234567890123456E+43");
     }
     public void Var195 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+12.34567890123456E+42","1,234567890123456E+43");
     }
     public void Var196 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+1.234567890123456E+43","1,234567890123456E+43");
     }
     public void Var197 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+.1234567890123456E+44","1,234567890123456E+43");
     }
     public void Var198 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+0.1234567890123456E+44","1,234567890123456E+43");
     }
     public void Var199 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "+0.01234567890123456E+45","1,234567890123456E+43");
     }
     public void Var200 () {
-	    dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-1,234567890123456E+43");
+	    dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456E28","-1,234567890123456E+43");
     }
-    public void Var201 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1E0", "1");}
-    public void Var202 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1.1", "1,1");} 
-    public void Var203 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, "1.1E0", "1,1");}
-    public void Var204 () { dfpTestCommaSeparator(JDRSTest.RSTEST_DFP34, null, null);}
+    public void Var201 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "1E0", "1");}
+    public void Var202 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "1.1", "1,1");} 
+    public void Var203 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, "1.1E0", "1,1");}
+    public void Var204 () { dfpTestCommaSeparator(JDRSTest.RSTEST_UPDDFP34, null, null);}
 
     /**
 updateBigDecimal() - Update a BOOLEAN.

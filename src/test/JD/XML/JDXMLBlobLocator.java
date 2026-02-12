@@ -79,6 +79,7 @@ extends JDXMLBlob
     protected void setup ()
     throws Exception
     {
+      suffix="L";
         lobThreshold = ";lob threshold=1";
 	super.setup(); 
     }

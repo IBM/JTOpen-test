@@ -19,6 +19,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -26,7 +27,7 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable;
@@ -124,7 +125,7 @@ Performs setup needed before running variations.
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GBS')");
     
             // Force LOB locators.
             connection2_ = testDriver_.getConnection (url + ";lob threshold=0","JDRSGetBinaryStream1");
@@ -433,7 +434,9 @@ getBinaryStream() - Should work when an update has been done.
     public void Var012()
     {
         if (checkJdbc20 ()) {
-        try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
             ResultSet rs = statement_.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE");
             JDRSTest.position (rs, "UPDATE_SANDBOX");
@@ -442,7 +445,7 @@ getBinaryStream() - Should work when an update has been done.
                                        (byte) 0xAB, (byte) 0xBC, (byte) 0xCD, (byte) 0xDE, (byte) 0xEF,
                                        (byte) 0xFF, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0xFF };
             rs.updateBytes ("C_BINARY_20", test);
-            rs.updateRow ();
+            rs.updateRow ();  /* serialized */
             InputStream v = rs.getBinaryStream ("C_BINARY_20");	
 	    boolean check;					// @K2                sb.setLength(0);
       sb.setLength(0);
@@ -452,11 +455,20 @@ getBinaryStream() - Should work when an update has been done.
 		check = compareBeginsWithBytes( v, test,sb);	// @K2
 	    else						// @K2
 		check = compare (v, test,sb);			// @K2
+	    v.close(); 
             rs.close();
             assertCondition(check,sb);
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
         }
     }
@@ -506,7 +518,9 @@ row, when an insert has been done.
     public void Var014()
     {
         if (checkJdbc20 ()) {
-        try {
+          JDSerializeFile serializeFile = null;
+          try {
+           serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
           if (getDriver() == JDTestDriver.DRIVER_JCC) {
             notApplicable("JCC does not support moveToInserRow"); 
             return; 
@@ -531,6 +545,14 @@ row, when an insert has been done.
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
+        } finally {
+          if (serializeFile != null) {
+            try {
+              serializeFile.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+          }
         }
         }
     }
@@ -551,7 +573,7 @@ getBinaryStream() - Should throw an exception on a deleted row.
             try {
                 rs = statement_.executeQuery ("SELECT * FROM "
                     + JDRSTest.RSTEST_GET + " FOR UPDATE");
-                JDRSTest.position (rs, "DUMMY_ROW");
+                JDRSTest.position (rs, "DUMMYROW_GBS");
                 rs.deleteRow ();
                 InputStream v = rs.getBinaryStream ("C_VARBINARY_20");
                 failed ("Didn't throw SQLException"+v);
@@ -1131,7 +1153,7 @@ to a value shorter than the byte array.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
          rs.next(); 
          InputStream v = rs.getBinaryStream (1);
          failed ("Didn't throw SQLException "+v);
@@ -1153,7 +1175,7 @@ to a value shorter than the byte array.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next(); 
          InputStream v = rs.getBinaryStream (1);
          failed ("Didn't throw SQLException "+v);

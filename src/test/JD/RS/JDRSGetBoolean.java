@@ -123,7 +123,7 @@ Performs setup needed before running variations.
 	      statement_ = connection_.createStatement();
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMYROW_GBOOL')");
 	    statementQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE";
             rs_ = statement_.executeQuery (statementQuery_);
@@ -457,7 +457,7 @@ getBoolean() - Should throw an exception on a deleted row.
           return;
         }
         try {
-          JDRSTest.position (rs_, "DUMMY_ROW");
+          JDRSTest.position (rs_, "DUMMYROW_GBOOL");
           rs_.deleteRow ();
           boolean v = rs_.getBoolean ("C_SMALLINT");
           failed ("Didn't throw SQLException"+v);
@@ -1347,7 +1347,7 @@ getBoolean() - Get from a BIGINT, when the value is false.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
          rs.next();
          boolean v = rs.getBoolean (1);
          if (isToolboxDriver() ||
@@ -1389,7 +1389,7 @@ getBoolean() - Get from a BIGINT, when the value is false.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next();
          boolean v = rs.getBoolean (1);
          if (isToolboxDriver() ||

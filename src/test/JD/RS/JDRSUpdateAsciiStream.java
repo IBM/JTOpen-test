@@ -35,6 +35,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDWeirdInputStream;
 
 
@@ -70,6 +71,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -111,11 +113,13 @@ extends JDTestcase
             connection_.setAutoCommit(false); // @C1A
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                                                       ResultSet.CONCUR_UPDATABLE);
+            
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                        ResultSet.CONCUR_READ_ONLY);
-
+            serializeUpdateFile_ = new JDSerializeFile(statement_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                                      + " (C_KEY) VALUES ('DUMMY_ROW')");
+                                      + " (C_KEY) VALUES ('DUMMY_UPDAS')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                                       + " (C_KEY) VALUES ('" + key_ + "')");
 
@@ -136,6 +140,7 @@ extends JDTestcase
         if(isJdbc20 ())
         {
             rs_.close ();
+            serializeUpdateFile_.close(); 
             statement_.close ();
             connection_.commit(); // @C1A
             connection_.close ();
@@ -221,7 +226,7 @@ extends JDTestcase
           {
             JDRSTest.position (rs_, null);
             rs_.updateAsciiStream ("C_VARCHAR_50", stringToAsciiStream ("Buenos Aires"), 12);
-            rs_.updateRow(); 
+            rs_.updateRow();  /* exception */ 
             failed ("Didn't throw SQLException when cursor not pointing to a row");
           }
           catch(Exception e)
@@ -622,10 +627,10 @@ extends JDTestcase
         {
             try
             {
-                JDRSTest.position (rs_, "DUMMY_ROW");
+                JDRSTest.position (rs_, "DUMMY_UPDAS");
                 rs_.deleteRow ();
                 rs_.updateAsciiStream ("C_VARCHAR_50", stringToAsciiStream ("Venice"), 6);
-                rs_.updateRow(); 
+                rs_.updateRow();  /* exception */ 
                 failed ("Didn't throw SQLException");
             }
             catch(Exception e)
@@ -2307,10 +2312,14 @@ extends JDTestcase
          Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
              ResultSet.CONCUR_UPDATABLE);
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
+             + JDRSTest.RSTEST_UPDDFP16+" FOR UPDATE ");
          rs.next(); 
-         rs.updateAsciiStream(1, stringToAsciiStream ("Hannover"), 8 );
-	 rs.updateRow(); 
+         InputStream stream = stringToAsciiStream ("Hannover");
+         rs.updateAsciiStream(1, stream, 8 );
+	 rs.updateRow();  /* exception */ 
+	 stream.close(); 
+	 rs.close(); 
+	 s.close(); 
          failed ("Didn't throw SQLException ");
        }
        catch (Exception e) {
@@ -2339,10 +2348,10 @@ extends JDTestcase
         Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
             ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery ("SELECT * FROM "
-            + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
+            + JDRSTest.RSTEST_UPDDFP34+" FOR UPDATE ");
         rs.next(); 
         rs.updateAsciiStream(1, stringToAsciiStream ("Hannover"), 8 ); 
-	rs.updateRow(); 
+	rs.updateRow();  /* exception */ 
         failed ("Didn't throw SQLException for 'Hannover' ");
       }
       catch (Exception e) {

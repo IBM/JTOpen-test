@@ -29,6 +29,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 import test.JD.JDWeirdInputStream;
 
 /**
@@ -57,6 +58,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
   private Statement statement_;
   private Statement statement2_;
   private ResultSet rs_;
+  private JDSerializeFile serializeUpdateFile_;
 
   /**
    * Constructor.
@@ -86,10 +88,13 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
           + ";data truncation=true";
       connection_ = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
       connection_.setAutoCommit(false); // @C1A
+      serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+      connection_.commit(); 
+
       statement_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
       statement2_ = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-      statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMY_ROW')");
+      statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMYROW_RSUBSM')");
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('" + key_ + "')");
 
       rs_ = statement_.executeQuery(select_ + " FOR UPDATE");
@@ -105,6 +110,8 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
     if (isJdbc20()) {
       rs_.close();
       statement_.close();
+      serializeUpdateFile_.close(); 
+
       connection_.commit(); // @C1A
       connection_.close();
     }
@@ -115,8 +122,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var001() {
     if (checkJdbc20()) {
-      try {
-        Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+      try (Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
         ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
         rs.next();
         rs.close();
@@ -134,11 +140,11 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var002() {
     if (checkJdbc20()) {
-      try {
-        Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE);
-        rs.next();
-        rs.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(new byte[] { (byte) -12, (byte) -34 }), 2);
+      try (Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+        try (ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDATE)) {
+          rs.next();
+          rs.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(new byte[] { (byte) -12, (byte) -34 }), 2);
+        }
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -156,7 +162,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         JDRSTest.position(rs_, null);
         rs_.updateBinaryStream("C_VARBINARY_20",
             new ByteArrayInputStream(new byte[] { (byte) 12, (byte) 34, (byte) 98 }), 3);
-        rs_.updateRow();
+        rs_.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -215,11 +221,13 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var007() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 22, (byte) 4, (byte) 98, (byte) -2 };
         rs_.updateBinaryStream(18, new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -227,7 +235,9 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+     
       }
+
     }
   }
 
@@ -289,11 +299,13 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var011() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) -4, (byte) 98, (byte) 99 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), 3);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -301,6 +313,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+     
       }
     }
   }
@@ -311,10 +324,12 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var012() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         rs_.updateBinaryStream("C_VARBINARY_20", null, 0);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -323,7 +338,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition((v == null) && (wn == true));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-      }
+      } 
     }
   }
 
@@ -366,14 +381,17 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var015() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 0, (byte) 56, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         assertCondition(areEqual(rs_.getBytes("C_VARBINARY_20"), ba));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+     
       }
     }
   }
@@ -384,17 +402,20 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var016() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 0, (byte) 56, (byte) 1, (byte) -1, (byte) 2, (byte) -2 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         rs_.beforeFirst();
         JDRSTest.position(rs_, key_);
         byte[] v = rs_.getBytes("C_VARBINARY_20");
         assertCondition(areEqual(ba, v));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      
       }
     }
   }
@@ -441,7 +462,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
   public void Var019() {
     if (checkJdbc20()) {
       try {
-        JDRSTest.position(rs_, "DUMMY_ROW");
+        JDRSTest.position(rs_, "DUMMYROW_RSUBSM");
         rs_.deleteRow();
         byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 2, (byte) -2 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), ba.length);
@@ -592,13 +613,15 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var029() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 44, (byte) 86, (byte) -1, (byte) 10, (byte) 20, (byte) 23, (byte) 77, (byte) 10,
             (byte) -1, (byte) 46, (byte) 11, (byte) 22, (byte) 43, (byte) 98, (byte) -6, (byte) 11, (byte) 11, (byte) 0,
             (byte) 0, (byte) 100 };
         rs_.updateBinaryStream("C_BINARY_20", new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_BINARY_20");
@@ -606,6 +629,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      
       }
     }
   }
@@ -621,7 +645,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         expectedColumn = rs_.findColumn("C_BINARY_1");
         rs_.updateBinaryStream("C_BINARY_1", new ByteArrayInputStream(new byte[] { (byte) 54, (byte) 64, (byte) 0 }),
             3);
-        rs_.updateRow();
+        rs_.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         DataTruncation dt = (DataTruncation) e;
@@ -638,11 +662,13 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var031() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) -1, (byte) 86, (byte) 11, (byte) 0, (byte) 0, (byte) 100 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -737,11 +763,13 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var036() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[0];
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), 0);
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -749,20 +777,23 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      
       }
     }
-  }
+}
 
   /**
    * updateBinaryStream() - Update a VARBINARY, with single element array.
    **/
   public void Var037() {
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 0 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), 1);
-        rs_.updateRow();
+        rs_.updateRow();  /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -788,7 +819,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
             (byte) 10, (byte) -1, (byte) 46, (byte) 23, (byte) 77, (byte) 10, (byte) -1, (byte) 46, (byte) 11,
             (byte) 11, (byte) 0, (byte) 0, (byte) 100 };
         rs_.updateBinaryStream("C_VARBINARY_20", new ByteArrayInputStream(ba), ba.length);
-        rs_.updateRow();
+        rs_.updateRow(); /* exception */
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         DataTruncation dt = (DataTruncation) e;
@@ -827,8 +858,9 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
           };
         }
 
-        InputStream r = new BadInputStream();
-        rs_.updateBinaryStream("C_VARBINARY_20", r, 2);
+        try (InputStream r = new BadInputStream()) {
+          rs_.updateBinaryStream("C_VARBINARY_20", r, 2);
+        }
         failed("Didn't throw SQLException");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
@@ -878,13 +910,15 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
   public void Var042() {
     if (checkJdbc20()) {
       if (checkLobSupport()) {
+        
         try {
+          
           JDRSTest.position(rs_, key_);
           byte[] ba = new byte[] { (byte) 98, (byte) 1 };
           rs_.updateBinaryStream("C_BLOB", new ByteArrayInputStream(ba), 2);
 
           // if (getDriver() == JDTestDriver.DRIVER_NATIVE) { //@D1D
-          rs_.updateRow();
+          rs_.updateRow(); /* serialized */
           ResultSet rs2 = statement2_.executeQuery(select_);
           JDRSTest.position(rs2, key_);
           byte[] v = rs2.getBytes("C_BLOB");
@@ -1010,23 +1044,26 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
     String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes ";
 
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 32, (byte) 33, (byte) 34, (byte) 35, (byte) 36, (byte) 37 };
-        InputStream is = new JDWeirdInputStream("0102030");
-
-        // toolbox expects correct size
-        try {
-          rs_.updateBinaryStream(18, is, 6);
-        } catch (SQLException e) {
-          if (isToolboxDriver()) {
-            succeeded();
-            return;
-          } else {
-            throw e;
+        try (InputStream is = new JDWeirdInputStream("0102030")) {
+          // toolbox expects correct size
+          try {
+            rs_.updateBinaryStream(18, is, 6);
+          } catch (SQLException e) {
+            if (isToolboxDriver()) {
+              succeeded();
+              return;
+            } else {
+              throw e;
+            }
           }
         }
-        rs_.updateRow();
+
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -1034,6 +1071,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba), "Not equal " + added);
       } catch (Exception e) {
         failed(e, "Unexpected Exception " + added);
+      
       }
     }
   }
@@ -1045,24 +1083,27 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
     String added = "Added by native driver 10/11/2006 to test input stream that sometimes returns 0 bytes ";
 
     if (checkJdbc20()) {
+      
       try {
+        
         JDRSTest.position(rs_, key_);
         byte[] ba = new byte[] { (byte) 32, (byte) 33, (byte) 34, (byte) 35, (byte) 36 };
 
-        InputStream is = new JDWeirdInputStream("0102030");
-
-        // toolbox expects correct size
-        try {
-          rs_.updateBinaryStream(18, is, 5);
-        } catch (SQLException e) {
-          if (isToolboxDriver()) {
-            succeeded();
-            return;
-          } else {
-            throw e;
+        try (InputStream is = new JDWeirdInputStream("0102030")) {
+          // toolbox expects correct size
+          try {
+            rs_.updateBinaryStream(18, is, 5);
+          } catch (SQLException e) {
+            if (isToolboxDriver()) {
+              succeeded();
+              return;
+            } else {
+              throw e;
+            }
           }
         }
-        rs_.updateRow();
+
+        rs_.updateRow(); /* serialized */
         ResultSet rs2 = statement2_.executeQuery(select_);
         JDRSTest.position(rs2, key_);
         byte[] v = rs2.getBytes("C_VARBINARY_20");
@@ -1070,6 +1111,7 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
         assertCondition(areEqual(v, ba), "Not equal " + added);
       } catch (Exception e) {
         failed(e, "Unexpected Exception " + added);
+      
       }
     }
   }
@@ -1079,9 +1121,8 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
    **/
   public void Var051() {
     if (checkDecFloatSupport()) {
-      try {
-        Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ");
+      try (Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP16 + " FOR UPDATE ")) {
         rs.next();
         rs.updateBinaryStream(1, new ByteArrayInputStream(new byte[] { (byte) 50 }), 1);
         failed("Didn't throw SQLException ");
@@ -1106,9 +1147,8 @@ public class JDRSUpdateBinaryStream extends JDTestcase {
 
   public void Var052() {
     if (checkDecFloatSupport()) {
-      try {
-        Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34 + " FOR UPDATE ");
+      try (Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP34 + " FOR UPDATE ")) {
         rs.next();
         rs.updateBinaryStream(1, new ByteArrayInputStream(new byte[] { (byte) 50 }), 1);
         failed("Didn't throw SQLException ");

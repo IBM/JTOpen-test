@@ -17,10 +17,23 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import test.JDDataAreaLock;
 
 /**
- * Class to serialize access to a find using data area. 
+ * Class to serialize access to a file using data area. 
+  The pattern for using the file looks like this
+    JDSerializeFile serializeFile = null;
+    try {
+     serializeFile = new JDSerializeFile(connection_, filename);
+     .....
+    } finally {
+      if (serializeFile != null) {
+        try {
+          serializeFile.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+    }
  */
 public class JDSerializeFile implements AutoCloseable{
   String name_; 
@@ -29,10 +42,16 @@ public class JDSerializeFile implements AutoCloseable{
   JDDataAreaLock dataAreaLock_ ; 
   
   public JDSerializeFile(Connection c, String name) throws Exception {
+    String library = null; 
     name_ = name; 
+    int dotIndex = name.indexOf("."); 
+    if (dotIndex > 0) { 
+      library = name.substring(0,dotIndex); 
+      name=name.substring(dotIndex+1); 
+    }
     statement_ = c.createStatement();
     closeStatement_ = true; 
-    name = name.replace("/","X").replace(".","X");
+    name = name.replace("/","X").replace(".","X").replace("\"","X");
     int len = name.length(); 
     if (len > 10) {
       name = name.substring(len-10); 
@@ -40,14 +59,24 @@ public class JDSerializeFile implements AutoCloseable{
     if (Character.isDigit(name.charAt(0))) { 
       name='X'+name.substring(1); 
     }
-    dataAreaLock_ = new JDDataAreaLock(statement_, name);
+    if (library != null) { 
+      dataAreaLock_ = new JDDataAreaLock(statement_, library, name);
+    } else {
+      dataAreaLock_ = new JDDataAreaLock(statement_, name);
+    }
     dataAreaLock_.lock("JDSerializeFile", 3600);
   }
 
   public JDSerializeFile(Statement s, String name) throws SQLException {
+    String library = null; 
     name_ = name; 
+    int dotIndex = name.indexOf("."); 
+    if (dotIndex > 0) { 
+      library = name.substring(0,dotIndex); 
+      name=name.substring(dotIndex+1); 
+    }
     statement_ = s;
-    name = name.replace("/","X").replace(".","X");
+    name = name.replace("/","X").replace(".","X").replace("\"","X");
     int len = name.length(); 
     if (len > 10) {
       name = name.substring(len-10); 
@@ -55,7 +84,11 @@ public class JDSerializeFile implements AutoCloseable{
     if (Character.isDigit(name.charAt(0))) { 
       name='X'+name.substring(1); 
     }
-    dataAreaLock_ = new JDDataAreaLock(statement_, name);
+    if (library != null) { 
+      dataAreaLock_ = new JDDataAreaLock(statement_, library, name);
+    } else {
+      dataAreaLock_ = new JDDataAreaLock(statement_, name);
+    }
     dataAreaLock_.lock("JDSerializeFile", 3600);
   }
 

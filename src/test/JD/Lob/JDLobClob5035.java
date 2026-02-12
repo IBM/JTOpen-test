@@ -51,6 +51,7 @@ public class JDLobClob5035 extends JDLobClobLocator5035
                namesAndVars, runMode, fileOutputStream,
                password);
 	lobThreshold="1000000000"; 
+	suffix="K";
     }
 
 

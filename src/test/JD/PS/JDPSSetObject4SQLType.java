@@ -120,6 +120,8 @@ public class JDPSSetObject4SQLType extends JDTestcase {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
       try {
+        statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName() + " (C_NUMERIC_105) VALUES (?)");
         ps.close();
@@ -152,6 +154,8 @@ if (checkJdbc42()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
       try {
+        statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName()
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -185,6 +189,8 @@ if (checkJdbc42()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
       try {
+        statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName()
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -218,6 +224,8 @@ if (checkJdbc42()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
 if (checkJdbc42()) {
       try {
+        statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
         PreparedStatement ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName()
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -387,6 +395,8 @@ if (checkJdbc42()) {
   PreparedStatement ps = null; 
       try {
         pstestSet = JDPSTest.getPstestSet(connection_);
+        statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
         ps = connection_.prepareStatement("INSERT INTO "
             + pstestSet.getName()
             + " (C_INTEGER, C_SMALLINT, C_VARCHAR_50) VALUES (?, ?, ?)");
@@ -439,6 +449,8 @@ if (checkJdbc42()) {
       pstestSet = JDPSTest.getPstestSet(connection_);
       if (checkJdbc42()) {
         try {
+          statement_.executeUpdate ("DELETE FROM " + pstestSet.getName());
+
           ps = connection_.prepareStatement("INSERT INTO " + pstestSet.getName() + " (C_SMALLINT) VALUES (?)");
           JDReflectionUtil.callMethod_V(ps, "setObject", 1, new Hashtable(), getSQLType(Types.SMALLINT), 0);
           failed("Didn't throw SQLException");
@@ -1411,9 +1423,10 @@ if (checkJdbc42()) {
               + pstestSet.getName());
           rs.next();
           Clob check = rs.getClob(1);
+          String answer = check.getSubString(1, (int) check.length());
           rs.close(); 
           ps.close(); 
-          assertCondition(check.getSubString(1, (int) check.length()).equals(
+          assertCondition(answer.equals(
               "Milbank")); // @D1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
@@ -1778,9 +1791,10 @@ if (checkJdbc42()) {
               + pstestSet.getName());
           rs.next();
           Blob check = rs.getBlob(1);
+           byte[] answer = check.getBytes(1, (int) check.length());
           // rs.close (); // @F1D
           rs.close(); 
-          assertCondition(areEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
+          assertCondition(areEqual(answer, b)); // @D1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }
@@ -1823,9 +1837,10 @@ if (checkJdbc42()) {
               + pstestSet.getName());
           rs.next();
           Blob check = rs.getBlob(1);
+          byte[] answer = check.getBytes(1, (int) check.length());
           // rs.close (); // @F1D
           rs.close(); 
-          assertCondition(areEqual(check.getBytes(1, (int) check.length()), b)); // @D1C
+          assertCondition(areEqual(answer, b)); // @D1C
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
         }

@@ -74,16 +74,17 @@ public class JDLobClobLocator extends JDTestcase {
   ResultSet rs4_;
   ResultSet rs6_;
 
-  public String TABLE_ = JDLobTest.COLLECTION + ".CLOBLOC";
-  public String TABLE2_ = JDLobTest.COLLECTION + ".CLOBLOC2";
-  public String TABLE3_ = JDLobTest.COLLECTION + ".CLOBLOC3";
-  public String TABLE4_ = JDLobTest.COLLECTION + ".CLOBLOC4";
-  public String TABLE5_ = JDLobTest.COLLECTION + ".CLOBLOC5";
-  public String TABLE6_ = JDLobTest.COLLECTION + ".CLOBLOC6";
-  public String TABLEHUGE_ = JDLobTest.COLLECTION + ".CLOBLOCH";
+  public String suffix="";
+  public String TABLE_ = JDLobTest.COLLECTION + ".CLBLOC"+suffix;
+  public String TABLE2_ = JDLobTest.COLLECTION + ".CLBLOC2+suffix";
+  public String TABLE3_ = JDLobTest.COLLECTION + ".CLBLOC3+suffix";
+  public String TABLE4_ = JDLobTest.COLLECTION + ".CLBLOC4+suffix";
+  public String TABLE5_ = JDLobTest.COLLECTION + ".CLBLOC5+suffix";
+  public String TABLE6_ = JDLobTest.COLLECTION + ".CLBLOC6+suffix";
+  public String TABLEHUGE_ = JDLobTest.COLLECTION + ".CLBLOCH+suffix";
 
-  public String TABLE120_ = JDLobTest.COLLECTION + ".CLOBLOC120";
-  public String TABLE121_ = JDLobTest.COLLECTION + ".CLOBLOC121";
+  public String TABLE120_ = JDLobTest.COLLECTION + ".CLBLOC120+suffix";
+  public String TABLE121_ = JDLobTest.COLLECTION + ".CLBLOC121+suffix";
 
   public String MEDIUM_ = "A really big object.";
   public String LARGE_ = "TBD"; // final
@@ -149,15 +150,15 @@ public class JDLobClobLocator extends JDTestcase {
   }
 
   void setupTableNames() {
-    TABLE_ = JDLobTest.COLLECTION + ".CLOBLOC";
-    TABLE2_ = JDLobTest.COLLECTION + ".CLOBLOC2";
-    TABLE3_ = JDLobTest.COLLECTION + ".CLOCLOC3"; // @k2
-    TABLE4_ = JDLobTest.COLLECTION + ".CLOBLOC4"; // @K5A
-    TABLE5_ = JDLobTest.COLLECTION + ".CLOBLOC5";
-    TABLE6_ = JDLobTest.COLLECTION + ".CLOBLOC6";
-    TABLE120_ = JDLobTest.COLLECTION + ".CLOBLLOC120";
-    TABLE121_ = JDLobTest.COLLECTION + ".CLOBLOC121";
-    TABLEHUGE_ = JDLobTest.COLLECTION + ".CLOBLOCH";
+    TABLE_ = JDLobTest.COLLECTION + ".CLBLOC"+suffix;
+    TABLE2_ = JDLobTest.COLLECTION + ".CLBLOC2"+suffix;
+    TABLE3_ = JDLobTest.COLLECTION + ".CLCLOC3"+suffix; // @k2
+    TABLE4_ = JDLobTest.COLLECTION + ".CLBLOC4"+suffix; // @K5A
+    TABLE5_ = JDLobTest.COLLECTION + ".CLBLOC5"+suffix;
+    TABLE6_ = JDLobTest.COLLECTION + ".CLBLOC6"+suffix;
+    TABLE120_ = JDLobTest.COLLECTION + ".CLBLLOC120"+suffix;
+    TABLE121_ = JDLobTest.COLLECTION + ".CLBLOC121"+suffix;
+    TABLEHUGE_ = JDLobTest.COLLECTION + ".CLBLOCH"+suffix;
   }
 
   void setupTestStringValues() {
@@ -231,13 +232,13 @@ public class JDLobClobLocator extends JDTestcase {
 
           String dbmoncol = JDLobTest.COLLECTION;
           try {
-            statement_.executeUpdate("DROP TABLE " + dbmoncol + ".JDLOBMON");
+            statement_.executeUpdate("DROP TABLE " + dbmoncol + ".JDLOBMON"+suffix);
           } catch (Exception e) {
 
           }
           connection_.commit();
-          String strdbmonCommand = "call QSYS.QCMDEXC(  'STRDBMON OUTFILE(" + dbmoncol
-              + "/JDLOBMON) TYPE(*BASIC)                        ',000000065.00000)";
+          String strdbmonCommand = "call QSYS2.QCMDEXC(  'STRDBMON OUTFILE(" + dbmoncol
+              + "/JDLOBMON"+suffix+") TYPE(*BASIC)    ')";
           output_.println("Starting DBMON using " + strdbmonCommand);
           statement_.executeUpdate(strdbmonCommand);
 
@@ -260,7 +261,7 @@ public class JDLobClobLocator extends JDTestcase {
           silentlyDropTable(statement_, TABLE5_);
           silentlyDropTable(statement_, TABLE6_);
           try {
-            statement_.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLOBLOCINF");
+            statement_.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix);
           } catch (Exception e) {
           }
 
@@ -268,6 +269,7 @@ public class JDLobClobLocator extends JDTestcase {
 
           connection_.commit();
 
+          
           //
           // Create the tables
           //
@@ -437,13 +439,13 @@ public class JDLobClobLocator extends JDTestcase {
         }
 
         // Create the UDF to test the locator
-        String cProgram[] = { "   /* File cloblocinf.c created  on Thu Feb 22 2007. */", "", "  /*",
+        String cProgram[] = { "   /* File CLBLOCINF"+suffix+".c created  on Thu Feb 22 2007. */", "", "  /*",
             "  * UDF to get info about a clob from a locator", "", "", "    compile using the following ",
-            "   CRTCMOD MODULE(CLOBLOCINF) DBGVIEW(*ALL)   ", "  CRTSRVPGM CLOBLOCINF export(*all)", "",
-            "   CREATE FUNCTION CLOBLOCINF (int) RETURNS VARCHAR(200) ", "   LANGUAGE C EXTERNAL NAME ",
-            "   'QGPL/CLOBLOCINF(CLOBLOCINF)', PARAMETER STYLE SQL", "", "   To test", "",
-            "    select CLOBLOCINF(256) from qsys2.qsqptabl", "", "", "", "", "  */", "", "#include <stdlib.h>",
-            "#include <stdio.h>", "#include <string.h>", "#include <sqludf.h>", "", "void  CLOBLOCINF (int * locator,",
+            "   CRTCMOD MODULE(CLBLOCINF"+suffix+") DBGVIEW(*ALL)   ", "  CRTSRVPGM CLBLOCINF"+suffix+" export(*all)", "",
+            "   CREATE FUNCTION CLBLOCINF"+suffix+" (int) RETURNS VARCHAR(200) ", "   LANGUAGE C EXTERNAL NAME ",
+            "   'QGPL/CLBLOCINF"+suffix+"(CLBLOCINF"+suffix+")', PARAMETER STYLE SQL", "", "   To test", "",
+            "    select CLBLOCINF"+suffix+"(256) from qsys2.qsqptabl", "", "", "", "", "  */", "", "#include <stdlib.h>",
+            "#include <stdio.h>", "#include <string.h>", "#include <sqludf.h>", "", "void  CLBLOCINF"+suffix+" (int * locator,",
             "                  char * output,", "                  int * ind0,", "                  int * ind1,",
             "                  char * sqlstate,", "                  char * functionName,",
             "                  char * specificName,", "                  char * messageText", "                 ) {",
@@ -456,13 +458,13 @@ public class JDLobClobLocator extends JDTestcase {
         String url2 = baseURL_;
 
         Connection noneConnection = testDriver_.getConnection(url2, systemObject_.getUserId(), encryptedPassword_);
-        stringArrayToSourceFile(noneConnection, cProgram, JDLobTest.COLLECTION, "CLOBLOCINF");
+        stringArrayToSourceFile(noneConnection, cProgram, JDLobTest.COLLECTION, "CLBLOCINF"+suffix);
         noneConnection.close();
 
         sql = "call QGPL.JDCMDEXEC(?,?)";
         CallableStatement cmd = connection_.prepareCall(sql);
-        String command = "QSYS/CRTCMOD MODULE(" + JDLobTest.COLLECTION + "/CLOBLOCINF) " + " SRCFILE(" + JDLobTest.COLLECTION
-            + "/CLOBLOCINF)   ";
+        String command = "QSYS/CRTCMOD MODULE(" + JDLobTest.COLLECTION + "/CLBLOCINF"+suffix+") " + " SRCFILE(" + JDLobTest.COLLECTION
+            + "/CLBLOCINF"+suffix+")   ";
 
         sql = sql + " command=" + command;
         cmd.setString(1, command);
@@ -474,8 +476,8 @@ public class JDLobClobLocator extends JDTestcase {
           e.printStackTrace();
         }
 
-        command = "QSYS/CRTSRVPGM SRVPGM(" + JDLobTest.COLLECTION + "/CLOBLOCINF) MODULE(" + JDLobTest.COLLECTION
-            + "/CLOBLOCINF) EXPORT(*ALL)  ";
+        command = "QSYS/CRTSRVPGM SRVPGM(" + JDLobTest.COLLECTION + "/CLBLOCINF"+suffix+") MODULE(" + JDLobTest.COLLECTION
+            + "/CLBLOCINF"+suffix+") EXPORT(*ALL)  ";
         cmd.setString(1, command);
         cmd.setInt(2, command.length());
         try {
@@ -485,12 +487,12 @@ public class JDLobClobLocator extends JDTestcase {
           e.printStackTrace();
         }
 
-        sql = " CREATE FUNCTION " + JDLobTest.COLLECTION + ".CLOBLOCINF (int) RETURNS VARCHAR(200) "
-            + "LANGUAGE C EXTERNAL NAME " + "'" + JDLobTest.COLLECTION + "/CLOBLOCINF(CLOBLOCINF)' PARAMETER STYLE SQL";
+        sql = " CREATE FUNCTION " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+" (int) RETURNS VARCHAR(200) "
+            + "LANGUAGE C EXTERNAL NAME " + "'" + JDLobTest.COLLECTION + "/CLBLOCINF"+suffix+"(CLBLOCINF"+suffix+")' PARAMETER STYLE SQL";
 
         Statement stmt = connection_.createStatement();
         try {
-          stmt.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLOBLOCINF");
+          stmt.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"");
         } catch (Exception e) {
         }
         try {
@@ -541,7 +543,7 @@ public class JDLobClobLocator extends JDTestcase {
           } catch (Exception e) {
           }
           try {
-            statement_.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLOBLOCINF");
+            statement_.executeUpdate("drop FUNCTION " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix);
           } catch (Exception e) {
           }
 
@@ -7695,7 +7697,7 @@ public class JDLobClobLocator extends JDTestcase {
           for (int i = 0; i < FREE_LOCATOR_BLOCK_SIZE; i++) {
             // Check the locator using DB locator value (not using the CLOB
             // object)
-            lastSql = "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator[i] + ")" + " from qsys2.qsqptabl";
+            lastSql = "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator[i] + ")" + " from qsys2.qsqptabl";
             ResultSet rs = statement2_.executeQuery(lastSql);
             rs.next();
             answer1[i] = rs.getString(1);
@@ -7709,7 +7711,7 @@ public class JDLobClobLocator extends JDTestcase {
           // Check the locator using DB locator value (not using the CLOB
           // object)
           for (int i = 0; i < FREE_LOCATOR_BLOCK_SIZE; i++) {
-            lastSql = "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator[i] + ")" + " from qsys2.qsqptabl";
+            lastSql = "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator[i] + ")" + " from qsys2.qsqptabl";
             ResultSet rs = statement2_.executeQuery(lastSql);
             rs.next();
             answer2[i] = rs.getString(1);
@@ -7770,7 +7772,7 @@ public class JDLobClobLocator extends JDTestcase {
             // object)
 
             ResultSet rs = statement2_.executeQuery(
-                "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator[i] + ")" + " from qsys2.qsqptabl");
+                "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator[i] + ")" + " from qsys2.qsqptabl");
             rs.next();
             answer2[i] = rs.getString(1);
             rs.close();
@@ -7826,7 +7828,7 @@ public class JDLobClobLocator extends JDTestcase {
             // object)
 
             ResultSet rs = statement2_.executeQuery(
-                "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator[i] + ")" + " from qsys2.qsqptabl");
+                "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator[i] + ")" + " from qsys2.qsqptabl");
             rs.next();
             answer2[i] = rs.getString(1);
             rs.close();
@@ -7895,7 +7897,7 @@ public class JDLobClobLocator extends JDTestcase {
             int locator = JDReflectionUtil.callMethod_I(clob[i], "getLocator");
 
             ResultSet rs = statement2_.executeQuery(
-                "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator + ")" + " from qsys2.qsqptabl");
+                "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator + ")" + " from qsys2.qsqptabl");
             rs.next();
             answer2[i] = rs.getString(1);
             rs.close();
@@ -8262,7 +8264,7 @@ public class JDLobClobLocator extends JDTestcase {
             // object)
 
             ResultSet rs = statement2_.executeQuery(
-                "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator + ")" + " from qsys2.qsqptabl");
+                "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator + ")" + " from qsys2.qsqptabl");
             rs.next();
             String answer1 = rs.getString(1);
             rs.close();
@@ -8273,7 +8275,7 @@ public class JDLobClobLocator extends JDTestcase {
             // object)
 
             rs = statement2_.executeQuery(
-                "select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator + ")" + " from qsys2.qsqptabl");
+                "select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator + ")" + " from qsys2.qsqptabl");
             rs.next();
             String answer2 = rs.getString(1);
             rs.close();
@@ -8317,7 +8319,7 @@ public class JDLobClobLocator extends JDTestcase {
           // object)
 
           ResultSet rs = statement2_
-              .executeQuery("select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator + ")" + " from qsys2.qsqptabl");
+              .executeQuery("select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator + ")" + " from qsys2.qsqptabl");
           rs.next();
           String answer1 = rs.getString(1);
           rs.close();
@@ -8329,7 +8331,7 @@ public class JDLobClobLocator extends JDTestcase {
           // object)
 
           rs = statement2_
-              .executeQuery("select " + JDLobTest.COLLECTION + ".CLOBLOCINF(" + locator + ")" + " from qsys2.qsqptabl");
+              .executeQuery("select " + JDLobTest.COLLECTION + ".CLBLOCINF"+suffix+"(" + locator + ")" + " from qsys2.qsqptabl");
           rs.next();
           String answer2 = rs.getString(1);
           rs.close();

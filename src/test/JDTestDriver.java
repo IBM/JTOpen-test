@@ -1703,7 +1703,16 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
   }
 
   protected static void initTable(Statement stmt, String tableName, String tableDefinition,
-      StringBuffer sb) throws SQLException {
+      StringBuffer sb ) throws SQLException {
+    initTable(stmt,tableName, tableDefinition, sb, true); 
+  }
+
+
+  /**
+   * Create or initialize a table as a blank table
+   */
+  protected static void initTable(Statement stmt, String tableName, String tableDefinition,
+      StringBuffer sb, boolean serializeAccess ) throws SQLException {
     tableDefinition = tableDefinition.trim();
     String oldDefinition = (String) tableDefinitions.get(tableName);
     if (oldDefinition == null) {
@@ -1717,7 +1726,7 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
     // Serialize access to the table
     JDSerializeFile setupLock = null;
     try {
-      setupLock = new JDSerializeFile(stmt, tableName); 
+      if (serializeAccess) setupLock = new JDSerializeFile(stmt, tableName); 
 
     String sql;
     try {
@@ -1778,6 +1787,74 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
       }
     }
 
+  }
+
+  
+  
+  /**
+   * Creates a table if needed.  If the table is created, then a JDSerializeFile object is returned.  JDSerializeFile should be closed after the inserts complete. 
+   * If the table exists, nothing happens and null is returned. 
+   */
+  protected static JDSerializeFile createTableIfNeeded(Statement stmt, String tableName, String tableDefinition,
+      StringBuffer sb ) throws SQLException {
+    
+    JDSerializeFile serializeFile = null; 
+    boolean tableCreated = false; 
+    tableDefinition = tableDefinition.trim();
+    String oldDefinition = (String) tableDefinitions.get(tableName);
+    if (oldDefinition == null) {
+      tableDefinitions.put(tableName, tableDefinition);
+    } else {
+      if (!oldDefinition.equals(tableDefinition)) {
+        throw new SQLException("ERROR:  definition of " + tableName + "\n"
+            + tableDefinition + "\nCHANGED FROM\n" + oldDefinition);
+      }
+    }
+     String baseFilename = null; 
+      String baseCollection = null; 
+      int dotIndex = tableName.indexOf("."); 
+      if (dotIndex > 0) { 
+        baseFilename = tableName.substring(dotIndex+1); 
+        baseCollection = tableName.substring(0,dotIndex); 
+      } else {
+        throw new SQLException("Unable to find schema in "+tableName);
+      }
+      serializeFile = new JDSerializeFile(stmt, tableName); 
+      String sql = "SELECT * FROM QSYS2.SYSTABLES where TABLE_NAME='"+baseFilename+"' and TABLE_SCHEMA='"+baseCollection+"' " ;
+      ResultSet rs = stmt.executeQuery(sql); 
+      if (!rs.next()) { 
+        sql = "CREATE TABLE " + tableName + tableDefinition;
+        if (sb != null)
+          sb.append("Running "+sql + "\n");
+        try {
+          stmt.executeUpdate(sql);
+
+          sql = "GRANT ALL ON "+tableName+" TO PUBLIC";
+          if (sb != null)
+              sb.append("Running "+sql + "\n");
+          stmt.executeUpdate(sql);
+          tableCreated = true; 
+        } catch (SQLException e2) {
+          int code = e2.getErrorCode();
+          if (code == -901) {
+            System.out
+                .println("SQL0901 found -- trying to recover using RCLDBXREF");
+            stmt.executeUpdate("CALL QSYS2.QCMDEXC(' RCLDBXREF OPTION(*FIX) ')");
+            stmt.executeUpdate(sql);
+            tableCreated = true; 
+          } else {
+            rs.close(); 
+            throw e2;
+          }
+        }
+      }
+      if (!tableCreated) { 
+        serializeFile.close(); 
+        serializeFile = null; 
+      }
+      rs.close(); 
+      return serializeFile;
+ 
   }
 
   protected void cleanupTable(Statement s, String tableName) {
@@ -1844,6 +1921,28 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
 
       }
     }
+  }
+
+  protected boolean newerFile(Statement s, String filename) throws SQLException  {
+    boolean newerFile = true;
+    String schema;
+    String baseName; 
+    filename=filename.toUpperCase();
+    int dotIndex = filename.indexOf('.'); 
+    if (dotIndex < 0) throw new SQLException("File "+filename+" does not have a '.'");
+    schema = filename.substring(0,dotIndex); 
+    baseName = filename.substring(dotIndex+1); 
+    String sql = " select * from qsys2.systables where TABLE_SCHEMA='" + schema + "'" + " AND TABLE_NAME='" + baseName
+        + "'  " + "AND LAST_ALTERED_TIMESTAMP > CURRENT_TIMESTAMP - 1 day ";    
+    ResultSet rs = s.executeQuery(sql); 
+    if (rs.next()) { 
+      newerFile = true;
+    } else {
+      newerFile = false; 
+    }
+    rs.close(); 
+    
+    return newerFile;
   }
 
 }

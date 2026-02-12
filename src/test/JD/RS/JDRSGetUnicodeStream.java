@@ -20,6 +20,7 @@ import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.Testcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ import java.sql.Connection;
 import java.sql.DataTruncation;
 
 import java.sql.ResultSet;
-
+import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
@@ -105,7 +106,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
       statement_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
           ResultSet.CONCUR_UPDATABLE);
       statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_GET
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
+          + " (C_KEY) VALUES ('DUMMYROW_GUNISTR')");
       rs_ = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GET
           + " FOR UPDATE");
     }
@@ -388,10 +389,12 @@ public class JDRSGetUnicodeStream extends JDTestcase {
     if (checkJdbc20()) {
       sb.setLength(0); 
 
+      JDSerializeFile serializeFile = null;
       try {
+        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_GET);
         JDRSTest.position(rs_, "UPDATE_SANDBOX");
         rs_.updateString("C_CHAR_50", "New Planet");
-        rs_.updateRow();
+        rs_.updateRow(); /* serialized */ 
         InputStream v = rs_.getUnicodeStream("C_CHAR_50");
         if (getDriver() == JDTestDriver.DRIVER_NATIVE && // @K2
             true) // @K2
@@ -405,9 +408,18 @@ public class JDRSGetUnicodeStream extends JDTestcase {
               "UnicodeBigUnmarked",sb),sb); // @B0C
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
+      } finally {
+        if (serializeFile != null) {
+          try {
+            serializeFile.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
       }
     }
-  }
+  
 
   /**
    * getUnicodeStream() - Should work when the current row is the insert row,
@@ -481,7 +493,7 @@ public class JDRSGetUnicodeStream extends JDTestcase {
         return;
       }
       try {
-        JDRSTest.position(rs_, "DUMMY_ROW");
+        JDRSTest.position(rs_, "DUMMYROW_GUNISTR");
         rs_.deleteRow();
         InputStream v = rs_.getUnicodeStream("C_VARCHAR_50");
         failed("Didn't throw SQLException" + v);
@@ -1217,7 +1229,7 @@ public void Var041() {
       sb.setLength(0);
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         InputStream v = rs.getUnicodeStream(1);
         String expected = "1.1";
@@ -1240,7 +1252,7 @@ public void Var041() {
       sb.setLength(0);
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         InputStream v = rs.getUnicodeStream(1);
         String expected = "1.1";

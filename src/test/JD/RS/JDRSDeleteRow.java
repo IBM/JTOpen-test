@@ -18,6 +18,7 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSTest;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.ResultSet;
@@ -59,6 +60,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -89,12 +91,15 @@ Performs setup needed before running variations.
     {
 	if (connection_ != null) connection_.close();
 
-        select_         = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE;
+        select_         = "SELECT * FROM " + JDRSTest.RSTEST_UPDATE+" A ORDER BY RRN(A)";
         if (isJdbc20 ()) {
             // SQL400 - driver neutral...
             String url = baseURL_;
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(),encryptedPassword_,"JDRSDeleteRow");
             connection_.setAutoCommit(false);   // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -102,7 +107,8 @@ Performs setup needed before running variations.
     
             // Clear any existing rows.
             statement_.executeUpdate ("DELETE FROM " + JDRSTest.RSTEST_UPDATE);
-    
+            connection_.commit();   
+            
             // Create a few different rows.  The number of loops is arbitrary.
             for (int i = 1; i < 198; ++i)
                 statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
@@ -126,6 +132,10 @@ Performs cleanup needed after running variations.
         if (isJdbc20 ()) {
             rs_.close ();
             statement_.close ();
+            connection_.commit(); 
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+
             connection_.close ();
         }
     }
@@ -139,9 +149,8 @@ closed.
     public void Var001()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
+            try (Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE)) {
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
                     + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
                 rs.next ();
@@ -164,11 +173,10 @@ not updatable.
     public void Var002()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+            try (Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                    + JDRSTest.RSTEST_UPDATE);
+                + JDRSTest.RSTEST_UPDATE)) {
                 rs.next ();
                 rs.deleteRow ();
                 failed ("Didn't throw SQLException");
@@ -226,6 +234,7 @@ deleteRow() - Should delete the first row when positioned there.
 **/
     public void Var005()
     {
+      StringBuffer sb = new StringBuffer(); 
         if (checkJdbc20 ()) {
             try {
                 rs_.beforeFirst ();
@@ -238,7 +247,7 @@ deleteRow() - Should delete the first row when positioned there.
     
                 rs_.first ();
                 rs_.deleteRow ();
-    
+                sb.append("After query is "+select_); 
                 ResultSet rs2 = statement2_.executeQuery (select_);
                 int rowCountAfter = 0;
                 Vector<String> keysAfter = new Vector<String> ();
@@ -252,16 +261,20 @@ deleteRow() - Should delete the first row when positioned there.
                 int deletedRow = 0;
                 for (int i = 0; i < rowCountBefore; ++i) {
                     if (i < deletedRow) {
-                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i)))
+                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i))) {
+                          sb.append("\nMismatch at index("+i+") before="+keysBefore.elementAt (i)+" after="+keysAfter.elementAt (i));
                             success = false;
+                        }
                     }               
                     else if (i > deletedRow) {
-                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i-1)))
+                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i-1))) {
+                          sb.append("\nMismatch at index("+i+") before="+keysBefore.elementAt (i)+" after(-1)="+keysAfter.elementAt (i-1));
                             success = false;
+                        }
                     }
                 }
-    
-                assertCondition (success && (rowCountAfter == (rowCountBefore - 1)));
+                sb.append("\nrowCountAfter="+rowCountAfter+" rowCountBefore="+rowCountBefore);
+                assertCondition (success && (rowCountAfter == (rowCountBefore - 1)),sb);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -302,7 +315,7 @@ deleteRow() - Should delete a middle row when positioned there.
                 int deletedRow = 3;
 
 		String s1, s2;
-
+		StringBuffer sb = new StringBuffer(); 
                 for (int i = 0; i < rowCountBefore; ++i) {
 
 		    s1 = keysBefore.elementAt(i).toString();
@@ -312,7 +325,7 @@ deleteRow() - Should delete a middle row when positioned there.
 
 //                        if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i)))
 			if(! s1.equals(s2)){
-			    output_.println(" "+i+". "+s2+" sb "+s1);
+			    sb.append("\n at offset "+i+". "+s2+" sb "+s1);
                             success = false;
 			}
                     }               
@@ -321,13 +334,13 @@ deleteRow() - Should delete a middle row when positioned there.
 			s2 = keysAfter.elementAt(i-1).toString();
 
 			if(! s1.equals(s2)){
-			    output_.println(" "+i+". "+s2+" sb "+s1);
+			    sb.append("\n at offset "+i+". "+s2+" sb "+s1);
                             success = false;
 			}
                     }
                 }
     
-                assertCondition (success && (rowCountAfter == (rowCountBefore - 1)));
+                assertCondition (success && (rowCountAfter == (rowCountBefore - 1)), sb);
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -394,47 +407,52 @@ is generated by a SELECT with correlation names.
     public void Var008()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-                ResultSet rs1 = s.executeQuery (select_
-                    + " AS TESTCORR FOR UPDATE");
-    
-                 rs1.beforeFirst ();
-                 int rowCountBefore = 0;
-                 Vector<String> keysBefore = new Vector<String> ();
-                 while (rs1.next ()) {
-                     ++rowCountBefore;
-                     keysBefore.addElement (rs1.getString ("C_KEY"));
-                 }
-     
-                 rs1.absolute (81);
-                 rs1.deleteRow ();
-                 rs1.close ();
-     
-                 ResultSet rs2 = statement2_.executeQuery (select_);
-                 int rowCountAfter = 0;
-                 Vector<String> keysAfter = new Vector<String> ();
-                 while (rs2.next ()) {
-                     ++rowCountAfter;
-                     keysAfter.addElement (rs2.getString ("C_KEY"));
-                 }
-                 rs2.close ();
-                  
-                 boolean success = true;
-                 int deletedRow = 80;
-                 for (int i = 0; i < rowCountBefore; ++i) {
-                     if (i < deletedRow) {
-                         if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i)))
-                             success = false;
-                     }               
-                     else if (i > deletedRow) {
-                         if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i-1)))
-                             success = false;
-                     }
-                 }
-     
-                 assertCondition (success && (rowCountAfter == (rowCountBefore - 1)));
+          
+          
+          
+          try {
+           
+                try (Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE)) {
+                  ResultSet rs1 = s.executeQuery (select_
+                      + " FOR UPDATE");
+  
+                   rs1.beforeFirst ();
+                   int rowCountBefore = 0;
+                   Vector<String> keysBefore = new Vector<String> ();
+                   while (rs1.next ()) {
+                       ++rowCountBefore;
+                       keysBefore.addElement (rs1.getString ("C_KEY"));
+                   }
+   
+                   rs1.absolute (81);
+                   rs1.deleteRow ();
+                   rs1.close ();
+   
+                   ResultSet rs2 = statement2_.executeQuery (select_);
+                   int rowCountAfter = 0;
+                   Vector<String> keysAfter = new Vector<String> ();
+                   while (rs2.next ()) {
+                       ++rowCountAfter;
+                       keysAfter.addElement (rs2.getString ("C_KEY"));
+                   }
+                   rs2.close ();
+                    
+                   boolean success = true;
+                   int deletedRow = 80;
+                   for (int i = 0; i < rowCountBefore; ++i) {
+                       if (i < deletedRow) {
+                           if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i)))
+                               success = false;
+                       }               
+                       else if (i > deletedRow) {
+                           if (! keysBefore.elementAt (i).equals (keysAfter.elementAt (i-1)))
+                               success = false;
+                       }
+                   }
+   
+                   assertCondition (success && (rowCountAfter == (rowCountBefore - 1)));
+                }
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -451,7 +469,9 @@ deleteRow() - Should delete a row when the cursor has a mixed case name.
     public void Var009()
     {
         if (checkJdbc20 ()) {
-            try {                    
+          
+          try {
+           
                 Statement statement = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 		if (isToolboxDriver())
@@ -492,11 +512,14 @@ deleteRow() - Should delete a row when the cursor has a mixed case name.
                             success = false;
                     }
                 }
-    
+                rs.close(); 
+                statement.close(); 
                 assertCondition (success && (rowCountAfter == (rowCountBefore - 1)));
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
+            } finally {
+              
             }
         }
     }

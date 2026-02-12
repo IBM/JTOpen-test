@@ -27,6 +27,7 @@ import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -63,7 +64,8 @@ extends JDTestcase
     private ResultSet           rs_;
 
 
-    private String baseAdded = " -- Added 02/07/2007 by native driver to test JDBC40 RowId support -- based on JDRSUpdateBytes "; 
+    private String baseAdded = " -- Added 02/07/2007 by native driver to test JDBC40 RowId support -- based on JDRSUpdateBytes ";
+    private JDSerializeFile serializeUpdateFile_; 
 
 /**
 Constructor.
@@ -102,13 +104,15 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
-            statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+          statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
     
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDRID')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
@@ -130,7 +134,9 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
-            connection_.close ();
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+           connection_.close ();
         }
     }
 
@@ -597,7 +603,7 @@ updateRowId() - Should throw an exception on a deleted row.
     {
         if (checkJdbc40 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDRID");
             rs_.deleteRow ();
             byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 2, (byte) -2 };
             JDReflectionUtil.callMethod_V(rs_, "updateRowId", "C_VARBINARY_20", createRowId(ba));
@@ -1231,7 +1237,7 @@ updateRowId() - Update a BIGINT.
                 sql="updateRowId"; 
                 try { 
                    JDReflectionUtil.callMethod_V(rs, "updateRowId",1, rid);
-                   rs.updateRow ();
+                   rs.updateRow ();  /* exception */
                    passed=false; 
                    message="Did not throw Exception"; 
                 }  catch (Exception e) {
