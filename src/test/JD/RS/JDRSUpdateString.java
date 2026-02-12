@@ -71,6 +71,7 @@ extends JDTestcase
     private ResultSet           rs_;
 
     boolean isjdk14_ = false;
+    private JDSerializeFile serializeUpdateFile_;
 
 
     /**
@@ -112,15 +113,17 @@ extends JDTestcase
 	      + ";data truncation=true";
 	    connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
 	    connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
 	    statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
 						      ResultSet.CONCUR_UPDATABLE);
 	    statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
 						       ResultSet.CONCUR_READ_ONLY);
 
 	    statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-				      + " (C_KEY) VALUES ('DUMMY_ROW')");
+				      + " (C_KEY) VALUES ('DUMMY_UPDSTR')");
 	    statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-				      + " (C_KEY) VALUES ('DUMMY_ROW2')");
+				      + " (C_KEY) VALUES ('DUMMY_UPDSTR2')");
 	    statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
 				      + " (C_KEY) VALUES ('" + key_ + "')");
 
@@ -143,7 +146,9 @@ extends JDTestcase
 	    rs_.close ();
 	    statement_.close ();
 	    connection_.commit(); // @C1A
-	    connection_.close ();
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+    connection_.close ();
 	}
     }
 
@@ -583,7 +588,7 @@ extends JDTestcase
 	{
 	    try
 	    {
-		JDRSTest.position (rs_, "DUMMY_ROW");
+		JDRSTest.position (rs_, "DUMMY_UPDSTR");
 		rs_.deleteRow ();
 		rs_.updateString ("C_VARCHAR_50", "STRSQL");
 		failed ("Didn't throw SQLException");
@@ -2065,9 +2070,9 @@ extends JDTestcase
 
     public void dfpTest(String table, String value, String expected) {
 	if (checkDecFloatSupport()) {
-	    JDSerializeFile serializeFile = null;
+	    
 	    try {
-	     serializeFile = new JDSerializeFile(connection_, table);
+	     
 		Statement s = connection_.createStatement(
 							  ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = s.executeQuery("SELECT * FROM " + table + " FOR UPDATE ");
@@ -2099,23 +2104,16 @@ extends JDTestcase
 				"Got " + v + " from "+ value +" sb " + expected);
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception for value "+value);
-	    } finally {
-	      if (serializeFile != null) {
-	        try {
-	          serializeFile.close();
-	        } catch (SQLException e) {
-	          e.printStackTrace();
-	        }
-	      }
+	   
 	    }
 	}
     }
 
     public void dfpRoundTest(String roundingMode, String table, String value, String expected) {
 	if (checkDecFloatSupport()) {
-          JDSerializeFile serializeFile = null;
+          
           try {
-           serializeFile = new JDSerializeFile(connection_, table);
+        
 		String roundingModeProp = roundingMode;
 		if(isToolboxDriver())
 		    roundingModeProp = roundingModeProp.substring(6);  //without "rounding " string
@@ -2156,223 +2154,215 @@ extends JDTestcase
 		assertCondition(v.equals(expected), "Got " + v + " sb " + expected +" from "+value+" for mode "+roundingMode);
 	    } catch (Exception e) {
 		failed(e, "Unexpected Exception for value "+ value);
-            } finally {
-              if (serializeFile != null) {
-                try {
-                  serializeFile.close();
-                } catch (SQLException e) {
-                  e.printStackTrace();
-                }
-              }
-	    }
+            } 
 	}
     }
 
     /**
      * updateString -- set DFP16 to different values and retrieve
      */
-    public void Var065 () { dfpTest(JDRSTest.RSTEST_DFP16, "4533.43", "4533.43"); }
-    public void Var066 () { dfpTest(JDRSTest.RSTEST_DFP16, "NaN", "NaN");} 
-    public void Var067 () { dfpTest(JDRSTest.RSTEST_DFP16, "NAN", "NaN");} 
-    public void Var068 () { dfpTest(JDRSTest.RSTEST_DFP16, "+NaN", "NaN");} 
-    public void Var069 () { dfpTest(JDRSTest.RSTEST_DFP16, "-NaN", "-NaN");} 
-    public void Var070 () { dfpTest(JDRSTest.RSTEST_DFP16, "QNaN", "NaN");} 
-    public void Var071 () { dfpTest(JDRSTest.RSTEST_DFP16, "+QNaN", "NaN");} 
-    public void Var072 () { dfpTest(JDRSTest.RSTEST_DFP16, "-QNaN", "-NaN");} 
-    public void Var073 () { dfpTest(JDRSTest.RSTEST_DFP16, "SNaN", "SNaN");} 
-    public void Var074 () { dfpTest(JDRSTest.RSTEST_DFP16, "+SNaN", "SNaN");} 
-    public void Var075 () { dfpTest(JDRSTest.RSTEST_DFP16, "-SNaN", "-SNaN");} 
-    public void Var076 () { dfpTest(JDRSTest.RSTEST_DFP16, "INF", "Infinity");}
-    public void Var077 () { dfpTest(JDRSTest.RSTEST_DFP16, "+INF", "Infinity");}
-    public void Var078 () { dfpTest(JDRSTest.RSTEST_DFP16, "-INF", "-Infinity");}
-    public void Var079 () { dfpTest(JDRSTest.RSTEST_DFP16, "Infinity", "Infinity");}
-    public void Var080 () { dfpTest(JDRSTest.RSTEST_DFP16, "+Infinity", "Infinity");}
-    public void Var081 () { dfpTest(JDRSTest.RSTEST_DFP16, "-Infinity", "-Infinity");}
-    public void Var082 () { dfpTest(JDRSTest.RSTEST_DFP16, "1234567890123456", "1234567890123456");} 
-    public void Var083 () { dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456", "-1234567890123456");}
-    public void Var084 () { dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456","1234567890123456");}
+    public void Var065 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "4533.43", "4533.43"); }
+    public void Var066 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "NaN", "NaN");} 
+    public void Var067 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "NAN", "NaN");} 
+    public void Var068 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+NaN", "NaN");} 
+    public void Var069 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-NaN", "-NaN");} 
+    public void Var070 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "QNaN", "NaN");} 
+    public void Var071 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+QNaN", "NaN");} 
+    public void Var072 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-QNaN", "-NaN");} 
+    public void Var073 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "SNaN", "SNaN");} 
+    public void Var074 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+SNaN", "SNaN");} 
+    public void Var075 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-SNaN", "-SNaN");} 
+    public void Var076 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "INF", "Infinity");}
+    public void Var077 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+INF", "Infinity");}
+    public void Var078 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-INF", "-Infinity");}
+    public void Var079 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "Infinity", "Infinity");}
+    public void Var080 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+Infinity", "Infinity");}
+    public void Var081 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-Infinity", "-Infinity");}
+    public void Var082 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1234567890123456", "1234567890123456");} 
+    public void Var083 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456", "-1234567890123456");}
+    public void Var084 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456","1234567890123456");}
     public void Var085 () {
 	
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) {
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E28","1.234567890123456E+43");
 	}
     }
     public void Var086 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123456E+28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123456E+28","1.234567890123456E+43");
 	}
     }
     public void Var087 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012345.6E+29","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012345.6E+29","1.234567890123456E+43");
 	}
     }
     public void Var088 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901234.56E+30","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901234.56E+30","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901234.56E+30","1.234567890123456E+43");
 	}
     }
     public void Var089 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123.456E+31","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890123.456E+31","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890123.456E+31","1.234567890123456E+43");
 	}
     }
     public void Var090 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012.3456E+32","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789012.3456E+32","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789012.3456E+32","1.234567890123456E+43");
 	}
     }
     public void Var091 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901.23456E+33","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678901.23456E+33","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678901.23456E+33","1.234567890123456E+43");
 	}
     }
     public void Var092 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890.123456E+34","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567890.123456E+34","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567890.123456E+34","1.234567890123456E+43");
 	}
     }
     public void Var093 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789.0123456E+35","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456789.0123456E+35","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456789.0123456E+35","1.234567890123456E+43");
 	}
     }
     public void Var094 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678.90123456E+36","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345678.90123456E+36","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345678.90123456E+36","1.234567890123456E+43");
 	}
     }
     public void Var095 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567.890123456E+37","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234567.890123456E+37","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234567.890123456E+37","1.234567890123456E+43");
 	}
     }
     public void Var096 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456.7890123456E+38","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123456.7890123456E+38","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123456.7890123456E+38","1.234567890123456E+43");
 	}
     }
     public void Var097 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345.67890123456E+39","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12345.67890123456E+39","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12345.67890123456E+39","1.234567890123456E+43");
 	}
     }
     public void Var098 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234.567890123456E+40","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1234.567890123456E+40","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1234.567890123456E+40","1.234567890123456E+43");
 	}
     }
     public void Var099 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123.4567890123456E+41","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+123.4567890123456E+41","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+123.4567890123456E+41","1.234567890123456E+43");
 	}
     }
     public void Var100 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12.34567890123456E+42","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+12.34567890123456E+42","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+12.34567890123456E+42","1.234567890123456E+43");
 	}
     }
     public void Var101 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1.234567890123456E+43","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+1.234567890123456E+43","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+1.234567890123456E+43","1.234567890123456E+43");
 	}
     }
     public void Var102 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+.1234567890123456E+44","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var103 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.1234567890123456E+44","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var104 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "+0.01234567890123456E+45","1.234567890123456E+43");
 	}
     }
     public void Var105 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP16, "-1234567890123456E28","-1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP16, "-1234567890123456E28","-1.234567890123456E+43");
 	}
     }
-    public void Var106 () { dfpTest(JDRSTest.RSTEST_DFP16, "1E0", "1");}
-    public void Var107 () { dfpTest(JDRSTest.RSTEST_DFP16, "1.1", "1.1");} 
-    public void Var108 () { dfpTest(JDRSTest.RSTEST_DFP16, "1.1E0", "1.1");}
-    public void Var109 () { dfpTest(JDRSTest.RSTEST_DFP16, null, null);}
+    public void Var106 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1E0", "1");}
+    public void Var107 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1.1", "1.1");} 
+    public void Var108 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, "1.1E0", "1.1");}
+    public void Var109 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, null, null);}
 
 
     /*
      * updateString -- using different rounding modes 
      */
     String RHE="round half even"; 
-    public void Var110 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP16,  "1.2345678901234545",  "1.234567890123454"); }
-    public void Var111 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP16,  "1.2345678901234555",  "1.234567890123456"); }
-    public void Var112 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP16, "-1.2345678901234545", "-1.234567890123454"); }
-    public void Var113 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP16, "-1.2345678901234555", "-1.234567890123456"); }
+    public void Var110 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP16,  "1.2345678901234545",  "1.234567890123454"); }
+    public void Var111 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP16,  "1.2345678901234555",  "1.234567890123456"); }
+    public void Var112 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234545", "-1.234567890123454"); }
+    public void Var113 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555", "-1.234567890123456"); }
 
     /** 
      *  updateFloat -- set a DFP16 with rounding mode "round half up"   
      */
     String RHU = "round half up"; 
-    public void Var114 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "1.2345678901234555", "1.234567890123456"); }
-    public void Var115 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "1.2345678901234545", "1.234567890123455"); }
-    public void Var116 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "1.2345678901234565", "1.234567890123457"); }
-    public void Var117 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "-1.2345678901234555", "-1.234567890123456"); }
-    public void Var118 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "-1.2345678901234545", "-1.234567890123455"); }
-    public void Var119 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP16, "-1.2345678901234565", "-1.234567890123457"); }
+    public void Var114 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555", "1.234567890123456"); }
+    public void Var115 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234545", "1.234567890123455"); }
+    public void Var116 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234565", "1.234567890123457"); }
+    public void Var117 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555", "-1.234567890123456"); }
+    public void Var118 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234545", "-1.234567890123455"); }
+    public void Var119 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234565", "-1.234567890123457"); }
 
     /** 
      *  updateFloat -- set a DFP16 with rounding mode "round down"   
      */
     String RD = "round down";
-    public void Var120 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP16, "1.2345678901234555",       "1.234567890123455"); }
-    public void Var121 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP16, "1.2345678901234559999999", "1.234567890123455"); }
-    public void Var122 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP16, "-1.2345678901234555",       "-1.234567890123455"); }
-    public void Var123 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
+    public void Var120 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555",       "1.234567890123455"); }
+    public void Var121 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234559999999", "1.234567890123455"); }
+    public void Var122 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
+    public void Var123 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
 
 
 
@@ -2380,32 +2370,32 @@ extends JDTestcase
      *  updateFloat -- set a DFP16 with rounding mode "round ceiling"   
      */
     String RC = "round ceiling";
-    public void Var124 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP16, "1.2345678901234555",       "1.234567890123456"); }
-    public void Var125 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP16, "1.2345678901234559999999", "1.234567890123456"); }
-    public void Var126 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP16, "-1.2345678901234555",       "-1.234567890123455"); }
-    public void Var127 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
+    public void Var124 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555",       "1.234567890123456"); }
+    public void Var125 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234559999999", "1.234567890123456"); }
+    public void Var126 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555",       "-1.234567890123455"); }
+    public void Var127 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
 
 
     /** 
      *  updateFloat -- set a DFP16  with rounding mode "round floor"   
      */
     String RF = "round floor";
-    public void Var128 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP16, "1.2345678901234555",       "1.234567890123455"); }
-    public void Var129 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP16, "1.2345678901234559999999", "1.234567890123455"); }
-    public void Var130 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP16, "-1.2345678901234555",       "-1.234567890123456"); }
-    public void Var131 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
+    public void Var128 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555",       "1.234567890123455"); }
+    public void Var129 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234559999999", "1.234567890123455"); }
+    public void Var130 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
+    public void Var131 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
 
 
     /** 
      *  updateFloat -- set a DFP16 with rounding mode "round half down"   
      */
     String RHD = "round half down"; 
-    public void Var132 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "1.2345678901234555", "1.234567890123455"); }
-    public void Var133 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "1.2345678901234545", "1.234567890123454"); }
-    public void Var134 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "1.2345678901234565", "1.234567890123456"); }
-    public void Var135 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "-1.2345678901234555", "-1.234567890123455"); }
-    public void Var136 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "-1.2345678901234545", "-1.234567890123454"); }
-    public void Var137 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP16, "-1.2345678901234565", "-1.234567890123456"); }
+    public void Var132 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555", "1.234567890123455"); }
+    public void Var133 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234545", "1.234567890123454"); }
+    public void Var134 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234565", "1.234567890123456"); }
+    public void Var135 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555", "-1.234567890123455"); }
+    public void Var136 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234545", "-1.234567890123454"); }
+    public void Var137 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234565", "-1.234567890123456"); }
 
 
 
@@ -2413,254 +2403,254 @@ extends JDTestcase
      *  updateFloat -- set a DFP16 with rounding mode "round up"   
      */
     String RU = "round up";
-    public void Var138 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP16, "1.2345678901234555",       "1.234567890123456"); }
-    public void Var139 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP16, "1.2345678901234559999999", "1.234567890123456"); }
-    public void Var140 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP16, "-1.2345678901234555",       "-1.234567890123456"); }
-    public void Var141 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
+    public void Var138 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234555",       "1.234567890123456"); }
+    public void Var139 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP16, "1.2345678901234559999999", "1.234567890123456"); }
+    public void Var140 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234555",       "-1.234567890123456"); }
+    public void Var141 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP16, "-1.2345678901234559999999", "-1.234567890123456"); }
 
 
 
     /**
      * updateString -- set DFP34 to different values and retrieve
      */
-    public void Var142 () { dfpTest(JDRSTest.RSTEST_DFP34, "4533.43", "4533.43"); }
-    public void Var143 () { dfpTest(JDRSTest.RSTEST_DFP34, "NaN", "NaN");} 
-    public void Var144 () { dfpTest(JDRSTest.RSTEST_DFP34, "NAN", "NaN");} 
-    public void Var145 () { dfpTest(JDRSTest.RSTEST_DFP34, "+NaN", "NaN");} 
-    public void Var146 () { dfpTest(JDRSTest.RSTEST_DFP34, "-NaN", "-NaN");} 
-    public void Var147 () { dfpTest(JDRSTest.RSTEST_DFP34, "QNaN", "NaN");} 
-    public void Var148 () { dfpTest(JDRSTest.RSTEST_DFP34, "+QNaN", "NaN");} 
-    public void Var149 () { dfpTest(JDRSTest.RSTEST_DFP34, "-QNaN", "-NaN");} 
-    public void Var150 () { dfpTest(JDRSTest.RSTEST_DFP34, "SNaN", "SNaN");} 
-    public void Var151 () { dfpTest(JDRSTest.RSTEST_DFP34, "+SNaN", "SNaN");} 
-    public void Var152 () { dfpTest(JDRSTest.RSTEST_DFP34, "-SNaN", "-SNaN");} 
-    public void Var153 () { dfpTest(JDRSTest.RSTEST_DFP34, "INF", "Infinity");}
-    public void Var154 () { dfpTest(JDRSTest.RSTEST_DFP34, "+INF", "Infinity");}
-    public void Var155 () { dfpTest(JDRSTest.RSTEST_DFP34, "-INF", "-Infinity");}
-    public void Var156 () { dfpTest(JDRSTest.RSTEST_DFP34, "Infinity", "Infinity");}
-    public void Var157 () { dfpTest(JDRSTest.RSTEST_DFP34, "+Infinity", "Infinity");}
-    public void Var158 () { dfpTest(JDRSTest.RSTEST_DFP34, "-Infinity", "-Infinity");}
-    public void Var159 () { dfpTest(JDRSTest.RSTEST_DFP34, "1234567890123456", "1234567890123456");} 
-    public void Var160 () { dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456", "-1234567890123456");}
-    public void Var161 () { dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456","1234567890123456");}
+    public void Var142 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "4533.43", "4533.43"); }
+    public void Var143 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "NaN", "NaN");} 
+    public void Var144 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "NAN", "NaN");} 
+    public void Var145 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+NaN", "NaN");} 
+    public void Var146 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-NaN", "-NaN");} 
+    public void Var147 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "QNaN", "NaN");} 
+    public void Var148 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+QNaN", "NaN");} 
+    public void Var149 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-QNaN", "-NaN");} 
+    public void Var150 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "SNaN", "SNaN");} 
+    public void Var151 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+SNaN", "SNaN");} 
+    public void Var152 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-SNaN", "-SNaN");} 
+    public void Var153 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "INF", "Infinity");}
+    public void Var154 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+INF", "Infinity");}
+    public void Var155 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-INF", "-Infinity");}
+    public void Var156 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "Infinity", "Infinity");}
+    public void Var157 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+Infinity", "Infinity");}
+    public void Var158 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-Infinity", "-Infinity");}
+    public void Var159 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1234567890123456", "1234567890123456");} 
+    public void Var160 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456", "-1234567890123456");}
+    public void Var161 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456","1234567890123456");}
     public void Var162 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E28","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E28","1.234567890123456E+43");
 	}
     }
     public void Var163 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E+28","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123456E+28","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123456E+28","1.234567890123456E+43");
 	}
     }
     public void Var164 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012345.6E+29","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012345.6E+29","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012345.6E+29","1.234567890123456E+43");
 	}
     }
     public void Var165 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901234.56E+30","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901234.56E+30","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901234.56E+30","1.234567890123456E+43");
 	}
     }
     public void Var166 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123.456E+31","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890123.456E+31","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890123.456E+31","1.234567890123456E+43");
 	}
     }
     public void Var167 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012.3456E+32","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789012.3456E+32","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789012.3456E+32","1.234567890123456E+43");
 	}
     }
     public void Var168 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901.23456E+33","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678901.23456E+33","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678901.23456E+33","1.234567890123456E+43");
 	}
     }
     public void Var169 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890.123456E+34","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567890.123456E+34","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567890.123456E+34","1.234567890123456E+43");
 	}
     }
     public void Var170 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789.0123456E+35","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456789.0123456E+35","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456789.0123456E+35","1.234567890123456E+43");
 	}
     }
     public void Var171 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678.90123456E+36","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345678.90123456E+36","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345678.90123456E+36","1.234567890123456E+43");
 	}
     }
     public void Var172 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567.890123456E+37","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234567.890123456E+37","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234567.890123456E+37","1.234567890123456E+43");
 	}
     }
     public void Var173 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456.7890123456E+38","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123456.7890123456E+38","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123456.7890123456E+38","1.234567890123456E+43");
 	}
     }
     public void Var174 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345.67890123456E+39","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12345.67890123456E+39","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12345.67890123456E+39","1.234567890123456E+43");
 	}
     }
     public void Var175 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234.567890123456E+40","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1234.567890123456E+40","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1234.567890123456E+40","1.234567890123456E+43");
 	}
     }
     public void Var176 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123.4567890123456E+41","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+123.4567890123456E+41","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+123.4567890123456E+41","1.234567890123456E+43");
 	}
     }
     public void Var177 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12.34567890123456E+42","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+12.34567890123456E+42","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+12.34567890123456E+42","1.234567890123456E+43");
 	}
     }
     public void Var178 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1.234567890123456E+43","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+1.234567890123456E+43","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+1.234567890123456E+43","1.234567890123456E+43");
 	}
     }
     public void Var179 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+.1234567890123456E+44","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var180 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.1234567890123456E+44","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.1234567890123456E+44","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.1234567890123456E+44","1.234567890123456E+43");
 	}
     }
     public void Var181 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.01234567890123456E+45","12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "+0.01234567890123456E+45","1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "+0.01234567890123456E+45","1.234567890123456E+43");
 	}
     }
     public void Var182 () {
 	if ((getDriver() == JDTestDriver.DRIVER_NATIVE || isToolboxDriver())  && isjdk14_) { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456E28","-12345678901234560000000000000000000000000000");
 	} else { 
-	    dfpTest(JDRSTest.RSTEST_DFP34, "-1234567890123456E28","-1.234567890123456E+43");
+	    dfpTest(JDRSTest.RSTEST_UPDDFP34, "-1234567890123456E28","-1.234567890123456E+43");
 	}
     }
-    public void Var183 () { dfpTest(JDRSTest.RSTEST_DFP34, "1E0", "1");}
-    public void Var184 () { dfpTest(JDRSTest.RSTEST_DFP34, "1.1", "1.1");} 
-    public void Var185 () { dfpTest(JDRSTest.RSTEST_DFP34, "1.1E0", "1.1");}
-    public void Var186 () { dfpTest(JDRSTest.RSTEST_DFP34, null, null);}
+    public void Var183 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1E0", "1");}
+    public void Var184 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1.1", "1.1");} 
+    public void Var185 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, "1.1E0", "1.1");}
+    public void Var186 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, null, null);}
 
 
     /*
      * updateString -- using different rounding modes
      */
-    public void Var187 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP34,  "1.1818181818181818182345678901234545",  "1.181818181818181818234567890123454"); }
-    public void Var188 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP34,  "1.1818181818181818182345678901234555",  "1.181818181818181818234567890123456"); }
-    public void Var189 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123454"); }
-    public void Var190 () { dfpRoundTest(RHE, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123456"); }
+    public void Var187 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP34,  "1.1818181818181818182345678901234545",  "1.181818181818181818234567890123454"); }
+    public void Var188 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP34,  "1.1818181818181818182345678901234555",  "1.181818181818181818234567890123456"); }
+    public void Var189 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123454"); }
+    public void Var190 () { dfpRoundTest(RHE, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123456"); }
  
     /** 
      *  updateFloat -- set a DFP34 with rounding mode "round half up"   
      */
-    public void Var191 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555",   "1.181818181818181818234567890123456"); }
-    public void Var192 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234545",   "1.181818181818181818234567890123455"); }
-    public void Var193 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234565",   "1.181818181818181818234567890123457"); }
-    public void Var194 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123456"); }
-    public void Var195 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123455"); }
-    public void Var196 () { dfpRoundTest(RHU, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234565", "-1.181818181818181818234567890123457"); }
+    public void Var191 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555",   "1.181818181818181818234567890123456"); }
+    public void Var192 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234545",   "1.181818181818181818234567890123455"); }
+    public void Var193 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234565",   "1.181818181818181818234567890123457"); }
+    public void Var194 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123456"); }
+    public void Var195 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123455"); }
+    public void Var196 () { dfpRoundTest(RHU, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234565", "-1.181818181818181818234567890123457"); }
 
     /** 
      *  updateFloat -- set a DFP34 with rounding mode "round down"   
      */
-    public void Var197 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123455"); }
-    public void Var198 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123455"); }
-    public void Var199 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123455"); }
-    public void Var200 () { dfpRoundTest(RD, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123455"); }
+    public void Var197 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123455"); }
+    public void Var198 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123455"); }
+    public void Var199 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123455"); }
+    public void Var200 () { dfpRoundTest(RD, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123455"); }
 
 
       
     /** 
      *  updateFloat -- set a DFP34 with rounding mode "round ceiling"   
      */
-    public void Var201 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123456"); }
-    public void Var202 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123456"); }
-    public void Var203 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123455"); }
-    public void Var204 () { dfpRoundTest(RC, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123455"); }
+    public void Var201 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123456"); }
+    public void Var202 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123456"); }
+    public void Var203 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123455"); }
+    public void Var204 () { dfpRoundTest(RC, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123455"); }
 
 
     /** 
      *  updateFloat -- set a DFP34  with rounding mode "round floor"   
      */
-    public void Var205 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123455"); }
-    public void Var206 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123455"); }
-    public void Var207 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123456"); }
-    public void Var208 () { dfpRoundTest(RF, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123456"); }
+    public void Var205 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123455"); }
+    public void Var206 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123455"); }
+    public void Var207 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123456"); }
+    public void Var208 () { dfpRoundTest(RF, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123456"); }
 
 
     /** 
      *  updateFloat -- set a DFP34 with rounding mode "round half down"   
      */
-    public void Var209 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555", "1.181818181818181818234567890123455"); }
-    public void Var210 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234545", "1.181818181818181818234567890123454"); }
-    public void Var211 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234565", "1.181818181818181818234567890123456"); }
-    public void Var212 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123455"); }
-    public void Var213 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123454"); }
-    public void Var214 () { dfpRoundTest(RHD, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234565", "-1.181818181818181818234567890123456"); }
+    public void Var209 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555", "1.181818181818181818234567890123455"); }
+    public void Var210 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234545", "1.181818181818181818234567890123454"); }
+    public void Var211 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234565", "1.181818181818181818234567890123456"); }
+    public void Var212 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555", "-1.181818181818181818234567890123455"); }
+    public void Var213 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234545", "-1.181818181818181818234567890123454"); }
+    public void Var214 () { dfpRoundTest(RHD, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234565", "-1.181818181818181818234567890123456"); }
 
 
 
    /** 
      *  updateFloat -- set a DFP34 with rounding mode "round up"   
      */
-    public void Var215 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123456"); }
-    public void Var216 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123456"); }
-    public void Var217 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123456"); }
-    public void Var218 () { dfpRoundTest(RU, JDRSTest.RSTEST_DFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123456"); }
+    public void Var215 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234555",       "1.181818181818181818234567890123456"); }
+    public void Var216 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP34, "1.1818181818181818182345678901234559999999", "1.181818181818181818234567890123456"); }
+    public void Var217 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234555",       "-1.181818181818181818234567890123456"); }
+    public void Var218 () { dfpRoundTest(RU, JDRSTest.RSTEST_UPDDFP34, "-1.1818181818181818182345678901234559999999", "-1.181818181818181818234567890123456"); }
 
 
 
@@ -2670,9 +2660,9 @@ extends JDTestcase
   public void updateBoolean(String inString, String outString) {
     if (checkJdbc20()) {
       if (checkBooleanSupport()) {
-        JDSerializeFile serializeFile = null;
+        
         try {
-          serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
+          
           // A previous commit could have lost lock on position. 
           // We need to make sure that server knows we want to re-obtain  the lock
           JDRSTest.position(rs_,key1_);
@@ -2686,15 +2676,7 @@ extends JDTestcase
           assertCondition(outString.equals(v), "Got "+v+" sb "+outString);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
-        } finally {
-          if (serializeFile != null) {
-            try {
-              serializeFile.close();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-          }
-        }
+        } 
       }
     }
   }

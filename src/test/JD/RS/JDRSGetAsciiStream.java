@@ -213,13 +213,13 @@ closed.
 **/
     public void Var001()
     {
-        try {
-            Statement s = connection_.createStatement ();
+        try (Statement s = connection_.createStatement ()) {
             ResultSet rs = s.executeQuery ("SELECT * FROM "
                 + JDRSTest.RSTEST_GET);
             rs.next ();
             rs.close ();
-            rs.getAsciiStream (1);
+            InputStream v = rs.getAsciiStream (1);
+            v.close(); 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -235,10 +235,10 @@ to a row.
 **/
     public void Var002()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             InputStream v = rs.getAsciiStream (1);
+            v.close(); 
             failed ("Didn't throw SQLException "+v);
         }
         catch (Exception e) {
@@ -254,11 +254,11 @@ is an invalid index.
 **/
     public void Var003()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             InputStream v = rs.getAsciiStream (100);
+            v.close(); 
             failed ("Didn't throw SQLException"+v);
         }
         catch (Exception e) {
@@ -274,11 +274,11 @@ is 0.
 **/
     public void Var004()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             InputStream v = rs.getAsciiStream (0);
+            v.close(); 
             failed ("Didn't throw SQLException"+v);
         }
         catch (Exception e) {
@@ -294,11 +294,11 @@ is -1.
 **/
     public void Var005()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
             InputStream v = rs.getAsciiStream (-1);
+            v.close(); 
             failed ("Didn't throw SQLException"+v);
         }
         catch (Exception e) {
@@ -314,9 +314,8 @@ getAsciiStream() - Should work when the column index is valid.
     public void Var006()
     {
       sb.setLength(0); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream (12);
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
@@ -326,6 +325,8 @@ getAsciiStream() - Should work when the column index is valid.
 	    else							// @K2
 		assertCondition (compare (				// @K2
                     v, "Toolbox for Java                                  ", "8859_1",sb),sb);	  // @K2
+	    v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -340,11 +341,12 @@ name is null.
 **/
     public void Var007()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
-            rs.getAsciiStream (null);
+            InputStream v = rs.getAsciiStream (null);
+            v.close(); 
+
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -360,11 +362,12 @@ name is an empty string.
 **/
     public void Var008()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
-            rs.getAsciiStream ("");
+            InputStream v = rs.getAsciiStream ("");
+            v.close(); 
+
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -380,11 +383,11 @@ name is invalid.
 **/
     public void Var009()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             rs.next ();
-            rs.getAsciiStream ("INVALID");
+            InputStream v = rs.getAsciiStream ("INVALID");
+            v.close(); 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -400,9 +403,8 @@ getAsciiStream() - Should work when the column name is valid.
     public void Var010()
     {
       sb.setLength(0); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&			// @K2
@@ -411,7 +413,9 @@ getAsciiStream() - Should work when the column name is valid.
                     v, "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);  // @K2
 	    else								// @K2
 		assertCondition (compare (					// @K2
+		   
                     v, "Toolbox for Java                                  ", "8859_1",sb),sb);	   // @K2
+	    v.close(); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -441,6 +445,7 @@ getAsciiStream() - Should work when an update is pending.
 	    else									// @K2
 		check = compare (v, "World Peace", "8859_1",sb);				// @K2
 	    rs.close();
+	    v.close(); 
             assertCondition(check,sb);
         }
         catch (Exception e) {
@@ -481,6 +486,7 @@ getAsciiStream() - Should work when an update has been done.
             if (!check) { 
               sVal = rs.getString("C_CHAR_50"); 
             }
+            v.close(); 
             rs.close();
             assertCondition(check, "\nExpected 'New Planet                                        ' "+
                                    "\nGot      '"+sVal+"'"+sb);
@@ -526,7 +532,9 @@ row, when an insert is pending.
 		check = compareBeginsWithBytes( v, "El Nino".getBytes("8859_1"),sb);	// @K2
 	    else									// @K2
 		check = compare (v, "El Nino", "8859_1",sb);				// @K2
+	    v.close(); 
             rs.close();
+            
             assertCondition(check,sb);
         }
         catch (Exception e) {
@@ -565,6 +573,7 @@ row, when an insert has been done.
 		check = compareBeginsWithBytes( v, "Year 2000 Problem".getBytes("8859_1"),sb);	// @K2
 	    else							// @K2
 		check = compare (v, "Year 2000 Problem", "8859_1",sb);	// @K2
+	    v.close(); 
             rs.close();
             assertCondition(check,sb);
         }
@@ -601,6 +610,8 @@ getAsciiStream() - Should throw an exception on a deleted row.
                 JDRSTest.position (rs, "DUMMYROW_GAS");
                 rs.deleteRow ();
                 InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
+                v.close(); 
+
                 failed ("Didn't throw SQLException but got v"+v);
             }
             catch (Exception e) {
@@ -623,11 +634,11 @@ getAsciiStream() - Should return null when the column is NULL.
 **/
     public void Var016 ()
     {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_NULL");
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
+            if (v != null) v.close(); 
             assertCondition (v == null);        
         }
         catch (Exception e) {
@@ -644,13 +655,14 @@ getAsciiStream() - Get from a SMALLINT.
     {
       sb.setLength(0); 
 sb.append(" -- Updated 12/14/2011 Since a smallint can be converted to string, it can be converted to ASCII stream"); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             InputStream v = rs.getAsciiStream ("C_SMALLINT");
 
-	    assertCondition(compare(v, "198", "8859_1", sb),sb);     
+	    assertCondition(compare(v, "198", "8859_1", sb),sb);  
+	    v.close(); 
+
 
         }
         catch (Exception e) {
@@ -670,13 +682,14 @@ getAsciiStream() - Get from a INTEGER.
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a integer can be converted to string, it can be converted to ASCII stream"); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             InputStream v = rs.getAsciiStream ("C_INTEGER");
 
 	    assertCondition(compare(v, "-98765", "8859_1", sb),sb);     
+	       v.close(); 
+
         }
         catch (Exception e) {
 	    failed (e, "Unexpected Exception"+sb);         
@@ -694,13 +707,14 @@ getAsciiStream() - Get from a REAL.
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a real can be converted to string, it can be converted to ASCII stream"); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             InputStream v = rs.getAsciiStream ("C_REAL");
 
 	    assertCondition(compare(v, "4.4", "8859_1", sb),sb);     
+	       v.close(); 
+
         }
         catch (Exception e) {
 	    failed (e, "Unexpected Exception"+sb);         
@@ -717,12 +731,13 @@ getAsciiStream() - Get from a FLOAT.
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a float can be converted to string, it can be converted to ASCII stream"); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
             InputStream v = rs.getAsciiStream ("C_FLOAT");
 	    assertCondition(compare(v, "-5.55", "8859_1", sb),sb);     
+	       v.close(); 
+
 
         }
         catch (Exception e) {
@@ -741,12 +756,13 @@ getAsciiStream() - Get from a DOUBLE.
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a double can be converted to string, it can be converted to ASCII stream"); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             InputStream v = rs.getAsciiStream ("C_DOUBLE");
 	    assertCondition(compare(v, "6.666", "8859_1", sb),sb);     
+	       v.close(); 
+
 
         }
         catch (Exception e) {
@@ -766,12 +782,13 @@ getAsciiStream() - Get from a DECIMAL.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
                 InputStream v = rs.getAsciiStream("C_DECIMAL_50");                                  //@F1A
 		assertCondition(compare(v, "7", "8859_1", sb), "update 01/04/2012 for native driver "+sb.toString());                                     //@F1A
+	          v.close(); 
+
         }
         catch (Exception e) {
                 failed(e, "Unexpected Exception update 01/04/2012 for native driver");                                                  //@F1A
@@ -788,13 +805,14 @@ getAsciiStream() - Get from a NUMERIC.
       sb.setLength(0); 
       sb.append(" updated 01/04/2012 for native driver"); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_NEG");
 		InputStream v = rs.getAsciiStream("C_NUMERIC_105");                         
 
 		assertCondition(compare(v, "-10.10105", "8859_1",sb));                     //@F1A
+	          v.close(); 
+
         }
         catch (Exception e) {
 	    failed(e, "Unexpected Exception updated 01/04/2012 for native driver ");                                          //@F1A
@@ -809,9 +827,8 @@ getAsciiStream() - Get from an empty CHAR.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_EMPTY");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
@@ -820,6 +837,8 @@ getAsciiStream() - Get from an empty CHAR.
 		"                                                  ".getBytes("8859_1"),sb),sb);	  // @K2
 	    else							// @K2
 		assertCondition (compare (v, "                                                  ", "8859_1",sb),sb);					  // @K2
+	       v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -835,9 +854,8 @@ getAsciiStream() - Get from a full CHAR.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_CHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&	// @K2
@@ -846,6 +864,8 @@ getAsciiStream() - Get from a full CHAR.
                    "Toolbox for Java                                  ".getBytes("8859_1"),sb),sb);	    // @K2
 	    else						// @K2
 		assertCondition (compare (v, "Toolbox for Java                                  ",  "8859_1",sb),sb);				  // @K2
+	       v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -861,9 +881,8 @@ getAsciiStream() - Get from an empty VARCHAR.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_EMPTY");
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				// @K2
@@ -871,6 +890,8 @@ getAsciiStream() - Get from an empty VARCHAR.
 		assertCondition( compareBeginsWithBytes( v, "".getBytes("8859_1"),sb),sb);	// @K2
 	    else									// @K2
 		assertCondition (compare (v, "", "8859_1",sb),sb);
+	       v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -886,9 +907,8 @@ getAsciiStream() - Get from a full VARCHAR.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "CHAR_FULL");
             InputStream v = rs.getAsciiStream ("C_VARCHAR_50");
 	    if( getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
@@ -896,6 +916,8 @@ getAsciiStream() - Get from a full VARCHAR.
 		assertCondition( compareBeginsWithBytes( v, "Java Toolbox".getBytes("8859_1"),sb),sb); // @K2
 	    else							// @K2
 		assertCondition (compare (v, "Java Toolbox", "8859_1",sb),sb);
+	       v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -911,15 +933,16 @@ getAsciiStream() - Get from a BINARY.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getAsciiStream ("C_BINARY_20");
             sb.setLength(0); 
             if(isToolboxDriver())                          //@F1A
                 assertCondition(compare(v, "456C6576656E2020202020202020202020202020", "8859_1",sb),sb);    //@F1A
             else assertCondition( compareBeginsWithBytes( v, "Eleven              ".getBytes("8859_1"),sb),sb); // @K2
+            v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -935,14 +958,15 @@ getAsciiStream() - Get from a VARBINARY.
     {
       sb.setLength(0); 
 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "BINARY_NOTRANS");
             InputStream v = rs.getAsciiStream ("C_VARBINARY_20");
             if(isToolboxDriver())                          //@F1A
                 assertCondition(compare(v, "5477656C7665", "8859_1",sb),sb);    //@F1A
             else assertCondition( compareBeginsWithBytes( v, "Twelve".getBytes("8859_1"),sb),sb); // @K2
+            v.close(); 
+
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -1008,6 +1032,8 @@ outside of a JDBC 2.0 driver.
 		    check = compareBeginsWithBytes( v, JDRSTest.CLOB_FULL.getBytes("8859_1"),sb);	// @K2
 		else							// @K2
 		    check = compare (v, JDRSTest.CLOB_FULL, "8859_1",sb);	// @K2
+	          v.close(); 
+
                 rs.close();
                 assertCondition(check,sb);
             }
@@ -1027,9 +1053,8 @@ returned in the result set.
     {
       sb.setLength(0); 
         if (checkLobSupport ()) {
-            try {
-                ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                    + JDRSTest.RSTEST_GET);
+            try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                + JDRSTest.RSTEST_GET)) {
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_DBCLOB");
 		if(getDriver() == JDTestDriver.DRIVER_NATIVE &&		// @K2
@@ -1037,6 +1062,8 @@ returned in the result set.
 		    assertCondition( compareBeginsWithBytes( v, JDRSTest.DBCLOB_FULL.getBytes("8859_1"),sb),sb); // @K2
 		else							// @K2
 		    assertCondition (compare (v, JDRSTest.DBCLOB_FULL, "8859_1",sb),sb);	// @K2
+	          v.close(); 
+
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -1073,6 +1100,8 @@ outside of a JDBC 2.0 driver.
 		    check = compareBeginsWithBytes( v, JDRSTest.DBCLOB_FULL.getBytes("8859_1"),sb); // @K2
 		else							// @K2
 		    check = compare (v, JDRSTest.DBCLOB_FULL, "8859_1",sb);// @K2
+	          v.close(); 
+
                 rs.close();
                 assertCondition(check,sb);
             }
@@ -1152,6 +1181,8 @@ outside of a JDBC 2.0 driver.
 		    sb.append("Path 3:");
 		    check = compareBeginsWithBytes( v, JDRSTest.BLOB_FULL, sb);	// @K2
 		}
+	          v.close(); 
+
                 rs.close();
                 assertCondition(check,sb );
             }
@@ -1170,15 +1201,16 @@ getAsciiStream() - Get from a DATE.
     {
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a date can be converted to string, it can be converted to ASCII stream"); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "DATE_1998");
             InputStream v = rs.getAsciiStream ("C_DATE");
             if(isToolboxDriver())                                  //@K1A
                 assertCondition(compare(v, "04/08/98", "8859_1",sb),sb);                      //@K1A
             else                                                                        //@K1A
                 assertCondition(compare(v, "1998-04-08", "8859_1", sb),sb);                      //@K1A
+            v.close(); 
+
         }
         catch (Exception e) {
 	    failed(e, "Unexpected Exception");                                      //@K1A
@@ -1194,16 +1226,17 @@ getAsciiStream() - Get from a TIME.
     {
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a time can be converted to string, it can be converted to ASCII stream"); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "DATE_1998");
             InputStream v = rs.getAsciiStream ("C_TIME");
 	    String expected = "08:14:03";
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		expected = "08.14.03";
 	    }
-	    assertCondition (compare (v, expected, "8859_1", sb),sb);        
+	    assertCondition (compare (v, expected, "8859_1", sb),sb);   
+	       v.close(); 
+
 
         }
         catch (Exception e) {
@@ -1220,16 +1253,17 @@ getAsciiStream() - Get from a TIMESTAMP.
     {
       sb.setLength(0); 
 	sb.append(" -- Updated 12/14/2011 Since a time can be converted to string, it can be converted to ASCII stream"); 
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "DATE_1998");
             InputStream v = rs.getAsciiStream ("C_TIMESTAMP");
 	    String expected = "1998-11-18 03:13:42.987654";
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		expected = "1998-11-18-03.13.42.987654";
 	    } 
-	    assertCondition (compare (v, expected, "8859_1", sb),sb);        
+	    assertCondition (compare (v, expected, "8859_1", sb),sb);   
+	       v.close(); 
+
 
         }
         catch (Exception e) {
@@ -1255,10 +1289,9 @@ getAsciiStream as other Strings can.
           return; 
         }
         if (checkDatalinkSupport ()) {
-            try {
-                Statement s = connection_.createStatement ();
+            try (Statement s = connection_.createStatement ();
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                    + JDRSTest.RSTEST_GETDL);
+                + JDRSTest.RSTEST_GETDL)) {
                 JDRSTest.position0 (rs, "LOB_FULL");
                 InputStream v = rs.getAsciiStream ("C_DATALINK");
 
@@ -1268,7 +1301,9 @@ getAsciiStream as other Strings can.
                    failed ("Didn't throw SQLException");                                                              
                 else                                                                                                 
                    // Note the case... AS/400 DB does its own thing here...                                             
-                   assertCondition (compare (v, JDRSTest.LOB_FULL_DATALINK_UPPER_DOMAIN, "8859_1",sb),sb);        
+                   assertCondition (compare (v, JDRSTest.LOB_FULL_DATALINK_UPPER_DOMAIN, "8859_1",sb),sb);    
+                v.close(); 
+
 
             }
             catch (Exception e) {
@@ -1288,17 +1323,18 @@ getAsciiStream() - Get from an empty DATALINK.
     public void Var040 ()
     {
        if (checkDatalinkSupport ()) {
-           try {
-               Statement s = connection_.createStatement ();
-               ResultSet rs = s.executeQuery ("SELECT * FROM "
-                   + JDRSTest.RSTEST_GETDL);
+           try (Statement s = connection_.createStatement ();
+              ResultSet rs = s.executeQuery ("SELECT * FROM "
+               + JDRSTest.RSTEST_GETDL)) {
                JDRSTest.position0 (rs, "LOB_EMPTY");
                InputStream v = rs.getAsciiStream ("C_DATALINK");
 
                 if (getDriver () == JDTestDriver.DRIVER_NATIVE && true && isJDK14 )    //@K1C
                   failed ("Didn't throw SQLException");                                                             
                 else                                                                                                 
-                  assertCondition (compare (v, "", "8859_1",sb),sb);        
+                  assertCondition (compare (v, "", "8859_1",sb),sb);  
+                v.close(); 
+
 
            }
            catch (Exception e) {
@@ -1324,9 +1360,8 @@ getAsciiStream() - Get from a DISTINCT.
           return; 
         }
         if (checkLobSupport ()) {
-            try {
-                ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                    + JDRSTest.RSTEST_GET);
+            try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+                + JDRSTest.RSTEST_GET)) {
                 JDRSTest.position0 (rs, "LOB_EMPTY");
                 InputStream v = rs.getAsciiStream ("C_DISTINCT");
 		if( getDriver() == JDTestDriver.DRIVER_NATIVE &&				  // @K2
@@ -1338,6 +1373,8 @@ getAsciiStream() - Get from a DISTINCT.
                 } else 
                
 		    assertCondition (compare (v, "         ", "8859_1",sb),sb);
+	          v.close(); 
+
             }
             catch (Exception e) {
                 failed (e, "Unexpected Exception");
@@ -1353,12 +1390,13 @@ getAsciiStream() - Get from a BIGINT.
     public void Var042 ()
     {
         if (checkBigintSupport()) {
-        try {
-            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_GET);
+        try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GET)) {
             JDRSTest.position0 (rs, "NUMBER_POS");
             InputStream v = rs.getAsciiStream ("C_BIGINT");
 	    assertCondition(compare(v, "12374321", "8859_1",sb),sb);          //@K1A
+	       v.close(); 
+
         }
         catch (Exception e) {
                 failed(e, "Unexpected Exception updated 01/04/2012 for native driver");                          //@K1A
@@ -1375,15 +1413,16 @@ getAsciiStream() - Get from a BIGINT.
 	sb.append(" -- Updated 12/14/2011 Since a DFP16 can be converted to string, it can be converted to ASCII stream"); 
 
       if (checkDecFloatSupport()) {
-        try {
-          Statement s = connection_.createStatement ();
-          ResultSet rs = s.executeQuery ("SELECT * FROM "
-              + JDRSTest.RSTEST_DFP16);
+        try (Statement s = connection_.createStatement ();
+            ResultSet rs = s.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GETDFP16+" A WHERE RRN(A) = 1")) {
           rs.next(); 
           InputStream v = rs.getAsciiStream (1);
 
 	  String expected="1.1"; 
-	    assertCondition (compare (v, expected, "8859_1", sb),sb);        
+	    assertCondition (compare (v, expected, "8859_1", sb),sb);    
+	       v.close(); 
+
 
         }
         catch (Exception e) {
@@ -1404,14 +1443,15 @@ getAsciiStream() - Get from a BIGINT.
 	sb.append(" -- Updated 12/14/2011 Since a DFP34 can be converted to string, it can be converted to ASCII stream"); 
 
       if (checkDecFloatSupport()) {
-        try {
-          Statement s = connection_.createStatement ();
-          ResultSet rs = s.executeQuery ("SELECT * FROM "
-              + JDRSTest.RSTEST_DFP34);
+        try (Statement s = connection_.createStatement ();
+            ResultSet rs = s.executeQuery ("SELECT * FROM "
+            + JDRSTest.RSTEST_GETDFP34+" A WHERE RRN(A) = 1")) {
           rs.next(); 
           InputStream v = rs.getAsciiStream (1);
 	  String expected="1.1"; 
-	  assertCondition (compare (v, expected, "8859_1", sb),sb);        
+	  assertCondition (compare (v, expected, "8859_1", sb),sb);     
+	         v.close(); 
+
 
         }
         catch (Exception e) {
@@ -1439,6 +1479,7 @@ getAsciiStream() - Get from a BIGINT.
                         InputStream v  = rs.getAsciiStream ("C_XML");
                         if (expected == null ) {
                           if (v != null) { 
+                            v.close(); 
                             sb.append("For row "+i+" Expected null but got '"+v+"'\n"); 
                           }
                         } else {
@@ -1447,7 +1488,7 @@ getAsciiStream() - Get from a BIGINT.
                             passed = false; 
                            
                           }
-
+                          v.close(); 
                         }
                         i++; 
                     }
@@ -1521,13 +1562,14 @@ getAsciiStream() - Get from a BOOLEAN true .
 	if (checkBooleanSupport()) { 
 	    sb.setLength(0); 
 
-	    try {
-		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-							 + JDRSTest.RSTEST_BOOLEAN);
+	    try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+      					 + JDRSTest.RSTEST_BOOLEAN)) {
 		JDRSTest.position0 (rs, "BOOLEAN_TRUE");
 		InputStream v = rs.getAsciiStream ("C_BOOLEAN");
 		sb.setLength(0); 
 		assertCondition(compare(v, JDRSTest.BOOLEAN_TRUE_STRING, "8859_1",sb),sb);    //@F1A
+	          v.close(); 
+
 	    }
 	    catch (Exception e) {
 		failed (e, "Unexpected Exception");
@@ -1546,13 +1588,14 @@ getAsciiStream() - Get from a BOOLEAN false .
 	if (checkBooleanSupport()) { 
 	    sb.setLength(0); 
 
-	    try {
-		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-							 + JDRSTest.RSTEST_BOOLEAN);
+	    try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+      					 + JDRSTest.RSTEST_BOOLEAN)) {
 		JDRSTest.position0 (rs, "BOOLEAN_FALSE");
 		InputStream v = rs.getAsciiStream ("C_BOOLEAN");
 		sb.setLength(0); 
 		assertCondition(compare(v, JDRSTest.BOOLEAN_FALSE_STRING, "8859_1",sb),sb);    //@F1A
+	          v.close(); 
+
 	    }
 	    catch (Exception e) {
 		failed (e, "Unexpected Exception");
@@ -1568,13 +1611,14 @@ getAsciiStream() - Get from a BOOLEAN null .
 	if (checkBooleanSupport()) { 
 	    sb.setLength(0); 
 
-	    try {
-		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-							 + JDRSTest.RSTEST_BOOLEAN);
+	    try (ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
+      					 + JDRSTest.RSTEST_BOOLEAN)) {
 		JDRSTest.position0 (rs, "BOOLEAN_NULL");
 		InputStream v = rs.getAsciiStream ("C_BOOLEAN");
 		if (v != null) { 
 		  sb.append("Got "+v+" sb null"); 
+  		        v.close(); 
+
 		}
 		
 		assertCondition(v == null,sb);    //@F1A

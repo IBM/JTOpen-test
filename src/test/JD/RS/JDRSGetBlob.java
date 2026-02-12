@@ -1157,7 +1157,7 @@ to a value shorter than the byte array.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
          rs.next(); 
          Blob v = rs.getBlob (1);
          failed ("Didn't throw SQLException "+v);
@@ -1179,7 +1179,7 @@ to a value shorter than the byte array.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next(); 
          Blob v = rs.getBlob (1);
          failed ("Didn't throw SQLException "+v);

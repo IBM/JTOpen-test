@@ -919,7 +919,7 @@ getInt() - Get from a BIGINT.
      **/
     public void Var057 ()
     {
-         testDfp(JDRSTest.RSTEST_DFP16, JDRSTest.VALUES_DFP16_INT, statement0_, "getInt");
+         testDfp(JDRSTest.RSTEST_GETDFP16, JDRSTest.VALUES_DFP16_INT, statement0_, "getInt");
     }
     
     
@@ -929,7 +929,7 @@ getInt() - Get from a BIGINT.
     public void Var058 ()
     {
 
-         testDfp(JDRSTest.RSTEST_DFP34, JDRSTest.VALUES_DFP34_INT, statement0_, "getInt");
+         testDfp(JDRSTest.RSTEST_GETDFP34, JDRSTest.VALUES_DFP34_INT, statement0_, "getInt");
     }
     
 

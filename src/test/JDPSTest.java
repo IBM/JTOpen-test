@@ -331,7 +331,7 @@ Performs setup needed before running testcases.
       } 
 
       
-      parallelCounter_ = new JDParallelCounter(connection_, PSTEST_CONCUR); 
+      parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
 
       // Added With comparisons 12/28/2006 so would work on LUW also
       try { 

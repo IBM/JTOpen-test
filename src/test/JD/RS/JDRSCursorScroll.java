@@ -1572,6 +1572,7 @@ getRow()
 	      } 
 	  }
 	  if (batchCount > 0) ps.executeBatch();
+	  ps.close(); 
 	  if (c != null) { 
 	      c.commit();
 	      c.close();
@@ -1825,10 +1826,9 @@ getRow()
         {
 	    int TABLESIZE = 100000; 
             int RUNMILLIS = 10000; 
-            try{
+            try (Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_READ_ONLY);) {
 		setupTable49();
-		Statement stmt = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                                                      ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs=stmt.executeQuery("SELECT count(*) FROM " + table49 );
                 rs.next(); 
 		int rowCount = rs.getInt(1); 
@@ -1996,6 +1996,9 @@ getRow()
 
             }
             catch(Exception e){
+                 if (cs != null)  try {
+                   cs.close(); 
+                 } catch (Exception e2) { e2.printStackTrace(); }
                 failed(e, "Unexpected Exception");
             }
         }

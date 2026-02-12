@@ -26,6 +26,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDReflectionUtil;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -65,7 +66,8 @@ extends JDTestcase
     private Statement           statement2_;
     private ResultSet           rs_;
     private String              url;
-    String methodName = "updateDB2Default"; 
+    String methodName = "updateDB2Default";
+    private JDSerializeFile serializeUpdateFile_; 
 
 
 /**
@@ -120,6 +122,9 @@ Performs setup needed before running variations.
             	url += ";date format=iso;time format=iso";	//@A1A
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -163,10 +168,10 @@ Performs setup needed before running variations.
             initTable(statement_, RSTEST_UPDTDB2DEF, buffer.toString());
                 
             statement_.executeUpdate ("INSERT INTO " + RSTEST_UPDTDB2DEF
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDDB2D')");
 
             statement_.executeUpdate ("INSERT INTO " + RSTEST_UPDTDB2DEF
-                + " (C_KEY) VALUES ('DUMMY_ROW1')");
+                + " (C_KEY) VALUES ('DUMMY_UPDDB2D1')");
 
             String sql = "INSERT INTO " + RSTEST_UPDTDB2DEF 
             + "   VALUES ('JDRSUpdateDB2Default', "  /* KEY */
@@ -206,6 +211,8 @@ Performs cleanup needed after running variations.
     
     {
       connection_.commit(); 
+      serializeUpdateFile_.close(); 
+      connection_.commit(); 
       connection_.close(); 
       connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
       statement_ = connection_.createStatement();	//@A1A
@@ -215,7 +222,7 @@ Performs cleanup needed after running variations.
         rs_.close ();
         statement_.close ();
         connection_.commit(); // @C1A
-        connection_.close ();
+      connection_.close ();
       }
       
       
@@ -589,7 +596,7 @@ updateDB2Default() - Should throw an exception on a deleted row.
 	}
        if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDDB2D");
             rs_.deleteRow ();
             JDReflectionUtil.callMethod_V(rs_, methodName, "C_VARCHAR_50");
             //rs_.updateDB2Default ("C_VARCHAR_50");

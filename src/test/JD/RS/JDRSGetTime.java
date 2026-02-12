@@ -837,7 +837,7 @@ public class JDRSGetTime extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         Time v = rs.getTime(1);
         failed("Didn't throw SQLException " + v);
@@ -854,7 +854,7 @@ public class JDRSGetTime extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         Time v = rs.getTime(1);
         failed("Didn't throw SQLException " + v);

@@ -43,12 +43,12 @@ public class JDSerializeFile implements AutoCloseable{
   
   public JDSerializeFile(Connection c, String name) throws Exception {
     String library = null; 
+    name_ = name; 
     int dotIndex = name.indexOf("."); 
     if (dotIndex > 0) { 
       library = name.substring(0,dotIndex); 
       name=name.substring(dotIndex+1); 
     }
-    name_ = name; 
     statement_ = c.createStatement();
     closeStatement_ = true; 
     name = name.replace("/","X").replace(".","X").replace("\"","X");
@@ -69,12 +69,12 @@ public class JDSerializeFile implements AutoCloseable{
 
   public JDSerializeFile(Statement s, String name) throws SQLException {
     String library = null; 
+    name_ = name; 
     int dotIndex = name.indexOf("."); 
     if (dotIndex > 0) { 
       library = name.substring(0,dotIndex); 
       name=name.substring(dotIndex+1); 
     }
-    name_ = name; 
     statement_ = s;
     name = name.replace("/","X").replace(".","X").replace("\"","X");
     int len = name.length(); 

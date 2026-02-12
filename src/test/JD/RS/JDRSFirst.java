@@ -204,9 +204,8 @@ first() - Should throw an exception on a cancelled statement.
     public void Var003 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 statement_.cancel ();
                 rs.first ();
                 failed ("Didn't throw SQLException");
@@ -225,11 +224,10 @@ first() - Should throw an exception on a foward only result set.
     public void Var004 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                           ResultSet.CONCUR_READ_ONLY);
+            try (Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                       ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                               + JDRSTest.RSTEST_POS);
+                                           + JDRSTest.RSTEST_POS)) {
                 rs.first ();
                 failed ("Didn't throw SQLException");
             }
@@ -759,9 +757,8 @@ isFirst() - Should throw an exception on a cancelled statement.
     public void Var025 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 statement_.cancel ();
                 rs.isFirst ();
                 failed ("Didn't throw SQLException");
@@ -1461,11 +1458,9 @@ isFirst() -- Should return false where there is still more data.
 	if (checkJdbc20 ()) {
 	    if (checkNative()) {
 		StringBuffer sb = new StringBuffer(); 
+                boolean passed=true; 
                 String sql = "Select 'A' from sysibm.sysdummy1 UNION Select 'B' from sysibm.sysdummy1 UNION SELECT 'C' from sysibm.sysdummy1"; 
-		try {
-		    boolean passed=true; 
-		    ResultSet rs = statementNoPrefetch_.executeQuery (sql);
-
+		try (ResultSet rs = statementNoPrefetch_.executeQuery (sql)) {
 		    boolean fetch1 = rs.next();
 		    if (!fetch1) { passed=false; sb.append("fetch1 returned "+fetch1+"\n"); }
 
@@ -1569,9 +1564,8 @@ first() - Should throw an exception on a cancelled statement.
     public void Var063 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 statementNoPrefetch_.cancel ();
                 rs.first ();
                 failed ("Didn't throw SQLException");
@@ -1590,11 +1584,10 @@ first() - Should throw an exception on a foward only result set.
     public void Var064 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connectionNoPrefetch_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                           ResultSet.CONCUR_READ_ONLY);
+            try (Statement s = connectionNoPrefetch_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                       ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                               + JDRSTest.RSTEST_POS);
+                                           + JDRSTest.RSTEST_POS)) {
                 rs.first ();
                 failed ("Didn't throw SQLException");
             }
@@ -2124,9 +2117,8 @@ isFirst() - Should throw an exception on a cancelled statement.
     public void Var085 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statementNoPrefetch_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 statementNoPrefetch_.cancel ();
                 rs.isFirst ();
                 failed ("Didn't throw SQLException");

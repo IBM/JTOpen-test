@@ -1229,7 +1229,7 @@ public void Var041() {
       sb.setLength(0);
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         InputStream v = rs.getUnicodeStream(1);
         String expected = "1.1";
@@ -1252,7 +1252,7 @@ public void Var041() {
       sb.setLength(0);
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         InputStream v = rs.getUnicodeStream(1);
         String expected = "1.1";

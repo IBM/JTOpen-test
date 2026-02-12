@@ -110,7 +110,7 @@ Performs setup needed before running variations.
 							  ResultSet.CONCUR_UPDATABLE);
 	    }
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_GET
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_GETFLOAT')");
 	    statementQuery_ = "SELECT * FROM "
                 + JDRSTest.RSTEST_GET + " FOR UPDATE"; 
             rs_ = statement_.executeQuery (statementQuery_);
@@ -454,7 +454,7 @@ getFloat() - Should throw an exception on a deleted row.
 
         if (checkJdbc20 ()) {
         try {
-            rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMY_ROW");
+            rs_ = JDRSTest.position (driver_, statement_, statementQuery_, rs_, "DUMMY_GETFLOAT");
             rs_.deleteRow ();
             float v = rs_.getFloat ("C_FLOAT");
             failed ("Didn't throw SQLException on deleted row but got "+v);
@@ -984,7 +984,7 @@ getFloat() - Get from a BIGINT.
           
           try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16);
+                + JDRSTest.RSTEST_GETDFP16);
             int i = 0; 
             while (rs.next()) { 
               double v = rs.getFloat (1);
@@ -1027,7 +1027,7 @@ getFloat() - Get from a BIGINT.
           
           try {
             ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34);
+                + JDRSTest.RSTEST_GETDFP34);
             int i = 0; 
             while (rs.next()) { 
               double v = rs.getFloat (1);
@@ -1073,7 +1073,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NAN);
+                + JDRSTest.RSTEST_GETDFP16NAN);
             rs.next(); 
             float v = rs.getFloat (1);
             String vString = ""+v; 
@@ -1098,7 +1098,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NNAN);
+                + JDRSTest.RSTEST_GETDFP16NNAN);
             rs.next(); 
             String v = ""+rs.getFloat (1);
             assertCondition(v.equals("NaN"), "Expected -NaN got "+v); 
@@ -1122,7 +1122,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16INF);
+                + JDRSTest.RSTEST_GETDFP16INF);
             rs.next(); 
             float v = rs.getFloat (1);
             assertCondition(v == Float.POSITIVE_INFINITY, "Expected Infinity got "+v);
@@ -1146,7 +1146,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP16NINF);
+                + JDRSTest.RSTEST_GETDFP16NINF);
             rs.next(); 
             float v = rs.getFloat (1);
             assertCondition(v == Float.NEGATIVE_INFINITY, "Expected -Infinity got "+v); 
@@ -1194,7 +1194,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34NNAN);
+                + JDRSTest.RSTEST_GETDFP34NNAN);
             rs.next(); 
             String v = ""+rs.getFloat (1);
             assertCondition(v.equals("NaN"), "Expected NaN got "+v); 
@@ -1218,7 +1218,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34INF);
+                + JDRSTest.RSTEST_GETDFP34INF);
             rs.next(); 
             float v = rs.getFloat (1);
             
@@ -1243,7 +1243,7 @@ getFloat() - Get from a BIGINT.
           try {
             Statement s = connection_.createStatement ();
             ResultSet rs = s.executeQuery ("SELECT * FROM "
-                + JDRSTest.RSTEST_DFP34NINF);
+                + JDRSTest.RSTEST_GETDFP34NINF);
             rs.next(); 
             float v = rs.getFloat (1);
             assertCondition(v == Float.NEGATIVE_INFINITY, "Expected -Infinity got "+v); 

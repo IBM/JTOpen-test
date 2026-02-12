@@ -434,13 +434,13 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var009() {
     if (checkJdbc20()) {
-      Statement statement_ = null;
       ResultSet rs = null;
       JDSerializeFile serializeFile = null;
+      Statement statement = null; 
       try {
         serializeFile = new JDSerializeFile(connectionInsensitive_, JDRSTest.RSTEST_SENSITIVE);
-        statement_ = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-        rs = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
+        statement = connectionInsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        rs = statement.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
         rs.next();
         rs.getInt(1);
 
@@ -455,12 +455,17 @@ public class JDRSCursorSensitivity extends JDTestcase {
 
         rs.beforeFirst();
         rs.next();
+        rs.close(); 
+        statement.close(); 
         failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         try {
           rs.close();
-          statement_.close();
+        } catch (Exception c) {
+        }
+        try {
+          statement.close();
         } catch (Exception c) {
         }
       } finally {
@@ -662,33 +667,38 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var014() {
     if (checkJdbc20()) {
-      Statement statement_ = null;
+      Statement statement = null;
       ResultSet rs = null;
       JDSerializeFile serializeFile = null;
       try {
         serializeFile = new JDSerializeFile(connectionSensitive_, JDRSTest.RSTEST_SENSITIVE);
-        statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-        rs = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
+        statement = connectionSensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        rs = statement.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
         rs.next();
         rs.getInt(1);
 
-        Statement statement2_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+        Statement statement2 = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_UPDATABLE);
-        ResultSet rs1 = statement2_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
+        ResultSet rs1 = statement2.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
         rs1.absolute(1);
         rs1.updateInt(1, 154);
         rs1.updateRow();/* serialized */
         rs1.close();
-        statement2_.close();
+        statement2.close(); 
 
         rs.beforeFirst();
         rs.next();
+        rs.close(); 
+        statement.close();
         failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         try {
           rs.close();
-          statement_.close();
+        } catch (Exception c) {
+        }
+        try {
+          statement.close();
         } catch (Exception c) {
         }
       } finally {
@@ -847,13 +857,13 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var018() {
     if (checkJdbc20()) {
-      Statement statement_ = null;
+      Statement statement = null;
       ResultSet rs = null;
       JDSerializeFile serializeFile = null;
       try {
         serializeFile = new JDSerializeFile(connectionAsensitive_, JDRSTest.RSTEST_SENSITIVE);
-        statement_ = connectionAsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-        rs = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
+        statement = connectionAsensitive_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+        rs = statement.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
         for (int i = 0; i < 18; i++)
           rs.next();
         rs.getInt(1);
@@ -869,12 +879,17 @@ public class JDRSCursorSensitivity extends JDTestcase {
 
         rs.beforeFirst();
         rs.next();
+        rs.close(); 
+        statement.close(); 
         failed("Didn't throw Exception - New testcase created by toolbox 5/15/2003.");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         try {
           rs.close();
-          statement_.close();
+        } catch (Exception c) {
+        }
+        try {
+          statement.close();
         } catch (Exception c) {
         }
       } finally {
@@ -1032,21 +1047,25 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var022() {
     if (checkJdbc20()) {
-      Statement statement_ = null;
+      Statement statement = null;
       ResultSet rs = null;
       try {
-        statement_ = connectionDefault_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-        rs = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
+        statement = connectionDefault_.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        rs = statement.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE);
 
         rs.absolute(1);
         rs.absolute(2);
         rs.close();
+        statement.close(); 
         failed("Didn't throw SQLException - New testcase created by toolbox 5/15/2003");
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
         try {
           rs.close();
-          statement_.close();
+        } catch (Exception c) {
+        }
+        try {
+          statement.close();
         } catch (Exception c) {
         }
       }
@@ -1234,9 +1253,8 @@ public class JDRSCursorSensitivity extends JDTestcase {
   public void Var037() {
     if (checkJdbc20()) {
 
-      try {
-        Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY);
+      try (Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY)) {
         ResultSet rs = statement_.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " with nc");
         rs.close();
         // Just make sure the query succeeds
@@ -1253,10 +1271,9 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var038() {
     if (checkJdbc20()) {
-      try {
-        PreparedStatement stmt = connectionSensitive_.prepareStatement(
-            "SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " with nc", ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY);
+      try (PreparedStatement stmt = connectionSensitive_.prepareStatement(
+          "SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " with nc", ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY)) {
         ResultSet rs = stmt.executeQuery();
         rs.close();
         // Just make sure the query succeeds
@@ -1273,9 +1290,8 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var039() {
     if (checkJdbc20()) {
-      try {
-        Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY);
+      try (Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY)) {
         ResultSet rs = statement_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " fetch first 10 rows only ");
         rs.close();
@@ -1292,9 +1308,8 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var040() {
     if (checkJdbc20()) {
-      try {
-        Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY);
+      try (Statement statement_ = connectionSensitive_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY)) {
         ResultSet rs = statement_
             .executeQuery("SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " optimize for all rows ");
         rs.close();
@@ -1311,10 +1326,9 @@ public class JDRSCursorSensitivity extends JDTestcase {
    **/
   public void Var041() {
     if (checkJdbc20()) {
-      try {
-        PreparedStatement statement_ = connectionSensitive_.prepareStatement(
-            "SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " optimize for all rows ", ResultSet.TYPE_SCROLL_INSENSITIVE,
-            ResultSet.CONCUR_READ_ONLY);
+      try (PreparedStatement statement_ = connectionSensitive_.prepareStatement(
+          "SELECT * FROM " + JDRSTest.RSTEST_SENSITIVE + " optimize for all rows ", ResultSet.TYPE_SCROLL_INSENSITIVE,
+          ResultSet.CONCUR_READ_ONLY)) {
         ResultSet rs = statement_.executeQuery();
         rs.close();
         // Just make sure the query succeeds

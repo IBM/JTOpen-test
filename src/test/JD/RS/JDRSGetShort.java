@@ -894,7 +894,7 @@ getShort() - Get from a BIGINT.
     **/
    public void Var041 ()
    {
-        testDfp(JDRSTest.RSTEST_DFP16, JDRSTest.VALUES_DFP16_SHORT, statement0_, "getShort");
+        testDfp(JDRSTest.RSTEST_GETDFP16, JDRSTest.VALUES_DFP16_SHORT, statement0_, "getShort");
    }
    
    
@@ -903,7 +903,7 @@ getShort() - Get from a BIGINT.
     **/
    public void Var042 ()
    {
-        testDfp(JDRSTest.RSTEST_DFP34, JDRSTest.VALUES_DFP34_SHORT, statement0_, "getShort");
+        testDfp(JDRSTest.RSTEST_GETDFP34, JDRSTest.VALUES_DFP34_SHORT, statement0_, "getShort");
    }
 
    

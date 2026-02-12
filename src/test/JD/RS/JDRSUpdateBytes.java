@@ -26,6 +26,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -60,6 +61,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -100,13 +102,16 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
     
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDBYTES')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
@@ -128,7 +133,9 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
-            connection_.close ();
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+         connection_.close ();
         }
     }
 
@@ -528,7 +535,7 @@ updateBytes() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDBYTES");
             rs_.deleteRow ();
             byte[] ba = new byte[] { (byte) 121, (byte) 0, (byte) 2, (byte) -2 };
             rs_.updateBytes ("C_VARBINARY_20", ba);
@@ -1093,7 +1100,7 @@ updateBytes() - Update a BIGINT.
           Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
               ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s.executeQuery ("SELECT * FROM "
-              + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
+              + JDRSTest.RSTEST_UPDDFP16+" FOR UPDATE ");
           rs.next(); 
           rs.updateBytes (1, new byte[] { (byte) 50 });
           rs.updateRow (); /* exception */ 
@@ -1116,7 +1123,7 @@ updateBytes() - Update a BIGINT.
          Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
              ResultSet.CONCUR_UPDATABLE);
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
+             + JDRSTest.RSTEST_UPDDFP34+" FOR UPDATE ");
          rs.next(); 
          rs.updateBytes (1, new byte[] { (byte) 50 });
          rs.updateRow (); /* exception */ 

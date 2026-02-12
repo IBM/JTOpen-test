@@ -1792,11 +1792,13 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
   
   
   /**
-   * Creates a table if needed.  If the table exists, nothing happens. 
+   * Creates a table if needed.  If the table is created, then a JDSerializeFile object is returned.  JDSerializeFile should be closed after the inserts complete. 
+   * If the table exists, nothing happens and null is returned. 
    */
-  protected static boolean createTableIfNeeded(Statement stmt, String tableName, String tableDefinition,
+  protected static JDSerializeFile createTableIfNeeded(Statement stmt, String tableName, String tableDefinition,
       StringBuffer sb ) throws SQLException {
     
+    JDSerializeFile serializeFile = null; 
     boolean tableCreated = false; 
     tableDefinition = tableDefinition.trim();
     String oldDefinition = (String) tableDefinitions.get(tableName);
@@ -1817,7 +1819,7 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
       } else {
         throw new SQLException("Unable to find schema in "+tableName);
       }
-
+      serializeFile = new JDSerializeFile(stmt, tableName); 
       String sql = "SELECT * FROM QSYS2.SYSTABLES where TABLE_NAME='"+baseFilename+"' and TABLE_SCHEMA='"+baseCollection+"' " ;
       ResultSet rs = stmt.executeQuery(sql); 
       if (!rs.next()) { 
@@ -1846,8 +1848,12 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
           }
         }
       }
+      if (!tableCreated) { 
+        serializeFile.close(); 
+        serializeFile = null; 
+      }
       rs.close(); 
-      return tableCreated; 
+      return serializeFile;
  
   }
 

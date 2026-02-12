@@ -279,9 +279,8 @@ an exception.
    public void Var007 ()
    {
       if (checkJdbc20 ()) {
-         try {
-            Statement s = connection_.createStatement ();
-            ResultSet rs = s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT");
+         try (Statement s = connection_.createStatement ();
+            ResultSet rs = s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT")) {
             rs.setFetchSize (-1);            
             failed ("Didn't throw SQLException");
          } catch (Exception e) {
@@ -299,11 +298,11 @@ is set).  Should throw an exception.
    public void Var008 ()
    {
       if (checkJdbc20 ()) {
-         try {
-            Statement s = connection_.createStatement ();
+         try (Statement s = connection_.createStatement ()) {
             s.setMaxRows (12);
-            ResultSet rs = s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT");
-            rs.setFetchSize (13);
+            try (ResultSet rs = s.executeQuery ("SELECT * FROM QIWS.QCUSTCDT")) {
+              rs.setFetchSize (13);
+            }
             failed ("Didn't throw SQLException");
          } catch (Exception e) {
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");

@@ -1562,7 +1562,7 @@ public class JDRSGetBytes extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         byte[] v = rs.getBytes(1);
         if ((!isToolboxDriver()))
@@ -1591,7 +1591,7 @@ public class JDRSGetBytes extends JDTestcase {
     if (checkDecFloatSupport()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         byte[] v = rs.getBytes(1);
         if ((!isToolboxDriver()))

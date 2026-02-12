@@ -912,7 +912,7 @@ getByte() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
 	 sql = "SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16; 
+             + JDRSTest.RSTEST_GETDFP16; 
          ResultSet rs = s.executeQuery (sql);
          rs.next(); 
          byte v = rs.getByte (1);
@@ -937,7 +937,7 @@ getByte() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
 	 while (rs.next()) { 
 	     byte v = rs.getByte (1);
 	     values += v+", "; 
@@ -964,7 +964,7 @@ getByte() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next(); 
          byte v = rs.getByte (1);
          s.close(); 
@@ -989,7 +989,7 @@ getByte() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
 	 while (rs.next()) { 
 	     byte v = rs.getByte (1);
 	     values += v+", "; 

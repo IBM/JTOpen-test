@@ -63,6 +63,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
   private Object sqlxml_;
 
   private boolean nodecl = false;
+  private JDSerializeFile serializeUpdateFile_;
 
   /**
    * Constructor.
@@ -91,11 +92,13 @@ public class JDRSUpdateSQLXML extends JDTestcase {
           + ";date format=iso" + ";data truncation=true";
       connection_ = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
       connection_.setAutoCommit(false); // @C1A
+      serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+      connection_.commit(); 
 
       statementOther_ = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
       statement2Other_ = connection_.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-      statementOther_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMY_ROW')");
+      statementOther_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMY_UPDSQLXML')");
       statementOther_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('" + key_ + "')");
 
       rsOther_ = statementOther_.executeQuery(select_ + " FOR UPDATE");
@@ -130,6 +133,8 @@ public class JDRSUpdateSQLXML extends JDTestcase {
       }
       statementXML_.close();
       connection_.commit(); // @C1A
+      serializeUpdateFile_.close(); 
+      connection_.commit(); 
       connection_.close();
     }
   }
@@ -164,11 +169,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       } finally {
-        try {
-          if (rs != null)
-            rs.close();
-        } catch (Exception e) {
-        }
+        
       }
     }
   }
@@ -1128,9 +1129,9 @@ public class JDRSUpdateSQLXML extends JDTestcase {
    **/
   public void Var055() {
     if (checkJdbc40()) {
-      JDSerializeFile serializeFile = null;
+      
       try {
-        serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE);
+        
         String expected = "<?xml version=\"1.0\" ?> <name>Var055</name>";
         if (nodecl) {
           expected = " <name>Var055</name>";
@@ -1151,14 +1152,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
 
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-      } finally {
-        if (serializeFile != null) {
-          try {
-            serializeFile.close();
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-        }
+    
       }
     }
   }
@@ -1420,7 +1414,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
     if (checkJdbc40()) {
       if (checkDecFloatSupport()) {
         try (Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ")) {
+            ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP16 + " FOR UPDATE ")) {
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           rs.updateRow(); /* exception thrown */
@@ -1441,7 +1435,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP16 + " FOR UPDATE ");
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           rs.updateRow(); /* exception thrown */
@@ -1461,7 +1455,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16 + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP16 + " FOR UPDATE ");
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           rs.updateRow(); /* exception thrown */
@@ -1482,7 +1476,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
       if (checkDecFloatSupport()) {
         try {
           Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34 + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP34 + " FOR UPDATE ");
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           failed("Didn't throw SQLException");
@@ -1502,7 +1496,7 @@ public class JDRSUpdateSQLXML extends JDTestcase {
 
         try {
           Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34 + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP34 + " FOR UPDATE ");
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           failed("Didn't throw SQLException");
@@ -1519,25 +1513,18 @@ public class JDRSUpdateSQLXML extends JDTestcase {
   public void Var075() {
     if (checkJdbc40()) {
       if (checkDecFloatSupport()) {
-        JDSerializeFile serializeFile = null;
+        
         try {
-          serializeFile = new JDSerializeFile(connection_, JDRSTest.RSTEST_DFP34);
+          
           Statement s = connection_.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34 + " FOR UPDATE ");
+          ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_UPDDFP34 + " FOR UPDATE ");
           rs.next();
           JDReflectionUtil.callMethod_V(rs, "updateSQLXML", 1, sqlxml_);
           rs.updateRow(); /* serialized */
           failed("Didn't throw SQLException");
         } catch (Exception e) {
           assertExceptionIsInstanceOf(e, "java.sql.SQLException");
-        } finally {
-          if (serializeFile != null) {
-            try {
-              serializeFile.close();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-          }
+       
         }
       }
     }

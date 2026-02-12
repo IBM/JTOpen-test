@@ -1494,7 +1494,7 @@ public class JDRSGetSQLXML extends JDTestcase {
     if (checkJdbc40()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP16);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP16);
         rs.next();
         Object v = JDReflectionUtil.callMethod_O(rs, "getSQLXML", 1);
         failed("Didn't throw SQLException " + v);
@@ -1511,7 +1511,7 @@ public class JDRSGetSQLXML extends JDTestcase {
     if (checkJdbc40()) {
       try {
         Statement s = connection_.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_DFP34);
+        ResultSet rs = s.executeQuery("SELECT * FROM " + JDRSTest.RSTEST_GETDFP34);
         rs.next();
         Object v = JDReflectionUtil.callMethod_O(rs, "getSQLXML", 1);
         failed("Didn't throw SQLException " + v);

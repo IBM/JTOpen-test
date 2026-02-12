@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSTest.java
@@ -36,6 +30,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDParallelCounter;
 import test.JD.JDSetupCollection;
 import test.JD.RSMD.JDRSMDGetCatalogName;
 import test.JD.RSMD.JDRSMDGetColumnClassName;
@@ -82,6 +77,8 @@ extends JDTestDriver
     // Private data.
     private Connection  connection_;
     private Statement   statement_;
+
+    private JDParallelCounter parallelCounter_;
 
 
 
@@ -144,6 +141,9 @@ extends JDTestDriver
         connection_ = getConnection (getBaseURL (),
                                      systemObject_.getUserId (), encryptedPassword_);
 
+        parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
+        
+        
         if(testLib_ != null)
         {    // @E1A
             COLLECTION = testLib_;
@@ -305,7 +305,7 @@ extends JDTestDriver
             initTable(statement, RSMDTEST_GET_BIG_PRECISION, buffer.toString()); 
            connection.commit();
         }
-
+        
     }
 
 
@@ -315,38 +315,45 @@ extends JDTestDriver
     
     @exception Exception If an exception occurs.
     **/
-    public void cleanup ()
-    throws Exception
-    {
-	// 
-	// Force gc to clean up open statement
-	// 
-	System.gc(); 
+    public void cleanup() throws Exception {
 
-	      cleanupTable(statement_, RSMDTEST_GET);
-        cleanupTable(statement_, RSMDTEST_GET2);
-
-        if(areLargeDecimalPrecisionsSupported())         {
-            cleanupTable(statement_,  RSMDTEST_GET_BIG_PRECISION);
-
-        }
-
-        if(areLobsSupported ()) {
-          try {
-
-        statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".MONEY");
-      } catch (Exception e) {
-        e.printStackTrace();
+      boolean doCleanup = true;
+      if (!parallelCounter_.doCleanup()) {
+        out_.println("JDRTest.cleanup not cleaning other parallel tests running =" + parallelCounter_.toString());
+        doCleanup = false;
       }
 
+      //
+      // Force gc to clean up open statement
+      //
+      System.gc();
+
+      if (doCleanup) {
+        cleanupTable(statement_, RSMDTEST_GET);
+        cleanupTable(statement_, RSMDTEST_GET2);
+
+        if (areLargeDecimalPrecisionsSupported()) {
+          cleanupTable(statement_, RSMDTEST_GET_BIG_PRECISION);
+
         }
-        connection_.commit();    // for xa
 
-        statement_.close ();
-        connection_.close ();
+        if (areLobsSupported()) {
+          try {
+
+            statement_.executeUpdate("DROP DISTINCT TYPE " + COLLECTION + ".MONEY");
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+
+        }
+      }
+      
+      parallelCounter_.close(); 
+      
+      connection_.commit(); 
+      statement_.close();
+      connection_.close();
     }
-
-
 
     /**
      * Cleanup - - this does not run automatically - - it is called by
@@ -360,47 +367,36 @@ extends JDTestDriver
 
 
     /**
-    Creates the testcases.
-    **/
-    public void createTestcases2 ()
-    {
-    	
-    	if(TestDriverStatic.pause_)
- 	    { 
- 		  	try 
- 		  	{						
- 		  		systemObject_.connectService(AS400.DATABASE);
- 			}
- 	     	catch (AS400SecurityException e) 
- 	     	{
- 				e.printStackTrace();
- 			} 
- 	     	catch (IOException e) 
- 	     	{
- 	     	    e.printStackTrace();
- 			}
- 				 	 	   
- 	     	try
- 	     	{
- 	     	    Job[] jobs = systemObject_.getJobs(AS400.DATABASE);
- 	     	    System.out.println("Host Server job(s): ");
+     * Creates the testcases.
+     **/
+    public void createTestcases2() {
 
- 	     	    	for(int i = 0 ; i< jobs.length; i++)
- 	     	    	{   	    	
- 	     	    		System.out.println(jobs[i]);
- 	     	    	}    	    
- 	     	 }
- 	     	 catch(Exception exc){}
- 	     	    
- 	     	 try 
- 	     	 {
- 	     	    	System.out.println ("Toolbox is paused. Press ENTER to continue.");
- 	     	    	System.in.read ();
- 	     	 } 
- 	     	 catch (Exception exc) {};   	   
- 	   } 
- 	   
-    	
+      if (TestDriverStatic.pause_) {
+        try {
+          systemObject_.connectService(AS400.DATABASE);
+        } catch (AS400SecurityException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+        try {
+          Job[] jobs = systemObject_.getJobs(AS400.DATABASE);
+          System.out.println("Host Server job(s): ");
+
+          for (int i = 0; i < jobs.length; i++) {
+            System.out.println(jobs[i]);
+          }
+        } catch (Exception exc) {
+        }
+
+        try {
+          System.out.println("Toolbox is paused. Press ENTER to continue.");
+          System.in.read();
+        } catch (Exception exc) {
+        }
+        ;
+      }    	
     	
         addTestcase (new JDRSMDGetCatalogName (systemObject_,
                                                namesAndVars_, runMode_, fileOutputStream_, 

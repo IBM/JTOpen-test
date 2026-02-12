@@ -26,6 +26,7 @@ import com.ibm.as400.access.AS400;
 import test.JDRSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -60,6 +61,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -100,13 +102,15 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
-            statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+          statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
     
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDTIME')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
@@ -128,6 +132,8 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
             connection_.close ();
         }
     }
@@ -530,7 +536,7 @@ updateTime() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDTIME");
             rs_.deleteRow ();
             rs_.updateTime ("C_TIME", Time.valueOf("14:34:05"));
             failed ("Didn't throw SQLException");
@@ -1027,7 +1033,7 @@ updateTime() - Update a BIGINT.
           Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
               ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s.executeQuery ("SELECT * FROM "
-              + JDRSTest.RSTEST_DFP16+" FOR UPDATE ");
+              + JDRSTest.RSTEST_UPDDFP16+" FOR UPDATE ");
           rs.next(); 
           rs.updateTime (1, new Time(1423449495)); 
           failed ("Didn't throw SQLException");
@@ -1048,7 +1054,7 @@ updateTime() - Update a BIGINT.
               Statement s = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                   ResultSet.CONCUR_UPDATABLE);
               ResultSet rs = s.executeQuery ("SELECT * FROM "
-                  + JDRSTest.RSTEST_DFP34+" FOR UPDATE ");
+                  + JDRSTest.RSTEST_UPDDFP34+" FOR UPDATE ");
               rs.next(); 
               rs.updateTime (1, new Time(1423449495)); 
               failed ("Didn't throw SQLException");

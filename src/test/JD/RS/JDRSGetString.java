@@ -2023,7 +2023,7 @@ the result set.
 
 	    try {
 		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-							 + JDRSTest.RSTEST_DFP16);
+							 + JDRSTest.RSTEST_GETDFP16);
 		int i = 0;
 		while (rs.next()) {
 		    String v = rs.getString (1);
@@ -2067,7 +2067,7 @@ the result set.
 
 	    try {
 		ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-							 + JDRSTest.RSTEST_DFP34);
+							 + JDRSTest.RSTEST_GETDFP34);
 		int i = 0;
 		while (rs.next()) {
 		    String v = rs.getString (1);
@@ -2110,7 +2110,7 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP16NAN);
+					       + JDRSTest.RSTEST_GETDFP16NAN);
 		rs.next();
 		String v = rs.getString (1);
 		s.close(); 
@@ -2136,7 +2136,7 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP16NNAN);
+					       + JDRSTest.RSTEST_GETDFP16NNAN);
 		rs.next();
 		String v = rs.getString (1);
 		s.close(); 
@@ -2162,9 +2162,10 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP16INF);
+					       + JDRSTest.RSTEST_GETDFP16INF);
 		rs.next();
 		String v = rs.getString (1);
+		rs.close(); 
 		s.close(); 
 		assertCondition(v.equals("Infinity"), "Expected Infinity got "+v);
 	    }
@@ -2188,9 +2189,10 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP16NINF);
+					       + JDRSTest.RSTEST_GETDFP16NINF);
 		rs.next();
 		String v = rs.getString (1);
+		rs.close(); 
 		s.close(); 
 		assertCondition(v.equals("-Infinity"), "Expected -Infinity got "+v);
 	    }
@@ -2240,7 +2242,7 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP34NNAN);
+					       + JDRSTest.RSTEST_GETDFP34NNAN);
 		rs.next();
 		String v = rs.getString (1);
 		s.close(); 
@@ -2266,7 +2268,7 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP34INF);
+					       + JDRSTest.RSTEST_GETDFP34INF);
 		rs.next();
 		String v = rs.getString (1);
 		s.close(); 
@@ -2292,7 +2294,7 @@ the result set.
 	    try {
 		Statement s = connection_.createStatement ();
 		ResultSet rs = s.executeQuery ("SELECT * FROM "
-					       + JDRSTest.RSTEST_DFP34NINF);
+					       + JDRSTest.RSTEST_GETDFP34NINF);
 		rs.next();
 		String v = rs.getString (1);
 		s.close(); 

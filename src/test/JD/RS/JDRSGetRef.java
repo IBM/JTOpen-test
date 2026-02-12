@@ -949,7 +949,7 @@ getRef() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
          rs.next(); 
          Ref v = rs.getRef (1);
          failed ("Didn't throw SQLException "+v);
@@ -971,7 +971,7 @@ getRef() - Get from a BIGINT.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next(); 
          Ref v = rs.getRef (1);
          failed ("Didn't throw SQLException "+v);

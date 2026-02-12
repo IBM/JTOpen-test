@@ -1051,7 +1051,7 @@ to a value shorter than the string.
 
          try {
            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-               + JDRSTest.RSTEST_DFP16);
+               + JDRSTest.RSTEST_GETDFP16);
            int i = 0;
            while (rs.next()) {
              Object v = rs.getObject (1);
@@ -1102,7 +1102,7 @@ to a value shorter than the string.
 
          try {
            ResultSet rs = statement0_.executeQuery ("SELECT * FROM "
-               + JDRSTest.RSTEST_DFP34);
+               + JDRSTest.RSTEST_GETDFP34);
            int i = 0;
            while (rs.next()) {
              Object v = rs.getObject (1);

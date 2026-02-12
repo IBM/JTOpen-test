@@ -1347,7 +1347,7 @@ getBoolean() - Get from a BIGINT, when the value is false.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP16);
+             + JDRSTest.RSTEST_GETDFP16);
          rs.next();
          boolean v = rs.getBoolean (1);
          if (isToolboxDriver() ||
@@ -1389,7 +1389,7 @@ getBoolean() - Get from a BIGINT, when the value is false.
        try {
          Statement s = connection_.createStatement ();
          ResultSet rs = s.executeQuery ("SELECT * FROM "
-             + JDRSTest.RSTEST_DFP34);
+             + JDRSTest.RSTEST_GETDFP34);
          rs.next();
          boolean v = rs.getBoolean (1);
          if (isToolboxDriver() ||

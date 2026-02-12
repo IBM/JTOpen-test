@@ -29,6 +29,7 @@ import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
 import test.JD.JDParallelCounter;
+import test.JD.JDSerializeFile;
 import test.JD.JDSetupCollection;
 import test.JD.RS.JDRSAbsolute;
 import test.JD.RS.JDRSAfterLast;
@@ -148,16 +149,18 @@ public class JDRSTest extends JDTestDriver {
   public static String RSTEST_GRAPHIC = COLLECTION + ".RSTESTGRAPHIC";
   public static String RSTEST_SENSITIVE = COLLECTION + ".RSTESTSENS"; // @G1A
 
-  public static String RSTEST_DFP16 = COLLECTION + ".RSDFP16";
-  public static String RSTEST_DFP16NAN = COLLECTION + ".RSDFP16NAN";
-  public static String RSTEST_DFP16INF = COLLECTION + ".RSDFP16INF";
-  public static String RSTEST_DFP16NNAN = COLLECTION + ".RSDFP16NNAN";
-  public static String RSTEST_DFP16NINF = COLLECTION + ".RSDFP16NINF";
-  public static String RSTEST_DFP34 = COLLECTION + ".RSDFP34";
+  public static String RSTEST_GETDFP16 = COLLECTION + ".RSGDFP16";
+  public static String RSTEST_UPDDFP16 = COLLECTION + ".RSUDFP16";
+  public static String RSTEST_GETDFP16NAN = COLLECTION + ".RSDFP16NAN";
+  public static String RSTEST_GETDFP16INF = COLLECTION + ".RSDFP16INF";
+  public static String RSTEST_GETDFP16NNAN = COLLECTION + ".RSDFP16NNAN";
+  public static String RSTEST_GETDFP16NINF = COLLECTION + ".RSDFP16NINF";
+  public static String RSTEST_GETDFP34 = COLLECTION + ".RSGDFP34";
+  public static String RSTEST_UPDDFP34 = COLLECTION + ".RSUDFP34";
   public static String RSTEST_DFP34NAN = COLLECTION + ".RSDFP34NAN";
-  public static String RSTEST_DFP34INF = COLLECTION + ".RSDFP34INF";
-  public static String RSTEST_DFP34NNAN = COLLECTION + ".RSDFP34NNAN";
-  public static String RSTEST_DFP34NINF = COLLECTION + ".RSDFP34NINF";
+  public static String RSTEST_GETDFP34INF = COLLECTION + ".RSDFP34INF";
+  public static String RSTEST_GETDFP34NNAN = COLLECTION + ".RSDFP34NNAN";
+  public static String RSTEST_GETDFP34NINF = COLLECTION + ".RSDFP34NINF";
 
   public static String RSTEST_GETXML = COLLECTION + ".RSTESTGETX";
   public static String RSTEST_UPDATEXML = COLLECTION + ".RSTESTUPDX";
@@ -483,7 +486,6 @@ public class JDRSTest extends JDTestDriver {
       buffer.append(")");
 
       sql = buffer.toString();
-      boolean tableCreated = true;
       
       
       // Generate sample lobs.
@@ -625,8 +627,8 @@ public class JDRSTest extends JDTestDriver {
       CLOB_MEDIUMX = buffer.toString();
 
 
-      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GET, sql, errorBuffer);
-      if (tableCreated) {
+      JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GET, sql, errorBuffer);
+      if (serializeFile != null) {
         // Key == NUMBER_0.
         sql = "INSERT INTO " + RSTEST_GET
             + " (C_KEY, C_SMALLINT, C_INTEGER, C_BIGINT, C_REAL, C_FLOAT, " // @D0A
@@ -896,7 +898,7 @@ public class JDRSTest extends JDTestDriver {
         sql = "INSERT INTO " + RSTEST_GET
             + " (C_KEY) VALUES ('UPDATE_SANDBOX')";
         statement_.executeUpdate(sql);
-
+        serializeFile.close(); 
       } // tableCreated RSTEST_GET
 
     } catch (SQLException e) {
@@ -968,9 +970,9 @@ public class JDRSTest extends JDTestDriver {
       }
       buffer.append(", C_VARBINARY_40    VARCHAR(40) FOR BIT DATA ");
       buffer.append(")");
-      boolean tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETX, buffer.toString(),
+      JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETX, buffer.toString(),
           errorBuffer);
-      if (tableCreated) {
+      if (serializeFile != null ) {
         // Key == NUMBER_0.
         statement_.executeUpdate("INSERT INTO " + RSTEST_GETX
             + " (C_KEY, C_SMALLINT, C_INTEGER, C_BIGINT, C_REAL, C_FLOAT, " // @D0A
@@ -1218,7 +1220,7 @@ public class JDRSTest extends JDTestDriver {
         // Key == UPDATE_SANDBOX.
         statement_.executeUpdate("INSERT INTO " + RSTEST_GETX
             + " (C_KEY) VALUES ('UPDATE_SANDBOX')");
-
+        serializeFile.close(); 
       } // tableCreated RSTEST_GETX
 
     } catch (SQLException e) {
@@ -1242,7 +1244,7 @@ public class JDRSTest extends JDTestDriver {
     connection_ = getConnection(getBaseURL(), systemObject_.getUserId(),
         encryptedPassword_, "INFO_JDRSTEST_SETUP2");
 
-    parallelCounter_ = new JDParallelCounter(connection_, "JDRSCONCUR"); 
+    parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
     
     try {
       setup2();
@@ -1283,7 +1285,6 @@ public class JDRSTest extends JDTestDriver {
     String sql = "";
     System.out.println("Running JDRSTest.setup2()"); 
     try {
-      boolean tableCreated;
       // Initialization.
 
       if (testLib_ != null) { // @E2A
@@ -1300,16 +1301,18 @@ public class JDRSTest extends JDTestDriver {
         RSTEST_GRAPHIC = COLLECTION + ".RSTESTGRAPHIC";
         RSTEST_SENSITIVE = COLLECTION + ".RSTESTSENS"; // @G1A
 
-        RSTEST_DFP16 = COLLECTION + ".RSDFP16";
-        RSTEST_DFP16NAN = COLLECTION + ".RSDFP16NAN";
-        RSTEST_DFP16INF = COLLECTION + ".RSDFP16INF";
-        RSTEST_DFP16NNAN = COLLECTION + ".RSDFP16NNAN";
-        RSTEST_DFP16NINF = COLLECTION + ".RSDFP16NINF";
-        RSTEST_DFP34 = COLLECTION + ".RSDFP34";
+        RSTEST_GETDFP16 = COLLECTION + ".RSGDFP16";
+        RSTEST_UPDDFP16 = COLLECTION + ".RSUDFP16";
+        RSTEST_GETDFP16NAN = COLLECTION + ".RSDFP16NAN";
+        RSTEST_GETDFP16INF = COLLECTION + ".RSDFP16INF";
+        RSTEST_GETDFP16NNAN = COLLECTION + ".RSDFP16NNAN";
+        RSTEST_GETDFP16NINF = COLLECTION + ".RSDFP16NINF";
+        RSTEST_GETDFP34 = COLLECTION + ".RSGDFP34";
+        RSTEST_UPDDFP34 = COLLECTION + ".RSUDFP34";
         RSTEST_DFP34NAN = COLLECTION + ".RSDFP34NAN";
-        RSTEST_DFP34INF = COLLECTION + ".RSDFP34INF";
-        RSTEST_DFP34NNAN = COLLECTION + ".RSDFP34NNAN";
-        RSTEST_DFP34NINF = COLLECTION + ".RSDFP34NINF";
+        RSTEST_GETDFP34INF = COLLECTION + ".RSDFP34INF";
+        RSTEST_GETDFP34NNAN = COLLECTION + ".RSDFP34NNAN";
+        RSTEST_GETDFP34NINF = COLLECTION + ".RSDFP34NINF";
         RSTEST_GETXML = COLLECTION + ".RSTESTGETX";
         RSTEST_UPDATEXML = COLLECTION + ".RSTESTUPDX";
 
@@ -1353,9 +1356,9 @@ public class JDRSTest extends JDTestDriver {
           buffer.append(",C_DATALINK     VARCHAR(150)   )");
         }
         sql = buffer.toString();
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETDL, sql, errorBuffer);
+        JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETDL, sql, errorBuffer);
 
-        if (tableCreated) {
+        if (serializeFile != null ) {
           PreparedStatement ps4;
           if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
             sql = "INSERT INTO " + RSTEST_GETDL + " (C_KEY, C_DATALINK) "
@@ -1387,6 +1390,7 @@ public class JDRSTest extends JDTestDriver {
           sql = "INSERT INTO " + RSTEST_GETDL
               + " (C_KEY) VALUES ('UPDATE_SANDBOX')";
           statement_.executeUpdate(sql);
+          serializeFile.close(); 
         } // tableCreated RSTEST_GETDL
       }
 
@@ -1411,17 +1415,18 @@ public class JDRSTest extends JDTestDriver {
         }
         buffer.append(")");
         sql = buffer.toString();
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GRAPHIC, sql, errorBuffer);
+        JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GRAPHIC, sql, errorBuffer);
         char[] mychar = { '\u5e03', '\u5f17', '\u672b', '\u5378' }; // @G2
         String unicode = new String(mychar); // @G2
 
-        if (tableCreated) {
+        if (serializeFile != null) {
 
           // Key == GRAPHIC_FULL.
           statement_.executeUpdate("INSERT INTO " + RSTEST_GRAPHIC
               + " (C_KEY, C_GRAPHIC, C_VARGRAPHIC, C_GRAPHIC_835, C_VARGRAPHIC_835)" // @G2
               + " VALUES ('GRAPHIC_FULL', 'TOOLBOX FOR JAVA', 'JAVA TOOLBOX', '"
               + unicode + "' , '" + unicode + "')"); // @G2
+          serializeFile.close(); 
         } // tableCreated RSTEST_GRAPH
       }
       // @F1
@@ -1443,9 +1448,9 @@ public class JDRSTest extends JDTestDriver {
           buffer.append(",C_PADDED         VARCHAR(20) FOR BIT DATA");
         }
         buffer.append(")");
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BINARY, buffer.toString(),
+        JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BINARY, buffer.toString(),
             errorBuffer);
-        if (tableCreated) {
+        if (serializeFile != null) {
           // Key == BINARY_NOTRANS.
           PreparedStatement ps5 = connection_.prepareStatement("INSERT INTO "
               + RSTEST_BINARY + " (C_KEY, C_BINARY_1, C_BINARY_20, "
@@ -1501,17 +1506,19 @@ public class JDRSTest extends JDTestDriver {
           // Key == UPDATE_SANDBOX
           statement_.executeUpdate("INSERT INTO " + RSTEST_BINARY
               + " (C_KEY) VALUES('UPDATE_SANDBOX')");
-        }
-      } // tableCreated RSTEST_BINARY
+          serializeFile.close(); 
+        }  // tableCreated RSTEST_BINARY 
+      } 
 
       // Setup RSTEST_POS table.
-      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_POS,
+      JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_POS,
           " (ID INT, VALUE VARCHAR(20))", errorBuffer);
-      if (tableCreated) {
+      if (serializeFile != null) {
         for (int i = 1; i <= 99; ++i) {
           statement_.executeUpdate("INSERT INTO " + RSTEST_POS
               + " (ID, VALUE) VALUES (" + i + ", 'Speed on, JDBC.')");
         }
+        serializeFile.close(); 
       } // tableCreated RSTEST_POS
 
       // Setup RSTEST_UPDATE table.
@@ -1569,45 +1576,45 @@ public class JDRSTest extends JDTestDriver {
         
       buffer.append(")");
 
-      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATE, buffer.toString(),
+      serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATE, buffer.toString(),
           errorBuffer);
      
-
-      // Make use the table is usable with a transactional connection
-      Connection c = getConnection(getBaseURL(), systemObject_.getUserId(),
-          encryptedPassword_, "INFO_JDRSTEST_SETUP2_TRANS");
-      try {
-        c.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-        c.setAutoCommit(false);
-      } catch (Exception e) {
-        System.out
-            .println("Warning:  Exception thrown changing isolation level");
-        System.err.flush();
-        System.out.flush();
-        e.printStackTrace();
-        System.err.flush();
-        System.out.flush();
-      }
-      Statement stmt = c.createStatement();
-      stmt.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-          + " (C_KEY) VALUES ('DUMMY_ROW')");
-      stmt.executeUpdate("DELETE FROM  " + JDRSTest.RSTEST_UPDATE);
-      stmt.close();
-      c.commit();
-      c.close();
-
-      try {
-        connection_.commit(); // needed for XA testing
-      } catch (Exception e) {
-        System.out.println("Exception calling commit");
-        if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
+      if (serializeFile != null) {
+        // Make use the table is usable with a transactional connection
+        Connection c = getConnection(getBaseURL(), systemObject_.getUserId(), encryptedPassword_,
+            "INFO_JDRSTEST_SETUP2_TRANS");
+        try {
+          c.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+          c.setAutoCommit(false);
+        } catch (Exception e) {
+          System.out.println("Warning:  Exception thrown changing isolation level");
+          System.err.flush();
           System.out.flush();
           e.printStackTrace();
           System.err.flush();
-
-        } else {
-          System.out.println("Ignoring for LUW");
+          System.out.flush();
         }
+        Statement stmt = c.createStatement();
+        stmt.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMY_ROW')");
+        stmt.executeUpdate("DELETE FROM  " + JDRSTest.RSTEST_UPDATE);
+        stmt.close();
+        c.commit();
+        c.close();
+
+        try {
+          connection_.commit(); // needed for XA testing
+        } catch (Exception e) {
+          System.out.println("Exception calling commit");
+          if (JDTestDriver.getDatabaseTypeStatic() == JDTestDriver.DB_SYSTEMI) {
+            System.out.flush();
+            e.printStackTrace();
+            System.err.flush();
+
+          } else {
+            System.out.println("Ignoring for LUW");
+          }
+        }
+        serializeFile.close(); 
       }
 
       //
@@ -1620,17 +1627,19 @@ public class JDRSTest extends JDTestDriver {
       buffer.append(",C_VARCHAR_50      VARCHAR(50)   ");
       buffer.append(",C_NVARCHAR_50     NVARCHAR(50)  ) ");
 
-      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SCROLL, buffer.toString(),
+      serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SCROLL, buffer.toString(),
           errorBuffer);
       
 
-      if (tableCreated) {
+      if (serializeFile != null) {
         for (int i = 0; i < 97; i++) {
           statement_.executeUpdate("INSERT INTO " + RSTEST_SCROLL
               + " ( ROWNUMBER, C_INTEGER, C_VARCHAR_50, C_NVARCHAR_50 )" // @D0A
               + " VALUES ( " + (i + 1) + " ," + (i + 1)
               + " , 'Hi Mom', 'Hi Mom')");
         }
+        serializeFile.close(); 
+
       }
 
       // G1A
@@ -1641,14 +1650,16 @@ public class JDRSTest extends JDTestDriver {
       buffer.setLength(0);
       buffer.append(" ( C_INTEGER         INTEGER  ) ");
 
-      tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SENSITIVE, buffer.toString(),
+      serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_SENSITIVE, buffer.toString(),
           errorBuffer);
 
-      if (tableCreated) {
+      if (serializeFile != null) {
         for (int i = 0; i < 97; i++) {
           statement_.executeUpdate("INSERT INTO " + RSTEST_SENSITIVE
               + " ( C_INTEGER )" + " VALUES ( " + (i + 1) + ")");
         }
+        serializeFile.close(); 
+
       }
 
       //
@@ -1658,28 +1669,33 @@ public class JDRSTest extends JDTestDriver {
       if (true) {
         if (getDatabaseType() == JDTestDriver.DB_ZOS
             || getDatabaseType() == JDTestDriver.DB_LUW) {
-          createAndPopulateTable(RSTEST_DFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
-          createAndPopulateTable(RSTEST_DFP16NAN, "C1 DECFLOAT(16)", "NAN");
-          createAndPopulateTable(RSTEST_DFP16INF, "C1 DECFLOAT(16)", "INF");
-          createAndPopulateTable(RSTEST_DFP16NNAN, "C1 DECFLOAT(16)", "-NAN");
-          createAndPopulateTable(RSTEST_DFP16NINF, "C1 DECFLOAT(16)", "-INF");
-          createAndPopulateTable(RSTEST_DFP34, "C1 DECFLOAT(34)",
+          createAndPopulateTable(RSTEST_GETDFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
+          createAndPopulateTable(RSTEST_UPDDFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
+          createAndPopulateTable(RSTEST_GETDFP16NAN, "C1 DECFLOAT(16)", "NAN");
+          createAndPopulateTable(RSTEST_GETDFP16INF, "C1 DECFLOAT(16)", "INF");
+          createAndPopulateTable(RSTEST_GETDFP16NNAN, "C1 DECFLOAT(16)", "-NAN");
+          createAndPopulateTable(RSTEST_GETDFP16NINF, "C1 DECFLOAT(16)", "-INF");
+          createAndPopulateTable(RSTEST_GETDFP34, "C1 DECFLOAT(34)",
+              VALUES_DFP34_LUWSET);
+          createAndPopulateTable(RSTEST_UPDDFP34, "C1 DECFLOAT(34)",
               VALUES_DFP34_LUWSET);
           createAndPopulateTable(RSTEST_DFP34NAN, "C1 DECFLOAT(34)", "NAN");
-          createAndPopulateTable(RSTEST_DFP34INF, "C1 DECFLOAT(34)", "INF");
-          createAndPopulateTable(RSTEST_DFP34NNAN, "C1 DECFLOAT(34)", "-NAN");
-          createAndPopulateTable(RSTEST_DFP34NINF, "C1 DECFLOAT(34)", "-INF");
+          createAndPopulateTable(RSTEST_GETDFP34INF, "C1 DECFLOAT(34)", "INF");
+          createAndPopulateTable(RSTEST_GETDFP34NNAN, "C1 DECFLOAT(34)", "-NAN");
+          createAndPopulateTable(RSTEST_GETDFP34NINF, "C1 DECFLOAT(34)", "-INF");
         } else {
-          createAndPopulateTable(RSTEST_DFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
-          createAndPopulateTable(RSTEST_DFP16NAN, "C1 DECFLOAT(16)", "'NAN'");
-          createAndPopulateTable(RSTEST_DFP16INF, "C1 DECFLOAT(16)", "'INF'");
-          createAndPopulateTable(RSTEST_DFP16NNAN, "C1 DECFLOAT(16)", "'-NAN'");
-          createAndPopulateTable(RSTEST_DFP16NINF, "C1 DECFLOAT(16)", "'-INF'");
-          createAndPopulateTable(RSTEST_DFP34, "C1 DECFLOAT(34)", VALUES_DFP34);
+          createAndPopulateTable(RSTEST_GETDFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
+          createAndPopulateTable(RSTEST_UPDDFP16, "C1 DECFLOAT(16)", VALUES_DFP16);
+          createAndPopulateTable(RSTEST_GETDFP16NAN, "C1 DECFLOAT(16)", "'NAN'");
+          createAndPopulateTable(RSTEST_GETDFP16INF, "C1 DECFLOAT(16)", "'INF'");
+          createAndPopulateTable(RSTEST_GETDFP16NNAN, "C1 DECFLOAT(16)", "'-NAN'");
+          createAndPopulateTable(RSTEST_GETDFP16NINF, "C1 DECFLOAT(16)", "'-INF'");
+          createAndPopulateTable(RSTEST_GETDFP34, "C1 DECFLOAT(34)", VALUES_DFP34);
+          createAndPopulateTable(RSTEST_UPDDFP34, "C1 DECFLOAT(34)", VALUES_DFP34);
           createAndPopulateTable(RSTEST_DFP34NAN, "C1 DECFLOAT(34)", "'NAN'");
-          createAndPopulateTable(RSTEST_DFP34INF, "C1 DECFLOAT(34)", "'INF'");
-          createAndPopulateTable(RSTEST_DFP34NNAN, "C1 DECFLOAT(34)", "'-NAN'");
-          createAndPopulateTable(RSTEST_DFP34NINF, "C1 DECFLOAT(34)", "'-INF'");
+          createAndPopulateTable(RSTEST_GETDFP34INF, "C1 DECFLOAT(34)", "'INF'");
+          createAndPopulateTable(RSTEST_GETDFP34NNAN, "C1 DECFLOAT(34)", "'-NAN'");
+          createAndPopulateTable(RSTEST_GETDFP34NINF, "C1 DECFLOAT(34)", "'-INF'");
 
         }
       }
@@ -1705,13 +1721,11 @@ public class JDRSTest extends JDTestDriver {
         buffer.append(", C_BLOB0037           BLOB(1M)              ");
         buffer.append(", C_BLOB1208           BLOB(1M)              ");
         buffer.append(", C_BLOB1200           BLOB(1M)              ");
-        if (true) {
-          buffer.append(", C_XML              XML              ");
-        }
+        buffer.append(", C_XML              XML              ");
         buffer.append(")");
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETXML, buffer.toString(),
+        serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_GETXML, buffer.toString(),
             errorBuffer);
-        if (tableCreated) {
+        if (serializeFile != null) {
           // Key == BINARY_NOTRANS.
           try {
             PreparedStatement ps5;
@@ -1760,6 +1774,7 @@ public class JDRSTest extends JDTestDriver {
             e.printStackTrace();
             System.err.flush();
           }
+          serializeFile.close(); 
 
         } /* tableCreated */
 
@@ -1781,9 +1796,9 @@ public class JDRSTest extends JDTestDriver {
         buffer.append(", C_BLOB1208           BLOB(1M)              ");
         buffer.append(", C_BLOB1200           BLOB(1M)              ");
         buffer.append(")");
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATEXML, buffer.toString(),
+        serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_UPDATEXML, buffer.toString(),
             errorBuffer);
-        if (tableCreated) {
+        if (serializeFile != null) {
           // Key == BINARY_NOTRANS.
           try {
             PreparedStatement ps5 = connection_.prepareStatement("INSERT INTO "
@@ -1824,6 +1839,7 @@ public class JDRSTest extends JDTestDriver {
             System.out.println("Unable to setup row for " + RSTEST_UPDATEXML);
             System.out.println("Error buffer = " + errorBuffer.toString());
           }
+          serializeFile.close(); 
 
         } /* tableCreated */
 
@@ -1835,9 +1851,9 @@ public class JDRSTest extends JDTestDriver {
         buffer.append(" (C_KEY           VARCHAR(20)   ");
         buffer.append(",C_BOOLEAN        BOOLEAN        ");
         buffer.append(")");
-        tableCreated = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BOOLEAN, buffer.toString(),
+        serializeFile = JDTestDriver.createTableIfNeeded(statement_, RSTEST_BOOLEAN, buffer.toString(),
             errorBuffer);
-        if (tableCreated) {
+        if (serializeFile != null) {
           // Key == BINARY_NOTRANS.
           PreparedStatement ps5 = connection_.prepareStatement("INSERT INTO "
               + RSTEST_BOOLEAN + " (C_KEY, C_BOOLEAN) VALUES (?, ?)");
@@ -1865,6 +1881,7 @@ public class JDRSTest extends JDTestDriver {
           ps5.executeUpdate();
 
           ps5.close();
+          serializeFile.close(); 
 
         } // tableCreated RSTEST_BOOLEAN
       } /* V7R5 or later */
@@ -1898,11 +1915,13 @@ public class JDRSTest extends JDTestDriver {
     StringBuffer errorBuffer = new StringBuffer();
 
     try {
-      boolean tableCreated = JDTestDriver.createTableIfNeeded(statementParm, tableName,
+      JDSerializeFile serializeFile  = JDTestDriver.createTableIfNeeded(statementParm, tableName,
           " (" + columnDefinition + ")", errorBuffer);
-      if (tableCreated) { 
+      if (serializeFile != null) { 
         statementParm
           .executeUpdate("INSERT INTO " + tableName + " VALUES(" + value + ")");
+        serializeFile.close(); 
+
       } 
     } catch (Exception e) {
       System.out.println("Unable to insert '" + value + "' into " + tableName);
@@ -1925,13 +1944,12 @@ public class JDRSTest extends JDTestDriver {
       String columnDefinition, String values[], Statement statementParm)
       throws SQLException {
 
-    boolean tableCreated;
     StringBuffer errorBuffer = new StringBuffer();
     try {
-      tableCreated = JDTestDriver.createTableIfNeeded(statementParm, tableName,
+      JDSerializeFile serializeFile = JDTestDriver.createTableIfNeeded(statementParm, tableName,
           " (" + columnDefinition + ")", errorBuffer);
 
-      if (tableCreated) {
+      if (serializeFile != null ) {
         for (int i = 0; i < values.length; i++) {
           String sql;
           if (getDatabaseTypeStatic() == JDTestDriver.DB_ZOS
@@ -1950,6 +1968,8 @@ public class JDRSTest extends JDTestDriver {
 
           }
         }
+        serializeFile.close(); 
+
       }
     } catch (SQLException e) {
       System.out.println("Exception caught " + e.toString() + " ");
@@ -1971,6 +1991,7 @@ public class JDRSTest extends JDTestDriver {
       Statement stmt = c.createStatement();
       stmt.executeUpdate(
           "CALL QSYS.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)       ', 0000000030.00000)");
+      stmt.close(); 
     } catch (Exception e) {
       System.out.flush();
       e.printStackTrace();

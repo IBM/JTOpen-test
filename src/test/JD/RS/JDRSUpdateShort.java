@@ -61,6 +61,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -99,18 +100,20 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
-            statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+           statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
-    
-            statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
-            statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('" + key_ + "')");
-    
-            rs_ = statement_.executeQuery (select_ + " FOR UPDATE");
-        }
+            
+           
+              
+              statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('DUMMY_UPDINT')");
+              statement_.executeUpdate("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('" + key_ + "')");
+           
+            rs_ = statement_.executeQuery(select_ + " FOR UPDATE");
+          }
     }
 
 
@@ -127,7 +130,9 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
-            connection_.close ();
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
+          connection_.close ();
         }
     }
 
@@ -488,7 +493,7 @@ updateShort() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDINT");
             rs_.deleteRow ();
             rs_.updateShort ("C_SMALLINT", (short) 2892);
             failed ("Didn't throw SQLException");
@@ -1047,9 +1052,9 @@ updateShort() - Update a BIGINT.
 
     public void dfpTest(String table, short value, String expected) {
       if (checkDecFloatSupport()) {
-        JDSerializeFile serializeFile = null;
+        
         try {
-         serializeFile = new JDSerializeFile(connection_, table);
+        
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -1077,14 +1082,7 @@ updateShort() - Update a BIGINT.
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
-        } finally {
-          if (serializeFile != null) {
-            try {
-              serializeFile.close();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-          }
+      
         }
       }
     }
@@ -1093,12 +1091,12 @@ updateShort() - Update a BIGINT.
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var041 () { dfpTest(JDRSTest.RSTEST_DFP16, (short) 32767, ""+32767); }
+    public void Var041 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, (short) 32767, ""+32767); }
   
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var042 () { dfpTest(JDRSTest.RSTEST_DFP34, (short) -32760, "-32760"); }
+    public void Var042 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, (short) -32760, "-32760"); }
 
 
     /**

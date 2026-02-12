@@ -173,9 +173,8 @@ absolute() - Should throw an exception on a cancelled statement.
     public void Var003 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 statement_.cancel ();
                 rs.absolute (1);
                 failed ("Didn't throw SQLException");
@@ -194,11 +193,10 @@ absolute() - Should throw an exception on a foward only result set.
     public void Var004 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
-                                                           ResultSet.CONCUR_READ_ONLY);
+            try (Statement s = connection_.createStatement (ResultSet.TYPE_FORWARD_ONLY,
+                                                       ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = s.executeQuery ("SELECT * FROM "
-                                               + JDRSTest.RSTEST_POS);
+                                           + JDRSTest.RSTEST_POS)) {
                 rs.next ();
                 rs.absolute (10);
                 failed ("Didn't throw SQLException");
@@ -245,9 +243,8 @@ says that "Calling absolute(0) moves the cursor before the first row."
     public void Var006 ()
     {
         if (checkJdbc20 ()) {
-            try {
-                ResultSet rs = statement_.executeQuery ("SELECT * FROM "
-                                                        + JDRSTest.RSTEST_POS);
+            try (ResultSet rs = statement_.executeQuery ("SELECT * FROM "
+                                                    + JDRSTest.RSTEST_POS)) {
                 /* boolean success = */  rs.absolute (0);
 
                 assertCondition(rs.isBeforeFirst());
@@ -417,10 +414,10 @@ says that "Calling absolute(0) moves the cursor before the first row."
     public void Var013 ()
     {
         if (checkJdbc20 ()) {
-            try {
-		ResultSet rs;
-		// Note:  don't use statement_ since it is updatable 
-    rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1");
+          // Note:  don't use statement_ since it is updatable 
+            try (ResultSet rs = statement2_.executeQuery("select * from SYSIBM.SYSDUMMY1");)  {
+		
+		
                 /* boolean success = */  rs.absolute (0);
                 assertCondition(rs.isBeforeFirst(), "isBeforeFirst() returned false, but should have returned true");
             }
@@ -613,10 +610,9 @@ SQL400 - We can't support scrollable metadata resultsets (CLI/DB restriction).
         {
             if (checkJdbc20 ()) 
             {
-                try 
+                try (ResultSet rs = dmd_.getColumns (null, "QIWS",
+                                                "QCUSTCDT", "%")) 
                 {
-                    ResultSet rs = dmd_.getColumns (null, "QIWS",
-                                                    "QCUSTCDT", "%");
                     /* boolean success =  */ rs.absolute (0);
                     assertCondition(rs.isBeforeFirst());
                 }

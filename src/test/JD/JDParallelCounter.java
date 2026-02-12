@@ -39,7 +39,7 @@ import test.JTOpenTestEnvironment;
  * 
  * So, beginning of setup has
  * 
- *       parallelCounter_ = new JDParallelCounter(connection_, PSTEST_CONCUR); 
+ *       parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
  *       
  *       each use of an object should still use JDSerializeFile to ensure
  *       serialized access to the file. 

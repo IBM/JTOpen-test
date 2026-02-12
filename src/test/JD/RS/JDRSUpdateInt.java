@@ -64,6 +64,7 @@ extends JDTestcase
     private Statement           statement_;
     private Statement           statement2_;
     private ResultSet           rs_;
+    private JDSerializeFile serializeUpdateFile_;
 
 
 
@@ -104,13 +105,16 @@ Performs setup needed before running variations.
                 + ";data truncation=true";
             connection_ = testDriver_.getConnection (url,systemObject_.getUserId(), encryptedPassword_);
             connection_.setAutoCommit(false); // @C1A
+            serializeUpdateFile_ = new JDSerializeFile(connection_, JDRSTest.RSTEST_UPDATE); 
+            connection_.commit(); 
+
             statement_ = connection_.createStatement (ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
             statement2_ = connection_.createStatement (ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
     
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
-                + " (C_KEY) VALUES ('DUMMY_ROW')");
+                + " (C_KEY) VALUES ('DUMMY_UPDINT')");
             statement_.executeUpdate ("INSERT INTO " + JDRSTest.RSTEST_UPDATE
                 + " (C_KEY) VALUES ('" + key_ + "')");
     
@@ -132,6 +136,8 @@ Performs cleanup needed after running variations.
             rs_.close ();
             statement_.close ();
             connection_.commit(); // @C1A
+            serializeUpdateFile_.close(); 
+            connection_.commit(); 
             connection_.close ();
         }
     }
@@ -497,7 +503,7 @@ updateInt() - Should throw an exception on a deleted row.
     {
         if (checkJdbc20 ()) {
         try {
-            JDRSTest.position (rs_, "DUMMY_ROW");
+            JDRSTest.position (rs_, "DUMMY_UPDINT");
             rs_.deleteRow ();
             rs_.updateInt ("C_INTEGER", 2892);
             failed ("Didn't throw SQLException");
@@ -1091,9 +1097,8 @@ updateInt() - Update a BIGINT.
     
     public void dfpTest(String table, int value, String expected) {
       if (checkDecFloatSupport()) {
-        JDSerializeFile serializeFile = null;
+        
         try {
-         serializeFile = new JDSerializeFile(connection_, table);
           Statement s = connection_.createStatement(
               ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
           ResultSet rs = s
@@ -1114,14 +1119,7 @@ updateInt() - Update a BIGINT.
           assertCondition(v.equals(expected), "Got " + v + " sb " + expected);
         } catch (Exception e) {
           failed(e, "Unexpected Exception");
-        } finally {
-          if (serializeFile != null) {
-            try {
-              serializeFile.close();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-          }
+        
         }
       }
     }
@@ -1130,12 +1128,12 @@ updateInt() - Update a BIGINT.
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var042 () { dfpTest(JDRSTest.RSTEST_DFP16, 123456789, "123456789"); }
+    public void Var042 () { dfpTest(JDRSTest.RSTEST_UPDDFP16, 123456789, "123456789"); }
   
     /**
      * updateInt -- set a DFP16 value 
      */
-    public void Var043 () { dfpTest(JDRSTest.RSTEST_DFP34, 123456789, "123456789"); }
+    public void Var043 () { dfpTest(JDRSTest.RSTEST_UPDDFP34, 123456789, "123456789"); }
 
     /**
      * Check updating cursor via DRDA.  See CLI PTF SE69885 
