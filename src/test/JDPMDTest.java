@@ -41,6 +41,8 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDParallelCounter;
+import test.JD.JDSerializeFile;
 import test.JD.JDSetupCollection;
 import test.JD.PMD.JDPMDGetDB2ParameterName;
 import test.JD.PMD.JDPMDGetDirection;
@@ -94,6 +96,8 @@ extends JDTestDriver {
     // Private data.
     private Connection  connection_;
     private Statement   statement_;
+
+    private JDParallelCounter parallelCounter_;
 
 
 
@@ -160,15 +164,10 @@ Performs setup needed before running testcases.
             PMDTEST_SET         = COLLECTION + ".PMDTEST_SET";
         }
 
-/*
-        try {
-            Statement s = connection_.createStatement();
-            s.executeUpdate("DROP COLLECTION " + COLLECTION);
-            s.close();
-        } catch (SQLException e) {
-            // Don't worry if it doesn't drop - it probably doesn't exist.
-        }
-*/
+        parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
+
+        
+        
         JDSetupCollection.create (systemObject_, 
                                   connection_, COLLECTION, out_);
 
@@ -179,8 +178,9 @@ Performs setup needed before running testcases.
         // Setup PMDTEST_SET table.
         boolean lobSupport = true;
         StringBuffer buffer = new StringBuffer ();
-        dropTable(statement_, PMDTEST_SET); 
-        buffer.append ("CREATE TABLE ");
+
+        JDSerializeFile serializeFile =new JDSerializeFile(connection_, PMDTEST_SET); 
+        buffer.append ("CREATE OR REPLACE TABLE  ");
         buffer.append (PMDTEST_SET);
         buffer.append ("(C_SMALLINT        SMALLINT NOT NULL  ");                // 1
         buffer.append (",C_INTEGER         INTEGER       ");                     // 2
@@ -206,9 +206,10 @@ Performs setup needed before running testcases.
             buffer.append(",C_BIGINT       BIGINT NOT NULL");                    // 19
         else
             buffer.append(",C_BIGINT       INTEGER NOT NULL");                   // 19
-        buffer.append (")");
+        buffer.append (") ON REPLACE DELETE ROWS ");
         statement_.executeUpdate (buffer.toString ());
 
+        serializeFile.close(); 
         // Setup stored procedure.
 
             JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this);
@@ -245,7 +246,10 @@ Performs setup needed after running testcases.
     public void cleanup ()
     throws Exception
     {
+      if (parallelCounter_.doCleanup()) { 
         statement_.executeUpdate ("DROP TABLE " + PMDTEST_SET);
+      }
+      parallelCounter_.close(); 
 
         statement_.close ();
         connection_.commit(); // for xa

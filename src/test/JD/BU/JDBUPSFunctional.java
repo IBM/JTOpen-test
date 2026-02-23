@@ -35,6 +35,7 @@ import com.ibm.as400.access.AS400;
 import test.JDBUTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 
 
@@ -57,6 +58,10 @@ extends JDTestcase {
      }
      test.JDBUTest.main(newArgs); 
    }
+
+
+
+  private JDSerializeFile serializeBatchFile_;
 
 
 
@@ -92,18 +97,14 @@ Performs setup needed before running variations.
             // to get the connection.
             connection_ = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_); 
             Statement s = connection_.createStatement();
+            serializeBatchFile_ = new JDSerializeFile(connection_, JDBUTest.BUTESTDATA); 
 
-            // todo:  butestdata is probably not needed....
-            try {
-                s.executeUpdate("drop table " + JDBUTest.BUTESTDATA);
-            } catch (SQLException e) {
-                // Ignore it.
-            }
+           
 
             // Create a table that uses the largest row size the database will
             // allow me to use.
-            s.executeUpdate("create table  " + JDBUTest.BUTESTDATA +
-                            " (col1 int, col2 int, col3 int)");
+            s.executeUpdate("create or replace table  " + JDBUTest.BUTESTDATA +
+                            " (col1 int, col2 int, col3 int) on replace delete rows");
 
             for (int i = 1; i <= 20; i++) {
                 s.executeUpdate("insert into " + JDBUTest.BUTESTDATA + 
@@ -129,8 +130,14 @@ Performs setup needed before running variations.
         try {
             try {
 		if (connection_ != null) {
-		    connection_.commit(); 
+		    connection_.commit();      
+	              serializeBatchFile_.close(); 
+	              serializeBatchFile_=null; 
+	              connection_.commit(); 
+	                    
+
                     connection_.close();
+                    
 		}
             } catch (SQLException e) {
                 output_.println("Critical Error - couldn't close connection");
@@ -139,15 +146,13 @@ Performs setup needed before running variations.
              connection_ = testDriver_.getConnection(baseURL_+";" + connectionParms, userId_, encryptedPassword_); 
             connection_.setAutoCommit(false);              
             s = connection_.createStatement();
+            serializeBatchFile_ = new JDSerializeFile(connection_, JDBUTest.BUTESTDATA); 
+            connection_.commit(); 
 
-            try {
-                s.executeUpdate("drop table " + JDBUTest.BUTESTLOB);
-            } catch (SQLException e) {
-                // Ignore it... 
-            }
+           
 
-            s.executeUpdate("create table " + JDBUTest.BUTESTLOB + 
-                            " (col1 int primary key, col2 BLOB(200), col3 BLOB(200))");
+            s.executeUpdate("create or replace table " + JDBUTest.BUTESTLOB + 
+                            " (col1 int primary key, col2 BLOB(200), col3 BLOB(200)) on replace delete rows");
 
             // NOTE:  It is important here for verification that the first byte is 0.
             byte[] blobBytes = new byte[] { (byte) 0, (byte) -12, (byte) 45, (byte) -33, (byte) 1};
@@ -212,6 +217,9 @@ This is the place to put all cleanup work for the testcase.
 
             // Close the global connection opened in setup().
 	    connection_.commit(); 
+	    serializeBatchFile_.close(); 
+	    serializeBatchFile_=null; 
+	    connection_.commit(); 
             connection_.close();
             connection_=null; 
 
@@ -231,24 +239,25 @@ This is the place to put all cleanup work for the testcase.
             try {
 		if (connection_ != null) {
 		    connection_.commit(); 
-                    connection_.close();
+		    serializeBatchFile_.close(); 
+                    serializeBatchFile_=null; 
+		    connection_.commit(); 
+                    
+	                    connection_.close();
 		}
             } catch (SQLException e) {
                 output_.println("Critical Error - couldn't close connection");
             }
 
             connection_ = testDriver_.getConnection(baseURL_+";" + connectionParms, userId_, encryptedPassword_); 
+            serializeBatchFile_ = new JDSerializeFile(connection_, JDBUTest.BUTESTDATA); 
             connection_.setAutoCommit(false);              
             s = connection_.createStatement();
 
-            try {
-                s.executeUpdate("drop table " + JDBUTest.BUTEST);
-            } catch (SQLException e) {
-                // Ignore it... 
-            }
+           
 
-            s.executeUpdate("create table " + JDBUTest.BUTEST + 
-                            " (col1 int primary key, col2 int, col3 int)");
+            s.executeUpdate("create or replace table " + JDBUTest.BUTEST + 
+                            " (col1 int primary key, col2 int, col3 int) on replace delete rows");
 
             s.executeUpdate("insert into " + JDBUTest.BUTEST + 
                             " values(0, 0, 0)");

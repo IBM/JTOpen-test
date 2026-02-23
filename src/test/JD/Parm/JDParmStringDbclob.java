@@ -65,6 +65,7 @@ extends JDTestcase {
     public PreparedStatement col2  = null;
     public PreparedStatement col3  = null;
     public PreparedStatement col4  = null;
+    private String stringsTable_;
 
 
 /**
@@ -100,27 +101,24 @@ Performs setup needed before running variations.
 
            Statement s = connection.createStatement();
 
-           try {
-               s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings");
-           } catch (SQLException e) {
-               // Ignore it.
-           }
+           stringsTable_ = JDParmTest.COLLECTION+".strdbc";
+
 
            // Create a table that uses the largest row size the database will
            // allow me to use.
-           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings " + 
+           s.executeUpdate("create or replace table "+stringsTable_+" " + 
                            "(col1 dbclob(1), " +
                            "col2 dbclob(20), " + 
                            "col3 dbclob (32714), " +
-                           "col4 dbclob (2000000) )");
+                           "col4 dbclob (2000000) ) on replace delete rows");
 
 
            s.close();
 
-           col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
-           col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
-           col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
-           col4 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col4) values(?)");
+           col1 = connection.prepareStatement("insert into "+stringsTable_+" (col1) values(?)");
+           col2 = connection.prepareStatement("insert into "+stringsTable_+" (col2) values(?)");
+           col3 = connection.prepareStatement("insert into "+stringsTable_+" (col3) values(?)");
+           col4 = connection.prepareStatement("insert into "+stringsTable_+" (col4) values(?)");
 
        } catch (Exception e) {
            output_.println("Caught exception: " + e.getMessage());
@@ -159,7 +157,7 @@ Test:  dbclob(1) - value is just right.  The value in this case is blah...
          col1.setString(1, inValue);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -167,7 +165,7 @@ Test:  dbclob(1) - value is just right.  The value in this case is blah...
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -180,7 +178,7 @@ Test:  dbclob(1) - empty string
          col1.setString(1, "");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -188,7 +186,7 @@ Test:  dbclob(1) - empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -202,7 +200,7 @@ Test:  dbclob(1) - null value
          col1.setString(1, null);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -210,7 +208,7 @@ Test:  dbclob(1) - null value
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -250,7 +248,7 @@ Test:  dbclob(1) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -270,7 +268,7 @@ Test:  dbclob(20) - value is just right
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -278,7 +276,7 @@ Test:  dbclob(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -298,7 +296,7 @@ Test:  dbclob(20) - value is smaller than column
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -306,7 +304,7 @@ Test:  dbclob(20) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -323,7 +321,7 @@ Test:  dbclob(20) - value is 1 char long
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -331,7 +329,7 @@ Test:  dbclob(20) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -345,7 +343,7 @@ Test:  dbclob(20) - value is empty string
          col2.setString(1, "");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -353,7 +351,7 @@ Test:  dbclob(20) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -367,7 +365,7 @@ Test:  dbclob(20) - value is null
          col2.setString(1, null);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -375,7 +373,7 @@ Test:  dbclob(20) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -415,7 +413,7 @@ Test:  dbclob(20) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -435,7 +433,7 @@ Test:  dbclob(32714) - value is just right
          col3.setString(1, inValue);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -443,7 +441,7 @@ Test:  dbclob(32714) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -463,7 +461,7 @@ Test:  dbclob(32714) - value is smaller than column
          col3.setString(1, inValue);
          int count = col3.executeUpdate();
          if (count == 1) {
-             assertCondition(JDParmHelper.verifyString("col3", inValue, connection,output_));
+             assertCondition(JDParmHelper.verifyString("col3", inValue, connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -472,7 +470,7 @@ Test:  dbclob(32714) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -489,7 +487,7 @@ Test:  dbclob(32714) - value is 1 char long
          col3.setString(1, inValue);
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", inValue, connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -498,7 +496,7 @@ Test:  dbclob(32714) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -512,7 +510,7 @@ Test:  dbclob(32714) - value is empty string
          col3.setString(1, "");
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "", connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -521,7 +519,7 @@ Test:  dbclob(32714) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -535,7 +533,7 @@ Test:  dbclob(32714) - value is null
          col3.setString(1, null);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -543,7 +541,7 @@ Test:  dbclob(32714) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -580,7 +578,7 @@ Test:  dbclob(32714) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -601,7 +599,7 @@ Test:  dbclob(2000000) - value is just right
          col4.setString(1, inValue);
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col4", inValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -609,7 +607,7 @@ Test:  dbclob(2000000) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -629,7 +627,7 @@ Test:  dbclob(2000000) - value is smaller than column
          col4.setString(1, inValue);
          int count = col4.executeUpdate();
          if (count == 1) {
-             assertCondition(JDParmHelper.verifyString("col4", inValue, connection,output_));
+             assertCondition(JDParmHelper.verifyString("col4", inValue, connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -638,7 +636,7 @@ Test:  dbclob(2000000) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -655,7 +653,7 @@ Test:  dbclob(2000000) - value is 1 char long
          col4.setString(1, inValue);
          int count = col4.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col4", inValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col4", inValue, connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -664,7 +662,7 @@ Test:  dbclob(2000000) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -678,7 +676,7 @@ Test:  dbclob(2000000) - value is empty string
          col4.setString(1, "");
          int count = col4.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col4", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col4", "", connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -687,7 +685,7 @@ Test:  dbclob(2000000) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -701,7 +699,7 @@ Test:  dbclob(2000000) - value is null
          col4.setString(1, null);
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col4", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col4", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -709,7 +707,7 @@ Test:  dbclob(2000000) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -746,7 +744,7 @@ Test:  dbclob(2000000) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 

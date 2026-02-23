@@ -24,7 +24,6 @@ import test.JDTestcase;
 import test.JTOpenTestEnvironment;
 import test.PasswordVault;
 import test.Testcase;
-import test.JD.JDSerializeFile;
 import test.JD.DataSource.JDDatabaseOverride;
 
 import java.io.ByteArrayInputStream;
@@ -170,13 +169,14 @@ public class JDRowSetRSTestcase extends JDTestcase {
         context.rebind(jndiName_, ds);
       }
 
-      //
-      // Must connect to the specified system.. Needed for IASP to
-      // work
-      //
-      conn_ = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
-      stmt_ = conn_.createStatement();
     }
+
+    //
+    // Must connect to the specified system.. Needed for IASP to
+    // work
+    //
+    conn_ = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_);
+    stmt_ = conn_.createStatement();
 
     conn2_ = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_, "JDRowSetRSTestcase");
 
@@ -698,10 +698,19 @@ public class JDRowSetRSTestcase extends JDTestcase {
           rowset.clearWarnings();
 
           SQLWarning w2 = rowset.getWarnings();
+          rowset.close(); 
           assertCondition((w1 != null) && (w2 == null), "systemName=" + systemName + " databaseName=" + databaseName);
-        } else
+        } else {
+          rowset.close(); 
           failed("Unexpected Results.systemName=" + systemName + " databaseName=" + databaseName);
+        }
       } catch (Exception e) {
+        if (rowset != null)
+          try {
+            rowset.close();
+          } catch (SQLException e1) {
+            e1.printStackTrace();
+          } 
         failed(e, "Unexpected Exception systemName=" + systemName + " databaseName=" + databaseName);
       } finally {
         
@@ -970,11 +979,18 @@ public class JDRowSetRSTestcase extends JDTestcase {
 
         position(rowset, "NUMBER_POS");
         Array v = rowset.getArray("C_INTEGER");
+        
         failed("Didn't throw SQLException but got " + v);
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       } finally {
-        
+        if (rowset != null) {
+          try {
+            rowset.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          } 
+        }
       }
     }
   }
@@ -1783,7 +1799,12 @@ public class JDRowSetRSTestcase extends JDTestcase {
       } catch (Exception e) {
         assertExceptionIsInstanceOf(e, "java.sql.SQLException");
       } finally {
-        
+          if (rowset != null)
+            try {
+              rowset.close();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            } 
       }
     }
   }
@@ -2498,7 +2519,13 @@ public class JDRowSetRSTestcase extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
-      
+      if (rowset != null)
+        try {
+          rowset.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        } 
+  
     }
   }
 
@@ -2537,7 +2564,13 @@ public class JDRowSetRSTestcase extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
-      
+      if (rowset != null)
+        try {
+          rowset.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        } 
+  
     }
   }
 
@@ -2600,7 +2633,13 @@ public class JDRowSetRSTestcase extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
-      
+      if (rowset != null)
+        try {
+          rowset.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        } 
+   
     }
   }
 
@@ -2626,7 +2665,13 @@ public class JDRowSetRSTestcase extends JDTestcase {
       } else
         failed(e, "Unexpected Exception.");
     } finally {
-      
+      if (rowset != null)
+        try {
+          rowset.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        } 
+    
     }
   }
 
@@ -2897,7 +2942,13 @@ public class JDRowSetRSTestcase extends JDTestcase {
     } catch (Exception e) {
       failed(e, "Unexpected Exception");
     } finally {
-      
+      if (rowset != null)
+        try {
+          rowset.close();
+        } catch (SQLException e) {
+          e.printStackTrace();
+        } 
+     
     }
 
   }

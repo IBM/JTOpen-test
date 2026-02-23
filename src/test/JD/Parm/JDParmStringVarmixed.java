@@ -75,6 +75,7 @@ extends JDTestcase {
     public PreparedStatement col2  = null;
     public PreparedStatement col3  = null;
     public String largeValue = "";
+    private String stringsTable_;
 
 
 /**
@@ -110,8 +111,10 @@ Performs setup needed before running variations.
 
            Statement s = connection.createStatement();
 
+           stringsTable_ = JDParmTest.COLLECTION+".strvmixed";
+
            try {
-              s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings");
+              s.executeUpdate("drop table "+stringsTable_+"");
            } catch (SQLException e) {
 	       JDParmHelper.handleDropException(e,output_); 
 
@@ -119,15 +122,15 @@ Performs setup needed before running variations.
 
            // Create a table that uses the largest row size the database will
            // allow me to use.
-           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings " + 
+           s.executeUpdate("create table "+stringsTable_+" " + 
                            "(col1 varchar(4) ccsid 937, col2 varchar(20) ccsid 937, col3 varchar (32711) ccsid 937)");
 
 
            s.close();
 
-           col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
-           col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
-           col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
+           col1 = connection.prepareStatement("insert into "+stringsTable_+" (col1) values(?)");
+           col2 = connection.prepareStatement("insert into "+stringsTable_+" (col2) values(?)");
+           col3 = connection.prepareStatement("insert into "+stringsTable_+" (col3) values(?)");
 
 
            String shortValue = "abcdefghijklmnopqrstuvwxy";
@@ -174,7 +177,7 @@ Test:  varchar(4) - value is just right
          col1.setString(1, "XXXX");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "XXXX", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "XXXX", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -182,7 +185,7 @@ Test:  varchar(4) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -194,7 +197,7 @@ Test:  varchar(4) - smaller than the column
          col1.setString(1, "XX");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "XX", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "XX", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -202,7 +205,7 @@ Test:  varchar(4) - smaller than the column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -215,7 +218,7 @@ Test:  varchar(4) - empty string
          col1.setString(1, "");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -223,7 +226,7 @@ Test:  varchar(4) - empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -237,7 +240,7 @@ Test:  varchar(4) - null value
          col1.setString(1, null);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -245,7 +248,7 @@ Test:  varchar(4) - null value
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -273,7 +276,7 @@ Test:  varchar(4) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -287,7 +290,7 @@ Test:  varchar(20) - value is just right
          col2.setString(1, "01234567890123456789");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -295,7 +298,7 @@ Test:  varchar(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -309,7 +312,7 @@ Test:  varchar(20) - value is smaller than column
          col2.setString(1, "0123456789");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -317,7 +320,7 @@ Test:  varchar(20) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -330,7 +333,7 @@ Test:  varchar(20) - value is 1 char long
          col2.setString(1, "0");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "0", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "0", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -338,7 +341,7 @@ Test:  varchar(20) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -352,7 +355,7 @@ Test:  varchar(20) - value is empty string
          col2.setString(1, "");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "", connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -360,7 +363,7 @@ Test:  varchar(20) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -374,7 +377,7 @@ Test:  varchar(20) - value is null
          col2.setString(1, null);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -382,7 +385,7 @@ Test:  varchar(20) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -409,7 +412,7 @@ Test:  varchar(20) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -423,7 +426,7 @@ Test:  varchar(32711) - value is just right
          col3.setString(1, largeValue);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -431,7 +434,7 @@ Test:  varchar(32711) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -445,7 +448,7 @@ Test:  varchar(32711) - value is smaller than column
          col3.setString(1, "0123456789012345678901234567890123456789");
          int count = col3.executeUpdate();
          if (count == 1) {
-             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection,output_));
+             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -454,7 +457,7 @@ Test:  varchar(32711) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -467,7 +470,7 @@ Test:  varchar(32711) - value is 1 char long
          col3.setString(1, "0");
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "0", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "0", connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -476,7 +479,7 @@ Test:  varchar(32711) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -490,7 +493,7 @@ Test:  varchar(32711) - value is empty string
          col3.setString(1, "");
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "", connection,stringsTable_,output_));
          }
          else
             failed ("invalid update count");
@@ -499,7 +502,7 @@ Test:  varchar(32711) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -513,7 +516,7 @@ Test:  varchar(32711) - value is null
          col3.setString(1, null);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", null, connection,stringsTable_,output_));
          else
             failed ("invalid update count");
 
@@ -521,7 +524,7 @@ Test:  varchar(32711) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -548,7 +551,7 @@ Test:  varchar(32711) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 }

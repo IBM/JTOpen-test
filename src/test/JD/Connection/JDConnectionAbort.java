@@ -554,11 +554,7 @@ Cleanup.
    public void Var007 () {
      // SecurityManager has been deprecated so calls to security manager were removed. 
      if (checkJdbc41()) {
-       
-        
        testExecutor("java.util.concurrent.ForkJoinPool");  
-
-       
      }
    }
    

@@ -16,13 +16,13 @@ package test;
 import test.MiscAH.HLTestcase;
 
 /**
- Test driver for the HistoryLog object and associated classes.  Refer to TestDriver for calling syntax.
+ * Test driver for the HistoryLog object and associated classes. Refer to
+ * TestDriver for calling syntax.
  **/
-public class HLTest extends TestDriver
-{
-    /**
-     Main for running standalone application tests.
-     **/
+public class HLTest extends TestDriver {
+  /**
+   * Main for running standalone application tests.
+   **/
     public static void main(String args[])
     {
         try

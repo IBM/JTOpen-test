@@ -1264,15 +1264,24 @@ public class JDRSTest extends JDTestDriver {
           || (exceptionInfo.indexOf("type *SQLUDT already exists") > 0)) {
         System.out.println(
             "WARNING:  found '" + exceptionInfo + "':  deleting collection");
-        if (connection_ != null)
+        if (parallelCounter_.doCleanup()) {
+          parallelCounter_.close(); 
           connection_.close();
-        connection_ = getConnection(getBaseURL(), systemObject_.getUserId(),
+          connection_ = getConnection(getBaseURL(), systemObject_.getUserId(),
             encryptedPassword_, "INFO_JDRSTEST_SETUP");
+          parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
+          if (parallelCounter_.doCleanup()) { 
+            JDTestDriver.dropCollection(connection_, COLLECTION);
 
-        JDTestDriver.dropCollection(connection_, COLLECTION);
-
-        System.out.println("WARNING:  attemping to run setup again");
-        setup2();
+            System.out.println("WARNING:  attemping to run setup again");
+            setup2();
+            parallelCounter_.close(); 
+            parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
+            
+          } 
+        } else {
+          throw e; 
+        }
 
       }
 

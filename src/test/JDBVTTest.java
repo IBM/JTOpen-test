@@ -271,7 +271,7 @@ Handles ensuring the PreparedStatement interface is working correctly.
             int i = 0;
             while (rs.next())
                 i++;
-
+            rs.close(); 
             if (i == 1) {
                 System.out.println("successful");
             } else {
@@ -358,6 +358,7 @@ Handles ensuring the CallableStatement interface is working correctly.
                 i++;
             if (i != 6)
                 success = false;
+            rs.close(); 
             s.close();
 
 
@@ -451,7 +452,7 @@ Handles ensuring the ResultSet interface is working correctly.
                     break;
                 }
             }
-
+            rs.close(); 
             s.close();
 
             if (success) {
@@ -533,7 +534,7 @@ Handles ensuring the ResultSetMetaData interface is working correctly.
                 System.out.println("successful");
             else
                 System.out.println("failed - incorrect results");
-
+            rs.close(); 
         } catch (SQLException e) {
             System.out.println("failed - SQLException");
             System.out.println("Details: " );

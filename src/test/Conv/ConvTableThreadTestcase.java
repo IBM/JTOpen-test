@@ -80,7 +80,9 @@ public class ConvTableThreadTestcase extends Testcase
             catch (Exception e)
             {
                 keepRunning_ = false;
-                error_ = "Exception occurred in thread for ccsid " + ccsid_ + ": " + e.getMessage();
+                StringBuffer sb = new StringBuffer(); 
+                printStackTraceToStringBuffer(e, sb); 
+                error_ = "Exception occurred in thread for ccsid " + ccsid_ + ": " + e.getMessage()+sb.toString();
             }
         }
     }
@@ -215,7 +217,8 @@ public class ConvTableThreadTestcase extends Testcase
 
         try
         {
-            output_.println("This variation will take approximately 120 seconds.");
+            NLS.setForceJavaConversion(true);
+            output_.println("Var002 will take approximately 120 seconds.");
             ct = new CTThread[4];
             int c = 0;
             // ConvTableSingleMap
@@ -224,7 +227,8 @@ public class ConvTableThreadTestcase extends Testcase
             ct[c++] = new CTThread(1282, "JKLMN", new byte[] { (byte)0x4A, (byte)0x4B, (byte)0x4C, (byte)0x4D, (byte)0x4E });
             ct[c++] = new CTThread(913, "OPQR", new byte[] { (byte)0x4F, (byte)0x50, (byte)0x51, (byte)0x52 });
             ct[c++] = new CTThread(5054, "ZYX", new byte[] { (byte)0x5A, (byte)0x59, (byte)0x58 });
-
+            NLS.setForceJavaConversion(false);
+            
             t = new Thread[ct.length];
             for (int i = 0; i < t.length; ++i)
             {

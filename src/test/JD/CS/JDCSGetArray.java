@@ -135,11 +135,7 @@ public class JDCSGetArray extends JDTestcase {
 
       st.close();
 
-      JDSetupProcedure.dropProcedure(connection_,
-          JDSetupProcedure.STP_CSARRSUM, output_);
-      JDSetupProcedure.dropProcedure(connection_,
-          JDSetupProcedure.STP_CSARRINT, output_);
-    
+   
 
     connection_.close();
     connection_ = null; 

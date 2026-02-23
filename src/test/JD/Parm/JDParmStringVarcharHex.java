@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringVarcharHex.java
 //
 // Classes:      JDParmStringVarcharHex
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -72,6 +61,7 @@ extends JDTestcase {
     public Connection connection = null;
     public Statement s = null;
     public ResultSet rs = null;
+    private String stringsTable_;
 
 
 /**
@@ -106,26 +96,22 @@ Performs setup needed before running variations.
            connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_); 
 
            s = connection.createStatement();
+           stringsTable_ = JDParmTest.COLLECTION+".strvchex";
 
-           try {
-              s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings2");
-          } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
-          }
 
-          s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings2 (col1 varchar(10))");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'00000000000000000000') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'0000000000C100000000') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'C1C1C1C1C100C1C1C1C1') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'00C1C1C1C1C1C1C1C1C1') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'C1C1C1C1C1C1C1C1C100') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'0000000000') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'0000C10000') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'C1C100C1C1') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'00C1C1C1C1') ");
-          s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings2 values(x'C1C1C1C100') ");
+          s.executeUpdate("create  or replace table "+stringsTable_+"(col1 varchar(10)) on replace delete rows");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'00000000000000000000') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'0000000000C100000000') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'C1C1C1C1C100C1C1C1C1') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'00C1C1C1C1C1C1C1C1C1') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'C1C1C1C1C1C1C1C1C100') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'0000000000') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'0000C10000') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'C1C100C1C1') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'00C1C1C1C1') ");
+          s.executeUpdate("insert into "+stringsTable_+" values(x'C1C1C1C100') ");
 
-           rs = s.executeQuery("select * from "+JDParmTest.COLLECTION+".strings2");
+           rs = s.executeQuery("select * from "+stringsTable_);
 
         } catch (Exception e) {
            output_.println("Caught exception: " + e.getMessage());

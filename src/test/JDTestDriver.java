@@ -16,6 +16,7 @@ package test;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 
+import test.JD.JDParallelCounter;
 import test.JD.JDSerializeFile;
 
 import java.sql.Connection;
@@ -410,39 +411,48 @@ public abstract class JDTestDriver extends TestDriver {
    * Drops a collection.
    **/
   public static void dropCollection(Connection c, String collection) {
-    String sql = ""; 
-    Statement s = null; 
-    try {
-      s = c.createStatement();
-      // Make sure the sysreply list is being used
-      //
-      System.out.println("Dropping collection " + collection + ".");
+    String sql = "";
+    try (Statement s = c.createStatement()) {
+      JDParallelCounter parallelCounter = new JDParallelCounter(c, collection);
+      if (parallelCounter.doCleanup()) {
 
-      sql = "CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)   ')";
-      s.executeUpdate(sql);
-      sql = "CALL QSYS2.QCMDEXC('ENDJRNPF FILE(*ALL) JRN("+collection+"/QSQJRN)')"; 
-      try { 
-         s.executeUpdate(sql);   
-      } catch (SQLException e) { 
-        if (JDCleanup.isImportantException(e )) { 
-          System.out.println("Warning:  sql failed in dropCollection:"+sql);
-          e.printStackTrace(System.out);
-        }
-      }
-      sql = "DROP COLLECTION " + collection;
-      try { 
+        // Make sure the sysreply list is being used
+        //
+        System.out.println("Dropping collection " + collection + ".");
+
+        sql = "CALL QSYS2.QCMDEXC('CHGJOB INQMSGRPY(*SYSRPYL)   ')";
         s.executeUpdate(sql);
-      } catch (SQLException e) { 
-        int sqlcode = e.getErrorCode(); 
-        if (sqlcode == -910) { /* pending change */ 
-          sql = "CALL QSYS2.QCMDEXC('DLTLIB "+collection+"')"; 
+        sql = "CALL QSYS2.QCMDEXC('ENDJRNPF FILE(*ALL) JRN(" + collection + "/QSQJRN)')";
+        try {
           s.executeUpdate(sql);
+        } catch (SQLException e) {
+          if (JDCleanup.isImportantException(e)) {
+            System.out.println("Warning:  sql failed in dropCollection:" + sql);
+            e.printStackTrace(System.out);
+          }
         }
+        sql = "DROP COLLECTION " + collection;
+        try {
+          s.executeUpdate(sql);
+        } catch (SQLException e) {
+          int sqlcode = e.getErrorCode();
+          if (sqlcode == -910) { /* pending change */
+            sql = "CALL QSYS2.QCMDEXC('DLTLIB " + collection + "')";
+            s.executeUpdate(sql);
+          }
+        }
+      } else {
+        System.out.println("Not cleaning because parallelCounter indicates "+collection+" in use"); 
       }
-      s.close();
-    } catch (SQLException e) {
-      if (JDCleanup.isImportantException(e)) { 
-        System.out.println(e.getMessage()+" SQL="+sql);
+      parallelCounter.close();
+    } catch (Exception e) {
+      if (e instanceof SQLException) {
+        if (JDCleanup.isImportantException((SQLException) e)) {
+          System.out.println(e.getMessage() + " SQL=" + sql);
+        }
+      } else { 
+        System.out.println("WARNING: cleanup failed"); 
+        e.printStackTrace(System.out); 
       }
     }
   }
@@ -1155,10 +1165,10 @@ public abstract class JDTestDriver extends TestDriver {
                 + packageName + " TO " + userId);
 
           }
-
+          rs.close(); 
           grantStatement.close();
           queryStatement.close();
-
+          changeConnection.close(); 
         } catch (Exception e) {
           System.out.println("Warning:  exception caught granting " + userId
               + " permssion to packages in " + library);
@@ -1338,6 +1348,7 @@ public abstract class JDTestDriver extends TestDriver {
       connection = (Connection) JDReflectionUtil.callMethod_O(nativeDriver, "connect", url, uid, pwdChars);
       PasswordVault.clearPassword(pwdChars);
     } catch (Exception e) {
+      if (connection != null) connection.close(); 
       String attemptedPassword;
       if (pwdChars != null) 
           attemptedPassword = new String(pwdChars); 
@@ -1613,6 +1624,7 @@ void runCommand(Connection connection, String command, boolean SQLNaming)
       sql = "DROP PROCEDURE QCMDEXC";
       statement.executeUpdate(sql);
       statement.close();
+      pstmt.close(); 
     } catch (Exception e) {
       System.out.println("Exception on " + sql);
       e.printStackTrace();

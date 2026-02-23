@@ -124,7 +124,7 @@ Creates Testcase objects for all the testcases in this component.
 **/
    public void createTestcases()
    {
-      AS400 PwrSys_ = null;
+    
 
       // Instantiate all testcases to be run.
       // boolean allTestcases = (namesAndVars_.size() == 0);
@@ -141,6 +141,7 @@ Creates Testcase objects for all the testcases in this component.
           char[] decryptedPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_); 
           PwrSys_ = new AS400( systemObject_.getSystemName(), pwrSysUserID_, decryptedPassword);
           PasswordVault.clearPassword(decryptedPassword);
+          
  		
     	}	
     	

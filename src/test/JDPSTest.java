@@ -562,18 +562,20 @@ Performs setup needed before running testcases.
        System.out.println("JDPSTest.cleanup not cleaning because  jobs are running"); 
      }
 
+     
+     statement_.close ();
+     try { 
+       connection_.commit(); // for xa
+     } catch (Exception e) { 
+     }
+
+     if (dropUDTfailed) {
+         System.out.println("Drop of UDT failed.  Dropping collection so that next run will work"); 
+         dropCollections(connection_); 
+     } 
+
      parallelCounter_.close(); 
 
-      statement_.close ();
-      try { 
-        connection_.commit(); // for xa
-      } catch (Exception e) { 
-      }
-
-      if (dropUDTfailed) {
-	  System.out.println("Drop of UDT failed.  Dropping collection so that next run will work"); 
-	  dropCollections(connection_); 
-      } 
       connection_.close ();
 
       

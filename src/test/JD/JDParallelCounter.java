@@ -104,6 +104,10 @@ public class JDParallelCounter implements AutoCloseable{
       sql =  "CREATE OR REPLACE TABLE "+filename_+" (LOCKJOBNAME VARCHAR(80), STARTTIME TIMESTAMP) ON REPLACE PRESERVE ROWS"; 
       System.out.println("Running "+sql); 
       statement_.executeUpdate(sql); 
+      
+      sql = "GRANT ALL ON "+filename_+" TO PUBLIC"; 
+      statement_.executeUpdate(sql); 
+      
       c.commit(); 
     } else {
       rs.close(); 
@@ -162,29 +166,31 @@ public class JDParallelCounter implements AutoCloseable{
    */
   public boolean doCleanup() throws SQLException {
     boolean cleanup = false; 
-
+    cleanupSet_ = false; 
     dataAreaLock_.lock("JDparallelCounter", 3600);
+    try {
+      /* Check the files. If we are the only job then */
+      /* add a CLEANUP entry to prevent new counters from being added */
 
-    /* Check the files.  If we are the only job then */
-    /* add a CLEANUP entry to prevent new counters from being added */
-    
-    
-    String sql = "SELECT count(*) FROM "+filename_;
-    ResultSet rs = statement_.executeQuery(sql); 
-    rs.next(); 
-    int count = rs.getInt(1); 
-    if (count == 1) {
-      sql = "INSERT INTO "+filename_+" VALUES('CLEANUP',CURRENT TIMESTAMP)"; 
-      statement_.execute(sql); 
-      cleanupSet_ = true; 
-      cleanup = true; 
+      String sql = "SELECT count(*) FROM " + filename_;
+      ResultSet rs = statement_.executeQuery(sql);
+      rs.next();
+      int count = rs.getInt(1);
+      if (count == 1) {
+        sql = "INSERT INTO " + filename_ + " VALUES('CLEANUP',CURRENT TIMESTAMP)";
+        statement_.execute(sql);
+        cleanupSet_ = true;
+        cleanup = true;
+      }
+      rs.close();
+
+    } finally {
+      if (!cleanupSet_) {
+        dataAreaLock_.unlock("JDSerializeFile", null);
+      }
+      statement_.getConnection().commit();
+
     }
-    rs.close(); 
-    
-    if (!cleanupSet_) { 
-       dataAreaLock_.unlock("JDSerializeFile", null);
-    }
-   statement_.getConnection().commit(); 
     
     return cleanup; 
   }

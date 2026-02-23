@@ -143,7 +143,8 @@ public class BidiEngineWrapper {
     	//System.out.println("TransFromLogRTLtoVisRTLEx \n"+ RLE + str + PDF + "\n > \n" + RLO + bidiTransform(str, 6,9) + PDF);//8?
     }
    
-	public static String getProbe(String value_, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
+	@SuppressWarnings("resource")
+  public static String getProbe(String value_, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
     	
 	//	JDProperties prop = connection.getProperties();        	       	        		
     	// int host_bidi_format;
@@ -177,7 +178,8 @@ public class BidiEngineWrapper {
 		return value_;
 	}    
 
-	public static boolean checkRoundTrip(String value_, String probe, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
+	@SuppressWarnings("resource")
+  public static boolean checkRoundTrip(String value_, String probe, AS400JDBCConnection connection, int source_ccsid_type, int target_ccsid_type, boolean use_packageCCSID) throws SQLException{
     	// JDProperties prop = connection.getProperties();        	       	        		
     	int host_bidi_format, host_ccsid, package_bidi_format, package_ccsid;
     	int bidi_format = source_ccsid_type;

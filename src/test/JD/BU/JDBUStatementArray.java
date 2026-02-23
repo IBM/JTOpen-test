@@ -26,6 +26,7 @@ import com.ibm.as400.access.AS400;
 import test.JDBUTest;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDSerializeFile;
 
 import java.io.FileOutputStream;
 import java.sql.ResultSet;
@@ -62,7 +63,8 @@ extends JDTestcase {
     // private Statement           statement_;
     // private String              properties_;
     private String              url; 
-    private StringBuffer        sb = new StringBuffer(); 
+    private StringBuffer        sb = new StringBuffer();
+    private JDSerializeFile serializeBatchFile_; 
 /**
 Constructor.
 **/
@@ -99,17 +101,18 @@ Performs setup needed before running variations.
 	    connection_ = testDriver_.getConnection (url, systemObject_.getUserId(), encryptedPassword_);
 
             Statement s = connection_.createStatement();
+            serializeBatchFile_ = new JDSerializeFile(connection_, JDBUTest.BUTESTDATA); 
+            
 
-            try {
-                s.executeUpdate("drop table " + JDBUTest.BUTESTDATA);
-            } catch (SQLException e) {
-                // Ignore it.
-            }
+            
 
             // Create a table that uses the largest row size the database will
             // allow me to use.
-            s.executeUpdate("create table  " + JDBUTest.BUTESTDATA +
-                            " (col1 int, col2 int, col3 int)");
+            s.executeUpdate("create or replace table  " + JDBUTest.BUTESTDATA +
+                            " (col1 int, col2 int, col3 int) on replace delete rows");
+            
+            s.executeUpdate("GRANT ALL ON "+JDBUTest.BUTESTDATA+" TO PUBLIC"); 
+            
 
             for (int i = 1; i <= 20; i++) {
                 s.executeUpdate("insert into " + JDBUTest.BUTESTDATA + 
@@ -135,6 +138,9 @@ This is the place to put all cleanup work for the testcase.
 
             // Close the global connection opened in setup().
 	    connection_.commit(); 
+            serializeBatchFile_.close(); 
+            serializeBatchFile_ = null; 
+            connection_.commit(); 
             connection_.close();
             connection_=null; 
 
@@ -152,8 +158,13 @@ This is the place to put all cleanup work for the testcase.
 	sb.setLength(0); 
         try {
             try {
-                if (connection_ != null)
+                if (connection_ != null) {
+                  serializeBatchFile_.close(); 
+                  serializeBatchFile_ = null; 
+                   connection_.commit(); 
+
                     connection_.close();
+                }
             } catch (SQLException e) {
                 output_.println("Critical Error - couldn't close connection");
             }
@@ -162,16 +173,14 @@ This is the place to put all cleanup work for the testcase.
 	    connection_ = testDriver_.getConnection (nowUrl);
             connection_.setAutoCommit(false);              
             s = connection_.createStatement();
-
-            try {
-                s.executeUpdate("drop table " + JDBUTest.BUTEST);
-            } catch (SQLException e) {
-                // Ignore it... 
-            }
-
-            s.executeUpdate("create table " + JDBUTest.BUTEST + 
-                            " (col1 int primary key, col2 int, col3 int)");
-
+            serializeBatchFile_ = new JDSerializeFile(connection_, JDBUTest.BUTESTDATA); 
+            connection_.commit();
+            
+      
+            s.executeUpdate("create  or replace table " + JDBUTest.BUTEST + 
+                            " (col1 int primary key, col2 int, col3 int) on replace delete rows");
+            s.executeUpdate("GRANT ALL ON "+JDBUTest.BUTEST+" TO PUBLIC"); 
+            
             s.executeUpdate("insert into " + JDBUTest.BUTEST + 
                             " values(0, 0, 0)");
 

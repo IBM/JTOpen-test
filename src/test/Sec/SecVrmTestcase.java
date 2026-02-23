@@ -162,7 +162,7 @@ public class SecVrmTestcase extends Testcase {
   }
 
   /**
-   * Signon to a V7R2 system and verify the release.
+   * Signon to the next release system and verify the release.
    **/
   public void Var010() {
     try {
@@ -174,7 +174,8 @@ public class SecVrmTestcase extends Testcase {
       system.connectService(AS400.PRINT);
      try {
         int release = system.getRelease();
-        assertCondition(release == 6, "Incorrect release =" + release + " - test runs to " + VNEXT_SYSTEM_NAME);
+        assertCondition(release == 7,  /* guess on next name */ 
+            "Incorrect release =" + release + " - test runs to " + VNEXT_SYSTEM_NAME);
       } finally {
         system.disconnectService(AS400.PRINT);
         system.close(); 

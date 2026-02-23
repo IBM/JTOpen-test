@@ -1230,6 +1230,7 @@ public class JDStatementStressTest extends JDTestcase {
     initTable(statement_, TABLE_,
         " (BID DECIMAL(8,0), BDATA VARCHAR(320) FOR BIT DATA)");
 
+    
     // make some data
     byte b[] = new byte[320];
     for (int i = 0; i < 320; i++) {
@@ -1246,21 +1247,13 @@ public class JDStatementStressTest extends JDTestcase {
     String QIWS = JDSetupProcedure.setupQIWS(systemObject_,
         connection_, output_);
 
-    String drop = "DROP PROCEDURE " + PROC_;
-    try {
-      Statement s3 = connection_.createStatement();
-      s3.executeUpdate(drop);
-      s3.close();
 
-    } catch (Exception e) {
-
-    }
     // create a procedure
-    String proc = "CREATE PROCEDURE " + PROC_
+    String proc = "CREATE OR REPLACE PROCEDURE " + PROC_
         + " (IN_1 INTEGER) RESULT SET 1 LANGUAGE SQL " + "BEGIN  "
         + "   DECLARE C3 CURSOR FOR SELECT * FROM " + QIWS + ".QCUSTCDT ; "
         + "   OPEN C3 ; " + "   SET RESULT SETS CURSOR C3 ; " + "END  ";
-
+    System.out.println("Running :"+proc); 
     Statement s3 = connection_.createStatement();
     s3.executeUpdate(proc);
     s3.close();
@@ -1307,8 +1300,6 @@ public class JDStatementStressTest extends JDTestcase {
    **/
   public void cleanup() throws Exception {
     statement_ = connection_.createStatement();
-    statement_.executeUpdate("DROP PROCEDURE " + PROC_);
-    statement_.executeUpdate("DROP TABLE " + TABLE_);
 
     statement_.close();
     connection_.close();

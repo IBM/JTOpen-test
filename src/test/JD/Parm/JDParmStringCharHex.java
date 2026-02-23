@@ -72,6 +72,7 @@ extends JDTestcase {
     public Connection connection = null;
     public Statement s = null;
     public ResultSet rs = null;
+    private String stringsTable_;
 
 
 /**
@@ -105,30 +106,20 @@ Performs setup needed before running variations.
            // to get the connection.
            connection = testDriver_.getConnection(baseURL_, userId_, encryptedPassword_); 
 
+           stringsTable_ = JDParmTest.COLLECTION+".strchrhex";
            s = connection.createStatement();
 
-           try {
-               s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings");
-           } catch (SQLException e) {
-               String message = e.toString();
-	       if (message.indexOf("not found") > 0 &&
-		   message.indexOf("type *FILE") > 0) {
-	       } else {
-		   output_.println("Warning .. could not delete strings");
-		   e.printStackTrace();
+           
 
-	       }
-           }
+           s.executeUpdate("create or replace table "+stringsTable_+" (col1 char(10)) on replace delete rows");
 
-           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings (col1 char(10)) ");
+           s.executeUpdate("insert into "+stringsTable_+" values(x'00000000000000000000') ");
+           s.executeUpdate("insert into "+stringsTable_+" values(x'0000000000C100000000') ");
+           s.executeUpdate("insert into "+stringsTable_+" values(x'C1C1C1C1C100C1C1C1C1') ");
+           s.executeUpdate("insert into "+stringsTable_+" values(x'00C1C1C1C1C1C1C1C1C1') ");
+           s.executeUpdate("insert into "+stringsTable_+" values(x'C1C1C1C1C1C1C1C1C100') ");
 
-           s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings values(x'00000000000000000000') ");
-           s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings values(x'0000000000C100000000') ");
-           s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings values(x'C1C1C1C1C100C1C1C1C1') ");
-           s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings values(x'00C1C1C1C1C1C1C1C1C1') ");
-           s.executeUpdate("insert into "+JDParmTest.COLLECTION+".strings values(x'C1C1C1C1C1C1C1C1C100') ");
-
-           rs = s.executeQuery("select * from "+JDParmTest.COLLECTION+".strings");
+           rs = s.executeQuery("select * from "+stringsTable_+"");
 
         } catch (Exception e) {
            output_.println("Caught exception: " + e.getMessage());

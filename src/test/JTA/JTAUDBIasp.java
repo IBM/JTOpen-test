@@ -111,25 +111,9 @@ Constructor.
     } catch (Exception e) {
     }
     stmt.executeUpdate("Delete from QGPL.IASPSTATUS");
+     
+    stmt.executeUpdate("INSERT INTO QGPL.IASPSTATUS  (select DEVICE_DESCRIPTION_NaME, ASP_STATE from qsys2.asp_info where ASP_NUMBER > 32)"); 
 
-    StringBuffer shellCommand = new StringBuffer(
-        "QSH CMD('system ''wrkcfgsts *dev *asp'' | grep DEV | sed ''s/^ *\\([^ ][^ ]*\\)  *\\([^ ][^ ]*\\)  *\\([^ ].*\\)/db2  \"insert into qgpl.iaspstatus values(''\"''\"''\\1''\"''\"'', ''\"''\"''\\3''\"''\"'')\"/'' | sh')      ");
-    while (shellCommand.length() < 210) {
-      shellCommand.append("          ");
-    }
-
-    try {
-      stmt.executeUpdate("CREATE PROCEDURE QGPL.QCMDEXC(IN :CMDSTR VARCHAR(1024),IN :CMDLENGTH DECIMAL(15,5)) EXTERNAL NAME QSYS.QCMDEXC LANGUAGE C GENERAL ");
-    } catch (Exception e) {
-
-    }
-    CallableStatement cstmt = localConnection_
-        .prepareCall("CALL QGPL.QCMDEXC(?,000000200.00000)");
-    String commandString = shellCommand.toString();
-    output_.println("Running " + commandString);
-    cstmt.setString(1, commandString);
-    cstmt.executeUpdate();
-    cstmt.close();
 
     ResultSet rs = stmt.executeQuery("Select * from QGPL.IASPSTATUS");
     while (rs.next()) {
@@ -143,7 +127,7 @@ Constructor.
         }
       }
     }
-
+    rs.close(); 
     stmt.close();
   }
 
@@ -157,6 +141,7 @@ Performs setup needed before running variations.
     {
 
 	super.setup(); 
+	lockSystem("JTATEST",600);
 
 	localConnection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 
@@ -247,6 +232,7 @@ Performs cleanup needed after running variations.
     protected void cleanup ()
         throws Exception
     {
+      unlockSystem(); 
     }
 
     public void doit(String test, String message) {

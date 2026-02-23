@@ -37,13 +37,21 @@ public class JDHostName {
       renameProperties = new Properties();
       File f = new File(INI_FILE);
       if (f.exists()) {
-        FileInputStream fileInputStream;
+        FileInputStream fileInputStream = null;
         try {
           fileInputStream = new FileInputStream(f);
           renameProperties.load(fileInputStream);
           fileInputStream.close();
         } catch (Exception e) {
           e.printStackTrace();
+          if (fileInputStream != null)
+            try {
+              fileInputStream.close();
+            } catch (IOException e1) {
+              // TODO Auto-generated catch block
+              e1.printStackTrace();
+            } 
+        
         }
       }
     }

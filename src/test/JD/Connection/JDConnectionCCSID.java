@@ -29,8 +29,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
 
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -57,14 +55,9 @@ extends JDTestcase {
      test.JDConnectionTest.main(newArgs); 
    }
 
-
-
-    // Private data.
-    String pwrUID_; 
-    String pwrPwd_;
-    char[] encryptedPwrPwd_; 
     
-    Hashtable<String,String> userProfiles = new Hashtable<String,String>();  
+    Hashtable<String,String> userProfiles = new Hashtable<String,String>();
+    private Connection pwrConnection_;  
 
 /**
 Constructor.
@@ -79,10 +72,7 @@ Constructor.
                              String pwrPwd) {   //@H2A
         super (systemObject, "JDConnectionCCSID",
                namesAndVars, runMode, fileOutputStream,
-               password);
-        pwrUID_ = pwrUID;   //@H2A
-        pwrPwd_ = pwrPwd;   //@H2A
-        encryptedPwrPwd_ = PasswordVault.getEncryptedPassword(pwrPwd); 
+               password, pwrUID, pwrPwd);
 
     }
 
@@ -96,16 +86,20 @@ Performs setup needed before running variations.
     protected void setup ()
     throws Exception
     {
+      
+      pwrConnection_ = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);
 	{
 	    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
 		    String currentUser = System.getProperty("user.name"); 	
 		try {
 	    // Grant current user access to the QP0ZMAINT program
 
-		    Connection c = testDriver_.getConnection (baseURL_, pwrUID_, encryptedPwrPwd_);
-		    Statement s = c.createStatement();
-		    s.execute("call QSYS.QCMDEXC('GRTOBJAUT OBJ(QSYS/QP0ZMAINT) OBJTYPE(*PGM) USER(" +currentUser+") AUT(*USE)                                                                  ',000000080.00000)");
-		    c.close();
+		    
+		    Statement s = pwrConnection_.createStatement();
+		    
+		    s.execute("call QSYS2.QCMDEXC('GRTOBJAUT OBJ(QSYS/QP0ZMAINT) OBJTYPE(*PGM) USER(" +currentUser+") AUT(*USE)   ')"); 
+		    s.close(); 
+		    
 		} catch (Exception e) {
 		    output_.println("Warning:  unable to grant currentUser access to QP0ZMAINT"); 
 		} 
@@ -243,6 +237,7 @@ Performs cleanup needed after running variations.
     throws Exception
     {
        cleanupProfiles(); 
+       pwrConnection_.close(); 
         connection_.close ();
         connection_ = null; 
 
@@ -257,7 +252,7 @@ Performs cleanup needed after running variations.
       String profile = "JDCON"+ccsid; 
       if (userProfiles.get(profile) == null) {
           // The profile has not been created.   Create it
-          Statement s = connection_.createStatement(); 
+          Statement s = pwrConnection_.createStatement(); 
           String sql = "CALL QSYS2.QCMDEXC('" + "QSYS/CRTUSRPRF USRPRF(" + profile + ") PASSWORD(DUMMY) JOBD(QGPL/QDFTJOBD)     ')"; 
           try { 
             s.executeUpdate(sql);
@@ -283,7 +278,7 @@ Performs cleanup needed after running variations.
       String sql="";
       try {
         Enumeration<String> keys = userProfiles.keys(); 
-        Statement s = connection_.createStatement(); 
+        Statement s = pwrConnection_.createStatement(); 
         while (keys.hasMoreElements()) {
           String key = (String) keys.nextElement(); 
           sql = "CALL QSYS.QCMDEXC('" + "QSYS/DLTUSRPRF USRPRF(" + key
@@ -302,49 +297,57 @@ Performs cleanup needed after running variations.
  * @throws Exception 
 **/
 
-    public int getConnectionWcbCCSID(Connection inputConnection) throws Exception  {
+public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) throws Exception {
+  String sql = "";
 
-	String jobname = (String) JDReflectionUtil.callMethod_S(inputConnection, "getServerJobName");
-	int slashIndex = jobname.indexOf('/');
-	String jobNumber = jobname.substring(0,slashIndex); 
+  try {
 
-	Runtime rt = Runtime.getRuntime();
+    Statement stmt = inputConnection.createStatement();
+    ResultSet rs;
+    sql = "values job_name";
+    rs = stmt.executeQuery(sql);
+    rs.next();
+    String jobname = rs.getString(1);
+    rs.close();
 
-	String[] cmd = new String[3];
-	cmd[0] = "/usr/bin/qsh";
-	cmd[1] = "-c";
-	cmd[2] = "/QSYS.LIB/QP0ZMAINT.PGM '30' "+jobNumber+" '0' '1' | grep ':001250' | sed 's/.*:...... ........ ........ \\(....\\).*/\\1/'";
+    int slashIndex = jobname.indexOf('/');
+    String jobNumber = jobname.substring(0, slashIndex);
 
-	int ccsid = 0; 
-	// output_.println("Debug:  Running "+cmd[2]);
-	try {
-	    Process p = rt.exec(cmd);
-	    InputStream iStream = p.getInputStream();
-	    int readByte = iStream.read();
-	    while (readByte != -1) {
-		int value; 
-		if ( ((readByte >= 0xf0) && (readByte <=0xf9)) ||
-		     ((readByte >= 0x30) && (readByte <=0x39))) {
-		    value = readByte & 0xf;
-		    ccsid=ccsid*16 +value; 
-		} else if ( ((readByte >= 0x41) && (readByte <=0x46) ||
-			     ((readByte >= 0xc1) && (readByte <=0xc6)))) {
-		    value = 9 + readByte & 0xf;
-		    ccsid=ccsid*16 +value; 
-		}
+    sql = "call qsys2.qcmdexc('QSH CMD(''rm -f /tmp/output.ccsid" + jobNumber + "'')')";
+    stmt.executeUpdate(sql);
 
-		readByte=iStream.read();
-	    }
-	    iStream.close();
+    sql = "call qsys2.qcmdexc('QSH CMD(''/QSYS.LIB/QP0ZMAINT.PGM 30 " + jobNumber + " 0 1 > /tmp/output.ccsid"
+        + jobNumber + "'')')";
+    stmt.executeUpdate(sql);
 
-	    return ccsid; 
-	} catch (Throwable e) {
-	    e.printStackTrace();
+    sql = " select * from TABLE(IFS_READ('/tmp/output.ccsid" + jobNumber + "'))";
+    rs = stmt.executeQuery(sql);
 
-	    return ccsid = 0; 
-	}
+    int ccsid = -1;
 
+    while (rs.next() && ccsid == -1) {
+      String line = rs.getString(2);
+      int colonIndex = line.indexOf(":001250");
+      if (colonIndex > 0) {
+        String hexData = line.substring(colonIndex + 26, colonIndex + 30);
+        ccsid = Integer.parseInt(hexData, 16);
+        System.out.println("CCSID is " + ccsid);
+      }
+    }
+    if (ccsid != -1) {
+      sql = "call qsys2.qcmdexc('QSH CMD(''rm -f /tmp/output.ccsid" + jobNumber + "'')')";
+      stmt.executeUpdate(sql);
+    }
+    rs.close();
+    stmt.close(); 
+    sb.append("\n returning ccsid " + ccsid+ " from /tmp/output.ccsid"+jobNumber+" ");
+    return ccsid;
+  } catch (Throwable e) {
+    System.out.println("Error on "+sql); 
+    e.printStackTrace();
 
+    return 0;
+  }
 
     } 
     
@@ -375,7 +378,6 @@ Performs cleanup needed after running variations.
 
     public void changeCcsidAndGetFromWcb(int ccsid) { 
       try {
-        if (checkNative()) {
 
           CallableStatement cmd = connection_
               .prepareCall("call QGPL.JDCMDEXEC(?,?)");
@@ -393,12 +395,12 @@ Performs cleanup needed after running variations.
             
           }
           s.close(); 
-          
-          int outCcsid = getConnectionWcbCCSID(connection_);
-
-          assertCondition(outCcsid == ccsid, "changeCcsidAndGetFromWcb(): input ccsid=" + ccsid
-              + " output ccsid=" + outCcsid);
-        }
+          StringBuffer sb = new StringBuffer(); 
+          sb.append("changeCcsidAndGetFromWcb(): input ccsid=" + ccsid);
+          int outCcsid = getConnectionWcbCCSID(connection_, sb);
+          sb.append(" output ccsid=" + outCcsid);
+          assertCondition(outCcsid == ccsid, sb); 
+              
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
       }
@@ -499,13 +501,16 @@ Performs cleanup needed after running variations.
           while(rs.next()) {
             
           }
+          rs.close(); 
           s.close(); 
-          
-          int outCcsid = getConnectionWcbCCSID(profileConnection);
-	  String extraInfo=""; 
+          StringBuffer sb = new StringBuffer(); 
+          sb.append("loginCcsidAndGetFromWcb() input ccsid=" + ccsid);
+          int outCcsid = getConnectionWcbCCSID(profileConnection, sb);
+          int expectedCcsid = ccsid;   
+         sb.append(" output ccsid=" + outCcsid+" expected ccsid="+expectedCcsid);
+	 
 
-            int expectedCcsid = ccsid;   
-
+ 
 	    boolean passed = (outCcsid == expectedCcsid);
 
 	    if (interactive_ && (!passed)) {
@@ -517,9 +522,8 @@ Performs cleanup needed after running variations.
 
 	    profileConnection.close();
 
-            assertCondition(passed, "loginCcsidAndGetFromWcb() input ccsid=" + ccsid
-                + " output ccsid=" + outCcsid+" expected ccsid="+expectedCcsid+extraInfo);
-
+            assertCondition(passed, sb); 
+            
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
