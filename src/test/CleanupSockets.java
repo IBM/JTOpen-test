@@ -18,13 +18,13 @@ import java.io.PrintWriter;
 import java.sql.*;
 
 public class CleanupSockets {
-  public static void usage() { 
+  public static void usage() {
     System.out.println("Usage:  java CleanupSockets [System] [userid] [password]");
-    System.out.println("   Cleans up sockets on the specified connection.  If the system is not specifed then the local system is used. "); 
+    System.out.println(
+        "   Cleans up sockets on the specified connection.  If the system is not specifed then the local system is used. ");
   }
 
-  public static void cleanup(PrintWriter printWriter, String system,
-      String userid, String password) throws Exception {
+  public static void cleanup(PrintWriter printWriter, String system, String userid, String password) throws Exception {
 
     Connection c = null;
     Timestamp ts;
@@ -39,7 +39,7 @@ public class CleanupSockets {
 
     // Restart interface if needed.
     String query = "select 'ENDTCPIFC INTNETADR(''' CONCAT INTERNET_ADDRESS CONCAT ''')' ,INTERNET_ADDRESS, LINE_DESCRIPTION, INTERFACE_STATUS from QSYS2.NETSTAT_INTERFACE_INFO  WHERE CONNECTION_TYPE='IPV4' AND INTERFACE_STATUS <> 'ACTIVE'";
- ts = new Timestamp(System.currentTimeMillis());
+    ts = new Timestamp(System.currentTimeMillis());
     printWriter.println(ts + " : running query " + query + "\n");
     ResultSet rs = queryStatement.executeQuery(query);
 
@@ -51,7 +51,8 @@ public class CleanupSockets {
       qcmdExcStatement.setString(1, command);
       qcmdExcStatement.execute();
     }
-
+    rs.close(); 
+    
     query = "select 'STRTCPIFC INTNETADR(''' CONCAT INTERNET_ADDRESS CONCAT ''')' ,INTERNET_ADDRESS, LINE_DESCRIPTION, INTERFACE_STATUS from QSYS2.NETSTAT_INTERFACE_INFO  WHERE CONNECTION_TYPE='IPV4' AND INTERFACE_STATUS <> 'ACTIVE'";
 
     printWriter.println(ts + " : running query " + query + "\n");
@@ -65,7 +66,8 @@ public class CleanupSockets {
       qcmdExcStatement.setString(1, command);
       qcmdExcStatement.execute();
     }
-
+    rs.close(); 
+    
     // Cleanup ports
     ts = new Timestamp(System.currentTimeMillis());
     query = "select 'ENDTCPCNN PROTOCOL(*TCP) LCLINTNETA('''||LOCAL_ADDRESS||''') LCLPORT('||LOCAL_PORT||') RMTINTNETA('''||REMOTE_ADDRESS||''') RMTPORT('||REMOTE_PORT|| ')    ', "
@@ -81,9 +83,8 @@ public class CleanupSockets {
       printWriter.println(ts + " : exeuting command  " + command + "\n");
       qcmdExcStatement.setString(1, command);
       qcmdExcStatement.execute();
-    } 
-
-
+    }
+    rs.close(); 
     // Cleanup scanner hanging on port 6042
 
     ts = new Timestamp(System.currentTimeMillis());
@@ -98,40 +99,39 @@ public class CleanupSockets {
       printWriter.println(ts + " : exeuting command  " + command + "\n");
       qcmdExcStatement.setString(1, command);
       qcmdExcStatement.execute();
-    } 
-
-
-
-    c.close(); 
-    
-
+    }
+    rs.close(); 
+    queryStatement.close(); 
+    qcmdExcStatement.close(); 
+    c.close();
 
   }
+
   public static void main(String args[]) {
-    String system = null ; 
-    String userid = null; 
-    String password = null; 
-    PrintWriter printWriter = null; 
-    
-    try { 
+    String system = null;
+    String userid = null;
+    String password = null;
+    PrintWriter printWriter = null;
+
+    try {
       printWriter = new PrintWriter(new FileWriter("/tmp/CleanupSockets.out", true));
 
       if (args.length >= 3) {
-        system=args[0]; 
-        userid=args[1];
-        password=args[2]; 
+        system = args[0];
+        userid = args[1];
+        password = args[2];
       }
-      cleanup(printWriter, system,userid,password);
-      
-    } catch (Exception e) { 
-      StringBuffer sb = new StringBuffer(); 
-      e.printStackTrace(); 
-      Testcase.printStackTraceToStringBuffer(e, sb); 
-      printWriter.append("Error: "+sb.toString()+"\n"); 
-      usage(); 
+      cleanup(printWriter, system, userid, password);
+
+    } catch (Exception e) {
+      StringBuffer sb = new StringBuffer();
+      e.printStackTrace();
+      Testcase.printStackTraceToStringBuffer(e, sb);
+      printWriter.append("Error: " + sb.toString() + "\n");
+      usage();
     }
-    if (printWriter != null) { 
-      printWriter.close(); 
+    if (printWriter != null) {
+      printWriter.close();
     }
   }
 }

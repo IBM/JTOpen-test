@@ -76,6 +76,7 @@ extends JDTestcase {
     public PreparedStatement col2  = null;
     public PreparedStatement col3  = null;
     public String largeValue = "";
+    private String stringsTable_;
 
 
 /**
@@ -111,15 +112,17 @@ Performs setup needed before running variations.
 
            Statement s = connection.createStatement();
 
+           stringsTable_ = JDParmTest.COLLECTION+".strvmixed2";
+
            try {
-              s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings");
+              s.executeUpdate("drop table "+stringsTable_+"");
            } catch (SQLException e) {
 	       JDParmHelper.handleDropException(e,output_);
            }
 
            // Create a table that uses the largest row size the database will
            // allow me to use.
-           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings " + 
+           s.executeUpdate("create table "+stringsTable_+" " + 
                            "(col1 varchar(4) ccsid 937,   " +
                            " col2 varchar(20) ccsid 937,  " + 
                            " col3 varchar (32711) ccsid 937)");
@@ -127,9 +130,9 @@ Performs setup needed before running variations.
 
            s.close();
 
-           col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
-           col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
-           col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
+           col1 = connection.prepareStatement("insert into "+stringsTable_+" (col1) values(?)");
+           col2 = connection.prepareStatement("insert into "+stringsTable_+" (col2) values(?)");
+           col3 = connection.prepareStatement("insert into "+stringsTable_+" (col3) values(?)");
 
 
            String shortValue = "abcdefghijklmnopqrstuvwxy";
@@ -184,7 +187,7 @@ Test:  char(4) - value is just right
          col1.setString(1, inValue);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", inValue, connection,output_), "col1 = " +col1+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col1", inValue, connection,stringsTable_,output_), "col1 = " +col1+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -192,7 +195,7 @@ Test:  char(4) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -247,7 +250,7 @@ Test:  char(4) - value too big
 	      }
 	  }
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -297,7 +300,7 @@ Test:  char(4) - value too big - doesn't fit - doesn't start with <shift-out>
 
 
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -348,7 +351,7 @@ Test:  char(4) - value too big - doesn't fit - starts with <shift-out>
 		  failed (e, "Unexpected Exception");
 	      }
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -375,7 +378,7 @@ Test:  char(20) - value is just right
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -383,7 +386,7 @@ Test:  char(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -414,7 +417,7 @@ Test:  char(20) - value is just right
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -422,7 +425,7 @@ Test:  char(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -447,7 +450,7 @@ Test:  char(20) - value is just right
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -455,7 +458,7 @@ Test:  char(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -480,7 +483,7 @@ Test:  char(20) - value is just right
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -488,7 +491,7 @@ Test:  char(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -507,7 +510,7 @@ Test:  char(20) - value is shorter then the column
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -515,7 +518,7 @@ Test:  char(20) - value is shorter then the column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -538,7 +541,7 @@ Test:  char(20) - value is shorter then the column
          col2.setString(1, inValue);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
+            assertCondition(JDParmHelper.verifyString("col2", inValue, connection,stringsTable_,output_), "col2 = " +col2+ ", inValue = " +inValue+ ", connection = " +connection);
          else
             failed ("invalid update count");
 
@@ -546,7 +549,7 @@ Test:  char(20) - value is shorter then the column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -613,7 +616,7 @@ Test:  char(20) - value too big - no room left for the shift in/out chars.
         
     	   
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -680,7 +683,7 @@ Test:  char(20) - value too big - too big by 1 - doesn't start with shift out.
 
         
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -751,7 +754,7 @@ Test:  char(20) - value too big - too big by 1 - starts with shift out.
 
         
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 

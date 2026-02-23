@@ -1434,7 +1434,7 @@ public class JDJobName {
 					writer.write((char) outByte);
 				readByte = iStream.read();
 			}
-
+                        iStream.close(); 
 			// System.out.println();
 			if (debug) {
 				if (bufferCount > 0) {
@@ -1491,6 +1491,7 @@ public class JDJobName {
 
 				readByte = iStream.read();
 			}
+			iStream.close(); 
 			if (debug) {
 				if (bufferCount > 0) {
 					System.out.println();

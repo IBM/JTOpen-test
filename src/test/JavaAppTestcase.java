@@ -351,6 +351,7 @@ public class  JavaAppTestcase extends Testcase
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("as400"))
                 && (listener.lastEvent_.getOldValue () == systemObject_)
                 && (listener.lastEvent_.getNewValue () == system2)," addPropertyChangeListener() runs incorrectly!");
+            system2.close(); 
         }
         catch (Exception e) {
             failed (e, "Unexpected Exception");
@@ -423,6 +424,7 @@ public class  JavaAppTestcase extends Testcase
             assertCondition ((listener.lastEvent_.getPropertyName ().equals ("as400"))
                 && (listener.lastEvent_.getOldValue () == systemObject_)
                 && (listener.lastEvent_.getNewValue () == system2)," addVetoableChangeListener() runs incorrectly.");
+            system2.close(); 
         }
         catch (Exception e) {
             failed (e, "addVetoableChangeListener() error.");
@@ -1346,6 +1348,7 @@ public class  JavaAppTestcase extends Testcase
     Method tested:getSystem()
     - Ensure the method runs well.
     **/
+    @SuppressWarnings("resource")
     public void Var060()
     {
         try
@@ -1363,6 +1366,7 @@ public class  JavaAppTestcase extends Testcase
     Method tested:getSystem(),setSystem()
     - Ensure the method runs well.
     **/
+    @SuppressWarnings("resource")
     public void Var061()
     {
         try
@@ -1371,6 +1375,7 @@ public class  JavaAppTestcase extends Testcase
             AS400 as400 = new AS400();
             s.setSystem(as400);
             assertCondition(s.getSystem().equals(as400)," getSystem() runs incorrectly!");
+            as400.close(); 
         }
         catch (Exception e)
         {

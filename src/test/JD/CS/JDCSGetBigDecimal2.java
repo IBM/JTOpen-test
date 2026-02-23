@@ -61,12 +61,12 @@ extends JDTestcase
      test.JDCSTest.main(newArgs); 
    }
     // table names
-    private static String INTEGER_TABLE = JDCSTest.COLLECTION + ".int_tab";
-    private static String INTEGER_PROCEDURE = JDCSTest.COLLECTION + ".int_proc";
-    private static String VARCHAR_TABLE = JDCSTest.COLLECTION + ".vc_tab";
-    private static String VARCHAR_PROCEDURE = JDCSTest.COLLECTION + ".vc_proc";
-    private static String NUMERIC_TABLE = JDCSTest.COLLECTION + ".num_tab";
-    private static String NUMERIC_PROCEDURE = JDCSTest.COLLECTION + ".num_proc";
+    private static String INTEGER_TABLE = JDCSTest.COLLECTION + ".int_tgb2";
+    private static String INTEGER_PROCEDURE = JDCSTest.COLLECTION + ".int_pgb2";
+    private static String VARCHAR_TABLE = JDCSTest.COLLECTION + ".vc_tgb2";
+    private static String VARCHAR_PROCEDURE = JDCSTest.COLLECTION + ".vc_pgb2";
+    private static String NUMERIC_TABLE = JDCSTest.COLLECTION + ".num_tgb2";
+    private static String NUMERIC_PROCEDURE = JDCSTest.COLLECTION + ".num_pgb2";
 
 
     // Private data.
@@ -106,12 +106,12 @@ extends JDTestcase
 	//
 	// Reset names to use collection names set by -lib parameter 
 	// 
-	INTEGER_TABLE = JDCSTest.COLLECTION + ".int_tab";
-	INTEGER_PROCEDURE = JDCSTest.COLLECTION + ".int_proc";
-	VARCHAR_TABLE = JDCSTest.COLLECTION + ".vc_tab";
-	VARCHAR_PROCEDURE = JDCSTest.COLLECTION + ".vc_proc";
-	NUMERIC_TABLE = JDCSTest.COLLECTION + ".num_tab";
-	NUMERIC_PROCEDURE = JDCSTest.COLLECTION + ".num_proc";
+	INTEGER_TABLE = JDCSTest.COLLECTION + ".int_tgb2";
+	INTEGER_PROCEDURE = JDCSTest.COLLECTION + ".int_pgb2";
+	VARCHAR_TABLE = JDCSTest.COLLECTION + ".vc_tgb2";
+	VARCHAR_PROCEDURE = JDCSTest.COLLECTION + ".vc_pgb2";
+	NUMERIC_TABLE = JDCSTest.COLLECTION + ".num_tgb2";
+	NUMERIC_PROCEDURE = JDCSTest.COLLECTION + ".num_pgb2";
 
 
 

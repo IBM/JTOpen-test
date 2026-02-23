@@ -24,22 +24,14 @@ package test.JD.Parm;
 import java.sql.*;
 import java.io.PrintWriter;
 
-import test.JDParmTest;
+
 
 /**
 This function contains various helper classes used by the JDParm tests.
 **/
 public class JDParmHelper {
 
-    public static boolean verifyString(String column, 
-                                       String value,
-                                       Connection connection,
-                                       PrintWriter output) 
-    {
-	return verifyString(column,value,connection,JDParmTest.COLLECTION+".strings", output); 
-    }
-
-    public static boolean verifyString(String column, 
+      public static boolean verifyString(String column, 
                                        String value,
                                        Connection connection, String tablename, PrintWriter output_) 
     {
@@ -48,7 +40,8 @@ public class JDParmHelper {
             ResultSet rs = s.executeQuery("select " + column + " from " + tablename); // @KKASHIR: added space before the word from to avoid exceptions
             rs.next();
             String test = rs.getString(1);
-
+            rs.close(); 
+            s.close(); 
             if (value == null) {
                 if (test == null) {
                     return true;
@@ -125,15 +118,16 @@ public class JDParmHelper {
     public static boolean verifyGraphic(String column, 
                                         String compare, 
                                         int    length, 
-                                        Connection connection)
+                                        Connection connection,
+                                        String stringsTable)
     {
         try {
             Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("select " + column + " from "+JDParmTest.COLLECTION+".strings");
+            ResultSet rs = s.executeQuery("select " + column + " from "+stringsTable);
             rs.next();
             String actual = rs.getString(1);
-
-
+            rs.close(); 
+            s.close(); 
             if (compare == null) {
                 if (actual == null) 
                     return true;
@@ -156,15 +150,7 @@ public class JDParmHelper {
     }
 
 
-    public static void purgeStringsTable(Connection connection, PrintWriter output_) {
-        try {
-            Statement s = connection.createStatement();
-            s.executeUpdate("delete from "+JDParmTest.COLLECTION+".strings");
-            s.close();
-        } catch (SQLException e) {
-            output_.println("Table purge function filed.");
-        }
-    }
+   
 
     public static void purgeStringsTable(Connection connection, String tablename, PrintWriter output_) {
         try {

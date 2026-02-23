@@ -70,6 +70,7 @@ import test.JDDriverTest;
 import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
+import test.JD.JDParallelCounter;
 
 /**
 Testcase JDDMDGetTables.  This tests the following methods
@@ -110,6 +111,11 @@ extends JDTestcase {
     String setupSysibmVersion = "";
     StringBuffer message = new StringBuffer();
     boolean is400 = true;
+    private JDParallelCounter parallelCounter_;
+    private JDParallelCounter parallelCounter2_;
+    private JDParallelCounter parallelCounterXX_;
+    private JDParallelCounter parallelCounterGT_;
+    private JDParallelCounter parallelCounter128_;
 
 
 
@@ -197,11 +203,14 @@ Performs setup needed before running variations.
 
     /* Make sure that the schema is valid.  In newer releases, sometimes */
     /* the SYSTABLES view is missing.  */
-
+    parallelCounter_ = new JDParallelCounter(connection_, JDDMDTest.COLLECTION); 
     validateCollection(connection_, JDDMDTest.COLLECTION);
+    parallelCounter2_ = new JDParallelCounter(connection_, JDDMDTest.COLLECTION2); 
     validateCollection(connection_, JDDMDTest.COLLECTION2);
+    parallelCounterXX_ = new JDParallelCounter(connection_, JDDMDTest.COLLECTIONXX); 
     validateCollection(connection_, JDDMDTest.COLLECTIONXX);
     jddmdCol_ = JDDMDTest.COLLECTION+"GT"; 
+    parallelCounterGT_ = new JDParallelCounter(connection_, jddmdCol_); 
     validateCollection(connection_,jddmdCol_);
     if (!is400) {
 		  // 
@@ -223,86 +232,43 @@ Performs setup needed before running variations.
 
     dmd_ = connection_.getMetaData();
 
- 
-    //
-    // Make sure it is clean before running
-    try {
-      s.executeUpdate("DROP VIEW " + JDDMDTest.COLLECTION + ".TABLESV");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP VIEW " + JDDMDTest.COLLECTION2 + ".TABLESV2");
-    } catch (Exception e) {
-    }
-    try {
-
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES1");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES2");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLESXX");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES3");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES4");
-    } catch (Exception e) {
-    }
-    try {
-      s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTIONXX + ".TABLESXX");
-    } catch (Exception e) {
-    }
 
 
 
 
 
+        s.executeUpdate ("CREATE OR REPLACE TABLE " + JDDMDTest.COLLECTION
+                         + ".TABLES (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION
+                         + ".TABLES1 (NAME INTEGER) ON REPLACE DELETE ROWS  ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION
+                         + ".TABLES2 (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION
+                         + ".TABLESXX (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION2
+                         + ".TABLES (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION2
+                         + ".TABLES3 (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTION2
+                         + ".TABLES4 (NAME INTEGER) ON REPLACE DELETE ROWS ");
+        s.executeUpdate ("CREATE OR REPLACE  TABLE " + JDDMDTest.COLLECTIONXX
+                         + ".TABLESXX (NAME INTEGER) ON REPLACE DELETE ROWS ");
 
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES1 (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES2 (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLESXX (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES3 (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES4 (NAME INTEGER)");
-        s.executeUpdate ("CREATE TABLE " + JDDMDTest.COLLECTIONXX
-                         + ".TABLESXX (NAME INTEGER)");
-
-        s.executeUpdate ("CREATE VIEW " + JDDMDTest.COLLECTION
+        s.executeUpdate ("CREATE  OR REPLACE VIEW " + JDDMDTest.COLLECTION
                          + ".TABLESV AS SELECT * FROM " + JDDMDTest.COLLECTION
                          + ".TABLES");
-        s.executeUpdate ("CREATE VIEW " + JDDMDTest.COLLECTION2
+        s.executeUpdate ("CREATE OR REPLACE  VIEW " + JDDMDTest.COLLECTION2
                          + ".TABLESV2 AS SELECT * FROM " + JDDMDTest.COLLECTION2
                          + ".TABLES3");
 
         // @128sch
         if(true)
         {
-            String sql = "CREATE TABLE " + JDDMDTest.SCHEMAS_LEN128
+          parallelCounter128_ = new JDParallelCounter(connection_, JDDMDTest.SCHEMAS_LEN128); 
+
+            String sql = "CREATE OR REPLACE TABLE " + JDDMDTest.SCHEMAS_LEN128
                 + ".TABLE1 (COL1 CHAR(15) DEFAULT 'DEFAULTVAL',"
-                + " COL2 CHAR(15) )";
+                + " COL2 CHAR(15) ) ON REPLACE DELETE ROWS ";
             try{
                 s.executeUpdate(sql);
             }
@@ -332,41 +298,49 @@ Performs cleanup needed after running variations.
     throws Exception
     {
         Statement s = connection_.createStatement ();
-
-        s.executeUpdate ("DROP VIEW " + JDDMDTest.COLLECTION
-                         + ".TABLESV");
-        s.executeUpdate ("DROP VIEW " + JDDMDTest.COLLECTION2
-                         + ".TABLESV2");
-
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES1");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLES2");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION
-                         + ".TABLESXX");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES3");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTION2
-                         + ".TABLES4");
-        s.executeUpdate ("DROP TABLE " + JDDMDTest.COLLECTIONXX
-                         + ".TABLESXX");
-
-        if(true) //@128sch
-        {
-            try{
-                s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
-            }
-            catch(Exception e){
-                output_.println("Warning.. drop table failed");
-                e.printStackTrace();
-            }
+        try {
+          if (parallelCounter_.doCleanup()) {
+            s.executeUpdate("DROP VIEW " + JDDMDTest.COLLECTION + ".TABLESV");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES1");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLES2");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION + ".TABLESXX");
+          }
+        } finally {
+          parallelCounter_.close();
         }
+        try {
+          if (parallelCounter2_.doCleanup()) {
+            s.executeUpdate("DROP VIEW " + JDDMDTest.COLLECTION2 + ".TABLESV2");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES3");
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTION2 + ".TABLES4");
+          }
+        } finally {
+          parallelCounter2_.close();
+        }
+        try {
+          if (parallelCounterXX_.doCleanup()) {
 
-
+            s.executeUpdate("DROP TABLE " + JDDMDTest.COLLECTIONXX + ".TABLESXX");
+          }
+        } finally {
+          parallelCounterXX_.doCleanup();
+        }
+        try { 
+          if (parallelCounter128_.doCleanup()) {
+            try {
+              s.executeUpdate("DROP TABLE " + JDDMDTest.SCHEMAS_LEN128 + ".TABLE1");
+            } catch (Exception e) {
+              output_.println("Warning.. drop table failed");
+              e.printStackTrace();
+            }
+          }
+        } finally {
+          parallelCounter128_.close();
+        }
+        parallelCounterGT_.close(); 
+        
         s.close ();
         connection_.close ();
         connection_ = null; 

@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -1124,11 +1123,10 @@ public class JDRSUpdateRow extends JDTestcase {
       String url = baseURL_
 
           + ";extended metadata=true";
-      Connection c = null;
       String city = "";
-      try {
+      try (Connection  c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_)) {
 
-        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
+        
 
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN FROM " + table3);
@@ -1146,6 +1144,7 @@ public class JDRSUpdateRow extends JDTestcase {
         }
 
         s.close();
+
         assertCondition(city.equals("Manhatten"));
       } catch (Exception e) {
         failed(e, "Unexpected Exception-New Testcase added by toolbox to test column alias support 9/17/03");
@@ -1164,9 +1163,8 @@ public class JDRSUpdateRow extends JDTestcase {
 
           + ";extended metadata=false";
       // String city = "";
-      Connection c = null;
-      try {
-        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
+      try (Connection c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);) {
+        
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN FROM " + table3);
 
@@ -1196,9 +1194,9 @@ public class JDRSUpdateRow extends JDTestcase {
           + ";extended metadata=true";
       String city = "";
       String state = "";
-      Connection c = null;
-      try {
-        c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);
+      
+      try (Connection  c = testDriver_.getConnection(url, systemObject_.getUserId(), encryptedPassword_);) {
+        
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = s.executeQuery("SELECT CITY AS TOWN,STATE AS LOCATION FROM " + table3);
 

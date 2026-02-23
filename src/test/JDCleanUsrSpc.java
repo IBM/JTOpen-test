@@ -93,7 +93,7 @@ public class JDCleanUsrSpc {
 
     commandCall.run(deleteJTCommand); 
 
-
+    as400.close(); 
 
   }
 

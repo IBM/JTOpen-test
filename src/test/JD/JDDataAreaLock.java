@@ -26,8 +26,9 @@ public class JDDataAreaLock {
   private String library_; 
 
   public JDDataAreaLock(Statement s, String dataArea) throws SQLException {
-    if (dataArea.length() > 10) {
-      throw new SQLException("Too long :"+dataArea); 
+    int len  = dataArea.length(); 
+    if (len > 10) {
+      dataArea = dataArea.substring(0,6) + dataArea.substring(len-4); 
     }
     s_ = s; 
     dataArea_ = dataArea; 
@@ -36,8 +37,9 @@ public class JDDataAreaLock {
 
   
   public JDDataAreaLock(Statement s, String library, String dataArea) throws SQLException {
-    if (dataArea.length() > 10) {
-      throw new SQLException("Too long :"+dataArea); 
+    int len  = dataArea.length(); 
+    if (len > 10) {
+      dataArea = dataArea.substring(0,6) + dataArea.substring(len-4); 
     }
     s_ = s; 
     dataArea_ = dataArea; 

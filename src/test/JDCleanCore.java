@@ -109,7 +109,7 @@ public class JDCleanCore {
 
     }	
     out.println("Completed clean"); 
-
+    as400.close(); 
   }
 
   private static void cleanRelatedFiles(AS400 as400, IFSFile javacorefile) throws IOException {

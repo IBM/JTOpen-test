@@ -168,85 +168,8 @@ public class JDCSSetArray extends JDCSSetTestcase
     {
 	try {
 	    reconnect();
-	////v7r1 array SPs
-	    if(areArraysSupported() )
-	    {
-	      String[] procedures = {
-	           JDSetupProcedure.STP_CSARRSUM,
-	           JDSetupProcedure.STP_CSARRINT3,
-	           JDSetupProcedure.STP_CSARRINTN,
-	           JDSetupProcedure.STP_CSARRINT,
-	           JDSetupProcedure.STP_CSARRVCH3,
-
-	           JDSetupProcedure.STP_CSARRINT2,
-	           JDSetupProcedure.STP_CSARRINT4,
-	           JDSetupProcedure.STP_CSARRSIN,
-	           JDSetupProcedure.STP_CSARRIN,
-	           JDSetupProcedure.STP_CSARRIN2,
-	           JDSetupProcedure.STP_CSARRBIN,
-	           JDSetupProcedure.STP_CSARRREA,
-	           JDSetupProcedure.STP_CSARRFLO,
-	           JDSetupProcedure.STP_CSARRDOU,
-	           JDSetupProcedure.STP_CSARRDEC,
-	           JDSetupProcedure.STP_CSARRNUM,
-	           JDSetupProcedure.STP_CSARRCH1,
-	           JDSetupProcedure.STP_CSARRCH50,
-	           JDSetupProcedure.STP_CSARRVCH,
-	           JDSetupProcedure.STP_CSARRVCH2,
-	           JDSetupProcedure.STP_CSARRGR,
-	           JDSetupProcedure.STP_CSARRVGR,
-	           JDSetupProcedure.STP_CSARRCLO,
-	           JDSetupProcedure.STP_CSARRBLO,
-	           JDSetupProcedure.STP_CSARRDAT,
-	           JDSetupProcedure.STP_CSARRTIM,
-	           JDSetupProcedure.STP_CSARRTS,
-	           JDSetupProcedure.STP_CSARRBY,
-	           JDSetupProcedure.STP_CSARRVBY,
-	           JDSetupProcedure.STP_CSARRXML,
-	      };
-	      for (int i = 0; i < procedures.length; i++) {
-	        if (createdProceduresHashtable.get(procedures[i]) != null ) {
-	          JDSetupProcedure.dropProcedure(connection_, procedures[i], output_);
-	        }
-	      }
-
-		Statement st = connection_.createStatement();
-		try{
-
-		//THESE ARE CREATEED IN JDSetupProcedures right before procedure create
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".JDINTARRAY ");
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".JDVCHARRAY ");
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRSIN");     //smallint
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRIN ");    //int
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRIN2 ");    //int and non-array type
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRBIN ");   //bigint
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRREA ");   //read
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRFLO "); //float
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRDOU "); //double
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRDEC "); // decimal
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRNUM "); //numberic
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRCH1 "); //char(1)
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRCH50 "); //char(50)
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRVCH "); //varchar(50)
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRVCH2 "); //varchar(50) and non-array type
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRGR "); //graphic
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRVGR "); //vargraphvi
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRCLO "); //clob
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRBLO "); //blob
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRDAT "); //date
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRTIM "); //time
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRTS "); //timestamp
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRBY "); //binary
-		    st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRVBY "); //varbinary
-		    if(isJdbc40())
-			st.execute("drop type " + JDSetupProcedure.COLLECTION + ".ARRXML "); //xml
-
-		} catch(Exception e){  }
-
-		st.close();
-	    }
-
-
+	    // do not cleanup procedures as they could be in use concurrently 
+	 
 	    super.cleanup(); 
 	    
 	} catch (Exception e) {

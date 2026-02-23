@@ -87,7 +87,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 106;  // useSock5
+      NUMBER_OF_PROPERTIES = 107;  // virtual threads
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();
@@ -526,6 +526,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     Hashtable<String,String> returnMethods = new Hashtable<String,String>();
 
     // Also check out the bean information
+    java.beans.Introspector.flushCaches();
     BeanInfo beanInfo = java.beans.Introspector.getBeanInfo(thisClass);
     PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
 
@@ -618,7 +619,15 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   public void Var042() { testProperty("cursor sensitivity","sensitive"); }
   public void Var043() { if (checkNative()) testProperty("direct map","false"); }
   public void Var044() { testProperty("query optimize goal","1"); }
-  public void Var045() { testProperty("decfloat rounding mode","round ceiling"); }
+
+  public void Var045() {
+    if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
+      testProperty("decfloat rounding mode", "round ceiling");
+    } else {
+      testProperty("decfloat rounding mode", "ceiling");
+    }
+  }
+
   public void Var046() { if (checkNative()) testProperty("qaqqinilib","QGPL"); }
   public void Var047() { if (checkNative()) testProperty("ignore warnings","0100C"); }
   public void Var048() { testProperty("commit hold","false"); }
@@ -633,5 +642,12 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   public void Var057() { testProperty("authenticationLocalPort","30"); }
   public void Var058() { testProperty("authenticationRemoteIP","2.3.4.5"); }
   public void Var059() { testProperty("authenticationRemotePort","50"); }
+  
+  
+  public void Var060() { if (checkToolbox()) testProperty("stay alive","60"); }
+  public void Var061() { if (checkToolbox()) testProperty("tls truststore","/tmp/mystore.jks");}
+  public void Var062() { if (checkToolbox()) testProperty("tls truststore password","p@ssw0rd");}
+  public void Var063() { if (checkToolbox()) testProperty("use sock5","true"); }
+  public void Var064() { if (checkToolbox()) testProperty("virtual threads","true"); }
 
 }

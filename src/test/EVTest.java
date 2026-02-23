@@ -101,6 +101,7 @@ public class EVTest extends TestDriver
      @return  The deserialized object.
      @exception  Exception  If an exception occurs.
      **/
+    @SuppressWarnings("resource")
     public static Object serialize(EnvironmentVariable object, char[] encryptedPassword) throws Exception
     {
         // Serialize.
@@ -139,6 +140,7 @@ public class EVTest extends TestDriver
      @return  The deserialized object.
      @exception  Exception  If an exception occurs.
      **/
+    @SuppressWarnings("resource")
     public static Object serialize(EnvironmentVariableList object, char[] encryptedPassword) throws Exception
     {
         // Serialize.

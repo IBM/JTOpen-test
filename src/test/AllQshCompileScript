@@ -115,4 +115,5 @@ else
   echo not cleaning because of error $COMPILELIST.*
 fi
 
+echo Compile done error = $error 
 exit $error

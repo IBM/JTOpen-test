@@ -30,6 +30,7 @@ import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400SecurityException;
 import com.ibm.as400.access.Job;
 
+import test.JD.JDParallelCounter;
 import test.JD.JDSetupCollection;
 import test.JD.CS.JDCSArrays;
 import test.JD.CS.JDCSExecute;
@@ -129,7 +130,10 @@ Test driver for the JDBC CallableStatement class.
 **/
 public class JDCSTest
 extends JDTestDriver {
+    Connection connection_;
 
+
+    private JDParallelCounter parallelCounter_; 
 
 
     /**
@@ -194,16 +198,19 @@ extends JDTestDriver {
     {
         super.setup();                                                          // @D1A
 
-        Connection c = getConnection (getBaseURL ()
+        connection_ = getConnection (getBaseURL ()
                                       + ";errors=full",
                                       systemObject_.getUserId (), encryptedPassword_);
-	System.out.println("JDCSTest.setup connectionClass="+c.getClass().getName()); 
+        
+        parallelCounter_ = new JDParallelCounter(connection_, COLLECTION); 
+
+	System.out.println("JDCSTest.setup connectionClass="+connection_.getClass().getName()); 
 
         if (testLib_ != null) { // @E1A
             COLLECTION = testLib_;
         }
         JDSetupCollection.create (systemObject_, 
-                                  c, COLLECTION, out_);
+                                  connection_, COLLECTION, out_);
 
  
 	String collection = COLLECTION;
@@ -213,55 +220,55 @@ extends JDTestDriver {
 	} 
         JDSupportedFeatures supportedFeatures_= new JDSupportedFeatures(this); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS0, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_RS0, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS1, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_RS1, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_RS3, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_RS3, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CS0, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CS0, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CS1, supportedFeatures_, collection,out_);        //@F2A
+                                     connection_, JDSetupProcedure.STP_CS1, supportedFeatures_, collection,out_);        //@F2A
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSPARMS, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSPARMSRS, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSPARMSRS, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUT, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESOUT, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUTX, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESOUTX, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESOUTB, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESOUTB, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESIN, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESIN, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESINOUT, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESINOUTX, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESINOUTX, supportedFeatures_, collection,out_); 
 
             JDSetupProcedure.create (systemObject_,
-                                     c, JDSetupProcedure.STP_CSTYPESNULL, supportedFeatures_, collection,out_); 
+                                     connection_, JDSetupProcedure.STP_CSTYPESNULL, supportedFeatures_, collection,out_); 
             JDSetupProcedure.create (systemObject_,                                                 //@F1A
-                                     c, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, collection,out_);   //@F1A
+                                     connection_, JDSetupProcedure.STP_CSINOUT, supportedFeatures_, collection,out_);   //@F1A
             JDSetupProcedure.create (systemObject_,                                                 //@F1A
-                                     c, JDSetupProcedure.STP_CSNULLTEST, supportedFeatures_, collection,out_);   //@F1A
+                                     connection_, JDSetupProcedure.STP_CSNULLTEST, supportedFeatures_, collection,out_);   //@F1A
             JDSetupProcedure.create (systemObject_,                                                  //@KBA
-                                     c, JDSetupProcedure.STP_CSSRS, supportedFeatures_, collection,out_);      //@KBA
+                                     connection_, JDSetupProcedure.STP_CSSRS, supportedFeatures_, collection,out_);      //@KBA
             JDSetupProcedure.create (systemObject_,                                                  //@KBA
-                                     c, JDSetupProcedure.STP_CSMSRS, supportedFeatures_, collection,out_);     //@KBA
+                                     connection_, JDSetupProcedure.STP_CSMSRS, supportedFeatures_, collection,out_);     //@KBA
 
             if (areReturnValuesSupported()) {                                                       // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSRV, supportedFeatures_, collection,out_);            // @E2A
+                                         connection_, JDSetupProcedure.STP_CSRV, supportedFeatures_, collection,out_);            // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSPARMSRV, supportedFeatures_, collection,out_);       // @E2A
+                                         connection_, JDSetupProcedure.STP_CSPARMSRV, supportedFeatures_, collection,out_);       // @E2A
                 JDSetupProcedure.create (systemObject_,                                  // @E2A
-                                         c, JDSetupProcedure.STP_CSPARMSRSRV, supportedFeatures_, collection,out_);     // @E2A
+                                         connection_, JDSetupProcedure.STP_CSPARMSRSRV, supportedFeatures_, collection,out_);     // @E2A
             }                                                                                       // @E2A
 
-        c.close ();
+     
     }
 
 
@@ -275,6 +282,8 @@ extends JDTestDriver {
     throws Exception
     {
 	/* Call the garbage collector to free still open Java objects */ 
+      parallelCounter_.close(); 
+      connection_.close(); 
 	System.gc(); 
     }
 
@@ -879,7 +888,8 @@ extends JDTestDriver {
 			System.out.println("Warning:  exception creating procedure in assureProcedureExists: SQL="+sql);
 			e.printStackTrace(System.out); 
 		    } 
-		}    	    
+		} 
+		stmt.close(); 
 		return; 
 	    } 
 	}

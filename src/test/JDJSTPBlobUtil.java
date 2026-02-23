@@ -174,7 +174,7 @@ public class JDJSTPBlobUtil implements java.sql.Blob {
 	      System.out.println("Unrecognized option:  \""+args[0]+"\"");
 	      usage(); 
 	  } 
-
+	  conn.close(); 
 
 	}
       } catch (Exception e) {

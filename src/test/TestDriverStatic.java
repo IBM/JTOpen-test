@@ -69,8 +69,7 @@ public class TestDriverStatic
     static SimpleDateFormat timeStampFormatter_ = new SimpleDateFormat( "yyyy-MM-dd HH:mm z" );
 
     static void init() {
-      // Make sure the static constructor above is called to load the 
-      // security manager 
+
     }
     
     /**
@@ -194,7 +193,6 @@ public class TestDriverStatic
 
         if (!servlet_ && !systemExitDisabled_)
         {
-	    TestDriverSecurityManager.setAllowExit(true); 
             System.exit(0);
         }
     }

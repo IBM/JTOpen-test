@@ -11,22 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
 ////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringLarge.java
 //
 // Classes:      JDParmStringLarge
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +96,10 @@ extends JDTestcase {
     public String largeSql = "";
     public String hugeSql  = "";
 
-    int vrm = 0 ; 
+    int vrm = 0 ;
+
+
+    private PreparedStatement ps1; 
 
     
 
@@ -156,51 +148,20 @@ Performs setup needed before running variations.
 	   graphictable =  JDParmTest.COLLECTION+".jdparmlrg9";
 	   vargraphictable =  JDParmTest.COLLECTION+".jdparmlrgA";
 
-           try { s.executeUpdate("drop table "+ chartable );    } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
-}
-           try { s.executeUpdate("drop table "+ varchartable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
- }
-           try { s.executeUpdate("drop table "+ clobtable );    } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
- }
-	   try { s.executeUpdate("drop table "+ dbclobtable );  } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
-}
-           try { s.executeUpdate("drop table "+ wchartable );   } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
- }
-           try { s.executeUpdate("drop table "+ wvarchartable );} catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
-}
-	   try { s.executeUpdate("drop table "+ numerictable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
- }
-           try { s.executeUpdate("drop table "+ decimaltable ); } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
-}
-           try { s.executeUpdate("drop table "+ graphictable );   } catch (SQLException e) {
-	       JDParmHelper.handleDropException(e,output_);
- }
-           try { s.executeUpdate("drop table "+ vargraphictable );} catch (SQLException e) {
-JDParmHelper.handleDropException(e,output_);
-
- }
 
 
            // Create with all types of columns 
 
-           s.executeUpdate("create table "+chartable+    "(cchar    char(32000))");
-           s.executeUpdate("create table "+varchartable+ "(cvarchar varchar(32000)) "); 
-           s.executeUpdate("create table "+clobtable+    "(cclob    clob (40000000))"); 
-           s.executeUpdate("create table "+dbclobtable+  "(cdbclob    dbclob (40000000) CCSID 13488)"); 
-           s.executeUpdate("create table "+wchartable+   "(cwchar graphic(16000) CCSID 13488) ");
-           s.executeUpdate("create table "+wvarchartable+ "(cwvarchar vargraphic(16000) CCSID 13488 )");
-           s.executeUpdate("create table "+numerictable+  "(cnumeric    numeric(10,10))");
-           s.executeUpdate("create table "+decimaltable+  "(cdecimal    decimal(10,10))");
-           s.executeUpdate("create table "+graphictable+   "(cgraphic graphic(16000) CCSID 835 ) ");
-           s.executeUpdate("create table "+vargraphictable+ "(cvargraphic vargraphic(16000) CCSID 835 )");
+           s.executeUpdate("create or replace table "+chartable+    "(cchar    char(32000)) on replace delete rows");
+           s.executeUpdate("create or replace  table "+varchartable+ "(cvarchar varchar(32000))  on replace delete rows"); 
+           s.executeUpdate("create or replace  table "+clobtable+    "(cclob    clob (40000000)) on replace delete rows"); 
+           s.executeUpdate("create or replace  table "+dbclobtable+  "(cdbclob    dbclob (40000000) CCSID 13488) on replace delete rows"); 
+           s.executeUpdate("create or replace  table "+wchartable+   "(cwchar graphic(16000) CCSID 13488)  on replace delete rows");
+           s.executeUpdate("create or replace  table "+wvarchartable+ "(cwvarchar vargraphic(16000) CCSID 13488 ) on replace delete rows");
+           s.executeUpdate("create or replace  table "+numerictable+  "(cnumeric    numeric(10,10)) on replace delete rows");
+           s.executeUpdate("create or replace  table "+decimaltable+  "(cdecimal    decimal(10,10)) on replace delete rows");
+           s.executeUpdate("create or replace  table "+graphictable+   "(cgraphic graphic(16000) CCSID 835 ) on replace delete rows ");
+           s.executeUpdate("create or replace  table "+vargraphictable+ "(cvargraphic vargraphic(16000) CCSID 835 ) on replace delete rows");
 
 
            s.close();
@@ -326,7 +287,7 @@ This is the place to put all cleanup work for the testcase.
 
 	  }
 
-
+	  s.close(); 
 
 
          // Close the global connection opened in setup().
@@ -1013,7 +974,8 @@ Test:  vargraphic huge
 	    notApplicable("Native problem with huge strings not fixed in V5R2"); 
 	} else { 
 	    try {
-		connection.prepareStatement(largeSql);
+		ps1 = connection.prepareStatement(largeSql);
+		ps1.close(); 
 		failed ("Didn't hit exception "+message); 
 	    } catch (SQLException e) {
 		assertCondition(true); 
@@ -1034,7 +996,8 @@ Test:  vargraphic huge
 	    try {
 		// Clear up as much memory as possible
 		System.gc(); 
-		connection.prepareStatement(hugeSql); 
+		ps1= connection.prepareStatement(hugeSql); 
+		ps1.close(); 
 		failed ("Didn't hit exception "+message); 
 	    } catch (SQLException e) {
 		assertCondition(true); 

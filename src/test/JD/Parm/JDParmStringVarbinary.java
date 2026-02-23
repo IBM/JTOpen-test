@@ -80,6 +80,7 @@ extends JDTestcase {
     public PreparedStatement col5  = null;
     public PreparedStatement col6  = null;
     public String largeValue = "";
+    private String stringsTable_;
 
 
 /**
@@ -116,8 +117,10 @@ Performs setup needed before running variations.
 
            Statement s = connection.createStatement();
 
+           stringsTable_ = JDParmTest.COLLECTION+".strvbin";
+
            try {
-              s.executeUpdate("drop table "+JDParmTest.COLLECTION+".strings");
+              s.executeUpdate("drop table "+stringsTable_+"");
            } catch (SQLException e) {
 	       JDParmHelper.handleDropException(e,output_);
 
@@ -125,7 +128,7 @@ Performs setup needed before running variations.
 
            // Create a table that uses the largest row size the database will
            // allow me to use.
-           s.executeUpdate("create table "+JDParmTest.COLLECTION+".strings " + 
+           s.executeUpdate("create table "+stringsTable_+" " + 
                            "(col1 varchar(1) CCSID 65535, " +
                            "col2 varchar(20) CCSID 65535, " + 
                            "col3 varchar (32714) CCSID 65535)");
@@ -133,13 +136,13 @@ Performs setup needed before running variations.
 
            s.close();
 
-           col1 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
-           col2 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
-           col3 = connection.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
+           col1 = connection.prepareStatement("insert into "+stringsTable_+" (col1) values(?)");
+           col2 = connection.prepareStatement("insert into "+stringsTable_+" (col2) values(?)");
+           col3 = connection.prepareStatement("insert into "+stringsTable_+" (col3) values(?)");
 
-           col4 = connection2.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col1) values(?)");
-           col5 = connection2.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col2) values(?)");
-           col6 = connection2.prepareStatement("insert into "+JDParmTest.COLLECTION+".strings (col3) values(?)");
+           col4 = connection2.prepareStatement("insert into "+stringsTable_+" (col1) values(?)");
+           col5 = connection2.prepareStatement("insert into "+stringsTable_+" (col2) values(?)");
+           col6 = connection2.prepareStatement("insert into "+stringsTable_+" (col3) values(?)");
 
            String shortValue = "abcdefghijklmnopqrstuvwxy";
 
@@ -185,7 +188,7 @@ Test:  varbinary(1) - value is just right
          col1.setString(1, "X");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "X", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "X", connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -196,7 +199,7 @@ Test:  varbinary(1) - value is just right
              failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -209,7 +212,7 @@ Test:  varbinary(1) - empty string
          col1.setString(1, "");
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "", connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -217,7 +220,7 @@ Test:  varbinary(1) - empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -231,7 +234,7 @@ Test:  varbinary(1) - null value
          col1.setString(1, null);
          int count = col1.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col1", null, connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -239,7 +242,7 @@ Test:  varbinary(1) - null value
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -270,7 +273,7 @@ Test:  varbinary(1) - value too big
           else
               failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -284,7 +287,7 @@ Test:  varbinary(20) - value is just right
          col2.setString(1, "01234567890123456789");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -292,7 +295,7 @@ Test:  varbinary(20) - value is just right
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -306,7 +309,7 @@ Test:  varbinary(20) - value is smaller than column
          col2.setString(1, "0123456789");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -314,7 +317,7 @@ Test:  varbinary(20) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -330,7 +333,7 @@ Test:  varbinary(20) - value is 1 char long
          col2.setString(1, "0");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", expected, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", expected, connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -338,7 +341,7 @@ Test:  varbinary(20) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -352,7 +355,7 @@ Test:  varbinary(20) - value is empty string
          col2.setString(1, "");
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "", connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -360,7 +363,7 @@ Test:  varbinary(20) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -374,7 +377,7 @@ Test:  varbinary(20) - value is null
          col2.setString(1, null);
          int count = col2.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col2", null, connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -382,7 +385,7 @@ Test:  varbinary(20) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -414,7 +417,7 @@ Test:  varbinary(20) - value too big
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -428,7 +431,7 @@ Test:  varbinary(32714) - value is just right
          col3.setString(1, largeValue);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -439,7 +442,7 @@ Test:  varbinary(32714) - value is just right
               failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -453,7 +456,7 @@ Test:  varbinary(32714) - value is smaller than column
          col3.setString(1, "0123456789012345678901234567890123456789");
          int count = col3.executeUpdate();
          if (count == 1) {
-             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection,output_));
+             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -462,7 +465,7 @@ Test:  varbinary(32714) - value is smaller than column
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -479,7 +482,7 @@ Test:  varbinary(32714) - value is 1 char long
          col3.setString(1, "0");
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", expected, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", expected, connection,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -488,7 +491,7 @@ Test:  varbinary(32714) - value is 1 char long
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -502,7 +505,7 @@ Test:  varbinary(32714) - value is empty string
          col3.setString(1, "");
          int count = col3.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "", connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "", connection,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -511,7 +514,7 @@ Test:  varbinary(32714) - value is empty string
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -525,7 +528,7 @@ Test:  varbinary(32714) - value is null
          col3.setString(1, null);
          int count = col3.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", null, connection,output_));
+            assertCondition(JDParmHelper.verifyString("col3", null, connection,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -533,7 +536,7 @@ Test:  varbinary(32714) - value is null
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -563,7 +566,7 @@ Test:  varbinary(32714) - value too big
           else
               failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -577,7 +580,7 @@ Test:  varbinary(1) - value is just right with translateBinary=true
          col4.setString(1, "X");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "X", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "X", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -585,7 +588,7 @@ Test:  varbinary(1) - value is just right with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -598,7 +601,7 @@ Test:  varbinary(1) - empty string with translateBinary=true
          col4.setString(1, "");
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", "", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col1", "", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -606,7 +609,7 @@ Test:  varbinary(1) - empty string with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_, output_);
       }
    }
 
@@ -620,7 +623,7 @@ Test:  varbinary(1) - null value with translateBinary=true
          col4.setString(1, null);
          int count = col4.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col1", null, connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col1", null, connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -628,7 +631,7 @@ Test:  varbinary(1) - null value with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -656,7 +659,7 @@ Test:  varbinary(1) - value too big with translateBinary=true
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -670,7 +673,7 @@ Test:  varbinary(20) - value is just right with translateBinary=true
          col5.setString(1, "01234567890123456789");
          int count = col5.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "01234567890123456789", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -678,7 +681,7 @@ Test:  varbinary(20) - value is just right with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -692,7 +695,7 @@ Test:  varbinary(20) - value is smaller than column with translateBinary=true
          col5.setString(1, "0123456789");
          int count = col5.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "0123456789", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -700,7 +703,7 @@ Test:  varbinary(20) - value is smaller than column with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -713,7 +716,7 @@ Test:  varbinary(20) - value is 1 char long with translateBinary=true
          col5.setString(1, "0");
          int count = col5.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "0", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "0", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -721,7 +724,7 @@ Test:  varbinary(20) - value is 1 char long with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -735,7 +738,7 @@ Test:  varbinary(20) - value is empty string with translateBinary=true
          col5.setString(1, "");
          int count = col5.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", "", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col2", "", connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -743,7 +746,7 @@ Test:  varbinary(20) - value is empty string with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -757,7 +760,7 @@ Test:  varbinary(20) - value is null with translateBinary=true
          col5.setString(1, null);
          int count = col5.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col2", null, connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col2", null, connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -765,7 +768,7 @@ Test:  varbinary(20) - value is null with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -792,7 +795,7 @@ Test:  varbinary(20) - value too big with translateBinary=true
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
@@ -806,7 +809,7 @@ Test:  varbinary(32714) - value is just right with translateBinary=true
          col6.setString(1, largeValue);
          int count = col6.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col3", largeValue, connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -814,7 +817,7 @@ Test:  varbinary(32714) - value is just right with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -828,7 +831,7 @@ Test:  varbinary(32714) - value is smaller than column with translateBinary=true
          col6.setString(1, "0123456789012345678901234567890123456789");
          int count = col6.executeUpdate();
          if (count == 1) {
-             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection2,output_));
+             assertCondition(JDParmHelper.verifyString("col3", "0123456789012345678901234567890123456789", connection2,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -837,7 +840,7 @@ Test:  varbinary(32714) - value is smaller than column with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -850,7 +853,7 @@ Test:  varbinary(32714) - value is 1 char long with translateBinary=true
          col6.setString(1, "0");
          int count = col6.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "0", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "0", connection2,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -859,7 +862,7 @@ Test:  varbinary(32714) - value is 1 char long with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -873,7 +876,7 @@ Test:  varbinary(32714) - value is empty string with translateBinary=true
          col6.setString(1, "");
          int count = col6.executeUpdate();
          if (count == 1) {
-            assertCondition(JDParmHelper.verifyString("col3", "", connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col3", "", connection2,stringsTable_,output_));
          }
          else
             failed("invalid update count");
@@ -882,7 +885,7 @@ Test:  varbinary(32714) - value is empty string with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -896,7 +899,7 @@ Test:  varbinary(32714) - value is null with translateBinary=true
          col6.setString(1, null);
          int count = col6.executeUpdate();
          if (count == 1)
-            assertCondition(JDParmHelper.verifyString("col3", null, connection2,output_));
+            assertCondition(JDParmHelper.verifyString("col3", null, connection2,stringsTable_,output_));
          else
             failed("invalid update count");
 
@@ -904,7 +907,7 @@ Test:  varbinary(32714) - value is null with translateBinary=true
          failed (e, "Unexpected Exception");
          
       } finally {
-         JDParmHelper.purgeStringsTable(connection2,output_);
+         JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
 
@@ -931,7 +934,7 @@ Test:  varbinary(32714) - value too big with translateBinary=true
       } catch (SQLException e) {
           failed (e, "Unexpected Exception");
       } finally {
-         JDParmHelper.purgeStringsTable(connection,output_);
+         JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
 
