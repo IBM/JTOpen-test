@@ -291,7 +291,7 @@ public class BidiEngineWrapper {
 		if(checkRoundTrip(s1, s2, 6, 5))
 			return true;
 		 */
-		//Brodsky1
+		
 		
 		return false;		
 	}

@@ -2,7 +2,9 @@ package test;
 
 import java.sql.Connection;
 
+import test.JDTestDriver;
 import test.JD.JDSetupCollection;
+import test.JD.BIDI.JDBIDITestcase;
 
 public class JDNLSTest extends JDTestDriver {
    

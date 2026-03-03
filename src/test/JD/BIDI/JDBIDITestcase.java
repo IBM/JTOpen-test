@@ -1,4 +1,4 @@
-package test;
+package test.JD.BIDI;
 
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -11,6 +11,12 @@ import java.util.Vector;
 
 import com.ibm.as400.access.AS400JDBCConnection;
 import com.ibm.as400.access.User;
+
+import test.JDNLSTest;
+import test.JDTestDriver;
+import test.JDTestcase;
+import test.PasswordVault;
+
 import com.ibm.as400.access.AS400;
 
 /**
@@ -18,6 +24,17 @@ import com.ibm.as400.access.AS400;
  * @author ibm Testcase to test bidi code in toolbox
  */
 public class JDBIDITestcase extends JDTestcase {
+
+  public static void main(String args[]) throws Exception {
+    String[] newArgs = new String[args.length + 2];
+    newArgs[0] = "-tc";
+    newArgs[1] = "JDBIDITestcase";
+    for (int i = 0; i < args.length; i++) {
+      newArgs[2 + i] = args[i];
+    }
+    test.JDNLSTest.main(newArgs);
+  }
+
 
   // Constants.
 
@@ -33,6 +50,7 @@ public class JDBIDITestcase extends JDTestcase {
   boolean isBidiUser_ = true;
 
   String[] Hebrew_CCSIDs = { "424", "62211", "62235", "62245" };
+  private Connection pwrConn_;
 
   public JDBIDITestcase(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
 
@@ -87,7 +105,7 @@ public class JDBIDITestcase extends JDTestcase {
   }
 
   public JDBIDITestBidiConnection constructBidiConn(String ccsid) {
-    JDBIDITestBidiConnection t = new JDBIDITestBidiConnection();
+    JDBIDITestBidiConnection t = new JDBIDITestBidiConnection(pwrConn_);
     t.schema_ = JDNLSTest.COLLECTION;
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       t.driverUrlBase = "jdbc:db2:";
@@ -102,7 +120,7 @@ public class JDBIDITestcase extends JDTestcase {
   }
 
   public JDBIDITestBidiMetaData constructMetaData(String ccsid) {
-    JDBIDITestBidiMetaData t = new JDBIDITestBidiMetaData();
+    JDBIDITestBidiMetaData t = new JDBIDITestBidiMetaData(pwrConn_);
     t.schema_ = JDNLSTest.COLLECTION;
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       t.driverUrlBase = "jdbc:db2:";
@@ -122,7 +140,7 @@ public class JDBIDITestcase extends JDTestcase {
    * @exception Exception If an exception occurs.
    **/
   protected void setup() throws Exception {
-    Connection con = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_, "JDBIDITestcase");
+    pwrConn_ = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_, "JDBIDITestcase");
 
     // CreateProfile should tolerate the case where the profile already exists.
     // At the end of the test, we should delete the profiles.
@@ -130,7 +148,7 @@ public class JDBIDITestcase extends JDTestcase {
     // that the profiles are there.
 
     for (int i = 0; i < Hebrew_CCSIDs.length; i++) {
-      createProfile(Hebrew_CCSIDs[i], con);
+      createProfile(Hebrew_CCSIDs[i], pwrConn_);
     }
 
     for (int i = 0; i < Hebrew_CCSIDs.length; i++) {
@@ -141,7 +159,6 @@ public class JDBIDITestcase extends JDTestcase {
       tBidiMetaData_[i] = constructMetaData(Hebrew_CCSIDs[i]);
     }
 
-    con.close();
 
   }
 
@@ -157,7 +174,8 @@ public class JDBIDITestcase extends JDTestcase {
       if (connection instanceof AS400JDBCConnection) {
         conn = (AS400JDBCConnection) connection;
         User u = new User(conn.getSystem(), user);
-        if (u.getCCSID() != Integer.parseInt(ccsid)) {
+        int userCcsid = u.getCCSID(); 
+        if ((userCcsid != 0) && (userCcsid != Integer.parseInt(ccsid))) {
           System.out.println("user is " + user + ", ccsid is " + u.getCCSID());
           isBidiUser = false;
         }
@@ -197,17 +215,10 @@ public class JDBIDITestcase extends JDTestcase {
   protected void cleanup() throws Exception {
 
     // Cleanup the profiles that were created.
-
-    Connection con = testDriver_.getConnection(baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_,
-        "JDBIDITestcase.cleanup");
-
     for (int i = 0; i < Hebrew_CCSIDs.length; i++) {
-      deleteProfile(Hebrew_CCSIDs[i], con);
+      deleteProfile(Hebrew_CCSIDs[i], pwrConn_);
     }
-    con.close();
-
-    // if(connection_!=null && !connection_.isClosed())
-    // connection_.close ();
+    pwrConn_.close();
   }
 
   /**
@@ -218,7 +229,7 @@ public class JDBIDITestcase extends JDTestcase {
     System.gc();
 
     System.out.println(
-        "TestBidiConnection host ccsid=" + t.host + ", package ccsid=" + t.package_ccsid + ", user ccsid=" + userCCSID);
+        "TestBidiConnection host =" + t.host + ", package ccsid=" + t.package_ccsid + ", user ccsid=" + userCCSID);
 
     if (!isBidiUser(userCCSID)) {
       notApplicable("user ccsid " + userCCSID + " is unsupported in this testcase");
@@ -278,6 +289,17 @@ public class JDBIDITestcase extends JDTestcase {
       long start = System.currentTimeMillis();
       boolean result = true;
       // Note: We cannot test the DMD unless we are on a BIDI system
+      int qccsid = 0; 
+      String sql = "select CURRENT_NUMERIC_VALUE from QSYS2.SYSTEM_VALUE_INFO where SYSTEM_VALUE_NAME='QCCSID'";
+      Statement s = pwrConn_.createStatement(); 
+      ResultSet rs = s.executeQuery(sql);
+      if (rs.next()) {
+        qccsid = rs.getInt(1); 
+      }
+      rs.close(); 
+      s.close(); 
+      
+      if (isBidiCcsid(qccsid)) { 
       boolean testDmd = false;
       if (!t.CreateMultiColumnTable(testDmd)) {
         result = false;
@@ -300,11 +322,26 @@ public class JDBIDITestcase extends JDTestcase {
       long end = System.currentTimeMillis();
       System.out.println("var" + varID + " SQL execute time : " + (end - start) / 1000 + " s");
       assertCondition(result, JDBIDITestBidiConnection.errorLog_.toString());
-
+      }  else {
+        notApplicable("QCCSID("+qccsid+") is not BIDI"); 
+      }
     } catch (Exception e) {
       failed(e, JDBIDITestBidiConnection.errorLog_.toString());
     }
 
+  }
+
+  private boolean isBidiCcsid(int qccsid) {
+    switch (qccsid) {
+    case 420:
+    case 424:
+    case 62211:
+    case 62235:
+    case 62245:
+      return true;
+    default:
+      return false;
+    }
   }
 
   public void Var001() {

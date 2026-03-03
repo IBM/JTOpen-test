@@ -1677,33 +1677,60 @@ getConnection -- test debug connection properties
         "-- added 6/29/2022 to test socket timeout and leaking socket connections \n");
     if (checkToolbox()) {
       try {
+        String sql = "select TCP_STATE,CONNECTION_TYPE,REMOTE_ADDRESS,REMOTE_PORT,REMOTE_PORT_NAME,LOCAL_ADDRESS,LOCAL_PORT,LOCAL_PORT_NAME,PROTOCOL,IDLE_TIME from QSYS2.NETSTAT_INFO where REMOTE_ADDRESS=SYSIBM.CLIENT_IPADDR and LOCAL_NAME='as-database' ORDER BY TCP_STATE";
+        
         boolean passed = true;
         String url = baseURL_;
+        AS400JDBCConnection initConnection = (AS400JDBCConnection) testDriver_
+            .getConnection(url, userId_, encryptedPassword_);
+        Statement initStmt = initConnection.createStatement();
+        ResultSet initRs = initStmt.executeQuery(sql);
+        while (initRs.next()) {
+          
+        }
+        initRs.close(); 
+        initStmt.close(); 
         int propertiesIndex = url.indexOf(';');
         if (propertiesIndex > 0) {
           url = url.substring(0, propertiesIndex);
         }
-        url = url + ";thread used=false;socket timeout=5000";
+        url = url + ";thread used=false;socket timeout=10000";
         sb.append("Connecting with URL="+url+"\n"); 
         for (int i = 0; i < 10; i++) {
 
-          AS400JDBCConnection testConnection = (AS400JDBCConnection) testDriver_
-              .getConnection(url, userId_, encryptedPassword_);
-          Statement stmt = testConnection.createStatement();
-          String sql = "select TCP_STATE,CONNECTION_TYPE,REMOTE_ADDRESS,REMOTE_PORT,REMOTE_PORT_NAME,LOCAL_ADDRESS,LOCAL_PORT,LOCAL_PORT_NAME,PROTOCOL,IDLE_TIME from QSYS2.NETSTAT_INFO where REMOTE_ADDRESS=SYSIBM.CLIENT_IPADDR and LOCAL_NAME='as-database' ORDER BY TCP_STATE";
-          sb.append("Running : " + sql+"\n");
-          ResultSet rs = stmt.executeQuery(sql);
+          AS400JDBCConnection testConnection = null; ;
+          Statement stmt = null ;    
           int badCount = 0;
-          while (rs.next()) {
-            sb.append("Got: " + rs.getString(1) + "," + rs.getString(2) + ","
-                + rs.getString(3) + "," + rs.getString(4) + ","
-                + rs.getString(5) + "," + rs.getString(6) + ","
-                + rs.getString(7) + "," + rs.getString(8) + ","
-                + rs.getString(9) + "," + rs.getString(10) + "\n");
-            if (!"ESTABLISHED".equals(rs.getString(1))) {
-              if (!"TIME-WAIT".equals(rs.getString(1))) {
-               badCount++;
-              } 
+          int retryCount = 20;
+          while (retryCount > 0) {
+            try {
+              testConnection = (AS400JDBCConnection) testDriver_.getConnection(url, userId_, encryptedPassword_);
+              stmt = testConnection.createStatement();
+              sql = "select TCP_STATE,CONNECTION_TYPE,REMOTE_ADDRESS,REMOTE_PORT,REMOTE_PORT_NAME,LOCAL_ADDRESS,LOCAL_PORT,LOCAL_PORT_NAME,PROTOCOL,IDLE_TIME from QSYS2.NETSTAT_INFO where REMOTE_ADDRESS=SYSIBM.CLIENT_IPADDR and LOCAL_NAME='as-database' ORDER BY TCP_STATE";
+              sb.append("Running : " + sql + "\n");
+              ResultSet rs = stmt.executeQuery(sql);
+
+              while (rs.next()) {
+                sb.append("Got: " + rs.getString(1) + "," + rs.getString(2) + "," + rs.getString(3) + ","
+                    + rs.getString(4) + "," + rs.getString(5) + "," + rs.getString(6) + "," + rs.getString(7) + ","
+                    + rs.getString(8) + "," + rs.getString(9) + "," + rs.getString(10) + "\n");
+                if (!"ESTABLISHED".equals(rs.getString(1))) {
+                  if (!"TIME-WAIT".equals(rs.getString(1))) {
+                    badCount++;
+                  }
+                }
+              }
+              rs.close();
+
+              retryCount = 0;
+            } catch (Exception e) {
+              String message = e.toString(); 
+              if (retryCount > 1 && message.indexOf("Read timed out") >= 0) {
+                retryCount--; 
+                sb.append("... Hit read time out running "+sql+" retryCount = "+retryCount); 
+              } else {
+                throw(e); 
+              }
             }
           }
           if (badCount > 2) {
@@ -1713,7 +1740,7 @@ getConnection -- test debug connection properties
           }
 
           try {
-            sql = "CALL QSYS2.QCMDEXC('DLYJOB 6')";
+            sql = "CALL QSYS2.QCMDEXC('DLYJOB 11')";
             stmt.executeUpdate(sql);
             sb.append("FAILED: No error from :" + sql + "\n");
             passed = false;
@@ -1729,8 +1756,8 @@ getConnection -- test debug connection properties
             }
           }
 
-          testConnection.close();
-
+          if (testConnection != null) testConnection.close();
+          initConnection.close(); 
         }
 
         assertCondition(passed, sb);

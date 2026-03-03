@@ -1,6 +1,6 @@
 
 /*
- * BIDI testcases originally from Gregory Brodsky
+ * BIDI testcases 
  *
  * To adapt for use in our testbucket, the following changes were made.
  *
@@ -16,9 +16,11 @@
 
 
 
-package test;
+package test.JD.BIDI;
 
 import com.ibm.as400.access.*;
+
+import test.BidiEngineWrapper;
 
 public class JDBIDITestBidiTransform {
 

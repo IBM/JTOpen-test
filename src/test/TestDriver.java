@@ -1215,35 +1215,43 @@ public abstract class TestDriver implements TestDriverI, Runnable,
     out_.println(RUN_COMPLETED); 
     out_.flush(); 
     // Check to see if there is an extra AS400 Read Daemon thread.  If so, call System.exit to make sure the test ends. 
+    int count = threadGroupHasAS400ReadDaemon(getRootThreadGroup(), out_);
+    if (count > 0) {
+      out_.println("Calling System.exit(0) because "+count+" AS400ReadDaemon found"); 
+      System.exit(0); 
+      
+    }
+  }
+  
+  static ThreadGroup getRootThreadGroup()  {
     ThreadGroup rootThreadGroup = Thread.currentThread().getThreadGroup();
     ThreadGroup parentThreadGroup = rootThreadGroup.getParent(); 
     while (parentThreadGroup != null) {
       rootThreadGroup = parentThreadGroup; 
       parentThreadGroup = rootThreadGroup.getParent(); 
     }
-    if (threadGroupHasAS400ReadDaemon(rootThreadGroup, out_)) {
-      out_.println("Calling System.exit(0) because AS400ReadDaemon found"); 
-      System.exit(0); 
-      
-    }
-    
-    
+    return rootThreadGroup; 
   }
 
-  private boolean threadGroupHasAS400ReadDaemon(ThreadGroup threadGroup, PrintWriter out) {
+  public static int countAS400ReadDeamon(PrintWriter out_) {
+    int count = threadGroupHasAS400ReadDaemon(getRootThreadGroup(), out_);
+    return count; 
+  }
+  
+  static int threadGroupHasAS400ReadDaemon(ThreadGroup threadGroup, PrintWriter out) {
     int threadCount = threadGroup.activeCount(); 
-    boolean found = false; 
+    int foundCount = 0; 
     Thread[] threadList = new Thread[threadCount+10];
     threadCount = threadGroup.enumerate(threadList );
     for (int i = 0; i < threadCount; i++) { 
       String  threadName = threadList[i].getName(); 
       if (threadName.indexOf("AS400 Read Daemon")>=0) {
          out.println("Found "+threadName); 
-        found =  true; 
+        foundCount++; 
       }
     }
     
-    return found;
+    return foundCount;
   }
 
   /**

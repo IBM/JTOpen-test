@@ -1,5 +1,5 @@
 /*
- * BIDI testcases originally from Gregory Brodsky
+ * BIDI testcases 
  *
  * To adapt for use in our testbucket, the following changes were made.
  *
@@ -14,17 +14,20 @@
  *  
  */ 
 
-package test;
+package test.JD.BIDI;
 
 import java.sql.*;
 
 import com.ibm.as400.access.*;
 
+import test.BidiEngineWrapper;
+import test.PasswordVault;
+
 
 public class JDBIDITestBidiMetaData extends JDBIDITestBidiConnection {
 
-	public JDBIDITestBidiMetaData() {
-		super();
+	public JDBIDITestBidiMetaData(Connection pwrCon) {
+		super(pwrCon);
 		metadata_reordering = true;  		
 		//package_ccsid = "13488";
 	}
@@ -33,7 +36,7 @@ public class JDBIDITestBidiMetaData extends JDBIDITestBidiConnection {
 	 * @param args
 	 */
 	public static void main(String[] args) {		
-		JDBIDITestBidiMetaData t = new JDBIDITestBidiMetaData();
+		JDBIDITestBidiMetaData t = new JDBIDITestBidiMetaData(null);
 		
 		if(args.length < 3){
 			//errorLog_.append("\nUSAGE: java TestFullSuite <host> <username> <password>");

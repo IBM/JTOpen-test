@@ -320,7 +320,7 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase {
     StringBuffer failMessage = new StringBuffer();
     boolean passed = true;
     try {
-      int expectedCount = 118;
+      int expectedCount = 120;
       AS400JDBCDataSourceBeanInfo bi = new AS400JDBCDataSourceBeanInfo();
       PropertyDescriptor[] pd = bi.getPropertyDescriptors();
       if (pd.length != expectedCount) {
@@ -456,15 +456,20 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase {
       propertyTypes.put("tlsTruststore", "java.lang.String");
       propertyTypes.put("tlsTruststorePassword", "java.lang.String");
       propertyTypes.put("useSock5", "boolean");
+      propertyTypes.put("virtualThreads", "boolean");
+      propertyTypes.put("trimCharFields", "boolean");
 
       for (int i = 0; i < pd.length; i++) {
         String value = (String) propertyTypes.get(pd[i].getName());
+        String returnPropertyType = pd[i].getPropertyType().toString();
+        String propertyName = pd[i].getName();
         if (!pd[i].getPropertyType().getName().equals(value)) {
-          if ("password".equals(pd[i].getName()) && "java.lang.String".equals(pd[i].getPropertyType().toString())) {
-            /* valid case */
+          if (("password".equals(propertyName)) && ("java.lang.String".equals(returnPropertyType))) {
+            failMessage.append("Valid properties types returned: i[" + i + "] (" + propertyName + ") "
+                + returnPropertyType + " should be " + value + "\n");
           } else {
-            failMessage.append("Wrong property types returned: [" + i + "] (" + pd[i].getName() + ") "
-                + pd[i].getPropertyType().toString() + " should be " + value + "\n");
+            failMessage.append("Wrong property types returned: i[" + i + "] (" + propertyName + ") "
+                + returnPropertyType + " should be " + value + "\n");
             passed = false;
           }
         }
@@ -594,6 +599,8 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase {
       getPropertyMethods.put("tlsTruststore", "getTlsTruststore");
       getPropertyMethods.put("tlsTruststorePassword", "getTlsTruststorePassword");
       getPropertyMethods.put("useSock5", "isUseSock5");
+      getPropertyMethods.put("virtualThreads", "isVirtualThreads");
+      getPropertyMethods.put("trimCharFields", "isTrimCharFields");
 
       for (int i = 0; i < pd.length; i++) {
         if (pd[i].getName().equals("password")) // password.
@@ -750,6 +757,8 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase {
       setPropertyMethods.put("tlsTruststore", "setTlsTruststore");
       setPropertyMethods.put("tlsTruststorePassword", "setTlsTruststorePassword");
       setPropertyMethods.put("useSock5", "setUseSock5");
+      setPropertyMethods.put("virtualThreads", "setVirtualThreads");
+      setPropertyMethods.put("trimCharFields", "setTrimCharFields");
 
       Properties setPropertyMethods2 = new Properties();
       setPropertyMethods2.put("toolboxTrace", "setToolboxTrace");
@@ -966,6 +975,9 @@ public class AS400JDBCDataSourceBeanInfoTestcase extends Testcase {
       propertyShortDescs.put("tlsTruststorePassword",
           "Specifies the password associated with the configured TLS truststore.");
       propertyShortDescs.put("useSock5", "Specifies that Socks5 should be used for the proxy support.");
+      propertyShortDescs.put("virtualThreads", "Specifies that virtual threads should be used when available.");
+      propertyShortDescs.put("trimCharFields", "Specifies whether to remove trailing spaces from char fields.");
+      
 
       for (int i = 0; i < pd.length; i++) {
 

@@ -638,7 +638,7 @@ public class JDDSProperties extends JDTestcase {
         String user = JDReflectionUtil.callMethod_S(ds, "getUser");
         String expectedUser = "";
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-          if (JTOpenTestEnvironment.isOS400) {
+          if (JTOpenTestEnvironment.isOS400 && !JTOpenTestEnvironment.isOS400open) {
             expectedUser = System.getProperty("user.name").toUpperCase();
           }
         }

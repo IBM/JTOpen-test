@@ -87,7 +87,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 107;  // virtual threads
+      NUMBER_OF_PROPERTIES = 108;  // trim char fields
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();
@@ -649,5 +649,6 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
   public void Var062() { if (checkToolbox()) testProperty("tls truststore password","p@ssw0rd");}
   public void Var063() { if (checkToolbox()) testProperty("use sock5","true"); }
   public void Var064() { if (checkToolbox()) testProperty("virtual threads","true"); }
+  public void Var065() { if (checkToolbox()) testProperty("trim char fields","true"); }
 
 }

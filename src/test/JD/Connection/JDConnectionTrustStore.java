@@ -169,7 +169,6 @@ public class JDConnectionTrustStore extends JDTestcase {
    **/
   public void Var001() {
     if (checkToolbox()) {
-      if (checkNotNative()) { 
       try {
         boolean passed = true;
         sb.setLength(0);
@@ -195,7 +194,6 @@ public class JDConnectionTrustStore extends JDTestcase {
         assertCondition(passed, sb);
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-      }
       }
     }
   }
@@ -234,7 +232,7 @@ public class JDConnectionTrustStore extends JDTestcase {
    * tls truststore / tls truststore Verify that *ANY / not setfails
    **/
   public void Var003() {
-    if (checkToolbox() && checkNotNative()) {
+    if (checkToolbox() ) {
       String[] expectedErrorMessages = {
           "The filename, directory name, or volume label syntax is incorrect",
           "A file or directory in the path name does not exist.",

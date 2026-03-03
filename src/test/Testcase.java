@@ -163,11 +163,15 @@ public abstract class Testcase {
   protected boolean skipCleanup;
   private String lockDtaaraName_ = null;
   private Exception lockDtaaraLocation_ = null;
+  private static boolean checkReadDaemon_ = false ;
 
   protected static boolean debug = false;
   static { 
     if (System.getProperty("test.Testcase.debug") != null) { 
       debug = true; 
+    }
+    if (System.getProperty("test.Testcase.checkReadDaemon") != null) { 
+      checkReadDaemon_ = true; 
     }
   }
   // Constant used in stringToBytes()
@@ -1736,7 +1740,10 @@ public abstract class Testcase {
       System.out.println("Invalid variation number " + variation + ".");
       return;
     }
-
+    int beforeCount = 0;
+    if (checkReadDaemon_) { 
+      beforeCount = TestDriver.countAS400ReadDeamon(output_);
+    }
     Throwable e = null;
     try {
       String temp = "000" + variation;
@@ -1784,7 +1791,12 @@ public abstract class Testcase {
     } catch (NoSuchMethodException e2) {
       e = e2;
     }
-
+    if (checkReadDaemon_) { 
+      int afterCount = TestDriver.countAS400ReadDeamon(output_);
+      if (afterCount > beforeCount) {
+        System.out.println("Warning:  Testcase added AS400 Read Daemon #"+(afterCount - beforeCount));
+      }
+    }   
     if (e != null) {
       outputVariationStatus(variation, NOT_ATTEMPTED, e.toString());
       System.out.println("Error invoking variation " + variation + ".");

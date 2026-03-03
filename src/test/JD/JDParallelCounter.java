@@ -56,6 +56,7 @@ public class JDParallelCounter implements AutoCloseable{
   String filename_ = null; 
   String name_; 
   Statement statement_; 
+  Connection connection_; 
   boolean closeStatement_ = false; 
   JDDataAreaLock dataAreaLock_ ; 
   boolean cleanupSet_ = false; 
@@ -66,6 +67,7 @@ public class JDParallelCounter implements AutoCloseable{
   public JDParallelCounter(Connection c, String name) throws Exception {
     filename_ = name; 
     name_ = name; 
+    connection_ = c; 
     statement_ = c.createStatement();
     closeStatement_ = true; 
     name = name.replace("/","X").replace(".","X").replace("\"","X");
@@ -96,12 +98,12 @@ public class JDParallelCounter implements AutoCloseable{
     /* Wait for a long time if there is much contention */ 
     statement_.executeUpdate("CALL QSYS2.QCMDEXC('CHGJOB DFTWAIT(3600)')"); 
     
-    String sql = "SELECT * FROM QSYS2.SYSTABLES where TABLE_NAME='"+baseFilename+"' and TABLE_SCHEMA='"+baseCollection+"' " ;
+    String sql = "SELECT * FROM QSYS2.SYSCOLUMNS where TABLE_NAME='"+baseFilename+"' and TABLE_SCHEMA='"+baseCollection+"' AND COLUMN_NAME='STACKTRACE'" ;
     ResultSet rs = statement_.executeQuery(sql); 
     if (!rs.next()) { 
       rs.close(); 
       
-      sql =  "CREATE OR REPLACE TABLE "+filename_+" (LOCKJOBNAME VARCHAR(80), STARTTIME TIMESTAMP) ON REPLACE PRESERVE ROWS"; 
+      sql =  "CREATE OR REPLACE TABLE "+filename_+" (LOCKJOBNAME VARCHAR(80), STARTTIME TIMESTAMP,  STACKTRACE CLOB(8192)) ON REPLACE PRESERVE ROWS"; 
       System.out.println("Running "+sql); 
       statement_.executeUpdate(sql); 
       
@@ -112,32 +114,30 @@ public class JDParallelCounter implements AutoCloseable{
     } else {
       rs.close(); 
     }
-
+    int retryCount = 60; 
     /* If the jobname is CLEANUP, then cleanup is in progress. */ 
     /* Unlock the data area and wait for it to become positive.  */
-    /* Once positive reaquire the data area */
+    /* Once positive reacquire the data area */
     sql = "SELECT count(*) FROM "+filename_+" WHERE LOCKJOBNAME='CLEANUP'";
     rs = statement_.executeQuery(sql); 
     rs.next(); 
     int count = rs.getInt(1); 
-    while (count > 0) {
-      dataAreaLock_.unlock("JDSerializeFile", null);
-      Thread.sleep(1000); 
+    while ((count > 0) && (retryCount > 0)) {
       rs.close(); 
+      dataAreaLock_.unlock("JDSerializeFile", null);
+      System.out.println("WAITING FOR CLEANUP TO COMPLETED USING :"+sql); 
+      Thread.sleep(5000); 
+      dataAreaLock_.lock("JDSerializeFile", 3600);
       rs = statement_.executeQuery(sql); 
       rs.next(); 
       count = rs.getInt(1); 
-      dataAreaLock_.lock("JDSerializeFile", 3600);
+      retryCount--; 
     }
     rs.close(); 
     
-
-    
-    
     /* Register the job */
-    Timestamp startTimestamp = new Timestamp(System.currentTimeMillis()); 
-    PreparedStatement ps = c.prepareStatement("INSERT INTO "+filename_+" VALUES(QSYS2.JOB_NAME,?)");
-    ps.setTimestamp(1,startTimestamp); 
+    PreparedStatement ps = c.prepareStatement("INSERT INTO "+filename_+"(STACKTRACE,LOCKJOBNAME,STARTTIME) VALUES(?,QSYS2.JOB_NAME,CURRENT TIMESTAMP)");
+    ps.setString(1, getCallString()); 
     ps.executeUpdate(); 
     ps.close(); 
     c.commit(); 
@@ -155,6 +155,20 @@ public class JDParallelCounter implements AutoCloseable{
   public String getName() { 
     return name_; 
   }
+  
+  private String getCallString() {
+    String stackString = "";
+    StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace(); 
+    int stackTraceLength = stackTrace.length;
+    int i = 2;
+    while( (i < 10) &&  ( i < stackTraceLength)) {
+      StackTraceElement element = stackTrace[i]; 
+      stackString+= element.getClassName()+"."+element.getMethodName()+":"+element.getLineNumber()+"\n"; 
+      i++; 
+    }
+    return stackString;
+  }
+
   
   @SuppressWarnings("resource")
   /** determine if cleanup should be called.  
@@ -177,8 +191,11 @@ public class JDParallelCounter implements AutoCloseable{
       rs.next();
       int count = rs.getInt(1);
       if (count == 1) {
-        sql = "INSERT INTO " + filename_ + " VALUES('CLEANUP',CURRENT TIMESTAMP)";
-        statement_.execute(sql);
+        sql = "INSERT INTO " + filename_ + "(LOCKJOBNAME,STARTTIME,STACKTRACE) VALUES('CLEANUP',CURRENT TIMESTAMP,?)";
+        
+        PreparedStatement ps = connection_.prepareStatement(sql); 
+        ps.setString(1,getCallString()); 
+        ps.executeUpdate(); 
         cleanupSet_ = true;
         cleanup = true;
       }
@@ -242,6 +259,7 @@ public class JDParallelCounter implements AutoCloseable{
        System.out.println("TEST 1 : Simple"); 
        System.out.println("  creating counter"); 
        JDParallelCounter counter1= new JDParallelCounter(c1, tablename);
+       viewTable(c1, tablename); 
        System.out.println("  calling doCleanup"); 
        boolean doCleanup = counter1.doCleanup();
        if (!doCleanup) { 
@@ -309,6 +327,19 @@ public class JDParallelCounter implements AutoCloseable{
        e.printStackTrace();
      }
      
+  }
+
+
+  private static void viewTable(Connection c1, String tablename) throws SQLException {
+    System.out.println("Viewing table"); 
+    Statement s1 = c1.createStatement(); 
+    ResultSet rs1 = s1.executeQuery("SELECT * FROM "+tablename); 
+    while (rs1.next()) {
+      System.out.println(rs1.getString(1)+","+rs1.getString(2)+","+rs1.getString(3)); 
+    }
+    rs1.close(); 
+    s1.close(); 
+    
   }
 
 }
