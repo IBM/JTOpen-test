@@ -1,6 +1,6 @@
 
 /*
- * BIDI testcases originally from Gregory Brodsky
+ * BIDI testcases 
  *
  * To adapt for use in our testbucket, the following changes were made.
  *
@@ -15,12 +15,15 @@
  */ 
 
 
-package test;
+package test.JD.BIDI;
 
 import java.sql.*;
 import java.util.Arrays;
 
 import com.ibm.as400.access.*;
+
+import test.BidiEngineWrapper;
+import test.PasswordVault;
 
 
 public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
@@ -63,14 +66,14 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 
 
 	
-	public JDBIDITestBidiConnection() {
-		super();	  
+	public JDBIDITestBidiConnection(Connection pwrCon) {
+		super(pwrCon);	  
 		metadata_reordering = false;
 		driverUrlBase="jdbc:as400://"; 
 	}
 
-	public JDBIDITestBidiConnection(String driverUrlBase, String host, String username, String password) {
-		super();	  
+	public JDBIDITestBidiConnection(Connection pwrCon, String driverUrlBase, String host, String username, String password) {
+		super(pwrCon);	  
 		metadata_reordering = false;  
 		this.host = host;
 		this.username = username;
@@ -92,7 +95,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 		
 		
 
-		JDBIDITestBidiConnection t = new JDBIDITestBidiConnection("jdbc:as400://", args[0], args[1], args[2]);
+		JDBIDITestBidiConnection t = new JDBIDITestBidiConnection(null, "jdbc:as400://", args[0], args[1], args[2]);
 		
 		t.use_complex_strings = true;
 		t.TestString = t.TestString1;
@@ -257,11 +260,9 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 		Connection db2Conn1 = getConnection(k);		
 		Delete(db2Conn1);
 		st = db2Conn1.createStatement();		
-		CallableStatement cst;
+		PreparedStatement cst;
 		for(j = 0; j < TestString.length; j++ ){
-		//	st.executeUpdate("insert into "+table_name+" values("+i+", "+j+", '" 
-		//			+ duplicateApostrophs(TestString[j]) + "')");
-			cst =  db2Conn1.prepareCall("insert into "+table_name+" values(?, ?, ?)");	    		
+		cst =  doPrepare(db2Conn1, "insert into "+table_name+" values(?, ?, ?)");	    		
     		cst.setInt(1, i); 
     		cst.setInt(2, j); 
     		cst.setString(3, TestString[j]);
@@ -301,7 +302,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 					if(!limitation)
 						limitation = BidiEngineWrapper.bidiTransform(value, k, i).equals(BidiEngineWrapper.bidiTransform(probe, k, i));
 													
-					limitation = limitation || BidiEngineWrapper.checkRoundTripLimitation(value, probe);//Brodsky1
+					limitation = limitation || BidiEngineWrapper.checkRoundTripLimitation(value, probe);
 					//
 					
 					
@@ -361,17 +362,22 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 		db2Conn.close();
 
 		for(i = 4; i<12; i++ ){
-			db2Conn = getConnection(i);
-			st = db2Conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			resultSet = st.executeQuery("SELECT * FROM "+table_name);
-			while(resultSet.next()){
-				i1 = resultSet.getInt(1);
-				j = resultSet.getInt(2);				
-				if(i == i1){
-					resultSet.updateString(3, TestString[j]);
-					resultSet.updateRow();
-				}													
-			}
+                  db2Conn = getConnection(i);
+                  st = db2Conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                  if (table_name.indexOf("BIDIC62235") < 0) {
+                    resultSet = st.executeQuery("SELECT * FROM " + table_name);
+                    while (resultSet.next()) {
+                      i1 = resultSet.getInt(1);
+                      j = resultSet.getInt(2);
+                      if (i == i1) {
+                        resultSet.updateString(3, TestString[j]);
+                        resultSet.updateRow();
+                      }
+                    }
+                    resultSet.close();
+                  } else {
+                    /* resultSet.updateRow fails with SQL syntax error for 62235 */
+                  }
 			st.close();
 			db2Conn.close();			
 		}		
@@ -395,7 +401,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 				&& !AS400BidiTransform.isVisual(user_profile_ccsid1)){
 			//they are different and both logical
 			errorLog_.append("\nNot supported");
-			//Brodsky? return true;
+			
 		}
 		
 		Delete();	
@@ -403,11 +409,21 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 			db2Conn = getConnection(i);		
 			for(j = 0; j < TestString.length; j++ ){
 				
-				st = db2Conn.createStatement();
-				String statement = "insert into "+table_name+" values("+i+", "+j+", '" 
-				+ duplicateApostrophs(TestString[j]) + "')"; 
-				st.executeUpdate(statement);
-				st.close();
+				// The question mark does not parse some CCSID
+				String sql = "insert into "+table_name+" values("+i+", "+j+", ?)"; 
+				PreparedStatement ps = null;
+				try { 
+				  ps = doPrepare(db2Conn, sql);
+				 
+				
+				  ps.setString(1,TestString[j]); 
+				  ps.executeUpdate();
+				} catch (Exception e) {
+				  System.out.println("Exception "+e+" for SQL:"+sql); 
+				  throw e;
+				} finally { 
+				  if (ps != null) ps.close(); 
+				}
 			}
 			db2Conn.close();
 		}
@@ -415,26 +431,45 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 	}
 
 	
-	boolean Testcase_CallableInsert() throws SQLException {				
-		CallableStatement st;
-		int i,j;
-		errorLog_.append("\nTest INSERT using prepareCall(), with CallableStatement");
-		Delete();	
-		for(i = 4; i < 12; i++ ){ //for all bidi options...			
-			db2Conn = getConnection(i);
-			for(j = 0; j < TestString.length; j++ ){								
-				st =  db2Conn.prepareCall("insert into "+table_name+" values(?, ?, ?)");	    		
-	    		st.setInt(1, i); 
-	    		st.setInt(2, j); 
-	    		st.setString(3, TestString[j]);
-	    		st.executeUpdate();				
-	    		
-				st.close();				
-			}
-			db2Conn.close();
-		}
-		return GetVisualResult(false);
-	}
+        private PreparedStatement doPrepare(Connection conn, String sql) throws SQLException {
+          PreparedStatement ps = null; 
+          try { 
+            ps = conn.prepareStatement(sql); 
+          } catch (SQLException sqlex) { 
+            String message = sqlex.toString(); 
+            // If syntax error because of bidi transformation
+            // try the pwr connectoin
+            if (message.indexOf("Valid tokens") >= 0) {
+              ps = pwrCon_ .prepareStatement(sql); 
+            } else {
+              throw sqlex; 
+            }
+          }
+          return ps ;
+        }
+
+        boolean Testcase_CallableInsert() throws SQLException {
+          PreparedStatement st;
+          int i, j;
+          errorLog_.append("\nTest INSERT using prepareCall(), with CallableStatement");
+          Delete();
+          for (i = 4; i < 12; i++) { // for all bidi options...
+            db2Conn = getConnection(i);
+            for (j = 0; j < TestString.length; j++) {
+              st = doPrepare(db2Conn, "insert into " + table_name + " values(?, ?, ?)");
+              // Must use pwrCon_ as bidi switches the ? around when translating from
+              // UTF-16 to the job CCSId 
+              st.setInt(1, i);
+              st.setInt(2, j);
+              st.setString(3, TestString[j]);
+              st.executeUpdate();
+
+              st.close();
+            }
+            db2Conn.close();
+          }
+          return GetVisualResult(false);
+        }
 	
 	boolean Testcase_PreparedInsert() throws SQLException {				
 		PreparedStatement st;
@@ -445,7 +480,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 			db2Conn = getConnection(i);
 			for(j = 0; j < TestString.length; j++ ){								
 				
-				st =  db2Conn.prepareStatement("insert into "+table_name+" values(?, ?, ?)");	    		
+				st =  doPrepare(db2Conn, "insert into "+table_name+" values(?, ?, ?)");	    		
 	    		st.setInt(1, i); 
 	    		st.setInt(2, j); 
 	    		st.setString(3, TestString[j]);
@@ -459,7 +494,7 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 	
 	boolean Testcase_CompareInserts() throws SQLException {	
 		Statement st1;
-		CallableStatement st2;
+		PreparedStatement st2;
 		PreparedStatement st3;
 		int i,j;
 		
@@ -488,14 +523,14 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 						+ duplicateApostrophs(TestString[j]) + "')");
 				st1.close();
 								
-				st2 =  db2Conn.prepareCall("insert into "+table_name+" values(?, ?, ?)");	    		
+				st2 =  doPrepare(db2Conn, "insert into "+table_name+" values(?, ?, ?)");	    		
 	    		st2.setInt(1, i); 
 	    		st2.setInt(2, j); 
 	    		st2.setString(3, TestString[j]);
 	    		st2.executeUpdate();					    		
 				st2.close();		
 				
-				st3 =  db2Conn.prepareStatement("insert into "+table_name+" values(?, ?, ?)");	    		
+				st3 =  doPrepare(db2Conn, "insert into "+table_name+" values(?, ?, ?)");	    		
 	    		st3.setInt(1, i); 
 	    		st3.setInt(2, j); 
 	    		st3.setString(3, TestString[j]);
@@ -566,11 +601,11 @@ public class JDBIDITestBidiConnection extends JDBIDITestBidiBasic {
 			if(!check)				errorLog_.append((limitation ? " (LIMITATION)" : "(error)"));
 			
 		/*
-			//Brodsky start
+			
 			etalon = BidiEngineWrapper.bidiTransform(TestString[j], 10, host_ccsid_type);
 			etalon = "\u202d" + etalon + "\u202c";
 			errorLog_.append("\t Source \u202d" + TestString[j] + "\u202c\tResult " + value +"\tCompare "+ etalon + (etalon.equals(value) ?  " CORRECT" : " WRONG"));			
-			//Brodsky end						
+								
 		*/	
 			errorLog_.append("\n");
 		}

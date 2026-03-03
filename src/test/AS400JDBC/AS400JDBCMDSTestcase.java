@@ -2981,7 +2981,6 @@ public class AS400JDBCMDSTestcase extends Testcase
                 passed = false; 
                  message = "No RS from query"; 
             }
-                failed("Unexpected results.");
             rs.close(); 
             s.close(); 
             c.close();
@@ -3102,8 +3101,9 @@ public class AS400JDBCMDSTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
 
             Statement s = c.createStatement();
-            s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-
+            ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+            rs.close();         
+            s.close(); 
 	    writer_.flush(); 
             assertCondition (checkLog("password is set") &&
                              checkLog("connection created"));
@@ -3348,8 +3348,9 @@ public class AS400JDBCMDSTestcase extends Testcase
         {
             AS400JDBCManagedDataSource ds = new AS400JDBCManagedDataSource();
             ds.setLogWriter(null);
-
-            assertCondition(ds.getLogWriter() == null);
+            PrintWriter writer = ds.getLogWriter(); 
+            if (writer != null) writer.close(); 
+            assertCondition(writer == null);
         }
         catch (Exception e)
         {
@@ -3447,7 +3448,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next() &&
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+            if (rsNext &&
                 jndiDataSource.getServerName().equals(serverName) &&
                 /* jndiDataSource.getDatabaseName().equals(databaseName) && */ 
                 jndiDataSource.getDescription().equals(description))
@@ -3515,7 +3520,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next())
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+            if (rsNext)
                 succeeded();
             else
                 failed("Unexpected results.");
@@ -3581,7 +3590,12 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next() &&
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+
+            if (rsNext &&
                 jndiDataSource.getServerName().equals(systemObject_.getSystemName()) &&
                 jndiDataSource.getUser().equals(systemObject_.getUserId()))
                 succeeded();
@@ -3661,7 +3675,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next() &&
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+            if (rsNext &&
                 jndiDataSource.getServerName().equals(systemObject_.getSystemName()) &&
                 jndiDataSource.getUser().equals(systemObject_.getUserId()))
                 succeeded();
@@ -3731,7 +3749,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next() &&
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+            if (rsNext &&
                 jndiDataSource.getDateFormat().equals(dateFormat) &&
                 jndiDataSource.isExtendedDynamic())
                 succeeded();
@@ -3771,7 +3793,7 @@ public class AS400JDBCMDSTestcase extends Testcase
    char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
             ds.setPassword(charPassword);
    PasswordVault.clearPassword(charPassword);
-            ds.getConnection();
+            Connection c = ds.getConnection();
 
             ds.setAccess("all");
             ds.setBigDecimal(true);
@@ -3816,9 +3838,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             ds.setTrace(false);
             ds.setTransactionIsolation("read committed");
             ds.setTranslateBinary(false);
-
-            assertCondition(ds.getLogWriter() == writer);
+            c.close(); 
+            PrintWriter outWriter = ds.getLogWriter();
+            assertCondition( outWriter == writer);
             writer.close();
+            outWriter.close(); 
         }
         catch (Exception e)
         {
@@ -3897,7 +3921,11 @@ public class AS400JDBCMDSTestcase extends Testcase
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 
-            if (rs.next() &&
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            connection.close();
+            if (rsNext &&
                 jndiDataSource.getDateFormat().equals(dateFormat) &&
                 jndiDataSource.isExtendedDynamic())
                 succeeded();
@@ -4049,8 +4077,11 @@ public class AS400JDBCMDSTestcase extends Testcase
 
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-
-            if (rs != null)
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            c.close();
+            if (rsNext)
                 succeeded();
             else
                 failed("Unexpected results.");
@@ -4136,7 +4167,8 @@ public class AS400JDBCMDSTestcase extends Testcase
 					     "garfield".toCharArray());
 	    ds.setPrompt(false);
 
-            ds.getConnection("garfield", "garfield".toCharArray());
+            Connection c = ds.getConnection("garfield", "garfield".toCharArray());
+            c.close(); 
             failed("Did not throw exception");           
         }
         catch (Exception e)
@@ -4159,7 +4191,8 @@ public class AS400JDBCMDSTestcase extends Testcase
                                                              "garfield".toCharArray());
             ds.setPrompt(false);
 
-            ds.getConnection();
+            Connection c = ds.getConnection();
+            c.close(); 
             failed("Did not throw exception");           
         }
         catch (Exception e)
@@ -4184,7 +4217,8 @@ public class AS400JDBCMDSTestcase extends Testcase
             ds.setPassword("garfield");
             ds.setPrompt(false);
 
-            ds.getConnection("garfield", "garfield".toCharArray());
+            Connection c =  ds.getConnection("garfield", "garfield".toCharArray());
+            c.close(); 
             failed("Did not throw exception");           
         }
         catch (Exception e)
@@ -4208,7 +4242,8 @@ public class AS400JDBCMDSTestcase extends Testcase
             ds.setPassword("garfield");
             ds.setPrompt(false);
 
-            ds.getConnection();
+            Connection c = ds.getConnection();
+            c.close(); 
             failed("Did not throw exception");           
         }
         catch (Exception e)
@@ -4297,8 +4332,11 @@ public class AS400JDBCMDSTestcase extends Testcase
 
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
-
-            if (rs != null)
+            boolean rsNext = rs.next(); 
+            rs.close(); 
+            s.close(); 
+            c.close();
+            if (rsNext)
                 succeeded();
             else
                 failed("Unexpected results.");
@@ -4563,9 +4601,10 @@ public class AS400JDBCMDSTestcase extends Testcase
    PasswordVault.clearPassword(charPassword);
 
             Statement s = c.createStatement();
-            s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
+            ResultSet rs = s.executeQuery("SELECT * FROM QIWS.QCUSTCDT");
 	    writer_.flush();
-
+	    rs.close(); 
+	    s.close(); 
             assertCondition (checkLog("password is set") &&     
                              checkLog("connection created"));   
         }
@@ -5392,6 +5431,7 @@ public class AS400JDBCMDSTestcase extends Testcase
      Connection c = null;
      Connection c2 = null;
      AS400JDBCManagedDataSource mds0 = null;
+     AS400JDBCManagedDataSource ds = null; 
 
      try
      {
@@ -5430,7 +5470,7 @@ public class AS400JDBCMDSTestcase extends Testcase
        mds0.setDataSourceName("mydatasource"); // point it to cpds0
        ctx.rebind("StatementPoolingDataSource", mds0);
 
-       AS400JDBCManagedDataSource ds = (AS400JDBCManagedDataSource)ctx.lookup("StatementPoolingDataSource");
+       ds  = (AS400JDBCManagedDataSource)ctx.lookup("StatementPoolingDataSource");
 
        // Get a connection from the pool.
        c = ds.getConnection(systemObject_.getUserId(), charPassword);
@@ -5459,6 +5499,7 @@ public class AS400JDBCMDSTestcase extends Testcase
        if (mds0 != null) {
          try { mds0.closePool(); } catch (Exception e) { e.printStackTrace(); }
        }
+       if (ds != null) ds.closePool(); 
      }
    }
 
@@ -5480,7 +5521,7 @@ public class AS400JDBCMDSTestcase extends Testcase
      Connection c3 = null;
      AS400JDBCManagedDataSource mds0 = null;
      boolean ok = true;
-
+     AS400JDBCManagedDataSource ds = null; 
      try
      {
        AS400JDBCManagedConnectionPoolDataSource cpds0 = new AS400JDBCManagedConnectionPoolDataSource();
@@ -5517,7 +5558,9 @@ public class AS400JDBCMDSTestcase extends Testcase
        mds0.setDataSourceName("mydatasource"); // point it to cpds0
        ctx.rebind("StatementPoolingDataSource", mds0);
 
-       AS400JDBCManagedDataSource ds =(AS400JDBCManagedDataSource)ctx.lookup("StatementPoolingDataSource");
+       ds =(AS400JDBCManagedDataSource)ctx.lookup("StatementPoolingDataSource");
+
+       charPassword = PasswordVault.decryptPassword(encryptedPassword_);
 
        // Get a connection from the pool.
        c = ds.getConnection(systemObject_.getUserId(), charPassword);
@@ -5548,7 +5591,7 @@ public class AS400JDBCMDSTestcase extends Testcase
        c = null; 
 
        c3 = ds.getConnection(systemObject_.getUserId(), charPassword);
-   PasswordVault.clearPassword(charPassword);
+       PasswordVault.clearPassword(charPassword);
 
        if (ok && c3 != null)
          succeeded();
@@ -5572,6 +5615,9 @@ public class AS400JDBCMDSTestcase extends Testcase
        }
        if (mds0 != null) {
          try { mds0.closePool(); } catch (Exception e) { e.printStackTrace(); }
+       }
+       if (ds != null) { 
+         ds.closePool(); 
        }
      }
    }

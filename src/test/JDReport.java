@@ -1673,6 +1673,16 @@ public class JDReport {
   
   public static void refreshRawFile(String SCHEMA, String rawfile, Connection connection, PrintStream writer, 
       String outfile, StringBuffer outputSb, boolean resetRegression, long regressionEarliestTime, Vector<String> newRunitOut) throws SQLException, IOException { 
+    
+  boolean toolboxInitials = false; 
+  if (rawfile.endsWith("T") || 
+      rawfile.endsWith("U") || 
+      rawfile.endsWith("H") ||
+      rawfile.endsWith("I") ||
+      rawfile.endsWith("V") ||
+      rawfile.endsWith("5") ) {
+    toolboxInitials = true; 
+  }
   /* read the current list of inserted entries from rawfile */
   Hashtable<String, Hashtable<Timestamp, Timestamp>> insertedHashtable = new Hashtable<String, Hashtable<Timestamp, Timestamp>>();
 
@@ -1774,7 +1784,11 @@ public class JDReport {
                       } else {
                         if (resetRegression) {
                           if (newRunitOut != null) {
-                            newRunitOut.addElement(originalLine);
+                            if (toolboxInitials && (originalLine.indexOf("JDJSTPjdbc") >= 0)) {
+                                /* No longer run JDJSTPjdbc for toolbox */ 
+                            } else {
+                              newRunitOut.addElement(originalLine);
+                            }
                           }
                         }
                         boolean found = false;

@@ -3651,9 +3651,33 @@ public class JDDriverConnect extends JDTestcase {
 
 
 
-  
-  public void Var077() {    notApplicable();  }
-  public void Var078() {    notApplicable();  }
+  /* Connect with socket properties and PORT:  Test for https://github.com/IBM/JTOpen/issues/294 */ 
+  public void Var077() {
+    if (checkToolbox()) {
+      try {
+
+        String password = PasswordVault.decryptPasswordLeak(encryptedPassword_);
+
+        String url = "jdbc:as400:" + systemObject_.getSystemName() + ":8471;socket timeout=3000;user=" + userId_
+            + ";password=" + password;
+        Connection c = driver_.connect(url, null);
+        c.close();
+        url = "jdbc:as400:" + systemObject_.getSystemName() + ":8471;socket timeout=3000";
+        c = DriverManager.getConnection(url, userId_, password);
+
+        c.close();
+        assertCondition(true);
+      } catch (Exception e) {
+        failed(e);
+      }
+    }
+
+  }
+
+  public void Var078() {
+    notApplicable();
+  }
+
   public void Var079() {    notApplicable();  }
   public void Var080() {    notApplicable();  }
   public void Var081() {    notApplicable();  }

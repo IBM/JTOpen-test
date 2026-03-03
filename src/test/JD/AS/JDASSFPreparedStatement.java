@@ -101,6 +101,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
             + transactionalSocketProxyPair.getPortNumber1()
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1;"
             + "retryIntervalForClientReroute=1;"
+            + "tcp no delay=true;"
             + "clientRerouteAlternateServerName=localhost;clientRerouteAlternatePortNumber="
             + transactionalSocketProxyPair.getPortNumber2();
 
@@ -117,6 +118,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
             + autocommitSocketProxyPair.getPortNumber1()
             + ";date format=jis;time format=jis;"
             + "enableClientAffinitiesList=1;enableSeamlessFailover=1;"
+            + "tcp no delay=true;"
             + "retryIntervalForClientReroute=1;"
             + "clientRerouteAlternateServerName=localhost;clientRerouteAlternatePortNumber="
             + autocommitSocketProxyPair.getPortNumber2();
@@ -131,6 +133,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         url = "jdbc:as400:localhost:"
             + failSocketProxyPair.getPortNumber1()
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1;"
+            + "tcp no delay=true;"
             + "retryIntervalForClientReroute=1;"
             + "clientRerouteAlternateServerName=localhost;clientRerouteAlternatePortNumber="
             + failSocketProxyPair.getPortNumber2();
@@ -217,13 +220,15 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
         String url = "jdbc:as400:localhost:" + localPort
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
+            + ";tcp no delay=true"
             + ";retryIntervalForClientReroute=1";
 
         sb.append("Connecting to " + url + "\n");
         Connection connection = testDriver_.getConnection(url,
             systemObject_.getUserId(), encryptedPassword_);
-
-        for (int i = 0; i < 20; i++) {
+        // Limit test to 20 seconds 
+        long testEndMillis = System.currentTimeMillis() + 20000; 
+        for (int i = 0; i < 20 && System.currentTimeMillis() < testEndMillis; i++) {
           sb.append("Running query 1\n");
           PreparedStatement stmt = connection
               .prepareStatement("select * from sysibm.sysdummy1");
@@ -291,6 +296,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
         String url = "jdbc:as400:localhost:" + localPort
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
+            + ";tcp no delay=true"
             + ";retryIntervalForClientReroute=1";
 
         sb.append("Connecting to " + url + "\n");
@@ -378,6 +384,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
 
         String url = "jdbc:as400:localhost:" + localPort
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
+            + ";tcp no delay=true"
             + ";retryIntervalForClientReroute=1";
 
         sb.append("Connecting to " + url + "\n");
@@ -593,6 +600,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         proxyThread.start();
 
         String url = "jdbc:as400:localhost:" + localPort
+            + ";tcp no delay=true"
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
             + ";retryIntervalForClientReroute=1";
 
@@ -664,6 +672,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         proxyThread.start();
 
         String url = "jdbc:as400:localhost:" + localPort
+            + ";tcp no delay=true"
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
             + ";retryIntervalForClientReroute=1";
 
@@ -767,6 +776,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         proxyThread.start();
 
         String url = "jdbc:as400:localhost:" + localPort
+            + ";tcp no delay=true"
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
             + ";retryIntervalForClientReroute=1";
 
@@ -902,6 +912,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         proxyThread.start();
 
         String url = "jdbc:as400:localhost:" + localPort
+            + ";tcp no delay=true"
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
             + ";retryIntervalForClientReroute=1";
 
@@ -1046,6 +1057,7 @@ public class JDASSFPreparedStatement extends JDASTestcase {
         proxyThread.start();
 
         String url = "jdbc:as400:localhost:" + localPort
+            + ";tcp no delay=true"
             + ";enableClientAffinitiesList=1;enableSeamlessFailover=1"
             + ";retryIntervalForClientReroute=1";
 

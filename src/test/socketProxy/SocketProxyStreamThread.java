@@ -39,6 +39,7 @@ public class SocketProxyStreamThread extends Thread {
           int stuff = inputStream_.read();
           if (stuff >= 0) { 
              outputStream_.write(stuff);
+             outputStream_.flush(); 
              byteCount++; 
           } else {
             running = false; 

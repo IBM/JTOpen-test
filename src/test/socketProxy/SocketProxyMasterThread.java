@@ -75,6 +75,7 @@ public class SocketProxyMasterThread extends Thread {
 	printWriter_.println("SocketProxyMasterThread-port#" + localPort_+" at accept"); 
 	printWriter_.flush(); 
         socket = serverSocket_.accept();
+        socket.setTcpNoDelay(true);
 	boolean isEnabled;
 	synchronized(this) {
 	    isEnabled = enabled_; 

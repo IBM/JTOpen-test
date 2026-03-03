@@ -107,6 +107,7 @@ public class SocketProxy implements Runnable {
     printWriter_ = new PrintWriter(stringWriter_); 
     inputStream_ = null;
     serverSocket_ = new ServerSocket(proxyPort_);
+
     // 
     // Open the server socket
     // 

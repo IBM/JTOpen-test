@@ -462,7 +462,7 @@ public class AS400JDBCConnectionPoolDataSourceBeanInfoTestcase extends Testcase
       {
          AS400JDBCConnectionPoolDataSourceBeanInfo bi = new AS400JDBCConnectionPoolDataSourceBeanInfo();
          BeanInfo[] bis = bi.getAdditionalBeanInfo();
-         int expectedLength = 118; 
+         int expectedLength = 120; /* trim char fields */ 
          PropertyDescriptor[] pd = bis[0].getPropertyDescriptors();
          if (pd.length != expectedLength)  
          {
@@ -602,7 +602,8 @@ propertyTypes.put("stayAlive",  "int");
 propertyTypes.put("tlsTruststore",  "java.lang.String"); 
 propertyTypes.put("tlsTruststorePassword",  "java.lang.String"); 
 propertyTypes.put("useSock5",  "boolean"); 
-
+propertyTypes.put("virtualThreads",  "boolean"); 
+propertyTypes.put("trimCharFields", "boolean");
 
 for (int i = 0; i < pd.length; i++) {
   String propertyName=pd[i].getName();
@@ -713,7 +714,8 @@ for (int i = 0; i < pd.length; i++) {
 	 getPropertyMethods.put("queryTimeoutMechanism", "getQueryTimeoutMechanism");
 	 getPropertyMethods.put("queryReplaceTruncatedParameter", "getQueryReplaceTruncatedParameter"); 
 	 getPropertyMethods.put("portNumber", "getPortNumber"); 
-
+	
+	 
 getPropertyMethods.put("extendedMetadata","isExtendedMetadata"); 
 getPropertyMethods.put("keepAlive","isKeepAlive"); 
 getPropertyMethods.put("numericRangeError","getNumericRangeError");
@@ -742,6 +744,8 @@ getPropertyMethods.put("stayAlive","getStayAlive");
 getPropertyMethods.put("tlsTruststore","getTlsTruststore"); 
 getPropertyMethods.put("tlsTruststorePassword","getTlsTruststorePassword"); 
 getPropertyMethods.put("useSock5","isUseSock5"); 
+getPropertyMethods.put("virtualThreads","isVirtualThreads"); 
+getPropertyMethods.put("trimCharFields", "isTrimCharFields");
 
 
          for (int i=0; i< pd.length; i++)
@@ -908,7 +912,8 @@ setPropertyMethods.put("stayAlive","setStayAlive");
 setPropertyMethods.put("tlsTruststore","setTlsTruststore"); 
 setPropertyMethods.put("tlsTruststorePassword","setTlsTruststorePassword"); 
 setPropertyMethods.put("useSock5","setUseSock5"); 
-
+setPropertyMethods.put("virtualThreads","setVirtualThreads"); 
+setPropertyMethods.put("trimCharFields", "setTrimCharFields");
 
 Properties setPropertyMethods2 = new Properties()	 ;
 setPropertyMethods2.put("toolboxTrace","setToolboxTrace");
@@ -1089,6 +1094,8 @@ propertyShortDescs.put("useDrdaMetadataVersion","Specifies if the DRDA metadata 
          propertyShortDescs.put("tlsTruststore","Specifies a file to be used as the truststore for TLS connections."); 
          propertyShortDescs.put("tlsTruststorePassword","Specifies the password associated with the configured TLS truststore."); 
          propertyShortDescs.put("useSock5","Specifies that Socks5 should be used for the proxy support."); 
+         propertyShortDescs.put("virtualThreads","Specifies that virtual threads should be used when available."); 
+         propertyShortDescs.put("trimCharFields", "Specifies whether to remove trailing spaces from char fields.");
          
          for (int i=0; i< pd.length; i++)
          {

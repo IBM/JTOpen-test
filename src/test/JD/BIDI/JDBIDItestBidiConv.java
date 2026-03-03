@@ -1,5 +1,5 @@
 
-package test;
+package test.JD.BIDI;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 

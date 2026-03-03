@@ -1,5 +1,5 @@
 /*
- * BIDI testcases originally from Gregory Brodsky
+ * BIDI testcases 
  *
  * To adapt for use in our testbucket, the following changes were made.
  *
@@ -13,7 +13,7 @@
  *  
  */ 
 
-package test;
+package test.JD.BIDI;
 
 
 import java.io.IOException;
@@ -21,6 +21,9 @@ import java.sql.*;
 import java.util.Arrays;
 
 import com.ibm.as400.access.*;
+
+import test.JDNLSTest;
+import test.PasswordVault;
 
 public class JDBIDITestBidiBasic{
         static protected StringBuffer errorLog_ = new StringBuffer(); //for error messages
@@ -60,10 +63,13 @@ public class JDBIDITestBidiBasic{
 	 
 	 protected  boolean metadata_reordering = false;  
 
-	String driverUrlBase = "jdbc:as400://"; 
- 
-	 public JDBIDITestBidiBasic(){
+	String driverUrlBase = "jdbc:as400://";
 
+  protected Connection pwrCon_; 
+ 
+	 public JDBIDITestBidiBasic(Connection pwrCon){
+
+	   pwrCon_ = pwrCon;
 	     schema_ = JDNLSTest.COLLECTION;
 		 
 		 mixed_string =  "ABC \u05D0\u05D1\u05D2 123";
@@ -105,7 +111,7 @@ public class JDBIDITestBidiBasic{
     	//Insert(4);
     	//Insert(11);
     	
-    		JDBIDITestBidiBasic self = new JDBIDITestBidiBasic();
+    		JDBIDITestBidiBasic self = new JDBIDITestBidiBasic(null);
     	
     	/*
     	
@@ -155,25 +161,25 @@ public class JDBIDITestBidiBasic{
 
     public void RecreateTable(int param)  throws SQLException {
     	//errorLog_.append("\nRecreateTable()");
+      if (user_profile_ccsid == 424) {
+          RecreateTable(pwrCon_); 
+      } else { 
     	Connection conn = getConnection(param);
+    
     	RecreateTable(conn);
-    	/*
-    	Statement st = conn.createStatement();
-    	try{
-    		st.executeUpdate("DROP TABLE  "+table_name);
-    	} catch(Exception e){
-    		errorLog_.append("\nHey, it's first time when you create the table");
-    	}
-		st.executeUpdate("CREATE TABLE "+table_name+" (I1 int, I2 int, "+column_name+" varchar(50) ccsid " + column_ccsid + ")");
-		st.close();
-		*/
     	conn.close();
+      }
     }
     
     public void RecreateTable(Connection conn)  throws SQLException {
     	//errorLog_.append("\nRecreateTable()");    
         String sql = ""; 
-    	Statement st = conn.createStatement();
+    	Statement st;
+    	if (user_profile_ccsid == 62235) {
+    	  st = pwrCon_.createStatement();
+    	} else {
+    	  st = conn.createStatement();
+    	}
     	try{
     		st.executeUpdate("DROP TABLE  "+table_name);
     	} catch(SQLException e){
@@ -659,19 +665,17 @@ public class JDBIDITestBidiBasic{
     }
 
     public boolean setHostCCSID(int ccsid){
+      String sql = null; 
     	try {
-          char[] password = PasswordVault.decryptPassword(encryptedPassword);
-    		AS400 as400 = new AS400(host, username, password);
-    		User u = new User(as400, username);
-    		u.setCCSID(ccsid);	
-    		user_profile_ccsid = ccsid;
-    		as400.close(); 
-                Arrays.fill(password,' '); 
-    		return true;
+    	  Statement s = pwrCon_.createStatement();
+    	  sql = "CALL QSYS2.QCMDEXC('CHGUSRPRF "+username+" CCSID("+ccsid+")')";
+    	  s.execute(sql); 
+    	  s.close(); 
+    	  return true;
     	}		
     	catch (Exception e) {
     		//e.printStackTrace();
-    		errorLog_.append("\nsetHostCCSID() FAILED: " + e);
+    		errorLog_.append("\nsetHostCCSID() FAILED: " + e+" sql="+sql);
     	}
     	return false;    	
     }
