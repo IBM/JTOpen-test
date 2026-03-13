@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSGetSQLXML.java
 //
 // Classes:      JDCSGetSQLXML
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.CS;
 
 import com.ibm.as400.access.AS400;
@@ -53,7 +39,6 @@ import java.sql.Types;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector; 
-
 
 
 /**
@@ -104,7 +89,6 @@ extends JDCSGetTestcase
       };
 
 
-
 /**
 Constructor.
 **/
@@ -119,7 +103,6 @@ Constructor.
              namesAndVars, runMode, fileOutputStream,
              password);
    }
-
 
 
 /**
@@ -149,7 +132,6 @@ Performs setup needed before running variations.
       JDSetupProcedure.register (csTypesLobLocator_, JDSetupProcedure.STP_CSTYPESOUTX, supportedFeatures_, getDriver());
       csTypesLobLocator_.execute ();
    }
-
 
 
 /**
@@ -204,9 +186,6 @@ dumpBytes() - Utility function used to see the bytes
 
 	return dumpBytes(answer);
     }
-
-
-
 
 
 /**
@@ -311,7 +290,6 @@ Compares a SQLXML with a byte[].
 	   
 
 
-
 	   boolean result =  areEqual (answer, b);
 	   if (!result) {
 	       sb.append("\n"); 
@@ -349,7 +327,6 @@ getSQLXML() - Get parameter -1.
    }
 
 
-
 /**
 getSQLXML() - Get parameter 0 
 **/
@@ -366,7 +343,6 @@ getSQLXML() - Get parameter 0
    }
 
 
-
 /**
 getSQLXML() - Use a parameter that is too big.
 **/
@@ -381,7 +357,6 @@ getSQLXML() - Use a parameter that is too big.
          }
       }
    }
-
 
 
 /**
@@ -414,7 +389,6 @@ getSQLXML() - Get a parameter when there are no parameters.
    }
 
 
-
 /**
 getSQLXML() - Get a parameter that was not registered.
 **/
@@ -432,7 +406,6 @@ getSQLXML() - Get a parameter that was not registered.
          }
       }
    }
-
 
 
 /**
@@ -455,7 +428,6 @@ executed.
    }
 
 
-
 /**
 getSQLXML() - Get a parameter when the statement is closed.
 **/
@@ -475,7 +447,6 @@ getSQLXML() - Get a parameter when the statement is closed.
          }
       }
    }
-
 
 
 /**
@@ -545,7 +516,6 @@ getSQLXML() - Get a type that was registered as a SMALLINT.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as an INTEGER.
 **/
@@ -560,7 +530,6 @@ getSQLXML() - Get a type that was registered as an INTEGER.
          }
       }
    }
-
 
 
 /**
@@ -579,7 +548,6 @@ getSQLXML() - Get a type that was registered as an REAL.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as an FLOAT.
 **/
@@ -594,7 +562,6 @@ getSQLXML() - Get a type that was registered as an FLOAT.
          }
       }
    }
-
 
 
 /**
@@ -613,7 +580,6 @@ getSQLXML() - Get a type that was registered as an DOUBLE.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as an DECIMAL.
 **/
@@ -628,7 +594,6 @@ getSQLXML() - Get a type that was registered as an DECIMAL.
          }
       }
    }
-
 
 
 /**
@@ -647,7 +612,6 @@ getSQLXML() - Get a type that was registered as an NUMERIC.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a CHAR, we allow this to work. 
 **/
@@ -663,7 +627,6 @@ getSQLXML() - Get a type that was registered as a CHAR, we allow this to work.
          }
       }
    }
-
 
 
 /**
@@ -684,7 +647,6 @@ getSQLXML() - Get a type that was registered as a VARCHAR.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a BINARY.
 **/
@@ -699,7 +661,6 @@ getSQLXML() - Get a type that was registered as a BINARY.
          }
       }
    }
-
 
 
 /**
@@ -718,7 +679,6 @@ getSQLXML() - Get a type that was registered as a VARBINARY.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a DATE.
 **/
@@ -733,7 +693,6 @@ getSQLXML() - Get a type that was registered as a DATE.
          }
       }
    }
-
 
 
 /**
@@ -752,7 +711,6 @@ getSQLXML() - Get a type that was registered as a TIME.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a TIMESTAMP.
 **/
@@ -767,7 +725,6 @@ getSQLXML() - Get a type that was registered as a TIMESTAMP.
          }
       }
    }
-
 
 
 /**
@@ -790,7 +747,6 @@ The XML is not valid for this condition
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a BLOB.
 **/
@@ -798,7 +754,6 @@ getSQLXML() - Get a type that was registered as a BLOB.
    {
        notApplicable("See variation 58");
    }
-
 
 
 /**
@@ -822,7 +777,6 @@ was returned in the result set.
          }
       }
    }
-
 
 
 /**
@@ -849,7 +803,6 @@ SQL400 - let this work.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a CLOB when the data
 was returned in the result set and is a DBCLOB.
@@ -870,7 +823,6 @@ was returned in the result set and is a DBCLOB.
          }
       }
    }
-
 
 
 /**
@@ -898,7 +850,6 @@ SQL400 - let this work.
    }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a BIGINT.
 **/
@@ -915,7 +866,6 @@ getSQLXML() - Get a type that was registered as a BIGINT.
          }
       }
    }
-
 
 
 /**
@@ -1348,7 +1298,6 @@ getSQLXML() - Get a type that was registered as a BIGINT.
    }
 
 
-
 /**
  * get Clob on a very large clob
  */ 
@@ -1515,7 +1464,6 @@ getSQLXML() - Get a type that was registered as a BIGINT.
   }
 
 
-
 /**
 getSQLXML() - Get an INOUT parameter, where the OUT parameter is
 longer than the IN parameter.
@@ -1553,7 +1501,6 @@ longer than the IN parameter.
   }
 
 
-
 /**
 getSQLXML() - Get a type that was registered as a BLOB, when 
 the data was returned in the result set.
@@ -1573,7 +1520,6 @@ the data was returned in the result set.
          }
       }
    }
-
 
 
 /**
@@ -1670,14 +1616,11 @@ the locator was returned in the result set.
 		  } 
 
 
-
 	      } else {
 		  notApplicable("Toolbox can't handle very large blob -- java.lang.OutOfMemory error occurs"); 
 	      }
 	  }
       }
-
-
 
 
 /**
@@ -1703,7 +1646,6 @@ getSQLXML() - Get parameter 0 on a return value function.
          }
       }
    }
-
 
 
    /**
@@ -1772,8 +1714,6 @@ getSQLXML() - Get parameter 0 on a return value function.
           }
         }
       }
-
-
 
 
 }

@@ -17,13 +17,10 @@
 //  Classes:   JDCTest
 //
 ////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////
 package test;
 import test.JD.JDSetupCollection;
 
 import java.sql.Connection;
-
 
 
 /**
@@ -104,7 +101,6 @@ public class JDCTest extends JDTestDriver
    }
 
 
-
    /**
    Performs setup needed after running testcases.
    
@@ -116,7 +112,6 @@ public class JDCTest extends JDTestDriver
 	/* Call the garbage collector to free still open Java objects */ 
 	System.gc(); 
    }
-
 
 
    /**

@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDWrapper.java
 //
 // Classes:      JDPMDWrapper
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -68,11 +55,9 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private              PreparedStatement  pstmt_; 
     private              ParameterMetaData  pmd_; 
-
 
 
 /**
@@ -88,7 +73,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -107,7 +91,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -121,9 +104,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
-
-
 
 
 /**
@@ -156,8 +136,6 @@ isWrapperFor() -- Call with java.lang.String, should return false.
 	    }
 	}
     }
-
-
 
 
 /**
@@ -199,7 +177,6 @@ isWrapperFor() -- Call with driver specific class, should return true.
     }
 
 
-
 /**
 unwrap() -- Call with null, should throw exception
 **/
@@ -231,8 +208,6 @@ unwrap() -- Call with java.lang.String, should throw exception
 	    }
 	}
     }
-
-
 
 
 /**
@@ -274,13 +249,6 @@ unwrap() -- Call with driver specific class, should return object.
     }
 
 
-
-
-
-
-
-
 }
-
 
 

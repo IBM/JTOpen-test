@@ -17,8 +17,6 @@
 //  Classes:   AS400JDBCSFStatement
 //
 ////////////////////////////////////////////////////////////////////////////
-// 
-////////////////////////////////////////////////////////////////////////////
 package test.JD.AS;
 
 
@@ -1893,7 +1891,6 @@ public class JDASSFCallableStatement extends JDASTestcase {
   public void registerOutParameter(int parameterIndex, int sqlType)
   public void registerOutParameter(int parameterIndex, int sqlType, int scale)
   public boolean wasNull() throws SQLException {
-
 
 
 JDBC40       

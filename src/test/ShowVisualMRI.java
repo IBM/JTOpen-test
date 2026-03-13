@@ -1,6 +1,3 @@
-//////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 //
 // JTOpen (IBM Toolbox for Java - OSS version)
@@ -52,9 +49,6 @@ public class ShowVisualMRI extends Object
     }
 
 
-
-
-
     System.out.println("\nMRI from VNPMRI.properties");
     System.out.println(  "------------------------");
     System.out.println(" ");
@@ -83,9 +77,6 @@ public class ShowVisualMRI extends Object
     }
 
 
-
-
-
     System.out.println("\nMRI from VQRYMRI.properties");
     System.out.println(  "------------------------");
     System.out.println(" ");
@@ -112,7 +103,6 @@ public class ShowVisualMRI extends Object
     {
        System.out.println(e);
     }
-
 
 
   }

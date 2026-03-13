@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionLibraries.java
 //
 // Classes:      JDSCPDSConnectionLibraries
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 import com.ibm.as400.access.AS400;
@@ -46,7 +33,6 @@ import java.util.Hashtable; import java.util.Vector;
 import java.util.StringTokenizer;
 import java.sql.*;
 import javax.sql.DataSource;
-
 
 
 /**
@@ -71,7 +57,6 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     public static  String COLLECTION2    = "JDTESTCON2";
 
@@ -90,7 +75,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -119,7 +103,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Checks that a schema is in the library list.
 
@@ -143,7 +126,6 @@ Checks that a schema is in the library list.
         // Updated this on 4/26/2006 to return found.  We'll see what breaks after  
         return found ;
     }
-
 
 
 /**
@@ -211,7 +193,6 @@ SQL400 - The native JDBC driver gets different error messages from
     }
 
 
-
 /**
 default schema - No default schema is specified in the URL,
 no libraries are specified, and sql naming.  Should use the schema with
@@ -236,7 +217,6 @@ the same name as the userId as the default.
             }
         }
     }
-
 
 
 /**
@@ -273,9 +253,6 @@ SQL400 - for the native driver, the value *libl is going to come back from
             }
         }
     }
-
-
-
 
 
 /**
@@ -332,7 +309,6 @@ Those libraries should be in the library list.
             }
         }
     }
-
 
 
 /**
@@ -402,17 +378,6 @@ passed in is valid.
     }
 
 
-
 }
-
-
-
-
-
-
-
-
-
-
 
 

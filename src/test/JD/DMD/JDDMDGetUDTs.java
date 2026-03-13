@@ -10,27 +10,11 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDGetUDTs.java
 //
 // Classes:      JDDMDGetUDTs
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
 //
 // The following differences/incompatilies are present.
 //
@@ -42,7 +26,7 @@
 // 6.  LUW/SYSIBM returns BINARY for VARCHAR FBD data type. (Var031) 
 //
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.DMD;
 
@@ -64,7 +48,6 @@ import test.JDTestDriver;
 import test.JDTestcase;
 
 
-
 /**
 Testcase JDDMDGetUDTs.  This tests the following methods
 of the JDBC DatabaseMetaData class:
@@ -84,7 +67,6 @@ extends JDTestcase {
      }
      test.JDDMDTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -129,7 +111,6 @@ Constructors.
       return null; 
       
     }
-
 
 
 /**
@@ -201,7 +182,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -239,7 +219,6 @@ Performs cleanup needed after running variations.
       }
       return result;
     } 
-
 
 
 /**
@@ -332,7 +311,6 @@ getUDTs() - Check the result set format.
     }
 
 
-
 /**
 getUDTs() - Get a list of those created in this testcase and
 verify all columns with system remarks (the default).
@@ -394,7 +372,6 @@ verify all columns with system remarks (the default).
             }
         }
     }
-
 
 
 /**
@@ -470,7 +447,6 @@ verify all columns with sql remarks.
     }
 
 
-
 /**
 getUDTs() - Specify all null parameters.  Verify that all types
 come back in the library list are returned.
@@ -529,7 +505,6 @@ come back in the library list are returned.
     }
 
 
-
 /**
 getUDTs() - Specify null for the catalog pattern.  All matching
 types should be returned.
@@ -580,7 +555,6 @@ types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify empty string for the catalog pattern.
 No matching types should be returned.
@@ -607,7 +581,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -656,7 +629,6 @@ exactly.  All matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -713,7 +685,6 @@ All matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify a catalog pattern for which there is a
 match.  No matching types should be returned, since we do not
@@ -747,7 +718,6 @@ support catalog pattern.
     }
 
 
-
 /**
 getUDTs() - Specify a catalog pattern for which there is no match.
 No matching types should be returned.
@@ -770,7 +740,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -842,7 +811,6 @@ types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify empty string for the schema pattern.
 No matching types should be returned.
@@ -869,7 +837,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -920,7 +887,6 @@ exactly.  All matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify a schema pattern using a percent for which
 there is a match.  All matching types should be returned.
@@ -966,7 +932,6 @@ there is a match.  All matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1015,7 +980,6 @@ there is a match.  All matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify a schema pattern for which there is no match.
 No matching types should be returned.
@@ -1038,7 +1002,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1089,7 +1052,6 @@ types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify empty string for the type name pattern.
 No matching types should be returned.
@@ -1117,7 +1079,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1162,7 +1123,6 @@ exactly.  All matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1212,7 +1172,6 @@ there is a match.  All matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify a types pattern using an underscore for which
 there is a match.  All matching types should be returned.
@@ -1258,7 +1217,6 @@ there is a match.  All matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1336,7 +1294,6 @@ types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify empty array for the type.
 No matching types should be returned.
@@ -1364,7 +1321,6 @@ No matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1413,7 +1369,6 @@ exactly.  All matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Specify a 1 element array that does not match a type.
 All matching types should be returned.
@@ -1437,7 +1392,6 @@ All matching types should be returned.
             }
         }
     }
-
 
 
 /**
@@ -1485,7 +1439,6 @@ returned.
     }
 
 
-
 /**
 getUDTs() - Specify a multiple element array that does not match
 any types.  No matching types should be returned.
@@ -1511,7 +1464,6 @@ any types.  No matching types should be returned.
     }
 
 
-
 /**
 getUDTs() - Should throw an exception when the connection
 is closed.
@@ -1527,7 +1479,6 @@ is closed.
             }
         }
     }
-
 
 
 /**
@@ -1776,8 +1727,6 @@ verify all columns with system remarks (the default) using getObject
             }
         }
     }
-
-
 
 
 /**
@@ -2193,8 +2142,6 @@ getUDTs() - Test new JDBC 3.0 field named BASE_TYPE using getObject
         }
 
 
-
-
         /**
          * Test the XML data type 
         **/
@@ -2215,7 +2162,6 @@ getUDTs() - Test new JDBC 3.0 field named BASE_TYPE using getObject
 	  testDataType(ex, " -- Added 01/28/09 by native driver");
 
         }
-
 
 
 /**
@@ -2349,10 +2295,6 @@ testDataType(ex, " -- Added 01/08/21 ");
     }
 
 
-
-
-
 }
-
 
 

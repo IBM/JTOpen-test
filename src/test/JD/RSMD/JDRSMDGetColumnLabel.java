@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnLabel.java
 //
 // Classes:      JDRSMDGetColumnLabel
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.RSMD;
 
 import com.ibm.as400.access.AS400;
@@ -666,7 +658,6 @@ public class JDRSMDGetColumnLabel extends JDTestcase {
 	  // For sq730 changed to "Table Type" on 5/29/2019
 	  assertCondition(v.equals("Table Type") || v.equals("Table               Type") , "Got '"+v+"' sb 'Table Type' for SYSIBM.SQLTBLTYPE.  To fix  -- COMMENT ON TABLE SYSIBM.SQLSCHEMAS IS 'REBUILDIT' -- CALL QSQSYSIBM");
       }
-
 
 
     } catch (Exception e) {

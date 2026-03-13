@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnClassName.java
 //
 // Classes:      JDRSMDGetColumnClassName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -39,7 +31,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
 import test.JDTestcase;
-
 
 
 /**
@@ -70,7 +61,6 @@ extends JDTestcase
    }
 
 
-
    // Private data.
    private ResultSet           rs_             = null;
    private ResultSetMetaData   rsmd_           = null;
@@ -98,8 +88,6 @@ Constructor.
    }
 
 
-
-
 /**
 Performs setup needed before running variations.
 
@@ -114,9 +102,6 @@ Performs setup needed before running variations.
 	// look for jdk1.4
 	//
 		isJDK14 = true; 
-
-
-
 
 
       // SQL400 - driver neutral...
@@ -144,7 +129,6 @@ Performs setup needed before running variations.
    }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -159,7 +143,6 @@ Performs cleanup needed after running variations.
       statement2_.close (); 
       connection_.close ();
    }
-
 
 
 /**
@@ -178,7 +161,6 @@ getColumnClassName() - Check column -1.  Should throw an exception.
    }
 
 
-
 /**
 getColumnClassName() - Check column 0.  Should throw an exception.
 **/
@@ -193,7 +175,6 @@ getColumnClassName() - Check column 0.  Should throw an exception.
          }
       }
    }
-
 
 
 /**
@@ -211,7 +192,6 @@ Should throw an exception.
          }
       }
    }
-
 
 
 /**
@@ -236,7 +216,6 @@ getColumnClassName() - Check when the result set is closed.
    }
 
 
-
 /**
 getColumnClassName() - Check when the meta data is from a prepared
 statement.
@@ -258,7 +237,6 @@ statement.
    }
 
 
-
 /**
 getColumnClassName() - Check a SMALLINT column.
 **/
@@ -273,7 +251,6 @@ getColumnClassName() - Check a SMALLINT column.
          }
       }
    }
-
 
 
 /**
@@ -292,7 +269,6 @@ getColumnClassName() - Check an INTEGER column.
    }
 
 
-
 /**
 getColumnClassName() - Check a REAL column.
 **/
@@ -307,7 +283,6 @@ getColumnClassName() - Check a REAL column.
          }
       }
    }
-
 
 
 /**
@@ -326,7 +301,6 @@ getColumnClassName() - Check a FLOAT column.
    }
 
 
-
 /**
 getColumnClassName() - Check a FLOAT(3) column.
 **/
@@ -341,7 +315,6 @@ getColumnClassName() - Check a FLOAT(3) column.
          }
       }
    }
-
 
 
 /**
@@ -360,7 +333,6 @@ getColumnClassName() - Check a DOUBLE column.
    }
 
 
-
 /**
 getColumnClassName() - Check a DECIMAL(10,5) column.
 **/
@@ -375,7 +347,6 @@ getColumnClassName() - Check a DECIMAL(10,5) column.
          }
       }
    }
-
 
 
 /**
@@ -394,7 +365,6 @@ getColumnClassName() - Check a NUMERIC(10,5) column.
    }
 
 
-
 /**
 getColumnClassName() - Check a CHAR(50) column.
 **/
@@ -409,7 +379,6 @@ getColumnClassName() - Check a CHAR(50) column.
          }
       }
    }
-
 
 
 /**
@@ -428,7 +397,6 @@ getColumnClassName() - Check a VARCHAR(50) column.
    }
 
 
-
 /**
 getColumnClassName() - Check a BINARY(20) column.
 **/
@@ -443,7 +411,6 @@ getColumnClassName() - Check a BINARY(20) column.
          }
       }
    }
-
 
 
 /**
@@ -462,7 +429,6 @@ getColumnClassName() - Check a VARBINARY(20) column.
    }
 
 
-
 /**
 getColumnClassName() - Check a DATE column.
 **/
@@ -477,7 +443,6 @@ getColumnClassName() - Check a DATE column.
          }
       }
    }
-
 
 
 /**
@@ -496,7 +461,6 @@ getColumnClassName() - Check a TIME column.
    }
 
 
-
 /**
 getColumnClassName() - Check a TIMESTAMP column.
 **/
@@ -511,7 +475,6 @@ getColumnClassName() - Check a TIMESTAMP column.
          }
       }
    }
-
 
 
 /**
@@ -536,7 +499,6 @@ getColumnClassName() - Check a BLOB column.
    }
 
 
-
 /**
 getColumnClassName() - Check a CLOB column.
 **/
@@ -559,7 +521,6 @@ getColumnClassName() - Check a CLOB column.
    }
 
 
-
 /**
 getColumnClassName() - Check a DBCLOB column.
 **/
@@ -580,7 +541,6 @@ getColumnClassName() - Check a DBCLOB column.
          }
       }
    }
-
 
 
 /**
@@ -614,7 +574,6 @@ objects in prior releases.
    }
 
 
-
 /**
 getColumnClassName() - Check a DISTINCT column.
 **/
@@ -631,7 +590,6 @@ getColumnClassName() - Check a DISTINCT column.
          }
       }
    }
-
 
 
 // @B0A
@@ -692,7 +650,6 @@ getColumnClassName() - Check a NCHAR(50) column.
    }
 
 
-
 /**
 getColumnClassName() - Check a NVARCHAR(50) column.
 **/
@@ -707,7 +664,6 @@ getColumnClassName() - Check a NVARCHAR(50) column.
          }
       }
    }
-
 
 
 /**
@@ -750,7 +706,6 @@ getColumnClassName() - Check a BOOLEAN column.
          }
   
    }
-
 
 
 }

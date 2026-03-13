@@ -10,21 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSSetBigDecimal.java
 //
 // Classes:      JDCSSetBigDecimal
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.CS;
 
 import java.io.FileOutputStream;
@@ -42,7 +33,6 @@ import test.JDCSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
 import test.JVMInfo;
-
 
 
 /**
@@ -67,10 +57,8 @@ extends JDCSSetTestcase
    }
 
 
-
     
     int jdk_; 
-
 
 
 /**
@@ -89,7 +77,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -105,7 +92,6 @@ Performs setup needed before running variations.
 	      }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -118,7 +104,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 Compares a BigDecimal with a double, and allows a little rounding error.
 **/
@@ -126,7 +111,6 @@ Compares a BigDecimal with a double, and allows a little rounding error.
     {
         return(Math.abs (bd.doubleValue () - d) < 0.001);
     }
-
 
 
 /**
@@ -150,7 +134,6 @@ statement is closed.
             }
         }
     }
-
 
 
 /**
@@ -181,7 +164,6 @@ specified.
     }
 
 
-
 /**
 setBigDecimal() - Should throw exception when index is 0.
 - Using an ordinal parameter
@@ -201,7 +183,6 @@ setBigDecimal() - Should throw exception when index is 0.
             }
         }
     }
-
 
 
 /**
@@ -226,7 +207,6 @@ setBigDecimal() - Should throw exception when index is -1.
     }
 
 
-
 /**
 setBigDecimal() - Should work with a valid parameter index
 greater than 1.
@@ -249,7 +229,6 @@ greater than 1.
             }
         }
     }
-
 
 
 /**
@@ -277,7 +256,6 @@ setBigDecimal() - Should set to SQL NULL when null is passed.
     }
 
 
-
 /**
 setBigDecimal() - Should throw exception when the parameter is
 not an input parameter.
@@ -302,7 +280,6 @@ not an input parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a SMALLINT parameter.
 - Using an ordinal parameter
@@ -324,7 +301,6 @@ setBigDecimal() - Set a SMALLINT parameter.
             }
         }
     }
-
 
 
 /**
@@ -351,7 +327,6 @@ by silently truncating the data.
     }
 
 
-
 /**
 setBigDecimal() - Set a SMALLINT parameter, when the value is too large.  This
 will result in a DataTruncation exception.
@@ -372,7 +347,6 @@ will result in a DataTruncation exception.
             }
         }
     }
-
 
 
 /**
@@ -396,7 +370,6 @@ setBigDecimal() - Set an INTEGER parameter.
             }
         }
     }
-
 
 
 /**
@@ -423,7 +396,6 @@ by silently truncating the data.
     }
 
 
-
 /**
 setBigDecimal() - Set an INTEGER parameter, when the value is too large.  This
 will result in a DataTruncation exception.
@@ -446,7 +418,6 @@ will result in a DataTruncation exception.
             }
         }
     }
-
 
 
 /**
@@ -472,7 +443,6 @@ setBigDecimal() - Set a REAL parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a FLOAT parameter.
 - Using an ordinal parameter
@@ -494,7 +464,6 @@ setBigDecimal() - Set a FLOAT parameter.
             }
         }
     }
-
 
 
 /**
@@ -520,7 +489,6 @@ setBigDecimal() - Set an DOUBLE parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set an DECIMAL parameter.
 - Using an ordinal parameter
@@ -543,7 +511,6 @@ setBigDecimal() - Set an DECIMAL parameter.
             }
         }
     }
-
 
 
 /**
@@ -577,7 +544,6 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big.
     }
 
 
-
 /**
 setBigDecimal() - Set an DECIMAL parameter, where only the BigDecimal's
 fraction truncates.  This should work.
@@ -602,7 +568,6 @@ fraction truncates.  This should work.
     }
 
 
-
 /**
 setBigDecimal() - Set an NUMERIC parameter.
 - Using an ordinal parameter
@@ -624,7 +589,6 @@ setBigDecimal() - Set an NUMERIC parameter.
             }
         }
     }
-
 
 
 /**
@@ -681,7 +645,6 @@ the available size which could be confusing.
     }
 
 
-
 /**
 setBigDecimal() - Set a NUMERIC parameter, where only the BigDecimal's
 fraction truncates.  This should work.
@@ -711,7 +674,6 @@ fraction truncates.  This should work.
     }
 
 
-
 /**
 setBigDecimal() - Set an CHAR(50) parameter.
 - Using an ordinal parameter
@@ -733,7 +695,6 @@ setBigDecimal() - Set an CHAR(50) parameter.
             }
         }
     }
-
 
 
 /**
@@ -759,7 +720,6 @@ setBigDecimal() - Set an CHAR(1) parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set an CHAR(1) parameter, when the value is too big.
 - Using an ordinal parameter
@@ -779,7 +739,6 @@ setBigDecimal() - Set an CHAR(1) parameter, when the value is too big.
             }
         }
     }
-
 
 
 /**
@@ -803,7 +762,6 @@ setBigDecimal() - Set an VARCHAR parameter.
             }
         }
     }
-
 
 
 /**
@@ -830,8 +788,6 @@ setBigDecimal() - Set a CLOB parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a DBCLOB parameter.
 - Using an ordinal parameter
@@ -856,7 +812,6 @@ setBigDecimal() - Set a DBCLOB parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a BINARY parameter.
 - Using an ordinal parameter
@@ -879,8 +834,6 @@ setBigDecimal() - Set a BINARY parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a VARBINARY parameter.
 - Using an ordinal parameter
@@ -901,8 +854,6 @@ setBigDecimal() - Set a VARBINARY parameter.
             }
         }
     }
-
-
 
 
 /**
@@ -931,8 +882,6 @@ setBigDecimal() - Set a BLOB parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a DATE parameter.
 - Using an ordinal parameter
@@ -954,7 +903,6 @@ setBigDecimal() - Set a DATE parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a TIME parameter.
 - Using an ordinal parameter
@@ -974,7 +922,6 @@ setBigDecimal() - Set a TIME parameter.
             }
         }
     }
-
 
 
 /**
@@ -1026,7 +973,6 @@ as a VARCHAR(200). That is why the test passes.
     }
 
 
-
 /**
 setBigDecimal() - Set a BIGINT parameter.
 - Using an ordinal parameter
@@ -1051,7 +997,6 @@ setBigDecimal() - Set a BIGINT parameter.
             }
         }
     }
-
 
 
 /**
@@ -1079,7 +1024,6 @@ by silently truncating the data.
             }
         }
     }
-
 
 
 /**
@@ -1271,7 +1215,6 @@ by silently truncating the data.
     }
 
 
-
 /**
 setBigDecimal() - Set a SMALLINT parameter, when the value is too large.  This
 will result in a DataTruncation exception.
@@ -1295,7 +1238,6 @@ will result in a DataTruncation exception.
     }
 
 
-
 /**
 setBigDecimal() - Set an INTEGER parameter.
 - Using a named parameter
@@ -1317,7 +1259,6 @@ setBigDecimal() - Set an INTEGER parameter.
             }
         }
     }
-
 
 
 /**
@@ -1344,7 +1285,6 @@ by silently truncating the data.
     }
 
 
-
 /**
 setBigDecimal() - Set an INTEGER parameter, when the value is too large.  This
 will result in a DataTruncation exception.
@@ -1367,7 +1307,6 @@ will result in a DataTruncation exception.
             }
         }
     }
-
 
 
 /**
@@ -1393,7 +1332,6 @@ setBigDecimal() - Set a REAL parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a FLOAT parameter.
 - Using a named parameter
@@ -1415,7 +1353,6 @@ setBigDecimal() - Set a FLOAT parameter.
             }
         }
     }
-
 
 
 /**
@@ -1441,7 +1378,6 @@ setBigDecimal() - Set an DOUBLE parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set an DECIMAL parameter.
 - Using a named parameter
@@ -1463,7 +1399,6 @@ setBigDecimal() - Set an DECIMAL parameter.
             }
         }
     }
-
 
 
 /**
@@ -1496,7 +1431,6 @@ setBigDecimal() - Set an DECIMAL parameter, when the value is too big.
     }
 
 
-
 /**
 setBigDecimal() - Set an DECIMAL parameter, where only the BigDecimal's
 fraction truncates.  This should work.
@@ -1521,7 +1455,6 @@ fraction truncates.  This should work.
     }
 
 
-
 /**
 setBigDecimal() - Set an NUMERIC parameter.
 - Using a named parameter
@@ -1543,7 +1476,6 @@ setBigDecimal() - Set an NUMERIC parameter.
             }
         }
     }
-
 
 
 /**
@@ -1603,7 +1535,6 @@ the available size which could be confusing.
     }
 
 
-
 /**
 setBigDecimal() - Set a NUMERIC parameter, where only the BigDecimal's
 fraction truncates.  This should work.
@@ -1633,7 +1564,6 @@ fraction truncates.  This should work.
     }
 
 
-
 /**
 setBigDecimal() - Set an CHAR(50) parameter.
 - Using a named parameter
@@ -1655,7 +1585,6 @@ setBigDecimal() - Set an CHAR(50) parameter.
             }
         }
     }
-
 
 
 /**
@@ -1681,7 +1610,6 @@ setBigDecimal() - Set an CHAR(1) parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set an CHAR(1) parameter, when the value is too big.
 - Using a named parameter
@@ -1701,7 +1629,6 @@ setBigDecimal() - Set an CHAR(1) parameter, when the value is too big.
             }
         }
     }
-
 
 
 /**
@@ -1725,7 +1652,6 @@ setBigDecimal() - Set an VARCHAR parameter.
             }
         }
     }
-
 
 
 /**
@@ -1752,8 +1678,6 @@ setBigDecimal() - Set a CLOB parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a DBCLOB parameter.
 - Using a named parameter
@@ -1778,7 +1702,6 @@ setBigDecimal() - Set a DBCLOB parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a BINARY parameter.
 - Using a named parameter
@@ -1801,8 +1724,6 @@ setBigDecimal() - Set a BINARY parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a VARBINARY parameter.
 - Using a named parameter
@@ -1823,8 +1744,6 @@ setBigDecimal() - Set a VARBINARY parameter.
             }
         }
     }
-
-
 
 
 /**
@@ -1853,8 +1772,6 @@ setBigDecimal() - Set a BLOB parameter.
     }
 
 
-
-
 /**
 setBigDecimal() - Set a DATE parameter.
 - Using a named parameter
@@ -1876,7 +1793,6 @@ setBigDecimal() - Set a DATE parameter.
     }
 
 
-
 /**
 setBigDecimal() - Set a TIME parameter.
 - Using a named parameter
@@ -1896,7 +1812,6 @@ setBigDecimal() - Set a TIME parameter.
             }
         }
     }
-
 
 
 /**
@@ -1948,7 +1863,6 @@ as a VARCHAR(200).  That is why the test passes.
     }
 
 
-
 /**
 setBigDecimal() - Set a BIGINT parameter.
 - Using a named parameter
@@ -1973,7 +1887,6 @@ setBigDecimal() - Set a BIGINT parameter.
             }
         }
     }
-
 
 
 /**
@@ -2001,7 +1914,6 @@ by silently truncating the data.
             }
         }
     }
-
 
 
 /**
@@ -2375,9 +2287,6 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
     }
 
 
-
-
-
     public void testNamedParameters(String procedureName,
 					   String procedureDefinition,
 					   String parameterName,
@@ -2415,9 +2324,7 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 	    }
 
 
-
     } 
-
 
 
     public void Var085() {

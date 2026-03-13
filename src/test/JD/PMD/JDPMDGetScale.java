@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetScale.java
 //
 // Classes:      JDPMDGetScale
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -87,7 +74,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -105,7 +91,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -118,7 +103,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -143,7 +127,6 @@ getScale() - Should throw exception if the statement gets closed.
     }
 
 
-
 /**
 getScale() - Should throw exception if the index is too small.
 **/
@@ -163,7 +146,6 @@ getScale() - Should throw exception if the index is too small.
 	    }
 	}
     }
-
 
 
 /**
@@ -1225,7 +1207,6 @@ a procedure call for data type of numeric.
     }
 
 
-
 /**
 getScale() - Should work with a callable statement for 
 a procedure call for data type of numeric.
@@ -1268,7 +1249,6 @@ a procedure call for data type of char.
 	    }
 	}
     }
-
 
 
 /**

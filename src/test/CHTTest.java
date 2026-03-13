@@ -1,5 +1,3 @@
- //////////////////////////////////////////////////////////////////////
- //
  ///////////////////////////////////////////////////////////////////////////////
 //
 // JTOpen (IBM Toolbox for Java - OSS version)
@@ -54,7 +52,6 @@ from the test driver's main().
         runApplication (new CHTTest (args));
         System.exit(0);
     }
-
 
 
 /**
@@ -256,7 +253,5 @@ Creates the testcases.
     }
 
 }
-
-
 
 

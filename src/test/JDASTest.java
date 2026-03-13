@@ -17,8 +17,6 @@
 //  Classes:   AS400JDBCAlternateServerTest
 //
 ////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.sql.Connection;
@@ -61,9 +59,6 @@ import test.JD.AS.JDASSeamlessFailover2;
 import test.JD.AS.JDASSeamlessFailover3;
 import test.JD.AS.JDASSeamlessFailover4;
 import test.JD.AS.JDASSeamlessFailover5;
-
-
-
 
 
 /**
@@ -145,7 +140,6 @@ public class JDASTest extends JDTestDriver
    }
 
 
-
    /**
    Performs setup needed after running testcases.
    
@@ -157,7 +151,6 @@ public class JDASTest extends JDTestDriver
 	/* Call the garbage collector to free still open Java objects */ 
 	System.gc(); 
    }
-
 
 
    /**
@@ -218,8 +211,6 @@ public class JDASTest extends JDTestDriver
         password_, pwrSysUserID_, pwrSysPassword_));
 
 
-
-
     addTestcase (new JDASSeamlessFailover1 (systemObject_,
         namesAndVars_, runMode_, fileOutputStream_, 
         password_, pwrSysUserID_, pwrSysPassword_));
@@ -276,7 +267,6 @@ addTestcase (new JDASDSEnableCALTestcase (systemObject_,
     password_, pwrSysUserID_, pwrSysPassword_));
 
 
-
 addTestcase (new JDASDSClientReroute1 (systemObject_,
     namesAndVars_, runMode_, fileOutputStream_, 
     password_, pwrSysUserID_, pwrSysPassword_));
@@ -305,7 +295,6 @@ addTestcase (new JDASDSDefaultRetry (systemObject_,
 addTestcase (new JDASDSRetry (systemObject_,
     namesAndVars_, runMode_, fileOutputStream_, 
     password_, pwrSysUserID_, pwrSysPassword_));
-
 
 
 addTestcase (new JDASDSSeamlessFailover1 (systemObject_,

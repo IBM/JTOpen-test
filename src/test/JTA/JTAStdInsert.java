@@ -1,5 +1,3 @@
-////////////////////////////////////////////////////////////////////////
-//
 ///////////////////////////////////////////////////////////////////////////////
 //
 // JTOpen (IBM Toolbox for Java - OSS version)
@@ -74,7 +72,6 @@ Constructor.
              namesAndVars, runMode, fileOutputStream,
              password);
    }
-
 
 
 /**
@@ -691,10 +688,6 @@ Performs cleanup needed after running variations.
          }
       }
    }
-
-
-
-
 
 
 }

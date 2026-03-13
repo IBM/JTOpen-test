@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSBatchTruncation.java
 //
 // Classes:      JDPSBatchTruncation
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 import java.io.FileOutputStream;
@@ -45,7 +32,6 @@ import com.ibm.as400.access.AS400;
 import test.JDPSTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
 
 
 /**
@@ -109,7 +95,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -135,7 +120,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -150,7 +134,6 @@ Performs cleanup needed after running variations.
         connectionNoCompress_.close(); 
         connectionCharacterTruncation_.close(); 
     }
-
 
 
   /* Use batch insert to attempt to insert truncated data into a CCSID 5035 column */ 
@@ -344,7 +327,6 @@ Performs cleanup needed after running variations.
     }
     }
   }
-
 
 
   public void Var004() {

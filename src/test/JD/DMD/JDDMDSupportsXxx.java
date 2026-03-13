@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDSupportsXxx.java
 //
 // Classes:      JDDMDSupportsXxx
 //
-////////////////////////////////////////////////////////////////////////
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.DMD;
 
 import com.ibm.as400.access.AS400;
@@ -43,7 +30,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -135,7 +121,6 @@ extends JDTestcase
     private DatabaseMetaData    dmd2_;
 
 
-
     /**
     Constructor.
     **/
@@ -150,8 +135,6 @@ extends JDTestcase
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
-
 
 
     /**
@@ -200,7 +183,6 @@ extends JDTestcase
     }
 
 
-
     /**
     Performs cleanup needed after running variations.
     
@@ -213,7 +195,6 @@ extends JDTestcase
         connection_ = null; 
 
     }
-
 
 
     /**
@@ -229,7 +210,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -252,8 +232,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsAlterTableWithDropColumn() - Should return the correct value
     when the connection is open.
@@ -267,7 +245,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -290,8 +267,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsANSI92EntryLevelSQL() - Should return the correct value
     when the connection is open.
@@ -305,7 +280,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -328,8 +302,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsANSI92FullSQL() - Should return the correct value
     when the connection is open.
@@ -343,7 +315,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -367,8 +338,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsANSI92IntermediateSQL() - Should return the correct value
     when the connection is open.
@@ -382,7 +351,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -406,8 +374,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsBatchUpdates() - Should return the correct value
     when the connection is open.
@@ -423,7 +389,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -448,8 +413,6 @@ extends JDTestcase
     }
 
 
-
-
     /**
     supportsCatalogsInDataManipulation() - Should return the correct value
     when the connection is open.
@@ -463,7 +426,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -486,7 +448,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCatalogsInIndexDefinitions() - Should return the correct value
     when the connection is open.
@@ -500,7 +461,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -523,7 +483,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCatalogsInPrivilegeDefinitions() - Should return the correct value
     when the connection is open.
@@ -537,7 +496,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -560,7 +518,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCatalogsInProcedureCalls() - Should return the correct value
     when the connection is open.
@@ -574,7 +531,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -597,7 +553,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCatalogsInTableDefinitions() - Should return the correct value
     when the connection is open.
@@ -611,7 +566,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -634,7 +588,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsColumnAliasing() - Should return the correct value
     when the connection is open.
@@ -648,7 +601,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -671,7 +623,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsConvert() - Should return the correct value
     when the connection is open.
@@ -685,7 +636,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -708,7 +658,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsConvert() - Should return the correct value
     when the connection is open.
@@ -725,7 +674,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -751,7 +699,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCoreSQLGrammar() - Should return the correct value
     when the connection is open.
@@ -765,7 +712,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -788,7 +734,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsCorrelatedSubqueries() - Should return the correct value
     when the connection is open.
@@ -802,7 +747,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -825,7 +769,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsDataDefinitionAndDataManipulationTransactions() - Should return the correct value
     when the connection is open.
@@ -839,7 +782,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -862,7 +804,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsDataManipulationTransactionsOnly() - Should return the correct value
     when the connection is open.
@@ -876,7 +817,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -899,7 +839,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsDifferentTableCorrelationNames() - Should return the correct value
     when the connection is open.
@@ -913,7 +852,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -936,7 +874,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsExpressionsInOrderBy() - Should return the correct value
     when the connection is open.
@@ -957,7 +894,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -986,7 +922,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsExtendedSQLGrammar() - Should return the correct value
     when the connection is open.
@@ -1000,7 +935,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1023,7 +957,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsFullOuterJoins() - Should return the correct value
     when the connection is open.
@@ -1043,7 +976,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1086,7 +1018,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsGroupBy() - Should return the correct value
     when the connection is closed.
@@ -1107,7 +1038,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsGroupByBeyondSelect() - Should return the correct value
     when the connection is open.
@@ -1121,7 +1051,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1144,7 +1073,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsGroupByUnrelated() - Should return the correct value
     when the connection is open.
@@ -1158,7 +1086,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1181,7 +1108,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsIntegrityEnhancementFacility() - Should return the correct value
     when the connection is open.
@@ -1195,7 +1121,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1218,7 +1143,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsLikeEscapeClause() - Should return the correct value
     when the connection is open.
@@ -1232,7 +1156,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1255,7 +1178,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsLimitedOuterJoins() - Should return the correct value
     when the connection is open.
@@ -1269,7 +1191,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1292,7 +1213,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsMinimumSQLGrammar() - Should return the correct value
     when the connection is open.
@@ -1306,7 +1226,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1330,7 +1249,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsMixedCaseIdentifiers() - Should return the correct value
     when the connection is open.
@@ -1344,7 +1262,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1368,7 +1285,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsMixedCaseQuotedIdentifiers() - Should return the correct value
     when the connection is open.
@@ -1382,7 +1298,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1407,7 +1322,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsMultipleResultSets() - Should return the correct value
     when the connection is open.
@@ -1421,7 +1335,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1445,7 +1358,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsMultipleTransactions() - Should return the correct value
     when the connection is open.
@@ -1459,7 +1371,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1483,7 +1394,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsNonNullableColumns() - Should return the correct value
     when the connection is open.
@@ -1497,7 +1407,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1521,7 +1430,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsOpenCursorsAcrossCommit() - Should return the correct value
     when the connection is open.
@@ -1535,7 +1443,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1559,7 +1466,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsOpenCursorsAcrossRollback() - Should return the correct value
     when the connection is open.
@@ -1573,7 +1479,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1595,7 +1500,6 @@ extends JDTestcase
   }
 
 
-
     /**
      * supportsOpenStatementsAcrossCommit() - Should return the correct value
      * when the connection is open.
@@ -1609,7 +1513,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1632,7 +1535,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsOpenStatementsAcrossRollback() - Should return the correct value
     when the connection is open.
@@ -1646,7 +1548,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1670,7 +1571,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsOrderByUnrelated() - Should return the correct value
     when the connection is open.
@@ -1684,7 +1584,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1708,7 +1607,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsOuterJoins() - Should return the correct value
     when the connection is open.
@@ -1722,7 +1620,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1746,7 +1643,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsPositionedDelete() - Should return the correct value
     when the connection is open.
@@ -1760,7 +1656,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1784,7 +1679,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsPositionedUpdate() - Should return the correct value
     when the connection is open.
@@ -1798,7 +1692,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1822,7 +1715,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetConcurrency() - Should throw an exception when the
     type is not valid.
@@ -1839,7 +1731,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -1860,7 +1751,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetConcurrency() - Should return the correct values when
     type is forward only and concurrency is read only.
@@ -1876,7 +1766,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -1896,7 +1785,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetConcurrency() - Should return the correct values when
     type is scroll insensitive and concurrency is read only.
@@ -1914,7 +1802,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetConcurrency() - Should return the correct values when
     type is scroll insensitive and concurrency is updatable.
@@ -1930,7 +1817,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -1953,7 +1839,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetConcurrency() - Should return the correct values when
     type is scroll sensitive and concurrency is updatable.
@@ -1969,7 +1854,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -1995,7 +1879,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetType() - Should throw an exception when the
     type is not valid.
@@ -2014,7 +1897,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetType() - Should return the correct value
     when the type is forward only.
@@ -2030,7 +1912,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -2054,7 +1935,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsResultSetType() - Should return the correct value
     when the type is scroll sensitive.
@@ -2074,7 +1954,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -2098,7 +1977,6 @@ extends JDTestcase
   }
 
 
-
     /**
      * supportsSchemasInDataManipulation() - Should return the correct value
      * when the connection is open.
@@ -2112,7 +1990,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2135,7 +2012,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSchemasInIndexDefinitions() - Should return the correct value
     when the connection is open.
@@ -2149,7 +2025,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2172,7 +2047,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSchemasInPrivilegeDefinitions() - Should return the correct value
     when the connection is open.
@@ -2186,7 +2060,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2209,7 +2082,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSchemasInProcedureCalls() - Should return the correct value
     when the connection is open.
@@ -2223,7 +2095,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2246,7 +2117,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSchemasInTableDefinitions() - Should return the correct value
     when the connection is open.
@@ -2260,7 +2130,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2283,7 +2152,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSelectForUpdate() - Should return the correct value
     when the connection is open.
@@ -2297,7 +2165,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2320,7 +2187,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsStoredProcedures() - Should return the correct value
     when the connection is open.
@@ -2334,7 +2200,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2357,7 +2222,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSubqueriesInComparisons() - Should return the correct value
     when the connection is open.
@@ -2371,7 +2235,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2394,7 +2257,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSubqueriesInExists() - Should return the correct value
     when the connection is open.
@@ -2408,7 +2270,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2431,7 +2292,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSubqueriesInIns() - Should return the correct value
     when the connection is open.
@@ -2445,7 +2305,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2468,7 +2327,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsSubqueriesInQuantifieds() - Should return the correct value
     when the connection is open.
@@ -2482,7 +2340,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2505,7 +2362,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTableCorrelationNames() - Should return the correct value
     when the connection is open.
@@ -2519,7 +2375,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2542,7 +2397,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTransactionIsolationLevel() - Should throw an exception when the
     value is not valid.
@@ -2557,7 +2411,6 @@ extends JDTestcase
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
     /**
@@ -2583,7 +2436,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTransactionIsolationLevel() - Should return the correct
     value for read uncommitted.
@@ -2597,7 +2449,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2615,7 +2466,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTransactionIsolationLevel() - Should return the correct
     value for repeatable read.
@@ -2631,7 +2481,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTransactionIsolationLevel() - Should return the correct
     value for serializable.
@@ -2645,7 +2494,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2667,7 +2515,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsTransactions() - Should return the correct value
     when the connection is open.
@@ -2681,7 +2528,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2704,7 +2550,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsUnion() - Should return the correct value
     when the connection is open.
@@ -2718,7 +2563,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2741,7 +2585,6 @@ extends JDTestcase
     }
 
 
-
     /**
     supportsUnionAll() - Should return the correct value
     when the connection is open.
@@ -2755,7 +2598,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -2796,7 +2638,6 @@ extends JDTestcase
         else
            notApplicable("Savepoints Variation."); 
     }                                                   
-
 
 
     /**
@@ -2840,7 +2681,6 @@ extends JDTestcase
         else
            notApplicable("Named Parameter Variation."); 
     }
-
 
 
     /**
@@ -2938,7 +2778,6 @@ extends JDTestcase
     }                                                                                           
 
 
-
     /**
     supportsGetGeneratedKeys() - Should return the correct value
     when the connection is closed.
@@ -2977,7 +2816,6 @@ extends JDTestcase
         else
             notApplicable("Cursor Holdability Variation");  
     }                                                                                       
-
 
 
     /**
@@ -3024,7 +2862,6 @@ extends JDTestcase
      else
             notApplicable("Cursor Holdability Variation");  
     }                                                                                       
-
 
 
     /**

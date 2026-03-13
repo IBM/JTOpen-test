@@ -44,7 +44,6 @@ For example -
 RUNJVA  CLASS(test.AS400CertificateTest) PARM('-system' 'rchasjew' '-uid'  'DENNISSUSR' '-pwd' 'xxxx' '-run' 'u' '-misc' 'JAVACTL,xxxx') OPTIMIZE(10)
 
 
-
 See TestDriver for remaining calling syntax.
 @see TestDriver
 **/
@@ -197,7 +196,6 @@ Creates Testcase objects for all the testcases in this component.
       addTestcase(tc);
       namesAndVars_.remove("AS400CertificateUsrPrfTestcase");
     }
-
 
 
     if (allTestcases || namesAndVars_.containsKey("AS400CertificateUsrPrfBeans"))

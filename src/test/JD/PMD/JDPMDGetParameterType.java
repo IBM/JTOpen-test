@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetParameterType.java
 //
 // Classes:      JDPMDGetParameterType
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -93,7 +80,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -111,7 +97,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -124,7 +109,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -149,7 +133,6 @@ getParameterType() - Should throw exception if the statement gets closed.
     }
 
 
-
 /**
 getParameterType() - Should throw exception if the index is too small.
 **/
@@ -169,7 +152,6 @@ getParameterType() - Should throw exception if the index is too small.
 	    }
 	}
     }
-
 
 
 /**

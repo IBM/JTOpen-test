@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetDouble.java
 //
 // Classes:      JDPSSetDouble
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 import com.ibm.as400.access.AS400;
@@ -49,7 +35,6 @@ import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
 import test.JD.JDSerializeFile;
 import java.sql.SQLException;
-
 
 
 /**
@@ -74,17 +59,14 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDPSSD";
-
 
 
     // Private data.
     private Statement           statement_;
     private Connection          connection1_;           // @E1A
     private Statement           statement1_;            // @E1A
-
 
 
 /**
@@ -101,7 +83,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -123,7 +104,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -141,7 +121,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 Compares 2 doubles, allowing for some rounding error.
 **/
@@ -149,7 +128,6 @@ Compares 2 doubles, allowing for some rounding error.
     {
         return (Math.abs (d1 - d2) < 0.001);
     }
-
 
 
 /**
@@ -183,7 +161,6 @@ statement is closed.
   }
 
 
-
 /**
 setDouble() - Should throw exception when an invalid index is
 specified.
@@ -213,7 +190,6 @@ specified.
       }
     }
   }
-
 
 
 /**
@@ -246,7 +222,6 @@ setDouble() - Should throw exception when index is 0.
   }
 
 
-
 /**
 setDouble() - Should throw exception when index is -1.
 **/
@@ -275,7 +250,6 @@ setDouble() - Should throw exception when index is -1.
       }
     }
   }
-
 
 
 /**
@@ -319,7 +293,6 @@ greater than 1.
   }
 
 
-
 /**
 setDouble() - Should throw exception when the parameter is
 not an input parameter.
@@ -337,7 +310,6 @@ not an input parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -379,7 +351,6 @@ setDouble() - Set a SMALLINT parameter.
   }
 
 
-
 /**
 setDouble() - Set a SMALLINT parameter, when there is a decimal part.
 **/
@@ -419,7 +390,6 @@ setDouble() - Set a SMALLINT parameter, when there is a decimal part.
   }
 
 
-
 /**
 setDouble() - Set a SMALLINT parameter, when the value is too big.  This should
 cause a DataTruncation exception to be thrown.
@@ -452,7 +422,6 @@ cause a DataTruncation exception to be thrown.
       }
     }
   }
-
 
 
 /**
@@ -494,7 +463,6 @@ setDouble() - Set an INTEGER parameter.
   }
 
 
-
 /**
 setDouble() - Set an INTEGER parameter, when there is a decimal part.
 **/
@@ -534,7 +502,6 @@ setDouble() - Set an INTEGER parameter, when there is a decimal part.
   }
 
 
-
 /**
 setDouble() - Set an INTEGER parameter, when the value is too big.  This should
 cause a DataTruncation exception to be thrown.
@@ -567,7 +534,6 @@ cause a DataTruncation exception to be thrown.
       }
     }
   }
-
 
 
 /**
@@ -609,7 +575,6 @@ setDouble() - Set an REAL parameter.
   }
 
 
-
 /**
 setDouble() - Set an FLOAT parameter.
 **/
@@ -647,7 +612,6 @@ setDouble() - Set an FLOAT parameter.
       }
     }
   }
-
 
 
 /**
@@ -689,7 +653,6 @@ setDouble() - Set an DOUBLE parameter.
   }
 
 
-
 /**
 setDouble() - Set an DECIMAL parameter.
 **/
@@ -727,7 +690,6 @@ setDouble() - Set an DECIMAL parameter.
       }
     }
   }
-
 
 
 /**
@@ -772,7 +734,6 @@ setDouble() - Set an DECIMAL parameter, when the value is too big.
   }
 
 
-
 /**
 setDouble() - Set an DECIMAL parameter, when only the fraction truncates.  This 
 is allowed.
@@ -811,7 +772,6 @@ is allowed.
       }
     }
   }
-
 
 
 /**
@@ -854,7 +814,6 @@ setDouble() - Set an DECIMAL parameter, when the value is very small.
   }
 
 
-
 /**
 setDouble() - Set an NUMERIC parameter.
 **/
@@ -892,7 +851,6 @@ setDouble() - Set an NUMERIC parameter.
       }
     }
   }
-
 
 
 /**
@@ -957,7 +915,6 @@ data size is 14 significant digits and the transfer size is 5 digits.
   }
 
 
-
 /**
 setDouble() - Set an DECIMAL parameter, when only the fraction truncates.  This 
 is allowed.
@@ -996,7 +953,6 @@ is allowed.
       }
     }
   }
-
 
 
 /**
@@ -1038,7 +994,6 @@ setDouble() - Set an NUMERIC parameter, when the value is very small.
   }
 
 
-
 /**
 setDouble() - Set an CHAR(50) parameter.
 **/
@@ -1078,7 +1033,6 @@ setDouble() - Set an CHAR(50) parameter.
   }
 
 
-
 /**
 setDouble() - Set an CHAR(1) parameter.   This throws an exception
 because the double is stored with  .0 at the end.
@@ -1112,7 +1066,6 @@ because the double is stored with  .0 at the end.
   }
 
 
-
 /**
 setDouble() - Set an CHAR(1) parameter, when the value is too big.
 **/
@@ -1143,7 +1096,6 @@ setDouble() - Set an CHAR(1) parameter, when the value is too big.
       }
     }
   }
-
 
 
 /**
@@ -1185,7 +1137,6 @@ setDouble() - Set an VARCHAR parameter.
   }
 
 
-
 /**
 setDouble() - Set a CLOB parameter.
 **/
@@ -1220,8 +1171,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
-
 
 
 /**
@@ -1260,7 +1209,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setDouble() - Set a BINARY parameter.
 **/
@@ -1290,8 +1238,6 @@ setDouble() - Set a BINARY parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -1325,8 +1271,6 @@ setDouble() - Set a VARBINARY parameter.
   }
 
 
-
-
 /**
 setDouble() - Set a BLOB parameter.
 **/
@@ -1356,8 +1300,6 @@ setDouble() - Set a BLOB parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -1394,7 +1336,6 @@ setDouble() - Set a DATE parameter.
     }
 
 
-
 /**
 setDouble() - Set a TIME parameter.
 **/
@@ -1427,7 +1368,6 @@ setDouble() - Set a TIME parameter.
       }
     }
     }
-
 
 
 /**
@@ -1500,7 +1440,6 @@ setDouble() - Set a DATALINK parameter.
     }
 
 
-
 /**
 setDouble() - Set a DISTINCT parameter.
 **/
@@ -1544,7 +1483,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
 
 
 /**
@@ -1591,7 +1529,6 @@ setDouble() - Set a BIGINT parameter.
     }
 
 
-
 /**
 setDouble() - Set a BIGINT parameter, when there is a decimal part.
 **/
@@ -1636,7 +1573,6 @@ setDouble() - Set a BIGINT parameter, when there is a decimal part.
     }
 
 
-
 /**
 setDouble() - Set a BIGINT parameter, when the value is too big.  This should
 cause a DataTruncation exception to be thrown.
@@ -1674,8 +1610,6 @@ cause a DataTruncation exception to be thrown.
       }
     }
     }
-
-
 
 
 /**
@@ -1734,7 +1668,6 @@ package cache.
     }
 
 
-
 // @E1A
 /**
 setDouble() - Set an DECIMAL parameter, when the "big decimal" property
@@ -1777,7 +1710,6 @@ is set to "false".
       }
     }
     }
-
 
 
 // @E1A
@@ -2026,10 +1958,6 @@ is set to "false".
       testSetDouble("C_BOOLEAN", Double.POSITIVE_INFINITY, "1");
     }
   }
-
-
-
-
 
 
 }

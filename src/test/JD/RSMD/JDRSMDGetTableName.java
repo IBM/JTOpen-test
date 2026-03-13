@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetTableName.java
 //
 // Classes:      JDRSMDGetTableName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -87,7 +78,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -148,7 +138,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 getTableName() - Check column -1.  Should throw an exception.
 **/
@@ -162,7 +151,6 @@ getTableName() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -180,7 +168,6 @@ getTableName() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 getTableName() - Check a column greater than the max.
 Should throw an exception.
@@ -195,7 +182,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -215,7 +201,6 @@ getTableName() - Check a valid column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -241,7 +226,6 @@ getTableName() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -287,7 +271,6 @@ getTableName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getTableName() - Check column 0.  Should throw an exception.
 **/
@@ -301,7 +284,6 @@ getTableName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException", " added by native 02/03/04 for extended metadata");
         }
     }
-
 
 
 /**
@@ -320,7 +302,6 @@ Should throw an exception.
     }
 
 
-
 /**
 getTableName() - Check a valid column.
 **/
@@ -334,7 +315,6 @@ getTableName() - Check a valid column.
             failed (e, "Unexpected Exception -- added by native 02/03/04 for extended metadata");
         }
     }
-
 
 
 /**
@@ -355,7 +335,6 @@ getTableName() - Check when the result set is closed.
             failed (e, "Unexpected Exception -- added by native 02/03/04 for extended metadata");
         }
     }
-
 
 
 /**
@@ -456,6 +435,5 @@ getTableName() - Check a valid column after a union has occurred (Dont' close th
     
 
 }
-
 
 

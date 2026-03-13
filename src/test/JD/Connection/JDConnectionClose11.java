@@ -18,8 +18,6 @@
 // Classes:      JDConnectionClose10
 //
 ////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////
 
 package test.JD.Connection;
 
@@ -29,8 +27,6 @@ import test.JDJobName;
 
 import java.io.FileOutputStream;
 import java.util.Hashtable; import java.util.Vector;
-
-
 
 
 /**
@@ -55,10 +51,6 @@ extends JDConnectionClose {
    }
 
 
-
-
-
-
 /**
 Constructor.
 **/
@@ -79,7 +71,6 @@ Constructor.
     }
 
 
-
     public void Var001 () { notApplicable(); }
     public void Var002 () { notApplicable(); }
     public void Var003 () { notApplicable(); }
@@ -89,8 +80,6 @@ Constructor.
     public void Var007 () { notApplicable(); }
     public void Var008 () { notApplicable(); }
     public void Var009 () { notApplicable(); }
-
-
 
 
 /**
@@ -154,6 +143,5 @@ In this case we don't explicitly close the connection, but allow the gc to close
     }
  
 }
-
 
 

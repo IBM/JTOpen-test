@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSSetObject4.java
 //
 // Classes:      JDCSSetObject4
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.CS;
 
 import java.io.FileOutputStream;
@@ -1918,7 +1904,6 @@ connectionDateTime_.close();
   }
 
 
-
   /**
    * setObject() - Should throw exception when the scale is invalid.
    **/
@@ -2497,7 +2482,6 @@ connectionDateTime_.close();
   }
 
 
-
   /**
    * setObject() - Set a BIGINT parameter with a nonzero scale.
    **/
@@ -2753,8 +2737,6 @@ connectionDateTime_.close();
   }
 
 
-
-
   public void Var135() { notApplicable(); }
  public void Var136() { notApplicable(); }
  public void Var137() { notApplicable(); }
@@ -2869,7 +2851,6 @@ connectionDateTime_.close();
       }
     }
   }
-
 
 
 	    /* Test the types using LocalTime */ 
@@ -3023,10 +3004,8 @@ connectionDateTime_.close();
       public void Var250() { notApplicable(); } 
 
 
-
   
   
-
 
 
 }

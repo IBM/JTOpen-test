@@ -10,27 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetString.java
 //
 // Classes:      JDPSSetString
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 import java.io.FileOutputStream;
@@ -78,7 +63,6 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private Statement           statement_;
     private String              properties_;
@@ -99,7 +83,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -111,7 +94,6 @@ Performs setup needed before running variations.
         properties_ = "X";
         reconnect ("");
     }
-
 
 
 /**
@@ -127,7 +109,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -150,7 +131,6 @@ Reconnects with different properties, if needed.
             statement_ = connection_.createStatement ();
         }
     }
-
 
 
 /**
@@ -184,7 +164,6 @@ statement is closed.
   }
 
 
-
 /**
 setString() - Should throw exception when an invalid index is
 specified.
@@ -214,7 +193,6 @@ specified.
       }
     }
   }
-
 
 
 /**
@@ -247,7 +225,6 @@ setString() - Should throw exception when index is 0.
   }
 
 
-
 /**
 setString() - Should throw exception when index is -1.
 **/
@@ -276,7 +253,6 @@ setString() - Should throw exception when index is -1.
       }
     }
   }
-
 
 
 /**
@@ -317,7 +293,6 @@ setString() - Should set to SQL NULL when the value is null.
       }
     }
   }
-
 
 
 /**
@@ -361,7 +336,6 @@ greater than 1.
   }
 
 
-
 /**
 setString() - Should throw exception when the parameter is
 not an input parameter.
@@ -380,7 +354,6 @@ not an input parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -433,9 +406,6 @@ posted when data is truncated.
   }
 
 
-
-
-
 /**
 setString() - Set a SMALLINT parameter.
 **/
@@ -465,7 +435,6 @@ setString() - Set a SMALLINT parameter.
       }
     }
   }
-
 
 
 /**
@@ -499,7 +468,6 @@ setString() - Set a INTEGER parameter.
   }
 
 
-
 /**
 setString() - Set a REAL parameter.
 **/
@@ -529,7 +497,6 @@ setString() - Set a REAL parameter.
       }
     }
   }
-
 
 
 /**
@@ -563,7 +530,6 @@ setString() - Set a FLOAT parameter.
   }
 
 
-
 /**
 setString() - Set a DOUBLE parameter.
 **/
@@ -593,7 +559,6 @@ setString() - Set a DOUBLE parameter.
       }
     }
   }
-
 
 
 /**
@@ -627,7 +592,6 @@ setString() - Set a DECIMAL parameter.
   }
 
 
-
 /**
 setString() - Set a NUMERIC parameter.
 **/
@@ -657,7 +621,6 @@ setString() - Set a NUMERIC parameter.
       }
     }
   }
-
 
 
 /**
@@ -700,8 +663,6 @@ longer.
   }
 
 
-
-
 /**
 setString() - Set a CHAR(50) parameter.
 **/
@@ -741,7 +702,6 @@ setString() - Set a CHAR(50) parameter.
   }
 
 
-
 /**
 setString() - Set a VARCHAR(50) parameter.
 **/
@@ -779,7 +739,6 @@ setString() - Set a VARCHAR(50) parameter.
       }
     }
   }
-
 
 
 /**
@@ -826,8 +785,6 @@ if (checkLobSupport ()) {
   }
 
 
-
-
 /**
 setString() - Set a DBCLOB parameter.
 **/
@@ -869,7 +826,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
 
 
   /**
@@ -970,8 +926,6 @@ setString() - Set a VARBINARY parameter, with translation turned on.
   }
 
 
-
-
 /**
 setString() - Set a BINARY parameter, with translation turned off.
 **/
@@ -1029,8 +983,6 @@ setString() - Set a BINARY parameter, with translation turned off.
   }
 
 
-
-
 /**
 setString() - Set a VARBINARY parameter, with translation turned off.
 **/
@@ -1081,8 +1033,6 @@ setString() - Set a VARBINARY parameter, with translation turned off.
   }
 
 
-
-
 /**
 setString() - Set a BLOB parameter.
 **/
@@ -1115,8 +1065,6 @@ setString() - Set a BLOB parameter.
       }
     }
     }
-
-
 
 
 /**
@@ -1153,7 +1101,6 @@ setString() - Set a DATE parameter to a value that is not a valid date.  This sh
     }
 
 
-
 /**
 setString() - Set a TIME parameter to a value that is not a valid date.  This should throw an exception. D1C.
 **/
@@ -1183,7 +1130,6 @@ setString() - Set a TIME parameter to a value that is not a valid date.  This sh
       }
     }
   }
-
 
 
 /**
@@ -1269,7 +1215,6 @@ if (getDriver () == JDTestDriver.DRIVER_JCC)
   }
 
 
-
 /**
 setString() - Set a DISTINCT parameter.
 **/
@@ -1315,7 +1260,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setString() - Set a BIGINT parameter.
 **/
@@ -1350,7 +1294,6 @@ if (checkBigintSupport()) {
       }
     }
   }
-
 
 
 /**
@@ -1408,7 +1351,6 @@ with different CCSIDs.
             }
         }
     }
-
 
 
 /**
@@ -1940,7 +1882,6 @@ setString() - make sure UTF-8 parameter can be passed
 	}
 
 
-
 /**
 setString() - make sure EURO symbol parameter can be passed and retrieved
             - This does not work for native driver (pre v5r3).
@@ -2083,7 +2024,6 @@ Also needs to work for V5R2
     };
 
 
-
     String dfp16valuesJDK14[][] = {
 	{"valid", "NaN", "NaN"},
 	{"valid", "NAN", "NaN"},
@@ -2186,7 +2126,6 @@ Also needs to work for V5R2
     {"truncation", "12345678901234567", "1.234567890123457E+16"}
 
     };
-
 
 
     String dfp16valuesJDK14TB[][] = {
@@ -2396,7 +2335,6 @@ setString() - Set a DECFLOAT 16 parameter to random values.  This should work.
     }
 
 
-
 /**
 setString() - Set a DECFLOAT 16 parameter to truncation values.  This should work.
 **/
@@ -2478,7 +2416,6 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
     }
 
 
-
     String dfp34values[][] = {
 	{"valid", "NaN", "NaN"},
 	{"valid", "NAN", "NaN"},
@@ -2527,7 +2464,6 @@ setString() - Set a DECFLOAT 16 parameter to truncation values.  This should wor
 	{"truncation", "12345678901234567890123456789012345", "1.234567890123456789012345678901234E+34"}
 
     };
-
 
 
             String dfp34valuesTB[][] = {
@@ -2745,7 +2681,6 @@ setString() - Set a DECFLOAT 34 parameter to random values.  This should work.
     }
 
 
-
 /**
 setString() - Set a DECFLOAT 34 parameter to truncation values.  This should work.
 **/
@@ -2825,7 +2760,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
             }
         }
     }
-
 
 
     public void dfpRoundTest(String roundingMode, int tableNumber, String value, String expected) {
@@ -2913,7 +2847,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     public void Var063 () { dfpRoundTest(RD, JDPSTest.SETDFP16, "-1.2345678901234559999999", "-1.234567890123455"); }
 
 
-
     /**
      *  setString -- set a DFP16 with rounding mode "round ceiling"
      */
@@ -2944,7 +2877,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     public void Var075 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234555", "-1.234567890123455"); }
     public void Var076 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234545", "-1.234567890123454"); }
     public void Var077 () { dfpRoundTest(RHD, JDPSTest.SETDFP16, "-1.2345678901234565", "-1.234567890123456"); }
-
 
 
    /**
@@ -2982,7 +2914,6 @@ setString() - Set a DECFLOAT 34 parameter to truncation values.  This should wor
     public void Var093 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "1.1818181818181818182345678901234559999999","1.181818181818181818234567890123455"); }
     public void Var094 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234555","-1.181818181818181818234567890123455"); }
     public void Var095 () { dfpRoundTest(RD, JDPSTest.SETDFP34, "-1.1818181818181818182345678901234559999999","-1.181818181818181818234567890123455"); }
-
 
 
     /**
@@ -3028,7 +2959,6 @@ dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234555","-1.
   }
     public void Var108 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234545","-1.181818181818181818234567890123454"); }
     public void Var109 () { dfpRoundTest(RHD, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234565","-1.181818181818181818234567890123456"); }
-
 
 
    /**
@@ -3271,7 +3201,6 @@ dfpRoundTest(RU, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234559999999"
     }
 
 
-
     /**
     setString() - Set a DATE parameter to a value that is not a valid date.  This should throw an exception. D1C
     **/
@@ -3309,7 +3238,6 @@ dfpRoundTest(RU, JDPSTest.SETDFP34,"-1.1818181818181818182345678901234559999999"
       }
     }
         }
-
 
 
     /**
@@ -3551,7 +3479,6 @@ setString() - Set an XML  parameter using invalid data.
 	public void Var141() { setXML(JDPSTest.SETXML290, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var141\uff98</Test>",  "<Test>Var141\uff98</Test>"); }
 
 
-
 	   /* Encoding is stripped for character data since we know is is UTF-16 */
 	public void Var142() { setXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Test>Var142</Test>",  "<Test>Var142</Test>"); }
 	public void Var143() { setInvalidXML(JDPSTest.SETXML, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Test>Var143</Tes>",  "XML parsing failed"); }
@@ -3566,10 +3493,8 @@ setString() - Set an XML  parameter using invalid data.
 	public void Var149() { setInvalidXML(JDPSTest.SETXML37, "<?xml version=\"1.0\" encoding=\"UTF-16\"?>  <Tet>Var149</Test>",  "XML parsing failed"); }
 
 
-
 	/* Set XML with a processing instruction (which should be left) */
 	public void Var150() { setXML(JDPSTest.SETXML,  "<?attribute list?><Test>Var150</Test>",  "<?attribute list?><Test>Var150</Test>"); }
-
 
 
 	/* Check for truncation on setting parameter marker for a query.  This should throw an exception. */
@@ -3797,7 +3722,6 @@ setString() - Set an XML  parameter using invalid data.
   } 
 
 
-
 /**
  * Test the following combinations
  *
@@ -3912,9 +3836,6 @@ Unicode => EBCDIC Conversion.
       
 
   } 
-
-
-
 
 
   /* Test all types of invalid timestamp.. Both native and toolbox should throw errors */
@@ -4145,7 +4066,6 @@ Unicode => EBCDIC Conversion.
   }
 
 
-
   public void Var182() {
 
       StringBuffer sb = new StringBuffer(" -- added 9/12/2017 to test type where database does the translation -- See CPS AQZDPW\n");
@@ -4224,8 +4144,6 @@ Unicode => EBCDIC Conversion.
 
 
   }
-
-
 
 
   public void Var183() {

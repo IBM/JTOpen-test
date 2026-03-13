@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionReadOnly.java
 //
 // Classes:      JDSCPDSConnectionReadOnly
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 
@@ -72,10 +59,8 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String table_      = JDSCPDSTest.COLLECTION + ".JDCACCESS";
-
 
 
 /**
@@ -92,7 +77,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -120,7 +104,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -142,7 +125,6 @@ Performs cleanup needed after running variations.
             c.close ();
         }
     }
-
 
 
 /**
@@ -172,7 +154,6 @@ Checks that a connection can query a table.
     }
 
 
-
 /**
 Checks that a connection can update a table.
 
@@ -197,7 +178,6 @@ Checks that a connection can update a table.
         s.close ();
         return success;
     }
-
 
 
 /**
@@ -225,7 +205,6 @@ Checks that a connection can call a program.
     }
 
 
-
 /**
 access property - Uses default access.  Connection should be able to
 read, write, and call.
@@ -250,7 +229,6 @@ read, write, and call.
             }
         }
     }
-
 
 
 /**
@@ -286,7 +264,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 access property - Specifies "all" access.  Connection should be
 able to read, write, and call.
@@ -312,7 +289,6 @@ able to read, write, and call.
             }
         }
     }
-
 
 
 /**
@@ -342,7 +318,6 @@ able to read and call, but not write.
     }
 
 
-
 /**
 access property - Specifies "read only" access.  Connection should be
 able to read, but not write or call.
@@ -368,7 +343,6 @@ able to read, but not write or call.
             }
         }
     }
-
 
 
 /**
@@ -398,7 +372,6 @@ still be recognized.
     }
 
 
-
 /**
 isReadOnly() - Verify that the default is false when
 no access property is set.
@@ -421,7 +394,6 @@ no access property is set.
             }
         }
     }
-
 
 
 /**
@@ -449,7 +421,6 @@ the access property is set to "all".
     }
 
 
-
 /**
 isReadOnly() - Verify that the default is true when
 the access property is set to "read call".
@@ -473,7 +444,6 @@ the access property is set to "read call".
             }
         }
     }
-
 
 
 /**
@@ -501,7 +471,6 @@ the access property is set to "read only".
     }
 
 
-
 /**
 isReadOnly() - Verify that an exception is thrown when
 the connection is closed.
@@ -525,7 +494,6 @@ the connection is closed.
             }
         }
     }
-
 
 
 /**
@@ -554,7 +522,6 @@ set is then returned.
     }
 
 
-
 /**
 setReadOnly()/isReadOnly() - Verify that the value that was
 set is then returned.
@@ -579,7 +546,6 @@ set is then returned.
             }
         }
     }
-
 
 
 /**
@@ -607,7 +573,6 @@ setReadOnly() - Verify that when set to false, we have all access.
             }
         }
     }
-
 
 
 /**
@@ -638,7 +603,6 @@ read and call access.
     }
 
 
-
 /**
 setReadOnly() - Verify that an exception is thrown when
 the connection is closed.
@@ -663,7 +627,6 @@ the connection is closed.
             }
         }
     }
-
 
 
 /**
@@ -705,7 +668,6 @@ a transaction is active.
     }
 
 
-
 /**
 setReadOnly() - Verify that an exception is thrown when
 a setting read only to false, but the access property is
@@ -738,7 +700,6 @@ set to "read only".
             }
         }
     }
-
 
 
 /**
@@ -775,18 +736,6 @@ set to "read call".
     }
 
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

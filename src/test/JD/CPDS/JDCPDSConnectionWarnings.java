@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCPDSConnectionWarnings.java
 //
 // Classes:      JDCPDSConnectionWarnings
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.CPDS;
 
 import com.ibm.as400.access.AS400;
@@ -70,7 +56,6 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String         table_ = JDCPDSTest.COLLECTION + ".JDCWARN";
 
@@ -91,7 +76,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -121,7 +105,6 @@ Setup.
     }
 
 
-
 /**
 Cleanup.
 
@@ -140,7 +123,6 @@ Cleanup.
 
         }
     }
-
 
 
 /**
@@ -163,7 +145,6 @@ Forces a single warning to be posted to the connection.
     }
 
 
-
 /**
 clearWarnings() - Has no effect when there are no
 warnings.
@@ -184,7 +165,6 @@ warnings.
     }
 
 
-
 /**
 clearWarnings() - Clears warnings after 1 has been posted.
 **/
@@ -203,7 +183,6 @@ clearWarnings() - Clears warnings after 1 has been posted.
             }
         }
     }
-
 
 
 /**
@@ -229,7 +208,6 @@ closed.
     }
 
 
-
 /**
 getWarning() - Returns null if no warnings have been
 reported.
@@ -247,7 +225,6 @@ reported.
             }
         }
     }
-
 
 
 /**
@@ -271,7 +248,6 @@ reported.
     }
 
 
-
 /**
 getWarning() - Returns the first warning when 2 warnings have been
 reported.
@@ -293,8 +269,6 @@ reported.
             }
         }
     }
-
-
 
 
 /**
@@ -328,8 +302,6 @@ the connection is closed. So getWarnings throws exception
     }
 
 
-
 }
-
 
 

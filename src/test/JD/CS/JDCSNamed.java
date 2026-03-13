@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSNamed.java
 //
 // Classes:      JDCSNamed
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -40,7 +32,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDTestcase;
-
 
 
 /**
@@ -398,7 +389,6 @@ SQL400 - Removed the package priming code - we won't be using it. B1A
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -412,10 +402,6 @@ Performs cleanup needed after running variations.
 	    connection_ = null; 
 	}
     }
-
-
-
-
 
 
 /**
@@ -943,9 +929,6 @@ Test Jesse Gorzinski's error case
   
 
 
-
-
-
   private boolean markCalled(String thisCallSql, String[] checkCombinations,
       boolean[] checkCombinationsFound, StringBuffer sb) {
     for (int i = 0; i < checkCombinations.length; i++) {
@@ -959,9 +942,6 @@ Test Jesse Gorzinski's error case
   }
 
 
-
-
-
   private boolean explicitlySet(int parm, int[] parameterCallMapping) {
     
     for (int j = 1; j < parameterCallMapping.length; j++) {
@@ -973,9 +953,6 @@ Test Jesse Gorzinski's error case
   }
 
 
-
-
-
   private boolean incrementInvalidPossibleParameters(int[] possibleParameters, int parametersLeft,  int[] thisDirection, int fixedCount) {
     while( ! containsRequiredParameters(possibleParameters, thisDirection, fixedCount)) {
       boolean keepGoing = incrementPossibleParameters(possibleParameters, parametersLeft) ; 
@@ -983,9 +960,6 @@ Test Jesse Gorzinski's error case
     }
     return true; 
   }
-
-
-
 
 
   private boolean incrementPossibleParameters(int[] possibleParameters,
@@ -1022,9 +996,6 @@ Test Jesse Gorzinski's error case
   }
 
 
-
-
-
   private boolean noDuplicates(int[] possibleParameters) {
     for (int i = 1; i < possibleParameters.length; i++) {
       if (possibleParameters[i] > 0) {
@@ -1039,9 +1010,6 @@ Test Jesse Gorzinski's error case
   }
 
 
-
-
-
   private boolean nextPossibleParameters(int[] possibleParameters,
       int parametersLeft, int[] thisDirection, int fixedCount) {
     boolean keepGoing = incrementPossibleParameters(possibleParameters, parametersLeft); 
@@ -1051,7 +1019,6 @@ Test Jesse Gorzinski's error case
       return false; 
     }
   }
-
 
 
   /**
@@ -1566,6 +1533,5 @@ this.getSQLDefaultValue = getSQLDefaultValue;
 this.getJDBCDefaultValue = getJDBCDefaultValue; 
   }
 }
-
 
 

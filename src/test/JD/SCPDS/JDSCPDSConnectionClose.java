@@ -10,27 +10,14 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
 /* This testcase is based on JDConnectionClose.java */
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionClose.java
 //
 // Classes:      JDSCPDSConnectionClose
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 
@@ -76,7 +63,6 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCCLOSE";
     private DataSource dataSource;
@@ -96,7 +82,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -131,7 +116,6 @@ Setup.
     }
 
 
-
 /**
 Cleanup.
 
@@ -149,7 +133,6 @@ Cleanup.
             c.close ();
         }
     }
-
 
 
 /**
@@ -171,8 +154,6 @@ Indicates if a result set is closed.
     }
 
 
-
-
 /**
 Indicates if a statement is closed.
 **/
@@ -188,8 +169,6 @@ Indicates if a statement is closed.
             return true;
         }
     }
-
-
 
 
 /**
@@ -209,7 +188,6 @@ isClosed() - Should return false on an open connection.
             }
         }
     }
-
 
 
 /**
@@ -236,7 +214,6 @@ too exact on which approach to implement.
     }
 
 
-
 /**
 close() - should have no effect when the connection is already closed.
 **/
@@ -254,8 +231,6 @@ close() - should have no effect when the connection is already closed.
             }
         }
     }
-
-
 
 
 /**
@@ -300,7 +275,6 @@ close() - Should close all its statements, but not those of a different connecti
          }
          */
     }
-
 
 
 /**
@@ -352,7 +326,6 @@ back in the pool
     }
 
 
-
 /**
 close() - Should rollback a transaction.
 **/
@@ -399,7 +372,6 @@ close() - Should rollback a transaction.
     }
 
 }
-
 
 
     

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetSchemaName.java
 //
 // Classes:      JDRSMDGetSchemaName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -42,7 +34,6 @@ import java.sql.ResultSetMetaData;
 
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -95,7 +86,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -126,7 +116,6 @@ Performs setup needed before running variations.
         rsmd2_ = rs2_.getMetaData ();
 
     }
-
 
 
 /**
@@ -168,7 +157,6 @@ getSchemaName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getSchemaName() - Check column 0.  Should throw an exception.
 **/
@@ -182,7 +170,6 @@ getSchemaName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -199,7 +186,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -237,7 +223,6 @@ getSchemaName() - Check when the result set is closed.
     }
 
 
-
 /**
 getSchemaName() - Check when the meta data is from a prepared statement.
 **/
@@ -267,7 +252,6 @@ getSchemaName() - Check when the meta data is from a prepared statement.
     }
 
 
-
 //@C1A  Add testcases to test "extended metadata" property.
 
 
@@ -286,7 +270,6 @@ getSchemaName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getSchemaName() - Check column 0.  Should throw an exception.
 **/
@@ -300,7 +283,6 @@ getSchemaName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -317,7 +299,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -355,7 +336,6 @@ getSchemaName() - Check when the result set is closed.
     }
 
 
-
 /**
 getSchemaName() - Check when the meta data is from a prepared statement.
 **/
@@ -382,7 +362,6 @@ getSchemaName() - Check when the meta data is from a prepared statement.
             }
         }
     }
-
 
 
 /**
@@ -415,9 +394,6 @@ getSchemaName() - Make sure we get old information if "extended metadata=false".
     }
 
 
-
-
 }
-
 
 

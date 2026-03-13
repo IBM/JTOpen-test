@@ -10,27 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionSort.java
 //
 // Classes:      JDSCPDSConnectionSort
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//                                                     Not sure how to code them for success since
-//                                                     the native driver doesn't support it.
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.SCPDS;
 
@@ -76,7 +61,6 @@ extends JDTestcase {
    }
 
 
-
 /**
 Constructor.
 **/
@@ -91,7 +75,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -120,7 +103,6 @@ Verifies that the server is sorting.
         s.close ();
         return(check && (count > 5));
     }
-
 
 
 /**
@@ -156,7 +138,6 @@ SQL400 - This property is not supported by the native driver today.
     }
 
 
-
 /**
 "sort" property - Specify "hex".
 
@@ -186,7 +167,6 @@ SQL400 - This property is not supported by the native driver today.
             }
         }
     }
-
 
 
 /**
@@ -220,7 +200,6 @@ SQL400 - This property is not supported by the native driver today.
     }
 
 
-
 /**
 "sort" property - Specify "language" with no language specified.
 
@@ -251,7 +230,6 @@ SQL400 - This property is not supported by the native driver today.
             }
         }
     }
-
 
 
 /**
@@ -288,7 +266,6 @@ SQL400 - This property is not supported by the native driver today.
     }
 
 
-
 /**
 "sort" property - Specify "language" with a valid language specified.
 
@@ -319,7 +296,6 @@ SQL400 - This property is not supported by the native driver today.
             }
         }
     }
-
 
 
 /**
@@ -356,7 +332,6 @@ SQL400 - This property is not supported by the native driver today.
     }
 
 
-
 /**
 "sort" property - Specify "language" with shared weight.
 
@@ -389,7 +364,6 @@ SQL400 - This property is not supported by the native driver today.
             }
         }
     }
-
 
 
 /**
@@ -426,7 +400,6 @@ SQL400 - This property is not supported by the native driver today.
     }
 
 
-
 /**
 "sort" property - Specify "table" with no table specified.
 
@@ -458,7 +431,6 @@ SQL400 - This property is not supported by the native driver today.
             }
         }
     }
-
 
 
 /**
@@ -566,6 +538,5 @@ SQL400 - This property is not supported by the native driver today.
         }
     }
 }
-
 
 

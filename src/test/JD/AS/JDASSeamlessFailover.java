@@ -18,8 +18,6 @@
 //Classes:   AS400JDBCSeamlessFailover
 //
 ////////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////////
 
 package test.JD.AS;
 import java.io.FileOutputStream;
@@ -84,7 +82,6 @@ super(systemObject, testname, namesAndVars, runMode,
 fileOutputStream, password, pwrSysUserID, pwrSysPassword);
 // originalPrintWriter_ = Trace.getPrintWriter();
 }
-
 
 
 public void setup() {
@@ -417,7 +414,6 @@ proxies[i].endService();
 }
 
 
-
 public void testDSPSTypeParametersSwitch(String[][] psTransactions,
 String[][][][] psParms, int parmType) {
 if (checkToolboxFixDate(TOOLBOX_FIX_DATE)) { 
@@ -722,9 +718,6 @@ return false;
 }
 return true; 
 }
-
-
-
 
 
 }

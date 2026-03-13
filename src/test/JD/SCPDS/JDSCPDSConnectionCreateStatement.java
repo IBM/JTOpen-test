@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionCreateStatement.java
 //
 // Classes:      JDSCPDSConnectionCreateStatement
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 
@@ -111,7 +98,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -165,7 +151,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -189,7 +174,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /** 
 Checks whether a result set is scrollable.
 **/
@@ -203,7 +187,6 @@ Checks whether a result set is scrollable.
         }
         return true;
     }
-
 
 
 /**
@@ -220,7 +203,6 @@ Checks whether a result set is updatable.
         }
         return true;
     }
-
 
 
 /**
@@ -270,7 +252,6 @@ reached, and returns the number of statements allocated.
     }
 
 
-
 /**
 createStatement() with 0 parameters - Create a statement in a
 connection.  Verify the result set type and concurrency in the
@@ -293,7 +274,6 @@ statement.
     }
 
 
-
 /**
 createStatement() - Create a statement in a closed connection.
 Should throw an exception. Initially thrw a NullPointerException.
@@ -311,7 +291,6 @@ Now, it correctly throws SQLException
             }
         }
     }
-
 
 
 /**
@@ -358,7 +337,6 @@ a bogus result set type.
     }
 
 
-
 /**
 createStatement() with 2 parameters - Create a statement with
 a bogus result set concurrency.
@@ -377,7 +355,6 @@ a bogus result set concurrency.
     }
 
 
-
 /**
 createStatement() with 2 parameters - Create a statement in a
 closed connection.  Should throw an exception.
@@ -394,7 +371,6 @@ closed connection.  Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -426,7 +402,6 @@ and read-only.
             }
         }
     }
-
 
 
 /**
@@ -461,7 +436,6 @@ and updatable.
     }
 
 
-
 /**
 createStatement() with 2 parameters - Create a statement as scroll insensitive
 and read-only. 
@@ -491,7 +465,6 @@ and read-only.
             }
         }
     }
-
 
 
 /**
@@ -524,7 +497,6 @@ and updatable.
             }
         }
     }
-
 
 
 /**
@@ -576,7 +548,6 @@ and read-only.
     }
 
 
-
 /**
 createStatement() with 2 parameters - Create a statement as scroll sensitive
 and updatable. 
@@ -609,7 +580,6 @@ and updatable.
     }
 
 
-
 /**
 prepareStatement() - Create a prepared statement in a connection.
 Verify the result set type and concurrency in the statement.
@@ -631,7 +601,6 @@ Verify the result set type and concurrency in the statement.
     }
 
 
-
 /**
 prepareStatement() - Pass null for SQL statement.
 Should throw an exception.
@@ -647,7 +616,6 @@ Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -667,7 +635,6 @@ Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() - Pass a blank string for SQL statement.
 Should throw an exception.
@@ -683,7 +650,6 @@ Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -703,7 +669,6 @@ Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() - Create a prepared statement in a closed connection.
 Should throw an exception.
@@ -719,7 +684,6 @@ Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -741,7 +705,6 @@ Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() with 3 parameters - Pass an empty string for
 SQL statement.   Should throw an exception.
@@ -759,7 +722,6 @@ SQL statement.   Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -781,7 +743,6 @@ for SQL statement.  Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() with 3 parameters - Pass a bogus string
 for SQL statement.  Should throw an exception.
@@ -799,7 +760,6 @@ for SQL statement.  Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -820,7 +780,6 @@ result set type.   Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() with 3 parameters - Pass an bad value for
 result set concurrency.   Should throw an exception.
@@ -839,7 +798,6 @@ result set concurrency.   Should throw an exception.
     }
 
 
-
 /**
 prepareStatement() with 3 parameters - Create a prepared statement
 in a closed connection. Should throw an exception.
@@ -856,7 +814,6 @@ in a closed connection. Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -890,7 +847,6 @@ and read-only.
     }
 
 
-
 /**
 prepareStatement() with 2 parameters - Prepare a updateable query as forward-only
 and read-only. 
@@ -920,7 +876,6 @@ and read-only.
             }
         }
     }
-
 
 
 /**
@@ -965,7 +920,6 @@ and updatable.
     }
 
 
-
 /**
 prepareStatement() with 2 parameters - Prepare an updateable statement as forward-only
 and updatable. 
@@ -995,7 +949,6 @@ and updatable.
             }
         }
     }
-
 
 
 /**
@@ -1029,7 +982,6 @@ and read-only.
     }
 
 
-
 /**
 prepareStatement() with 2 parameters - Prepare a statement as scroll insensitive
 and updatable. 
@@ -1059,7 +1011,6 @@ and updatable.
             }
         }
     }
-
 
 
 /**
@@ -1111,7 +1062,6 @@ and read-only.
     }
 
 
-
 /**
 prepareStatement() with 2 parameters - Prepare a statement as scroll sensitive
 and updatable. 
@@ -1143,7 +1093,6 @@ and updatable.
     }
 
 
-
 /**
 prepareCall() - Create a callable statement in a connection.
 Verify the result set type and concurrency in the statement.
@@ -1165,7 +1114,6 @@ Verify the result set type and concurrency in the statement.
     }
 
 
-
 /**
 prepareCall() - Pass null.  Should throw an exception.
 **/
@@ -1180,7 +1128,6 @@ prepareCall() - Pass null.  Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1199,7 +1146,6 @@ prepareCall() - Pass an empty string.  Should throw an exception.
     }
 
 
-
 /**
 prepareCall() - Pass a blank string.  Should throw an exception.
 **/
@@ -1214,7 +1160,6 @@ prepareCall() - Pass a blank string.  Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1233,7 +1178,6 @@ prepareCall() - Pass a bogus string.  Should throw an exception.
     }
 
 
-
 /**
 prepareCall() - Create a callable statement in a closed connection.
 Should throw an exception.
@@ -1249,7 +1193,6 @@ Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1273,7 +1216,6 @@ statement in a connection.
     }
 
 
-
 /**
 prepareCall() with 3 parameters - Pass null for SQL statement.
 Should throw an exception.
@@ -1290,7 +1232,6 @@ Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1311,7 +1252,6 @@ SQL statement.   Should throw an exception.
     }
 
 
-
 /**
 prepareCall() with 3 parameters - Pass a blank string
 for SQL statement.  Should throw an exception.
@@ -1328,7 +1268,6 @@ for SQL statement.  Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1349,7 +1288,6 @@ for SQL statement.  Should throw an exception.
     }
 
 
-
 /**
 prepareCall() with 3 parameters - Pass an bad value for
 result set type.   Should throw an exception.
@@ -1366,7 +1304,6 @@ result set type.   Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1387,7 +1324,6 @@ result set concurrency.   Should throw an exception.
     }
 
 
-
 /**
 prepareCall() with 3 parameters - Create a callable statement
 in a closed connection. Should throw an exception.
@@ -1404,7 +1340,6 @@ in a closed connection. Should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -1438,7 +1373,6 @@ and read-only.
     }
 
 
-
 /**
 prepareCall() with 2 parameters - Prepare a statement as forward-only
 and updatable. 
@@ -1468,7 +1402,6 @@ and updatable.
             }
         }
     }
-
 
 
 /**
@@ -1502,7 +1435,6 @@ and read-only.
     }
 
 
-
 /**
 prepareCall() with 2 parameters - Prepare a statement as scroll insensitive
 and updatable. 
@@ -1532,7 +1464,6 @@ and updatable.
             }
         }
     }
-
 
 
 /**
@@ -1577,7 +1508,6 @@ and read-only.
     }
 
 
-
 /**
 prepareCall() with 2 parameters - Prepare a statement as scroll sensitive
 and updatable. 
@@ -1609,7 +1539,6 @@ and updatable.
     }
 
 
-
 /**
 createStatement()/prepareStatement()/prepareCall() - Verify
 that we can create exactly 255 statements.
@@ -1633,7 +1562,6 @@ SQL400 - The Native JDBC driver handle limit keeps changing.
             }
         }
     }
-
 
 
 /**
@@ -1722,9 +1650,6 @@ prepareStatement (for autogenerated keys) -- make sure this works.
     
 
 
-
 }
-
-
 
 

@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringGraphic.java
 //
 // Classes:      JDParmStringGraphic
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -63,7 +50,6 @@ import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
 
 
-
 /**
 Testcase JDParmStringGraphic.  This tests the following method
 of the JDBC PreparedStatement class:
@@ -83,7 +69,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -109,7 +94,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -158,7 +142,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -173,7 +156,6 @@ This is the place to put all cleanup work for the testcase.
          e.printStackTrace();
       }
    }
-
 
 
 /**
@@ -222,7 +204,6 @@ Test:  graphic(1) - empty string
    }
 
 
-
 /**
 Test:  graphic(1) - null value
 **/
@@ -242,7 +223,6 @@ Test:  graphic(1) - null value
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -284,7 +264,6 @@ Test:  graphic(1) - value too big
    }
 
 
-
 /**
 Test:  graphic(20) - value is just right
 **/
@@ -310,7 +289,6 @@ Test:  graphic(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -365,7 +343,6 @@ Test:  graphic(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  graphic(20) - value is empty string
 **/
@@ -385,7 +362,6 @@ Test:  graphic(20) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -449,7 +425,6 @@ Test:  graphic(20) - value too big
    }
 
 
-
 /**
 Test:  graphic(16361) - value is just right
 **/
@@ -475,7 +450,6 @@ Test:  graphic(16361) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -532,7 +506,6 @@ Test:  graphic(16361) - value is 1 char long
    }
 
 
-
 /**
 Test:  graphic(16361) - value is empty string
 **/
@@ -553,7 +526,6 @@ Test:  graphic(16361) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -617,6 +589,5 @@ Test:  graphic(16361) - value too big
    }
 
 }
-
 
 

@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringDecimal.java
 //
 // Classes:      JDParmStringDecimal
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -45,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -67,7 +53,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -96,7 +81,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -159,7 +143,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -174,7 +157,6 @@ This is the place to put all cleanup work for the testcase.
          e.printStackTrace();
       }
    }
-
 
 
 /**
@@ -218,7 +200,6 @@ Test:  Decimal(1, 0) - empty string.  This is an error condition - an empty stri
    }
 
 
-
 /**
 Test:  Decimal(1, 0) - empty string.  This is an error condition - an empty string is not 
     automatically treated as some default value.
@@ -236,7 +217,6 @@ Test:  Decimal(1, 0) - empty string.  This is an error condition - an empty stri
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -258,7 +238,6 @@ Test:  Decimal(1, 0) - null value.  This is legal.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -287,7 +266,6 @@ Test:  Decimal(1, 0) - value too big.  This is expected to throw a data truncati
    }
 
 
-
 /**
 Test:  Decimal(1, 0) - value with a decimal point - this is expected to work with the decimal
     point and trailing data being removed automatically.
@@ -310,7 +288,6 @@ Test:  Decimal(1, 0) - value with a decimal point - this is expected to work wit
    }
 
 
-
 /**
 Test:  Decimal(5, 0) - value is just right.
 **/
@@ -330,7 +307,6 @@ Test:  Decimal(5, 0) - value is just right.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -373,7 +349,6 @@ Test:  Decimal(5, 0) - empty string.  This is an error condition - an empty stri
    }
 
 
-
 /**
 Test:  Decimal(5, 0) - null value.  This is legal.
 **/
@@ -393,7 +368,6 @@ Test:  Decimal(5, 0) - null value.  This is legal.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -421,7 +395,6 @@ Test:  Decimal(5, 0) - value too big.  This is expected to throw a data truncati
    }
 
 
-
 /**
 Test:  Decimal(5, 0) - value with a decimal point - this is expected to work with the decimal
     point and trailing data being removed automatically.
@@ -447,7 +420,6 @@ Test:  Decimal(5, 0) - value with a decimal point - this is expected to work wit
    }
 
 
-
 /**
 Test:  Decimal(10, 0) - value is just right.
 **/
@@ -467,7 +439,6 @@ Test:  Decimal(10, 0) - value is just right.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -510,7 +481,6 @@ Test:  Decimal(10, 0) - empty string.  This is an error condition - an empty str
    }
 
 
-
 /**
 Test:  Decimal(10, 0) - null value.  This is legal.
 **/
@@ -530,7 +500,6 @@ Test:  Decimal(10, 0) - null value.  This is legal.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -560,7 +529,6 @@ Test:  Decimal(10, 0) - value too big.  This is expected to throw a data truncat
    }
 
 
-
 /**
 Test:  Decimal(10, 0) - value with a decimal point - this is expected to work with the decimal
     point and trailing data being removed automatically.
@@ -581,7 +549,6 @@ Test:  Decimal(10, 0) - value with a decimal point - this is expected to work wi
           JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
        }
    }
-
 
 
 /**
@@ -605,7 +572,6 @@ Test:  Decimal(5, 5) - value is just right (has leading 0).
    }
 
 
-
 /**
 Test:  Decimal(5, 5) - value is just right (no leading 0).
 **/
@@ -625,7 +591,6 @@ Test:  Decimal(5, 5) - value is just right (no leading 0).
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -673,7 +638,6 @@ Test:  Decimal(5, 5) - empty string.  This is an error condition - an empty stri
    }
 
 
-
 /**
 Test:  Decimal(5, 5) - null value.  This is legal.
 **/
@@ -695,7 +659,6 @@ Test:  Decimal(5, 5) - null value.  This is legal.
    }
 
 
-
 /**
 Test:  Decimal(5, 5) - value too big.  This is expected to work.  The extra precision is truncated.
 **/
@@ -715,7 +678,6 @@ Test:  Decimal(5, 5) - value too big.  This is expected to work.  The extra prec
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -777,7 +739,6 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
    }
 
 
-
 /**
 Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
 **/
@@ -820,6 +781,5 @@ Test:  Decimal(1, 1) - Deal with constrained space and tricky strings.
    }
 
 }
-
 
 
