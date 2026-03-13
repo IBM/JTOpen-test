@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionNaming.java
 //
 // Classes:      JDSCPDSConnectionNaming
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 
@@ -67,7 +54,6 @@ extends JDTestcase {
    }
 
 
-
 /**
 Constructor.
 **/
@@ -82,7 +68,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -110,7 +95,6 @@ An exception should be thrown.
     }
 
 
-
 /**
 naming - Does not specify naming and uses sql naming.
 This should work.
@@ -133,7 +117,6 @@ This should work.
             }
         }
     }
-
 
 
 /**
@@ -161,7 +144,6 @@ An exception should be thrown.
     }
 
 
-
 /**
 naming - Specifies sql naming and uses sql naming.
 This should work.
@@ -185,7 +167,6 @@ This should work.
             }
         }
     }
-
 
 
 /**
@@ -213,7 +194,6 @@ An exception should be thrown.
     }
 
 
-
 /**
 naming - Specifies system naming and uses system naming.
 This should work.
@@ -239,7 +219,6 @@ This should work.
     }
 
 
-
 /**
 naming - Specifies bogus naming but uses system naming.
 An exception should be thrown.
@@ -263,7 +242,6 @@ An exception should be thrown.
             }
         }
     }
-
 
 
 /**
@@ -297,18 +275,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

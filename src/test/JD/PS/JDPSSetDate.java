@@ -11,25 +11,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
- ////////////////////////////////////////////////////////////////////////
- //
- // File Name:    JDPSSetDate.java
- //
- // Classes:      JDPSSetDate
- //
- ////////////////////////////////////////////////////////////////////////
- //
- //
- //                                                  Toolbox.
- //
- //
- ////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+//
+// File Name:    JDPSSetDate.java
+//
+// Classes:      JDPSSetDate
+//
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PS;
 
@@ -55,7 +43,6 @@ import test.JD.JDSerializeFile;
 import java.sql.SQLException;
 
 
-
 /**
 Testcase JDPSSetDate.  This tests the following method
 of the JDBC PreparedStatement class:
@@ -78,15 +65,12 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDPSST";
 
 
-
     // Private data.
     private Statement           statement_;
-
 
 
 /**
@@ -103,7 +87,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -128,7 +111,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -142,7 +124,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -176,7 +157,6 @@ statement is closed.
   }
 
 
-
 /**
 setDate() - Should throw exception when an invalid index is
 specified.
@@ -206,7 +186,6 @@ specified.
       }
     }
   }
-
 
 
 /**
@@ -239,7 +218,6 @@ setDate() - Should throw exception when index is 0.
   }
 
 
-
 /**
 setDate() - Should throw exception when index is -1.
 **/
@@ -268,7 +246,6 @@ setDate() - Should throw exception when index is -1.
       }
     }
   }
-
 
 
 /**
@@ -309,7 +286,6 @@ setDate() - Should throw exception when the value is null.
       }
     }
   }
-
 
 
 /**
@@ -357,7 +333,6 @@ greater than 1.
     }
 
 
-
 /**
 setDate() - Should throw exception when the calendar is null.
 **/
@@ -391,7 +366,6 @@ if (checkJdbc20 ()) {
       }
     }
   }
-
 
 
 /**
@@ -450,7 +424,6 @@ setDate() - Set a SMALLINT parameter.
     }
 
 
-
 /**
 setDate() - Set a INTEGER parameter.
 **/
@@ -479,7 +452,6 @@ setDate() - Set a INTEGER parameter.
       }
     }
   }
-
 
 
 /**
@@ -512,7 +484,6 @@ setDate() - Set a REAL parameter.
   }
 
 
-
 /**
 setDate() - Set a FLOAT parameter.
 **/
@@ -541,7 +512,6 @@ setDate() - Set a FLOAT parameter.
       }
     }
   }
-
 
 
 /**
@@ -574,7 +544,6 @@ setDate() - Set a DOUBLE parameter.
   }
 
 
-
 /**
 setDate() - Set a DECIMAL parameter.
 **/
@@ -605,7 +574,6 @@ setDate() - Set a DECIMAL parameter.
   }
 
 
-
 /**
 setDate() - Set a NUMERIC parameter.
 **/
@@ -634,7 +602,6 @@ setDate() - Set a NUMERIC parameter.
       }
     }
   }
-
 
 
 /**
@@ -677,7 +644,6 @@ setDate() - Set a CHAR(50) parameter.
   }
 
 
-
 /**
 setDate() - Set a VARCHAR(50) parameter.
 **/
@@ -718,7 +684,6 @@ setDate() - Set a VARCHAR(50) parameter.
   }
 
 
-
 /**
 setDate() - Set a CLOB parameter.
 **/
@@ -752,8 +717,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
-
 
 
 /**
@@ -791,7 +754,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setDate() - Set a BINARY parameter.
 **/
@@ -822,8 +784,6 @@ setDate() - Set a BINARY parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -858,8 +818,6 @@ setDate() - Set a VARBINARY parameter.
   }
 
 
-
-
 /**
 setDate() - Set a BLOB parameter.
 **/
@@ -888,8 +846,6 @@ setDate() - Set a BLOB parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -982,8 +938,6 @@ setDate() - Set a DATE parameter, with a calendar specified.
     }
 
 
-
-
 /**
 setDate() - Set a TIME parameter.
 **/
@@ -1015,7 +969,6 @@ setDate() - Set a TIME parameter.
       }
     }
     }
-
 
 
 /**
@@ -1102,7 +1055,6 @@ setDate() - Set a DATALINK parameter.
     }
 
 
-
 /**
 setDate() - Set a DISTINCT parameter.
 **/
@@ -1138,7 +1090,6 @@ setDate() - Set a DISTINCT parameter.
     }
 
 
-
 /**
 setDate() - Set a BIGINT parameter.
 **/
@@ -1172,7 +1123,6 @@ setDate() - Set a BIGINT parameter.
       }
     }
     }
-
 
 
 /**
@@ -1350,9 +1300,6 @@ setDate() - Set a BOOLEAN parameter.
     }
 
 
-
-
 }
-
 
 

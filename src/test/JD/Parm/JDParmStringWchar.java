@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringWchar.java
 //
 // Classes:      JDParmStringWchar
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -45,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -67,7 +53,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -101,7 +86,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -201,7 +185,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -259,7 +242,6 @@ Test:  wchar(1) - empty string
    }
 
 
-
 /**
 Test:  wchar(1) - null value
 **/
@@ -279,7 +261,6 @@ Test:  wchar(1) - null value
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -321,7 +302,6 @@ Test:  wchar(1) - value too big
    }
 
 
-
 /**
 Test:  wchar(20) - value is just right
 **/
@@ -341,7 +321,6 @@ Test:  wchar(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -386,7 +365,6 @@ Test:  wchar(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(20) - value is empty string
 **/
@@ -406,7 +384,6 @@ Test:  wchar(20) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -472,7 +449,6 @@ Test:  wchar(20) - value too big
    }
 
 
-
 /**
 Test:  wchar(16361) - value is just right
 **/
@@ -492,7 +468,6 @@ Test:  wchar(16361) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -547,7 +522,6 @@ Test:  wchar(16361) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(16361) - value is empty string
 **/
@@ -572,7 +546,6 @@ Test:  wchar(16361) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -678,7 +651,6 @@ Test:  wchar(1) - empty string
    }
 
 
-
 /**
 Test:  wchar(1) - null value
 **/
@@ -699,7 +671,6 @@ Test:  wchar(1) - null value
        } 
 
    }
-
 
 
 /**
@@ -743,7 +714,6 @@ Test:  wchar(1) - value too big
    }
 
 
-
 /**
 Test:  wchar(20) - value is just right
 **/
@@ -764,7 +734,6 @@ Test:  wchar(20) - value is just right
        } 
 
    }
-
 
 
 /**
@@ -811,7 +780,6 @@ Test:  wchar(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(20) - value is empty string
 **/
@@ -832,7 +800,6 @@ Test:  wchar(20) - value is empty string
        } 
 
    }
-
 
 
 /**
@@ -897,7 +864,6 @@ Test:  wchar(20) - value too big
    }
 
 
-
 /**
 Test:  wchar(16361) - value is just right
 **/
@@ -918,7 +884,6 @@ Test:  wchar(16361) - value is just right
        } 
 
    }
-
 
 
 /**
@@ -975,7 +940,6 @@ Test:  wchar(16361) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(16361) - value is empty string
 **/
@@ -1001,7 +965,6 @@ Test:  wchar(16361) - value is empty string
        } 
 
    }
-
 
 
 /**
@@ -1109,7 +1072,6 @@ Test:  wchar(1) - empty string
    }
 
 
-
 /**
 Test:  wchar(1) - null value
 **/
@@ -1130,7 +1092,6 @@ Test:  wchar(1) - null value
        } 
 
    }
-
 
 
 /**
@@ -1173,7 +1134,6 @@ Test:  wchar(1) - value too big
    }
 
 
-
 /**
 Test:  wchar(20) - value is just right
 **/
@@ -1194,7 +1154,6 @@ Test:  wchar(20) - value is just right
        } 
 
    }
-
 
 
 /**
@@ -1241,7 +1200,6 @@ Test:  wchar(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(20) - value is empty string
 **/
@@ -1262,7 +1220,6 @@ Test:  wchar(20) - value is empty string
        } 
 
    }
-
 
 
 /**
@@ -1327,7 +1284,6 @@ Test:  wchar(20) - value too big
    }
 
 
-
 /**
 Test:  wchar(16361) - value is just right
 **/
@@ -1348,7 +1304,6 @@ Test:  wchar(16361) - value is just right
        } 
 
    }
-
 
 
 /**
@@ -1405,7 +1360,6 @@ Test:  wchar(16361) - value is 1 char long
    }
 
 
-
 /**
 Test:  wchar(16361) - value is empty string
 **/
@@ -1431,7 +1385,6 @@ Test:  wchar(16361) - value is empty string
        } 
 
    }
-
 
 
 /**

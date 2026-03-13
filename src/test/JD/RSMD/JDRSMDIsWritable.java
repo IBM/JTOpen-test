@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDIsWritable.java
 //
 // Classes:      JDRSMDIsWritable
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -41,7 +33,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -69,7 +60,6 @@ extends JDTestcase
                                                     + ".JDRSMIS";
 
 
-
     // Private data.
     private Statement statement_     = null;
     private ResultSet rs_            = null;
@@ -79,9 +69,6 @@ extends JDTestcase
     private Statement statement2_    = null;   //@C1A
     private ResultSet rs2_           = null;   //@C1A
     private ResultSetMetaData rsmd2_ = null;   //@C1A
-
-
-
 
 
 /**
@@ -98,8 +85,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
-
 
 
 /**
@@ -135,7 +120,6 @@ Performs setup needed before running variations.
         rs2_ = statement2_.executeQuery ("SELECT * FROM " + TABLE);
         rsmd2_ = rs2_.getMetaData ();
     }
-
 
 
 /**
@@ -179,7 +163,6 @@ isWritable() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isWritable() - Check column 0.  Should throw an exception.
 **/
@@ -193,7 +176,6 @@ isWritable() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -210,7 +192,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -237,7 +218,6 @@ isWritable() - Check a column with an updatable query result set.
     }
 
 
-
 /**
 isWritable() - Check a column with a read only query result set.
 **/
@@ -251,7 +231,6 @@ isWritable() - Check a column with a read only query result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -274,7 +253,6 @@ isWritable() - Check a column with a catalog result set.
     }
 
 
-
 /**
 isWritable() - Check when the result set is closed.
 **/
@@ -293,7 +271,6 @@ isWritable() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -341,7 +318,6 @@ isWritable() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isWritable() - Check column 0.  Should throw an exception.
 **/
@@ -355,7 +331,6 @@ isWritable() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -372,7 +347,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -399,7 +373,6 @@ isWritable() - Check a column with an updatable query result set.
     }
 
 
-
 /**
 isWritable() - Check a column with a read only query result set.
 **/
@@ -413,7 +386,6 @@ isWritable() - Check a column with a read only query result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -436,7 +408,6 @@ isWritable() - Check a column with a catalog result set.
     }
 
 
-
 /**
 isWritable() - Check when the result set is closed.
 **/
@@ -455,7 +426,6 @@ isWritable() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -536,11 +506,6 @@ isWritable() - Check that we don't get new data if "extended metadata=false".
     }
 
 
-
-
-
-
 }
-
 
 

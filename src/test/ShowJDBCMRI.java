@@ -1,6 +1,3 @@
-//////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 //
 // JTOpen (IBM Toolbox for Java - OSS version)
@@ -19,7 +16,6 @@ import java.sql.Driver;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.util.Properties;
-
 
 
 public class ShowJDBCMRI
@@ -42,7 +38,6 @@ public class ShowJDBCMRI
         catch (SQLException e) {
             e.printStackTrace ();
         }
-
 
 
         for (int i = 0; i < dpi.length; ++i)
@@ -185,8 +180,6 @@ public class ShowJDBCMRI
             System.out.println ("Translated: " + dpi[i].description);
         }
     }
-
-
 
 
 }

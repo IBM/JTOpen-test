@@ -289,7 +289,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
     }
 
 
-
     public void added(AS400CertificateEvent event)
     {
 	if (usEvent != null)
@@ -327,7 +326,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
 
     testInit();
   }
-
 
 
   //***********************************************************/
@@ -561,7 +559,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
                          );
 
 
-
          // no locality or state
     byte[] testcert9 =  gencert.genCert(
                          "subject",
@@ -658,7 +655,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
   }
 
 
-
   void testInit()
     throws Exception
   {
@@ -675,7 +671,6 @@ public class AS400CertificateUsrPrfBeans extends Testcase implements PropertyCha
        }
     }
     catch (Exception e) {}
-
 
 
     //read in 13 test X.509 certificates
@@ -1069,7 +1064,6 @@ Add a certificate to CERTTEST user profile, verify add event.
       }
 
 
-
   }
   catch(Exception e)
   {
@@ -1081,7 +1075,6 @@ Add a certificate to CERTTEST user profile, verify add event.
 	
 
 }
-
 
 
     /**
@@ -1212,11 +1205,14 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    us.addPropertyChangeListener(this);
 	    AS400 newsys = new AS400();
 	    us.setSystem(newsys);
+	    boolean passed = verifyPropChange("system", systemObject_, newsys, us, us.getSystem()) == true;
+	    newsys.close(); 
 	    // Verify event
-	    if (verifyPropChange("system", systemObject_, newsys, us, us.getSystem()) == true)
+	    if (passed )
 	    {
 		succeeded();
 	    }
+	 
 	}
 	catch(Exception e)
 	{
@@ -1669,9 +1665,9 @@ Add a certificate to CERTTEST user profile, verify add event.
 	
 	setVariation(17);
 	
-	try
+	try (AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());)
 	{
-	    AS400 badSystem = new AS400("rchasxxx", "JAVA", "JTEAM1".toCharArray());
+	    
 	    AS400CertificateUserProfileUtil aAS400CertificateUserProfileUtil = new AS400CertificateUserProfileUtil(badSystem, goodUsrPrfName);
 	    String newUSName = "/QSYS.LIB/CERTTEST1.USRPRF";
 	    aAS400CertificateUserProfileUtil.setPath(newUSName);
@@ -1713,7 +1709,8 @@ Add a certificate to CERTTEST user profile, verify add event.
 	    }
 	    finally
 	    {
-	      if (s != null) s.close(); 
+	      if (s != null) s.close();
+	      if (f != null) f.close(); 
 	      if (s2 != null) s2.close(); 
 		File fd = new File("uspace.ser");
 		fd.delete();

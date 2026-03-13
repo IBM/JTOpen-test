@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSMisc.java
 //
 // Classes:      JDCSMisc
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.CS;
 
 import java.io.FileOutputStream;
@@ -53,7 +40,6 @@ import test.JD.JDSetupPackage;
 import test.JD.JDTestUtilities;
 
 
-
 /**
 Testcase JDCSMisc.  This tests the following
 methods of the JDBC CallableStatement class:
@@ -76,7 +62,6 @@ extends JDTestcase
      }
      test.JDCSTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -107,7 +92,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -177,7 +161,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
  * Performs cleanup needed after running variations.
  *
@@ -203,7 +186,6 @@ Performs setup needed before running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -263,7 +245,6 @@ checked by trying to execute the statement.
     }
 
 
-
 /**
 clearParameters() - Clear parameters when thge statement is closed.
 An exception should be thrown.
@@ -282,7 +263,6 @@ An exception should be thrown.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -317,7 +297,6 @@ result sets.
         failed (e, "Unexpected Exception");
     }
   }
-
 
 
 /**
@@ -370,9 +349,6 @@ cache.
         failed (e, "Unexpected Exception");
     }
   }
-
-
-
 
 
 /**
@@ -661,8 +637,6 @@ cache.
 	               "LANGUAGE C++ GENERAL ";
 
 
-
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+collection_+".JDCSCPPPGM");
@@ -722,7 +696,6 @@ cache.
         failed (e, "Unexpected Exception -- new testcase added by native driver 12/10/03 command='"+command+"' sql='"+sql+"'");
     }
   }
-
 
 
 /**
@@ -794,7 +767,6 @@ cache.
 	               " dynamic result sets 0  "+
                        " EXTERNAL NAME '"+collection_+"/JDCSCPGM' "+
 	               " LANGUAGE C GENERAL ";
-
 
 
 	  Statement stmt = connection2_.createStatement();
@@ -1058,8 +1030,6 @@ cache.
 	               "LANGUAGE C++ GENERAL ";
 
 
-
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+collection_+".JDCSCP2PGM");
@@ -1091,7 +1061,6 @@ cache.
 	  int p6 = cs.getShort(6);
 
 
-
 	  cs.close();
 	  cmd.close();
 
@@ -1101,8 +1070,6 @@ cache.
 	  stmt.executeUpdate("DROP TABLE     "+collection_+".JDCSCP2PGM");
           stmt.executeUpdate("DROP TABLE     "+collection_+".JDCSC10PGM");
 	  stmt.close();
-
-
 
 
 	  assertCondition ( p1 == 123 &&
@@ -1118,7 +1085,6 @@ cache.
         failed (e, "Unexpected Exception -- new testcase added by native driver 10/05/05 ");
     }
   }
-
 
 
 /**
@@ -1192,7 +1158,6 @@ cache.
 	               " LANGUAGE C GENERAL ";
 
 
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+collection_+".JDCSC11PGM");
@@ -1239,7 +1204,6 @@ cache.
         failed (e, "Unexpected Exception -- new testcase added by native driver 10/05/05 ");
     }
   }
-
 
 
 /**
@@ -1339,7 +1303,6 @@ cache.
 
       }
   }
-
 
 
     /**
@@ -1637,7 +1600,6 @@ cache.
   }
 
 
-
   public void testReturnFormats(String connectionProperty, String[] expectedTime, String[] expectedDate) {
         String added = "-- New testcase added by toolbox driver 08/09/2006";
         String sql = "";
@@ -1770,7 +1732,6 @@ cache.
      }
 
 
-
       /**
        * Call a stored procedures that returns a time and date in all various
        * formats with connection props "time format=jis" and "date format=jis"
@@ -1797,7 +1758,6 @@ cache.
          String[] expectedDate = { "1999-12-01", "2000-01-12", "1900-01-01", "2030-01-01", "2030-01-01", "2030-01-15", "2030-01-15"};
          testReturnFormats(connectionProperties, expectedTime, expectedDate);
        }
-
 
 
 /**
@@ -1997,7 +1957,6 @@ cache.
   }
 
 
-
 /**
  * Call a C stored procedure that returns zero length ebcdic data
  */
@@ -2060,7 +2019,6 @@ cache.
 	               " LANGUAGE C GENERAL ";
 
 
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+lib+".JDCSC26PGM");
@@ -2094,7 +2052,6 @@ cache.
         failed (e, "Unexpected Exception -- test zero length output --  new testcase added by native driver 7/27/09 ");
     }
   }
-
 
 
 /**
@@ -2152,7 +2109,6 @@ cache.
 	               " LANGUAGE C GENERAL ";
 
 
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+lib+".JDCSC27PGM");
@@ -2187,7 +2143,6 @@ cache.
         failed (e, "Unexpected Exception -- test zero length output --  new testcase added by native driver 7/27/09 ");
     }
   }
-
 
 
 /**
@@ -2240,7 +2195,6 @@ cache.
 	               " dynamic result sets 0  "+
                        " EXTERNAL NAME '"+lib+"/JDCSC28PGM' "+
 	               " LANGUAGE C GENERAL ";
-
 
 
 	  Statement stmt = connection2_.createStatement();
@@ -2362,7 +2316,6 @@ cache.
 	               " LANGUAGE C GENERAL ";
 
 
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+lib+".JDCSC29PGM");
@@ -2405,7 +2358,6 @@ cache.
         failed (e, "Unexpected Exception -- test mixed byte garbage data --  new testcase added by native driver 7/29/09 ");
     }
   }
-
 
 
   public boolean verifyAndCloseRs(boolean passed, ResultSet rs, String expected, StringBuffer sb) throws SQLException {
@@ -2560,7 +2512,6 @@ cache.
   }
 
 
-
 /**
  * Call a stored procedure that executes an embedded SELECT INTO, then indicates an error using
  *  SNDPGMMSG API of QMHSNDPM.
@@ -2649,7 +2600,6 @@ cache.
 	               " LANGUAGE C GENERAL ";
 
 
-
 	  Statement stmt = connection2_.createStatement();
 	  try {
 	      stmt.executeUpdate("drop procedure "+lib+".JDCSC31PGM");
@@ -2683,8 +2633,6 @@ cache.
         failed (e, "Unexpected Exception "+info);
     }
   }
-
-
 
 
 /**
@@ -2787,7 +2735,6 @@ cache.
 		  expectedC3 = "D585A58599408285A3A385994040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"; 
 
 	      } 
-
 
 
 	      String lib = collection_; 
@@ -2903,7 +2850,6 @@ cache.
 
       }
   }
-
 
 
 /**
@@ -3442,6 +3388,5 @@ cache.
 
    
 }
-
 
 

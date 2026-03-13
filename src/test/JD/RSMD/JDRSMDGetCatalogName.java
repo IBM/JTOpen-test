@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetCatalogName.java
 //
 // Classes:      JDRSMDGetCatalogName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -39,7 +31,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
 import test.JDTestcase;
-
 
 
 /**
@@ -64,12 +55,10 @@ extends JDTestcase
    }
 
 
-
     // Private data.
     private ResultSet rs_           = null;
     private ResultSetMetaData rsmd_ = null;
     private Statement statement_    = null;
-
 
 
 /**
@@ -86,7 +75,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -110,7 +98,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -123,7 +110,6 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -141,7 +127,6 @@ getCatalogName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getCatalogName() - Check column 0.  Should throw an exception.
 **/
@@ -155,7 +140,6 @@ getCatalogName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -174,7 +158,6 @@ Should throw an exception.
     }
 
 
-
 /**
 getCatalogName() - Check a valid column.
 **/
@@ -188,7 +171,6 @@ getCatalogName() - Check a valid column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -212,7 +194,6 @@ getCatalogName() - Check when the result set is closed.
     }
 
 
-
 /**
 getCatalogName() - Check when the meta data is from a prepared statement.
 **/
@@ -233,8 +214,6 @@ getCatalogName() - Check when the meta data is from a prepared statement.
     }
 
 
-
 }
-
 
 

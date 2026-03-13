@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnDisplaySize.java
 //
 // Classes:      JDRSMDGetColumnDisplaySize
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -65,7 +56,6 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDRSMDGCDS";
     private static final String PACKAGE_CACHE_NO    = "extended dynamic=false";
@@ -79,7 +69,6 @@ extends JDTestcase
     private ResultSet           rs_             = null;
     private ResultSetMetaData   rsmd_           = null;
     private Statement           statement_      = null;
-
 
 
 /**
@@ -96,8 +85,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
-
 
 
 /**
@@ -134,7 +121,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Reconnects with different properties, if needed.
 
@@ -162,7 +148,6 @@ Reconnects with different properties, if needed.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -175,7 +160,6 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -195,7 +179,6 @@ getColumnDisplaySize() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getColumnDisplaySize() - Check column 0.  Should throw an exception.
 (Package cache = false)
@@ -213,7 +196,6 @@ getColumnDisplaySize() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a column greater than the max.
 Should throw an exception. (Package cache = false)
@@ -229,7 +211,6 @@ Should throw an exception. (Package cache = false)
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -251,7 +232,6 @@ getColumnDisplaySize() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -276,7 +256,6 @@ statement.
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a SMALLINT column. (Package cache = false)
 **/
@@ -291,7 +270,6 @@ getColumnDisplaySize() - Check a SMALLINT column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -310,7 +288,6 @@ getColumnDisplaySize() - Check an INTEGER column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a REAL column. (Package cache = false)
 **/
@@ -325,7 +302,6 @@ getColumnDisplaySize() - Check a REAL column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -344,7 +320,6 @@ getColumnDisplaySize() - Check a FLOAT column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a FLOAT(3) column. (Package cache = false)
 **/
@@ -359,7 +334,6 @@ getColumnDisplaySize() - Check a FLOAT(3) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -378,7 +352,6 @@ getColumnDisplaySize() - Check a DOUBLE column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DECIMAL(5,0) column. (Package cache = false)
 **/
@@ -393,7 +366,6 @@ getColumnDisplaySize() - Check a DECIMAL(5,0) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -412,7 +384,6 @@ getColumnDisplaySize() - Check a DECIMAL(10,5) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a NUMERIC(5,0) column. (Package cache = false)
 **/
@@ -427,7 +398,6 @@ getColumnDisplaySize() - Check a NUMERIC(5,0) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -446,7 +416,6 @@ getColumnDisplaySize() - Check a NUMERIC(10,5) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a CHAR column. (Package cache = false)
 **/
@@ -461,7 +430,6 @@ getColumnDisplaySize() - Check a CHAR column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -480,7 +448,6 @@ getColumnDisplaySize() - Check a CHAR(50) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a VARCHAR(50) column. (Package cache = false)
 **/
@@ -495,7 +462,6 @@ getColumnDisplaySize() - Check a VARCHAR(50) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -514,7 +480,6 @@ getColumnDisplaySize() - Check a BINARY column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a BINARY(20) column. (Package cache = false)
 **/
@@ -529,7 +494,6 @@ getColumnDisplaySize() - Check a BINARY(20) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -548,7 +512,6 @@ getColumnDisplaySize() - Check a VARBINARY(20) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DATE column. (Package cache = false)
 **/
@@ -563,7 +526,6 @@ getColumnDisplaySize() - Check a DATE column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -582,7 +544,6 @@ getColumnDisplaySize() - Check a TIME column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a TIMESTAMP column. (Package cache = false)
 **/
@@ -597,7 +558,6 @@ getColumnDisplaySize() - Check a TIMESTAMP column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -618,7 +578,6 @@ getColumnDisplaySize() - Check a BLOB column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a CLOB column. (Package cache = false)
 **/
@@ -635,7 +594,6 @@ getColumnDisplaySize() - Check a CLOB column. (Package cache = false)
             }
         }
     }
-
 
 
 /**
@@ -656,7 +614,6 @@ getColumnDisplaySize() - Check a DBCLOB column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DATALINK column. (Package cache = false)
 **/
@@ -675,7 +632,6 @@ getColumnDisplaySize() - Check a DATALINK column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DISTINCT column. (Package cache = false)
 **/
@@ -692,7 +648,6 @@ getColumnDisplaySize() - Check a DISTINCT column. (Package cache = false)
             }
         }
     }
-
 
 
 // $B0A
@@ -714,7 +669,6 @@ getColumnDisplaySize() - Check a BIGINT column. (Package cache = false)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check column -1.  Should throw an exception.
 (Package cache = true)
@@ -730,7 +684,6 @@ getColumnDisplaySize() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -750,7 +703,6 @@ getColumnDisplaySize() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a column greater than the max.
 Should throw an exception. (Package cache = true)
@@ -766,7 +718,6 @@ Should throw an exception. (Package cache = true)
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -785,7 +736,6 @@ getColumnDisplaySize() - Check a SMALLINT column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check an INTEGER column. (Package cache = true)
 **/
@@ -800,7 +750,6 @@ getColumnDisplaySize() - Check an INTEGER column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -819,7 +768,6 @@ getColumnDisplaySize() - Check a REAL column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a FLOAT column. (Package cache = true)
 **/
@@ -834,7 +782,6 @@ getColumnDisplaySize() - Check a FLOAT column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -853,7 +800,6 @@ getColumnDisplaySize() - Check a FLOAT(3) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DOUBLE column. (Package cache = true)
 **/
@@ -868,7 +814,6 @@ getColumnDisplaySize() - Check a DOUBLE column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -887,7 +832,6 @@ getColumnDisplaySize() - Check a DECIMAL(5,0) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DECIMAL(10,5) column. (Package cache = true)
 **/
@@ -902,7 +846,6 @@ getColumnDisplaySize() - Check a DECIMAL(10,5) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -921,7 +864,6 @@ getColumnDisplaySize() - Check a NUMERIC(5,0) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a NUMERIC(10,5) column. (Package cache = true)
 **/
@@ -936,7 +878,6 @@ getColumnDisplaySize() - Check a NUMERIC(10,5) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -955,7 +896,6 @@ getColumnDisplaySize() - Check a CHAR column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a CHAR(50) column. (Package cache = true)
 **/
@@ -970,7 +910,6 @@ getColumnDisplaySize() - Check a CHAR(50) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -989,7 +928,6 @@ getColumnDisplaySize() - Check a VARCHAR(50) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a BINARY column. (Package cache = true)
 **/
@@ -1004,7 +942,6 @@ getColumnDisplaySize() - Check a BINARY column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1023,7 +960,6 @@ getColumnDisplaySize() - Check a BINARY(20) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a VARBINARY(20) column. (Package cache = true)
 **/
@@ -1038,7 +974,6 @@ getColumnDisplaySize() - Check a VARBINARY(20) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1057,7 +992,6 @@ getColumnDisplaySize() - Check a DATE column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a TIME column. (Package cache = true)
 **/
@@ -1074,7 +1008,6 @@ getColumnDisplaySize() - Check a TIME column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a TIMESTAMP column. (Package cache = true)
 **/
@@ -1089,7 +1022,6 @@ getColumnDisplaySize() - Check a TIMESTAMP column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1110,7 +1042,6 @@ getColumnDisplaySize() - Check a BLOB column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a CLOB column. (Package cache = true)
 **/
@@ -1127,7 +1058,6 @@ getColumnDisplaySize() - Check a CLOB column. (Package cache = true)
             }
         }
     }
-
 
 
 /**
@@ -1148,7 +1078,6 @@ getColumnDisplaySize() - Check a DBCLOB column. (Package cache = true)
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DATALINK column. (Package cache = true)
 **/
@@ -1165,7 +1094,6 @@ getColumnDisplaySize() - Check a DATALINK column. (Package cache = true)
             }
         }
     }
-
 
 
 /**
@@ -1241,7 +1169,6 @@ Size = 34 digits + leading sign + decimal point + E + exponent size + 4 exponent
     }
 
 
-
 /**
 getColumnDisplaySize() - Check a DECFLOAT 16 column. (Package cache = true)
 **/
@@ -1277,8 +1204,6 @@ getColumnDisplaySize() - Check a DECFLOAT 34 column. (Package cache = false)
     }
 
 
-
-
 /**
 getColumnDisplaySize() - Check a BOOLEAN column.
 **/
@@ -1295,8 +1220,6 @@ getColumnDisplaySize() - Check a BOOLEAN column.
             }
         }
     }
-
-
 
 
 }

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDIsNullable.java
 //
 // Classes:      JDRSMDIsNullable
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -42,7 +34,6 @@ import test.JDRSMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
-
 
 
 /**
@@ -66,7 +57,6 @@ extends JDTestcase {
    }
 
 
-
     private static final String PACKAGE             = "JDRSMDIN";
     private static final String PACKAGE_CACHE_NO    = "extended dynamic=false";
     private static String PACKAGE_CACHE_YES   = "extended dynamic=true;package="
@@ -77,14 +67,11 @@ extends JDTestcase {
                                                       + ".JDRSMDIN";
 
 
-
     // Private data.
     private String properties_      = "";
     private Statement statement_    = null;
     private ResultSet rs_           = null;
     private ResultSetMetaData rsmd_ = null;
-
-
 
 
 /**
@@ -101,8 +88,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
-
 
 
 /**
@@ -142,7 +127,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Reconnects with different properties, if needed.
 
@@ -173,7 +157,6 @@ Reconnects with different properties, if needed.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -189,7 +172,6 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -209,7 +191,6 @@ isNullable() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isNullable() - Check column 0.  Should throw an exception.
 (Package cache = false)
@@ -225,7 +206,6 @@ isNullable() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -245,7 +225,6 @@ Should throw an exception. (Package cache = false)
     }
 
 
-
 /**
 isNullable() - Check a column that is nullable.
 (Package cache = false)
@@ -261,7 +240,6 @@ isNullable() - Check a column that is nullable.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -281,7 +259,6 @@ isNullable() - Check a column that is not nullable.
     }
 
 
-
 /**
 isNullable() - Check column -1.  Should throw an exception.
 (Package cache = true)
@@ -297,7 +274,6 @@ isNullable() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -317,7 +293,6 @@ isNullable() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 isNullable() - Check a column greater than the max.
 Should throw an exception. (Package cache = true)
@@ -333,7 +308,6 @@ Should throw an exception. (Package cache = true)
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -353,7 +327,6 @@ isNullable() - Check a column that is nullable.
     }
 
 
-
 /**
 isNullable() - Check a column with a multiple character name.
 (Package cache = true)
@@ -369,7 +342,6 @@ isNullable() - Check a column with a multiple character name.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -400,7 +372,6 @@ SQL400 - Perhaps this is a problem but we will need to deal with but
     }
 
 
-
 /**
 isNullable() - Check when the meta data is from a prepared statement.
 **/
@@ -421,7 +392,6 @@ isNullable() - Check when the meta data is from a prepared statement.
     }
 
 
-
 /**
 isNullable() - Check when the result set is from a database meta data.
 **/
@@ -439,7 +409,6 @@ isNullable() - Check when the result set is from a database meta data.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 }

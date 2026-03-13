@@ -11,16 +11,13 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSWasNull.java
 //
 // Classes:      JDCSWasNull
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -37,7 +34,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDSetupProcedure;
 import test.JDTestcase;
-
 
 
 /**
@@ -62,11 +58,9 @@ extends JDTestcase
    }
 
 
-
    // Private data.
    private CallableStatement   csTypes_;
    private CallableStatement   csTypes2_;
-
 
 
 /**
@@ -83,7 +77,6 @@ Constructor.
              namesAndVars, runMode, fileOutputStream,
              password);
    }
-
 
 
 /**
@@ -110,7 +103,6 @@ Performs setup needed before running variations.
    }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -125,10 +117,6 @@ Performs cleanup needed after running variations.
    }
 
 
-
-
-
-
 /**
 wasNull() - Without getting a parameter .
 **/
@@ -140,7 +128,6 @@ wasNull() - Without getting a parameter .
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -161,7 +148,6 @@ wasNull() - After getting parameter -1.
    }
 
 
-
 /**
 wasNull() - After getting parameter 0.
 **/
@@ -180,7 +166,6 @@ wasNull() - After getting parameter 0.
    }
 
 
-
 /**
 wasNull() - Use a parameter that is too big.
 **/
@@ -197,7 +182,6 @@ wasNull() - Use a parameter that is too big.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -232,7 +216,6 @@ wasNull() - After getting a parameter when there are no parameters.
    }
 
 
-
 /**
 wasNull() - After getting a parameter that was not registered.
 **/
@@ -254,7 +237,6 @@ wasNull() - After getting a parameter that was not registered.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -279,7 +261,6 @@ executed.
    }
 
 
-
 /**
 wasNull() - After getting a parameter when the statement is closed.
 **/
@@ -302,7 +283,6 @@ wasNull() - After getting a parameter when the statement is closed.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -373,7 +353,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a SMALLINT when
 the value is NULL.
@@ -388,7 +367,6 @@ the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -407,7 +385,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an INTEGER when
 the value is NULL.
@@ -422,7 +399,6 @@ the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -441,7 +417,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an REAL when
 the value is NULL.
@@ -456,7 +431,6 @@ the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -475,7 +449,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an FLOAT when
 the value is NULL.
@@ -490,7 +463,6 @@ the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -509,7 +481,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an DOUBLE
 when the value is NULL.
@@ -524,7 +495,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -544,7 +514,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an DECIMAL
 when the value is NULL.
@@ -560,7 +529,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -580,7 +548,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an NUMERIC when
 the value is NULL.
@@ -596,7 +563,6 @@ the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -615,7 +581,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a CHAR
 when the value is NULL.
@@ -630,7 +595,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -649,7 +613,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a VARCHAR
 when the value is NULL.
@@ -664,7 +627,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -683,7 +645,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a BINARY
 when the value is NULL.
@@ -698,7 +659,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -717,7 +677,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a VARBINARY
 when the value is  NULL.
@@ -732,7 +691,6 @@ when the value is  NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -751,7 +709,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a DATE
 when the value is NULL.
@@ -766,7 +723,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -785,7 +741,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a TIME
 when the value is NULL.
@@ -800,7 +755,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -819,7 +773,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a TIMESTAMP
 when the value is NULL.
@@ -834,7 +787,6 @@ when the value is NULL.
          failed (e, "Unexpected Exception");
       }
    }
-
 
 
 /**
@@ -855,7 +807,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as an OTHER
 when the value is NULL.
@@ -872,7 +823,6 @@ when the value is NULL.
          }
       }
    }
-
 
 
 /**
@@ -896,7 +846,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a BLOB
 when the value is NULL.
@@ -916,7 +865,6 @@ when the value is NULL.
          }
       }
    }
-
 
 
 /**
@@ -940,7 +888,6 @@ when the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a CLOB
 when the value is NULL.
@@ -962,7 +909,6 @@ when the value is NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a BIGINT when
 the value is not NULL.
@@ -981,7 +927,6 @@ the value is not NULL.
    }
 
 
-
 /**
 wasNull() - After getting a type that was registered as a BIGINT when
 the value is NULL.
@@ -998,7 +943,6 @@ the value is NULL.
          }
       }
    }
-
 
 
    public void Var047()
@@ -1045,8 +989,6 @@ the value is NULL.
    }
 
 
-
-
 /**
 wasNull() - After getting a type that was registered as a BOOLEAN when
 the value is not NULL.
@@ -1063,7 +1005,6 @@ the value is not NULL.
          }
       }
    }
-
 
 
 /**
@@ -1084,8 +1025,6 @@ the value is NULL.
    }
 
 
-
 }
-
 
 

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnTypeName.java
 //
 // Classes:      JDRSMDGetColumnTypeName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDRSMDTest;
 import test.JDTestcase;
-
 
 
 /**
@@ -71,7 +62,6 @@ extends JDTestcase
    }
 
 
-
     // Private data.
     private ResultSet           rs_             = null;
     private ResultSetMetaData   rsmd_           = null;
@@ -98,8 +88,6 @@ Constructor.
     }
 
 
-
-
 /**
 Performs setup needed before running variations.
 
@@ -114,7 +102,6 @@ Performs setup needed before running variations.
 	// look for jdk1.4
 	//
 		isJDK14 = true; 
-
 
 
         // SQL400 - driver neutral...
@@ -134,7 +121,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -149,7 +135,6 @@ Performs cleanup needed after running variations.
         statement2_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -167,7 +152,6 @@ getColumnTypeName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getColumnTypeName() - Check column 0.  Should throw an exception.
 **/
@@ -181,7 +165,6 @@ getColumnTypeName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -198,7 +181,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -219,7 +201,6 @@ getColumnTypeName() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -252,7 +233,6 @@ statement.
     }
 
 
-
 /**
 getColumnTypeName() - Check a SMALLINT column.
 **/
@@ -266,7 +246,6 @@ getColumnTypeName() - Check a SMALLINT column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -284,7 +263,6 @@ getColumnTypeName() - Check an INTEGER column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a REAL column.
 **/
@@ -298,7 +276,6 @@ getColumnTypeName() - Check a REAL column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -316,7 +293,6 @@ getColumnTypeName() - Check a FLOAT column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a FLOAT(3) column.
 **/
@@ -330,7 +306,6 @@ getColumnTypeName() - Check a FLOAT(3) column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -348,7 +323,6 @@ getColumnTypeName() - Check a DOUBLE column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a DECIMAL(10,5) column.
 **/
@@ -362,7 +336,6 @@ getColumnTypeName() - Check a DECIMAL(10,5) column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -380,7 +353,6 @@ getColumnTypeName() - Check a NUMERIC(10,5) column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a CHAR(50) column.
 **/
@@ -394,7 +366,6 @@ getColumnTypeName() - Check a CHAR(50) column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -412,7 +383,6 @@ getColumnTypeName() - Check a VARCHAR(50) column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a BINARY(20) column.
 **/
@@ -426,7 +396,6 @@ getColumnTypeName() - Check a BINARY(20) column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -444,7 +413,6 @@ getColumnTypeName() - Check a VARBINARY(20) column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a DATE column.
 **/
@@ -458,7 +426,6 @@ getColumnTypeName() - Check a DATE column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -476,7 +443,6 @@ getColumnTypeName() - Check a TIME column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a TIMESTAMP column.
 **/
@@ -490,7 +456,6 @@ getColumnTypeName() - Check a TIMESTAMP column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -508,7 +473,6 @@ getColumnTypeName() - Check a BLOB column.
             }
         }
     }
-
 
 
 /**
@@ -529,7 +493,6 @@ getColumnTypeName() - Check a CLOB column.
     }
 
 
-
 /**
 getColumnTypeName() - Check a DBCLOB column.
 **/
@@ -545,7 +508,6 @@ getColumnTypeName() - Check a DBCLOB column.
             }
         }
     }
-
 
 
 /**
@@ -574,7 +536,6 @@ as VARCHAR, just like the type that comes back on JDRSMDGetColumnType.
     }
 
 
-
 /**
 getColumnTypeName() - Check a DISTINCT column.
 **/
@@ -593,7 +554,6 @@ getColumnTypeName() - Check a DISTINCT column.
             }
         }
     }
-
 
 
 // @B0A
@@ -648,7 +608,6 @@ getColumnTypeName() - Check a DECFLOAT34 column.
     }
 
 
-
 /**
 getColumnTypeName() - Check an XML column.
 **/
@@ -666,8 +625,6 @@ getColumnTypeName() - Check an XML column.
             }
         }
     }
-
-
 
 
 /**
@@ -785,7 +742,6 @@ getColumnTypeName() - Check a UDT Types -- issue 67185
 	    stmt.execute(sql);
 
 
-
 	    sql = "CREATE TABLE  "+collection_+".JDRSMDGT34 ( " +
 	      " A "+collection_+".UDTINT WITH DEFAULT NULL, "+
 	      " B "+collection_+".UDTBLOB WITH DEFAULT NULL, "+
@@ -845,8 +801,6 @@ getColumnTypeName() - Check a UDT Types -- issue 67185
             }
  
     }
-
-
 
 
 }

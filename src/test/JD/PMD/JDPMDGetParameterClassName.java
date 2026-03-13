@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetParameterClassName.java
 //
 // Classes:      JDPMDGetParameterClassName
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -88,7 +75,6 @@ extends JDTestcase
     }
 
 
-
     /**
     Performs setup needed before running variations.
     
@@ -106,7 +92,6 @@ extends JDTestcase
     }
 
 
-
     /**
     Performs cleanup needed after running variations.
     
@@ -119,7 +104,6 @@ extends JDTestcase
         connection_ = null; 
 
     }
-
 
 
     /**
@@ -144,7 +128,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getParameterClassName() - Should throw exception if the index is too small.
     **/
@@ -164,7 +147,6 @@ extends JDTestcase
 	    }
 	}
     }
-
 
 
     /**

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDIsAutoIncrement.java
 //
 // Classes:      JDRSMDIsAutoIncrement
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -41,7 +33,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -66,7 +57,6 @@ extends JDTestcase
    }
 
 
-
     // Private data.
     private Connection          noExtendedMetadataConnection_ = null;
     private ResultSet           rs_             = null;
@@ -75,7 +65,6 @@ extends JDTestcase
     private ResultSet           rs2_             = null;
     private ResultSetMetaData   rsmd2_           = null;
     private Statement           statement2_      = null;
-
 
 
 /**
@@ -92,7 +81,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -126,7 +114,6 @@ Performs setup needed before running variations.
 
 	noExtendedMetadataConnection_ = testDriver_.getConnection(baseURL_,  userId_, encryptedPassword_);
     }
-
 
 
 /**
@@ -170,7 +157,6 @@ isAutoIncrement() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isAutoIncrement() - Check column 0.  Should throw an exception.
 **/
@@ -184,7 +170,6 @@ isAutoIncrement() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -201,7 +186,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -222,7 +206,6 @@ isAutoIncrement() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -253,7 +236,6 @@ isAutoIncrement() - Check when the meta data is from a prepared statement.
     }
 
 
-
 /**
 isAutoIncrement() - Check a SMALLINT column.
 **/
@@ -267,7 +249,6 @@ isAutoIncrement() - Check a SMALLINT column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -288,7 +269,6 @@ isAutoIncrement() - Check an INTEGER column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a REAL column.
 **/
@@ -302,7 +282,6 @@ isAutoIncrement() - Check a REAL column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -320,7 +299,6 @@ isAutoIncrement() - Check a FLOAT column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a DOUBLE column.
 **/
@@ -334,7 +312,6 @@ isAutoIncrement() - Check a DOUBLE column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -352,7 +329,6 @@ isAutoIncrement() - Check a DECIMAL column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a NUMERIC column.
 **/
@@ -366,7 +342,6 @@ isAutoIncrement() - Check a NUMERIC column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -384,7 +359,6 @@ isAutoIncrement() - Check a CHAR column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a VARCHAR column.
 **/
@@ -398,7 +372,6 @@ isAutoIncrement() - Check a VARCHAR column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -416,7 +389,6 @@ isAutoIncrement() - Check a BINARY column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a VARBINARY column.
 **/
@@ -430,7 +402,6 @@ isAutoIncrement() - Check a VARBINARY column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -448,7 +419,6 @@ isAutoIncrement() - Check a DATE column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a TIME column.
 **/
@@ -464,7 +434,6 @@ isAutoIncrement() - Check a TIME column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a TIMESTAMP column.
 **/
@@ -478,7 +447,6 @@ isAutoIncrement() - Check a TIMESTAMP column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -498,7 +466,6 @@ isAutoIncrement() - Check a BLOB column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a CLOB column.
 **/
@@ -514,7 +481,6 @@ isAutoIncrement() - Check a CLOB column.
             }
         }
     }
-
 
 
 /**
@@ -534,7 +500,6 @@ isAutoIncrement() - Check a DBCLOB column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a DATALINK column.
 **/
@@ -552,7 +517,6 @@ isAutoIncrement() - Check a DATALINK column.
     }
 
 
-
 /**
 isAutoIncrement() - Check a DISTINCT column.
 **/
@@ -568,7 +532,6 @@ isAutoIncrement() - Check a DISTINCT column.
             }
         }
     }
-
 
 
 /**
@@ -663,9 +626,6 @@ isAutoIncrement() - Check a BOOLEAN column.
     }
 
 
-
-
 }
-
 
 

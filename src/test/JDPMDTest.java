@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDTest.java
 //
 // Classes:      JDPMDTest
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test;
 
 import java.io.IOException;
@@ -100,7 +86,6 @@ extends JDTestDriver {
     private JDParallelCounter parallelCounter_;
 
 
-
 /**
 Run the test as an application.  This should be called
 from the test driver's main().
@@ -116,7 +101,6 @@ from the test driver's main().
     }
 
 
-
 /**
 Constructs an object for applets.
 
@@ -127,7 +111,6 @@ Constructs an object for applets.
     {
         super();
     }
-
 
 
 /**
@@ -142,7 +125,6 @@ Constructs an object for testing applications.
     {
         super (args);
     }
-
 
 
 /**
@@ -237,7 +219,6 @@ Performs setup needed before running testcases.
     }
 
 
-
 /**
 Performs setup needed after running testcases.
 
@@ -264,7 +245,6 @@ Cleanup - - this does not run automatically - - it is called by JDCleanup.
     {
         dropCollection(c, COLLECTION);
     }
-
 
 
 /**
@@ -353,7 +333,6 @@ Creates the testcases.
     }
 
 
-
 /**
 This method returns a prepared statement or a callable statement that is the 
 right format for the various tests of the ParameterMetaData test bucket.
@@ -410,6 +389,5 @@ right format for the various tests of the ParameterMetaData test bucket.
         return (PreparedStatement) ps;  
     }
 }
-
 
 

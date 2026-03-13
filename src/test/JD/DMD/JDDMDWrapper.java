@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDWrapper.java
 //
 // Classes:      JDDMDWrapper
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.DMD;
 
 import java.io.FileOutputStream;
@@ -66,10 +52,8 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private              DatabaseMetaData dmd_; 
-
 
 
 /**
@@ -87,7 +71,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -99,7 +82,6 @@ Performs setup needed before running variations.
         connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
 	dmd_ = connection_.getMetaData(); 
     }
-
 
 
 /**
@@ -114,9 +96,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
-
-
 
 
 /**
@@ -149,8 +128,6 @@ isWrapperFor() -- Call with java.lang.String, should return false.
 	    }
 	}
     }
-
-
 
 
 /**
@@ -192,7 +169,6 @@ isWrapperFor() -- Call with driver specific class, should return true.
     }
 
 
-
 /**
 unwrap() -- Call with null, should throw exception
 **/
@@ -224,8 +200,6 @@ unwrap() -- Call with java.lang.String, should throw exception
 	    }
 	}
     }
-
-
 
 
 /**
@@ -267,13 +241,6 @@ unwrap() -- Call with driver specific class, should return object.
     }
 
 
-
-
-
-
-
-
 }
-
 
 

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDMisc.java
 //
 // Classes:      JDRSMDMisc
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import com.ibm.as400.access.AS400;
 import test.JDRSMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
 
 
 /**
@@ -67,13 +58,10 @@ extends JDTestcase {
                                                       + ".JDRSMDM";
 
 
-
     // Private data.
     private Statement statement_    = null;
     private ResultSet rs_           = null;
     private ResultSetMetaData rsmd_ = null;
-
-
 
 
 /**
@@ -90,8 +78,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
-
 
 
 /**
@@ -117,7 +103,6 @@ Performs setup needed before running variations.
         rs_ = statement_.executeQuery ("SELECT * FROM " + TABLE);
         rsmd_ = rs_.getMetaData ();
     }
-
 
 
 /**
@@ -152,7 +137,6 @@ toString() - Test toString when the cursor name has not been set.
     }
 
 
-
 /**
 toString() - Test toString when the cursor name has been set.
 
@@ -180,7 +164,6 @@ SQL400 - Perhaps this is a problem but we will need to deal with but
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -233,6 +216,5 @@ toString() - Test toString when the meta data comes from a prepared statement.
 
 
 }
-
 
 

@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDIsNullable.java
 //
 // Classes:      JDPMDIsNullable
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -87,7 +74,6 @@ extends JDTestcase {
     }
 
 
-
     /**
     Performs setup needed before running variations.
     
@@ -105,7 +91,6 @@ extends JDTestcase {
     }
 
 
-
     /**
     Performs cleanup needed after running variations.
     
@@ -118,7 +103,6 @@ extends JDTestcase {
         connection_ = null; 
 
     }
-
 
 
     /**
@@ -143,7 +127,6 @@ extends JDTestcase {
     }
 
 
-
     /**
     isNullable() - Should throw exception if the index is too small.
     **/
@@ -163,7 +146,6 @@ extends JDTestcase {
 	    }
 	}
     }
-
 
 
     /**
@@ -1255,7 +1237,6 @@ extends JDTestcase {
     }
 
 
-
     /**
     isNullable() - Should work with a callable statement for 
     a procedure call for data type of numeric.
@@ -1298,7 +1279,6 @@ extends JDTestcase {
 	    }
 	}
     }
-
 
 
     /**

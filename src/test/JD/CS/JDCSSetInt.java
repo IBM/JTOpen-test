@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSSetInt.java
 //
 // Classes:      JDCSSetInt
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -41,7 +33,6 @@ import com.ibm.as400.access.AS400;
 import test.JDCSTest;
 import test.JDSetupProcedure;
 import test.JDTestDriver;
-
 
 
 /**
@@ -65,8 +56,6 @@ extends JDCSSetTestcase {
    }
 
 
-
-
 /**
 Constructor.
 **/
@@ -83,7 +72,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -94,7 +82,6 @@ Performs setup needed before running variations.
     {
       super.setup(); 
       }
-
 
 
 /**
@@ -1327,8 +1314,6 @@ setInt() - Should throw exception since the mixed case name is in quotes.
     }
 
 
-
-
     public void testNamedParameters(String procedureName,
 					   String procedureDefinition,
 					   String parameterName,
@@ -1366,9 +1351,7 @@ setInt() - Should throw exception since the mixed case name is in quotes.
 	    }
 
 
-
     } 
-
 
 
     public void Var067() {

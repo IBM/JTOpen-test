@@ -10,27 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-// 5770SS11
-// (C) Copyright IBM Corp.2011,2011
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDConnectionAbort.java
 //
 // Classes:      JDConnectionAbort
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.Connection;
 
 import com.ibm.as400.access.AS400;
@@ -47,7 +32,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -68,7 +52,6 @@ public class JDConnectionAbort extends JDTestcase {
      }
      test.JDConnectionTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -95,7 +78,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -130,7 +112,6 @@ Setup.
         
         stmt.close(); 
     }
-
 
 
 /**
@@ -632,7 +613,6 @@ Cleanup.
       }
 
 
-
       
       class JDExecuteWhileAbortThread extends Thread {
   
@@ -674,7 +654,6 @@ Cleanup.
               return exceptionThrown;  
           }
       }
-
 
 
 }

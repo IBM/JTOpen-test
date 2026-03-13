@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnCount.java
 //
 // Classes:      JDRSMDGetColumnCount
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import com.ibm.as400.access.AS400;
 import test.JDRSMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
-
 
 
 /**
@@ -65,10 +56,8 @@ extends JDTestcase
    }
 
 
-
     // Private data.
     private Statement statement_    = null;
-
 
 
 /**
@@ -85,7 +74,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -106,7 +94,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -118,7 +105,6 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -138,7 +124,6 @@ getColumnCount() - Check a result set with 1 column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -163,7 +148,6 @@ getColumnCount() - Check a result set with 10 columns.
     }
 
 
-
 /**
 getColumnCount() - Check when the result set is closed.
 **/
@@ -181,7 +165,6 @@ getColumnCount() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -210,7 +193,6 @@ getColumnCount() - Check when the meta data comes from a prepared statement.
             }
         }
     }
-
 
 
 }

@@ -10,21 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSProperties.java
 //
 // Classes:      JDSCPDSProperties
 //
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.SCPDS;
 
@@ -40,7 +31,6 @@ import javax.naming.*;
 import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
-
 
 
 /**
@@ -125,7 +115,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -261,7 +250,6 @@ getDescription() - call getDescription to check that the value set before is ret
             }
         }
     }
-
 
 
 /**
@@ -1258,11 +1246,5 @@ an invalid value. Exception should be thrown.
     
 
 }
-
-
-
-
-
-
 
 

@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetLong.java
 //
 // Classes:      JDPSSetLong
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 
@@ -50,7 +36,6 @@ import test.JDTestcase;
 import test.JD.JDSetupPackage;
 import test.JD.JDSerializeFile;
 import java.sql.SQLException;
-
 
 
 /**
@@ -75,15 +60,12 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDPSSL";
 
 
-
     // Private data.
     private Statement           statement_;
-
 
 
 /**
@@ -100,7 +82,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -127,7 +108,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -141,7 +121,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -175,7 +154,6 @@ statement is closed.
   }
 
 
-
 /**
 setLong() - Should throw exception when an invalid index is
 specified.
@@ -205,7 +183,6 @@ specified.
       }
     }
   }
-
 
 
 /**
@@ -238,7 +215,6 @@ setLong() - Should throw exception when index is 0.
   }
 
 
-
 /**
 setLong() - Should throw exception when index is -1.
 **/
@@ -267,7 +243,6 @@ setLong() - Should throw exception when index is -1.
       }
     }
   }
-
 
 
 /**
@@ -311,7 +286,6 @@ greater than 1.
   }
 
 
-
 /**
 setLong() - Should throw exception when the parameter is
 not an input parameter.
@@ -333,7 +307,6 @@ not an input parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -375,7 +348,6 @@ setLong() - Set a SMALLINT parameter.
   }
 
 
-
 /**
 setLong() - Set a SMALLINT parameter, when the integer is too large.
 **/
@@ -410,7 +382,6 @@ setLong() - Set a SMALLINT parameter, when the integer is too large.
       }
     }
   }
-
 
 
 /**
@@ -452,7 +423,6 @@ setLong() - Set an INTEGER parameter.
   }
 
 
-
 /**
 setLong() - Set a INTEGER parameter, when the long is too large.
 This should throw a DataTruncation exception.
@@ -485,7 +455,6 @@ This should throw a DataTruncation exception.
       }
     }
   }
-
 
 
 /**
@@ -525,7 +494,6 @@ setLong() - Set an REAL parameter.
       }
     }
   }
-
 
 
 /**
@@ -568,7 +536,6 @@ setLong() - Set an FLOAT parameter.
   }
 
 
-
 /**
 setLong() - Set an DOUBLE parameter.
 **/
@@ -607,7 +574,6 @@ setLong() - Set an DOUBLE parameter.
       }
     }
   }
-
 
 
 /**
@@ -652,7 +618,6 @@ setLong() - Set an DECIMAL parameter.
     }
 
 
-
 /**
 setLong() - Set an DECIMAL parameter, when the value is too big.
 **/
@@ -692,7 +657,6 @@ setLong() - Set an DECIMAL parameter, when the value is too big.
   }
 
 
-
 /**
 setLong() - Set an NUMERIC parameter.
 **/
@@ -730,7 +694,6 @@ setLong() - Set an NUMERIC parameter.
       }
     }
   }
-
 
 
 /**
@@ -805,7 +768,6 @@ of the values because scale values will be silently truncated.
   }
 
 
-
 /**
 setLong() - Set an CHAR(50) parameter.
 **/
@@ -843,7 +805,6 @@ setLong() - Set an CHAR(50) parameter.
       }
     }
   }
-
 
 
 /**
@@ -885,7 +846,6 @@ setLong() - Set an CHAR(1) parameter.
   }
 
 
-
 /**
 setLong() - Set an CHAR(1) parameter, when the value is too big.
 **/
@@ -917,7 +877,6 @@ setLong() - Set an CHAR(1) parameter, when the value is too big.
       }
     }
   }
-
 
 
 /**
@@ -959,7 +918,6 @@ setLong() - Set an VARCHAR parameter.
   }
 
 
-
 /**
 setLong() - Set a CLOB parameter.
 **/
@@ -993,8 +951,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
-
 
 
 /**
@@ -1032,7 +988,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setLong() - Set a BINARY parameter.
 **/
@@ -1062,8 +1017,6 @@ setLong() - Set a BINARY parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -1097,8 +1050,6 @@ setLong() - Set a VARBINARY parameter.
   }
 
 
-
-
 /**
 setLong() - Set a BLOB parameter.
 **/
@@ -1127,8 +1078,6 @@ setLong() - Set a BLOB parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -1161,7 +1110,6 @@ setLong() - Set a DATE parameter.
   }
 
 
-
 /**
 setLong() - Set a TIME parameter.
 **/
@@ -1190,7 +1138,6 @@ setLong() - Set a TIME parameter.
       }
     }
   }
-
 
 
 /**
@@ -1261,7 +1208,6 @@ if (checkDatalinkSupport ()) {
   }
 
 
-
 /**
 setLong() - Set a DISTINCT parameter.
 **/
@@ -1307,7 +1253,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setLong() - Set a BIGINT parameter.
 **/
@@ -1350,7 +1295,6 @@ if (checkBigintSupport()) {
       }
     }
   }
-
 
 
 /**
@@ -1414,7 +1358,6 @@ if (getDriver() == JDTestDriver.DRIVER_JCC) {
       }
     }
   }
-
 
 
 /**
@@ -2021,7 +1964,6 @@ if (checkBigintSupport()) {
           }
 
 
-
 /**
 setLong() - Set a SQLXML parameter.
 **/
@@ -2226,8 +2168,6 @@ setLong() - Set a SQLXML parameter.
         testSetLong("C_BOOLEAN", Long.MIN_VALUE, "1");
       }
     }
-
-
 
 
 }

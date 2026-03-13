@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnName.java
 //
 // Classes:      JDRSMDGetColumnName
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -41,7 +33,6 @@ import com.ibm.as400.access.AS400;
 import test.JDRSMDTest;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
-
 
 
 /**
@@ -66,7 +57,6 @@ extends JDTestcase
    }
 
 
-
     private static final String PACKAGE             = "JDRSMDGCN";
     private static final String PACKAGE_CACHE_NO    = "extended dynamic=false";
     private static String PACKAGE_CACHE_YES   = "extended dynamic=true;package="
@@ -79,14 +69,11 @@ extends JDTestcase
                                                     + ".JDRSMDGCNLCN";  //@C1A
 
 
-
     // Private data.
     private String properties_      = "";
     private Statement statement_    = null;
     private ResultSet rs_           = null;
     private ResultSetMetaData rsmd_ = null;
-
-
 
 
 /**
@@ -103,8 +90,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
-
 
 
 /**
@@ -149,7 +134,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Reconnects with different properties, if needed.
 
@@ -180,7 +164,6 @@ Reconnects with different properties, if needed.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -200,7 +183,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 getColumnName() - Check column -1.  Should throw an exception.
 (Package cache = false)
@@ -216,7 +198,6 @@ getColumnName() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -236,7 +217,6 @@ getColumnName() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 getColumnName() - Check a column greater than the max.
 Should throw an exception. (Package cache = false)
@@ -252,7 +232,6 @@ Should throw an exception. (Package cache = false)
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -272,7 +251,6 @@ getColumnName() - Check a column with a 1 character name.
     }
 
 
-
 /**
 getColumnName() - Check a column with a multiple character name.
 (Package cache = false)
@@ -288,7 +266,6 @@ getColumnName() - Check a column with a multiple character name.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -308,7 +285,6 @@ getColumnName() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getColumnName() - Check column 0.  Should throw an exception.
 (Package cache = true)
@@ -324,7 +300,6 @@ getColumnName() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -344,7 +319,6 @@ Should throw an exception. (Package cache = true)
     }
 
 
-
 /**
 getColumnName() - Check a column with a 1 character name.
 (Package cache = true)
@@ -360,7 +334,6 @@ getColumnName() - Check a column with a 1 character name.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -398,8 +371,6 @@ getColumnName() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
-
 
 
 /**

@@ -10,21 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSSetBytesBinary.java
 //
 // Classes:      JDCSSetBytesBinary
 //
-////////////////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -65,7 +56,6 @@ extends JDTestcase
    }
 
 
-
     // Private data.
     private CallableStatement   cs;
     
@@ -98,7 +88,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -113,7 +102,6 @@ Performs setup needed before running variations.
 	STP_VAR  = JDCSTest.COLLECTION+".STP_VARBINARY";
 	sql_bin  = "CALL " + STP_BIN + " (?, ?)";
 	sql_var  = "CALL " + STP_VAR + " (?, ?)";    
-
 
 
         connection_ = testDriver_.getConnection (baseURL_
@@ -148,7 +136,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -167,7 +154,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**

@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDIsSearchable.java
 //
 // Classes:      JDRSMDIsSearchable
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -63,7 +54,6 @@ extends JDTestcase
      }
      test.JDRSMDTest.main(newArgs); 
    }
-
 
 
     // Private data.  
@@ -95,7 +85,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -134,7 +123,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -161,7 +149,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 isSearchable() - Check column -1.  Should throw an exception.
 **/
@@ -175,7 +162,6 @@ isSearchable() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -193,7 +179,6 @@ isSearchable() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 isSearchable() - Check a column greater than the max.
 Should throw an exception.
@@ -208,7 +193,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -229,7 +213,6 @@ isSearchable() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -262,7 +245,6 @@ isSearchable() - Check when the meta data is from a prepared statement.
     }
 
 
-
 /**
 isSearchable() - Check a SMALLINT column.
 **/
@@ -276,7 +258,6 @@ isSearchable() - Check a SMALLINT column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -294,7 +275,6 @@ isSearchable() - Check an INTEGER column.
     }
 
 
-
 /**
 isSearchable() - Check a REAL column.
 **/
@@ -308,7 +288,6 @@ isSearchable() - Check a REAL column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -326,7 +305,6 @@ isSearchable() - Check a FLOAT column.
     }
 
 
-
 /**
 isSearchable() - Check a DOUBLE column.
 **/
@@ -340,7 +318,6 @@ isSearchable() - Check a DOUBLE column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -358,7 +335,6 @@ isSearchable() - Check a DECIMAL column.
     }
 
 
-
 /**
 isSearchable() - Check a NUMERIC column.
 **/
@@ -372,7 +348,6 @@ isSearchable() - Check a NUMERIC column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -390,7 +365,6 @@ isSearchable() - Check a CHAR column.
     }
 
 
-
 /**
 isSearchable() - Check a VARCHAR column.
 **/
@@ -404,7 +378,6 @@ isSearchable() - Check a VARCHAR column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -422,7 +395,6 @@ isSearchable() - Check a BINARY column.
     }
 
 
-
 /**
 isSearchable() - Check a VARBINARY column.
 **/
@@ -436,7 +408,6 @@ isSearchable() - Check a VARBINARY column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -454,7 +425,6 @@ isSearchable() - Check a DATE column.
     }
 
 
-
 /**
 isSearchable() - Check a TIME column.
 **/
@@ -470,7 +440,6 @@ isSearchable() - Check a TIME column.
     }
 
 
-
 /**
 isSearchable() - Check a TIMESTAMP column.
 **/
@@ -484,7 +453,6 @@ isSearchable() - Check a TIMESTAMP column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -504,7 +472,6 @@ isSearchable() - Check a BLOB column.
     }
 
 
-
 /**
 isSearchable() - Check a CLOB column.
 **/
@@ -522,7 +489,6 @@ isSearchable() - Check a CLOB column.
     }
 
 
-
 /**
 isSearchable() - Check a DBCLOB column.
 **/
@@ -538,7 +504,6 @@ isSearchable() - Check a DBCLOB column.
             }
         }
     }
-
 
 
 /**
@@ -562,7 +527,6 @@ isSearchable() - Check a DATALINK column.
     }
 
 
-
 /**
 isSearchable() - Check a DISTINCT column.
 **/
@@ -578,7 +542,6 @@ isSearchable() - Check a DISTINCT column.
             }
         }
     }
-
 
 
 /**
@@ -598,7 +561,6 @@ isSearchable() - Check a BIGINT column.
     }
 
 
-
 //@F1A  New testcases to test "extended metadata" property.
 /**
 isSearchable() - Check column -1.  Should throw an exception.
@@ -613,7 +575,6 @@ isSearchable() - Check column -1.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -631,7 +592,6 @@ isSearchable() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 isSearchable() - Check a column greater than the max.
 Should throw an exception.
@@ -646,7 +606,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -667,7 +626,6 @@ isSearchable() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -700,7 +658,6 @@ isSearchable() - Check when the meta data is from a prepared statement.
     }
 
 
-
 /**
 isSearchable() - Check a SMALLINT column.
 **/
@@ -714,7 +671,6 @@ isSearchable() - Check a SMALLINT column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -732,7 +688,6 @@ isSearchable() - Check an INTEGER column.
     }
 
 
-
 /**
 isSearchable() - Check a REAL column.
 **/
@@ -746,7 +701,6 @@ isSearchable() - Check a REAL column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -764,7 +718,6 @@ isSearchable() - Check a FLOAT column.
     }
 
 
-
 /**
 isSearchable() - Check a DOUBLE column.
 **/
@@ -778,7 +731,6 @@ isSearchable() - Check a DOUBLE column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -796,7 +748,6 @@ isSearchable() - Check a DECIMAL column.
     }
 
 
-
 /**
 isSearchable() - Check a NUMERIC column.
 **/
@@ -810,7 +761,6 @@ isSearchable() - Check a NUMERIC column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -828,7 +778,6 @@ isSearchable() - Check a CHAR column.
     }
 
 
-
 /**
 isSearchable() - Check a VARCHAR column.
 **/
@@ -842,7 +791,6 @@ isSearchable() - Check a VARCHAR column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -860,7 +808,6 @@ isSearchable() - Check a BINARY column.
     }
 
 
-
 /**
 isSearchable() - Check a VARBINARY column.
 **/
@@ -874,7 +821,6 @@ isSearchable() - Check a VARBINARY column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -892,7 +838,6 @@ isSearchable() - Check a DATE column.
     }
 
 
-
 /**
 isSearchable() - Check a TIME column.
 **/
@@ -908,7 +853,6 @@ isSearchable() - Check a TIME column.
     }
 
 
-
 /**
 isSearchable() - Check a TIMESTAMP column.
 **/
@@ -922,7 +866,6 @@ isSearchable() - Check a TIMESTAMP column.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -942,7 +885,6 @@ isSearchable() - Check a BLOB column.
     }
 
 
-
 /**
 isSearchable() - Check a CLOB column.
 **/
@@ -960,7 +902,6 @@ isSearchable() - Check a CLOB column.
     }
 
 
-
 /**
 isSearchable() - Check a DBCLOB column.
 **/
@@ -976,7 +917,6 @@ isSearchable() - Check a DBCLOB column.
             }
         }
     }
-
 
 
 /**
@@ -1000,7 +940,6 @@ return anything differently than the old support.
     }
 
 
-
 /**
 isSearchable() - Check a DISTINCT column.
 **/
@@ -1016,7 +955,6 @@ isSearchable() - Check a DISTINCT column.
             }
         }
     }
-
 
 
 /**
@@ -1065,7 +1003,6 @@ isSearchable() - Make sure "extended metadata=false" returns old value.
     }
 
 
-
 /**
 isSearchable() - Check an XML column.
 **/
@@ -1100,10 +1037,6 @@ isSearchable() - Check a BOOLEAN column.
     }
 
 
-
-
-
 }
-
 
 

@@ -10,21 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-
-
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSSetTimestamp.java
 //
 // Classes:      JDCSSetTimestamp
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -66,8 +57,6 @@ extends JDCSSetTestcase {
    }
 
 
-
-
 private Timestamp sampleTimestamp;
 
 /**
@@ -86,7 +75,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -98,7 +86,6 @@ Performs setup needed before running variations.
       super.setup(); 
       sampleTimestamp = new Timestamp (234); 
           }
-
 
 
 /**
@@ -1543,10 +1530,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
   }
 
 
-
-
-
-
   public void Var065() {
     String[][] testValues = {
     /* 0 */ {"2013-01-13 11:12:13.0", "2013-01-13 11:12:13.0",},
@@ -1578,7 +1561,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
           testValues);
 
   }
-
 
 
   public void Var066() {
@@ -1613,7 +1595,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
   }
 
 
-
   public void Var067() {
     String[][] testValues = {
     /* 0 */ {"2013-01-13 11:12:13.0", "2013-01-13 11:12:13.0",},
@@ -1645,12 +1626,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
           testValues);
 
   }
-
-
-
-
-
-
 
 
   public void Var068() {
@@ -1719,8 +1694,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
   }
 
 
-
-
   public void Var070() {
     String[][] testValues = {
     /* 0 */ {"2013-01-13 11:12:13.0", "2013-01-13 11:12:13.0",},
@@ -1752,8 +1725,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
           testValues);
 
   }
-
-
 
 
   public void Var071() {
@@ -1855,9 +1826,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
   }
 
 
-
-
-
   /**
    * setTimestamp() - Set a BOOLEAN parameter. - Using an ordinal parameter
    */
@@ -1883,8 +1851,6 @@ setTimestamp() - Should throw an exception since the lower case name is in quote
     }
 
   }
-
-
 
 
 }
