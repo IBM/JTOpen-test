@@ -763,7 +763,7 @@ Property translate hex = binary, should pass when we try to insert a hex value i
 	     Blob b = cstmt.getBlob(1);
 	     byte[] bytes = b.getBytes (1, (int) b.length());              
 
-	     assertCondition(compare(b, expected), "b = " +JDTestUtilities.dumpBytes(bytes)+ " exp = " +JDTestUtilities.dumpBytes(expected)+ "\n\nNote:  For native driver on V5R4 this will be fixed as a result of issue 35479");
+	     assertCondition(compare(b, expected), "b = " +JDTestUtilities.dumpBytes(bytes)+ " exp = " +JDTestUtilities.dumpBytes(expected)+ "\n");
 	     cstmt.close();
 	     stmt.close();
 	 }

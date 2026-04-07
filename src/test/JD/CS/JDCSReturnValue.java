@@ -288,7 +288,7 @@ public class JDCSReturnValue extends JDTestcase {
 
     if (checkReturnValueSupport()) {
       StringBuffer sb = new StringBuffer();
-      sb.append(" -- added 11/14/2013 for issue 51847 ");
+      sb.append(" -- added 11/14/2013 ");
       try {
         CallableStatement cs = connection_.prepareCall("?=CALL " + JDSetupProcedure.STP_CSPARMSRSRV + "(?,?,?)");
         cs.setInt(2, 1332);
@@ -327,7 +327,7 @@ public class JDCSReturnValue extends JDTestcase {
         cs.close();
         assertCondition((success) && (result == true) && (check1 == true) && (check2 == false), sb);
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -349,9 +349,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == 333) // P2 = P1 + 1
             && (cs.getInt(4) == 127)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -373,9 +373,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == -331) // P2 = P1 + 1
             && (cs.getInt(4) == -125)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -397,9 +397,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == -332324233) // P2 = P1 + 1
             && (cs.getInt(4) == 12432933)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -422,9 +422,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == 1) // P2 = P1 + 1
             && (cs.getInt(4) == 1)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -447,9 +447,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == 2) // P2 = P1 + 1
             && (cs.getInt(4) == 0)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -470,9 +470,9 @@ public class JDCSReturnValue extends JDTestcase {
         boolean success = ((cs.getInt(3) == 33245) // P2 = P1 + 1
             && (cs.getInt(4) == -3)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception  -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception  -- added 11/14/2013 ");
       }
     }
   }
@@ -493,9 +493,9 @@ public class JDCSReturnValue extends JDTestcase {
         boolean success = ((cs.getInt(2) == 11) // P2 = P1 + 1
             && (cs.getInt(3) == 10)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -518,9 +518,9 @@ public class JDCSReturnValue extends JDTestcase {
             && (cs.getInt(3) == 333) // P2 = P1 + 1
             && (cs.getInt(4) == 127)); // P3 = P3 + 1
         cs.close();
-        assertCondition(success, " -- added 11/14/2013 for issue 51847");
+        assertCondition(success, " -- added 11/14/2013 ");
       } catch (Exception e) {
-        failed(e, "Unexpected Exception -- added 11/14/2013 for issue 51847");
+        failed(e, "Unexpected Exception -- added 11/14/2013 ");
       }
     }
   }
@@ -531,7 +531,7 @@ public class JDCSReturnValue extends JDTestcase {
   public void Var019() {
     if (checkReturnValueSupport()) {
       StringBuffer sb = new StringBuffer();
-      sb.append(" -- added 11/14/2013 for issue 51847 ");
+      sb.append(" -- added 11/14/2013  ");
       try {
         CallableStatement cs = connection_.prepareCall("?=CALL " + JDSetupProcedure.STP_CSPARMSRSRV + "(?,?,?)");
         cs.setInt("P1", 1332);

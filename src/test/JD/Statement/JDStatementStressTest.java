@@ -592,11 +592,13 @@ public class JDStatementStressTest extends JDTestcase {
               + "\\\u00f7STUVWXYZ\u00b2\u00d4\u00d6\u01af\u00d3\u01a0"
               + "0123456789\u00b3\u00db\u00dc\u00d9\u00da"),
 
+      /* Note: U+20AD is the Kip Sign (₭), the dedicated currency symbol for the Lao Kip, the official currency of Laos. */ 
+      /* Note: The system does not correctly convert between 0x70 and ux'20AD'.  */ 
       new CCSIDTestData(1132,
           " \u00a0\u0e81\u0e82\u0e84\u0e87\u0e88\u0eaa\u0e8a[\u00a2.<(+|"
               + "& \u0e8d\u0e94\u0e95\u0e96\u0e97\u0e99\u0e9a]!$*);\u00ac"
               + "-/\u0e9b\u0e9c\u0e9d\u0e9e\u0e9f\u0ea1\u0ea2^\u00a6,%_>\u003f"
-              + "k \u0ea3\u0ea5\u0ea7\u0eab\u0ead\u0eae `:#@\u0027=\""
+              + "\u20ad \u0ea3\u0ea5\u0ea7\u0eab\u0ead\u0eae `:#@\u0027=\""
               + " abcdefghi  \u0eaf\u0eb0\u0eb2\u0eb3"
               + " jklmnopqr\u0eb4\u0eb5\u0eb6\u0eb7\u0eb8\u0eb9"
               + " ~stuvwxyz\u0ebc\u0eb1\u0ebb\u0ebd  "
@@ -2501,7 +2503,7 @@ public class JDStatementStressTest extends JDTestcase {
 
   /**
    * Runs different tests using the specified CCSID. The goal is to verify that
-   * data in that CCSID can be inserted and retrieved. Written by the native
+   * data in that CCSID can be inserted and retrieved. Added by the native
    * driver after determining that CCSID 62235 has a problem in V5R3..
    */
 
@@ -2584,7 +2586,7 @@ public class JDStatementStressTest extends JDTestcase {
 
   /**
    * Runs different tests using the specified CCSID. The goal is to verify that
-   * data in that CCSID can be inserted and retrieved. Written by the native
+   * data in that CCSID can be inserted and retrieved. Added by the native
    * driver after determining that CCSID 62235 has a problem in V5R3..
    */
 
@@ -3115,7 +3117,8 @@ public class JDStatementStressTest extends JDTestcase {
       }
 
       /* Do not test these CCSIDs for the large test */
-      if ((ccsid != 420) && (ccsid != 424) && (ccsid != 918) && (ccsid != 1097)
+      if ((ccsid != 420) && (ccsid != 424) && (ccsid != 918) && (ccsid != 1097) 
+          && (ccsid != 1132) /* Laos */
           && (ccsid != 8612) && (ccsid != 12708) && (ccsid != 62211)
           && (ccsid != 62224) && (ccsid != 62235) && (ccsid != 62245)
           && (ccsid != 62251) && singleByte) {
@@ -3167,8 +3170,8 @@ public class JDStatementStressTest extends JDTestcase {
           if (!s3.equals(s4)) {
             passed = false;
             sb.append("Retrieved hex strings from "+tableName+" did not match\n");
-            sb.append("Retrieved raw  = " + showStringAsHex(s1) + "\n");
-            sb.append("Retrieved 1200 = " + showStringAsHex(s2) + "\n");
+            sb.append("Retrieved raw byte = " + showStringAsHex(s1) + "\n");
+            sb.append("Retrieved as 1200  = " + showStringAsHex(s2) + "\n");
             showDifferences(s3, s4, sb);
           }
         }
@@ -3525,11 +3528,12 @@ public class JDStatementStressTest extends JDTestcase {
         // The following CCSIDs are not supported by PASE
         switch (ccsid) {
         case 1047:
+        case 1132:   /* Thai ux'20ad' not translated by native driver */ 
         case 1166:
         case 1371:
         case 5233:
         case 57777:
-	case 61175:  /* Not supported -- issue 66267 */ 
+	case 61175:  /* Not supported  */ 
         case 62211: /* Crashes JVM */
         case 62224: /* Crashes JVM */
         case 62235: /* Crashes JVM */

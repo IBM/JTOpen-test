@@ -160,7 +160,7 @@ Performs setup needed before running variations.
 
         //@E1A
 	//@E2C.  When trying to get this to work, it would fail because the SQLCOLPRIVILEGES
-        //       view does not work when the table contains only 1 column.  DB Issue 27810
+        //       view does not work when the table contains only 1 column. 
         //
         if((!JDTestDriver.isLUW())  && true){
             s.executeUpdate ("CREATE TABLE "  + JDDMDTest.COLLECTION                         //@E1A

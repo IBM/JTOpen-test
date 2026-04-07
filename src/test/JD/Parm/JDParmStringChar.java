@@ -549,7 +549,7 @@ Test:  char(32744) - value too big
 	     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX &&
 	         ( i == 1175 ||
 	           i == 1377 || 
-	           i == 61175 )) {           /* CCSID 61175 not support in DBTables -- see issue 66267 */ 
+	           i == 61175 )) {           /* CCSID 61175 not support in DBTables  */ 
 	       output_.println("Skipping CCSID "+i+" for toolbox driver"); 
 	     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
            ( i == 1047  ||   // Latin open sys 
@@ -559,7 +559,7 @@ Test:  char(32744) - value too big
              i ==  1377 ||  // Mixed host HKSCS growing
              i ==  5233 || 
              i ==  57777 || // SAP codepage
-             i ==  61175 ||   /* CCSID 61175 not support in DBTables -- see issue 66267 */ 
+             i ==  61175 ||   /* CCSID 61175 not support in DBTables */ 
              i ==  62211 || 
              i ==  62224 ||
              i ==  62235 ||

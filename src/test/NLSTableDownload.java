@@ -22,10 +22,6 @@ import test.NLS.NLSGetDoubleByteTableRequest;
 import test.NLS.NLSGetTableReply;
 import test.NLS.NLSGetTableRequest; 
 
-/**
-  *@version 1.00
-  *@author  Schuman Shao
-  **/
 public class NLSTableDownload extends Object
 {
 

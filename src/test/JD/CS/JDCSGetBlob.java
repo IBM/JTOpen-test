@@ -1135,8 +1135,7 @@ getBlob() - Get blob on a large blob
 		       Blob check = cstmt.getBlob(1);
 		       assertCondition (compare(check, expected1,output_), "Testcase added 12/14/2005 by native driver");
 		   } catch (Exception e) {
-		       failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "+
-			       " Currrently fails -- see issue 29243 ");
+		       failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- ");
 		   }
 
 	       } 

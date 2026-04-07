@@ -2895,7 +2895,7 @@ PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
 
             //
             // Note:  The native block insert fails because CLI only permits
-            // 32K rows.  Opened issue 31000 to see if limit can be increased
+            // 32K rows.  
 //
 // This was fixed internally by the native driver by breaking the execute into
 // 32K row chunks. 
@@ -2931,7 +2931,7 @@ assertCondition(answer==36450135000L && updateCounts.length == 270000, "answer="
                   messageBuffer.toString());
 
   } catch (Exception e) {
-failed (e, "Unexpected Exception:  Added by Native 7/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
+failed (e, "Unexpected Exception:  Added by Native 7/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used " );
   } 
 
     }
@@ -2994,7 +2994,7 @@ PreparedStatement pStmt = connection_.prepareStatement("INSERT INTO "+tablename+
 
             //
             // Note:  The native block instert fails because CLI only permits
-            // 32K rows.  Opened issue 31000 to see if limit can be increased
+            // 32K rows.  
             // 
 for (int i = 0; i < 270000; i++) {
               // if (i % 1000 == 0) { output_.print(i+"."); }
@@ -3029,7 +3029,7 @@ assertCondition(updateCounts.length == 270000 && updateCounts2.length == 270000,
                   messageBuffer.toString());
 
   } catch (Exception e) {
-failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used -- see issue 31000" );
+failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.toString()+" Note:  Currently fails for native when native insert support used " );
   } 
 
     }

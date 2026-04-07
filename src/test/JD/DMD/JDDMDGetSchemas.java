@@ -84,7 +84,7 @@ extends JDTestcase
     private DatabaseMetaData    dmd2_;
     StringBuffer message =new StringBuffer();
 
-    private String addedGetSchemasFix = " -- added 9/24/2009 by native driver -- requires SYSIBM fix from issue 42006";
+    private String addedGetSchemasFix = " -- added 9/24/2009 by native driver";
 
 
 /**

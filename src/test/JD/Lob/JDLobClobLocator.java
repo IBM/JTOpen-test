@@ -1008,7 +1008,7 @@ public class JDLobClobLocator extends JDTestcase {
   /**
    * length() - When the lob is not empty.
    * 
-   * SQL400 - The length of a lob is expected to be the length of the signficant
+   * SQL400 - The length of a lob is expected to be the length of the significant
    * data in the lob. The Native driver returns 20 here as that is the number of
    * significant characters in this lob. empty.
    **/
@@ -1025,7 +1025,7 @@ public class JDLobClobLocator extends JDTestcase {
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             notApplicable(
-                "09/13/07: Toolbox issue 30040 opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
+                "09/13/07: Toolbox issue opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
             return;
           }
 
@@ -1058,7 +1058,7 @@ public class JDLobClobLocator extends JDTestcase {
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             notApplicable(
-                "09/13/07: Toolbox issue 30040 opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
+                "09/13/07: Toolbox issue opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
             return;
           }
 
@@ -1158,7 +1158,7 @@ public class JDLobClobLocator extends JDTestcase {
 
           if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
             notApplicable(
-                "09/13/07: Toolbox issue 30040 opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
+                "09/13/07: Toolbox issue opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
             return;
           }
 
@@ -2202,7 +2202,7 @@ public class JDLobClobLocator extends JDTestcase {
 
         if (CCSID_ == 5035 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           notApplicable(
-              "09/13/07: Toolbox issue 30040 opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
+              "09/13/07: Toolbox issue opened for hostserver.  They say it is a permanant restriction and do not plan to fix it.  ");
           return;
         }
 

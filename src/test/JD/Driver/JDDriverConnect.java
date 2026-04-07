@@ -3047,7 +3047,7 @@ public class JDDriverConnect extends JDTestcase {
 
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
 
-          expectedVerificationId = "Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE";
+          expectedVerificationId = "Verification_ID=QIBM_OS400_JT400";
 
           if (isNative_) {
             expectedRemotePort = "Remote_Port=0";
@@ -3074,58 +3074,18 @@ public class JDDriverConnect extends JDTestcase {
         }
         c.close();
 
-        Statement pwrStmt = pwrConnection_.createStatement();
-        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/" + jobName + ".txt'))";
-        rs = pwrStmt.executeQuery(sql);
-        sb.append("/tmp/authexit/" + jobName + ".txt contains \n");
-        sb.append("-------------------------------------------\n");
-
-        while (rs.next()) {
-          String line = rs.getString(1).trim();
-          sb.append(line);
-          sb.append("\n");
-          if (line.equals("User_Profile_Name=" + mfaUserid_)) {
-            foundProfileName = true;
-          }
-          if (line.equals(expectedVerificationId))
-            foundVerificationId = true;
-          if (line.equals(expectedLocalIp))
-            foundLocalIp = true;
-          if (line.equals(expectedLocalPort))
-            foundLocalPort = true;
-          if (line.equals(expectedRemoteIp))
-            foundRemoteIp = true;
-          if (line.equals(expectedRemotePort))
-            foundRemotePort = true;
-        }
-        sb.append("-------------------------------------------\n");
-
-        rs.close();
-        pwrStmt.close();
-        if (!foundProfileName) {
-          successful = false;
-          sb.append("Did not find USER PROFILE in /tmp/authexit/" + jobName + ".txt\n");
-        }
-        if (!foundVerificationId) {
-          successful = false;
-          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
-        }
-        if (!foundLocalIp) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedLocalIp + "\n");
-        }
-        if (!foundLocalPort) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedLocalPort + "\n");
-        }
-        if (!foundRemoteIp) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
-        }
-        if (!foundRemotePort) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedRemotePort + "\n");
-        }
+        successful  = successful && AuthExit.checkResult(
+            pwrConnection_,
+            jobName,  
+            mfaUserid_,
+            sb,
+            expectedVerificationId, 
+            expectedRemotePort,
+            expectedLocalPort,
+            expectedRemoteIp,
+            expectedLocalIp); 
+        
+        
         if (!successful)
           skipExitCleanup = true;
         assertCondition(successful, sb);
@@ -3172,7 +3132,7 @@ public class JDDriverConnect extends JDTestcase {
         String expectedRemoteIp = "NOTSET";
         String expectedLocalIp = "NOTSET";
 
-        expectedVerificationId = "Verification_ID=QIBM_QZBS_SVR_HOSTCNN";
+        expectedVerificationId = "Verification_ID=QIBM_OS400_JT400";
 
         String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
         rs = s.executeQuery(sql);
@@ -3284,58 +3244,17 @@ public class JDDriverConnect extends JDTestcase {
         String expectedLocalIp = "Local_IPAddress=1.2.3.4";
         c.close();
 
-        Statement pwrStmt = pwrConnection_.createStatement();
-        String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('/tmp/authexit/" + jobName + ".txt'))";
-        rs = pwrStmt.executeQuery(sql);
-        sb.append("/tmp/authexit/" + jobName + ".txt contains \n");
-        sb.append("-------------------------------------------\n");
+        successful  = successful && AuthExit.checkResult(
+            pwrConnection_,
+            jobName,  
+            mfaUserid_,
+            sb,
+            expectedVerificationId, 
+            expectedRemotePort,
+            expectedLocalPort,
+            expectedRemoteIp,
+            expectedLocalIp); 
 
-        while (rs.next()) {
-          String line = rs.getString(1).trim();
-          sb.append(line);
-          sb.append("\n");
-          if (line.equals("User_Profile_Name=" + mfaUserid_)) {
-            foundProfileName = true;
-          }
-          if (line.equals(expectedVerificationId))
-            foundVerificationId = true;
-          if (line.equals(expectedLocalIp))
-            foundLocalIp = true;
-          if (line.equals(expectedLocalPort))
-            foundLocalPort = true;
-          if (line.equals(expectedRemoteIp))
-            foundRemoteIp = true;
-          if (line.equals(expectedRemotePort))
-            foundRemotePort = true;
-        }
-        sb.append("-------------------------------------------\n");
-
-        rs.close();
-        pwrStmt.close();
-        if (!foundProfileName) {
-          successful = false;
-          sb.append("Did not find USER PROFILE in /tmp/authexit/" + jobName + ".txt\n");
-        }
-        if (!foundVerificationId) {
-          successful = false;
-          sb.append("Did not find verification id:" + expectedVerificationId + "\n");
-        }
-        if (!foundLocalIp) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedLocalIp + "\n");
-        }
-        if (!foundLocalPort) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedLocalPort + "\n");
-        }
-        if (!foundRemoteIp) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedRemoteIp + "\n");
-        }
-        if (!foundRemotePort) {
-          successful = false;
-          sb.append("Did not find expected:" + expectedRemotePort + "\n");
-        }
         if (!successful)
           skipExitCleanup = true;
         assertCondition(successful, sb);
@@ -3389,7 +3308,7 @@ public class JDDriverConnect extends JDTestcase {
         String expectedAFbytes = "Additional_FactorBytes=31323334353637383931313233343536373839323132333435363738393331323334353637383934313233343536373839353132333435363738393631323334"; 
 
 
-        expectedVerificationId = "Verification_ID=QIBM_QZBS_SVR_HOSTCNN";
+        expectedVerificationId = "Verification_ID=QIBM_OS400_JT400";
 
         String sql = "select CLIENT_IP_ADDRESS, CLIENT_PORT_NUMBER, SERVER_IP_ADDRESS, SERVER_PORT_NUMBER from QSYS2.TCPIP_INFO";
         rs = s.executeQuery(sql);
@@ -3402,6 +3321,7 @@ public class JDDriverConnect extends JDTestcase {
 
         c.close();
 
+        
         Statement pwrStmt = pwrConnection_.createStatement();
         String pathname = null;
         sql = "select LINE,PATH_NAME from " + "table(qsys2.IFS_OBJECT_STATISTICS('/tmp/authexit')), "
@@ -3521,7 +3441,7 @@ public class JDDriverConnect extends JDTestcase {
         String expectedAFbytes = "Additional_FactorBytes=31323334353637383931313233343536373839323132333435363738393331323334353637383934313233343536373839353132333435363738393631323334"; 
 
 
-        expectedVerificationId = "Verification_ID=QIBM_OS400_QZBS_SVR_DATABASE";
+        expectedVerificationId = "Verification_ID=QIBM_OS400_JT400";
         String sql; 
         if (toolboxNative) {
           expectedRemoteIp = "Remote_IPAddress=";

@@ -601,7 +601,7 @@ Performs cleanup needed after running variations.
 
     public void Var007()
     {
-	String added = "-- added 09/06/2007 by native to test client register set values -- Note: as of 9/6/2007 this will fail because of issue 34082 "; 
+	String added = "-- added 09/06/2007 by native to test client register set values  "; 
 
 
 	    String sql = "NONE"; 
@@ -826,7 +826,7 @@ Performs cleanup needed after running variations.
       String testProfile = "ISSUE67424";
       String testPassword = "J8VAPASS";
       StringBuffer sb = new StringBuffer();
-      sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
+      sb.append("-- Added 10/19/2021 ");
       try {
         boolean passed = true;
         char[] pwrPwd = PasswordVault.decryptPassword(encryptedPwrPwd_); 
@@ -892,7 +892,7 @@ Performs cleanup needed after running variations.
       String testProfile = "ISSUE67424";
       String testPassword = "J8VAPASS";
       StringBuffer sb = new StringBuffer();
-      sb.append("-- Added 10/19/2021 for issue 67424/CPS C7GCHE");
+      sb.append("-- Added 10/19/2021 ");
       try {
         boolean passed = true;
         char[] pwrPwd = PasswordVault.decryptPassword(encryptedPwrPwd_); 

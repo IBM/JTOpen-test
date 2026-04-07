@@ -7015,7 +7015,7 @@ will attempt to recreate the error.
 
                     rs.close ();
                     assertCondition (success && check1 && check2
-                            && (rows == 2), "success="+success+" check1="+check1+" check2="+check2+ " rows="+rows+" sb 2 "+message.toString() + " V7R1 Long-Schema TC - issue 41580 opened for v7r1 roi");
+                            && (rows == 2), "success="+success+" check1="+check1+" check2="+check2+ " rows="+rows+" sb 2 "+message.toString() + " V7R1 Long-Schema TC ");
                 } catch (Exception e) {
                     failed (e, "Unexpected Exception");
                 }

@@ -1602,25 +1602,18 @@ Created 1/31/2011 for CPS 8DHTTE.
 	}; 
 
 	Object[][] fixupArrayExtended = {
-	    {"749T", fixupExtended736T, "Updated 5/29/2019"}, 
-	    {"749N", fixupExtended736N},
+	    {"746T", fixupExtended736T, "Updated 5/29/2019"}, 
+	    {"746N", fixupExtended736N},
 
 	};
-
-
 
 	Object[][] fixupArray = {
 	    {"748TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
 	    {"749TS", fixup726TS, "10/01/2013 -- guess from 716TS"},
-
 	    {"748TX", fixup545TX},
-
 	    {"748NS", fixup726NS, "09/16/2013 -- Primed"},
-
-
+            {"716LS", fixup726L}, 
 	    {"546LS", fixup546L},
-	    {"716LS", fixup726L}, 
-
 	};
 
 

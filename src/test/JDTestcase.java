@@ -1198,7 +1198,7 @@ public class JDTestcase extends Testcase {
         cmd[0] = "/usr/bin/qsh";
         cmd[1] = "-c";
         cmd[2] = "system dspobjd " + library
-            + "/qjvajdbc '*srvpgm detail(*service)'  | grep -i 'PTF number' | sed 's/^.*SI//'";
+            + "/qjvajdbc '*srvpgm detail(*service)'  | grep -i 'PTF number' | sed 's/^.*SI//'  | sed 's/^.*SJ/1/'";
 
         // System.out.println("Debug: Running "+cmd[2]);
         try {

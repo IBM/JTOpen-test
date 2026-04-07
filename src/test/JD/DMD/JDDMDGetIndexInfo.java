@@ -11,12 +11,6 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
- //////////////////////////////////////////////////////////////////////
- //
- //
- //
- //
- //
  ////////////////////////////////////////////////////////////////////////
  //
  // File Name:    JDDMDGetIndexInfo.java
@@ -31,9 +25,6 @@
  //
  // SYSIBM differences
  // 1. Empty catalog returns answers (Var005)
- //
- ////////////////////////////////////////////////////////////////////////
- //
  //
  ////////////////////////////////////////////////////////////////////////
 
@@ -378,8 +369,6 @@ Performs cleanup needed after running variations.
 /**
 getIndexInfo() - Check the result set format.
 
-Note:  In V6R1 the SYSIBM procedures changed the datatype by columns COLUMN_NAME, CARDINALITY, PAGES, and FILTER_CONDITION.  See issu 36275 for more details.
-Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for column 13 from 2005 (CLOB) to 12 (VARCHAR).
 **/
     public void Var001()
     {
@@ -496,109 +485,106 @@ Note:  In December 2008 for V6R1, the SYSIBM procedure changed the datatype for 
 /**
 getIndexInfo() - Get a list of those created in this testcase and
 verify all columns.
-
-SQL400 - The native driver returns the cardinality and the pages as 0
-         and the toolbox driver is returning them as -1.  I am note sure
-         what is right but it didn't seem to be worth changing the driver
-         code when I could change the testcase code.
 **/
 
 
-    public void Var002()
-    {
-        try {
-	    int expectedRows = 2;
-	    if (isSysibmMetadata()) {
-		    expectedRows = 3;
-	    } else if((getDriver () == JDTestDriver.DRIVER_TOOLBOX))
-	    	expectedRows = 3;
+public void Var002() {
+  try {
+    int expectedRows = 2;
+    if (isSysibmMetadata()) {
+      expectedRows = 3;
+    } else if ((getDriver() == JDTestDriver.DRIVER_TOOLBOX))
+      expectedRows = 3;
 
-      message.setLength(0);
-            ResultSet rs = dmd_.getIndexInfo (null, JDDMDTest.COLLECTION,
-                "INDEXTABLE", false, true);
-            boolean success = true;
+    message.setLength(0);
+    message.append("Checking index information for "+JDDMDTest.COLLECTION+ ".INDEXTABLE\n"); 
+    ResultSet rs = dmd_.getIndexInfo(null, JDDMDTest.COLLECTION, "INDEXTABLE", false, true);
+    boolean success = true;
 
-            int rows = 0;
-            while (rs.next ()) {
-                ++rows;
-                String columnName       = rs.getString ("COLUMN_NAME");
-                messageColumnName = columnName;
-                success = checkString("TABLE_CAT", rs.getString ("TABLE_CAT"), connectionCatalog_) && success;
-                success = checkString("TABLE_SCHEM", rs.getString ("TABLE_SCHEM"), JDDMDTest.COLLECTION) && success;
-                success = checkString("TABLE_NAME", rs.getString("TABLE_NAME"), "INDEXTABLE") && success;
+    int rows = 0;
+    while (rs.next()) {
+      ++rows;
+      String columnName = rs.getString("COLUMN_NAME");
+      messageColumnName = columnName;
+      success = checkString("TABLE_CAT", rs.getString("TABLE_CAT"), connectionCatalog_) && success;
+      success = checkString("TABLE_SCHEM", rs.getString("TABLE_SCHEM"), JDDMDTest.COLLECTION) && success;
+      success = checkString("TABLE_NAME", rs.getString("TABLE_NAME"), "INDEXTABLE") && success;
 
-                boolean nonUnique       = rs.getBoolean ("NON_UNIQUE");
-                String indexQualifier   = rs.getString ("INDEX_QUALIFIER");
-                String indexName        = rs.getString ("INDEX_NAME");
-                short type              = rs.getShort ("TYPE");
-                short ordinalPosition   = rs.getShort ("ORDINAL_POSITION");
-                String ascOrDesc        = rs.getString ("ASC_OR_DESC");
-                int cardinality         = rs.getInt ("CARDINALITY");
-                int pages               = rs.getInt ("PAGES");
-                String filterCondition  = rs.getString ("FILTER_CONDITION");
+      boolean nonUnique = rs.getBoolean("NON_UNIQUE");
+      String indexQualifier = rs.getString("INDEX_QUALIFIER");
+      String indexName = rs.getString("INDEX_NAME");
+      short type = rs.getShort("TYPE");
+      short ordinalPosition = rs.getShort("ORDINAL_POSITION");
+      String ascOrDesc = rs.getString("ASC_OR_DESC");
+      int cardinality = rs.getInt("CARDINALITY");
+      int pages = rs.getInt("PAGES");
+      String filterCondition = rs.getString("FILTER_CONDITION");
 
-		if (columnName==null) {
-		    success = checkBoolean("NON_UNIQUE", nonUnique, false) && success;
-		    success = checkInt("TYPE", type, DatabaseMetaData.tableIndexStatistic) && success;
-		    success = checkInt("ORDINAL_POSITION", ordinalPosition, 0) && success;
+      if (columnName == null) {
+        success = checkBoolean("NON_UNIQUE", nonUnique, false) && success;
+        success = checkInt("TYPE", type, DatabaseMetaData.tableIndexStatistic) && success;
+        success = checkInt("ORDINAL_POSITION", ordinalPosition, 0) && success;
 
-		} else {
+      } else {
+        success = checkBoolean("NON_UNIQUE", nonUnique, true) && success;
+        success = checkInt("TYPE", type, DatabaseMetaData.tableIndexOther) && success;
+        success = checkInt("ORDINAL_POSITION", ordinalPosition, 1) && success;
+      }
 
-		    success = checkBoolean("NON_UNIQUE", nonUnique, true) && success;
-		    success = checkInt("TYPE", type, DatabaseMetaData.tableIndexOther) && success;
-		    success = checkInt("ORDINAL_POSITION", ordinalPosition, 1) && success;
+      success = checkInt("CARDINALITY", cardinality, 0) && success;
+      if (type == DatabaseMetaData.tableIndexStatistic)
+        success = checkInt("PAGES", pages, 1) && success; // index pages
+      else
+        success = checkInt("PAGES", pages, 0) && success; // table pages
 
-		}
+      success = checkString("FILTER_CONDITION", filterCondition, null) && success;
 
+      if ("INDEX".equals(indexName)) {
+        success = checkString("INDEX_QUALIFIER", indexQualifier, JDDMDTest.COLLECTION) && success;
+        success = checkString("ASC_OR_DESC", ascOrDesc, "D") && success;
+      } else if ("INDEX1".equals(indexName)) {
+        success = checkString("INDEX_QUALIFIER", indexQualifier, JDDMDTest.COLLECTION) && success;
+        success = checkString("ASC_OR_DESC", ascOrDesc, "A") && success;
 
-                if (getDriver () == JDTestDriver.DRIVER_TOOLBOX)
-                {
-                    {
-                    	  success = checkInt("CARDINALITY", cardinality, 0) && success;
-                    	  if(type == DatabaseMetaData.tableIndexStatistic)
-                              success = checkInt("PAGES", pages, 1) && success; //index pages
-                    	  else
-                    		  success = checkInt("PAGES", pages, 0) && success; //table pages
-                    }
-                }
-                else
-                {
-                    success = checkInt("CARDINALITY", cardinality, 0) && success;
-			success = checkInt("PAGES", pages, 1) && success; //index pages
-                }
-
-                success = checkString("FILTER_CONDITION", filterCondition,null ) && success;
-
-                if ("INDEX".equals( indexName)) {
-                    success = checkString("INDEX_QUALIFIER", indexQualifier, JDDMDTest.COLLECTION) && success;
-                    success = checkString("ASC_OR_DESC", ascOrDesc, "D") && success;
-                }
-                else if ("INDEX1".equals(indexName)) {
-                    success = checkString("INDEX_QUALIFIER", indexQualifier, JDDMDTest.COLLECTION) && success;
-                    success = checkString("ASC_OR_DESC", ascOrDesc, "A") && success;
-
-                }
-		else if (indexName == null) {
-		    success = checkString("INDEX_QUALIFIER", indexQualifier, null) && success;
-		    success = checkString("ASC_OR_DESC", ascOrDesc, null) && success;
-		}
-                else {
-		    message.append("UNRECOGNIZED INDEX FOUND "+indexName+"\n");
-                    success = false;  // just tightening down the testcase a little.
-                }
-            }
-	    if (rows != expectedRows) {
-		success=false;
-		message.append("Number of rows is "+rows+" instead of "+expectedRows);
-	    }
-            rs.close ();
-            assertCondition (success, message);
-        }
-        catch (Exception e)  {
-            failed (e, "Unexpected Exception");
-        }
+      } else if (indexName == null) {
+        success = checkString("INDEX_QUALIFIER", indexQualifier, null) && success;
+        success = checkString("ASC_OR_DESC", ascOrDesc, null) && success;
+      } else {
+        message.append("UNRECOGNIZED INDEX FOUND " + indexName + "\n");
+        success = false; // just tightening down the testcase a little.
+      }
     }
-
+    if (rows != expectedRows) {
+      success = false;
+      message.append("Number of rows is " + rows + " instead of " + expectedRows);
+    }
+    rs.close();
+    if (!success) { 
+      Statement s = connection_.createStatement(); 
+      String sql = "select * from sysibm.sqlstatistics where TABLE_SCHEM='"+JDDMDTest.COLLECTION+"' and TABLE_NAME='INDEXTABLE'";
+      message.append("SQL="+sql+"\n"); 
+      rs = s.executeQuery(sql); 
+      ResultSetMetaData rsmd = rs.getMetaData(); 
+      int columnCount = rsmd.getColumnCount(); 
+      for (int i = 1; i <= columnCount; i++) { 
+        message.append(rsmd.getColumnName(i)+","); 
+      }
+      message.append("\n"); 
+      while (rs.next()) {
+        for (int i = 1; i <= columnCount; i++) { 
+          message.append(rs.getString(i)+","); 
+        }
+        message.append("\n"); 
+      }
+      message.append("EOF\n"); 
+      rs.close(); 
+      s.close(); 
+    }
+    assertCondition(success, message);
+  } catch (Exception e) {
+    failed(e, "Unexpected Exception");
+  }
+}
 
 
 /**
@@ -1369,11 +1355,7 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
 	      return;
 	  }
 
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355) {
-	  notApplicable("Native Driver and SI24355 testing");
-      } else {
 	  checkRSMD(false);
-      }
   }
 
   public void Var026() {
@@ -1386,13 +1368,9 @@ getIndexInfo() - Check all the RSMD results when using JDBC 3.0.
 	      notApplicable("LUW fails with  DB2 SQL error: SQLCODE: -954, SQLSTATE: 57011, SQLERRMC: null");
 	      return;
 	  }
-      if (getDriver() == JDTestDriver.DRIVER_NATIVE && getDriverFixLevel() < 24355) {
-	  notApplicable("Native Driver and SI24355 testing");
-      } else {
 	  if (checkNotGroupTest()) { 
 	      checkRSMD(true);
 	  }
-      }
   }
 
     public void checkRSMD(boolean extendedMetadata) {

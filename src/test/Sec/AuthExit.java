@@ -282,7 +282,13 @@ public class AuthExit {
       found = true; 
     }
   }
-  
+
+  if (expectedVerificationId.indexOf("IGNORE")>=0)   foundVerificationId = true; 
+  if (expectedLocalIp.indexOf("IGNORE")>=0) foundLocalIp = true; 
+  if (expectedLocalPort.indexOf("IGNORE")>=0) foundLocalPort = true; 
+  if (expectedRemoteIp.indexOf("IGNORE")>=0) foundRemoteIp = true; 
+  if (expectedRemotePort.indexOf("IGNORE")>=0) foundRemotePort = true; 
+
   String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('"+filename+"'))";
   ResultSet rs = pwrStmt.executeQuery(sql);
   sb.append(filename+" contains \n");
@@ -296,11 +302,11 @@ public class AuthExit {
     if (line.equals("User_Profile_Name="+mfaUserid)) {
       foundProfileName = true;
     }
-    if (!foundVerificationId && line.equals(expectedVerificationId))   foundVerificationId = true; 
-    if (!foundLocalIp && line.equals(expectedLocalIp)) foundLocalIp = true; 
-    if (!foundLocalPort && line.equals(expectedLocalPort)) foundLocalPort = true; 
-    if (!foundRemoteIp && line.equals(expectedRemoteIp)) foundRemoteIp = true; 
-    if (!foundRemotePort && line.equals(expectedRemotePort)) foundRemotePort = true; 
+    if (!foundVerificationId && (line.equals(expectedVerificationId)))   foundVerificationId = true; 
+    if (!foundLocalIp        && (line.equals(expectedLocalIp))) foundLocalIp = true; 
+    if (!foundLocalPort      && (line.equals(expectedLocalPort))) foundLocalPort = true; 
+    if (!foundRemoteIp       && (line.equals(expectedRemoteIp))) foundRemoteIp = true; 
+    if (!foundRemotePort     && (line.equals(expectedRemotePort))) foundRemotePort = true; 
   }
   sb.append("-------------------------------------------\n");
   rs.close(); 
@@ -321,11 +327,11 @@ public class AuthExit {
 
   pwrStmt.close(); 
   if (!foundProfileName) { successful = false; sb.append("Did not find USER PROFILE ("+mfaUserid+") in /tmp/authexit/"+jobName+".txt\n"); }
-  if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+"\n"); }
-  if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+"\n"); }
-  if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+"\n"); }
-  if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+"\n"); }
-  if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+"\n"); }
+  if (!foundVerificationId) { successful = false; sb.append("Did not find verification id:"+expectedVerificationId+" in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundLocalIp) { successful = false; sb.append("Did not find expected:"+expectedLocalIp+" in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundLocalPort) { successful = false; sb.append("Did not find expected:"+expectedLocalPort+ " in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundRemoteIp) { successful = false; sb.append("Did not find expected:"+expectedRemoteIp+" in /tmp/authexit/"+jobName+".txt\n"); }
+  if (!foundRemotePort) { successful = false; sb.append("Did not find expected:"+expectedRemotePort+" in /tmp/authexit/"+jobName+".txt\n"); }
 
   } catch (SQLException sqlex ) { 
     sb.append("Hit exception "+sqlex); 
