@@ -10,14 +10,6 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSDSTest.java
 //
@@ -40,7 +32,6 @@ public class JDSDSTest
       extends JDTestDriver {
 
 
-
 /**
 Run the test as an application.  This should be called
 from the test driver's main().
@@ -55,7 +46,6 @@ from the test driver's main().
    }
 
 
-
 /**
 Constructs an object for applets.
 @exception  Exception  If an exception occurs.
@@ -65,7 +55,6 @@ Constructs an object for applets.
    {
       super();
    }
-
 
 
 /**

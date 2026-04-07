@@ -10,23 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetPrecision.java
 //
 // Classes:      JDPMDGetPrecision
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -85,7 +74,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -103,7 +91,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -116,7 +103,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -141,7 +127,6 @@ getPrecision() - Should throw exception if the statement gets closed.
     }
 
 
-
 /**
 getPrecision() - Should throw exception if the index is too small.
 **/
@@ -161,7 +146,6 @@ getPrecision() - Should throw exception if the index is too small.
 	    }
 	}
     }
-
 
 
 /**
@@ -1225,7 +1209,6 @@ a procedure call for data type of numeric.
     }
 
 
-
 /**
 getPrecision() - Should work with a callable statement for
 a procedure call for data type of numeric.
@@ -1268,7 +1251,6 @@ a procedure call for data type of char.
 	    }
 	}
     }
-
 
 
 /**

@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSGetConnection.java
 //
 // Classes:      JDSCPDSGetConnection
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// Release     Date        Userid    Comments
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.SCPDS;
 
@@ -47,7 +33,6 @@ import test.JDTestcase;
 import test.PasswordVault;
 
 import javax.sql.DataSource;
-
 
 
 /**
@@ -70,7 +55,6 @@ extends JDTestcase {
      }
      test.JDSCPDSTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -101,7 +85,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -119,7 +102,6 @@ Performs setup needed before running variations.
     // TO Test:
     // getConnection()
     // getConnection(user, password)
-
 
 
 /**
@@ -267,8 +249,6 @@ getConnection(userid,pwd) - Should work with valid userid,pwd.
     }
 
 
-
 }
-
 
 

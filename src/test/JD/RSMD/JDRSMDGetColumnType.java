@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetColumnType.java
 //
 // Classes:      JDRSMDGetColumnType
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -42,7 +34,6 @@ import test.JDRSMDTest;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.JD.JDSetupPackage;
-
 
 
 /**
@@ -67,7 +58,6 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDRSMDGCT";
     private static final String PACKAGE_CACHE_NO    = "extended dynamic=false";
@@ -81,7 +71,6 @@ extends JDTestcase
     private ResultSet           rs_             = null;
     private ResultSetMetaData   rsmd_           = null;
     private Statement           statement_      = null;
-
 
 
 /**
@@ -98,8 +87,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
-
 
 
 /**
@@ -141,7 +128,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Reconnects with different properties, if needed.
 
@@ -173,7 +159,6 @@ Reconnects with different properties, if needed.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -189,7 +174,6 @@ Performs cleanup needed after running variations.
         statement_.close ();
         connection_.close ();
     }
-
 
 
 /**
@@ -209,7 +193,6 @@ getColumnType() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getColumnType() - Check column 0.  Should throw an exception.
 (Package cache = false)
@@ -227,7 +210,6 @@ getColumnType() - Check column 0.  Should throw an exception.
     }
 
 
-
 /**
 getColumnType() - Check a column greater than the max.
 Should throw an exception. (Package cache = false)
@@ -243,7 +225,6 @@ Should throw an exception. (Package cache = false)
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -265,7 +246,6 @@ getColumnType() - Check when the result set is closed.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -296,7 +276,6 @@ getColumnType() - Check when the meta data comes from a prepared statement.
     }
 
 
-
 /**
 getColumnType() - Check a SMALLINT column. (Package cache = false)
 **/
@@ -311,7 +290,6 @@ getColumnType() - Check a SMALLINT column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -330,7 +308,6 @@ getColumnType() - Check an INTEGER column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a REAL column. (Package cache = false)
 **/
@@ -345,7 +322,6 @@ getColumnType() - Check a REAL column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -364,7 +340,6 @@ getColumnType() - Check a FLOAT column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a FLOAT(3) column. (Package cache = false)
 **/
@@ -379,7 +354,6 @@ getColumnType() - Check a FLOAT(3) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -398,7 +372,6 @@ getColumnType() - Check a DOUBLE column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a DECIMAL(10,5) column. (Package cache = false)
 **/
@@ -413,7 +386,6 @@ getColumnType() - Check a DECIMAL(10,5) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -432,7 +404,6 @@ getColumnType() - Check a NUMERIC(10,5) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a CHAR(50) column. (Package cache = false)
 **/
@@ -447,7 +418,6 @@ getColumnType() - Check a CHAR(50) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -466,7 +436,6 @@ getColumnType() - Check a VARCHAR(50) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a BINARY(20) column. (Package cache = false)
 **/
@@ -481,7 +450,6 @@ getColumnType() - Check a BINARY(20) column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -500,7 +468,6 @@ getColumnType() - Check a VARBINARY(20) column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a DATE column. (Package cache = false)
 **/
@@ -515,7 +482,6 @@ getColumnType() - Check a DATE column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -534,7 +500,6 @@ getColumnType() - Check a TIME column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a TIMESTAMP column. (Package cache = false)
 **/
@@ -549,7 +514,6 @@ getColumnType() - Check a TIMESTAMP column. (Package cache = false)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -570,7 +534,6 @@ getColumnType() - Check a BLOB column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a CLOB column. (Package cache = false)
 **/
@@ -587,7 +550,6 @@ getColumnType() - Check a CLOB column. (Package cache = false)
             }
         }
     }
-
 
 
 /**
@@ -608,7 +570,6 @@ getColumnType() - Check a DBCLOB column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a DATALINK column. (Package cache = false)
 **/
@@ -622,7 +583,6 @@ getColumnType() - Check a DATALINK column. (Package cache = false)
  	}
 
 
-
 	if (checkLobSupport ()) {
 	    try {
 		reconnect (PACKAGE_CACHE_NO);
@@ -634,7 +594,6 @@ getColumnType() - Check a DATALINK column. (Package cache = false)
 	    }
 	}
     }
-
 
 
 /**
@@ -655,7 +614,6 @@ getColumnType() - Check a DISTINCT column. (Package cache = false)
     }
 
 
-
 /**
 getColumnType() - Check a BIGINT column. (Package cache = false)
 **/
@@ -672,7 +630,6 @@ getColumnType() - Check a BIGINT column. (Package cache = false)
             }
         }
     }
-
 
 
 /**
@@ -692,7 +649,6 @@ getColumnType() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 getColumnType() - Check column 0.  Should throw an exception.
 (Package cache = true)
@@ -708,7 +664,6 @@ getColumnType() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -728,7 +683,6 @@ Should throw an exception. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a SMALLINT column. (Package cache = true)
 **/
@@ -743,7 +697,6 @@ getColumnType() - Check a SMALLINT column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -762,7 +715,6 @@ getColumnType() - Check an INTEGER column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a REAL column. (Package cache = true)
 **/
@@ -777,7 +729,6 @@ getColumnType() - Check a REAL column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -796,7 +747,6 @@ getColumnType() - Check a FLOAT column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a FLOAT(3) column. (Package cache = true)
 **/
@@ -811,7 +761,6 @@ getColumnType() - Check a FLOAT(3) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -830,7 +779,6 @@ getColumnType() - Check a DOUBLE column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a DECIMAL(10,5) column. (Package cache = true)
 **/
@@ -845,7 +793,6 @@ getColumnType() - Check a DECIMAL(10,5) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -864,7 +811,6 @@ getColumnType() - Check a NUMERIC(10,5) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a CHAR(50) column. (Package cache = true)
 **/
@@ -879,7 +825,6 @@ getColumnType() - Check a CHAR(50) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -898,7 +843,6 @@ getColumnType() - Check a VARCHAR(50) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a BINARY(20) column. (Package cache = true)
 **/
@@ -913,7 +857,6 @@ getColumnType() - Check a BINARY(20) column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -932,7 +875,6 @@ getColumnType() - Check a VARBINARY(20) column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a DATE column. (Package cache = true)
 **/
@@ -947,7 +889,6 @@ getColumnType() - Check a DATE column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -966,7 +907,6 @@ getColumnType() - Check a TIME column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a TIMESTAMP column. (Package cache = true)
 **/
@@ -981,7 +921,6 @@ getColumnType() - Check a TIMESTAMP column. (Package cache = true)
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1002,7 +941,6 @@ getColumnType() - Check a BLOB column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a CLOB column. (Package cache = true)
 **/
@@ -1021,7 +959,6 @@ getColumnType() - Check a CLOB column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a DBCLOB column. (Package cache = true)
 **/
@@ -1038,7 +975,6 @@ getColumnType() - Check a DBCLOB column. (Package cache = true)
             }
         }
     }
-
 
 
 /**
@@ -1064,7 +1000,6 @@ getColumnType() - Check a DATALINK column. (Package cache = true)
 	    }
 	}
     }
-
 
 
 /**
@@ -1103,7 +1038,6 @@ getColumnType() - Check a BIGINT column. (Package cache = true)
     }
 
 
-
 /**
 getColumnType() - Check a DECFLOAT 16 column. (Package cache = false)
 **/
@@ -1138,7 +1072,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = false)
             }
         }
     }
-
 
 
 /**
@@ -1230,7 +1163,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = true)
         }
 
 
-
     /**
     getColumnType() - Check UTF-8 CHAR column
     **/
@@ -1251,8 +1183,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = true)
                 failed (e, "Unexpected Exception - UTF-8");
             }
         }
-
-
 
 
     /**
@@ -1298,7 +1228,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = true)
                 failed (e, "Unexpected Exception - UTF-16");
             }
         }
-
 
 
     /**
@@ -1404,7 +1333,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = true)
         }
 
 
-
     /**
     getColumnType() - Check NCLOB column
     **/
@@ -1430,7 +1358,6 @@ getColumnType() - Check a DECFLOAT 34 column. (Package cache = true)
                 failed (e, "Unexpected Exception - NCLOB");
             }
         }
-
 
 
 /**
@@ -1467,11 +1394,6 @@ getColumnType() - Check a BOOLEAN column. (Package cache = false)
             }
         }
     }
-
-
-
-
-
 
 
 }

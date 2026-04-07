@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSDSMisc.java
 //
 // Classes:      JDSDSMisc
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// Release     Date        Userid    Comments
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.SDS;
 
@@ -41,7 +27,6 @@ import test.JDTestcase;
 import java.io.FileOutputStream;
 import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
-
 
 
 /**
@@ -65,7 +50,6 @@ extends JDTestcase {
    }
 
 
-
    // Private data.
    private DataSource dataSource_;
 
@@ -86,7 +70,6 @@ Constructor.
    }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -99,7 +82,6 @@ Performs setup needed before running variations.
          dataSource_ = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.DB2StdDataSource");
       }
    }
-
 
 
    // TO Test:
@@ -125,6 +107,5 @@ toString() - There are no testcases written yet.
 
 
 }
-
 
 

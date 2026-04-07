@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetFloat.java
 //
 // Classes:      JDPSSetFloat
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 import com.ibm.as400.access.AS400;
@@ -49,7 +35,6 @@ import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
 import test.JD.JDSerializeFile;
 import java.sql.SQLException;
-
 
 
 /**
@@ -74,15 +59,12 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDPSSF";
 
 
-
     // Private data.
     private Statement           statement_;
-
 
 
 /**
@@ -99,7 +81,6 @@ Constructor.
             namesAndVars, runMode, fileOutputStream,
             password);
     }
-
 
 
 /**
@@ -119,7 +100,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -133,7 +113,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -167,7 +146,6 @@ statement is closed.
   }
 
 
-
 /**
 setFloat() - Should throw exception when an invalid index is
 specified.
@@ -197,7 +175,6 @@ specified.
       }
     }
   }
-
 
 
 /**
@@ -230,7 +207,6 @@ setFloat() - Should throw exception when index is 0.
   }
 
 
-
 /**
 setFloat() - Should throw exception when index is -1.
 **/
@@ -259,7 +235,6 @@ setFloat() - Should throw exception when index is -1.
       }
     }
   }
-
 
 
 /**
@@ -303,7 +278,6 @@ greater than 1.
   }
 
 
-
 /**
 setFloat() - Should throw exception when the parameter is
 not an input parameter.
@@ -321,7 +295,6 @@ not an input parameter.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -363,7 +336,6 @@ setFloat() - Set a SMALLINT parameter.
   }
 
 
-
 /**
 setFloat() - Set a SMALLINT parameter, when there is a decimal part.
 **/
@@ -403,7 +375,6 @@ setFloat() - Set a SMALLINT parameter, when there is a decimal part.
   }
 
 
-
 /**
 setFloat() - Set a SMALLINT parameter, when the value is too big.  This will
 cause a data truncation exception.
@@ -435,7 +406,6 @@ cause a data truncation exception.
       }
     }
   }
-
 
 
 /**
@@ -477,7 +447,6 @@ setFloat() - Set an INTEGER parameter.
   }
 
 
-
 /**
 setFloat() - Set an INTEGER parameter, when there is a decimal part.
 **/
@@ -515,7 +484,6 @@ setFloat() - Set an INTEGER parameter, when there is a decimal part.
       }
     }
   }
-
 
 
 /**
@@ -589,7 +557,6 @@ setFloat() - Set an REAL parameter.
   }
 
 
-
 /**
 setFloat() - Set an FLOAT parameter.
 **/
@@ -627,7 +594,6 @@ setFloat() - Set an FLOAT parameter.
       }
     }
   }
-
 
 
 /**
@@ -669,7 +635,6 @@ setFloat() - Set an DOUBLE parameter.
   }
 
 
-
 /**
 setFloat() - Set an DECIMAL parameter.
 **/
@@ -709,7 +674,6 @@ setFloat() - Set an DECIMAL parameter.
   }
 
 
-
 /**
 setFloat() - Set an DECIMAL parameter, when the value is too big.
 **/
@@ -746,7 +710,6 @@ setFloat() - Set an DECIMAL parameter, when the value is too big.
       }
     }
   }
-
 
 
 /**
@@ -789,7 +752,6 @@ This does not cause a DataTruncation object to be created.
   }
 
 
-
 /**
 setFloat() - Set an DECIMAL parameter, when the value is very small.
 **/
@@ -829,7 +791,6 @@ setFloat() - Set an DECIMAL parameter, when the value is very small.
   }
 
 
-
 /**
 setFloat() - Set an NUMERIC parameter.
 **/
@@ -867,7 +828,6 @@ setFloat() - Set an NUMERIC parameter.
       }
     }
   }
-
 
 
 /**
@@ -912,7 +872,6 @@ setFloat() - Set an NUMERIC parameter, when the value is too big
   }
 
 
-
 /**
 setFloat() - Set a NUMERIC parameter, where the float's fraction truncates.
 This does not cause a DataTruncation object to be created.
@@ -951,7 +910,6 @@ This does not cause a DataTruncation object to be created.
       }
     }
   }
-
 
 
 /**
@@ -993,7 +951,6 @@ setFloat() - Set an NUMERIC parameter, when the value is very small.
   }
 
 
-
 /**
 setFloat() - Set an CHAR(50) parameter.
 **/
@@ -1033,7 +990,6 @@ setFloat() - Set an CHAR(50) parameter.
   }
 
 
-
 /**
 setFloat() - Set an CHAR(1) parameter.
 **/
@@ -1070,7 +1026,6 @@ setFloat() - Set an CHAR(1) parameter.
   }
 
 
-
 /**
 setFloat() - Set an CHAR(1) parameter, when the value is too big.
 **/
@@ -1101,7 +1056,6 @@ setFloat() - Set an CHAR(1) parameter, when the value is too big.
       }
     }
   }
-
 
 
 /**
@@ -1143,7 +1097,6 @@ setFloat() - Set an VARCHAR parameter.
   }
 
 
-
 /**
 setFloat() - Set a CLOB parameter.
 **/
@@ -1178,8 +1131,6 @@ if (checkLobSupport ()) {
       }
     }
   }
-
-
 
 
 /**
@@ -1218,7 +1169,6 @@ if (checkLobSupport ()) {
   }
 
 
-
 /**
 setFloat() - Set a BINARY parameter.
 **/
@@ -1248,8 +1198,6 @@ setFloat() - Set a BINARY parameter.
       }
     }
   }
-
-
 
 
 /**
@@ -1286,8 +1234,6 @@ setFloat() - Set a VARBINARY parameter.
     }
 
 
-
-
 /**
 setFloat() - Set a BLOB parameter.
 **/
@@ -1320,8 +1266,6 @@ setFloat() - Set a BLOB parameter.
       }
     }
     }
-
-
 
 
 /**
@@ -1358,7 +1302,6 @@ setFloat() - Set a DATE parameter.
     }
 
 
-
 /**
 setFloat() - Set a TIME parameter.
 **/
@@ -1391,7 +1334,6 @@ setFloat() - Set a TIME parameter.
       }
     }
     }
-
 
 
 /**
@@ -1461,7 +1403,6 @@ setFloat() - Set a DATALINK parameter.
     }
 
 
-
 /**
 setFloat() - Set a DISTINCT parameter.
 **/
@@ -1504,7 +1445,6 @@ setFloat() - Set a DISTINCT parameter.
       }
     }
     }
-
 
 
 /**
@@ -1551,7 +1491,6 @@ setFloat() - Set a BIGINT parameter.
     }
 
 
-
 /**
 setFloat() - Set a BIGINT parameter, when there is a decimal part.
 **/
@@ -1596,7 +1535,6 @@ setFloat() - Set a BIGINT parameter, when there is a decimal part.
     }
 
 
-
 /**
 setFloat() - Set an BIGINT parameter, when the value is too big.  This will
 cause a data truncation exception.
@@ -1634,7 +1572,6 @@ cause a data truncation exception.
       }
     }
     }
-
 
 
 /**
@@ -1774,7 +1711,6 @@ package cache.
       
       
     }
-
 
 
 /**

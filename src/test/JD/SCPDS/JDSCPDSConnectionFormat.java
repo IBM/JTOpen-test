@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionFormat.java
 //
 // Classes:      JDSCPDSConnectionFormat
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 import com.ibm.as400.access.AS400;
@@ -47,7 +34,6 @@ import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 
 import java.sql.*;
-
 
 
 /**
@@ -75,11 +61,9 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String table_      = JDSCPDSTest.COLLECTION + ".JDCFORMAT";
 	private DataSource dataSource;
-
 
 
 /**
@@ -96,7 +80,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -124,7 +107,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -140,7 +122,6 @@ Performs cleanup needed after running variations.
             s.close ();
         }
     }
-
 
 
 /**
@@ -187,7 +168,6 @@ inserts succeeds.
             }
         }
     }
-
 
 
 /**
@@ -245,7 +225,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 decimal separator - Specify "." for the decimal separator.
 Insert a record using a "." decimal separator.  This should work.
@@ -273,7 +252,6 @@ Insert a record using a "." decimal separator.  This should work.
     }
 
 
-
 /**
 decimal separator - Specify "." for the decimal separator.
 Insert a record using a "," decimal separator.  This should
@@ -299,7 +277,6 @@ throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -336,7 +313,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 decimal separator - Specify "," for the decimal separator.
 Insert a record using a "." decimal separator.  This should
@@ -371,7 +347,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date format - Use the default for the date format.
 This will depend on the server job, but iso should always
@@ -397,8 +372,6 @@ work.
             }
         }
     }
-
-
 
 
 /**
@@ -442,7 +415,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 date format - Specify "mdy" for the date format.
 Insert a date in mdy format.  This should work.
@@ -478,7 +450,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date format - Specify "mdy" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -504,8 +475,6 @@ Insert a date in julian format.  This should throw an exception.
             }
         }
     }
-
-
 
 
 /**
@@ -543,7 +512,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date format - Specify "dmy" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -569,7 +537,6 @@ Insert a date in julian format.  This should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -606,7 +573,6 @@ SQL400 - for now the Native driver can't do this.
         }}
 
 
-
 /**
 date format - Specify "ymd" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -631,7 +597,6 @@ Insert a date in julian format.  This should throw an exception.
                 assertExceptionIsInstanceOf (e, "java.sql.SQLException");
             }
         }}
-
 
 
 /**
@@ -662,7 +627,6 @@ Insert a date in usa format.  This should work.
     }
 
 
-
 /**
 date format - Specify "usa" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -688,7 +652,6 @@ Insert a date in julian format.  This should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -718,7 +681,6 @@ Insert a date in usa format.  This should work.
         }}
 
 
-
 /**
 date format - Specify "iso" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -744,7 +706,6 @@ Insert a date in julian format.  This should throw an exception.
             }
         }
     }
-
 
 
 /**
@@ -775,7 +736,6 @@ Insert a date in eur format.  This should work.
     }
 
 
-
 /**
 date format - Specify "eur" for the date format.
 Insert a date in julian format.  This should throw an exception.
@@ -803,7 +763,6 @@ Insert a date in julian format.  This should throw an exception.
     }
 
 
-
 /**
 date format - Specify "jis" for the date format.
 Insert a date in jis format.  This should work.
@@ -829,7 +788,6 @@ Insert a date in jis format.  This should work.
                 failed(e,"Unexpected Exception");
             }
         }}
-
 
 
 /**
@@ -895,7 +853,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date format - Specify "julian" for the date format.
 Insert a date in eur format.  This should throw an exception.
@@ -923,8 +880,6 @@ Insert a date in eur format.  This should throw an exception.
     }
 
 
-
-
 /**
 date separator - Use the default for the date separator.
 This will depend on the server job, but iso should always
@@ -950,8 +905,6 @@ work.
             }
         }
     }
-
-
 
 
 /**
@@ -989,7 +942,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 date separator - Specify "/" for the date separator.
 Insert a date using the "/" separator.  This should work.
@@ -1025,7 +977,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date separator - Specify "/" for the date separator.
 Insert a date using the "-" separator.  This should throw
@@ -1052,7 +1003,6 @@ an exception.
             }
         }
     }
-
 
 
 /**
@@ -1090,7 +1040,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date separator - Specify "-" for the date separator.
 Insert a date using the "." separator.  This should throw
@@ -1117,7 +1066,6 @@ an exception.
             }
         }
     }
-
 
 
 /**
@@ -1155,7 +1103,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date separator - Specify "." for the date separator.
 Insert a date using the "," separator.  This should throw
@@ -1182,8 +1129,6 @@ an exception.
             }
         }
     }
-
-
 
 
 /**
@@ -1221,7 +1166,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date separator - Specify "," for the date separator.
 Insert a date using the " " separator.  This should throw
@@ -1248,7 +1192,6 @@ an exception.
             }
         }
     }
-
 
 
 /**
@@ -1286,7 +1229,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 date separator - Specify "b" for the date separator.
 Insert a date using the "/" separator.  This should throw
@@ -1315,7 +1257,6 @@ an exception.
     }
 
 
-
 /**
 time format - Use the default for the time format.
 This will depend on the server job, but iso should always
@@ -1341,8 +1282,6 @@ work.
             }
         }
     }
-
-
 
 
 /**
@@ -1380,7 +1319,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 time format - Specify "hms" for the time format.
 Insert a time in hms format.  This should work.
@@ -1407,7 +1345,6 @@ Insert a time in hms format.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1439,8 +1376,6 @@ exception.
     }
 
 
-
-
 /**
 time format - Specify "usa" for the time format.
 Insert a time in usa format.  This should work.
@@ -1467,7 +1402,6 @@ Insert a time in usa format.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1499,7 +1433,6 @@ exception.
     }
 
 
-
 /**
 time format - Specify "iso" for the time format.
 Insert a time in iso format.  This should work.
@@ -1526,7 +1459,6 @@ Insert a time in iso format.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1558,7 +1490,6 @@ exception.
     }
 
 
-
 /**
 time format - Specify "eur" for the time format.
 Insert a time in eur format.  This should work.
@@ -1585,7 +1516,6 @@ Insert a time in eur format.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1617,7 +1547,6 @@ exception.
     }
 
 
-
 /**
 time format - Specify "jis" for the time format.
 Insert a time in jis format.  This should work.
@@ -1644,7 +1573,6 @@ Insert a time in jis format.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1676,7 +1604,6 @@ exception.
     }
 
 
-
 /**
 time separator - Use the default for the time separator.
 This will depend on the server job, but iso should always
@@ -1702,8 +1629,6 @@ work.
             }
         }
     }
-
-
 
 
 /**
@@ -1741,7 +1666,6 @@ is specified is a valid one. If it is not, a SQLException is thrown */
     }
 
 
-
 /**
 time separator - Specify ":" for the time separator.
 Insert a time using the ":" separator.  This should work.
@@ -1768,7 +1692,6 @@ Insert a time using the ":" separator.  This should work.
             }
         }
     }
-
 
 
 /**
@@ -1799,7 +1722,6 @@ an exception.
     }
 
 
-
 /**
 time separator - Specify "." for the time separator.
 Insert a time using the "." separator.  This should work.
@@ -1828,7 +1750,6 @@ Insert a time using the "." separator.  This should work.
     }
 
 
-
 /**
 time separator - Specify "." for the time separator.
 Insert a time using the " " separator.  This should throw
@@ -1855,7 +1776,6 @@ an exception.
             }
         }
     }
-
 
 
 /**
@@ -1893,7 +1813,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 time separator - Specify "," for the time separator.
 Insert a time using the " " separator.  This should throw
@@ -1920,8 +1839,6 @@ an exception.
             }
         }
     }
-
-
 
 
 /**
@@ -1959,7 +1876,6 @@ SQL400 - for now the Native driver can't do this.
     }
 
 
-
 /**
 time separator - Specify "b" for the time separator.
 Insert a time in bogus format.  (We can't force an exception
@@ -1989,22 +1905,6 @@ exception.
     }
 
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

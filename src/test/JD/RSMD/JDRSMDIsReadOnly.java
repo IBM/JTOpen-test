@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDIsReadOnly.java
 //
 // Classes:      JDRSMDIsReadOnly
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -41,7 +33,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -68,7 +59,6 @@ extends JDTestcase {
                                                 + ".JDRSMDRO";
 
 
-
     // Private data.
     private Connection connection2_  = null;      //@C1A
     private Statement statement_     = null;
@@ -77,7 +67,6 @@ extends JDTestcase {
     private ResultSet rs2_           = null;      //@C1A
     private ResultSetMetaData rsmd_  = null;
     private ResultSetMetaData rsmd2_ = null;      //@C1A
-
 
 
 /**
@@ -94,8 +83,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
-
 
 
 /**
@@ -130,7 +117,6 @@ Performs setup needed before running variations.
         rs2_ = statement2_.executeQuery ("SELECT * FROM " + TABLE);   //@C1A
         rsmd2_ = rs2_.getMetaData ();                         //@C1A
     }
-
 
 
 /**
@@ -194,7 +180,6 @@ isReadOnly() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isReadOnly() - Check column 0.  Should throw an exception.
 **/
@@ -208,7 +193,6 @@ isReadOnly() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -225,7 +209,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -253,7 +236,6 @@ isReadOnly() - Check a column with an updatable query result set.
     }
 
 
-
 /**
 isReadOnly() - Check a column with a read only query result set.
 **/
@@ -267,7 +249,6 @@ isReadOnly() - Check a column with a read only query result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -288,7 +269,6 @@ isReadOnly() - Check a column with a catalog result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -317,7 +297,6 @@ SQL400 - Perhaps this is a problem but we will need to deal with but
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -358,7 +337,6 @@ isReadOnly() - Check column -1.  Should throw an exception.
     }
 
 
-
 /**
 isReadOnly() - Check column 0.  Should throw an exception.
 **/
@@ -372,7 +350,6 @@ isReadOnly() - Check column 0.  Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -389,7 +366,6 @@ Should throw an exception.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -416,7 +392,6 @@ isReadOnly() - Check a column with an updatable query result set.
     }
 
 
-
 /**
 isReadOnly() - Check a column with a read only query result set.
 **/
@@ -430,7 +405,6 @@ isReadOnly() - Check a column with a read only query result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -451,7 +425,6 @@ isReadOnly() - Check a column with a catalog result set.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -480,7 +453,6 @@ SQL400 - Perhaps this is a problem but we will need to deal with but
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -528,7 +500,6 @@ cursor w/o "FOR UPDATE" as of v5r2/PTF on v5r1.
     }
 
 
-
     /**
 isReadOnly() - Make sure same results when "extended metadata=false".
 **/
@@ -555,7 +526,6 @@ isReadOnly() - Make sure same results when "extended metadata=false".
             }
         }
     }
-
 
 
 }

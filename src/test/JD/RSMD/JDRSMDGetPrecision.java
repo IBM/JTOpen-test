@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDGetPrecision.java
 //
 // Classes:      JDRSMDGetPrecision
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -40,7 +32,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -65,7 +56,6 @@ extends JDTestcase
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDRSMDGS";
     private static final String PACKAGE_CACHE_NO    = "extended dynamic=false";
@@ -88,7 +78,6 @@ extends JDTestcase
     private Statement           statement3_     = null;
 
 
-
     /**
     Constructor.
     **/
@@ -103,8 +92,6 @@ extends JDTestcase
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
-
 
 
     /**
@@ -153,7 +140,6 @@ extends JDTestcase
     }
 
 
-
     /**
     Reconnects with different properties, if needed.
 
@@ -192,7 +178,6 @@ extends JDTestcase
     }
 
 
-
     /**
     Performs cleanup needed after running variations.
 
@@ -215,7 +200,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check column -1.  Should throw an exception.
     (Package cache = false)
@@ -233,7 +217,6 @@ extends JDTestcase
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
     /**
@@ -255,7 +238,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a column greater than the max.
     Should throw an exception. (Package cache = false)
@@ -273,7 +255,6 @@ extends JDTestcase
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
     /**
@@ -296,7 +277,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -330,7 +310,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a SMALLINT column. (Package cache = false)
     **/
@@ -347,7 +326,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -368,7 +346,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a REAL column. (Package cache = false)
     **/
@@ -385,7 +362,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -406,7 +382,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a FLOAT(3) column. (Package cache = false)
     **/
@@ -423,7 +398,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -444,7 +418,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DECIMAL(5,0) column. (Package cache = false)
     **/
@@ -461,7 +434,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -482,7 +454,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a NUMERIC(5,0) column. (Package cache = false)
     **/
@@ -499,7 +470,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -520,7 +490,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a CHAR column. (Package cache = false)
     **/
@@ -537,7 +506,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -558,7 +526,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a VARCHAR(50) column. (Package cache = false)
     **/
@@ -575,7 +542,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -596,7 +562,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a BINARY(20) column. (Package cache = false)
     **/
@@ -613,7 +578,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -634,7 +598,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DATE column. (Package cache = false)
     **/
@@ -651,7 +614,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -672,7 +634,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a TIMESTAMP column. (Package cache = false)
     **/
@@ -689,7 +650,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -713,7 +673,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a CLOB column. (Package cache = false)
     **/
@@ -733,7 +692,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -757,7 +715,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DATALINK column. (Package cache = false)
     **/
@@ -779,7 +736,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DISTINCT column. (Package cache = false)
     **/
@@ -799,7 +755,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     // @D0A
@@ -824,7 +779,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check column -1.  Should throw an exception.
     (Package cache = true)
@@ -842,7 +796,6 @@ extends JDTestcase
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
     /**
@@ -864,7 +817,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a column greater than the max.
     Should throw an exception. (Package cache = true)
@@ -882,7 +834,6 @@ extends JDTestcase
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
     /**
@@ -903,7 +854,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check an INTEGER column. (Package cache = true)
     **/
@@ -920,7 +870,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -941,7 +890,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a FLOAT column. (Package cache = true)
     **/
@@ -958,7 +906,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -979,7 +926,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DOUBLE column. (Package cache = true)
     **/
@@ -996,7 +942,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1017,7 +962,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DECIMAL(10,5) column. (Package cache = true)
     **/
@@ -1034,7 +978,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1055,7 +998,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a NUMERIC(10,5) column. (Package cache = true)
     **/
@@ -1072,7 +1014,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1093,7 +1034,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a CHAR(50) column. (Package cache = true)
     **/
@@ -1110,7 +1050,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1131,7 +1070,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a BINARY column. (Package cache = true)
     **/
@@ -1148,7 +1086,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1169,7 +1106,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a VARBINARY(20) column. (Package cache = true)
     **/
@@ -1186,7 +1122,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1207,7 +1142,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a TIME column. (Package cache = true)
     **/
@@ -1226,7 +1160,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a TIMESTAMP column. (Package cache = true)
     **/
@@ -1243,7 +1176,6 @@ extends JDTestcase
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
     /**
@@ -1267,7 +1199,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a CLOB column. (Package cache = true)
     **/
@@ -1287,7 +1218,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**
@@ -1311,7 +1241,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DATALINK column. (Package cache = true)
     **/
@@ -1333,7 +1262,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DISTINCT column. (Package cache = true)
     **/
@@ -1353,7 +1281,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     // @D0A
@@ -2914,7 +2841,6 @@ extends JDTestcase
     }
 
 
-
     /**
     getPrecision() - Check a DECFLOAT 16 column. (Package cache = false)
     **/
@@ -2955,7 +2881,6 @@ extends JDTestcase
             }
         }
     }
-
 
 
     /**

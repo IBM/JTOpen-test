@@ -11,24 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDCSGetShort.java
 //
 // Classes:      JDCSGetShort
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.CS;
 
@@ -45,7 +33,6 @@ import com.ibm.as400.access.AS400;
 
 import test.JDCSTest;
 import test.JDSetupProcedure;
-
 
 
 /**
@@ -70,7 +57,6 @@ extends JDCSGetTestcase
    }
 
 
-
  
 /**
 Constructor.
@@ -88,7 +74,6 @@ Constructor.
    }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -103,7 +88,6 @@ Performs setup needed before running variations.
    }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -114,7 +98,6 @@ Performs cleanup needed after running variations.
    {
      super.cleanup(); 
    }
-
 
 
 /**
@@ -132,7 +115,6 @@ getShort() - Get parameter -1.
    }
 
 
-
 /**
 getShort() - Get parameter 0.
 **/
@@ -147,7 +129,6 @@ getShort() - Get parameter 0.
    }
 
 
-
 /**
 getShort() - Use a parameter that is too big.
 **/
@@ -160,7 +141,6 @@ getShort() - Use a parameter that is too big.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -191,7 +171,6 @@ getShort() - Get a parameter when there are no parameters.
    }
 
 
-
 /**
 getShort() - Get a parameter that was not registered.
 **/
@@ -207,7 +186,6 @@ getShort() - Get a parameter that was not registered.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -228,7 +206,6 @@ executed.
    }
 
 
-
 /**
 getShort() - Get a parameter when the statement is closed.
 **/
@@ -246,7 +223,6 @@ getShort() - Get a parameter when the statement is closed.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -308,7 +284,6 @@ getShort() - Get a type that was registered as a SMALLINT.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as an INTEGER.
 **/
@@ -332,7 +307,6 @@ getShort() - Get a type that was registered as an INTEGER.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as an REAL.
 **/
@@ -347,7 +321,6 @@ getShort() - Get a type that was registered as an REAL.
         failed (e, "Unexpected Exception"+info);
       }
    }
-
 
 
 /**
@@ -366,7 +339,6 @@ getShort() - Get a type that was registered as an FLOAT.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as an DOUBLE.
 **/
@@ -381,7 +353,6 @@ getShort() - Get a type that was registered as an DOUBLE.
         failed (e, "Unexpected Exception"+info);
       }
    }
-
 
 
 /**
@@ -400,7 +371,6 @@ getShort() - Get a type that was registered as an DECIMAL.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as an NUMERIC.
 **/
@@ -417,7 +387,6 @@ getShort() - Get a type that was registered as an NUMERIC.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a CHAR.
 **/
@@ -430,7 +399,6 @@ getShort() - Get a type that was registered as a CHAR.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -447,7 +415,6 @@ getShort() - Get a type that was registered as a VARCHAR.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a BINARY.
 **/
@@ -460,7 +427,6 @@ getShort() - Get a type that was registered as a BINARY.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -477,7 +443,6 @@ getShort() - Get a type that was registered as a VARBINARY.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a DATE.
 **/
@@ -490,7 +455,6 @@ getShort() - Get a type that was registered as a DATE.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -507,7 +471,6 @@ getShort() - Get a type that was registered as a TIME.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a TIMESTAMP.
 **/
@@ -520,7 +483,6 @@ getShort() - Get a type that was registered as a TIMESTAMP.
          assertExceptionIsInstanceOf (e, "java.sql.SQLException");
       }
    }
-
 
 
 /**
@@ -539,7 +501,6 @@ getShort() - Get a type that was registered as an OTHER.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a BLOB.
 **/
@@ -556,7 +517,6 @@ getShort() - Get a type that was registered as a BLOB.
    }
 
 
-
 /**
 getShort() - Get a type that was registered as a CLOB.
 **/
@@ -571,7 +531,6 @@ getShort() - Get a type that was registered as a CLOB.
          }
       }
    }
-
 
 
 /**
@@ -591,8 +550,6 @@ getShort() - Get a type that was registered as a BIGINT.
 
       }
    }
-
-
 
 
 /**

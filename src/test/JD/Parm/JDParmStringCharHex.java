@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringCharHex.java
 //
 // Classes:      JDParmStringCharHex
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -43,7 +30,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -67,7 +53,6 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     public Connection connection = null;
     public Statement s = null;
@@ -89,7 +74,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -128,7 +112,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -143,7 +126,6 @@ This is the place to put all cleanup work for the testcase.
          e.printStackTrace();
       }
    }
-
 
 
 /**
@@ -202,7 +184,6 @@ Test:  char(10) - value is just right - embedded real char
    }
 
 
-
 /**
 Test:  char(10) - value is just right - embedded null char
 **/
@@ -232,7 +213,6 @@ Test:  char(10) - value is just right - embedded null char
          
       }
    }
-
 
 
 /**
@@ -266,8 +246,6 @@ Test:  char(10) - value is just right - First char null.
    }
 
 
-
-
 /**
 Test:  char(10) - value is just right - last char null
 **/
@@ -299,6 +277,5 @@ Test:  char(10) - value is just right - last char null
    }
 
 }
-
 
 

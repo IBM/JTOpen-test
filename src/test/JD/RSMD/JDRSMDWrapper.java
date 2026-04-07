@@ -10,19 +10,13 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDRSMDWrapper.java
 //
 // Classes:      JDRSMDWrapper
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.RSMD;
 
@@ -61,12 +55,10 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private              Statement      stmt_; 
     private              ResultSet      rs_;
     private              ResultSetMetaData rsmd_; 
-
 
 
 /**
@@ -82,7 +74,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -101,7 +92,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -114,9 +104,6 @@ Performs cleanup needed after running variations.
 	stmt_.close(); 
         connection_.close ();
     }
-
-
-
 
 
 /**
@@ -149,8 +136,6 @@ isWrapperFor() -- Call with java.lang.String, should return false.
 	    }
 	}
     }
-
-
 
 
 /**
@@ -192,7 +177,6 @@ isWrapperFor() -- Call with driver specific class, should return true.
     }
 
 
-
 /**
 unwrap() -- Call with null, should throw exception
 **/
@@ -225,8 +209,6 @@ unwrap() -- Call with java.lang.String, should throw exception
 	    }
 	}
     }
-
-
 
 
 /**
@@ -268,13 +250,6 @@ unwrap() -- Call with driver specific class, should return object.
     }
 
 
-
-
-
-
-
-
 }
-
 
 

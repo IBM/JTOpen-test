@@ -11,25 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionMisc.java
 //
 // Classes:      JDSCPDSConnectionMisc
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 import com.ibm.as400.access.AS400;
@@ -43,7 +30,6 @@ import java.io.FileOutputStream;
 import java.util.Hashtable; import java.util.Vector;
 import java.sql.*;
 import javax.sql.DataSource;
-
 
 
 /**
@@ -72,10 +58,8 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private              Connection     closedConnection_;
-
 
 
 /**
@@ -92,7 +76,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -117,7 +100,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -130,7 +112,6 @@ Performs cleanup needed after running variations.
             connection_ = null; 
 
     }
-
 
 
 /**
@@ -147,8 +128,6 @@ Queries the relational database directory to get the catalog name for
       rs.next();
       return rs.getString(1).trim();
    }
-
-
 
 
 /**
@@ -179,7 +158,6 @@ we are connected.
     }
 
 
-
 /**
 getCatalog() - Should throw an exception when the connection
 is closed.
@@ -196,7 +174,6 @@ is closed.
             }
         }
     }
-
 
 
 /**
@@ -227,7 +204,6 @@ support catalogs.
     }
 
 
-
 /**
 setCatalog() - Should throw an exception when the connection
 is closed.
@@ -244,7 +220,6 @@ is closed.
             }
         }
     }
-
 
 
 /**
@@ -265,7 +240,6 @@ is open.
     }
 
 
-
 /**
 getMetaData() - Returns the meta data when the connection
 is closed.
@@ -284,7 +258,6 @@ is closed.
     }
 
 
-
 /**
 getTypeMap() - Throws an exception, not supported.
 **/
@@ -299,7 +272,6 @@ getTypeMap() - Throws an exception, not supported.
 //*CUJO-Pulled JDBC 2.0             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 //*CUJO-Pulled JDBC 2.0         }
     }
-
 
 
 /**
@@ -321,7 +293,6 @@ setTypeMap() - Throws an exception, not supported.
 //*CUJO-Pulled JDBC 2.0            assertExceptionIsInstanceOf (e, "java.sql.SQLException");
 //*CUJO-Pulled JDBC 2.0        }
     }
-
 
 
 /**
@@ -349,7 +320,6 @@ we are connected.
             }
         }
     }
-
 
 
 /**
@@ -380,8 +350,6 @@ connection is closed
     }
 
 
-
 }
-
 
 

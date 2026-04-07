@@ -17,8 +17,6 @@
 //  Classes:   AS400JDBCSeamlessFailover
 //
 ////////////////////////////////////////////////////////////////////////////
-// 
-////////////////////////////////////////////////////////////////////////////
 package test.JD.AS;
 
 
@@ -26,7 +24,6 @@ import java.io.FileOutputStream;
 import java.util.Hashtable; import java.util.Vector;
 
 import com.ibm.as400.access.AS400;
-
 
 
 /**

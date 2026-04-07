@@ -11,24 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPMDGetParameterCount.java
 //
 // Classes:      JDPMDGetParameterCount
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.PMD;
 
@@ -87,7 +75,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -105,7 +92,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -118,7 +104,6 @@ Performs cleanup needed after running variations.
         connection_ = null; 
 
     }
-
 
 
 /**
@@ -141,7 +126,6 @@ getParameterCount() - Should throw exception if the statement gets closed.
 	    }
 	}
     }
-
 
 
 /**
@@ -188,7 +172,6 @@ executed.
     }
 
 
-
 /**
 getParameterCount() - Should work for an insert statement that has parameters.
 **/
@@ -208,7 +191,6 @@ getParameterCount() - Should work for an insert statement that has parameters.
 	    }
 	}
     }
-
 
 
 /**
@@ -232,7 +214,6 @@ getParameterCount() - Should work for a query statement that has parameters.
     }
 
 
-
 /**
 getParameterCount() - Should work for a stored procedure call that has parameters.
 **/
@@ -252,7 +233,6 @@ getParameterCount() - Should work for a stored procedure call that has parameter
 	    }
 	}
     }
-
 
 
 /**

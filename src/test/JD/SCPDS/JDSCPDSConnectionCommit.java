@@ -12,25 +12,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 /* This testcase is based on JDConnectionCommit.java */
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionCommit.java
 //
 // Classes:      JDSCPDSConnectionCommit
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 import com.ibm.as400.access.AS400;
@@ -46,7 +33,6 @@ import java.util.Hashtable; import java.util.Vector;
 import javax.sql.DataSource;
 
 import java.sql.*;
-
 
 
 /**
@@ -73,11 +59,9 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCCOMMIT";
     private DataSource dataSource;
-
 
 
 /**
@@ -94,7 +78,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -126,7 +109,6 @@ Setup.
     }
 
 
-
 /**
 Cleanup.
 
@@ -150,7 +132,6 @@ Cleanup.
     }
 
 
-
 /**
 Checks that the result set contains a row.
 
@@ -171,7 +152,6 @@ Checks that the result set contains a row.
         s.close ();
         return found;
     }
-
 
 
 /**
@@ -202,7 +182,6 @@ setAutoCommit()/getAutoCommit() - Verify that autocommit is turned on by default
     }
 
 
-
 /**
 setAutoCommit()/getAutoCommit() - Turn on autocommit.  Insert a value and then
 verify it was committed.
@@ -231,7 +210,6 @@ verify it was committed.
             }
         }
     }
-
 
 
 /**
@@ -266,7 +244,6 @@ then verify it was not committed.
     }
 
 
-
 /**
 setAutoCommit() - Verify that setting autocommit on a closed
 connection throws an exception.
@@ -287,7 +264,6 @@ connection throws an exception.
     }
 
 
-
 /**
 getAutoCommit() - Verify that getting autocommit on a closed
 connection throws an exception.
@@ -306,7 +282,6 @@ connection throws an exception.
             }
         }
     }
-
 
 
 /**
@@ -339,7 +314,6 @@ Verify that table exists but previous inserts were rolled back.
             }
         }
     }
-
 
 
 /**
@@ -376,7 +350,6 @@ changes are reflected.
             }
         }
     }
-
 
 
 /**
@@ -417,7 +390,6 @@ uncommited transactions are rolled back.
     }
 
 
-
 /**
 commit()/setAutocommit() - Verify that commit has no effect when autocommit is on.
 **/
@@ -444,8 +416,6 @@ commit()/setAutocommit() - Verify that commit has no effect when autocommit is o
             }
         }
     }
-
-
 
 
 /**
@@ -476,7 +446,6 @@ rollback()/setAutocommit( - Verify that rollback has no effect when autocommit i
     }
 
 
-
 /**
 commit() - Verify that committing a closed connection throws an exception.
 **/
@@ -496,7 +465,6 @@ commit() - Verify that committing a closed connection throws an exception.
     }
 
 
-
 /**
 rollback() - Verify that rolling back a closed connection throws an exception.
 **/
@@ -514,7 +482,6 @@ rollback() - Verify that rolling back a closed connection throws an exception.
             }
         }
     }
-
 
 
 /**
@@ -549,7 +516,6 @@ were rolled back.
             }
         }
     }
-
 
 
 /**
@@ -600,8 +566,6 @@ SQL400 - Until we figure out anything different, the native driver expects you
     }
 
 
-
 }
-
 
 

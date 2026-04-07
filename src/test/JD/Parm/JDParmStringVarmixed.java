@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringVarmixed.java
 //
 // Classes:      JDParmStringVarmixed
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -44,7 +31,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -66,7 +52,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -92,7 +77,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -151,7 +135,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -166,7 +149,6 @@ This is the place to put all cleanup work for the testcase.
          e.printStackTrace();
       }
    }
-
 
 
 /**
@@ -231,7 +213,6 @@ Test:  varchar(4) - empty string
    }
 
 
-
 /**
 Test:  varchar(4) - null value
 **/
@@ -251,7 +232,6 @@ Test:  varchar(4) - null value
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -281,7 +261,6 @@ Test:  varchar(4) - value too big
    }
 
 
-
 /**
 Test:  varchar(20) - value is just right
 **/
@@ -301,7 +280,6 @@ Test:  varchar(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -346,7 +324,6 @@ Test:  varchar(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  varchar(20) - value is empty string
 **/
@@ -366,7 +343,6 @@ Test:  varchar(20) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -417,7 +393,6 @@ Test:  varchar(20) - value too big
    }
 
 
-
 /**
 Test:  varchar(32711) - value is just right
 **/
@@ -437,7 +412,6 @@ Test:  varchar(32711) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -484,7 +458,6 @@ Test:  varchar(32711) - value is 1 char long
    }
 
 
-
 /**
 Test:  varchar(32711) - value is empty string
 **/
@@ -505,7 +478,6 @@ Test:  varchar(32711) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -555,6 +527,5 @@ Test:  varchar(32711) - value too big
       }
    }
 }
-
 
 

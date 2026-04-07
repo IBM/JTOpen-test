@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringVarmixed2.java
 //
 // Classes:      JDParmStringVarmixed2
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -45,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -67,7 +53,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -93,7 +78,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -151,7 +135,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -166,7 +149,6 @@ This is the place to put all cleanup work for the testcase.
          e.printStackTrace();
       }
    }
-
 
 
 /**
@@ -255,7 +237,6 @@ Test:  char(4) - value too big
    }
 
 
-
 /**
 Test:  char(4) - value too big - doesn't fit - doesn't start with <shift-out>
 **/
@@ -303,7 +284,6 @@ Test:  char(4) - value too big - doesn't fit - doesn't start with <shift-out>
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -356,7 +336,6 @@ Test:  char(4) - value too big - doesn't fit - starts with <shift-out>
    }
 
 
-
 /**
 Test:  char(20) - value is just right
 **/
@@ -389,7 +368,6 @@ Test:  char(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -430,7 +408,6 @@ Test:  char(20) - value is just right
    }
 
 
-
 /**
 Test:  char(20) - value is just right
 **/
@@ -461,7 +438,6 @@ Test:  char(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -523,7 +499,6 @@ Test:  char(20) - value is shorter then the column
    }
 
 
-
 /**
 Test:  char(20) - value is shorter then the column
 **/
@@ -552,7 +527,6 @@ Test:  char(20) - value is shorter then the column
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -621,7 +595,6 @@ Test:  char(20) - value too big - no room left for the shift in/out chars.
    }
 
 
-
 /**
 Test:  char(20) - value too big - too big by 1 - doesn't start with shift out.
 **/
@@ -686,7 +659,6 @@ Test:  char(20) - value too big - too big by 1 - doesn't start with shift out.
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -759,6 +731,5 @@ Test:  char(20) - value too big - too big by 1 - starts with shift out.
    }
 
 }
-
 
 

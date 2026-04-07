@@ -10,20 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSDSWrapper.java
 //
 // Classes:      JDSDSWrapper
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SDS;
 
 import javax.sql.*; 
@@ -35,7 +27,6 @@ import test.JDTestcase;
 
 import java.io.FileOutputStream;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -60,10 +51,8 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private              DataSource dataSource_;
-
 
 
 /**
@@ -81,7 +70,6 @@ Constructor.
     }
 
 
-
 /**
 Performs setup needed before running variations.
 
@@ -94,7 +82,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -105,9 +92,6 @@ Performs cleanup needed after running variations.
     {
 
     }
-
-
-
 
 
 /**
@@ -140,8 +124,6 @@ isWrapperFor() -- Call with java.lang.String, should return false.
 	    }
 	}
     }
-
-
 
 
 /**
@@ -183,7 +165,6 @@ isWrapperFor() -- Call with driver specific class, should return true.
     }
 
 
-
 /**
 unwrap() -- Call with null, should throw exception
 **/
@@ -216,8 +197,6 @@ unwrap() -- Call with java.lang.String, should throw exception
 	    }
 	}
     }
-
-
 
 
 /**
@@ -259,13 +238,6 @@ unwrap() -- Call with driver specific class, should return object.
     }
 
 
-
-
-
-
-
-
 }
-
 
 

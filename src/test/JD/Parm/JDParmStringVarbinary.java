@@ -11,24 +11,12 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDParmStringVarbinary.java
 //
 // Classes:      JDParmStringVarbinary
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-// 
-//
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 package test.JD.Parm;
 
@@ -45,7 +33,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable; import java.util.Vector;
-
 
 
 /**
@@ -67,7 +54,6 @@ extends JDTestcase {
      }
      test.JDParmTest.main(newArgs); 
    }
-
 
 
     // Private data.
@@ -97,7 +83,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -161,7 +146,6 @@ Performs setup needed before running variations.
      }
 
 
-
 /**
 This is the place to put all cleanup work for the testcase.
 **/   
@@ -177,7 +161,6 @@ This is the place to put all cleanup work for the testcase.
           e.printStackTrace();
        }
    }
-
 
 
 /**
@@ -225,7 +208,6 @@ Test:  varbinary(1) - empty string
    }
 
 
-
 /**
 Test:  varbinary(1) - null value
 **/
@@ -245,7 +227,6 @@ Test:  varbinary(1) - null value
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -278,7 +259,6 @@ Test:  varbinary(1) - value too big
    }
 
 
-
 /**
 Test:  varbinary(20) - value is just right
 **/
@@ -298,7 +278,6 @@ Test:  varbinary(20) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -346,7 +325,6 @@ Test:  varbinary(20) - value is 1 char long
    }
 
 
-
 /**
 Test:  varbinary(20) - value is empty string
 **/
@@ -366,7 +344,6 @@ Test:  varbinary(20) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -422,7 +399,6 @@ Test:  varbinary(20) - value too big
    }
 
 
-
 /**
 Test:  varbinary(32714) - value is just right
 **/
@@ -445,7 +421,6 @@ Test:  varbinary(32714) - value is just right
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -496,7 +471,6 @@ Test:  varbinary(32714) - value is 1 char long
    }
 
 
-
 /**
 Test:  varbinary(32714) - value is empty string
 **/
@@ -517,7 +491,6 @@ Test:  varbinary(32714) - value is empty string
          JDParmHelper.purgeStringsTable(connection,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -571,7 +544,6 @@ Test:  varbinary(32714) - value too big
    }
 
 
-
 /**
 Test:  varbinary(1) - value is just right with translateBinary=true
 **/
@@ -614,7 +586,6 @@ Test:  varbinary(1) - empty string with translateBinary=true
    }
 
 
-
 /**
 Test:  varbinary(1) - null value with translateBinary=true
 **/
@@ -634,7 +605,6 @@ Test:  varbinary(1) - null value with translateBinary=true
          JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -664,7 +634,6 @@ Test:  varbinary(1) - value too big with translateBinary=true
    }
 
 
-
 /**
 Test:  varbinary(20) - value is just right with translateBinary=true
 **/
@@ -684,7 +653,6 @@ Test:  varbinary(20) - value is just right with translateBinary=true
          JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -729,7 +697,6 @@ Test:  varbinary(20) - value is 1 char long with translateBinary=true
    }
 
 
-
 /**
 Test:  varbinary(20) - value is empty string with translateBinary=true
 **/
@@ -749,7 +716,6 @@ Test:  varbinary(20) - value is empty string with translateBinary=true
          JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -800,7 +766,6 @@ Test:  varbinary(20) - value too big with translateBinary=true
    }
 
 
-
 /**
 Test:  varbinary(32714) - value is just right with translateBinary=true
 **/
@@ -820,7 +785,6 @@ Test:  varbinary(32714) - value is just right with translateBinary=true
          JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -867,7 +831,6 @@ Test:  varbinary(32714) - value is 1 char long with translateBinary=true
    }
 
 
-
 /**
 Test:  varbinary(32714) - value is empty string with translateBinary=true
 **/
@@ -888,7 +851,6 @@ Test:  varbinary(32714) - value is empty string with translateBinary=true
          JDParmHelper.purgeStringsTable(connection2,stringsTable_,output_);
       }
    }
-
 
 
 /**
@@ -939,9 +901,6 @@ Test:  varbinary(32714) - value too big with translateBinary=true
    }
 
 
-
-
 }
-
 
 

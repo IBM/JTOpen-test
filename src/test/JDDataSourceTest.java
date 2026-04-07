@@ -10,24 +10,10 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDataSourceTest.java
 //
 // Classes:      JDDataSourceTest
-//
-////////////////////////////////////////////////////////////////////////
-//
-//
-//                 v5r2m0t   07/24/2001  kcoover   Created.
-//
 //
 ////////////////////////////////////////////////////////////////////////
 
@@ -46,14 +32,11 @@ import test.JD.DataSource.JDDataSource;
 import test.JD.DataSource.JDDataSourceSocketOptionsTestcase;  
 
 
-
-
 /**
 Test driver for the ConnectionPoolDataSource and DataSource class.
 **/
 public class JDDataSourceTest
       extends JDTestDriver {
-
 
 
    // Constants.
@@ -64,7 +47,6 @@ public class JDDataSourceTest
 
    // Private data.
    private Connection  connection_;
-
 
 
 /**
@@ -82,7 +64,6 @@ from the test driver's main().
    }
 
 
-
 /**
 Constructs an object for applets.
 
@@ -93,7 +74,6 @@ Constructs an object for applets.
    {
       super();
    }
-
 
 
 /**
@@ -108,7 +88,6 @@ Constructs an object for testing applications.
    {
       super (args);
    }
-
 
 
 /**
@@ -137,7 +116,6 @@ Performs setup needed before running testcases.
    }
 
 
-
 /**
 Cleanup - - this does not run automatically - - it is called by JDCleanup.
 **/
@@ -145,7 +123,6 @@ Cleanup - - this does not run automatically - - it is called by JDCleanup.
    {
       dropCollection(c, COLLECTION);
    }
-
 
 
 /**
@@ -158,7 +135,6 @@ Performs setup needed after running testcases.
    {
       connection_.close ();
    }
-
 
 
 /**
@@ -218,7 +194,5 @@ Creates the testcases.
 
    }
 }
-
-
 
 

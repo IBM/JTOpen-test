@@ -10,21 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDDMDGetTables.java
 //
 // Classes:      JDDMDGetTables
 //
-////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // The following differences/incompatilies are present.
 //
@@ -44,13 +35,7 @@
 // 6.  LUW will return the DBNAME from the rsmd.getCatalogName (see Var119)
 //     but doesn't return the DBNAME in the column -- (see Var002, Var003, ..)
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.DMD;
 
 
@@ -116,8 +101,6 @@ extends JDTestcase {
     private JDParallelCounter parallelCounterXX_;
     private JDParallelCounter parallelCounterGT_;
     private JDParallelCounter parallelCounter128_;
-
-
 
 
 /**
@@ -191,7 +174,6 @@ Performs setup needed before running variations.
     Statement s = connection_.createStatement();
 
 
-
     // Determine if LUW
     try {
 	s.executeQuery("select * from qsys2.qsqptabl");
@@ -231,10 +213,6 @@ Performs setup needed before running variations.
     dmdNoSysibm_ = connectionNoSysibm_.getMetaData();
 
     dmd_ = connection_.getMetaData();
-
-
-
-
 
 
         s.executeUpdate ("CREATE OR REPLACE TABLE " + JDDMDTest.COLLECTION
@@ -279,14 +257,12 @@ Performs setup needed before running variations.
         }
 
 
-
 	setupObjects(connection_);
         closedConnection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
         dmd2_ = closedConnection_.getMetaData ();
         closedConnection_.close ();
 
     }
-
 
 
 /**
@@ -359,7 +335,6 @@ Performs cleanup needed after running variations.
     }
     return result;
   }
-
 
 
 /**
@@ -467,7 +442,6 @@ Performs cleanup needed after running variations.
     }
 
 
-
 /**
 getTables() - Get a list of those created in this testcase and
 verify all columns with system remarks (the default).
@@ -564,7 +538,6 @@ SQL400 - the 400 doesn't support the LABEL on values being brought back
     }
 
 
-
 /**
 getTables() - Get a list of those created in this testcase and
 verify all columns with sql remarks.
@@ -650,7 +623,6 @@ verify all columns with sql remarks.
     }
 
 
-
 /**
 getTables() - Specify all null parameters.  Verify that all tables
 come back in the library list are returned.
@@ -711,7 +683,6 @@ come back in the library list are returned.
     }
 
 
-
 /**
 getTables() - Specify null for the catalog pattern.  All matching
 tables should be returned.
@@ -754,7 +725,6 @@ tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify empty string for the catalog pattern.
 No matching tables should be returned.
@@ -789,7 +759,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -832,7 +801,6 @@ exactly.  All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -887,7 +855,6 @@ All matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify a catalog pattern for which there is a
 match.  No matching tables should be returned, since we do not
@@ -916,7 +883,6 @@ support catalog pattern.
     }
 
 
-
 /**
 getTables() - Specify a catalog pattern for which there is no match.
 No matching tables should be returned.
@@ -937,7 +903,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1009,7 +974,6 @@ tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify empty string for the schema pattern.
 No matching tables should be returned.
@@ -1030,7 +994,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1072,7 +1035,6 @@ exactly.  All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1118,7 +1080,6 @@ there is a match.  All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1179,7 +1140,6 @@ there is a match.  All matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify a schema pattern for which there is no match.
 No matching tables should be returned.
@@ -1200,7 +1160,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1245,7 +1204,6 @@ tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify empty string for the table pattern.
 No matching tables should be returned.
@@ -1266,7 +1224,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1308,7 +1265,6 @@ exactly.  All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1356,7 +1312,6 @@ there is a match.  All matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify a tables pattern using an underscore for which
 there is a match.  All matching tables should be returned.
@@ -1401,7 +1356,6 @@ there is a match.  All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1506,7 +1460,6 @@ check1 = true;					// @C1
     }
 
 
-
 /**
 getTables() - Specify empty array for the type.
 No matching tables should be returned.
@@ -1532,7 +1485,6 @@ No matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1603,7 +1555,6 @@ exactly.  All matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify a 1 element array that does not match a type.
 All matching tables should be returned.
@@ -1625,7 +1576,6 @@ All matching tables should be returned.
             failed (e, "Unexpected Exception");
         }
     }
-
 
 
 /**
@@ -1705,7 +1655,6 @@ check1 = true;					// @C1
     }
 
 
-
 /**
 getTables() - Specify a multiple element array that matches some types
 exactly but includes a bogus type.  All matching tables should be returned.
@@ -1765,7 +1714,6 @@ exactly but includes a bogus type.  All matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Specify a multiple element array that does not match
 any types.  No matching tables should be returned.
@@ -1789,7 +1737,6 @@ any types.  No matching tables should be returned.
     }
 
 
-
 /**
 getTables() - Should throw an exception when the connection
 is closed.
@@ -1803,7 +1750,6 @@ is closed.
             assertExceptionIsInstanceOf (e, "java.sql.SQLException");
         }
     }
-
 
 
 /**
@@ -2059,7 +2005,6 @@ This testcase is like Var025, but checks columns 6 - 10 for JDBC 3.0
     }
 
 
-
     public void Var036()
     {
 	if (checkJdbc30 ()) {
@@ -2284,7 +2229,6 @@ getTables() - check the metadata for the RS -- isNullable
 	ResultSetMetaData.columnNullable};
 
 
-
   message.setLength(0);
 	boolean success = true;
 	ResultSetMetaData rsmd = getResultSetMetaData();
@@ -2503,8 +2447,6 @@ getTables() - check the metadata for the RS -- isSigned
        }
 
     }
-
-
 
 
 /**
@@ -2932,10 +2874,7 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 	new JDDMDGetTablesExpectedRow(VIEW,"SYSIBM","CHECKVIEW2","VIEW", true ),
 
 
-
     };
-
-
 
 
     public JDDMDGetTablesExpectedRow expectedSysibmRows71[] = {
@@ -3049,7 +2988,6 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
     };
 
 
-
     public JDDMDGetTablesExpectedRow expectedSysibmRows54[] = {
 	new JDDMDGetTablesExpectedRow(VIEW, "SYSIBM","AUTHORIZATIONS","VIEW"),
 	new JDDMDGetTablesExpectedRow(VIEW, "SYSIBM","CATALOG_NAME","VIEW"),
@@ -3101,7 +3039,6 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 	new JDDMDGetTablesExpectedRow(VIEW, "SYSIBM","VIEWS","VIEW"),
 
     };
-
 
 
     public JDDMDGetTablesExpectedRow expectedSysibmRows5440[] = {
@@ -3251,7 +3188,6 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
     };
 
 
-
     public JDDMDGetTablesExpectedRow expectedRows[];
 
     public JDDMDGetTablesExpectedRow expectedRows53[] = {
@@ -3398,9 +3334,6 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
     };
 
 
-
-
-
     public boolean checkSysibmResultSet(ResultSet rs) throws Exception  {
 	String okRows = "";
 	boolean extraRow = false;
@@ -3466,8 +3399,6 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
 
 	return ok && (!extraRow);
     }
-
-
 
 
     public boolean checkResultSet(ResultSet rs, int expectedTypes) throws Exception  {
@@ -3639,9 +3570,6 @@ setupVersion ="expectedRows71";
 	    for (int i =0 ; i < statements.length; i+=2) {
 		exceptionAction=statements[i];
 		sql=statements[i+1];
-
-
-
 
 
 		    // Update the generic JDDMDCOL with the current collection 
@@ -3927,8 +3855,6 @@ setupVersion ="expectedRows71";
    }
 
 
-
-
 /**
 getTables() - check the metadata for the RS -- isAutoIncrement
 **/
@@ -3938,8 +3864,6 @@ getTables() - check the metadata for the RS -- isAutoIncrement
        String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
        checkExpectedMDStrings(expected13, expected14, expected14, ISAUTOINCREMENT);
    }
-
-
 
 
 /**
@@ -4012,8 +3936,6 @@ getTables() - check the metadata for the RS -- isDefinitelyWritable
        String expected14[] = {null, "false","false","false","false","false", "false","false","false","false","false"};
        checkExpectedMDStrings(expected13, expected14, expected14, ISDEFINITELYWRITABLE);
    }
-
-
 
 
    /**
@@ -4100,9 +4022,6 @@ getTables() - check the metadata for the RS -- isDefinitelyWritable
            }
 
 
-
-
-
 /**
 getTables() - Run getTables multiple times.  Make sure there is not a handle leak.
 Created 1/27/2011 for CPS 8DHTTE.
@@ -4143,12 +4062,6 @@ Created 1/27/2011 for CPS 8DHTTE.
             }
         }
     }
-
-
-
-
-
-
 
 
   public void Var126() {
@@ -4355,7 +4268,6 @@ Created 1/27/2011 for CPS 8DHTTE.
       {"getColumnClassName","10","java.lang.String"},
 
 
-
 	};
 
 
@@ -4368,8 +4280,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 	    {"getColumnDisplaySize","5","254"},
 	    {"getPrecision","5","254"},
 	};
-
-
 
 
 	String [][] fixup716T = {
@@ -4497,7 +4407,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 	};
 
 
-
 	String [][] fixup = {};
 
 	String [][] fixupExtended546N={
@@ -4512,7 +4421,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 	    {"isSearchable","9","false"},
 	    {"isSearchable","10","false"},
 	} ;
-
 
 
 	Object[][] fixupArrayExtended = {
@@ -4623,7 +4531,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 	};
 
 
-
 	if (checkJdbc30()) {
 	    try {
 
@@ -4638,7 +4545,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 		    dmd= connection.getMetaData ();
 
 		    fixup = getFixup(fixupArrayExtended, null, "fixupArrayExtended", message);
-
 
 
 		} else {
@@ -4665,7 +4571,6 @@ Created 1/27/2011 for CPS 8DHTTE.
 			}
 		    }
 		}
-
 
 
 		String catalog1 = connection.getCatalog();
@@ -4778,10 +4683,6 @@ class JDDMDGetTablesExpectedRow {
 	this.typeName = typeName;
 	this.optional = optional; 
     }
-
-
-
-
 
 
 }

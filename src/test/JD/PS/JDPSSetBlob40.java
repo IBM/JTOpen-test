@@ -10,25 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDPSSetBlob40.java
 //
 // Classes:      JDPSSetBlob40
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.PS;
 
 import com.ibm.as400.access.AS400;
@@ -54,7 +41,6 @@ import test.JD.JDSerializeFile;
 import java.sql.SQLException;
 
 
-
 /**
 Testcase JDPSSetBlob40.  This tests the following method
 of the JDBC PreparedStatement class:
@@ -76,16 +62,13 @@ extends JDTestcase {
    }
 
 
-
     // Constants.
     private static final String PACKAGE             = "JDPSSBS";
-
 
 
     // Private data.
     private Connection          connectionNoDT_;
     private Statement           statement_;
-
 
 
 /**
@@ -102,7 +85,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -126,7 +108,6 @@ Performs setup needed before running variations.
     }
 
 
-
 /**
 Performs cleanup needed after running variations.
 
@@ -141,7 +122,6 @@ Performs cleanup needed after running variations.
 
         connectionNoDT_.close();
     }
-
 
 
 /**
@@ -179,7 +159,6 @@ try {
       }
     }
   }
-
 
 
 /**
@@ -791,7 +770,6 @@ if (checkJdbc40()) { try {
       }
     }
   }
-
 
 
 /**
@@ -1616,7 +1594,6 @@ if (checkBigintSupport()) {
   }
 
 
-
 /**
 setBlob() - Set a VARBINARY parameter with package caching.
 **/
@@ -2026,7 +2003,6 @@ setBlob() - Set a CHAR(1) parameter. streamLength>lengthSpecified case
     }
 
 
-
 /**
 setBlob() - Set a CHAR(50) parameter. streamLength>lengthSpecified case
 **/
@@ -2140,7 +2116,6 @@ setBlob() - Set a CLOB parameter. streamLength>lengthSpecified case
       }
     }
     }
-
 
 
 /**
@@ -2279,7 +2254,6 @@ setBlob() - Set a BLOB parameter.  streamLength>lengthSpecified case
       }
     }
     }
-
 
 
 /**
@@ -3053,7 +3027,6 @@ setBlob() - Set a BLOB parameter.  streamLength<lengthSpecified case
     }
 
 
-
 /**
 setBlob() - Set a DATE parameter.  streamLength<lengthSpecified case
 **/
@@ -3203,7 +3176,6 @@ setBlob() - Set a DATALINK parameter.  streamLength<lengthSpecified case
     }
 
 
-
 /**
 setBlob() - Set a DISTINCT parameter.  streamLength<lengthSpecified case
 **/
@@ -3317,7 +3289,6 @@ setBlob() - Set a BIGINT parameter.  streamLength<lengthSpecified case
         }
 
 
-
         /**
          setBlob() - Set a DECFLOAT16 parameter.
          **/
@@ -3366,9 +3337,6 @@ setBlob() - Set a BIGINT parameter.  streamLength<lengthSpecified case
       }
       
     }
-
-
-
 
 
 /**
@@ -3686,11 +3654,6 @@ setBlob() - Set an XML  parameter using invalid data.
 	       }
 
 
-
-
 }
-
-
-
 
 

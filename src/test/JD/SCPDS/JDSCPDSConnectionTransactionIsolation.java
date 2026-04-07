@@ -10,26 +10,12 @@
 // others.  All rights reserved.
 //
 ///////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
 //
 // File Name:    JDSCPDSConnectionTransactionIsolation.java
 //
 // Classes:      JDSCPDSConnectionTransactionIsolation
 //
-////////////////////////////////////////////////////////////////////////
-//
-//
-//
-//
-////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 package test.JD.SCPDS;
 
 import com.ibm.as400.access.AS400;
@@ -70,10 +56,8 @@ extends JDTestcase {
    }
 
 
-
     // Private data.
     private static String         table_      = JDSCPDSTest.COLLECTION + ".JDCTXNISO";
-
 
 
 /**
@@ -90,7 +74,6 @@ Constructor.
                namesAndVars, runMode, fileOutputStream,
                password);
     }
-
 
 
 /**
@@ -133,7 +116,6 @@ Setup.
     }
 
 
-
 /**
 Cleanup.
 
@@ -155,7 +137,6 @@ Cleanup.
             c.close ();
         }
     }
-
 
 
 /**
@@ -203,7 +184,6 @@ Verifies if a dirty read succeeds.
 
         return success;
     }
-
 
 
 /**
@@ -259,7 +239,6 @@ Verifies if a non-repeatable read succeeds.
     }
 
 
-
 /**
 Verifies is a phantom read succeeds.
 
@@ -311,7 +290,6 @@ Verifies is a phantom read succeeds.
     }
 
 
-
 /**
 setTransactionIsolation() - Invalid value should throw an
 exception.
@@ -334,7 +312,6 @@ exception.
             }
         }
     }
-
 
 
 /**
@@ -412,7 +389,6 @@ phantom reads.
     }
 
 
-
 /**
 setTransactionIsolation() - TRANSACTION_READ_COMMITTED
 should allow non-repeatable reads and phantom reads,
@@ -453,8 +429,6 @@ but not dirty reads.
             }
         }
     }
-
-
 
 
 /**
@@ -499,8 +473,6 @@ non-repeatable reads.
     }
 
 
-
-
 /**
 setTransactionIsolation() - TRANSACTION_SERIALIZABLE
 should not allow dirty reads, non-repeatable reads, or
@@ -543,7 +515,6 @@ phantom reads.
     }
 
 
-
 /**
 setTransactionIsolation() - Called while a transaction is
 active.  Verify that an exception is thrown.
@@ -584,7 +555,6 @@ active.  Verify that an exception is thrown.
     }
 
 
-
 /**
 setTransactionIsolation() - When the connection is closed,
 should throw an exception.
@@ -610,7 +580,6 @@ should throw an exception.
     }
 
 
-
 /**
 getTransactionIsolation() - Verify that the default is TRANSACTION_READ_UNCOMMITTED.
 **/
@@ -633,7 +602,6 @@ getTransactionIsolation() - Verify that the default is TRANSACTION_READ_UNCOMMIT
             }
         }
     }
-
 
 
 /**
@@ -661,8 +629,6 @@ setTransactionIsolation().
             }
         }
     }
-
-
 
 
 /**
@@ -698,7 +664,6 @@ setTransactionIsolation() and then a bad isolation is set.
     }
 
 
-
 /**
 transaction isolation property - Verify that setting to ""
 leaves the default transaction isolation to TRANSACTION_READ_UNCOMMITTED.
@@ -731,8 +696,6 @@ is specified is a valid string. If it is not, a SQLException is thrown */
     }
 
 
-
-
 /**
 transaction isolation property - Verify that setting to "badvalue"
 leaves the default transaction isolation to TRANSACTION_READ_UNCOMMITTED.
@@ -763,8 +726,6 @@ is specified is a valid string. If it is not, a SQLException is thrown */
             }
         }
     }
-
-
 
 
 /**
@@ -800,8 +761,6 @@ level.
     }
 
 
-
-
 /**
 transaction isolation property - Verify that setting to "read
 uncommitted" sets the default transaction isolation to
@@ -827,8 +786,6 @@ TRANSACTION_READ_UNCOMMITTED.
             }
         }
     }
-
-
 
 
 /**
@@ -860,8 +817,6 @@ TRANSACTION_READ_COMMITTED.
     }
 
 
-
-
 /**
 transaction isolation property - Verify that setting to "repeatable
 read" sets the default transaction isolation to
@@ -891,8 +846,6 @@ TRANSACTION_REPEATABLE_READ.
     }
 
 
-
-
 /**
 transaction isolation property - Verify that setting to "serializable"
 sets the default transaction isolation to TRANSACTION_SERIALIZABLE.
@@ -917,8 +870,6 @@ sets the default transaction isolation to TRANSACTION_SERIALIZABLE.
             }
         }
     }
-
-
 
 
 /**
@@ -947,10 +898,6 @@ using weird case still sets the default transaction isolation.
     }
 
 
-
-
 }
-
-
 
 
