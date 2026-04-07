@@ -1204,7 +1204,7 @@ Playing around with VLARGE_ field by checking getSubString, length methods
 
 /**
 Check for memory leak for toolbox driver (Also run for native).
-See Issue 44488 for more information
+
 **/
     public void Var033()
     {

@@ -448,7 +448,7 @@ extends JDTestcase
 
 	    Exception savedException = null; 
 	    connection.commit();         //@B1C changed to connection.commit since that is what the method name implies
-	    rs.close(); //@PDA per db issue 25928
+	    rs.close(); 
 
 	    try {
 		switch (blobType) { 

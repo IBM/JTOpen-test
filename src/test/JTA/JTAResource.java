@@ -645,7 +645,7 @@ public class JTAResource extends JTATestcase {
           xar.end(xid, XAResource.TMSUCCESS);
         } catch (Exception e) {
           System.out
-              .println("Exception caught on real XA end -- could be native driver problem in issue 29649 ");
+              .println("Exception caught on real XA end -- could be native driver problem ");
         }
         xar.rollback(xid);
         xac.close();
@@ -661,7 +661,7 @@ public class JTAResource extends JTATestcase {
           System.out
               .println("errorCode should be XAException.XAER_NOTA, but is "
                   + errorCode
-                  + " note.. in V5R4 this will fail -- see issue 29649");
+                  + " note.. in V5R4 this will fail -- ");
           output_.println("countRows(-4432) should be 0 but is " + rowCount);
         }
         assertCondition(condition);
@@ -705,7 +705,7 @@ public class JTAResource extends JTATestcase {
             && (countRows(-12) == 0));
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-        output_.println("For Toolbox driver, opened issue 29717 12-22-05");
+        output_.println("For Toolbox driver, opened issue in 12-22-05");
       }
     }
   }
@@ -773,7 +773,7 @@ public class JTAResource extends JTATestcase {
         }
       } catch (Exception e) {
         failed(e, "Unexpected Exception");
-        output_.println("For Toolbox driver, opened issue 29717 12-22-05");
+        output_.println("For Toolbox driver, opened issue in 12-22-05");
       }
     }
   }

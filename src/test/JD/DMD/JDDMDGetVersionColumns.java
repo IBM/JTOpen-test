@@ -736,7 +736,7 @@ getVersionColumns() - Specify "localhost" for the catalog.
                 }
 
                 rs.close ();
-               if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {//per issue 40138 for v6r1 non-metadata TB
+               if (getDriver() ==  JDTestDriver.DRIVER_TOOLBOX ) {
                    assertCondition (!check1 && (rows == 0), "CUSTID found="+check1+" rows="+rows+" sb 0");
                 }
                else

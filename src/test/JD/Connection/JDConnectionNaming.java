@@ -385,7 +385,7 @@ When not all parameters are parameter markers.
 		assertCondition(outInt == 22, "Output is "+outInt+" instead of 22 -- added by native driver 03/30/2004 ");
 
 	    } catch (Exception e) {
-		failed (e, "Unexpected Exception -- Find named parameter problem when not all parms are parameter markers not working in V5R4 -- Issue 33770 --  this needs to be fixed in V5R4 by the native driver 03/30/2004 ");
+		failed (e, "Unexpected Exception -- Find named parameter problem when not all parms are parameter markers not working in V5R4  ");
 	    }
 
 

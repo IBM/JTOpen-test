@@ -894,7 +894,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         }
         /**
         commit(), rollback() - Verify that when isolationlevel is *none, that commit and rollback do
-        not close cursors.  DB issue 38976.
+        not close cursors.  
          **/
         public void Var021()
         {
@@ -941,7 +941,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         }
         /**
         commit(), rollback() - Verify that when isolationlevel is *none, that commit and rollback do
-        not close cursors.  DB issue 38976.
+        not close cursors.  
          **/
         public void Var022()
         {
@@ -986,7 +986,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
 
         /**
          rollback() - Verify that when isolationlevel is *none, that commit and rollback do
-        not close cursors.  DB issue 38976.
+        not close cursors. 
          **/
         public void Var023()
         {
@@ -1026,7 +1026,7 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         }
         /**
         rollback() - Verify that when isolationlevel is *none, that commit and rollback do
-        not close cursors.  DB issue 38976.
+        not close cursors.  
          **/
         public void Var024()
         {
@@ -1133,11 +1133,6 @@ For 5500 statements 1000 commits took 22 ms  avg = 0.022
         {
 
 	    
-	    if (getDriver() == JDTestDriver.DRIVER_NATIVE &&
-		getDriverFixLevel() <= 46209 ) {
-		notApplicable("TODO:  Testcases hangs for native JDBC driver -- Fix in PTF after SI46209 -- see issue 47682");
-		return; 
-	    }
 	    
 	    output_.println("driverFixLevel="+getDriverFixLevel());
 
