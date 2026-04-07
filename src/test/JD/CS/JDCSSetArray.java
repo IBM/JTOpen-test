@@ -13888,7 +13888,7 @@ public class JDCSSetArray extends JDCSSetTestcase
      */
     /**
      * Set an ARRAY of int  and non-array int with a literal as seond parameter.
-     * See issue 48043
+     * 
      */
 
     public void Var523() {
@@ -13977,12 +13977,12 @@ public class JDCSSetArray extends JDCSSetTestcase
      * getArray() - Set an ARRAY of ints where error occurs.
      * Make sure that the error is the expected one.
      * Then reuse the array to verify that things will still work.
-     * Added 08/09/2012 for issue 48051.
+     * 
      *
      */
     public void Var524() {
     if (checkArraySupport()) {
-      StringBuffer sb = new StringBuffer(" -- added 08/09/2012 to test issue 48051");
+      StringBuffer sb = new StringBuffer(" -- added 08/09/2012 ");
       boolean passed = true;
       try {
         assureProcedureExists(JDSetupProcedure.STP_CSARRINT2R);
@@ -14071,7 +14071,7 @@ public class JDCSSetArray extends JDCSSetTestcase
      * getArray() - Set an ARRAY of ints where error occurs.
      * Make sure that the error is the expected one.
      * Then reuse the array to verify that things will still work.
-     * Added 08/09/2012 for issue 48051.
+     * Added 08/09/2012 
      *
      */
 
@@ -14080,7 +14080,7 @@ public class JDCSSetArray extends JDCSSetTestcase
 
     public void Var525() {
     if (checkArraySupport()) {
-      StringBuffer sb = new StringBuffer(" -- added 08/09/2012 to test issue 48051");
+      StringBuffer sb = new StringBuffer(" -- added 08/09/2012 ");
       boolean passed = true;
       try {
         assureProcedureExists(JDSetupProcedure.STP_CSARRINT2);

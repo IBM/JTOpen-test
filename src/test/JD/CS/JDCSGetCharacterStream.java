@@ -1271,8 +1271,7 @@ getCharacterStream() - Get a type that was registered as a BIGINT.
 		      Reader check = (Reader) JDReflectionUtil.callMethod_O(cstmt,getMethodName,1);
 		      assertCondition (compare(check, expected,sb), "Testcase added 12/14/2005 by native driver "+sb);
 		  } catch (Exception e) {
-		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "+
-			      " Currrently fails -- see issue 29243 ");
+		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- ");
 		  } 
 	      }
 	  }

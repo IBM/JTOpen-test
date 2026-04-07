@@ -1356,8 +1356,7 @@ getSQLXML() - Get a type that was registered as a BIGINT.
 		      Clob check = (Clob) JDReflectionUtil.callMethod_O(cstmt, "getSQLXML", 1);
 		      assertCondition (compare(check, expected2,info), "Testcase added 12/14/2005 by native driver");
 		  } catch (Exception e) {
-		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "+
-			      " Currrently fails -- see issue 29243 ");
+		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- ");
 		  } 
 	      }
 	  }

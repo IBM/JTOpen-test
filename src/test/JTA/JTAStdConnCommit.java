@@ -386,7 +386,7 @@ Performs cleanup needed after running variations.
 
 	       //
                // Execute an explicit commit on the connection to prevent
-               // problem documented in issue 20318
+               // problem 
                //
 	       conn.commit(); 
 

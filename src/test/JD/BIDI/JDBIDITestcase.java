@@ -21,7 +21,7 @@ import com.ibm.as400.access.AS400;
 
 /**
  * 
- * @author ibm Testcase to test bidi code in toolbox
+ *  Testcase to test bidi code in toolbox
  */
 public class JDBIDITestcase extends JDTestcase {
 

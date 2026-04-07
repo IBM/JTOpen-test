@@ -1149,7 +1149,7 @@ getClob() - Get a type that was registered as a BIGINT.
       public void Var056()
       {
 	  if (! RUNTOOLONG ) {
-	      notApplicable("Takes too long to run NEED TO FIX!!!!.  This exhausts system storage.  See issue 49443 ");
+	      notApplicable("Takes too long to run NEED TO FIX!!!!.  This exhausts system storage.   ");
 	  } else { 
 	      if (checkJdbc20 ()) {
 		  String sql ="";
@@ -1194,8 +1194,7 @@ getClob() - Get a type that was registered as a BIGINT.
 		      Clob check = cstmt.getClob(1);
 		      assertCondition (compare(check, expected), "Testcase added 12/14/2005 by native driver");
 		  } catch (Exception e) {
-		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- "+
-			      " Currrently fails -- see issue 29243 ");
+		      failed (e, "Unexpected Exception Last SQL was "+sql+" Testcase added 12/14/2005 by native driver -- ");
 		  } 
 	      }
 	  }

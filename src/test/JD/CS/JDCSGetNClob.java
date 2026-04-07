@@ -1114,8 +1114,7 @@ public class JDCSGetNClob extends JDCSGetTestcase {
               "Testcase added 12/14/2005 by native driver");
         } catch (Exception e) {
           failed(e, "Unexpected Exception Last SQL was " + sql
-              + " Testcase added 12/14/2005 by native driver -- "
-              + " Currrently fails -- see issue 29243 ");
+              + " Testcase added 12/14/2005 by native driver -- ");
         }
       }
     }
