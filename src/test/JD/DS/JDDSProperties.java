@@ -156,7 +156,7 @@ public class JDDSProperties extends JDTestcase {
         dataSourceTB_ = new AS400JDBCDataSource();
         dataSourceTB_.setDataSourceName(DATA_SOURCE_TOOLBOX_NAME);
         dataSourceTB_.setDescription(DATA_SOURCE_TOOLBOX_DESCRIPTION);
-
+        dataSourceTB_.setServerName(systemObject_.getSystemName());
         dataSource_ = dataSourceTB_;
         dataSourceName_ = DATA_SOURCE_TOOLBOX_NAME;
         dataSourceDescription_ = DATA_SOURCE_TOOLBOX_DESCRIPTION;
@@ -3184,7 +3184,7 @@ public class JDDSProperties extends JDTestcase {
     String addedInfo = " -- new V7R5+ property added by native driver";
     StringBuffer sb = new StringBuffer(addedInfo);
     String systemName = systemObject_.getSystemName();
-    if (checkNative() && checkRelease760(addedInfo) && checkAdditionalAuthenticationFactor(systemName)
+    if (checkRelease760(addedInfo) && checkAdditionalAuthenticationFactor(systemName)
         && checkPasswordLeak()) {
       try {
         boolean successful = true;
@@ -3213,13 +3213,16 @@ public class JDDSProperties extends JDTestcase {
         JDReflectionUtil.callMethod_V(dataSource_, "setUser", mfaUserid_);
         String mfaPassword = PasswordVault.decryptPasswordLeak(mfaEncryptedPassword_);
         JDReflectionUtil.callMethod_V(dataSource_, "setPassword", mfaPassword);
-        JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 12345);
-        JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", mfaFactorString);
         JDReflectionUtil.callMethod_V(ds, "setAuthenticationVerificationId", "MYAPP_SUPER_SERVER");
-        JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalIP", "1.2.3.4");
-        JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalPort", 80);
-        JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemoteIP", "5.6.7.8");
-        JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 2134);
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE) { 
+          JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", mfaFactorString);
+          JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalIP", "1.2.3.4");
+          JDReflectionUtil.callMethod_V(ds, "setAuthenticationLocalPort", 80);
+          JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemoteIP", "5.6.7.8");
+          JDReflectionUtil.callMethod_V(ds, "setAuthenticationRemotePort", 2134);
+        } else {
+          JDReflectionUtil.callMethod_V(ds, "setAdditionalAuthenticationFactor", mfaFactorString.toCharArray());
+        }
         sb.append("\nconnecting using " + mfaUserid_ + " AAF=" + mfaFactorString);
         Connection c = ((DataSource) ds).getConnection();
         Statement s = c.createStatement();
@@ -3227,13 +3230,19 @@ public class JDDSProperties extends JDTestcase {
         rs.next();
         String currentUser = rs.getString(1);
         sb.append("\ncurrent MFA user is " + currentUser);
-        String jobName = JDJobName.getJobName().replace('/', '.');
+        String jobName;
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
+          jobName = rs.getString(2).replace('/', '.');
+        } else {
+          jobName = JDJobName.getJobName().replace('/', '.');
+        }
         sb.append("\nJob with exit information is " + jobName);
         rs.close();
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
           successful = false;
           sb.append("currentUser=" + currentUser + " MFAUserID=" + mfaUserid_ + "\n");
         }
+        s.close(); 
         c.close();
 
         String expectedVerificationId = "Verification_ID=MYAPP_SUPER_SERVER";
@@ -3241,6 +3250,15 @@ public class JDDSProperties extends JDTestcase {
         String expectedLocalPort = "Local_Port=80";
         String expectedRemoteIp = "Remote_IPAddress=5.6.7.8";
         String expectedLocalIp = "Local_IPAddress=1.2.3.4";
+        
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
+          expectedRemotePort = "Remote_Port=IGNORE";
+          expectedLocalPort = "Local_Port=IGNORE";
+          expectedRemoteIp = "Remote_IPAddress=IGNORE";
+          expectedLocalIp = "Local_IPAddress=IGNORE";
+          
+        }
+
 
         if (!AuthExit.checkResult(pwrConnection_, jobName, mfaUserid_, sb, expectedVerificationId, expectedRemotePort,
             expectedLocalPort, expectedRemoteIp, expectedLocalIp)) {

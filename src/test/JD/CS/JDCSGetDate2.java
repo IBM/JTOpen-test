@@ -631,7 +631,7 @@ getDate() - getDate on a type registered as Date, Date format iso, output parame
    **/
   public void Var023() {
 
-      if(checkRelease710()) { 
+      if(true) { 
 	  String added = " -- added by native driver 5/29/2009 to test date format julian";
 	  try {
 

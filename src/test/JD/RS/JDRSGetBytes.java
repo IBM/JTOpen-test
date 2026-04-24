@@ -1661,7 +1661,7 @@ public class JDRSGetBytes extends JDTestcase {
   public void Var047() {
     String added = " -- Added 5/15/2008 by native driver -- Fix made in V7R1 to retrieveLobFromLocator with getRawBytesForUTF8 flag.  Not PTF'd back to previous releases because of fix complexity.";
     if (checkLobSupport()) {
-      if (checkRelease710()) {
+      if (true) {
         try {
           Statement stmt = connection_.createStatement();
           ResultSet rs = stmt.executeQuery(

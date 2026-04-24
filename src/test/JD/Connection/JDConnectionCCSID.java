@@ -24,7 +24,6 @@ package test.JD.Connection;
 import com.ibm.as400.access.AS400;
 
 import test.JDConnectionTest;
-import test.JDReflectionUtil;
 import test.JDTestDriver;
 import test.JDTestcase;
 import test.PasswordVault;
@@ -219,6 +218,7 @@ Performs setup needed before running variations.
 		e.printStackTrace(); 
 	    }
 	    stmt.close(); 
+	    cmd.close(); 
 	} catch (Exception e) {
 	    e.printStackTrace(); 
 	}
@@ -310,23 +310,40 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
     String jobname = rs.getString(1);
     rs.close();
 
+    sql = " VALUES CURRENT USER ";
+    sb.append("  Running SQL: "+sql+"\n");
+    rs = stmt.executeQuery(sql);
+    rs.next(); 
+    String currentUser = rs.getString(1);
+    sb.append("Current user is "+currentUser); 
+    rs.close(); 
+    
+    Statement pwrStmt = pwrConnection_.createStatement();
+    pwrStmt.execute("call QSYS2.QCMDEXC('GRTOBJAUT OBJ(QSYS/QP0ZMAINT) OBJTYPE(*PGM) USER(" +currentUser+") AUT(*USE)   ')"); 
+    pwrStmt.close(); 
+    
     int slashIndex = jobname.indexOf('/');
     String jobNumber = jobname.substring(0, slashIndex);
-
+    sb.append("Running getConnectionWcbCCSID\n"); 
     sql = "call qsys2.qcmdexc('QSH CMD(''rm -f /tmp/output.ccsid" + jobNumber + "'')')";
+    sb.append("  Running SQL: "+sql+"\n");
     stmt.executeUpdate(sql);
 
     sql = "call qsys2.qcmdexc('QSH CMD(''/QSYS.LIB/QP0ZMAINT.PGM 30 " + jobNumber + " 0 1 > /tmp/output.ccsid"
         + jobNumber + "'')')";
+    sb.append("  Running SQL: "+sql+"\n");
     stmt.executeUpdate(sql);
 
+
     sql = " select * from TABLE(IFS_READ('/tmp/output.ccsid" + jobNumber + "'))";
+    sb.append("  Running SQL: "+sql+"\n");
     rs = stmt.executeQuery(sql);
 
     int ccsid = -1;
 
     while (rs.next() && ccsid == -1) {
       String line = rs.getString(2);
+      sb.append("Line is "+line+"\n"); 
       int colonIndex = line.indexOf(":001250");
       if (colonIndex > 0) {
         String hexData = line.substring(colonIndex + 26, colonIndex + 30);
@@ -336,6 +353,7 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
     }
     if (ccsid != -1) {
       sql = "call qsys2.qcmdexc('QSH CMD(''rm -f /tmp/output.ccsid" + jobNumber + "'')')";
+      sb.append("  Running SQL: "+sql+"\n");
       stmt.executeUpdate(sql);
     }
     rs.close();
@@ -368,7 +386,9 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
             + ".SRVJBCCSID() from sysibm.sysdummy1");
         rs.next();
         int outCcsid = rs.getInt(1);
-
+        rs.close(); 
+        s.close(); 
+        cmd.close(); 
         assertCondition(outCcsid == ccsid, "changeCcsidAndGetFromQusrjobi(): input ccsid=" + ccsid
             + " output ccsid=" + outCcsid);
       } catch (Exception e) {
@@ -394,7 +414,9 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
           while(rs.next()) {
             
           }
+          rs.close(); 
           s.close(); 
+          cmd.close(); 
           StringBuffer sb = new StringBuffer(); 
           sb.append("changeCcsidAndGetFromWcb(): input ccsid=" + ccsid);
           int outCcsid = getConnectionWcbCCSID(connection_, sb);
@@ -438,6 +460,8 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
           int outCcsid = rs.getInt(1); 
           
           s.executeUpdate("DROP TABLE "+tablename);
+          cmd.close(); 
+          rs.close(); 
           s.close(); 
           
           int expectedCcsid = ccsid;   
@@ -472,7 +496,8 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
         if (expectedCcsid == 65535 && getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           expectedCcsid=37; 
         }
-        
+        rs.close(); 
+        s.close(); 
         assertCondition(outCcsid == expectedCcsid, "loginCcsidAndGetFromQusrjobi(): input ccsid=" + ccsid
             + " output ccsid=" + outCcsid+" expected ccsid="+expectedCcsid);
       } catch (Exception e) {
@@ -485,10 +510,6 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
 	  
         if (checkNative()) {
 
-	    if (getRelease() < JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("Server WCB CCSID test fixed in V7R2");
-		return; 
-	    }
 
           String profile = setupProfile(ccsid); 
           Connection profileConnection = testDriver_.getConnection (baseURL_, profile, encryptedPassword_);
@@ -557,6 +578,7 @@ public int getConnectionWcbCCSID(Connection inputConnection, StringBuffer sb) th
           int outCcsid = rs.getInt(1); 
           
           s.executeUpdate("DROP TABLE "+tablename);
+          rs.close(); 
           s.close(); 
           
           

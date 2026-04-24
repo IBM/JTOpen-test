@@ -504,7 +504,7 @@ name is invalid.
     public void Var010()
     {
       if (checkJdbc41()) {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.String",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -669,7 +669,7 @@ name is invalid.
     /* Test LocalDate with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var019()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.String",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -689,7 +689,7 @@ name is invalid.
     /* Test java.lang.Byte 2X with SQLXML X0 */ 
     public void Var020()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Byte",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -814,7 +814,7 @@ name is invalid.
     /* Test java.lang.Byte 2X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var029()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Byte",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -834,7 +834,7 @@ name is invalid.
     /* Test java.lang.Integer 3X with SQLXML X0 */ 
     public void Var030()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Integer",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -959,7 +959,7 @@ name is invalid.
     /* Test java.lang.Integer 3X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var039()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Integer",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -978,7 +978,7 @@ name is invalid.
     /* Test java.lang.Short 4X with SQLXML X0 */ 
     public void Var040()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Short",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1103,7 +1103,7 @@ name is invalid.
     /* Test java.lang.Short 4X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var049()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Short",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1123,7 +1123,7 @@ name is invalid.
     /* Test java.lang.Long 5X with SQLXML X0 */ 
     public void Var050()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Long",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1248,7 +1248,7 @@ name is invalid.
     /* Test java.lang.Long 5X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var059()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Long",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1269,7 +1269,7 @@ name is invalid.
     /* Test java.lang.Float 6X with SQLXML X0 */ 
     public void Var060()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Float",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1394,7 +1394,7 @@ name is invalid.
     /* Test java.lang.Float 6X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var069()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Float",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1415,7 +1415,7 @@ name is invalid.
     /* Test java.lang.Double 7X with SQLXML X0 */ 
     public void Var070()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Double",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1540,7 +1540,7 @@ name is invalid.
     /* Test java.lang.Double 7X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var079()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Double",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1561,7 +1561,7 @@ name is invalid.
     /* Test java.math.BigDecimal 8X with SQLXML X0 */ 
     public void Var080()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.math.BigDecimal",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1686,7 +1686,7 @@ name is invalid.
     /* Test java.math.BigDecimal 8X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var089()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.math.BigDecimal",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1708,7 +1708,7 @@ name is invalid.
     /* Test java.lang.Boolean 9X with SQLXML X0 */ 
     public void Var090()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Boolean",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -1846,7 +1846,7 @@ name is invalid.
     /* Test java.lang.Boolean 9X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var099()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Boolean",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('0' as NCHAR(10)), CAST('0' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -1870,7 +1870,7 @@ name is invalid.
     /* Test [B 10X with SQLXML X0 */ 
     public void Var100()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "[B",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -2011,7 +2011,7 @@ name is invalid.
     /* Test [B 10X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var109()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "[B",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -2035,7 +2035,7 @@ name is invalid.
     /* Test java.sql.Date 11X with SQLXML X0 */ 
     public void Var110()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Date",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -2160,7 +2160,7 @@ name is invalid.
     /* Test java.sql.Date 11X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var119()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Date",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('2011-09-11' as NCHAR(10)), CAST('2011-09-12' AS NVARCHAR(100)), CAST('2001-09-12' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -2183,7 +2183,7 @@ name is invalid.
     /* Test java.sql.Time 12X with SQLXML X0 */ 
     public void Var120()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Time",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -2308,7 +2308,7 @@ name is invalid.
     /* Test java.sql.Time 12X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var129()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Time",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('11:22:11' as NCHAR(10)), CAST('11:22:12' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -2330,7 +2330,7 @@ name is invalid.
     /* Test java.sql.Timestamp 13X with SQLXML X0 */ 
     public void Var130()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Timestamp",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -2455,7 +2455,7 @@ name is invalid.
     /* Test java.sql.Timestamp 13X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var139()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Timestamp",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('2011-09-01 11:22:11.111111' as NCHAR(26)), CAST('2011-09-01 11:22:12.222222' AS NVARCHAR(100)), CAST('1' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(26)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -2475,7 +2475,7 @@ name is invalid.
     /* Test java.io.InputStream 14X with SQLXML X0 */ 
     public void Var140()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.io.InputStream",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -2661,7 +2661,7 @@ name is invalid.
     /* Test java.io.InputStream 14X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var149()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.io.InputStream",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), " +
@@ -2703,7 +2703,7 @@ name is invalid.
     /* Test java.io.Reader 15X with SQLXML X0 */ 
     public void Var150()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.io.Reader",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -2883,7 +2883,7 @@ name is invalid.
     /* Test java.io.Reader 15X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var159()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.io.Reader",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -2903,7 +2903,7 @@ name is invalid.
     /* Test java.sql.Clob 16X with SQLXML X0 */ 
     public void Var160()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Clob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -3080,7 +3080,7 @@ name is invalid.
     /* Test java.sql.Clob 16X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var169()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Clob",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -3099,7 +3099,7 @@ name is invalid.
     /* Test java.sql.Blob 17X with SQLXML X0 */ 
     public void Var170()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Blob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -3268,7 +3268,7 @@ name is invalid.
     /* Test java.sql.Blob 17X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var179()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Blob",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100))," +
@@ -3310,7 +3310,7 @@ name is invalid.
     public void Var180()
     {
       if (checkJdbc40()) {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.NClob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -3502,7 +3502,7 @@ name is invalid.
     /* Test java.sql.NClob 18X with rowid, nchar, nvarchar, NClob X9 */ 
     public void Var189()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.NClob",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NClob(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NClob(100K)) from sysibm.sysdummy1",
@@ -3540,7 +3540,7 @@ name is invalid.
     /* Test java.sql.Array 19X with SQLXML X0 */ 
     public void Var190()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Array",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -3682,7 +3682,7 @@ name is invalid.
     /* Test java.sql.Array 19X with rowid, nchar, nvarchar, nArray X9 */ 
     public void Var199()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Array",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), " +
@@ -3706,7 +3706,7 @@ name is invalid.
     /* Test java.sql.Ref 20X with SQLXML X0 */ 
     public void Var200()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Ref",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -3848,7 +3848,7 @@ name is invalid.
     /* Test java.sql.Ref 20X with rowid, nchar, nvarchar, nArray X9 */ 
     public void Var209()
     {
-      if (checkRelease710()) {  
+      if (true) {  
 	  String[] testArray = {
 	      "java.sql.Ref",
 	      "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), " +
@@ -3873,7 +3873,7 @@ name is invalid.
 
     public void Var210()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.net.URL",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -4008,7 +4008,7 @@ name is invalid.
     /* Test java.net.URL 21X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var219()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.net.URL",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -4028,7 +4028,7 @@ name is invalid.
     /* Test object 22X with SQLXML X0 */ 
     public void Var220()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Object",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(null as XML) from sysibm.sysdummy1", 
@@ -4166,7 +4166,7 @@ name is invalid.
     /* Test object 22X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var229()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Object",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('ABC' as NCHAR(10)), CAST('ABC' AS NVARCHAR(100)), CAST('ABC' AS NCLOB(100K)), CAST(null AS ROWID), CAST(null as NCHAR(10)), CAST(null AS NVARCHAR(100)), CAST(null AS NCLOB(100K)) from sysibm.sysdummy1",
@@ -4189,7 +4189,7 @@ name is invalid.
     /* Test java.sql.RowId 23X with SQLXML X0 */ 
     public void Var230()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.RowId",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -4353,7 +4353,7 @@ name is invalid.
     /* Test java.sql.RowId 23X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var239()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.RowId",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), CAST('1' as NCHAR(10)), CAST('1' AS NVARCHAR(100))," +
@@ -4376,7 +4376,7 @@ name is invalid.
     /* Test java.sql.SQLXML 24X with SQLXML X0 */ 
     public void Var240()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.SQLXML",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ), CAST(NULL AS XML) from sysibm.sysdummy1", 
@@ -4568,7 +4568,7 @@ name is invalid.
     public void Var249()
     {
 	// Update 2/21/2014  Toolbox SQLXML expects valid SQL
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.SQLXML",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID), "+
@@ -5007,7 +5007,7 @@ name is invalid.
     /* Test LocalDate with SQLXML X0 */ 
     public void Var310()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.String",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5170,7 +5170,7 @@ name is invalid.
     /* Test LocalDate with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var319()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.String",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5190,7 +5190,7 @@ name is invalid.
     /* Test java.lang.Byte 2X with SQLXML X0 */ 
     public void Var320()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Byte",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5315,7 +5315,7 @@ name is invalid.
     /* Test java.lang.Byte 2X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var329()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Byte",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5335,7 +5335,7 @@ name is invalid.
     /* Test java.lang.Integer 3X with SQLXML X0 */ 
     public void Var330()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Integer",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5460,7 +5460,7 @@ name is invalid.
     /* Test java.lang.Integer 3X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var339()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Integer",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5479,7 +5479,7 @@ name is invalid.
     /* Test java.lang.Short 4X with SQLXML X0 */ 
     public void Var340()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Short",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5604,7 +5604,7 @@ name is invalid.
     /* Test java.lang.Short 4X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var349()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Short",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5624,7 +5624,7 @@ name is invalid.
     /* Test java.lang.Long 5X with SQLXML X0 */ 
     public void Var350()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Long",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5749,7 +5749,7 @@ name is invalid.
     /* Test java.lang.Long 5X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var359()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Long",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5770,7 +5770,7 @@ name is invalid.
     /* Test java.lang.Float 6X with SQLXML X0 */ 
     public void Var360()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Float",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -5895,7 +5895,7 @@ name is invalid.
     /* Test java.lang.Float 6X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var369()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Float",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -5916,7 +5916,7 @@ name is invalid.
     /* Test java.lang.Double 7X with SQLXML X0 */ 
     public void Var370()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Double",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6041,7 +6041,7 @@ name is invalid.
     /* Test java.lang.Double 7X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var379()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Double",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -6062,7 +6062,7 @@ name is invalid.
     /* Test java.math.BigDecimal 8X with SQLXML X0 */ 
     public void Var380()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.math.BigDecimal",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6187,7 +6187,7 @@ name is invalid.
     /* Test java.math.BigDecimal 8X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var389()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.math.BigDecimal",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -6209,7 +6209,7 @@ name is invalid.
     /* Test java.lang.Boolean 9X with SQLXML X0 */ 
     public void Var390()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Boolean",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6347,7 +6347,7 @@ name is invalid.
     /* Test java.lang.Boolean 9X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var399()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Boolean",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('0' as NCHAR(10)) AS C4, CAST('0' AS NVARCHAR(100)) AS C5, CAST('1' AS NCLOB(100K)) AS C6, CAST(null AS ROWID) AS C7, CAST(null as NCHAR(10)) AS C8, CAST(null AS NVARCHAR(100)) AS C9, CAST(null AS NCLOB(100K)) AS C10 from sysibm.sysdummy1",
@@ -6371,7 +6371,7 @@ name is invalid.
     /* Test [B 10X with SQLXML X0 */ 
     public void Var400()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "[B",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6515,7 +6515,7 @@ name is invalid.
     /* Test [B 10X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var409()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "[B",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -6561,7 +6561,7 @@ name is invalid.
     /* Test java.sql.Date 11X with SQLXML X0 */ 
     public void Var410()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Date",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6686,7 +6686,7 @@ name is invalid.
     /* Test java.sql.Date 11X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var419()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Date",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('2011-09-11' as NCHAR(10)) AS C2, CAST('2011-09-12' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -6709,7 +6709,7 @@ name is invalid.
     /* Test java.sql.Time 12X with SQLXML X0 */ 
     public void Var420()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Time",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6834,7 +6834,7 @@ name is invalid.
     /* Test java.sql.Time 12X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var429()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Time",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID)  AS C1, CAST('11:22:11' as NCHAR(10)) AS C2, CAST('11:22:12' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -6856,7 +6856,7 @@ name is invalid.
     /* Test java.sql.Timestamp 13X with SQLXML X0 */ 
     public void Var430()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Timestamp",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -6981,7 +6981,7 @@ name is invalid.
     /* Test java.sql.Timestamp 13X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var439()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Timestamp",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID)  AS C1, CAST('2011-09-01 11:22:11.111111' as NCHAR(26)) AS C2, CAST('2011-09-01 11:22:12.222222' AS NVARCHAR(100)) AS C3, CAST('1' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(26)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -7001,7 +7001,7 @@ name is invalid.
     /* Test java.io.InputStream 14X with SQLXML X0 */ 
     public void Var440()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.io.InputStream",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -7182,7 +7182,7 @@ name is invalid.
     /* Test java.io.InputStream 14X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var449()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.io.InputStream",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, " +
@@ -7224,7 +7224,7 @@ name is invalid.
     /* Test java.io.Reader 15X with SQLXML X0 */ 
     public void Var450()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.io.Reader",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -7402,7 +7402,7 @@ name is invalid.
     /* Test java.io.Reader 15X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var459()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.io.Reader",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -7422,7 +7422,7 @@ name is invalid.
     /* Test java.sql.Clob 16X with SQLXML X0 */ 
     public void Var460()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Clob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -7600,7 +7600,7 @@ name is invalid.
     /* Test java.sql.Clob 16X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var469()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Clob",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -7619,7 +7619,7 @@ name is invalid.
     /* Test java.sql.Blob 17X with SQLXML X0 */ 
     public void Var470()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Blob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -7780,7 +7780,7 @@ name is invalid.
     /* Test java.sql.Blob 17X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var479()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Blob",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3," +
@@ -7825,7 +7825,7 @@ name is invalid.
     public void Var480()
     {
       if (checkJdbc40()) {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.NClob",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8016,7 +8016,7 @@ name is invalid.
     /* Test java.sql.NClob 18X with rowid, nchar, nvarchar, NClob X9 */ 
     public void Var489()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.NClob",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -8055,7 +8055,7 @@ name is invalid.
     /* Test java.sql.Array 19X with SQLXML X0 */ 
     public void Var490()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Array",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8197,7 +8197,7 @@ name is invalid.
     /* Test java.sql.Array 19X with rowid, nchar, nvarchar, nArray X9 */ 
     public void Var499()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.Array",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, " +
@@ -8221,7 +8221,7 @@ name is invalid.
     /* Test java.sql.Ref 20X with SQLXML X0 */ 
     public void Var500()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.Ref",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8363,7 +8363,7 @@ name is invalid.
     /* Test java.sql.Ref 20X with rowid, nchar, nvarchar, nArray X9 */ 
     public void Var509()
     {
-      if (checkRelease710()) {  
+      if (true) {  
 	  String[] testArray = {
 	      "java.sql.Ref",
 	      "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, " +
@@ -8388,7 +8388,7 @@ name is invalid.
 
     public void Var510()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.net.URL",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8523,7 +8523,7 @@ name is invalid.
     /* Test java.net.URL 21X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var519()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.net.URL",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -8543,7 +8543,7 @@ name is invalid.
     /* Test object 22X with SQLXML X0 */ 
     public void Var520()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.lang.Object",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8679,7 +8679,7 @@ name is invalid.
     /* Test object 22X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var529()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.lang.Object",
             "select CAST(CAST(X'1122' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('ABC' as NCHAR(10)) AS C2, CAST('ABC' AS NVARCHAR(100)) AS C3, CAST('ABC' AS NCLOB(100K)) AS C4, CAST(null AS ROWID) AS C5, CAST(null as NCHAR(10)) AS C6, CAST(null AS NVARCHAR(100)) AS C7, CAST(null AS NCLOB(100K)) AS C8 from sysibm.sysdummy1",
@@ -8702,7 +8702,7 @@ name is invalid.
     /* Test java.sql.RowId 23X with SQLXML X0 */ 
     public void Var530()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.RowId",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -8864,7 +8864,7 @@ name is invalid.
     /* Test java.sql.RowId 23X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var539()
     {
-      if (checkRelease710()) {  
+      if (true) {  
     String[] testArray = {
             "java.sql.RowId",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, CAST('1' as NCHAR(10)) AS C2, CAST('1' AS NVARCHAR(100)) AS C3," +
@@ -8887,7 +8887,7 @@ name is invalid.
     /* Test java.sql.SQLXML 24X with SQLXML X0 */ 
     public void Var540()
     {
-      if (checkRelease710()) {  
+      if (true) {  
            String[] testArray = {
               "java.sql.SQLXML",
               "select XMLPARSE( DOCUMENT '<h>hello</h>' ) as C1, CAST(null as XML) as C2 from sysibm.sysdummy1", 
@@ -9078,7 +9078,7 @@ name is invalid.
     /* Test java.sql.SQLXML 24X with rowid, nchar, nvarchar, nclob X9 */ 
     public void Var549()
     {
-      if (checkRelease710()) {
+      if (true) {
     String[] testArray = {
             "java.sql.SQLXML",
             "select CAST(CAST(X'01' AS CHAR(2) FOR BIT DATA) AS ROWID) AS C1, "+

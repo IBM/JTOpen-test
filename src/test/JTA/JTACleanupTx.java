@@ -12,12 +12,18 @@ package test.JTA;
 
 import java.util.*;
 
+import javax.sql.XAConnection;
 import javax.sql.XADataSource;
+import javax.transaction.xa.XAResource;
+import javax.transaction.xa.Xid;
 
 import java.io.*;
 import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-
+import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.AS400JDBCXADataSource;
 
 import test.JDReflectionUtil;
@@ -29,7 +35,7 @@ class JTACleanupTxTransInfo {
 
   static boolean debug = false;
 
-  private static PrintStream output_;
+  private static PrintStream output_ = System.out;
 
   // set default to null
   protected String state = null;
@@ -239,7 +245,53 @@ class JTACleanupTxTransInfo {
     v.copyInto(tiArr);
     return tiArr;
   }
+
+
+
+  public static JTACleanupTxTransInfo[] getTransInfo(String system, String userid, char[] password) throws Exception {
+
+    if (System.getProperty("debug") != null) {
+      debug = true;
+    }
+
+    Vector<JTACleanupTxTransInfo> v = new Vector<JTACleanupTxTransInfo>();
+
+    String sql = "select XA_TRANSACTION_MANAGER, XA_TRANSACTION_BRANCH_STATE,XA_XID_FORMAT_ID,XA_XID_GLOBAL_TRANSACTION_ID,XA_XID_BRANCH_QUALIFIER from QSYS2.DB_TRANSACTION_INFO WHERE COMMITMENT_DEFINITION='*TNSOBJ'";
+
+    AS400JDBCDriver driver = new AS400JDBCDriver();
+    Connection c = driver.connect("jdbc:as400:" + system, userid, password);
+    Statement s = c.createStatement();
+    ResultSet rs = s.executeQuery(sql);
+    while (rs.next()) {
+      String transactionManager = rs.getString(1);
+      if (((transactionManager.indexOf("Q_UDB_JTA") != -1) || (transactionManager.indexOf("QZDATM") != -1))) {
+
+        JTACleanupTxTransInfo match = new JTACleanupTxTransInfo();
+        String state = rs.getString(2);
+        String gtid = rs.getString(4);
+        String branchQualifier = rs.getString(5);
+        match.setState(state);
+        match.setGlobalTransactionId(gtid);
+        match.setBranchQualifier(branchQualifier);
+        match.setCollection("");
+        // Add this TransInfo object to the vector
+        v.addElement(match);
+      }
+    }
+    rs.close(); 
+    s.close(); 
+    c.close(); 
+    if (v.size() == 0) {
+      return null;
+    }
+    // convert the vector into a TransInfo array and return it
+    JTACleanupTxTransInfo[] tiArr = new JTACleanupTxTransInfo[v.size()];
+    v.copyInto(tiArr);
+    return tiArr;
+
+  }
 }
+
 
 /**
  * NOTE NOTE NOTE: This Xid implementation should be compatible with the
@@ -283,6 +335,7 @@ class JTACleanupTxRecoveryTargeter {
 
 }
 
+
 public class JTACleanupTx {
 
   private static PrintStream output_ = System.out;
@@ -290,6 +343,8 @@ public class JTACleanupTx {
   public static void usage() {
     output_
         .println("Usage: java JTACleanupTx <rdbname|localhost> 'ThisIsDangerous' [all]");
+    output_
+    .println("   or: java JTACleanupTx system:SYSTEMNAME USERID PASSWORD 'ThisIsDangerous' [all]");
     output_
         .println("  The parameter 'ThisIsDangerous' is required because this is\n"
             + "  a dangerous thing to do on a system that might have 'other than\n"
@@ -307,196 +362,323 @@ public class JTACleanupTx {
     System.exit(1);
   }
 
+  
   public static void main(String[] args) {
     try {
-      output_  = System.out; 
+      output_ = System.out;
 
-      output_
-          .println("Recover in-doubt or heuristically completed transactions");
-      if (args.length < 2 || args.length > 3
-          || !args[1].equals("ThisIsDangerous")) {
+      output_.println("Recover in-doubt or heuristically completed transactions");
+      if (args.length < 2 || (args[0].indexOf("system:") < 0 && !args[1].equals("ThisIsDangerous"))) {
         usage();
       }
 
-      if (args[0].equalsIgnoreCase("localhost")) {
-        String localHost = InetAddress.getLocalHost().getHostName()
-            .toLowerCase();
-        int dotIndex = localHost.indexOf(".");
-        if (dotIndex >= 0) {
-          localHost = localHost.substring(0, dotIndex);
-        }
-
-        args[0] = localHost.toUpperCase();
-      }
-      boolean rollbackAll = false;
-      if (args.length == 3) {
-        if (!args[2].equals("all")) {
+      if (args[0].indexOf("system:") == 0) {
+        if (args.length < 4 || !args[3].equals("ThisIsDangerous")) {
           usage();
-        } else {
-          rollbackAll = true;
         }
-      }
-
-      boolean masterDone = false;
-      int resourceIndex = 0;
-      do {
-
-        Object xaConn = null;
-        Object xaRes = null;
-        // Connection conn;
-        if (resourceIndex / 2 == 0) {
-	    output_
-	      .println("Now, using NATIVE XAResource.recover() to find all "
-		       + "transactions in-doubt transactions");
-
-          output_.println("resourceIndex="+resourceIndex+" using UDBXADataSource"); 
-          XADataSource xaDs;
-          xaDs = (XADataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBXADataSource");
-          JDReflectionUtil.callMethod_V(xaDs,"setDatabaseName",args[0]);
-
-          // Get the XAConnection.
-          xaConn = xaDs.getXAConnection();
-          xaDs = (XADataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBXADataSource");
-
-        } else if ((resourceIndex / 2) == 1) {
-
-	    output_
-	      .println("Now, using toolbox XAResource.recover() to find all "
-		       + "transactions in-doubt transactions");
-
-          output_.println("resourceIndex="+resourceIndex+" using AS400JDBCXADataSource"); 
-
-          AS400JDBCXADataSource xaDs = new AS400JDBCXADataSource();
-          xaDs.setServerName(args[0]);
-
-          // Get the XAConnection.
-          xaConn = xaDs.getXAConnection();
-
-        } else {
-          output_.println("resourceIndex="+resourceIndex+" DONE"); 
-          masterDone = true;
+        String serverName = args[0].substring(7);
+        String userid = args[1];
+        String password = args[2];
+        String option = null;
+        if (args.length > 4) {
+          option = args[4];
         }
-        resourceIndex ++; 
-        
-        if (!masterDone) {
-          xaRes = JDReflectionUtil.callMethod_O(xaConn, "getXAResource");
+        jdbcUrlCleanup(serverName, userid, password.toCharArray(), option);
+      } else {
+        if (args[0].equalsIgnoreCase("localhost")) {
+          String localHost = InetAddress.getLocalHost().getHostName().toLowerCase();
+          int dotIndex = localHost.indexOf(".");
+          if (dotIndex >= 0) {
+            localHost = localHost.substring(0, dotIndex);
+          }
 
-          // conn =
-          // (Connection)JDReflectionUtil.callMethod_O(xaConn,"getConnection");
-
-          Object[] xids;
-
-          xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
-              javax.transaction.xa.XAResource.TMSTARTRSCAN);
-          if (xids == null || xids.length == 0) {
-            output_
-                .println("There are currently no In-Doubt transactions detected");
+          args[0] = localHost.toUpperCase();
+        }
+        boolean rollbackAll = false;
+        if (args.length == 3) {
+          if (!args[2].equals("all")) {
+            usage();
           } else {
+            rollbackAll = true;
+          }
+        }
 
-            boolean done = false;
-            // int count = 0;
-            // It may be that the XIDs were heuristically rolled back or
-            // committed
-            // (If this testcase is being called with a 'doOnlyRecovery' value
-            // of
-            // true in order
-            // to forget about existing transactions.
-            boolean heuRollback = false;
-            boolean heuCommit = false;
-            boolean heuMix = false;
-            // Construct a targeter to choose Xids that will be cleaned up
-            JTACleanupTxRecoveryTargeter targeter = new JTACleanupTxRecoveryTargeter();
-            if (rollbackAll) {
-              targeter.setTargetId(-1);
-            }
+        boolean masterDone = false;
+        int resourceIndex = 0;
+        do {
 
-            while (!done) {
-              output_.println("Scan found " + xids.length
-                  + " in-doubt transactions");
-              // count += xids.length;
-              for (int i = 0; i < xids.length; ++i) {
-                // Skip any XIDs that are not targetted by this tool.
-                if (!targeter.isATarget(xids[i])) {
-                  output_.println("Skipping non targeted Xid "
-                      + xidToString(xids[i]));
-                  continue;
-                }
-                // Attempt to roll back the thransaction.
-                output_.println("Rollback: " + xidToString(xids[i]));
-                heuRollback = false;
-                heuCommit = false;
-                heuMix = false;
-                try {
-                  JDReflectionUtil.callMethod_V(xaRes, "rollback", xids[i]);
-                  output_.println("Rollback completed");
-                } catch (Exception e) {
-                  // Expect a couple of possible exceptions that aren't
-                  // necessarily
-                  // a bad thing.
-                  output_.println("Rollback rc="
-                      + JDReflectionUtil.getField_I(e, "errorCode"));
-                  if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURCOM) {
-                    output_
-                        .println("The transaction was already committed XA_HEURCOM");
-                    heuCommit = true;
-                  } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURRB) {
-                    output_
-                        .println("The transaction was already rolled back XA_HEURRB");
-                    heuRollback = true;
-                  } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURMIX) {
-                    output_
-                        .println("The transaction was already committed and rolled back XA_HEURMIX");
-                    heuMix = true;
-                  } else {
-                    // This is a problem.
-                    throw e;
-                  }
-                }
-                if (heuRollback || heuCommit || heuMix) {
-                  output_
-                      .println("Forget about heurisically completed transaction:"
-                          + xidToString(xids[i]));
-                  JDReflectionUtil.callMethod_V(xaRes, "forget", xids[i]);
-                } else {
-                  output_.println("Skipped Forget");
-                }
+          Object xaConn = null;
+          Object xaRes = null;
+          // Connection conn;
+          if (resourceIndex / 2 == 0) {
+            output_
+                .println("Now, using NATIVE XAResource.recover() to find all " + "transactions in-doubt transactions");
+
+            output_.println("resourceIndex=" + resourceIndex + " using UDBXADataSource");
+            XADataSource xaDs;
+            xaDs = (XADataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBXADataSource");
+            JDReflectionUtil.callMethod_V(xaDs, "setDatabaseName", args[0]);
+
+            // Get the XAConnection.
+            xaConn = xaDs.getXAConnection();
+            xaDs = (XADataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBXADataSource");
+
+          } else if ((resourceIndex / 2) == 1) {
+
+            output_
+                .println("Now, using toolbox XAResource.recover() to find all " + "transactions in-doubt transactions");
+
+            output_.println("resourceIndex=" + resourceIndex + " using AS400JDBCXADataSource");
+
+            AS400JDBCXADataSource xaDs = new AS400JDBCXADataSource();
+            xaDs.setServerName(args[0]);
+
+            // Get the XAConnection.
+            xaConn = xaDs.getXAConnection();
+
+          } else {
+            output_.println("resourceIndex=" + resourceIndex + " DONE");
+            masterDone = true;
+          }
+          resourceIndex++;
+
+          if (!masterDone) {
+            xaRes = JDReflectionUtil.callMethod_O(xaConn, "getXAResource");
+
+            // conn =
+            // (Connection)JDReflectionUtil.callMethod_O(xaConn,"getConnection");
+
+            Object[] xids;
+
+            xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
+                javax.transaction.xa.XAResource.TMSTARTRSCAN);
+            if (xids == null || xids.length == 0) {
+              output_.println("There are currently no In-Doubt transactions detected");
+            } else {
+
+              boolean done = false;
+              // int count = 0;
+              // It may be that the XIDs were heuristically rolled back or
+              // committed
+              // (If this testcase is being called with a 'doOnlyRecovery' value
+              // of
+              // true in order
+              // to forget about existing transactions.
+              boolean heuRollback = false;
+              boolean heuCommit = false;
+              boolean heuMix = false;
+              // Construct a targeter to choose Xids that will be cleaned up
+              JTACleanupTxRecoveryTargeter targeter = new JTACleanupTxRecoveryTargeter();
+              if (rollbackAll) {
+                targeter.setTargetId(-1);
               }
 
-              output_.println("Finding more transactions");
-              xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
-                  javax.transaction.xa.XAResource.TMNOFLAGS);
-              if (xids == null || xids.length == 0) {
-                output_.println("End of in-doubt transactions");
-                done = true;
+              while (!done) {
+                output_.println("Scan found " + xids.length + " in-doubt transactions");
+                // count += xids.length;
+                for (int i = 0; i < xids.length; ++i) {
+                  // Skip any XIDs that are not targetted by this tool.
+                  if (!targeter.isATarget(xids[i])) {
+                    output_.println("Skipping non targeted Xid " + xidToString(xids[i]));
+                    continue;
+                  }
+                  // Attempt to roll back the thransaction.
+                  output_.println("Rollback: " + xidToString(xids[i]));
+                  heuRollback = false;
+                  heuCommit = false;
+                  heuMix = false;
+                  try {
+                    JDReflectionUtil.callMethod_V(xaRes, "rollback", xids[i]);
+                    output_.println("Rollback completed");
+                  } catch (Exception e) {
+                    // Expect a couple of possible exceptions that aren't
+                    // necessarily
+                    // a bad thing.
+                    output_.println("Rollback rc=" + JDReflectionUtil.getField_I(e, "errorCode"));
+                    if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURCOM) {
+                      output_.println("The transaction was already committed XA_HEURCOM");
+                      heuCommit = true;
+                    } else if (JDReflectionUtil.getField_I(e,
+                        "errorCode") == javax.transaction.xa.XAException.XA_HEURRB) {
+                      output_.println("The transaction was already rolled back XA_HEURRB");
+                      heuRollback = true;
+                    } else if (JDReflectionUtil.getField_I(e,
+                        "errorCode") == javax.transaction.xa.XAException.XA_HEURMIX) {
+                      output_.println("The transaction was already committed and rolled back XA_HEURMIX");
+                      heuMix = true;
+                    } else {
+                      // This is a problem.
+                      throw e;
+                    }
+                  }
+                  if (heuRollback || heuCommit || heuMix) {
+                    output_.println("Forget about heurisically completed transaction:" + xidToString(xids[i]));
+                    JDReflectionUtil.callMethod_V(xaRes, "forget", xids[i]);
+                  } else {
+                    output_.println("Skipped Forget");
+                  }
+                }
+
+                output_.println("Finding more transactions");
+                xids = (Object[]) JDReflectionUtil.callMethod_O(xaRes, "recover",
+                    javax.transaction.xa.XAResource.TMNOFLAGS);
+                if (xids == null || xids.length == 0) {
+                  output_.println("End of in-doubt transactions");
+                  done = true;
+                }
               }
             }
           }
+        } while (!masterDone);
+
+        output_.println("Looking for more transactions");
+        wrkcmtdfnBlock: try {
+          JTACleanupTxTransInfo list[] = JTACleanupTxTransInfo.getTransInfo();
+          if (list == null || list.length == 0) {
+            output_.println("No more transactions.");
+            break wrkcmtdfnBlock;
+          }
+          output_.println("Transactions still in flight:");
+          for (int i = 0; i < list.length; ++i) {
+            output_.println(list[i]);
+          }
+        } catch (Exception e) {
+          output_.println("Exception: " + e);
+          e.printStackTrace();
         }
-      } while (!masterDone);
+
+        output_.println("Done");
+        /* System.exit(0); */
+      }
+
     } catch (Exception e) {
       output_.println("Exception: " + e);
       e.printStackTrace();
     }
 
-    output_.println("Looking for more transactions");
-    wrkcmtdfnBlock: try {
-      JTACleanupTxTransInfo list[] = JTACleanupTxTransInfo.getTransInfo();
-      if (list == null || list.length == 0) {
-        output_.println("No more transactions.");
-        break wrkcmtdfnBlock;
+  }
+
+  public static void jdbcUrlCleanup(String serverName, String userid, char[] password, String option) {
+    boolean rollbackAll = false;
+    try {
+      if (option != null && option.equals("all")) {
+        rollbackAll = true;
       }
-      output_.println("Transactions still in flight:");
-      for (int i = 0; i < list.length; ++i) {
-        output_.println(list[i]);
+
+      boolean masterDone = false;
+      do {
+
+        XAConnection xaConn = null;
+        XAResource xaRes = null;
+        // Connection conn;
+        output_.println("Using toolbox XAResource.recover() to find all " + "transactions in-doubt transactions");
+
+        AS400JDBCXADataSource xaDs = new AS400JDBCXADataSource(serverName, userid, password);
+        // Get the XAConnection.
+        xaConn = xaDs.getXAConnection();
+        xaRes = xaConn.getXAResource();
+
+        Xid[] xids = xaRes.recover(javax.transaction.xa.XAResource.TMSTARTRSCAN);
+
+        if (xids == null || xids.length == 0) {
+          output_.println("There are currently no In-Doubt transactions detected");
+          masterDone = true;
+        } else {
+
+          boolean done = false;
+          // int count = 0;
+          // It may be that the XIDs were heuristically rolled back or
+          // committed
+          // (If this testcase is being called with a 'doOnlyRecovery' value
+          // of
+          // true in order
+          // to forget about existing transactions.
+          boolean heuRollback = false;
+          boolean heuCommit = false;
+          boolean heuMix = false;
+          // Construct a targeter to choose Xids that will be cleaned up
+          JTACleanupTxRecoveryTargeter targeter = new JTACleanupTxRecoveryTargeter();
+          if (rollbackAll) {
+            targeter.setTargetId(-1);
+          }
+
+          while (!done) {
+            output_.println("Scan found " + xids.length + " in-doubt transactions");
+            // count += xids.length;
+            for (int i = 0; i < xids.length; ++i) {
+              // Skip any XIDs that are not targetted by this tool.
+              if (!targeter.isATarget(xids[i])) {
+                output_.println("Skipping non targeted Xid " + xidToString(xids[i]));
+                continue;
+              }
+              // Attempt to roll back the thransaction.
+              output_.println("Rollback: " + xidToString(xids[i]));
+              heuRollback = false;
+              heuCommit = false;
+              heuMix = false;
+              try {
+                xaRes.rollback(xids[i]);
+                output_.println("Rollback completed");
+              } catch (Exception e) {
+                // Expect a couple of possible exceptions that aren't
+                // necessarily
+                // a bad thing.
+                output_.println("Rollback rc=" + JDReflectionUtil.getField_I(e, "errorCode"));
+                if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURCOM) {
+                  output_.println("The transaction was already committed XA_HEURCOM");
+                  heuCommit = true;
+                } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURRB) {
+                  output_.println("The transaction was already rolled back XA_HEURRB");
+                  heuRollback = true;
+                } else if (JDReflectionUtil.getField_I(e, "errorCode") == javax.transaction.xa.XAException.XA_HEURMIX) {
+                  output_.println("The transaction was already committed and rolled back XA_HEURMIX");
+                  heuMix = true;
+                } else {
+                  // This is a problem.
+                  throw e;
+                }
+              }
+              if (heuRollback || heuCommit || heuMix) {
+                output_.println("Forget about heurisically completed transaction:" + xidToString(xids[i]));
+                JDReflectionUtil.callMethod_V(xaRes, "forget", xids[i]);
+              } else {
+                output_.println("Skipped Forget");
+              }
+            }
+
+            output_.println("Finding more transactions");
+            xids = xaRes.recover(javax.transaction.xa.XAResource.TMNOFLAGS);
+            if (xids == null || xids.length == 0) {
+              output_.println("End of in-doubt transactions");
+              done = true;
+            }
+          }
+        }
+
+      } while (!masterDone);
+
+      output_.println("Looking for more transactions");
+      wrkcmtdfnBlock: try {
+        JTACleanupTxTransInfo list[] = JTACleanupTxTransInfo.getTransInfo(serverName, userid, password);
+        if (list == null || list.length == 0) {
+          output_.println("No more transactions.");
+          break wrkcmtdfnBlock;
+        }
+        output_.println("Transactions still in flight:");
+        for (int i = 0; i < list.length; ++i) {
+          output_.println(list[i]);
+        }
+      } catch (Exception e) {
+        output_.println("Exception: " + e);
+        e.printStackTrace();
       }
+
     } catch (Exception e) {
       output_.println("Exception: " + e);
       e.printStackTrace();
     }
 
     output_.println("Done");
-    /* System.exit(0); */
-
 
   }
 

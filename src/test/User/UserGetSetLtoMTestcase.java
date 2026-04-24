@@ -2387,9 +2387,7 @@ public class UserGetSetLtoMTestcase extends Testcase
             User u = new User(pwrSys_, sandbox_.createUser());
             int testValue = 2147483645;
             int expectedValue = -1;
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
 		expectedValue = -2;
-	    } 
             u.setMaximumStorageAllowed(testValue);
             int returnValue = u.getMaximumStorageAllowed();
             assertCondition(returnValue == expectedValue,"maximumStorageAllowed="+returnValue+" sb "+expectedValue);
@@ -2413,9 +2411,7 @@ public class UserGetSetLtoMTestcase extends Testcase
             User u = new User(pwrSys_, sandbox_.createUser());
             String testValue = "2147483645";
             int expectedValue = -1;
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
 		expectedValue = -2;
-	    } 
             u.setMaximumStorageAllowed(testValue);
             int returnValue = u.getMaximumStorageAllowed();
             assertCondition(returnValue == expectedValue, "maximumStorageAllowed="+returnValue+" sb "+expectedValue);

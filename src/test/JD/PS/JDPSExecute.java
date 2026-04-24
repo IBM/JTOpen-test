@@ -1171,7 +1171,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
 **/
     public void Var035() {
       String description = "New Array insert syntax test"; 
-    if (checkRelease710()) {
+    if (true) {
       StringBuffer testInfo = new StringBuffer(); 
       boolean passed = true; 
       String sql = ""; 
@@ -1284,7 +1284,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
    **/
   public void Var037() {
     String description = "Values('abc') execution test -- added 10/23/2012 to detect bug in native JDBC driver";
-    if (checkRelease610()) {   /* values only in v6r1 and later */ 
+    if (true) {   /* values only in v6r1 and later */ 
 	StringBuffer testInfo = new StringBuffer();
 	boolean passed = true;
 	String sql = "";
@@ -1321,7 +1321,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
   public void Var038() {
     String description = "Values('abc' || ? ) execution test -- added 10/23/2012 to detect bug in native JDBC driver";
 
-    if (checkRelease710()) {
+    if (true) {
     StringBuffer testInfo = new StringBuffer();
     boolean passed = true;
     String sql = "";
@@ -1639,7 +1639,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
   public void Var049() {
     if (checkJdbc42()) {
       String description = "New Array insert syntax test";
-      if (checkRelease710()) {
+      if (true) {
         StringBuffer testInfo = new StringBuffer();
         boolean passed = true;
         String sql = "";

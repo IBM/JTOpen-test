@@ -14,7 +14,8 @@
 package test.DDM;
 
 import java.io.FileOutputStream;
-
+import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.Vector;
 
 
@@ -22,6 +23,7 @@ import java.util.Vector;
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.security.auth.ProfileTokenCredential;
 
+import test.JDReflectionUtil;
 import test.PasswordVault;
 import test.Testcase;
 
@@ -43,13 +45,13 @@ public class DDMConnect extends Testcase {
   /**
    * Constructor. This is called from the DDMTest constructor.
    **/
-  public DDMConnect(AS400 systemObject, Vector<String> variationsToRun, int runMode,
-      FileOutputStream fileOutputStream,  String testLib) {
-
-    super(systemObject, "DDMConnect", variationsToRun, runMode,
-        fileOutputStream);
-    
+  
+  public DDMConnect(AS400 systemObject, Hashtable<String,Vector<String>> namesAndVars, int runMode, FileOutputStream fileOutputStream,
+      String password, AS400 pwrSys, String pwrSysPwd) {
+    super(systemObject, "DDMConnect", namesAndVars, runMode, fileOutputStream, password, pwrSys, pwrSysPwd);
+    systemObject_ = systemObject;
   }
+
 
   /**
    * Verify simple connection
@@ -158,7 +160,39 @@ public class DDMConnect extends Testcase {
     }
   }
   
-  
+  /**
+   * Connect with MFA  
+   */
+  public void Var005() {
+   
+    String systemName = systemObject_.getSystemName();
+    if (checkAdditionalAuthenticationFactor(systemName)) {
 
+    boolean passed = true;
+    StringBuffer sb = new StringBuffer();
+    try {
+      initMfaUser();
+      sb.append("new AS400(" + systemObject_.getSystemName() + "," + mfaUserid_ + ",....,"
+          + new String(mfaFactor_) + "\n");
+      char[] mfaPassword = PasswordVault.decryptPassword(mfaEncryptedPassword_);
+      AS400 as400 = (AS400) JDReflectionUtil.createObject("com.ibm.as400.access.AS400", systemObject_.getSystemName(),
+          mfaUserid_, mfaPassword, mfaFactor_);
+      Arrays.fill(mfaPassword, ' ');
+      as400.connectService(AS400.RECORDACCESS);
+      as400.disconnectService(AS400.RECORDACCESS);
+      as400.close(); 
+      
+      assertCondition(passed, sb);
+
+    } catch (Exception e) {
+      failed(e, sb);
+    }
+    }
+ }
+
+  
+  
+  
+  
 
 }

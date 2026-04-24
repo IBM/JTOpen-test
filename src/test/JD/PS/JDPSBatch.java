@@ -7046,13 +7046,6 @@ failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.to
           // toolbox returns SUCCESS_NO_INFO in update array */ 
           testString[9][2] = "-2,-2"; 
         }
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	    (getRelease() <= JDTestDriver.RELEASE_V7R2M0) &&
-	    useBlockInsert) {
-	    // Block insert does not correctly update counts in V5R4 and V6R1 and V7R1 and V7R2
-            // and currently V7R2 (9/25/2013) 
-	    testString[9][2] = ""; 
-	} 
         
 	testBatchError(testString, " -- native V7R2 needs to be enhanced/fixed");
 
@@ -7100,16 +7093,6 @@ failed (e, "Unexpected Exception:  Added by Native 07/19/2006 "+messageBuffer.to
         }
 
 
-	if ((getDriver() == JDTestDriver.DRIVER_NATIVE) &&
-	    (getRelease() <= JDTestDriver.RELEASE_V7R2M0) &&
-	    useBlockInsert) {
-	    // Block insert does not correctly update counts in V5R4 and V6R1 and V7R1
-            // and currently V7R2 (9/23/2013) 
-	    // Block insert also does not do any of the updateds 
-	    testString[10][2] = "";
-	    testString[13][0] = "EXTRA";
-	    testString[14][0] = "EXTRA"; 
-	} 
 
 
         testBatchError(testString, " -- native V7R2 needs to be enhanced/fixed");

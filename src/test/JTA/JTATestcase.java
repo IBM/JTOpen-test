@@ -237,6 +237,20 @@ extends JDTestcase
     }
 
 
+    
+    /**
+     * Performs setup needed before running variations.
+     * 
+     * @exception Exception
+     *              If an exception occurs.
+     **/
+    protected void setup() throws Exception {
+      /* Make sure all XA tests are clean before running tests */ 
+      char[] localPassword  = PasswordVault.decryptPassword(encryptedPassword_);
+      JTACleanupTx.jdbcUrlCleanup(systemObject_.getSystemName(), userId_ , localPassword, null);
+      PasswordVault.clearPassword(localPassword);
+    }
+
 }
 
 

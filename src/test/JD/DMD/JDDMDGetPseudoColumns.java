@@ -299,7 +299,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
   {
     // Result set format checked below. Removing cases that are not working.
     // Just pass this test to avoid dual maintenance
-    if (checkRelease610()) {
+    if (true) {
       assertCondition(true);
       return;
     }
@@ -309,7 +309,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * getPseudoColumns() - Get a list of those created in this testcase.
    **/
   public void Var002() {
-    if (checkRelease610()) {
+    if (true) {
       try {
 
         String catalog = getExpectedTableCat();
@@ -427,7 +427,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    **/
   public void Var003() {
 
-    if (checkRelease610()) {
+    if (true) {
 
       message = new StringBuffer();
 
@@ -469,7 +469,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * tables should be returned.
    **/
   public void Var004() {
-    if (checkRelease610()) {
+    if (true) {
 
       try {
         message = new StringBuffer();
@@ -520,7 +520,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * matching columns should be returned.
    **/
   public void Var005() {
-    if (checkRelease610()) {
+    if (true) {
 
       try {
         ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_OSSSS(dmd_, "getPseudoColumns", "",
@@ -549,7 +549,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * exactly. All matching columns should be returned.
    **/
   public void Var006() {
-    if (checkRelease610()) {
+    if (true) {
 
       try {
         String catalog = getExpectedTableCat();
@@ -602,7 +602,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * matching columns should be returned, since we do not support catalog pattern.
    **/
   public void Var007() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -636,7 +636,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * No matching columns should be returned.
    **/
   public void Var008() {
-    if (checkRelease610()) {
+    if (true) {
 
       try {
         ResultSet rs = (ResultSet) JDReflectionUtil.callMethod_OSSSS(dmd_, "getPseudoColumns", "BOGUS%",
@@ -659,7 +659,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * columns should be returned.
    **/
   public void Var009() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -717,7 +717,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * columns should be returned.
    **/
   public void Var010() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
         ;
@@ -743,7 +743,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * All matching columns should be returned.
    **/
   public void Var011() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
         ;
@@ -798,7 +798,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * is a match. All matching columns should be returned.
    **/
   public void Var012() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
         ;
@@ -854,7 +854,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * there is a match. All matching columns should be returned.
    **/
   public void Var013() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
         ;
@@ -908,7 +908,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * matching columns should be returned.
    **/
   public void Var014() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -932,7 +932,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * should be returned.
    **/
   public void Var015() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -986,7 +986,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * columns should be returned.
    **/
   public void Var016() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1011,7 +1011,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * All matching columns should be returned.
    **/
   public void Var017() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1063,7 +1063,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * is a match. All matching columns should be returned.
    **/
   public void Var018() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1116,7 +1116,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * there is a match. All matching columns should be returned.
    **/
   public void Var019() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1166,7 +1166,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * matching columns should be returned.
    **/
   public void Var020() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1191,7 +1191,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * columns should be returned.
    **/
   public void Var021() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1246,7 +1246,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * columns should be returned.
    **/
   public void Var022() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1271,7 +1271,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * All matching columns should be returned.
    **/
   public void Var023() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1323,7 +1323,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * is a match. All matching columns should be returned.
    **/
   public void Var024() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1376,7 +1376,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * there is a match. All matching columns should be returned.
    **/
   public void Var025() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1428,7 +1428,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * matching columns should be returned.
    **/
   public void Var026() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         String catalog = getExpectedTableCat();
 
@@ -1452,7 +1452,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * getPseudoColumns() - Should throw an exception when the connection is closed.
    **/
   public void Var027() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         ResultSet resultSet = (ResultSet) JDReflectionUtil.callMethod_OSSSS(dmd2_, "getPseudoColumns", null, null, null,
             null);
@@ -1504,7 +1504,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * and the result is as expected.
    **/
   public void Var028() {
-    if (checkRelease610()) {
+    if (true) {
       /** @K2 **/
       // String systemName =
       // ((AS400JDBCConnection)connection_).getSystem().getSystemName(); //@K1A
@@ -1966,7 +1966,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * check the result set metadata with extended metadata off
    */
   public void Var029() {
-    if (checkRelease610()) {
+    if (true) {
       checkRSMD(false);
     }
   }
@@ -1975,7 +1975,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * check the result set metadata with extended metadata on
    */
   public void Var030() {
-    if (checkRelease610()) {
+    if (true) {
       checkRSMD(true);
     }
   }
@@ -2092,7 +2092,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * read call connection
    **/
   public void Var033() {
-    if (checkRelease610()) {
+    if (true) {
       try {
         message = new StringBuffer();
         messageColumnName = "";
@@ -2142,7 +2142,7 @@ public class JDDMDGetPseudoColumns extends JDTestcase {
    * 
    **/
   public void Var034() {
-    if (checkRelease610()) {
+    if (true) {
       String added = " -- added by 1/31/2011 to test for native statement leak in metadata";
       if (checkNative()) {
         try {

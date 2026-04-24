@@ -143,8 +143,17 @@ Performs setup needed before running testcases.
       Connection c = getConnection (getBaseURL (),
                                     systemObject_.getUserId (), encryptedPassword_);
       if (testLib_ != null) {
-         COLLECTION = "JDX"+testLib_.substring(3);
+        String xaInitials = System.getenv("JTOPEN_TEST_XAINITIAL");
+        if (xaInitials == null || xaInitials.length() == 0) { 
+          xaInitials="X";
+        } else {
+          if (xaInitials.length() > 1) {
+            xaInitials = xaInitials.substring(0,1); 
+          }
+        }
+        COLLECTION = "JD"+xaInitials+testLib_.substring(3);
       }
+      
       System.out.println("JTATest collection is "+COLLECTION); 
       JDSetupCollection.create (systemObject_, 
                                 c, COLLECTION,

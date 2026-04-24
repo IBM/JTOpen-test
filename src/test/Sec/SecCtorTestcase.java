@@ -1386,6 +1386,7 @@ public class SecCtorTestcase extends Testcase {
         try {
           system.connectService(AS400.COMMAND);
           AS400 system2 = new AS400(systemName_, profileToken);
+          system2.setGuiAvailable(false);
           system2.connectService(AS400.COMMAND);
           assertCondition(system.getUserId().equals(userId_.toUpperCase()) && system2.getUserId().equals(mfaUserid_),
               "User ID mismatch system.getUserId()=" + system.getUserId() + " userId_=" + userId_
@@ -1427,10 +1428,12 @@ public class SecCtorTestcase extends Testcase {
         JDReflectionUtil.callMethod_V(provider,"setAdditionalAuthenticationFactor",mfaFactor_);
         
         system = new AS400(systemName_, provider);
-        Arrays.fill(mfaPassword,' '); 
         system.setGuiAvailable(false);
         system.connectService(AS400.COMMAND);
 
+        Arrays.fill(mfaPassword,' '); 
+
+        
         // Verify that JDBC also works
         AS400JDBCDriver driver = new AS400JDBCDriver();
         Connection c = driver.connect(system);
@@ -1520,7 +1523,7 @@ public class SecCtorTestcase extends Testcase {
         testas4002.setGuiAvailable(false);
         
         
-        if (debug) output_.println("Creating new connection to RC/DPC server "+systemName_+" using the token...");
+        if (debug) output_.println("Creating new connection to COMMAND server "+systemName_+" using the token...");
         testas4002.connectService(AS400.COMMAND);
         if (debug) output_.println("Successfully connected.");
         testas4002.close(); 

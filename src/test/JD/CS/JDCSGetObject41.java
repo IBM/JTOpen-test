@@ -1005,7 +1005,7 @@ is -1.
 
     /* Test string 1X with XML X4 */ 
     public void Var034()  {
-	if (checkRelease710()) {
+	if (true) {
            String[] testArray = {
               "java.lang.String",
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
@@ -1022,7 +1022,7 @@ is -1.
 	    "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
 	    "SQLARRAY=[Integer:1:2:3],Data type mismatch",
 	    "null,null"};
-	if (checkRelease710()) 
+	if (true) 
 	    testGetObject(testArray,parameterName);
     }
 
@@ -1300,7 +1300,7 @@ is -1.
 	    "ABCD,Data type mismatch",
 	    "null,null"};
 
-	    if (checkRelease710())  
+	    if (true)  
 		testGetObject(testArray,parameterName);
 	    
     }
@@ -1336,7 +1336,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -1348,7 +1348,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -1616,7 +1616,7 @@ is -1.
 	      "30000,Data type mismatch",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -1629,7 +1629,7 @@ is -1.
 	      "30000,Data type mismatch",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -1642,7 +1642,7 @@ is -1.
 	      "30000,Data type mismatch",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -1654,7 +1654,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
- 	if (checkRelease710()) 
+ 	if (true) 
           testGetObject(testArray,parameterName);
     }
 
@@ -1665,7 +1665,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -1947,7 +1947,7 @@ is -1.
 	      "1,11",
 	      "655,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -1970,7 +1970,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
- 	if (checkRelease710()) 
+ 	if (true) 
           testGetObject(testArray,parameterName);
     }
 
@@ -1982,7 +1982,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -2257,7 +2257,7 @@ is -1.
 	      "3000000000000000000000030000000000000000000000,Data type mismatch",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -2280,7 +2280,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -2292,7 +2292,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -2579,7 +2579,7 @@ is -1.
 	      }
 */
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -2602,7 +2602,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -2614,7 +2614,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -2879,7 +2879,7 @@ is -1.
 	      "1,11.0",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -2902,7 +2902,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -2914,7 +2914,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -3169,7 +3169,7 @@ is -1.
 	      "1,11",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -3181,7 +3181,7 @@ is -1.
 	      "1,11",
 	      "bogus,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -3204,7 +3204,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -3215,7 +3215,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -3479,7 +3479,7 @@ is -1.
 	      "bogus,true",
 	      ",false",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -3493,7 +3493,7 @@ is -1.
 	      "bogus,true",
 	      ",false",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -3504,7 +3504,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoNCLOB (?)",
 	      "1,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -3516,7 +3516,7 @@ is -1.
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -3527,7 +3527,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -3876,7 +3876,7 @@ is -1.
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -3902,7 +3902,7 @@ is -1.
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -3926,7 +3926,7 @@ is -1.
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -3940,7 +3940,7 @@ is -1.
               "null,null"};
 
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -3951,7 +3951,7 @@ is -1.
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -4230,7 +4230,7 @@ if (checkBooleanSupport()) {
 	      "Bogus,Data type mismatch", 
 	      "1990-03-02,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -4242,7 +4242,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -4253,7 +4253,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -4532,7 +4532,7 @@ if (checkBooleanSupport()) {
 	      "Bogus,Data type mismatch", 
 	      "11:22:33,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -4545,7 +4545,7 @@ if (checkBooleanSupport()) {
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -4557,7 +4557,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
     
@@ -4808,7 +4808,7 @@ if (checkBooleanSupport()) {
 	      "Bogus,Data type mismatch", 
 	      "2011-09-01 11:22:01.012345,2011-09-01 11:22:01.012345",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -4820,7 +4820,7 @@ if (checkBooleanSupport()) {
 	      "Bogus,Data type mismatch", 
 	      "2011-09-01 11:22:01.012345,2011-09-01 11:22:01.012345",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -4832,7 +4832,7 @@ if (checkBooleanSupport()) {
 	      "Bogus,Data type mismatch", 
 	      "2011-09-01 11:22:01.012345,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -4844,7 +4844,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -4855,7 +4855,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -5168,7 +5168,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -5190,7 +5190,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -5212,7 +5212,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -5236,7 +5236,7 @@ if (checkBooleanSupport()) {
 	    }
 
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -5247,7 +5247,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -5591,7 +5591,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,READER=<h>h</h>",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -5603,7 +5603,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -5942,7 +5942,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,CLOB=<h>h</h>",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -5954,7 +5954,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -6272,7 +6272,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -6294,7 +6294,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -6316,7 +6316,7 @@ if (checkBooleanSupport()) {
 		  testArray = testArrayNative; 
 	      } 
 
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -6339,7 +6339,7 @@ if (checkBooleanSupport()) {
 		    testArray =testArrayToolbox;
 	    }
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -6351,7 +6351,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -6692,7 +6692,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,CLOB=<h>h</h>",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -6703,7 +6703,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -6986,7 +6986,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -6997,7 +6997,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],SQLARRAY=java.lang.Integer[5]=[0,1,2,3,4]",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -7278,7 +7278,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,Data type mismatch"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -7290,7 +7290,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,Data type mismatch"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -7575,7 +7575,7 @@ if (checkBooleanSupport()) {
 	      "http://a.b,http://a.b",
 	      "ABCD,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -7587,7 +7587,7 @@ if (checkBooleanSupport()) {
 	      "http://a.b,http://a.b",
 	      "ABCD,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -7599,7 +7599,7 @@ if (checkBooleanSupport()) {
 	      "http://a.b,http://a.b",
 	      "ABCD,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -7624,7 +7624,7 @@ if (checkBooleanSupport()) {
 	      } 
 
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -7636,7 +7636,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -7923,7 +7923,7 @@ if (checkBooleanSupport()) {
               "null,null"};
 
 
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -7934,7 +7934,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],SQLARRAY=java.lang.Integer[5]=[0,1,2,3,4]",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
     
@@ -8227,7 +8227,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoNCHAR (?)",
 	      "ABCDE,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -8238,7 +8238,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoNVARC (?)",
 	      "ABCD,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -8249,7 +8249,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoNCLOB (?)",
 	      "ABCD,Data type mismatch",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -8261,7 +8261,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,Data type mismatch",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -8273,7 +8273,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
     
@@ -8562,7 +8562,7 @@ if (checkBooleanSupport()) {
 	      "ABCD,Data type mismatch",
 	      "<h>h</h>,SQLXML=<h>h</h>",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
  
@@ -8574,7 +8574,7 @@ if (checkBooleanSupport()) {
 	      "ABCD,Data type mismatch",
 	      "<h>h</h>,SQLXML=<h>h</h>",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -8586,7 +8586,7 @@ if (checkBooleanSupport()) {
 /* 	      "ABCD,Data type mismatch", */
 	      "<h>h</h>,SQLXML=<h>h</h>",
               "null,null"};
-	    if (checkRelease710())             testGetObject(testArray,parameterName);
+	    if (true)             testGetObject(testArray,parameterName);
     }
 
 
@@ -8598,7 +8598,7 @@ if (checkBooleanSupport()) {
               "call "+JDCSTest.COLLECTION+".csgoXML (?)",
 	      "<h>h</h>,SQLXML=<h>h</h>",
               "null,null"};
-	if (checkRelease710()) 
+	if (true) 
            testGetObject(testArray,parameterName);
     }
 
@@ -8610,7 +8610,7 @@ if (checkBooleanSupport()) {
             "call "+JDCSTest.COLLECTION+".csgoARINT (?)",
             "SQLARRAY=[Integer:1:2:3],Data type mismatch",
             "null,null"};
-	if (checkRelease710()) 
+	if (true) 
             testGetObject(testArray,parameterName);
     }
 
@@ -8879,7 +8879,7 @@ if (checkBooleanSupport()) {
           "call " + JDCSTest.COLLECTION + ".csgoNCLOBM (?)",
           "Bogus,Data type mismatch", "1990-03-02,Data type mismatch",
           "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -8891,7 +8891,7 @@ if (checkBooleanSupport()) {
       String[] testArray = { "java.time.LocalDate",
           "call " + JDCSTest.COLLECTION + ".csgoXML (?)",
           "<h>h</h>,Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -8902,7 +8902,7 @@ if (checkBooleanSupport()) {
       String[] testArray = { "java.time.LocalDate",
           "call " + JDCSTest.COLLECTION + ".csgoARINT (?)",
           "SQLARRAY=[Integer:1:2:3],Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9173,7 +9173,7 @@ if (checkBooleanSupport()) {
           "call " + JDCSTest.COLLECTION + ".csgoNCLOBM (?)",
           "Bogus,Data type mismatch", "11:22:33,Data type mismatch",
           "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9186,7 +9186,7 @@ if (checkBooleanSupport()) {
           "call " + JDCSTest.COLLECTION + ".csgoXML (?)",
           "<h>h</h>,Data type mismatch", "null,null" };
 
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9197,7 +9197,7 @@ if (checkBooleanSupport()) {
       String[] testArray = { "java.time.LocalTime",
           "call " + JDCSTest.COLLECTION + ".csgoARINT (?)",
           "SQLARRAY=[Integer:1:2:3],Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9455,7 +9455,7 @@ if (checkBooleanSupport()) {
           "Bogus,Data type mismatch",
           "2011-09-01 11:22:01.012345,2011-09-01T11:22:01.012345",
           "null,null" };
-	  if (checkRelease710()) {
+	  if (true) {
 	      testGetObject(testArray, parameterName);
 	  }
     }
@@ -9469,7 +9469,7 @@ if (checkBooleanSupport()) {
           "Bogus,Data type mismatch",
           "2011-09-01 11:22:01.012345,2011-09-01T11:22:01.012345",
           "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9481,7 +9481,7 @@ if (checkBooleanSupport()) {
           "call " + JDCSTest.COLLECTION + ".csgoNCLOBM (?)",
           "Bogus,Data type mismatch",
           "2011-09-01 11:22:01.012345,Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9493,7 +9493,7 @@ if (checkBooleanSupport()) {
       String[] testArray = { "java.time.LocalDateTime",
           "call " + JDCSTest.COLLECTION + ".csgoXML (?)",
           "<h>h</h>,Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }
@@ -9504,7 +9504,7 @@ if (checkBooleanSupport()) {
       String[] testArray = { "java.time.LocalDateTime",
           "call " + JDCSTest.COLLECTION + ".csgoARINT (?)",
           "SQLARRAY=[Integer:1:2:3],Data type mismatch", "null,null" };
-      if (checkRelease710())
+      if (true)
         testGetObject(testArray, parameterName);
     }
   }

@@ -479,7 +479,6 @@ public class JDVariationSkip {
   }
   public static int getReleaseIndex(int release) throws Exception {
       switch (release) {
-          case JDTestDriver.RELEASE_V7R2M0: return 3;
           case JDTestDriver.RELEASE_V7R3M0: return 4;
           case JDTestDriver.RELEASE_V7R4M0: return 5;
           case JDTestDriver.RELEASE_V7R5M0: return 6;

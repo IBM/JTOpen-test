@@ -409,7 +409,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var008()
     {
 	String added = "-- added 07/14/2015 to getColumns with different CCSIDS Fixed by SE62366 (SYSIBM) -- updated 02/16/2022 to check column 23 ";
-	if (checkRelease720(added)) { 
+	if (true) { 
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -491,7 +491,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getFunctionColumns with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -565,7 +565,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getFunctions with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -767,7 +767,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var013()
     {
 	String added = "-- added 07/14/2015 to getTables with different CCSIDS Fixed by SE62366 (SYSIBM) -- updated 2/16/2022 to check column 4";
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -842,7 +842,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var014()
     {
 	String added = "-- added 07/14/2015 to getColumnPrivileges with different CCSIDS Fixed by SE62366 (SYSIBM)";
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -911,7 +911,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     public void Var015()
     {
 	String added = "-- added 07/14/2015 to getTablePrivileges with different CCSIDS Fixed by SE62366 (SYSIBM)";
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try
@@ -980,7 +980,7 @@ test the getTimeDateFunctions method of DatabaseMetaData
     {
 	String added = "-- added 07/14/2015 to getPseudoColumns with different CCSIDS Fixed by SE62366 (SYSIBM)";
 
-	if (checkRelease720(added)) {
+	if (true) {
 	    StringBuffer sb = new StringBuffer();
 	    String sql; 
 	    try

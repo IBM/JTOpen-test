@@ -56,8 +56,11 @@ import test.DDM.DDMTranslation;
 import test.DDM.DDMUpdate;
 import test.DDM.DDMWrite;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
 Test driver for the ddm (record-level database access) component.
@@ -762,13 +765,12 @@ Creates Testcase objects for all the testcases in this component.
     {
       DDMConnect tc =
         new DDMConnect(systemObject_,
-                      namesAndVars_.get("DDMConnect"), runMode_,
-                     fileOutputStream_, testLib_);
+                      namesAndVars_, runMode_,
+                     fileOutputStream_, password_, pwrSys_, pwrSysPassword_);
       tc.setTestcaseParameters(systemObject_, pwrSys_, systemName_, userId_, password_, proxy_, mustUseSockets_, isNative_, isLocal_, onAS400_, namesAndVars_, runMode_, fileOutputStream_);
       addTestcase(tc);
-      namesAndVars_.remove("DDMConnect");
     }
-
+    
     if (allTestcases || namesAndVars_.containsKey("DDMOpenClose"))
     {
       DDMOpenClose tc =

@@ -2293,7 +2293,7 @@ setBigDecimal() - Should not be recognized since the mixed case name is in quote
 					   BigDecimal parameterValue) {
 
 	String added=" -- added by native driver 6/24/2015 to test named arguments";
-	if (checkRelease710()) {
+	if (true) {
 
 		try {
 		    Statement stmt = connection_.createStatement();

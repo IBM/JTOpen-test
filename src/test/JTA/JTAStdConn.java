@@ -94,6 +94,8 @@ public class JTAStdConn extends JTATestcase {
         pwrSysEncryptedPassword_);
 
     if (isJdbc20StdExt()) {
+      
+      
       Connection conn = null;
       try {
         JTATest.verboseOut(baseURL_);
@@ -127,6 +129,7 @@ public class JTAStdConn extends JTATestcase {
           }
       }
     }
+    super.setup(); 
   }
 
   /**

@@ -1134,11 +1134,6 @@ on the same stored procedure.  It's valid JDBC, but a server limitation.
 **/
     public void Var035 ()
     {
-	if ((getRelease() <= JDTestDriver.RELEASE_V7R2M0) &&
-	    (isToolboxDriver())) {
-	    notApplicable("Not working in V7R1/V7R2 for toolbox driver");
-	    return; 
-	} 
 
         if ( checkCursorHoldabilitySupport() )
         {

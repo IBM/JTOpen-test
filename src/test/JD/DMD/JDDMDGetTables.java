@@ -3466,15 +3466,9 @@ getTables() - check columns 6-10 using the JDBC 3.0 names.
         if (!setupExpectedDone) {
             expectedSysibmRows = expectedSysibmRows54;
             setupSysibmVersion =      "expectedSysibmRows54";
-            if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
                 expectedSysibmRows = expectedSysibmRows72;
                 setupSysibmVersion =      "expectedSysibmRows72";
 
-            } else {
-                expectedSysibmRows = expectedSysibmRows71;
-                setupSysibmVersion =      "expectedSysibmRows71";
-
-            }
 
                         if( getDriver() == JDTestDriver.DRIVER_TOOLBOX && !isSysibmMetadata()){
                             for (int i = 0; i < expectedSysibmRows.length; i++) {

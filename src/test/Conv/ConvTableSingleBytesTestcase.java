@@ -161,19 +161,22 @@ public class ConvTableSingleBytesTestcase extends Testcase
             return;
         }
         StringBuffer charFailures = new StringBuffer();
-        for (int i = 0; i < established.length; ++i)
-        {
-            int est = (int)(established[i] & 0xFFFF);
-            int gen = (int)(generated[i] & 0xFFFF);
-            if (est != gen)
-            {
-                if(!(i == 0xBC) && !(systemObject_.getVRM() < 0x00060100) && !(est == 0x00AF) && !(gen == 0x203E))  //@A1A
-                    charFailures.append(hex(i) + ":{'" + hex(est) + "','" + hex(gen) + "'}\n");
+        for (int i = 0; i < established.length; ++i) {
+          int est = (int) (established[i] & 0xFFFF);
+          int gen = (int) (generated[i] & 0xFFFF);
+          if (est != gen) {
+            if (ccsid == 1132 && i == 0x70 && est == 0x20AD && gen == 0x006B) {
+              /* ignore this.  For ccsid 1132 the KIP symbol should be 0x20AD but the system translates as 0x0068 (k)  */
+            } else {
+              /* The following condition does not make sense.  Looks like it should have been OR'd instead of anded  */ 
+              /* if (!(i == 0xBC) && !(systemObject_.getVRM() < 0x00060100) && !(est == 0x00AF) && !(gen == 0x203E)) */
+                charFailures.append(hex(i) + ":{'" + hex(est) + "','" + hex(gen) + "'}\n");
             }
+          }
         }
         if (charFailures.length() > 0)
         {
-            failed("EBCDIC->Unicode table characters do not match OS/400's for ccsid " + ccsid + ":\n" + charFailures.toString());
+            failed("EBCDIC->Unicode table characters do not match OS/400's for ccsid " + ccsid + ": index:{toolbox,system}\n" + charFailures.toString());
             return;
         }
 

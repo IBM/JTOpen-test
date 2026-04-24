@@ -3745,7 +3745,7 @@ sqlx.printStackTrace(output_);
     **/
     public void Var081()
     {
-	if (checkRelease720()) { 
+	if (true) { 
 	    StringBuffer sb = new StringBuffer();
 	    sb.append(" -- Test fetch error after combined open fetch -- toolbox  issue 46618 -- need both toolbox fix and fix from john broich \n"); ; 
 	    boolean passed = true; 

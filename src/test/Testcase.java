@@ -2260,15 +2260,7 @@ public abstract class Testcase {
 
     try {
       int vrm = systemObject_.getVRM();
-      if (vrm == AS400.generateVRM(5, 4, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R2M0;
-      } else if (vrm == AS400.generateVRM(6, 1, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R2M0;
-      } else if (vrm == AS400.generateVRM(7, 1, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R2M0;
-      } else if (vrm == AS400.generateVRM(7, 2, 0)) {
-        release_ = JDTestDriver.RELEASE_V7R2M0;
-      } else if (vrm == AS400.generateVRM(7, 3, 0)) {
+      if (vrm == AS400.generateVRM(7, 3, 0)) {
         release_ = JDTestDriver.RELEASE_V7R3M0;
       } else if (vrm == AS400.generateVRM(7, 4, 0)) {
         release_ = JDTestDriver.RELEASE_V7R4M0;
@@ -2940,7 +2932,7 @@ public abstract class Testcase {
     if (base.length() > 5) {
       throw new Exception("base='" + base + "' must be less than 6 characters");
     }
-    int intKey1 = InetAddress.getLocalHost().hashCode() % 60466175;
+    int intKey1 = (InetAddress.getLocalHost().hashCode() & 0x7FFFFFFF) % 60466175;
     String stringKey1 = Integer.toString(intKey1, 36);
     return base + stringKey1;
   }
@@ -3333,6 +3325,7 @@ public abstract class Testcase {
 	  }
 	  char[] pwrPassword = PasswordVault.decryptPassword(pwrSysEncryptedPassword_);
 	  AS400 authAs400 = new AS400(systemName_,pwrSysUserID_, pwrPassword); 
+	  authAs400.setGuiAvailable(false); 
 	  CommandCall cc = new CommandCall(authAs400); 
 	  String command = "QSYS/CHGUSRPRF "+mfaUserid_+" TOTPOPTITV(*NONE)   ";
 	  cc.run(command); 
@@ -3349,6 +3342,7 @@ public abstract class Testcase {
 		  mfaFactorString = "0"+mfaFactorString; 
 	  }
 	  mfaFactor_ = mfaFactorString.toCharArray(); 
+	  authAs400.close(); 
 	  
   }
 }

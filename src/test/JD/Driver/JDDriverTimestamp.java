@@ -82,11 +82,7 @@ extends JDTestcase
     **/
   protected void setup() throws Exception {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
         timestampClassName = "com.ibm.db2.jdbc.app.DB2JDBCTimestamp";
-      } else {
-        timestampClassName = null;
-      }
     } else if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
       timestampClassName = "com.ibm.as400.access.AS400JDBCTimestamp";
     } else {

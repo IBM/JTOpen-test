@@ -78,6 +78,8 @@ public class JDRowSetRSTestcase extends JDTestcase {
   private Connection conn2_; // @pda for creatign Nclobs
   StringBuffer sb = new StringBuffer();
 
+  boolean useStringPassword = false; 
+  
   /**
    * Constructor.
    **/
@@ -153,6 +155,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       }
 
     } else {
+      if (getRelease() <= JDTestDriver.RELEASE_V7R6M0) {
+        useStringPassword = true; 
+      }
       System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.fscontext.RefFSContextFactory");
       jndiName_ = "jdbc";
       ds = (DataSource) JDReflectionUtil.createObject("com.ibm.db2.jdbc.app.UDBDataSource");
@@ -476,6 +481,16 @@ public class JDRowSetRSTestcase extends JDTestcase {
     return success;
   }
 
+  private void setPassword(RowSet rowset) throws Exception  {
+    if (useStringPassword) {
+      JDReflectionUtil.callMethod_V(rowset, "setPassword", PasswordVault.decryptPasswordLeak(encryptedPassword_));
+    } else {
+      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
+      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
+      PasswordVault.clearPassword(charPassword);
+    }
+  }
+
   /**
    * updateRow() - Should update exactly 1 column when updates are pending.
    **/
@@ -677,9 +692,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
 
         rowset = getRowSet(name);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        setPassword(rowset); 
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX)
@@ -760,9 +773,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
 
         RowSet rowset = getRowSet(name);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        setPassword(rowset); 
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) // @C1A
@@ -799,9 +810,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.execute();
 
@@ -924,9 +933,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
       rowset.setCommand("SELECT CUSNUM,LSTNAM,INIT FROM QIWS.QCUSTCDT");
       rowset.execute();
 
@@ -945,9 +952,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS);
       rowset.execute();
@@ -971,9 +976,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        setPassword(rowset); 
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
 
@@ -1002,9 +1005,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1031,9 +1032,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1061,9 +1060,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1090,9 +1089,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1118,9 +1117,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1144,9 +1143,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1171,9 +1170,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1194,9 +1193,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1217,9 +1216,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1240,9 +1239,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1263,9 +1262,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1286,9 +1285,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1315,9 +1314,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -1339,9 +1338,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1365,9 +1364,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1391,9 +1390,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1418,9 +1417,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1445,9 +1444,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1471,9 +1470,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1496,9 +1495,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1520,9 +1519,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1544,9 +1543,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1568,9 +1567,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1592,9 +1591,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1616,9 +1615,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1640,9 +1639,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1664,9 +1663,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1688,9 +1687,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1712,9 +1711,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1736,9 +1735,10 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      setPassword(rowset); 
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1753,6 +1753,7 @@ public class JDRowSetRSTestcase extends JDTestcase {
     }
   }
 
+
   /**
    * getObject() - Should work when the column name is valid.
    **/
@@ -1760,9 +1761,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1786,9 +1787,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1818,9 +1819,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1846,9 +1847,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -1870,9 +1871,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS + " WHERE ID = 1");
         rowset.execute();
@@ -1894,9 +1895,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1918,9 +1919,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -1943,9 +1944,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS + " WHERE ID = -1");
         rowset.execute();
@@ -1967,9 +1968,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS);
         rowset.execute();
@@ -1995,9 +1996,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
         
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_UPDATE + " FOR UPDATE");
@@ -2028,9 +2029,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2057,9 +2058,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2086,9 +2087,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2110,9 +2111,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2134,9 +2135,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2158,9 +2159,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2182,9 +2183,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2206,9 +2207,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
@@ -2231,9 +2232,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand(command);
       String command2 = rowset.getCommand();
       rowset.close();
@@ -2253,9 +2254,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setConcurrency(concurrency);
       int resultConcurrency = rowset.getConcurrency();
       rowset.close();
@@ -2273,9 +2274,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setConcurrency(concurrency);
       int resultCurrency = rowset.getConcurrency();
       rowset.close();
@@ -2292,9 +2293,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.execute();
 
@@ -2332,9 +2333,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.setEscapeProcessing(false);
       boolean resultEscapeProcessing = rowset.getEscapeProcessing();
@@ -2352,9 +2353,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.execute();
@@ -2410,9 +2411,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.execute();
 
@@ -2451,9 +2452,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       // @A1
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         rowset.setCommand("CREATE TABLE QGPL.TESTTBLE (I INTEGER)");
@@ -2507,9 +2508,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
 
       int size = 25;
@@ -2552,9 +2553,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
 
       int size = 25;
@@ -2581,9 +2582,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
       rowset.execute();
 
@@ -2623,9 +2624,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.setQueryTimeout(expected);
 
@@ -2651,9 +2652,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.execute();
       Statement statement = rowset.getStatement();
@@ -2700,9 +2701,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       
       
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       // @A1
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         rowset.setCommand("INSERT INTO " + JDRSTest.RSTEST_UPDATE + " (C_KEY) VALUES ('test')");
@@ -2728,9 +2729,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
 
       int type = ResultSet.TYPE_SCROLL_INSENSITIVE;
@@ -2769,9 +2770,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setCommand("SELECT * FROM QIWS.QCUSTCDT");
       rowset.setMaxRows(25);
 
@@ -2923,9 +2924,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS + " WHERE ID = 1");
@@ -2964,9 +2965,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
       rowset.setConcurrency(ResultSet.CONCUR_UPDATABLE);
       rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_POS + " FOR UPDATE");
@@ -4180,9 +4181,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
     try {
       RowSet rowset = getRowSet(jndiName_);
       rowset.setUsername(systemObject_.getUserId());
-      char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-      JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-      PasswordVault.clearPassword(charPassword);
+      
+      setPassword(rowset);
+     
       // @A1
       if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         rowset.setCommand("CREATE TABLE QGPL.TESTTBLE (G INTEGER)");
@@ -4201,9 +4202,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
         // @A1
         if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
           rowset.setUsername(systemObject_.getUserId()); // @K1A
-          char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-          JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword); // @K1A //@K1A
-          PasswordVault.clearPassword(charPassword);
+          
+          setPassword(rowset); // @K1A //@K1A
+         
           rowset.setCommand("DROP TABLE QGPL.TESTTBLE"); // @K1A
           rowset.execute();
         } else {
@@ -5308,9 +5309,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5344,9 +5345,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5371,9 +5372,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5397,9 +5398,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5424,9 +5425,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5451,9 +5452,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5478,9 +5479,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5510,9 +5511,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();
@@ -5541,9 +5542,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GETX);
         rowset.execute();
@@ -5569,9 +5570,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GETX);
         rowset.execute();
@@ -5598,9 +5599,9 @@ public class JDRowSetRSTestcase extends JDTestcase {
       try {
         RowSet rowset = getRowSet(jndiName_);
         rowset.setUsername(systemObject_.getUserId());
-        char[] charPassword = PasswordVault.decryptPassword(encryptedPassword_);
-        JDReflectionUtil.callMethod_V(rowset, "setPassword", charPassword);
-        PasswordVault.clearPassword(charPassword);
+        
+        setPassword(rowset);
+       
         rowset.setType(ResultSet.TYPE_SCROLL_SENSITIVE);
         rowset.setCommand("SELECT * FROM " + JDRSTest.RSTEST_GET);
         rowset.execute();

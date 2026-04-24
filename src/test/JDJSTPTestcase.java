@@ -5204,6 +5204,12 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
     public static String getJdkString(int jdk, int vrm1) throws Exception { 
       switch (jdk) {
+      case 21:
+          return ".java21";
+      case 17:
+          return ".java17";
+      case 11:
+          return ".java11"; 
       case 190:  
           return ".jdk9"; 
       case 180:  
@@ -5248,7 +5254,7 @@ super(systemObject, testcaseName, namesAndVars, runMode, fileOutputStream,  pass
 
     
     int vrms[] = { 770, 760, 750, 740, 730, 720, 710, 0 };
-    int jdks[] = { 180,170,160,150,142,140,0}; 
+    int jdks[] = { 21, 17, 11, 180,170,160,150,142,140,0}; 
     int currentJdk = JVMInfo.getJDK(); 
     
     

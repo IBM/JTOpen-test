@@ -174,7 +174,16 @@ Performs setup needed before running variations.
             JDTestDriver.dropCollection(c, collection_XX);
             // Delete the JDX tests as well
             if (JDCleanupTest.COLLECTION.indexOf("JDT")== 0) {
-              String xaCollection = "JDX"+JDCleanupTest.COLLECTION.substring(3); 
+              String xaInitials = System.getenv("JTOPEN_TEST_XAINITIAL");
+              if (xaInitials == null || xaInitials.length() == 0) { 
+                xaInitials="X";
+              } else {
+                if (xaInitials.length() > 1) {
+                  xaInitials = xaInitials.substring(0,1); 
+                }
+              }
+              String xaCollection = "JD"+xaInitials+testLib_.substring(3);
+
               JDTestDriver.dropCollection(c, xaCollection);
             }
         }

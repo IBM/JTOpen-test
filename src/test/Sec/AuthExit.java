@@ -283,11 +283,11 @@ public class AuthExit {
     }
   }
 
-  if (expectedVerificationId.indexOf("IGNORE")>=0)   foundVerificationId = true; 
-  if (expectedLocalIp.indexOf("IGNORE")>=0) foundLocalIp = true; 
-  if (expectedLocalPort.indexOf("IGNORE")>=0) foundLocalPort = true; 
-  if (expectedRemoteIp.indexOf("IGNORE")>=0) foundRemoteIp = true; 
-  if (expectedRemotePort.indexOf("IGNORE")>=0) foundRemotePort = true; 
+  if (expectedVerificationId != null && expectedVerificationId.indexOf("IGNORE")>=0)   foundVerificationId = true; 
+  if (expectedLocalIp != null && expectedLocalIp.indexOf("IGNORE")>=0) foundLocalIp = true; 
+  if (expectedLocalPort != null && expectedLocalPort.indexOf("IGNORE")>=0) foundLocalPort = true; 
+  if (expectedRemoteIp != null && expectedRemoteIp.indexOf("IGNORE")>=0) foundRemoteIp = true; 
+  if (expectedRemotePort != null && expectedRemotePort.indexOf("IGNORE")>=0) foundRemotePort = true; 
 
   String sql = "select LINE from TABLE(QSYS2.IFS_READ_UTF8('"+filename+"'))";
   ResultSet rs = pwrStmt.executeQuery(sql);

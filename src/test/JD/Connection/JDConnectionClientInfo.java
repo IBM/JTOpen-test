@@ -560,12 +560,8 @@ Performs cleanup needed after running variations.
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07050";
 		    } else if (getRelease() == JDTestDriver.RELEASE_V7R4M0) {
 			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07040";
-		    } else if (getRelease() == JDTestDriver.RELEASE_V7R3M0) {
-			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07030";
-		    } else if (getRelease() == JDTestDriver.RELEASE_V7R2M0) {
-			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07020";
 		    } else  {
-			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07010";
+			expected = "IBM Developer Kit for Java JDBC Driver:JDBC:07030";
 		    }
                 }
                 else if (isToolboxDriver()) {    
