@@ -3204,15 +3204,22 @@ public class JDDriverConnect extends JDTestcase {
 
       StringBuffer sb = new StringBuffer();
       boolean successful = true;
-      if (checkNative() && checkExitProgram() && checkPasswordLeak()) {
+      if ( checkExitProgram() && checkPasswordLeak()) {
         String jobName;
         // Create a simple MFA connection and check the exit information.
         initMfaUser();
         String mfaFactorString = new String(mfaFactor_);
-        String url;
-        url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString
+        String url; 
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+          url = "jdbc:as400:"+systemObject_.getSystemName() +";additionalAuthenticationFactor=" + mfaFactorString
             + ";authenticationVerificationId=MYAPP_SUPER_SERVER" + ";authenticationLocalIP=1.2.3.4"
             + ";authenticationLocalPort=80" + ";authenticationRemoteIP=5.6.7.8" + ";authenticationRemotePort=2134";
+        } else { 
+          url = "jdbc:db2:localhost;additionalAuthenticationFactor=" + mfaFactorString
+              + ";authenticationVerificationId=MYAPP_SUPER_SERVER" + ";authenticationLocalIP=1.2.3.4"
+              + ";authenticationLocalPort=80" + ";authenticationRemoteIP=5.6.7.8" + ";authenticationRemotePort=2134";
+          
+        }
         sb.append("Connecting using URL " + url + "\n");
         String mfaPassword = new String(PasswordVault.decryptPassword(mfaEncryptedPassword_));
 
@@ -3222,7 +3229,12 @@ public class JDDriverConnect extends JDTestcase {
         rs.next();
         String currentUser = rs.getString(1);
         output_.println("current MFA user is " + currentUser);
-        jobName = JDJobName.getJobName().replace('/', '.');
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) { 
+          jobName = rs.getString(2).replace('/', '.');
+        } else { 
+          jobName = JDJobName.getJobName().replace('/', '.');
+        }
+
         output_.println("Job with exit information is " + jobName);
         rs.close();
         if (!mfaUserid_.equalsIgnoreCase(currentUser)) {
@@ -3242,6 +3254,13 @@ public class JDDriverConnect extends JDTestcase {
         String expectedLocalPort = "Local_Port=80";
         String expectedRemoteIp = "Remote_IPAddress=5.6.7.8";
         String expectedLocalIp = "Local_IPAddress=1.2.3.4";
+        if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
+           expectedRemotePort = "Remote_Port=IGNORE";
+           expectedLocalPort = "Local_Port=IGNORE";
+           expectedRemoteIp = "Remote_IPAddress=IGNORE";
+           expectedLocalIp = "Local_IPAddress=IGNORE";
+          
+        }
         c.close();
 
         successful  = successful && AuthExit.checkResult(
@@ -3654,7 +3673,7 @@ public class JDDriverConnect extends JDTestcase {
           expectedBadConnectException = "Communication link failure";
         }
 
-        if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
+        if (getDriver() == JDTestDriver.DRIVER_NATIVE ) {
           expectedBadConnectException = "Processing of the SQL statement ended";
         }
         String powerPassword = PasswordVault.decryptPasswordLeak(pwrSysEncryptedPassword_);

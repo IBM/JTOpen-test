@@ -1372,7 +1372,7 @@ public class JDCSSetLong extends JDCSSetTestcase {
       String procedureDefinition, String parameterName, long parameterValue) {
 
     String added = " -- added by native driver 6/24/2015 to test named arguments";
-    if (checkRelease710()) {
+    if (true) {
 
       try {
         Statement stmt = connection_.createStatement();

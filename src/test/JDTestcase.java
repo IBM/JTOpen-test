@@ -1442,6 +1442,10 @@ public class JDTestcase extends Testcase {
     return release_;
   }
 
+  public boolean checkAfterRelease760(String comment) {
+    return checkRelease(JDTestDriver.RELEASE_V7R6M0_PLUS, comment);
+  }
+
   public boolean checkRelease760(String comment) {
     return checkRelease(JDTestDriver.RELEASE_V7R6M0, comment);
   }
@@ -1462,26 +1466,8 @@ public class JDTestcase extends Testcase {
     return checkRelease(JDTestDriver.RELEASE_V7R3M0, comment);
   }
 
-  public boolean checkRelease720() {
-    return checkRelease720(null);
-  }
-
-  public boolean checkRelease720(String comment) {
-    return checkRelease(JDTestDriver.RELEASE_V7R2M0, comment);
-  }
-
-  public boolean checkRelease710() {
-    return checkRelease720(null);
-  }
 
 
-  public boolean checkRelease610() {
-    return checkRelease720(null);
-  }
-
-  public boolean checkRelease610(String comment) {
-    return checkRelease720(comment);
-  }
 
   public boolean checkRelease(int release, String comment) {
     if (release_ >= release) {
@@ -1591,9 +1577,7 @@ public class JDTestcase extends Testcase {
     if ((release_ == JDTestDriver.RELEASE_NONE) && (isToolboxDriver())) {
       try {
         int vrm = systemObject_.getVRM();
-        if (vrm == AS400.generateVRM(7, 2, 0))
-          release_ = JDTestDriver.RELEASE_V7R2M0;
-        else if (vrm == AS400.generateVRM(7, 3, 0))
+        if (vrm == AS400.generateVRM(7, 3, 0))
           release_ = JDTestDriver.RELEASE_V7R3M0;
         else if (vrm == AS400.generateVRM(7, 4, 0))
           release_ = JDTestDriver.RELEASE_V7R4M0;
@@ -2090,9 +2074,6 @@ public class JDTestcase extends Testcase {
   String getReleaseJvmDriver() {
     String value = "";
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V7R2M0:
-      value = "72";
-      break;
     case JDTestDriver.RELEASE_V7R3M0:
       value = "73";
       break;

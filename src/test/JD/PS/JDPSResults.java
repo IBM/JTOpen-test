@@ -1396,7 +1396,7 @@ public class JDPSResults extends JDTestcase {
    * SI44489 SI44490 6.1 SI44487 SI44488
    **/
   public void Var060() {
-    if (checkRelease610()) {
+    if (true) {
       String added = " -- getUpdateCount from create table from select added 11/7/2011\nSee issue 46717.  Depends on the following SQ PTFs.\n"
           + "7.1  SI44489 SI44490\n" + "6.1  SI44487 SI44488\n";
       try {

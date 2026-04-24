@@ -962,9 +962,11 @@ extends JDTestcase
         StringBuffer sb = new StringBuffer();
         JVMRunUtility runUtility = new JVMRunUtility("test.JVMRunJDBC",
             baseURL_ + " " + userId_ + " " + PasswordVault.decryptPasswordLeak(encryptedPassword_, "JDDriverMisc.16") + " 200", 30);
-
+        System.out.println("Var016: Starting JVM");  System.out.flush();
         runUtility.startJVM();
+        System.out.println("Var016: WaitForExit");  System.out.flush();
         runUtility.waitForExit();
+        System.out.println("Var016: after WaitForExit"); System.out.flush();
         String[] topList = runUtility.getTopList();
         output_.println("topList is ");
         if (topList == null) {

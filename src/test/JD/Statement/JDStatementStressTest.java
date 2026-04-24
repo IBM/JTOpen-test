@@ -3523,8 +3523,7 @@ public class JDStatementStressTest extends JDTestcase {
 
   protected boolean skipCcsid(int ccsid) {
     if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
-      if (getRelease() >= JDTestDriver.RELEASE_V7R2M0
-          && getRelease() < JDTestDriver.RELEASE_V7R4M0) {
+      if ( getRelease() < JDTestDriver.RELEASE_V7R4M0) {
         // The following CCSIDs are not supported by PASE
         switch (ccsid) {
         case 1047:

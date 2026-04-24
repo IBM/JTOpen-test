@@ -183,11 +183,7 @@ An exception should be thrown.
 		assertCondition(true); 
         }
         catch (Exception e) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-		failed(e, "unexpected exception.  In 7.2 the system accepts the period as the delimiter when using *SYS naming.  It was part of the default parameter I0."); 
-	    } else { 
-		assertExceptionIsInstanceOf (e, "java.sql.SQLException");
-	    }
+          failed(e, "unexpected exception.  In 7.2 the system accepts the period as the delimiter when using *SYS naming.  It was part of the default parameter I0."); 
         }
     }
 

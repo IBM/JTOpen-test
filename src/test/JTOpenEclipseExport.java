@@ -62,6 +62,7 @@ public class JTOpenEclipseExport extends Thread {
     String homeDirectory = System.getProperty("user.home");
     String testDirectory = currentDirectory + File.separatorChar + "src";
     File iniDirectoryFile = new File(testDirectory + File.separatorChar + "ini");
+    File jdbcDirectoryFile = new File(testDirectory + File.separatorChar + "jdbc");
     File testDirectoryFile = new File(testDirectory + File.separatorChar + "test");
     if (!testDirectoryFile.exists()) {
       System.out.println(prefix + "Error. directory " + testDirectory + File.separatorChar + "test"
@@ -83,6 +84,8 @@ public class JTOpenEclipseExport extends Thread {
     Vector<String> fileList = buildFileList(testDirectoryFile, "test", lastModifiedTime);
     Vector<String> iniList = buildFileList(iniDirectoryFile, "ini", lastModifiedTime);
     fileList.addAll(iniList);
+    Vector<String> jdbcList = buildFileList(jdbcDirectoryFile, "jdbc", lastModifiedTime);
+    fileList.addAll(jdbcList);
 
     AS400 as400 = new AS400(as400Name, userid, password.toCharArray());
     as400.setGuiAvailable(false);

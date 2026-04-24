@@ -87,7 +87,7 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
     driver_ = DriverManager.getDriver(baseURL_);
 
     if (getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
-      NUMBER_OF_PROPERTIES = 108;  // trim char fields
+      NUMBER_OF_PROPERTIES = 109;  // verification ID
       
     } else if (getDriver() == JDTestDriver.DRIVER_NATIVE) {
       int vrm_ = testDriver_.getRelease();
@@ -159,8 +159,8 @@ public class JDDriverGetPropertyInfo extends JDTestcase {
           
           // Check the expected values 
           String expectedValue =  properties.getProperty(propertyInfo[i].name); 
-          if (propertyInfo[i].name.equals("password") && (getDriver() == JDTestDriver.DRIVER_TOOLBOX)) {
-            expectedValue = "";          /* Toolbox does not return password */ 
+          if (propertyInfo[i].name.equals("password")) {
+            expectedValue = "";          /* Drivers do not return password */ 
           }
           if (expectedValue != null) { 
              if (! expectedValue.equals(propertyInfo[i].value)) {

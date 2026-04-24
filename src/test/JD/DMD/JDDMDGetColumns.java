@@ -2754,22 +2754,16 @@ is closed.
 
 	  }
         }
-      } else if ((getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX)
-          || // @N1C
+      } else if ((getJdbcLevel() >= 4 && getDriver() != JDTestDriver.DRIVER_TOOLBOX) || // @N1C
           ((getDriver() == JDTestDriver.DRIVER_NATIVE) && (true))
           || ((getDriver() == JDTestDriver.DRIVER_TOOLBOX) && isSysibmMetadata())) {
-	  if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-	    if (getJdbcMajorMinorLevel() >= 41) { 
-        message.append("Expected = jdbc41Expected34r72\n");
-        expected34 = jdbc41Expected34r72;
-	    } else { 
-	      message.append("Expected = jdbc40Expected34r72\n");
-	      expected34 = jdbc40Expected34r72;
-	    }
-	  } else { 
-	      message.append("Expected = jdbc40Expected34\n");
-	      expected34 = jdbc40Expected34;
-	  }
+        if (getJdbcMajorMinorLevel() >= 41) {
+          message.append("Expected = jdbc41Expected34r72\n");
+          expected34 = jdbc41Expected34r72;
+        } else {
+          message.append("Expected = jdbc40Expected34r72\n");
+          expected34 = jdbc40Expected34r72;
+        }
       }
 
       try {
@@ -3412,25 +3406,14 @@ SQL400 - The native driver will return null for a remarks field that
                 (true))
                 ||  ( (getDriver() == JDTestDriver.DRIVER_TOOLBOX) &&
                         isSysibmMetadata())) {
-	    if (getRelease() >= JDTestDriver.RELEASE_V7R2M0) {
-	      if (getJdbcMajorMinorLevel() >= 41 ) { 
-	        message.append("Expected = jdbc41Expected39r72\n");
-	        expected39=jdbc41Expected39r72;
-	      
-	      } else { 
-		message.append("Expected = jdbc40Expected39r72\n");
-		expected39=jdbc40Expected39r72;
-	      }
-	    } else { 
-	      if (getJdbcMajorMinorLevel() >= 41) { 
-	        message.append("Expected = jdbc41Expected39\n");
-	        expected39=jdbc41Expected39;
-	        
-	      } else { 
-		message.append("Expected = jdbc40Expected39\n");
-		expected39=jdbc40Expected39;
-	      }
-	    }
+          if (getJdbcMajorMinorLevel() >= 41) {
+            message.append("Expected = jdbc41Expected39r72\n");
+            expected39 = jdbc41Expected39r72;
+
+          } else {
+            message.append("Expected = jdbc40Expected39r72\n");
+            expected39 = jdbc40Expected39r72;
+          }
         } else {
           if ( getDriver() == JDTestDriver.DRIVER_TOOLBOX) {
         	  if((getJdbcLevel() >= 4)){ //@pda

@@ -1721,10 +1721,6 @@ if (checkJdbc40()) {
       return;
     }
 
-    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-      notApplicable("Sax source not implemented in V7R2");
-      return;
-    }
     String added = " -- Testing SQLXMLSAXSource -- added by native driver 08/21/2009";
     if (checkJdbc40()) {
       if (checkXmlSupport()) {

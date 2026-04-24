@@ -7093,7 +7093,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
      * Set an ARRAY of time and get array out reversed with all time format properties
      */
     public void Var162() { testTimeCase1(";time format=hms"); }
-    public void Var163() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testTimeCase1(";time format=usa"); }
+    public void Var163() { testTimeCase1(";time format=usa"); }
     public void Var164() { testTimeCase1(";time format=iso"); }
     public void Var165() { testTimeCase1(";time format=eur"); }
     public void Var166() { testTimeCase1(";time format=jis"); }
@@ -7108,7 +7108,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
      */
 
     public void Var171() { testTimeCase2(";time format=hms"); }
-    public void Var172() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testTimeCase2(";time format=usa"); }
+    public void Var172() { testTimeCase2(";time format=usa"); }
     public void Var173() { testTimeCase2(";time format=iso"); }
     public void Var174() { testTimeCase2(";time format=eur"); }
     public void Var175() { testTimeCase2(";time format=jis"); }
@@ -7123,7 +7123,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
 
     public void Var180() { testTimeCase3(";time format=hms"); }
-    public void Var181() { /* if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } */  testTimeCase3(";time format=usa"); }
+    public void Var181() { /* */  testTimeCase3(";time format=usa"); }
     public void Var182() { testTimeCase3(";time format=iso"); }
     public void Var183() { testTimeCase3(";time format=eur"); }
     public void Var184() { testTimeCase3(";time format=jis"); }
@@ -7137,100 +7137,100 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     /**
      * Set an ARRAY of date and get array out reversed with all date format properties
      */
-    public void Var189() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testDateCase1(";date format=mdy");  }
-    public void Var190() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy");  }
-    public void Var191() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd");  }
-    public void Var192() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=usa");  }
+    public void Var189() { testDateCase1(";date format=mdy");  }
+    public void Var190() {testDateCase1(";date format=dmy");  }
+    public void Var191() {testDateCase1(";date format=ymd");  }
+    public void Var192() {testDateCase1(";date format=usa");  }
     public void Var193() { testDateCase1(";date format=iso");  }
-    public void Var194() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=eur");  }
+    public void Var194() {testDateCase1(";date format=eur");  }
     public void Var195() { testDateCase1(";date format=jis");  }
-    public void Var196() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian");  }
-    public void Var197() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=mdy;date separator=/");  }
-    public void Var198() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=mdy;date separator=-");  }
-    public void Var199() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=mdy;date separator=.");  }
-    public void Var200() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=mdy;date separator=,");  }
-    public void Var201() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=mdy;date separator=b");  }
-    public void Var202() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy;date separator=/");  }
-    public void Var203() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy;date separator=-");  }
-    public void Var204() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy;date separator=.");  }
-    public void Var205() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy;date separator=,");  }
-    public void Var206() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=dmy;date separator=b");  }
-    public void Var207() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd;date separator=/");  }
-    public void Var208() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd;date separator=-");  }
-    public void Var209() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd;date separator=.");  }
-    public void Var210() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd;date separator=,");  }
-    public void Var211() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=ymd;date separator=b");  }
-    public void Var212() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian;date separator=/");  }
-    public void Var213() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian;date separator=-");  }
-    public void Var214() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian;date separator=.");  }
-    public void Var215() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian;date separator=,");  }
-    public void Var216() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1(";date format=julian;date separator=b");  }
+    public void Var196() {testDateCase1(";date format=julian");  }
+    public void Var197() {testDateCase1(";date format=mdy;date separator=/");  }
+    public void Var198() {testDateCase1(";date format=mdy;date separator=-");  }
+    public void Var199() {testDateCase1(";date format=mdy;date separator=.");  }
+    public void Var200() {testDateCase1(";date format=mdy;date separator=,");  }
+    public void Var201() {testDateCase1(";date format=mdy;date separator=b");  }
+    public void Var202() {testDateCase1(";date format=dmy;date separator=/");  }
+    public void Var203() {testDateCase1(";date format=dmy;date separator=-");  }
+    public void Var204() {testDateCase1(";date format=dmy;date separator=.");  }
+    public void Var205() {testDateCase1(";date format=dmy;date separator=,");  }
+    public void Var206() {testDateCase1(";date format=dmy;date separator=b");  }
+    public void Var207() {testDateCase1(";date format=ymd;date separator=/");  }
+    public void Var208() {testDateCase1(";date format=ymd;date separator=-");  }
+    public void Var209() {testDateCase1(";date format=ymd;date separator=.");  }
+    public void Var210() {testDateCase1(";date format=ymd;date separator=,");  }
+    public void Var211() {testDateCase1(";date format=ymd;date separator=b");  }
+    public void Var212() {testDateCase1(";date format=julian;date separator=/");  }
+    public void Var213() {testDateCase1(";date format=julian;date separator=-");  }
+    public void Var214() {testDateCase1(";date format=julian;date separator=.");  }
+    public void Var215() {testDateCase1(";date format=julian;date separator=,");  }
+    public void Var216() {testDateCase1(";date format=julian;date separator=b");  }
 
     /**
      * Set an ARRAY of JDCSSetArrayDate and get array out reversed  with all date format properties
      */
 
-    public void Var217() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy");  }
-    public void Var218() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy");  }
-    public void Var219() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd");  }
-    public void Var220() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=usa");  }
+    public void Var217() {testDateCase2(";date format=mdy");  }
+    public void Var218() {testDateCase2(";date format=dmy");  }
+    public void Var219() {testDateCase2(";date format=ymd");  }
+    public void Var220() {testDateCase2(";date format=usa");  }
     public void Var221() { testDateCase2(";date format=iso");  }
-    public void Var222() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=eur");  }
+    public void Var222() {testDateCase2(";date format=eur");  }
     public void Var223() { testDateCase2(";date format=jis");  }
-    public void Var224() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian");  }
-    public void Var225() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy;date separator=/");  }
-    public void Var226() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy;date separator=-");  }
-    public void Var227() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy;date separator=.");  }
-    public void Var228() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy;date separator=,");  }
-    public void Var229() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=mdy;date separator=b");  }
-    public void Var230() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy;date separator=/");  }
-    public void Var231() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy;date separator=-");  }
-    public void Var232() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy;date separator=.");  }
-    public void Var233() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy;date separator=,");  }
-    public void Var234() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=dmy;date separator=b");  }
-    public void Var235() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=/");  }
-    public void Var236() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=-");  }
-    public void Var237() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=.");  }
-    public void Var238() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=,");  }
-    public void Var239() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=b");  }
-    public void Var240() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=/");  }
-    public void Var241() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=-");  }
-    public void Var242() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=.");  }
-    public void Var243() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=,");  }
-    public void Var244() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=b");  }
+    public void Var224() {testDateCase2(";date format=julian");  }
+    public void Var225() {testDateCase2(";date format=mdy;date separator=/");  }
+    public void Var226() {testDateCase2(";date format=mdy;date separator=-");  }
+    public void Var227() {testDateCase2(";date format=mdy;date separator=.");  }
+    public void Var228() {testDateCase2(";date format=mdy;date separator=,");  }
+    public void Var229() {testDateCase2(";date format=mdy;date separator=b");  }
+    public void Var230() {testDateCase2(";date format=dmy;date separator=/");  }
+    public void Var231() {testDateCase2(";date format=dmy;date separator=-");  }
+    public void Var232() {testDateCase2(";date format=dmy;date separator=.");  }
+    public void Var233() {testDateCase2(";date format=dmy;date separator=,");  }
+    public void Var234() {testDateCase2(";date format=dmy;date separator=b");  }
+    public void Var235() {testDateCase2(";date format=ymd;date separator=/");  }
+    public void Var236() {testDateCase2(";date format=ymd;date separator=-");  }
+    public void Var237() {testDateCase2(";date format=ymd;date separator=.");  }
+    public void Var238() {testDateCase2(";date format=ymd;date separator=,");  }
+    public void Var239() {testDateCase2(";date format=ymd;date separator=b");  }
+    public void Var240() {testDateCase2(";date format=julian;date separator=/");  }
+    public void Var241() {testDateCase2(";date format=julian;date separator=-");  }
+    public void Var242() {testDateCase2(";date format=julian;date separator=.");  }
+    public void Var243() {testDateCase2(";date format=julian;date separator=,");  }
+    public void Var244() {testDateCase2(";date format=julian;date separator=b");  }
 
     /**
      * Set an ARRAY of JDCSSetArrayDate and get array out reversed  with all date format properties
      */
 
-    public void Var245() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy");  }
-    public void Var246() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy");  }
-    public void Var247() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=ymd");  }
-    public void Var248() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=usa");  }
-    public void Var249() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=iso");  }
-    public void Var250() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=eur");  }
-    public void Var251() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=jis");  }
-    public void Var252() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=julian");  }
-    public void Var253() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy;date separator=/");  }
-    public void Var254() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy;date separator=-");  }
-    public void Var255() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy;date separator=.");  }
-    public void Var256() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy;date separator=,");  }
-    public void Var257() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=mdy;date separator=b");  }
-    public void Var258() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy;date separator=/");  }
-    public void Var259() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy;date separator=-");  }
-    public void Var260() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy;date separator=.");  }
-    public void Var261() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy;date separator=,");  }
-    public void Var262() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=dmy;date separator=b");  }
-    public void Var263() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=ymd;date separator=/");  }
-    public void Var264() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=ymd;date separator=-");  }
-    public void Var265() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=ymd;date separator=.");  }
-    public void Var266() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3(";date format=ymd;date separator=,");  }
-    public void Var267() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=ymd;date separator=b");  }
-    public void Var268() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=/");  }
-    public void Var269() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=-");  }
-    public void Var270() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=.");  }
-    public void Var271() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=,");  }
-    public void Var272() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2(";date format=julian;date separator=b");  }
+    public void Var245() {testDateCase3(";date format=mdy");  }
+    public void Var246() {testDateCase3(";date format=dmy");  }
+    public void Var247() {testDateCase3(";date format=ymd");  }
+    public void Var248() {testDateCase3(";date format=usa");  }
+    public void Var249() {testDateCase3(";date format=iso");  }
+    public void Var250() {testDateCase3(";date format=eur");  }
+    public void Var251() {testDateCase3(";date format=jis");  }
+    public void Var252() {testDateCase3(";date format=julian");  }
+    public void Var253() {testDateCase3(";date format=mdy;date separator=/");  }
+    public void Var254() {testDateCase3(";date format=mdy;date separator=-");  }
+    public void Var255() {testDateCase3(";date format=mdy;date separator=.");  }
+    public void Var256() {testDateCase3(";date format=mdy;date separator=,");  }
+    public void Var257() {testDateCase3(";date format=mdy;date separator=b");  }
+    public void Var258() {testDateCase3(";date format=dmy;date separator=/");  }
+    public void Var259() {testDateCase3(";date format=dmy;date separator=-");  }
+    public void Var260() {testDateCase3(";date format=dmy;date separator=.");  }
+    public void Var261() {testDateCase3(";date format=dmy;date separator=,");  }
+    public void Var262() {testDateCase3(";date format=dmy;date separator=b");  }
+    public void Var263() {testDateCase3(";date format=ymd;date separator=/");  }
+    public void Var264() {testDateCase3(";date format=ymd;date separator=-");  }
+    public void Var265() {testDateCase3(";date format=ymd;date separator=.");  }
+    public void Var266() {testDateCase3(";date format=ymd;date separator=,");  }
+    public void Var267() {testDateCase2(";date format=ymd;date separator=b");  }
+    public void Var268() {testDateCase2(";date format=julian;date separator=/");  }
+    public void Var269() {testDateCase2(";date format=julian;date separator=-");  }
+    public void Var270() {testDateCase2(";date format=julian;date separator=.");  }
+    public void Var271() {testDateCase2(";date format=julian;date separator=,");  }
+    public void Var272() {testDateCase2(";date format=julian;date separator=b");  }
 
     /* Repeat tests, reusing callable statement  */
 
@@ -8586,10 +8586,6 @@ public class JDCSSetArrayN extends JDCSSetTestcase
                 notApplicable("No XML (locators) arrays supported in TB"); //host limitation on locators in arrays.  XML is a locator
                 return;
             }
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("XML arrays cannot be support in JDBC (too large)");
-		return;
-	    }
 	    assureProcedureExists(JDSetupProcedure.STP_CSARRXML );
             reconnect();
             ////////create array and set/get data
@@ -10805,10 +10801,6 @@ public class JDCSSetArrayN extends JDCSSetTestcase
                 notApplicable("No XML (locators) arrays supported in TB"); //host limitation on locators in arrays.  XML is a locator
                 return;
             }
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("XML arrays cannot be support in JDBC (too large)");
-		     return;
-	    }
 	    assureProcedureExists(JDSetupProcedure.STP_CSARRXML );
 
             reconnect();
@@ -12141,10 +12133,6 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     if (checkArraySupport())
         try{
 	    assureProcedureExists(JDSetupProcedure.STP_CSARRXML );
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("XML arrays cannot be support in JDBC (too large)");
-		return;
-	    }
 
             if(isToolboxDriver()){
                 notApplicable("No XML (locators) arrays supported in TB"); //host limitation on locators in arrays.  XML is a locator
@@ -13464,10 +13452,6 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 	StringBuffer sb = new StringBuffer();
     if (checkArraySupport())
         try{
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("XML arrays cannot be support in JDBC (too large)");
-		return;
-	    }
 
             if(isToolboxDriver()){
                 notApplicable("No XML (locators) arrays supported in TB"); //host limitation on locators in arrays.  XML is a locator
@@ -13535,18 +13519,10 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     public void Var402() { testNullArrayReuse( "JDCSNARGR", "GRAPHIC(50)"); }
     public void Var403() { testNullArrayReuse( "JDCSNARVGR", "VARGRAPHIC(50)"); }
     public void Var404() {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-	    notApplicable("CLOB arrays cannot be support in JDBC (too large)");
-	    return;
-	}
 
 	testNullArrayReuse( "JDCSNARCLO", "CLOB(1M)");
     }
     public void Var405() {
-	if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-	    notApplicable("BLOB arrays cannot be support in JDBC (too large)");
-	    return;
-	}
 	testNullArrayReuse( "JDCSNARBLO", "BLOB(1M)");
     }
     public void Var406() { testNullArrayReuse( "JDCSNARDAT", "DATE"); }
@@ -13556,10 +13532,6 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     public void Var410() { testNullArrayReuse( "JDCSNARVBY", "VARBINARY(50)"); }
     public void Var411() {
 	if (checkJdbc40()) {
-	    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-		notApplicable("XML arrays cannot be support in JDBC (too large)");
-		return;
-	    }
 	    testNullArrayReuse( "JDCSNARXML", "XML");
 	}
     }
@@ -13570,7 +13542,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
      * Set an ARRAY of time and get array out reversed with all time format properties
      */
     public void Var412() { testTimeCase1reuse(";time format=hms"); }
-    public void Var413() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testTimeCase1reuse(";time format=usa"); }
+    public void Var413() { testTimeCase1reuse(";time format=usa"); }
     public void Var414() { testTimeCase1reuse(";time format=iso"); }
     public void Var415() { testTimeCase1reuse(";time format=eur"); }
     public void Var416() { testTimeCase1reuse(";time format=jis"); }
@@ -13585,7 +13557,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
      */
 
     public void Var421() { testTimeCase2repeat(";time format=hms"); }
-    public void Var422() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testTimeCase2repeat(";time format=usa"); }
+    public void Var422() { testTimeCase2repeat(";time format=usa"); }
     public void Var423() { testTimeCase2repeat(";time format=iso"); }
     public void Var424() { testTimeCase2repeat(";time format=eur"); }
     public void Var425() { testTimeCase2repeat(";time format=jis"); }
@@ -13600,7 +13572,7 @@ public class JDCSSetArrayN extends JDCSSetTestcase
 
 
     public void Var430() { testTimeCase3repeat(";time format=hms"); }
-    public void Var431() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testTimeCase3repeat(";time format=usa"); }
+    public void Var431() { testTimeCase3repeat(";time format=usa"); }
     public void Var432() { testTimeCase3repeat(";time format=iso"); }
     public void Var433() { testTimeCase3repeat(";time format=eur"); }
     public void Var434() { testTimeCase3repeat(";time format=jis"); }
@@ -13614,100 +13586,100 @@ public class JDCSSetArrayN extends JDCSSetTestcase
     /**
      * Set an ARRAY of date and get array out reversed with all date format properties
      */
-    public void Var439() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; } testDateCase1reuse(";date format=mdy");  }
-    public void Var440() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy");  }
-    public void Var441() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd");  }
-    public void Var442() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=usa");  }
+    public void Var439() { testDateCase1reuse(";date format=mdy");  }
+    public void Var440() {testDateCase1reuse(";date format=dmy");  }
+    public void Var441() {testDateCase1reuse(";date format=ymd");  }
+    public void Var442() {testDateCase1reuse(";date format=usa");  }
     public void Var443() { testDateCase1reuse(";date format=iso");  }
-    public void Var444() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=eur");  }
+    public void Var444() {testDateCase1reuse(";date format=eur");  }
     public void Var445() { testDateCase1reuse(";date format=jis");  }
-    public void Var446() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian");  }
-    public void Var447() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=mdy;date separator=/");  }
-    public void Var448() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=mdy;date separator=-");  }
-    public void Var449() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=mdy;date separator=.");  }
-    public void Var450() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=mdy;date separator=,");  }
-    public void Var451() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=mdy;date separator=b");  }
-    public void Var452() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy;date separator=/");  }
-    public void Var453() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy;date separator=-");  }
-    public void Var454() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy;date separator=.");  }
-    public void Var455() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy;date separator=,");  }
-    public void Var456() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=dmy;date separator=b");  }
-    public void Var457() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd;date separator=/");  }
-    public void Var458() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd;date separator=-");  }
-    public void Var459() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd;date separator=.");  }
-    public void Var460() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd;date separator=,");  }
-    public void Var461() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=ymd;date separator=b");  }
-    public void Var462() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian;date separator=/");  }
-    public void Var463() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian;date separator=-");  }
-    public void Var464() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian;date separator=.");  }
-    public void Var465() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian;date separator=,");  }
-    public void Var466() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase1reuse(";date format=julian;date separator=b");  }
+    public void Var446() {testDateCase1reuse(";date format=julian");  }
+    public void Var447() {testDateCase1reuse(";date format=mdy;date separator=/");  }
+    public void Var448() {testDateCase1reuse(";date format=mdy;date separator=-");  }
+    public void Var449() {testDateCase1reuse(";date format=mdy;date separator=.");  }
+    public void Var450() {testDateCase1reuse(";date format=mdy;date separator=,");  }
+    public void Var451() {testDateCase1reuse(";date format=mdy;date separator=b");  }
+    public void Var452() {testDateCase1reuse(";date format=dmy;date separator=/");  }
+    public void Var453() {testDateCase1reuse(";date format=dmy;date separator=-");  }
+    public void Var454() {testDateCase1reuse(";date format=dmy;date separator=.");  }
+    public void Var455() {testDateCase1reuse(";date format=dmy;date separator=,");  }
+    public void Var456() {testDateCase1reuse(";date format=dmy;date separator=b");  }
+    public void Var457() {testDateCase1reuse(";date format=ymd;date separator=/");  }
+    public void Var458() {testDateCase1reuse(";date format=ymd;date separator=-");  }
+    public void Var459() {testDateCase1reuse(";date format=ymd;date separator=.");  }
+    public void Var460() {testDateCase1reuse(";date format=ymd;date separator=,");  }
+    public void Var461() {testDateCase1reuse(";date format=ymd;date separator=b");  }
+    public void Var462() {testDateCase1reuse(";date format=julian;date separator=/");  }
+    public void Var463() {testDateCase1reuse(";date format=julian;date separator=-");  }
+    public void Var464() {testDateCase1reuse(";date format=julian;date separator=.");  }
+    public void Var465() {testDateCase1reuse(";date format=julian;date separator=,");  }
+    public void Var466() {testDateCase1reuse(";date format=julian;date separator=b");  }
 
     /**
      * Set an ARRAY of JDCSSetArrayDate and get array out reversed  with all date format properties
      */
 
-    public void Var467() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy");  }
-    public void Var468() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy");  }
-    public void Var469() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd");  }
-    public void Var470() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=usa");  }
+    public void Var467() {testDateCase2repeat(";date format=mdy");  }
+    public void Var468() {testDateCase2repeat(";date format=dmy");  }
+    public void Var469() {testDateCase2repeat(";date format=ymd");  }
+    public void Var470() {testDateCase2repeat(";date format=usa");  }
     public void Var471() { testDateCase2repeat(";date format=iso");  }
-    public void Var472() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=eur");  }
+    public void Var472() {testDateCase2repeat(";date format=eur");  }
     public void Var473() { testDateCase2repeat(";date format=jis");  }
-    public void Var474() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian");  }
-    public void Var475() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy;date separator=/");  }
-    public void Var476() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy;date separator=-");  }
-    public void Var477() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy;date separator=.");  }
-    public void Var478() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy;date separator=,");  }
-    public void Var479() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=mdy;date separator=b");  }
-    public void Var480() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy;date separator=/");  }
-    public void Var481() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy;date separator=-");  }
-    public void Var482() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy;date separator=.");  }
-    public void Var483() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy;date separator=,");  }
-    public void Var484() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=dmy;date separator=b");  }
-    public void Var485() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=/");  }
-    public void Var486() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=-");  }
-    public void Var487() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=.");  }
-    public void Var488() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=,");  }
-    public void Var489() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=b");  }
-    public void Var490() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=/");  }
-    public void Var491() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=-");  }
-    public void Var492() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=.");  }
-    public void Var493() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=,");  }
-    public void Var494() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=b");  }
+    public void Var474() {testDateCase2repeat(";date format=julian");  }
+    public void Var475() {testDateCase2repeat(";date format=mdy;date separator=/");  }
+    public void Var476() {testDateCase2repeat(";date format=mdy;date separator=-");  }
+    public void Var477() {testDateCase2repeat(";date format=mdy;date separator=.");  }
+    public void Var478() {testDateCase2repeat(";date format=mdy;date separator=,");  }
+    public void Var479() {testDateCase2repeat(";date format=mdy;date separator=b");  }
+    public void Var480() {testDateCase2repeat(";date format=dmy;date separator=/");  }
+    public void Var481() {testDateCase2repeat(";date format=dmy;date separator=-");  }
+    public void Var482() {testDateCase2repeat(";date format=dmy;date separator=.");  }
+    public void Var483() {testDateCase2repeat(";date format=dmy;date separator=,");  }
+    public void Var484() {testDateCase2repeat(";date format=dmy;date separator=b");  }
+    public void Var485() {testDateCase2repeat(";date format=ymd;date separator=/");  }
+    public void Var486() {testDateCase2repeat(";date format=ymd;date separator=-");  }
+    public void Var487() {testDateCase2repeat(";date format=ymd;date separator=.");  }
+    public void Var488() {testDateCase2repeat(";date format=ymd;date separator=,");  }
+    public void Var489() {testDateCase2repeat(";date format=ymd;date separator=b");  }
+    public void Var490() {testDateCase2repeat(";date format=julian;date separator=/");  }
+    public void Var491() {testDateCase2repeat(";date format=julian;date separator=-");  }
+    public void Var492() {testDateCase2repeat(";date format=julian;date separator=.");  }
+    public void Var493() {testDateCase2repeat(";date format=julian;date separator=,");  }
+    public void Var494() {testDateCase2repeat(";date format=julian;date separator=b");  }
 
     /**
      * Set an ARRAY of JDCSSetArrayDate and get array out reversed  with all date format properties
      */
 
-    public void Var495() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy");  }
-    public void Var496() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy");  }
-    public void Var497() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=ymd");  }
-    public void Var498() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=usa");  }
-    public void Var499() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=iso");  }
-    public void Var500() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=eur");  }
-    public void Var501() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=jis");  }
-    public void Var502() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=julian");  }
-    public void Var503() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy;date separator=/");  }
-    public void Var504() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy;date separator=-");  }
-    public void Var505() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy;date separator=.");  }
-    public void Var506() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy;date separator=,");  }
-    public void Var507() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=mdy;date separator=b");  }
-    public void Var508() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy;date separator=/");  }
-    public void Var509() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy;date separator=-");  }
-    public void Var510() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy;date separator=.");  }
-    public void Var511() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy;date separator=,");  }
-    public void Var512() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=dmy;date separator=b");  }
-    public void Var513() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=ymd;date separator=/");  }
-    public void Var514() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=ymd;date separator=-");  }
-    public void Var515() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=ymd;date separator=.");  }
-    public void Var516() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase3repeat(";date format=ymd;date separator=,");  }
-    public void Var517() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=ymd;date separator=b");  }
-    public void Var518() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=/");  }
-    public void Var519() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=-");  }
-    public void Var520() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=.");  }
-    public void Var521() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=,");  }
-    public void Var522() { if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) { notApplicable("Time format change not working in V7R1"); return; }testDateCase2repeat(";date format=julian;date separator=b");  }
+    public void Var495() {testDateCase3repeat(";date format=mdy");  }
+    public void Var496() {testDateCase3repeat(";date format=dmy");  }
+    public void Var497() {testDateCase3repeat(";date format=ymd");  }
+    public void Var498() {testDateCase3repeat(";date format=usa");  }
+    public void Var499() {testDateCase3repeat(";date format=iso");  }
+    public void Var500() {testDateCase3repeat(";date format=eur");  }
+    public void Var501() {testDateCase3repeat(";date format=jis");  }
+    public void Var502() {testDateCase3repeat(";date format=julian");  }
+    public void Var503() {testDateCase3repeat(";date format=mdy;date separator=/");  }
+    public void Var504() {testDateCase3repeat(";date format=mdy;date separator=-");  }
+    public void Var505() {testDateCase3repeat(";date format=mdy;date separator=.");  }
+    public void Var506() {testDateCase3repeat(";date format=mdy;date separator=,");  }
+    public void Var507() {testDateCase3repeat(";date format=mdy;date separator=b");  }
+    public void Var508() {testDateCase3repeat(";date format=dmy;date separator=/");  }
+    public void Var509() {testDateCase3repeat(";date format=dmy;date separator=-");  }
+    public void Var510() {testDateCase3repeat(";date format=dmy;date separator=.");  }
+    public void Var511() {testDateCase3repeat(";date format=dmy;date separator=,");  }
+    public void Var512() {testDateCase3repeat(";date format=dmy;date separator=b");  }
+    public void Var513() {testDateCase3repeat(";date format=ymd;date separator=/");  }
+    public void Var514() {testDateCase3repeat(";date format=ymd;date separator=-");  }
+    public void Var515() {testDateCase3repeat(";date format=ymd;date separator=.");  }
+    public void Var516() {testDateCase3repeat(";date format=ymd;date separator=,");  }
+    public void Var517() {testDateCase2repeat(";date format=ymd;date separator=b");  }
+    public void Var518() {testDateCase2repeat(";date format=julian;date separator=/");  }
+    public void Var519() {testDateCase2repeat(";date format=julian;date separator=-");  }
+    public void Var520() {testDateCase2repeat(";date format=julian;date separator=.");  }
+    public void Var521() {testDateCase2repeat(";date format=julian;date separator=,");  }
+    public void Var522() {testDateCase2repeat(";date format=julian;date separator=b");  }
 
 
 

@@ -90,7 +90,7 @@ public abstract class JDTestDriver extends TestDriver {
   // is being tested.
   public static final int RELEASE_NONE = 0;
   // public static final int RELEASE_V7R1M0 = 710;
-  public static final int RELEASE_V7R2M0 = 720;
+  // public static final int RELEASE_V7R2M0 = 720;
   public static final int RELEASE_V7R3M0 = 730;
   public static final int RELEASE_V7R4M0 = 740;
   public static final int RELEASE_V7R5M0 = 750;
@@ -691,8 +691,6 @@ public abstract class JDTestDriver extends TestDriver {
           registerDriver(DRIVER_CLASS_NATIVE_RMI, DRIVER_NATIVE_RMI);
 
         // Was a release specified?
-        else if (token.equalsIgnoreCase("V7R2M0"))
-          release_ = RELEASE_V7R2M0;
         else if (token.equalsIgnoreCase("V7R3M0"))
           release_ = RELEASE_V7R3M0;
         else if (token.equalsIgnoreCase("V7R4M0"))
@@ -777,9 +775,7 @@ public abstract class JDTestDriver extends TestDriver {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      if (vrm == AS400.generateVRM(7, 2, 0))
-        release_ = RELEASE_V7R2M0;
-      else if (vrm == AS400.generateVRM(7, 3, 0))
+      if (vrm == AS400.generateVRM(7, 3, 0))
         release_ = RELEASE_V7R3M0;
       else if (vrm == AS400.generateVRM(7, 4, 0))
         release_ = RELEASE_V7R4M0;
@@ -802,7 +798,7 @@ public abstract class JDTestDriver extends TestDriver {
     decfloatSupport_ = true;
     xmlSupport_ = true; 
     arraySupport_ = true;
-    timestamp12Support_ = (release_ >= JDTestDriver.RELEASE_V7R2M0); 
+    timestamp12Support_ = true; 
     returnValueSupport_ = true; 
     booleanSupport_ = (release_ >= JDTestDriver.RELEASE_V7R5M0); 
 

@@ -19,18 +19,20 @@ public class JDCleanSplfJdbcResults {
   public long deleteBytes;
   public long keepCount;
   public long keepBytes;
+  public long errorCount; 
 
   public long processedCount;
   public long processSeconds;
 
   public JDCleanSplfJdbcResults(long deleteCount, long deleteBytes, long keepCount, long keepBytes, long processedCount,
-      long processSeconds) {
+      long processSeconds, long errorCount) {
     this.deleteCount = deleteCount;
     this.deleteBytes = deleteBytes;
     this.keepCount = keepCount;
     this.keepBytes = keepBytes;
     this.processedCount = processedCount;
     this.processSeconds = processSeconds;
+    this.errorCount = errorCount; 
   }
 
   public JDCleanSplfJdbcResults(JDCleanSplfJdbcResults a, JDCleanSplfJdbcResults b) {
@@ -40,6 +42,7 @@ public class JDCleanSplfJdbcResults {
     this.keepBytes = a.keepBytes + b.keepBytes;
     this.processedCount = a.processedCount + b.processedCount;
     this.processSeconds = a.processSeconds + b.processSeconds;
+    this.errorCount = a.errorCount + b.errorCount;
   }
 
   public JDCleanSplfJdbcResults(JDCleanSplfJdbcResults a, JDCleanSplfJdbcResults b, JDCleanSplfJdbcResults c,
@@ -50,5 +53,6 @@ public class JDCleanSplfJdbcResults {
     this.keepBytes = a.keepBytes + b.keepBytes + c.keepBytes + d.keepBytes;
     this.processedCount = a.processedCount + b.processedCount + c.processedCount + d.processedCount;
     this.processSeconds = a.processSeconds + b.processSeconds + c.processSeconds + d.processSeconds;
+    this.errorCount = a.errorCount + b.errorCount + c.errorCount + d.errorCount;
   }
 }

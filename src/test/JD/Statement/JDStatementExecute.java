@@ -184,6 +184,7 @@ executeUpdate() - Pass a null, should throw an exception.
         try {
             Statement s = connection_.createStatement ();
             s.executeUpdate (null);
+            s.close(); 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -201,6 +202,7 @@ executeUpdate() - Pass an empty string, should throw an exception.
         try {
             Statement s = connection_.createStatement ();
             s.executeUpdate ("");
+            s.close(); 
             failed ("Didn't throw SQLException");
         }
         catch (Exception e) {
@@ -314,20 +316,6 @@ Should throw an exception.
           String expectedSqlstate="07001";
           String expectedSqlmessage="Number of host variables not valid.";
 
-	  //
-	  // For the native driver, the CLI is not properly returning an error for some cases.
-	  // This should be fixed in V7R2.
-	  //
-	  if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V7R2M0) {
-
-	      if (e instanceof SQLException) {
-		  if (((SQLException)e). getErrorCode() == -99999) {
-		      expectedSqlcode=-99999;
-		      expectedSqlstate="JDBC\u0000";
-		      expectedSqlmessage="Internal Error:  CLI signalled an error condition and had no error data available.";
-		  }
-	      }
-	  }
           assertSqlException(e, expectedSqlcode, expectedSqlstate, expectedSqlmessage, "Expected syntax error for parameter marker  -- updated 8/5/2010");
         }
     }
@@ -1810,7 +1798,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
 **/
     public void Var052() {
       String description = "New Array insert syntax test";
-    if (checkRelease710()) {
+    if (true) {
       StringBuffer testInfo = new StringBuffer();
       boolean passed = true;
       String sql = "";
@@ -1855,7 +1843,7 @@ execute() - Verify that we can handle the new array insert syntax -- See issue 4
     **/
         public void Var053() {
           String description = "New Array insert syntax test";
-        if (checkRelease710()) {
+        if (true) {
           StringBuffer testInfo = new StringBuffer();
           boolean passed = true;
           String sql = "";
@@ -2111,7 +2099,7 @@ executeQuery -- make sure we can run a values statement
 
     public void Var059()
     {
-	if (checkRelease610()) { 
+	if (true) { 
 	    StringBuffer sb = new StringBuffer();
 	    boolean passed = true;
 	    String[][] queries = {
@@ -2161,7 +2149,7 @@ execute -- make sure we can run a values into statement and get the right update
 
     public void Var060()
     {
-	if (checkRelease710()) { 
+	if (true) { 
 	    StringBuffer sb = new StringBuffer();
 	    boolean passed = true;
 	    String[][] queries = {
@@ -2430,20 +2418,6 @@ Should throw an exception.
 		String expectedSqlstate="07001";
 		String expectedSqlmessage="Number of host variables not valid.";
 
-	  //
-	  // For the native driver, the CLI is not properly returning an error for some cases.
-	  // This should be fixed in V7R2.
-	  //
-		if (getDriver() == JDTestDriver.DRIVER_NATIVE && getRelease() < JDTestDriver.RELEASE_V7R2M0) {
-
-		    if (e instanceof SQLException) {
-			if (((SQLException)e). getErrorCode() == -99999) {
-			    expectedSqlcode=-99999;
-			    expectedSqlstate="JDBC\u0000";
-			    expectedSqlmessage="Internal Error:  CLI signalled an error condition and had no error data available.";
-			}
-		    }
-		}
 		assertSqlException(e, expectedSqlcode, expectedSqlstate, expectedSqlmessage, "Expected syntax error for parameter marker  -- updated 8/5/2010");
 	    }
 	}

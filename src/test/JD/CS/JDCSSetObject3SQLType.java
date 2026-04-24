@@ -1551,10 +1551,6 @@ public class JDCSSetObject3SQLType extends JDCSSetObjectBase {
    * setObject() - Set a DATALINK parameter.
    **/
   public void Var073() {
-    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-      notApplicable("datalink not working before v7R2");
-      return;
-    }
     if (checkLobSupport()) {
       if (checkJdbc42()) {
         try {

@@ -55,13 +55,18 @@ public class JVMRunJDBC {
            }
            ps[i] = connection.prepareStatement("select * from sysibm.sysdummy1"); 
          }
+
+         System.gc();
+         for (int i = 0; i < ps.length; i++) {
+             System.out.println("ps["+i+"] = "+ps[i]); 
+         }
+
+         connection.close(); 
+
        } catch (Exception e) { 
          e.printStackTrace(); 
        }
-     System.gc();
-     for (int i = 0; i < ps.length; i++) {
-	 System.out.println("ps["+i+"] = "+ps[i]); 
-     } 
+     System.out.println("Calling System.exit(0)"); 
      System.exit(0); 
   }
 

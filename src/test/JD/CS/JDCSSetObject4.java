@@ -1328,10 +1328,6 @@ connectionDateTime_.close();
    * setObject() - Set a DATALINK parameter.
    **/
   public void Var073() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R2M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	  notApplicable("datalink not working in native V7R2 and earlier");
-	  return;
-      } 
 
     if (checkLobSupport()) {
       try {
@@ -2429,10 +2425,6 @@ connectionDateTime_.close();
    * setObject() - Set a DATALINK parameter with a nonzero scale.
    **/
   public void Var122() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R2M0 && getDriver() == JDTestDriver.DRIVER_NATIVE) {
-	  notApplicable("datalink not working in V7R2 and earlier");
-	  return;
-      } 
     if (checkLobSupport()) {
       try {
       CallableStatement cs = prepareCall(Types.DATALINK);

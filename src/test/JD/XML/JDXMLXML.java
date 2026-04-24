@@ -5331,7 +5331,7 @@ testSetResult(TABLE37_, "C_XML", 6, SAXRESULT, ROW6_S_, SAXSOURCE, ROW6_S_,
    * Make sure that 250000 rows can be processed.
    */ 
   public void Var493() {
-      if (checkRelease710()) {
+      if (true) {
 	  if (checkJdbc40()) {
 	    Object o = null; 
 	    try { 

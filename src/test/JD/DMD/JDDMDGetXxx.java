@@ -358,9 +358,6 @@ public class JDDMDGetXxx extends JDTestcase {
   private String getReleaseAsString() {
     String release;
     switch (getRelease()) {
-    case JDTestDriver.RELEASE_V7R2M0:
-      release = "07.02.0000 V7R2m0";
-      break;
     case JDTestDriver.RELEASE_V7R3M0:
       release = "07.03.0000 V7R3m0";
       break;

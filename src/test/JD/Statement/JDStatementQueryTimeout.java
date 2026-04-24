@@ -102,7 +102,7 @@ extends JDTestcase
         connection_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
         connection2_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
         connection3_ = testDriver_.getConnection (baseURL_, userId_, encryptedPassword_);
-        connectionPwrSys_ = testDriver_.getConnection (baseURL_, pwrSysUserID_, pwrSysEncryptedPassword_);//@I3A
+        connectionPwrSys_ = testDriver_.getConnection (baseURL_+";prefetch=false", pwrSysUserID_, pwrSysEncryptedPassword_);//@I3A
 
     }
 
@@ -334,7 +334,8 @@ extends JDTestcase
             long queryEnd = 0;
             char letter = 'e'; 
 
-            String query = "SELECT a.table_name FROM QSYS2.SYSTABLES a, QSYS2.SYSVIEWS, QSYS2.SYSCOLUMNS, QSYS2.SYSINDEXES, QSYS2.SYSCOLUMNS b, QSYS2.SYSCOLUMNS c, QSYS2.SYSCOLUMNS d ";    /* @F1C */ 
+            String query = "SELECT a.table_name FROM QSYS2.SYSTABLES a, QSYS2.SYSVIEWS b, QSYS2.SYSCOLUMNS c, QSYS2.SYSINDEXES d ";
+            String orderBy=" order by a.table_name, c.column_name";
             initializeSlow ();
 
             // Need to use the connectionPwrSys_ connection because @I3A
@@ -354,7 +355,7 @@ extends JDTestcase
                 try
                 {
                     queryStart = System.currentTimeMillis();   
-                    s.executeQuery (query +  " optimize for all rows");
+                    s.executeQuery (query + orderBy + " optimize for all rows");
                     queryEnd = System.currentTimeMillis();
 
                     // If query took less than a second and a half, make it bigger and retry

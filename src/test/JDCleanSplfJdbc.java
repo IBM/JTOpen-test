@@ -193,7 +193,7 @@ public class JDCleanSplfJdbc {
     out.println(nestLevel + "Attempting deleteSpoolFiles " + startTimestamp + " - " + endTimestamp);
     if (startFilterTime >= endFilterTime) {
       out.println(nestLevel + "**** Warning -- aborting since time filters are the same");
-      return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0);
+      return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0,0);
     }
 
     try {
@@ -220,7 +220,7 @@ public class JDCleanSplfJdbc {
         long quarterTime = (endFilterTime - startFilterTime) / 4;
         if (quarterTime < 1000) {
           out.println(" **** Warning *** quarter time too small . aborting");
-          return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0);
+          return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0,0);
         }
 
         JDCleanSplfJdbcResults firstResults = deleteSpoolFiles(out, conn, nestLevel + "a ", startFilterTime,
@@ -286,7 +286,7 @@ public class JDCleanSplfJdbc {
         long quarterTime = (endFilterTime - startFilterTime) / 4;
         if (quarterTime < 1000) {
           out.println(" **** Warning *** quarter time too small . aborting");
-          return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0);
+          return new JDCleanSplfJdbcResults(0, 0, 0, 0, 0, 0,0);
 
         } else {
           JDCleanSplfJdbcResults resultsA = deleteUselessSpoolFiles(out, conn, nestLevel + "a ", startFilterTime,
@@ -387,10 +387,11 @@ public class JDCleanSplfJdbc {
     long deleteBytes = clean.deleteBytes_;
     long keepCount = clean.keepCount_;
     long keepBytes = clean.keepBytes_;
+    long errorCount = clean.errorCount_;
     long processCount = 0;
     int processSeconds = (int) (finishMillis + 500 - startMillis) / 1000;
 
-    return new JDCleanSplfJdbcResults(deleteCount, deleteBytes, keepCount, keepBytes, processCount, processSeconds);
+    return new JDCleanSplfJdbcResults(deleteCount, deleteBytes, keepCount, keepBytes, processCount, processSeconds, errorCount);
   }
 
   public static JDCleanSplfJdbcResults deleteUselessSpoolFilesAttempt(PrintStream out, Connection c, String nestLevel,
@@ -413,7 +414,8 @@ public class JDCleanSplfJdbc {
     long deleteBytes = clean.deleteBytes_;
     long keepCount = clean.keepCount_;
     long keepBytes = clean.keepBytes_;
-
+    long errorCount = clean.errorCount_; 
+    
     long processCount = 0;
 
     int processSeconds = (int) (System.currentTimeMillis() - startMillis) / 1000;
@@ -424,7 +426,7 @@ public class JDCleanSplfJdbc {
     out.println(nestLevel + "DONE         for " + startTimestamp + " - " + endTimestamp + " deleteCount=" + deleteCount
         + " keepCount=" + keepCount + " processCount=" + processCount + " time=" + hours + ":" + minutes + ":"
         + seconds);
-    return new JDCleanSplfJdbcResults(deleteCount, deleteBytes, keepCount, keepBytes, processCount, processSeconds);
+    return new JDCleanSplfJdbcResults(deleteCount, deleteBytes, keepCount, keepBytes, processCount, processSeconds, errorCount);
   }
 
   String nestLevel_ = "";
@@ -436,6 +438,7 @@ public class JDCleanSplfJdbc {
   long keepCount_ = 0;
   long keepBytes_ = 0;
   long processCount_ = 0;
+  long errorCount_ = 0; 
   CharConverter charConverter_ = null;
   Connection conn_;
   Statement stmt_;
@@ -453,6 +456,7 @@ public class JDCleanSplfJdbc {
     keepCount_ = 0;
     keepBytes_ = 0;
     processCount_ = 0;
+    errorCount_ = 0; 
     this.out = out;
     try {
       charConverter_ = new CharConverter(37);
@@ -474,6 +478,7 @@ public class JDCleanSplfJdbc {
     keepCount_ = 0;
     keepBytes_ = 0;
     processCount_ = 0;
+    errorCount_ = 0; 
     this.out = out;
     try {
       charConverter_ = new CharConverter(37);
@@ -514,7 +519,7 @@ public class JDCleanSplfJdbc {
     processCount_++;
     if (processCount_ % 1000 == 0) {
       out.println(
-          nestLevel_ + "  processCount=" + processCount_ + " deleteCount=" + deleteCount_ + " keepCount=" + keepCount_);
+          nestLevel_ + "  processCount=" + processCount_ + " deleteCount=" + deleteCount_ + " keepCount=" + keepCount_+" errorCount="+errorCount_);
       out.println(nestLevel_ + "    fileInfo = " + createTimestamp + " " + jobUser + " " + fileName + " " + fileNumber
           + " " + fileJobName + " " + fileJobUser + " " + fileJobNumber);
       /* Check the number of jobs and delete extra if needed */
@@ -589,10 +594,10 @@ public class JDCleanSplfJdbc {
       }
       try {
 
-        deleteBytes_ += dataLength;
         String sql = "CALL QSYS2.QCMDEXC(" + "'DLTSPLF FILE(" + fileName + ") " + "JOB(" + fileJobNumber + "/"
             + fileJobUser + "/" + fileJobName + ") " + "SPLNBR(" + fileNumber + ")   ')";
         stmt_.executeUpdate(sql);
+        deleteBytes_ += dataLength;
         deleteCount_++;
       } catch (Exception e1) {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -608,6 +613,7 @@ public class JDCleanSplfJdbc {
             e1.printStackTrace(out);
           }
         }
+        errorCount_ ++ ; 
       }
     } else {
       try {

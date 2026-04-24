@@ -8234,10 +8234,6 @@ public class JDLobClobLocator extends JDTestcase {
       notApplicable("JDBC 4.0 testcase");
       return;
     }
-    if (getRelease() <= JDTestDriver.RELEASE_V7R2M0) {
-      notApplicable("v7r3 or later  variation -- make sure locator not accessible after rs.close() ");
-      return;
-    }
 
     if (Integer.parseInt(lobThreshold) > 10000) {
       notApplicable("Lob locator test\n");
@@ -8549,7 +8545,7 @@ public class JDLobClobLocator extends JDTestcase {
     // If not running on AS/400 this takes too long.
     if (rows <= 25000 || checkClientOn400()) {
 
-      if (checkRelease710()) {
+      if (true) {
         if (checkJdbc40()) {
           try {
             StringBuffer sb1 = new StringBuffer();

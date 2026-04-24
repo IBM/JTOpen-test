@@ -2328,12 +2328,6 @@ the result set.
 
     public void Var083 ()
     {
-	// Don't check for toolbox until V7R2
-	if (isToolboxDriver() &&
-	    getRelease() < JDTestDriver.RELEASE_V7R2M0) {
-	    notApplicable("substitution test not application for toolbox < v7r2");
-	    return;
-	}
 	StringBuffer sb = new StringBuffer();
 	/* Classic output is at [][1] */
 	/* J9 is at [][2] */

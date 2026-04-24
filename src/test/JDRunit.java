@@ -3752,7 +3752,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
             if (!tmpDir.exists()) {
               tmpDir.mkdir();
             }
-            System.out.println("Storing files in "+tmpDir.getCanonicalPath());
+            System.out.println("Storing file ("+localFile+") in "+tmpDir.getCanonicalPath());
             char[] encryptedPassword = PasswordVault.getEncryptedPassword(TEXT_PASSWORD); 
             char[] clearPassword = PasswordVault.decryptPassword(encryptedPassword);
             //
@@ -3782,7 +3782,8 @@ public void setExtraJavaArgs(String extraJavaArgs) {
                 readLine = bufferedReader.readLine();
               }
               bufferedReader.close(); 
-              bufferedWriter.close(); 
+              bufferedWriter.close();
+              System.out.println("Done writing to "+destinationDir+"/"+localFile);
             } else {
               System.out.println("Warning IFSfile "+ifsFile+" does not exist"); 
             }

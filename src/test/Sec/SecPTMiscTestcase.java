@@ -1259,9 +1259,9 @@ public class SecPTMiscTestcase extends Testcase
            }
            
            String  expectedVerificationId="Verification_ID=QIBM_OS400_JT400"; 
-           String  expectedRemotePort=null; /* don't check remote port */ 
+           String  expectedRemotePort="IGNORE"; /* don't check remote port */ 
            String expectedRemoteIp = "Remote_IPAddress="+JDReflectionUtil.callMethod_S(sys,"getLocalIPAddress"); 
-           String expectedLocalIp = null; /* don't check local ip */ 
+           String expectedLocalIp = "IGNORE"; /* don't check local ip */ 
              
 
            if (!AuthExit.checkResult(pwrConnection_, jobName, mfaUserid_, sb, expectedVerificationId,

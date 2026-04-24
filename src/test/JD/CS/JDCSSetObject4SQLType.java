@@ -1554,10 +1554,6 @@ connectionDateTime_.close();
    * setObject() - Set a DATALINK parameter.
    **/
   public void Var073() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R2M0 ) {
-	  notApplicable("Data links not working before V7R3");
-	  return; 
-      } 
     if (checkLobSupport()) {
       if (checkJdbc42()) {
         try {
@@ -2742,10 +2738,6 @@ connectionDateTime_.close();
    * setObject() - Set a DATALINK parameter with a nonzero scale.
    **/
   public void Var122() {
-      if (getRelease() <= JDTestDriver.RELEASE_V7R2M0 ) {
-	  notApplicable("Data links not working before V7R3");
-	  return; 
-      } 
 
     if (checkLobSupport()) {
       if (checkJdbc42()) {

@@ -12,8 +12,9 @@ BAIS=java.io.ByteArrayInputStream@.*
 >!SETNEWVAR S1=java.lang.String(my:test:string)
 S1=my:test:string
 >-- Call method that returns an array
->!CALLMETHOD S1.split(':',20)
-Call returned [Ljava.lang.String;@.*
+>!CALLMETHOD S1.split(':.*
+IGNORE_EXTRA:Call returned [Ljava.lang.String;@.*
+IGNORE_EXTRA:1f043
   .. Array of size 3
 [0][java.lang.String]=my
 [1][java.lang.String]=test
@@ -87,9 +88,6 @@ Call returned null
 >!SETVAR STMT1=CON.createStatement()
 STMT1=STMT0001
 >!CALLMETHOD STMT1.checkOpen()
-No matching method found, possible errors are the following:
-ERROR:  Method not found checkOpen
-
 Call returned null
 >
 >-- error situations
@@ -148,22 +146,33 @@ L1=100
 >!setnewvar bitset=java.util.BitSet()
 bitset={}
 >!showvarmethods bitset
+IGNORE_EXTRA:static void static checkRange(int,int)
+IGNORE_EXTRA:static java.util.BitSet static valueOf([B)
+IGNORE_EXTRA:static java.util.BitSet static valueOf([J)
+IGNORE_EXTRA:static java.util.BitSet static valueOf(java.nio.ByteBuffer)
+IGNORE_EXTRA:static java.util.BitSet static valueOf(java.nio.LongBuffer)
+IGNORE_EXTRA:static int static wordIndex(int)
 void and(java.util.BitSet)
 void andNot(java.util.BitSet)
 int cardinality()
+IGNORE_EXTRA:void checkInvariants()
 void clear()
 void clear(int)
 void clear(int,int)
 java.lang.Object clone()
+IGNORE_EXTRA:void ensureCapacity(int)
 boolean equals(java.lang.Object)
+IGNORE_EXTRA:void expandTo(int)
 void flip(int)
 void flip(int,int)
 boolean get(int)
 java.util.BitSet get(int,int)
 java.lang.Class getClass()
 int hashCode()
+IGNORE_EXTRA:void initWords(int)
 boolean intersects(java.util.BitSet)
 boolean isEmpty()
+IGNORE_EXTRA:java.util.Spliterator$OfInt lambda$stream$0()
 int length()
 int nextClearBit(int)
 int nextSetBit(int)
@@ -172,6 +181,8 @@ void notifyAll()
 void or(java.util.BitSet)
 IGNORE_EXTRA:int previousClearBit(int)
 IGNORE_EXTRA:int previousSetBit(int)
+IGNORE_EXTRA:void readObject(java.io.ObjectInputStream)
+IGNORE_EXTRA:void recalculateWordsInUse()
 void set(int)
 void set(int,boolean)
 void set(int,int)
@@ -181,14 +192,17 @@ IGNORE_EXTRA:java.util.stream.IntStream stream()
 IGNORE_EXTRA:[B toByteArray()
 IGNORE_EXTRA:[J toLongArray()
 java.lang.String toString()
+IGNORE_EXTRA:void trimToSize()
 IGNORE_EXTRA:java.util.BitSet valueOf([B)
 IGNORE_EXTRA:java.util.BitSet valueOf([J)
 IGNORE_EXTRA:java.util.BitSet valueOf(java.nio.ByteBuffer)
 IGNORE_EXTRA:java.util.BitSet valueOf(java.nio.LongBuffer)
 void wait()
 void wait(long)
-void wait(long,int)
+IGNORE_EXTRA:void wait(long,int)
+IGNORE_EXTRA:void writeObject(java.io.ObjectOutputStream)
 void xor(java.util.BitSet)
+IGNORE_EXTRA:
 >
 >
 >
