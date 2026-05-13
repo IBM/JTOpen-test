@@ -77,6 +77,10 @@ import java.sql.*;
 @SuppressWarnings("deprecation")
 public class JDRunit {
 
+  public static String SLF4J_JAR="slf4j-api-2.0.17.jar";
+  public static String BCPROV_JAR="bcprov-jdk18on-1.84.jar"; 
+  public static String JCIFS_JAR="jcifs-3.0.2.jar"; 
+
   public static final String TMP = "/tmp";
   public static String testcaseCode = JTOpenTestEnvironment.testcaseHomeDirectory;
 
@@ -2337,9 +2341,20 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         + ":/qibm/proddata/java400/ext/translator.zip:"
         + toolsJar
         + ":jars/googleauth-1.5.0.jar:jars/commons-codec-1.16.0.jar"
-        + ":jars/servlet.jar:jars/jcifs.jar:jars/fscontext.jar:jars/providerutil.jar";
+        + ":jars/servlet.jar:jars/fscontext.jar:jars/providerutil.jar";
 
-    
+     /* Only include JCIFS if running Java 17 or later */ 
+     char firstInitial = vmInitials.charAt(0); 
+     switch (firstInitial) {
+       case '8':
+         System.out.println("JDRunit:  Not adding JCIFS because Java 8"); 
+         break;
+       default:
+         setClasspath+=":jars/"+JCIFS_JAR+":jars/"+SLF4J_JAR+":jars/"+BCPROV_JAR;
+     }
+     
+     
+     
     /* Only add jcc jars if addJccJars is defined */
 
     if (iniProperties.getProperty("addJccJars") != null) {
@@ -2436,7 +2451,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"fscontext.jar;" + 
           System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"providerutil.jar;" + 
           System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"servlet.jar;" + 
-          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"jcifs.jar;" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+JCIFS_JAR+";" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+SLF4J_JAR+";" + 
+          System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+BCPROV_JAR+";" +
           System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"googleauth-1.5.0.jar;"+
           System.getProperty("user.dir") + ""+File.separator+"jars"+File.separator+"commons-codec-1.16.0.jar;" +
           jccJars + ";" +
@@ -2457,6 +2474,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
         toolsJar = javaHome + "/lib/tools.jar";
       }
 
+      
       setClasspath = "CLASSPATH=\""+testcaseCode+":" + toolboxJar + ":"
           + toolsJar + ":"  
           + System.getProperty("user.dir") + "/jars/fscontext.jar:" 
@@ -2464,7 +2482,9 @@ public void setExtraJavaArgs(String extraJavaArgs) {
           + System.getProperty("user.dir") + "/jars/servlet.jar:" 
           + System.getProperty("user.dir") + "/jars/googleauth-1.5.0.jar:"
           + System.getProperty("user.dir") + "/jars/commons-codec-1.16.0.jar:"
-          + System.getProperty("user.dir") + "/jars/jcifs.jar" + "\"";
+          + System.getProperty("user.dir") + "/jars/"+SLF4J_JAR+":"
+          + System.getProperty("user.dir") + "/jars/"+BCPROV_JAR+":"
+          + System.getProperty("user.dir") + "/jars/"+JCIFS_JAR+" " + "\"";
 
       if (System.getProperty("user.name").equalsIgnoreCase("JAVA")) {
         display = ":9";
@@ -3837,6 +3857,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
     String replaceStringsFilename = destinationDir+"/aaReplaceStrings.txt"; 
     File replaceStringsFile = new File(replaceStringsFilename);
     if (replaceStringsFile.exists()) {
+      System.out.println("Replacing using "+replaceStringsFilename); 
       try { 
       BufferedReader bufferedReader = new BufferedReader(new FileReader(replaceStringsFile)); 
       String line = bufferedReader.readLine();
@@ -4126,7 +4147,7 @@ public void setExtraJavaArgs(String extraJavaArgs) {
       argTypes1[0]=authorizedKeysFile.getClass(); 
       argTypes1[1]=Boolean.TYPE;
       args1[0]=authorizedKeysFile;
-      args1[1] = new Boolean(true); 
+      args1[1] = Boolean.valueOf(true); 
       Object fileWriter = JDReflectionUtil.createObject("com.ibm.as400.access.IFSFileWriter",argTypes1,args1);
       JDReflectionUtil.callMethod_V(fileWriter,"write",rsaKey+"\n");
       JDReflectionUtil.callMethod_V(fileWriter,"close"); 

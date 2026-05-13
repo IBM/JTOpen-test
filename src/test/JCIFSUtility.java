@@ -26,15 +26,11 @@ import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,19 +39,16 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.Date;
-import java.util.Hashtable;
-
 import java.util.Enumeration;
+import java.util.Hashtable;
 
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.ISeriesNetServer;
 import com.ibm.as400.access.ISeriesNetServerFileShare;
 
-import jcifs.smb.*;
-
 public class JCIFSUtility {
-
+  public static String JCIFS_PACKAGE_PREFIX="org.codelibs.jcifs.smb.impl.";
   public static boolean debug = false;
   public static boolean useJdbc = true;
   private static Connection jdbcConnection_;
@@ -72,9 +65,10 @@ public class JCIFSUtility {
     }
 
     // Turn on extended security.
-    jcifs.Config.setProperty("jcifs.util.loglevel", "3");
-    jcifs.Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
-    jcifs.Config.setProperty("jcifs.smb.lmCompatibility", "0");
+    // SingletonContext config = org.codelibs.jcifs.smb.context.SingletonContext.getInstance();
+    // config.setProperty("jcifs.util.loglevel", "3");
+    // jcifs.Config.setProperty("jcifs.smb.client.useExtendedSecurity", "false");
+    // jcifs.Config.setProperty("jcifs.smb.lmCompatibility", "0");
 
   }
 
@@ -113,7 +107,7 @@ public class JCIFSUtility {
       ps.execute();
       ps.close();
     } else {
-      SmbFileOutputStream outputStream = null;
+      OutputStream outputStream = null;
 
       String url;
       system = fullyQualifySystem(system);
@@ -126,9 +120,10 @@ public class JCIFSUtility {
         int retryCount = 20;
         while (retryCount > 0) {
           try {
-            outputStream = new SmbFileOutputStream(url);
+            Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+            outputStream = (OutputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileOutputStream",smbFile);
             retryCount = 0;
-          } catch (jcifs.smb.SmbAuthException a) {
+          } catch (Exception a) {
             String message = a.getMessage();
             if (message.indexOf("Access is denied") >= 0) {
               // Loop and try again. JCIFS is kind of quirky
@@ -175,23 +170,23 @@ public class JCIFSUtility {
 
   public static void deleteFile(String system, String userId, char[] encryptedPassword, String filename)
       throws Exception {
-    SmbFile smbFile = null;
+    Object smbFile = null;
 
     system = fullyQualifySystem(system);
     String url = getUrl(system, userId, encryptedPassword, filename);
 
     if (debug)
       System.out.println("JCIFSUtility.debug:  deleteFile url=" + url);
-    smbFile = new SmbFile(url);
-    if (smbFile.exists()) {
-      smbFile.delete();
+    smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+    if (JDReflectionUtil.callMethod_B(smbFile,"exists")) {
+      JDReflectionUtil.callMethod_V(smbFile,"delete");
     }
-
+    JDReflectionUtil.callMethod_V(smbFile,"close"); 
   }
 
   public static void createDirectory(String system, String userId, char[] encryptedPassword, String directoryname)
       throws Exception {
-    SmbFile smbFile = null;
+    Object smbFile = null;
 
     system = fullyQualifySystem(system);
     String url;
@@ -204,11 +199,11 @@ public class JCIFSUtility {
       int retryCount = 20;
       while (retryCount > 0) {
         try {
-          smbFile = new SmbFile(url);
-          smbFile.mkdirs();
+          smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+          JDReflectionUtil.callMethod_V(smbFile,"mkdirs");
 
           retryCount = 0;
-        } catch (jcifs.smb.SmbAuthException a) {
+        } catch (Exception a) {
           String message = a.getMessage();
           if (message.indexOf("Access is denied") >= 0) {
             // Loop and try again. JCIFS is kind of quirky
@@ -241,7 +236,7 @@ public class JCIFSUtility {
 
   public static String[] listDirectory(String system, String userId, char[] encryptedPassword, String directoryname)
       throws Exception {
-    SmbFile smbFile = null;
+    Object smbFile = null;
 
     system = fullyQualifySystem(system);
     String url;
@@ -260,8 +255,8 @@ public class JCIFSUtility {
       int retryCount = 20;
       while (retryCount > 0) {
         try {
-          smbFile = new SmbFile(url);
-          String[] files = smbFile.list();
+          smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+          String[] files = (String[]) JDReflectionUtil.callMethod_O(smbFile,"list");
 
           // SmbFile has a bug in that it returns the files several time.. Make
           // sure they are unique
@@ -279,7 +274,7 @@ public class JCIFSUtility {
           }
           return files;
 
-        } catch (jcifs.smb.SmbAuthException a) {
+        } catch (Exception a) {
           String message = a.getMessage();
           if (message.indexOf("Access is denied") >= 0) {
             // Loop and try again. JCIFS is kind of quirky
@@ -310,27 +305,28 @@ public class JCIFSUtility {
     return null;
   }
 
-  public static void recursiveDelete(SmbFile smbFile) throws Exception {
+  public static void recursiveDelete(Object smbFile) throws Exception {
     Exception savedException = null;
-    SmbFile[] files = null;
+    Object[] files;
     try {
-      files = smbFile.listFiles();
-    } catch (SmbException smbEx) {
+      files = (Object []) JDReflectionUtil.callMethod_O(smbFile,"listFiles");
+    } catch (Exception smbEx) {
       String exMessage = smbEx.toString();
       if (exMessage.indexOf("must end with") >= 0) {
-        smbFile = new SmbFile(smbFile.getURL() + "/");
-        files = smbFile.listFiles();
+        Object smbUrl = JDReflectionUtil.callMethod_O(smbFile,"getUrl");
+        smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",smbUrl + "/");
+        files = (Object []) JDReflectionUtil.callMethod_O(smbFile,"listFiles");
 
       } else {
         throw smbEx;
       }
     }
     for (int i = 0; i < files.length; i++) {
-      if (files[i].isDirectory()) {
+      if (JDReflectionUtil.callMethod_B(files[i],"isDirectory")) {
         recursiveDelete(files[i]);
       } else {
         try {
-          files[i].delete();
+          JDReflectionUtil.callMethod_V(files[i],"delete");
         } catch (Exception e) {
           savedException = e;
         }
@@ -339,7 +335,7 @@ public class JCIFSUtility {
     if (savedException != null) {
       throw savedException;
     }
-    smbFile.delete();
+    JDReflectionUtil.callMethod_V(smbFile,"delete");
   }
 
   public static boolean deleteDirectory(String system, String userId, char[] encryptedPassword, String filename)
@@ -355,21 +351,21 @@ public class JCIFSUtility {
       s.close();
       return true;
     } else {
-      SmbFile smbFile = null;
+      Object smbFile = null;
 
       system = fullyQualifySystem(system);
       String url = getUrl(system, userId, encryptedPassword, filename);
 
       if (debug)
         System.out.println("JCIFSUtility.debug:  deleteFile url=" + url);
-      smbFile = new SmbFile(url);
-      if (smbFile.exists()) {
-        if (smbFile.isDirectory()) {
+      smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+      if (JDReflectionUtil.callMethod_B(smbFile,"exists")) {
+        if (JDReflectionUtil.callMethod_B(smbFile,"isDirectory")) {
           recursiveDelete(smbFile);
         }
       }
-      smbFile = new SmbFile(url);
-      if (smbFile.exists()) {
+      smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+      if (JDReflectionUtil.callMethod_B(smbFile,"exists")) {
         System.out.println("Delete of " + url + " failed");
         return false;
       }
@@ -378,11 +374,16 @@ public class JCIFSUtility {
   }
 
   public static DataInput openDataInput(String system, String userId, char[] encryptedPassword, String filename,
-      String mode) throws Exception {
+      String mode) throws Exception  {
 
     system = fullyQualifySystem(system);
-
-    if (system.equals("localhost")) {
+    boolean isLocalhost = system.equals("localhost");
+    if (!isLocalhost) { 
+      InetAddress address = InetAddress.getByName(system);
+      InetAddress localhost = InetAddress.getLocalHost();
+      isLocalhost = address.equals(localhost); 
+    }
+    if (isLocalhost) {
       return new RandomAccessFile(filename, mode);
     } else {
       if (useJdbc) {
@@ -391,11 +392,16 @@ public class JCIFSUtility {
         return new DataInputStream(inputStream);
       } else {
         String url = getUrl(system, userId, encryptedPassword, filename);
-        SmbFile smbFile = new SmbFile(url);
+        Object smbFile;
+        smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
 
         if (debug)
           System.out.println("JCIFSUtility.debug:  openDataInput url=" + url);
-        return new SmbRandomAccessFile(smbFile, mode);
+        try {
+          return (DataInput) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbRandomAccessFile",smbFile, mode);
+        } catch (Exception e) {
+          throw new Exception("SmbException taken",e);
+        }
       }
     }
   }
@@ -405,14 +411,14 @@ public class JCIFSUtility {
 
     system = fullyQualifySystem(system);
     String url = getUrl(system, userId, encryptedPassword, filename);
-    SmbFile smbFile = new SmbFile(url);
+    Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
 
     if (debug)
       System.out.println("JCIFSUtility.debug:  openDataOutput url=" + url);
-    return new SmbRandomAccessFile(smbFile, mode);
+    return (DataOutput) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbRandomAccessFile",smbFile, mode);
   }
 
-  SmbFileOutputStream outputStream = null;
+  OutputStream outputStream = null;
   String url = null;
 
   public JCIFSUtility(String system, String userId, char[] encryptedPassword) {
@@ -428,7 +434,8 @@ public class JCIFSUtility {
         retry = false;
         retryCount--;
         try {
-          outputStream = new SmbFileOutputStream(url);
+          Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+          outputStream = (OutputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileOutputStream",smbFile);
         } catch (Exception e) {
           // Handle the unmapped problem (shows up as network name cannot be
           // found )
@@ -444,7 +451,8 @@ public class JCIFSUtility {
             netServer.createFileShare("root", "/", "ROOT", ISeriesNetServerFileShare.READ_WRITE);
             as400.close();
             // Try again to attach
-            outputStream = new SmbFileOutputStream(url);
+            Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+            outputStream = (OutputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileOutputStream",smbFile);
           } else if (message.indexOf("NTLMv2 requires extended security") >= 0) {
             if (retryCount > 0) {
               retry = true;
@@ -490,8 +498,8 @@ public class JCIFSUtility {
         outputStream.close();
       }
       if (url != null) {
-        SmbFile file = new SmbFile(url);
-        file.delete();
+        Object file = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url);
+        JDReflectionUtil.callMethod_V(file,"delete");
       }
     } catch (Exception e) {
       System.out.flush();
@@ -564,7 +572,7 @@ public class JCIFSUtility {
 
   public static InputStream getFileInputStream(String system, String userId, char[] encryptedPassword,
       String ifsPathName)
-      throws SmbException, MalformedURLException, UnknownHostException, FileNotFoundException, SQLException {
+      throws  Exception {
     InputStream fis = null;
 
     if (system == "localhost") {
@@ -606,8 +614,9 @@ public class JCIFSUtility {
         if (debug)
           System.out.println("JCIFSUtility.debug:  getFileInputStream url=" + url);
         try {
-          fis = new SmbFileInputStream(url);
-        } catch (SmbException e) {
+          Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+          fis = (InputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileInputStream",smbFile);
+        } catch (Exception e) {
           System.err.println("Exception on new SmbFileInputStream(" + url + ")");
           throw e;
         }
@@ -617,15 +626,16 @@ public class JCIFSUtility {
   }
 
   public static OutputStream getFileOutputStream(String system, String userId, char[] encryptedPassword,
-      String ifsPathName) throws SmbException, MalformedURLException, UnknownHostException {
+      String ifsPathName) throws Exception {
 
     OutputStream fos = null;
     String url = getUrl(system, userId, encryptedPassword, ifsPathName);
 
     if (debug)
       System.out.println("JCIFSUtility.debug:  getFileInputStream url=" + url);
+    Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
 
-    fos = new SmbFileOutputStream(url);
+    fos = (OutputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileOutputStream",smbFile);
 
     return fos;
   }
@@ -653,15 +663,17 @@ public class JCIFSUtility {
 
   public static DataOutput RandomAccessFileDataOutput(String system, String userId, char[] encryptedPassword,
       String ifsPathName, String mode, int shareAccess)
-      throws SmbException, MalformedURLException, UnknownHostException {
+      throws Exception {
 
     String url = getUrl(system, userId, encryptedPassword, ifsPathName);
 
-    return new SmbRandomAccessFile(url, mode, shareAccess);
+    Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+
+    return (DataOutput) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbRandomAccessFile",smbFile, mode);
   }
 
   public static boolean fileExists(String system, String userId, char[] encryptedPassword, String filename)
-      throws MalformedURLException, SmbException, SQLException {
+      throws Exception {
 
     if (useJdbc) {
       if (jdbcConnection_ == null) {
@@ -673,35 +685,39 @@ public class JCIFSUtility {
       ;
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
+        rs.close(); ps.close(); 
         return true;
 
       } else {
         SQLWarning rsWarning = rs.getWarnings();
         if (rsWarning != null) {
+          rs.close(); ps.close(); 
           return false;
         }
         ;
         SQLWarning psWarning = ps.getWarnings();
         if (psWarning != null) {
+          rs.close(); ps.close(); 
           return false;
         }
         ;
 
         // File is empty
+        rs.close(); ps.close(); 
         return true;
       }
 
     } else {
       String url = getUrl(system, userId, encryptedPassword, filename);
 
-      SmbFile smbFile = new SmbFile(url);
-      return smbFile.exists();
+      Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+      return JDReflectionUtil.callMethod_B(smbFile,"exists");
 
     }
   }
 
   public static long fileLength(String system, String userId, char[] encryptedPassword, String filename)
-      throws MalformedURLException, SmbException, SQLException {
+      throws Exception {
     if (useJdbc) {
       long length = 0;
       if (jdbcConnection_ == null) {
@@ -714,22 +730,24 @@ public class JCIFSUtility {
       if (rs.next()) {
         length = rs.getLong(1);
       } else {
+        rs.close(); 
         ps.close();
         throw new SQLException(filename + "not found");
       }
+      rs.close(); 
       ps.close();
       return length;
 
     } else {
       String url = getUrl(system, userId, encryptedPassword, filename);
 
-      SmbFile smbFile = new SmbFile(url);
-      return smbFile.length();
+      Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+      return JDReflectionUtil.callMethod_L(smbFile,"length");
     }
   }
 
   public static boolean checkExpectedRead2(String system, String userId, char[] encryptedPassword, String ifsPathName,
-      int x1, int x2) throws IOException, SQLException {
+      int x1, int x2) throws Exception {
     if (useJdbc) {
 
       if (jdbcConnection_ == null) {
@@ -743,16 +761,23 @@ public class JCIFSUtility {
       if (rs.next()) {
         Blob blob = rs.getBlob(1);
         if (blob.length() < 2) {
+          rs.close(); 
+          ps.close(); 
           return false;
         } else {
           byte[] bytes = blob.getBytes(1, 2);
           if (bytes[0] == x1 && bytes[1] == x2) {
+            rs.close(); 
+            ps.close(); 
             return true;
           } else {
+            rs.close(); 
+            ps.close(); 
             return false;
           }
         }
       } else {
+        rs.close(); 
         ps.close();
         return false;
       }
@@ -761,8 +786,8 @@ public class JCIFSUtility {
 
       if (debug)
         System.out.println("JCIFSUtility.debug:  checkExpectedRead2 url=" + url);
-
-      InputStream fis = new SmbFileInputStream(url);
+      Object smbFile = JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFile",url); 
+      InputStream fis = (InputStream) JDReflectionUtil.createObject(JCIFS_PACKAGE_PREFIX+"SmbFileInputStream",smbFile);
       boolean passed = fis.read() == x1 && fis.read() == x2;
       fis.close();
       return passed;

@@ -9,7 +9,7 @@ echo UNAME is $UNAME
 #
 UVERSION=`uname -v`
 URELEASE=`uname -r`
-CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs.jar:/home/jdbctest/jars/jakarta.servlet-api-5.0.0.jar"
+CLASSPATH=".:/qibm/proddata/http/public/jt400/lib/java8/jt400.jar:/qibm/proddata/http/public/jt400/lib/jt400Servlet.jar:/home/jdbctest/jars/servlet.jar:/home/jdbctest/jars/sslightx.zip:/qibm/proddata/os400/java400/jdk/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk60/32bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit/lib/tools.jar:/QOpenSys/QIBM/ProdData/JavaVM/jdk80/32bit/lib/tools.jar:./db2_classes.jar:/qibm/proddata/os400/java400/ext/mail.jar:/qibm/proddata/os400/java400/ext/activation.jar:/home/jdbctest/jars/jcifs-3.0.2.jar:/home/jdbctest/jars/jakarta.servlet-api-5.0.0.jar"
 
 
 
@@ -94,7 +94,8 @@ do #
   echo UVERSION is $UVERSION
   echo UNAME is '"'$UNAME'"'
   echo URELEASE is '"'$URELEASE'"'
-  JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk80/64bit
+  # Compile now with Java 17 for Jjcifs-3.0.2
+  JAVA_HOME=/QOpenSys/QIBM/ProdData/JavaVM/jdk17/64bit
   export JAVA_HOME
   echo JAVA_HOME is $JAVA_HOME
   echo "javac -classpath $CLASSPATH -g -source 1.8  -target 1.8 $files"

@@ -29,13 +29,13 @@ import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
 
+
 import com.ibm.as400.access.AS400;
 import com.ibm.as400.access.AS400JDBCDriver;
 import com.ibm.as400.access.IFSFile;
 import com.ibm.as400.access.IFSFileOutputStream;
 import com.ibm.as400.access.IFSRandomAccessFile;
 
-import jcifs.smb.SmbException;
 import test.IFSTests;
 import test.JCIFSUtility;
 import test.JTOpenTestEnvironment;
@@ -1152,7 +1152,7 @@ e.printStackTrace();
 
 
 
-  public InputStream getNonIFSInputStream(String ifsPathName) throws FileNotFoundException, SmbException, MalformedURLException, UnknownHostException, SQLException {
+  public InputStream getNonIFSInputStream(String ifsPathName) throws Exception {
       InputStream fis = null; 
       if (IFSTests.IsRunningOnOS400) {
 	  fis = new FileInputStream(ifsPathName); 
@@ -1240,6 +1240,7 @@ e.printStackTrace();
   	// return (file.length());
       }
   }
+  
 
   public boolean checkExpectedRead2(String ifsPathNameX, int x1, int x2) throws Exception  {  
     boolean passed = false; 
@@ -1253,12 +1254,11 @@ e.printStackTrace();
     }
 
   public DataInput openDataInput(String ifsPathNameX, String mode) throws Exception  {  
+    
     return JCIFSUtility.openDataInput(systemName_, userId_, encryptedPassword_, ifsPathNameX, mode); 
-    }
+    
+  }
 
-//  public DataOutput openDataOutput(String ifsPathNameX, String mode) throws Exception  {  
-//    return JCIFSUtility.openDataOutput(systemName_, userId_, encryptedPassword_, ifsPathNameX, mode); 
-//     }
   
   
 }

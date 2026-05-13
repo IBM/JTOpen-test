@@ -13,6 +13,7 @@
 
 package test;
 
+import java.io.DataInput;
 import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.*;
@@ -3737,6 +3738,28 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
        return newObject;
                
        }
+     public static Object createObject(String classname, Object arg1, String arg2) throws Exception  {
+       Class<?> objectClass11 = classLoader_.loadClass(classname);
+       Class<?>[] twoArgTypes = new Class<?>[2];
+       twoArgTypes[0] = arg1.getClass();
+       twoArgTypes[1] = "".getClass();
+       
+       Object[] twoArgs    = new Object[2];
+       twoArgs[0] = arg1; 
+       twoArgs[1] = arg2; 
+       
+       Object newObject =null;
+       try {
+           Constructor<?> constructor = objectClass11.getDeclaredConstructor(twoArgTypes);
+
+           constructor.setAccessible(true);  
+           newObject = constructor.newInstance(twoArgs);
+       } catch (java.lang.reflect.InvocationTargetException ite) {
+           handleIte(ite);
+
+       }
+       return newObject;
+     }
 
      
  	public static Object createObject(String classname, int arg1, Object arg2) throws Exception  {
@@ -3923,6 +3946,7 @@ public static void callMethod_V(Object o, String methodName, long l, Object parm
       classLoader_ = loader; 
       
     }
+
 
 
  

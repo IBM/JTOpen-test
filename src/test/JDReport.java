@@ -274,6 +274,17 @@ public class JDReport {
     String changeDateString = changeDate.toString();
     String compactDateString = changeDateString.replace(' ', 'x');
     String[] stats = getStats(htmlFile, c);
+    // 
+    // Stats are
+    //  String[0] Notatt Count 
+    //  String[1] Regressed Count 
+    //  String[2] Failed Count 
+    //  String[3] Success Count 
+    //  String[4] Regressed Testcases
+    //  String[5] Run minutes 
+    //  String[6] Failed Testcases
+    //  String[7] Scheduled Count
+
 
     long jarTime = 0;
     if (jarTimestamp != null)
@@ -311,7 +322,8 @@ public class JDReport {
     
     if ("0".equals(stats[0])) {
       returnString += "<td><a href=\"" + next + "?" + compactDateString + "\">"
-          + describeTest(next) + " Test Results</a>";
+          + describeTest(next) + " Test Results</a>"
+          + addRegressionPlusLink(next);
       if ("0".equals(stats[1])) {
         returnString += "<td>" + stats[0] + "<td><font color=\"darkgreen\"><b>"
             + stats[1] + "</b></font>" + stats[4] + "<td>" + stats[2] + stats[6]
@@ -324,12 +336,27 @@ public class JDReport {
     } else {
       returnString += "<td><a href=\"" + next + "?" + compactDateString + "\">"
           + describeTest(next)
-          + " Test Results</a><td><font color=\"red\">ERROR " + stats[0]
+          + " Test Results</a>"
+          + addRegressionPlusLink(next)
+          + "<td><font color=\"red\">ERROR " + stats[0]
           + "</font><td>" + stats[1] + stats[4] + "<td>" + stats[2] + stats[6]
           + "<td>" + stats[3] + "<td>" + stats[5] + "<td>" + schedCount;
     }
 
     return returnString;
+  }
+
+  private static String addRegressionPlusLink(String input) {
+    
+      int htmlIndex = input.indexOf(".html");
+      if (htmlIndex > 0)
+        input = input.substring(0, htmlIndex);
+      int latestIndex = input.indexOf("latest");
+      if (latestIndex >= 0) {
+        input = input.substring(latestIndex + 6);
+      }
+
+      return " <a href=\"cgi-pase/JDRunit.acgi?PRIORITY=1&INITIALS="+input+"&TESTCASE=REGRESSIONPLUS\">RUNALL</a>"; 
   }
 
   public static String formatHeader() {

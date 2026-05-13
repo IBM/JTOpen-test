@@ -762,7 +762,9 @@ public class JDSQL400 implements Runnable {
       //
 
       InputStream in = new FileInputStream(inFile);
-
+      if (debug) {
+        out.println("Setting userId="+inUserId+" in constructor"); 
+      }
       userId = inUserId;
       password = inPassword;
 
